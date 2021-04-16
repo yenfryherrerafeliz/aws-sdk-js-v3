@@ -619,22 +619,57 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   eventStreamSerdeProvider?: __EventStreamSerdeProvider;
 }
 
-type S3ClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
-  ClientDefaults &
-  RegionInputConfig &
-  EndpointsInputConfig &
-  RetryInputConfig &
-  HostHeaderInputConfig &
-  AwsAuthInputConfig &
-  BucketEndpointInputConfig &
-  UserAgentInputConfig &
-  EventStreamSerdeInputConfig;
-/**
- * The configuration interface of S3Client class constructor that set the region, credentials and other options.
- */
-export interface S3ClientConfig extends S3ClientConfigType {}
+export interface S3ClientConfig
+  extends Partial<Omit<__SmithyConfiguration<any>, "requestHandler">>,
+    ClientDefaults,
+    RegionInputConfig,
+    EndpointsInputConfig,
+    RetryInputConfig,
+    HostHeaderInputConfig,
+    AwsAuthInputConfig,
+    BucketEndpointInputConfig,
+    UserAgentInputConfig,
+    EventStreamSerdeInputConfig {}
 
-type S3ClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+// export interface S3ClientResolvedConfig
+//   extends Omit<__SmithyResolvedConfiguration<any>, "requestHandler">,
+//     Required<ClientDefaults>,
+//     RegionResolvedConfig {}
+
+type Intersection<T, S> = Omit<T, keyof S> & S;
+export interface S3ClientResolvedConfig
+  extends Intersection<
+    __SmithyResolvedConfiguration<__HttpHandlerOptions>,
+    Intersection<
+      Required<ClientDefaults>,
+      Intersection<
+        RegionResolvedConfig,
+        Intersection<
+          EndpointsResolvedConfig,
+          Intersection<
+            RetryResolvedConfig,
+            Intersection<
+              HostHeaderResolvedConfig,
+              Intersection<
+                AwsAuthResolvedConfig,
+                Intersection<
+                  BucketEndpointResolvedConfig,
+                  Intersection<UserAgentResolvedConfig, EventStreamSerdeResolvedConfig>
+                >
+              >
+            >
+          >
+        >
+      >
+    >
+  > {}
+// type S3ClientResolvedConfig = Intersection<Required<ClientDefaults>, RegionResolvedConfig>;
+// const c: S3ClientResolvedConfig = {} as any;
+// const b = c.region;
+// console.log(b);
+
+/**
+export type S3ClientResolvedConfig = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointsResolvedConfig &
