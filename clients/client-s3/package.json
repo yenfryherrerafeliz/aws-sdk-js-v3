@@ -4,7 +4,7 @@
   "version": "3.13.0",
   "scripts": {
     "clean": "yarn remove-definitions && yarn remove-dist && yarn remove-documentation",
-    "build-documentation": "yarn remove-documentation && typedoc ./",
+    "build-documentation": "yarn remove-documentation && typedoc --tsconfig ./tsconfig.json",
     "prepublishOnly": "yarn build && downlevel-dts dist/types dist/types/ts3.4",
     "remove-definitions": "rimraf ./types",
     "remove-dist": "rimraf ./dist",
