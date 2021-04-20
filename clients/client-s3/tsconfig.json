@@ -30,8 +30,8 @@
     "out": "./docs",
     "theme": "default",
     "plugin": [
-      "none"
-      /*"@aws-sdk/client-documentation-generator"*/
+      /*"none"*/
+      "@aws-sdk/client-documentation-generator"
     ]
   }
 }
