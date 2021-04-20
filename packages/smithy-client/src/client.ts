@@ -13,6 +13,20 @@ export interface SmithyConfiguration<HandlerOptions> {
 
 export type SmithyResolvedConfiguration<HandlerOptions> = SmithyConfiguration<HandlerOptions>;
 
+/**
+ * The intersection type a list of provided types. The entries in the type that
+ * comes later in the list will overwrite the entries in the type that comes
+ * earlier.
+ *
+ * This type is not suppose to be used outside of generated clients.
+ * @internal
+ */
+export type Intersection<T extends any[]> = T extends [...infer U, infer S]
+  ? U extends []
+    ? S
+    : Omit<Intersection<U>, keyof S> & S
+  : unknown;
+
 export class Client<
   HandlerOptions,
   ClientInput extends object,
