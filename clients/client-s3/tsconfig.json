@@ -17,21 +17,14 @@
     "types": ["mocha", "node"]
   },
   "typedocOptions": {
-    "entryPoints": ["./index.ts"],
+    "entryPoints": ["./index.typedoc.ts"],
     "exclude": ["**/node_modules/**", "**/*.spec.ts", "./protocols/*.ts", "./e2e/*.ts", "./endpoints.ts"],
-    // "excludeNotExported": true,
     "excludePrivate": true,
     "hideGenerator": true,
     "disableSources": true,
-    // "ignoreCompilerErrors": true,
-    // "includeDeclarations": true,
     "readme": "./README.md",
-    // "mode": "file",
     "out": "./docs",
     "theme": "default",
-    "plugin": [
-      /*"none"*/
-      "@aws-sdk/client-documentation-generator"
-    ]
+    "plugin": ["@aws-sdk/client-documentation-generator"]
   }
 }

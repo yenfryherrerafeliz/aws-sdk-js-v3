@@ -4,3 +4,5 @@
 tsconfig.test.json
 *.tsbuildinfo
 jest.config.js
+index.typedoc.*
+**/*/index.typedoc.*

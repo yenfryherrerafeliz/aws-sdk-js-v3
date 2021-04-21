@@ -2,3 +2,5 @@
 /docs/
 tsconfig.test.json
 *.tsbuildinfo
+index.typedoc.*
+**/*/index.typedoc.*
