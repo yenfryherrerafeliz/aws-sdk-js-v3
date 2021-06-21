@@ -16,7 +16,7 @@ export class SdkIndexLinkClientPlugin extends RendererComponent {
    * "{{CLIENT}}" will be replaced with the client name.
    * For example: `path/{{CLIENT}}/docs` will target s3 docs at `path/client-s3/docs`
    */
-  @BindOption("clientDocs")
+  // @BindOption("clientDocs")
   readonly clientDocs!: string;
 
   initialize() {

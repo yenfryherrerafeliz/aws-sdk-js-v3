@@ -1,10 +1,10 @@
-import { PluginHost } from "typedoc/dist/lib/utils";
+// import { PluginHost } from "typedoc/dist/lib/utils";
 
 import { SdkClientCommentUpdatePlugin } from "./sdk-client-comment-update";
 import { SdkClientRemoveNavigatorPlugin } from "./sdk-client-remove-navigator";
 import { SdkClientTocPlugin } from "./sdk-client-toc-plugin";
 
-module.exports = function load(pluginHost: PluginHost) {
+module.exports = function load(pluginHost: any) {
   const application = pluginHost.owner;
 
   application.converter.addComponent(

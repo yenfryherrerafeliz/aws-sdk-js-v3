@@ -11,28 +11,28 @@ import ts from "typescript";
 @Component({ name: "SdkClientCommentUpdatePlugin" })
 export class SdkClientCommentUpdatePlugin extends ConverterComponent {
   initialize() {
-    this.listenTo(this.owner, {
-      [Converter.EVENT_CREATE_DECLARATION]: this.onDeclaration,
-    });
+    // this.listenTo(this.owner, {
+    //   [Converter.EVENT_CREATE_DECLARATION]: this.onDeclaration,
+    // });
   }
 
-  private onDeclaration(context: Context, reflection: Reflection, node?: ts.Node) {
-    if (!node) return;
-    const rawComment = getRawComment(node);
-    if (!rawComment) return;
-    const comment = parseComment(this.cleanEmptyCommentLines(rawComment));
-    reflection.comment = comment;
-  }
+  // private onDeclaration(context: Context, reflection: Reflection, node?: ts.Node) {
+  //   if (!node) return;
+  //   const rawComment = getRawComment(node);
+  //   if (!rawComment) return;
+  //   const comment = parseComment(this.cleanEmptyCommentLines(rawComment));
+  //   reflection.comment = comment;
+  // }
 
-  /**
-   * Update documentation block to exclude empty lines.
-   */
-  private cleanEmptyCommentLines(comment: string): string {
-    return comment.startsWith("/*") && comment.endsWith("*/")
-      ? comment
-          .split("\n")
-          .filter((line) => line.substr(line.indexOf("*") + 1).trim().length !== 0)
-          .join("\n")
-      : comment;
-  }
+  // /**
+  //  * Update documentation block to exclude empty lines.
+  //  */
+  // private cleanEmptyCommentLines(comment: string): string {
+  //   return comment.startsWith("/*") && comment.endsWith("*/")
+  //     ? comment
+  //         .split("\n")
+  //         .filter((line) => line.substr(line.indexOf("*") + 1).trim().length !== 0)
+  //         .join("\n")
+  //     : comment;
+  // }
 }
