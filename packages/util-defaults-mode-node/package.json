@@ -1,6 +1,6 @@
 {
   "name": "@aws-sdk/util-defaults-mode-node",
-  "version": "3.0.0",
+  "version": "3.47.0",
   "scripts": {
     "build": "yarn build:cjs && yarn build:es && yarn build:types",
     "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -18,8 +18,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@aws-sdk/credential-provider-imds": "*",
     "@aws-sdk/config-resolver": "*",
+    "@aws-sdk/credential-provider-imds": "*",
     "@aws-sdk/node-config-provider": "*",
     "@aws-sdk/property-provider": "*",
     "@aws-sdk/types": "*",
