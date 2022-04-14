@@ -1,7 +1,9 @@
 import { constructStack } from "@aws-sdk/middleware-stack";
 import { Client as IClient, Command, MetadataBearer, MiddlewareStack, RequestHandler } from "@aws-sdk/types";
 
-export interface SmithyConfiguration<HandlerOptions> {
+import { getRetryPlugin, RetryResolvedConfig } from "./retry";
+
+export interface SmithyConfiguration<HandlerOptions> extends RetryResolvedConfig {
   requestHandler: RequestHandler<any, any, HandlerOptions>;
   /**
    * The API version set internally by the SDK, and is
@@ -24,6 +26,7 @@ export class Client<
   readonly config: ResolvedClientConfiguration;
   constructor(config: ResolvedClientConfiguration) {
     this.config = config;
+    getRetryPlugin(config).applyToStack(this.middlewareStack);
   }
   send<InputType extends ClientInput, OutputType extends ClientOutput>(
     command: Command<ClientInput, InputType, ClientOutput, OutputType, SmithyResolvedConfiguration<HandlerOptions>>,
