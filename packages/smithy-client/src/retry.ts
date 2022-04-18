@@ -9,6 +9,7 @@ import {
   Pluggable,
   Provider,
   RetryStrategy as OldRetryStrategy,
+  SdkError,
 } from "@aws-sdk/types";
 
 enum RetryErrorType {
@@ -39,7 +40,7 @@ interface RetryStrategy {
    * book-keeping to inform its circuit breaker policy based on the types of errors it's encountering. A Retry can be rejected. In that case this function either immediately
    * returns an error or throws an exception. Upon success, it returns control to the program upon the appropriate wait time elapsing.
    */
-  waitForRetry: (errorType: RetryErrorType) => Promise<boolean>;
+  waitForRetry: (error: SdkError) => Promise<boolean>;
 
   /**
    * Upon successful completion of the operation, a user calls this function to record that the operation was successful.
@@ -47,16 +48,11 @@ interface RetryStrategy {
   recordSuccess: () => void;
 }
 
-// TODO: move RetryInputConfig interface
 
 export interface RetryResolvedConfig {
   maxAttempts: Provider<number>;
 
   retryStrategy: Provider<RetryStrategy | OldRetryStrategy>;
-
-  serviceId: string;
-
-  region: Provider<string>;
 }
 
 export const retryMiddleware =
@@ -67,32 +63,32 @@ export const retryMiddleware =
   ): FinalizeHandler<any, Output> =>
   async (args: FinalizeHandlerArguments<any>): Promise<FinalizeHandlerOutput<Output>> => {
     const retryStrategy = await options.retryStrategy();
-    const region = await options.region();
+    const maxAttempts = await options.maxAttempts();
 
     const isOldStrategy = (strategy: RetryStrategy | OldRetryStrategy): strategy is OldRetryStrategy =>
       typeof strategy["retry"] === "function";
     if (isOldStrategy(retryStrategy)) {
-      if (retryStrategy?.mode)
-        context.userAgent = [...(context.userAgent || []), ["cfg/retry-mode", retryStrategy.mode]];
+      // TODO: add UA string in a separate middleware.
       return retryStrategy.retry(next, args);
     } else {
-      // TODO: how are we going to put UA
-      // TODO: here we require the default retry strategy instance to be shared across the clients. But how does
-      // the users config it programmatically since we don't have any shared configurations?
-      await retryStrategy.acquireRetryToken(`${region}:${options.serviceId}`, 1000);
+      // TODO: add UA string in a separate middleware.
+      await retryStrategy.acquireRetryToken(context["partition_id"], 1000);
       let canRetry = false;
-      let lastError: any = undefined;
+      let lastError: SdkError = undefined;
+      let attempts = 0;
       do {
         try {
+          attempts++;
           const res = await next(args);
           retryStrategy.recordSuccess();
           canRetry = false;
           return res;
         } catch (e) {
           lastError = e;
+          // QUESTION: do we need reference to request here?
           canRetry = await retryStrategy.waitForRetry(e);
         }
-      } while (canRetry);
+      } while (canRetry && attempts < maxAttempts);
       throw lastError;
     }
   };
