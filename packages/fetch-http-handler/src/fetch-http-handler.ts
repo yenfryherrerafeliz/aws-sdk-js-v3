@@ -100,7 +100,7 @@ export class FetchHttpHandler implements HttpHandler {
           response: new HttpResponse({
             headers: transformedHeaders,
             statusCode: response.status,
-            body: response.body,
+            body: response.body || new Uint8Array(),
           }),
         };
       }),
