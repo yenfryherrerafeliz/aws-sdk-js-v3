@@ -78,7 +78,7 @@ export interface ReceiveMessageCommandOutput extends ReceiveMessageResult, __Met
  * const input = { // ReceiveMessageRequest
  *   QueueUrl: "STRING_VALUE", // required
  *   AttributeNames: [ // AttributeNameList
- *     "STRING_VALUE",
+ *     "All" || "Policy" || "VisibilityTimeout" || "MaximumMessageSize" || "MessageRetentionPeriod" || "ApproximateNumberOfMessages" || "ApproximateNumberOfMessagesNotVisible" || "CreatedTimestamp" || "LastModifiedTimestamp" || "QueueArn" || "ApproximateNumberOfMessagesDelayed" || "DelaySeconds" || "ReceiveMessageWaitTimeSeconds" || "RedrivePolicy" || "FifoQueue" || "ContentBasedDeduplication" || "KmsMasterKeyId" || "KmsDataKeyReusePeriodSeconds" || "DeduplicationScope" || "FifoThroughputLimit" || "RedriveAllowPolicy" || "SqsManagedSseEnabled",
  *   ],
  *   MessageAttributeNames: [ // MessageAttributeNameList
  *     "STRING_VALUE",

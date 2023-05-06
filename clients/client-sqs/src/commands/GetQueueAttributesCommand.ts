@@ -45,7 +45,7 @@ export interface GetQueueAttributesCommandOutput extends GetQueueAttributesResul
  * const input = { // GetQueueAttributesRequest
  *   QueueUrl: "STRING_VALUE", // required
  *   AttributeNames: [ // AttributeNameList
- *     "STRING_VALUE",
+ *     "All" || "Policy" || "VisibilityTimeout" || "MaximumMessageSize" || "MessageRetentionPeriod" || "ApproximateNumberOfMessages" || "ApproximateNumberOfMessagesNotVisible" || "CreatedTimestamp" || "LastModifiedTimestamp" || "QueueArn" || "ApproximateNumberOfMessagesDelayed" || "DelaySeconds" || "ReceiveMessageWaitTimeSeconds" || "RedrivePolicy" || "FifoQueue" || "ContentBasedDeduplication" || "KmsMasterKeyId" || "KmsDataKeyReusePeriodSeconds" || "DeduplicationScope" || "FifoThroughputLimit" || "RedriveAllowPolicy" || "SqsManagedSseEnabled",
  *   ],
  * };
  * const command = new GetQueueAttributesCommand(input);

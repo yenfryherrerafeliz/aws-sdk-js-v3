@@ -27,7 +27,6 @@ access management</a> in the <i>Amazon SQS Developer Guide.</i>
 <p>Handle error responses</p>
 </li>
 </ul>
-
 <p>
 <b>Additional information</b>
 </p>

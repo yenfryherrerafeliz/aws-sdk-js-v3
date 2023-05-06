@@ -40,7 +40,6 @@ export interface ListDeadLetterSourceQueuesCommandOutput extends ListDeadLetterS
  *           display, the response includes a value for <code>NextToken</code>. Use
  *           <code>NextToken</code> as a parameter in your next request to
  *           <code>ListDeadLetterSourceQueues</code> to receive the next page of results.   </p>
- *
  *          <p>For more information about using dead-letter queues, see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html">Using Amazon SQS Dead-Letter Queues</a>
  *           in the <i>Amazon SQS Developer Guide</i>.</p>
  * @example

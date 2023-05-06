@@ -43,7 +43,7 @@ export interface AddPermissionCommandOutput extends __MetadataBearer {}
  *          <note>
  *             <ul>
  *                <li>
- *                  <p>
+ *                   <p>
  *                      <code>AddPermission</code> generates a policy for you. You can use
  *                      <code>
  *                         <a>SetQueueAttributes</a>
@@ -53,11 +53,11 @@ export interface AddPermissionCommandOutput extends __MetadataBearer {}
  *                      the <i>Amazon SQS Developer Guide</i>.</p>
  *                </li>
  *                <li>
- *                  <p>An Amazon SQS policy can have a maximum of 7 actions.</p>
+ *                   <p>An Amazon SQS policy can have a maximum of 7 actions.</p>
  *                </li>
  *                <li>
- *                     <p>To remove the ability to change queue permissions, you must deny permission to the <code>AddPermission</code>, <code>RemovePermission</code>, and <code>SetQueueAttributes</code> actions in your IAM policy.</p>
- *                 </li>
+ *                   <p>To remove the ability to change queue permissions, you must deny permission to the <code>AddPermission</code>, <code>RemovePermission</code>, and <code>SetQueueAttributes</code> actions in your IAM policy.</p>
+ *                </li>
  *             </ul>
  *          </note>
  *          <p>Some actions take lists of parameters. These lists are specified using the <code>param.n</code> notation. Values of <code>n</code> are integers starting from 1. For example, a parameter list with two elements looks like this:</p>
