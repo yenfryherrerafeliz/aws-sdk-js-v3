@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,13 +11,17 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { KendraClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KendraClient";
 import { GetQuerySuggestionsResponse } from "../models/models_0";
 import { GetQuerySuggestionsRequest } from "../models/models_1";
 import { de_GetQuerySuggestionsCommand, se_GetQuerySuggestionsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -171,6 +175,27 @@ export interface GetQuerySuggestionsCommandOutput extends GetQuerySuggestionsRes
  * //           ],
  * //         },
  * //       },
+ * //       SourceDocuments: [ // SourceDocuments
+ * //         { // SourceDocument
+ * //           DocumentId: "STRING_VALUE",
+ * //           SuggestionAttributes: [ // DocumentAttributeKeyList
+ * //             "STRING_VALUE",
+ * //           ],
+ * //           AdditionalAttributes: [ // DocumentAttributeList
+ * //             { // DocumentAttribute
+ * //               Key: "STRING_VALUE", // required
+ * //               Value: { // DocumentAttributeValue
+ * //                 StringValue: "STRING_VALUE",
+ * //                 StringListValue: [ // DocumentAttributeStringListValue
+ * //                   "STRING_VALUE",
+ * //                 ],
+ * //                 LongValue: Number("long"),
+ * //                 DateValue: new Date("TIMESTAMP"),
+ * //               },
+ * //             },
+ * //           ],
+ * //         },
+ * //       ],
  * //     },
  * //   ],
  * // };

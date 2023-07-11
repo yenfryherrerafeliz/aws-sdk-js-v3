@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { getApplyMd5BodyChecksumPlugin } from "@aws-sdk/middleware-apply-body-checksum";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getApplyMd5BodyChecksumPlugin } from "@smithy/middleware-apply-body-checksum";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { HttpChecksumRequiredInputOutput } from "../models/models_0";
 import { de_HttpChecksumRequiredCommand, se_HttpChecksumRequiredCommand } from "../protocols/Aws_restJson1";
 import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RestJsonProtocolClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -44,6 +48,10 @@ export interface HttpChecksumRequiredCommandOutput extends HttpChecksumRequiredI
  * };
  * const command = new HttpChecksumRequiredCommand(input);
  * const response = await client.send(command);
+ * // { // HttpChecksumRequiredInputOutput
+ * //   foo: "STRING_VALUE",
+ * // };
+ *
  * ```
  *
  * @param HttpChecksumRequiredCommandInput - {@link HttpChecksumRequiredCommandInput}
@@ -52,6 +60,8 @@ export interface HttpChecksumRequiredCommandOutput extends HttpChecksumRequiredI
  * @see {@link HttpChecksumRequiredCommandOutput} for command's `response` shape.
  * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
  *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
  *
  */
 export class HttpChecksumRequiredCommand extends $Command<

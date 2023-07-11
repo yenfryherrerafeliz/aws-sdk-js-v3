@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { DescribeStackResourceDriftsInput, DescribeStackResourceDriftsOutput } from "../models/models_0";
 import { de_DescribeStackResourceDriftsCommand, se_DescribeStackResourceDriftsCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,16 +36,13 @@ export interface DescribeStackResourceDriftsCommandOutput extends DescribeStackR
 
 /**
  * @public
- * <p>Returns drift information for the resources that have been checked for drift in the
- *          specified stack. This includes actual and expected configuration values for resources where
- *          CloudFormation detects configuration drift.</p>
- *          <p>For a given stack, there will be one <code>StackResourceDrift</code> for each stack
- *          resource that has been checked for drift. Resources that haven't yet been checked for drift
- *          aren't included. Resources that don't currently support drift detection aren't checked, and
- *          so not included. For a list of resources that support drift detection, see <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-drift-resource-list.html">Resources that Support Drift Detection</a>.</p>
- *          <p>Use <a>DetectStackResourceDrift</a> to detect drift on individual resources,
- *          or <a>DetectStackDrift</a> to detect drift on all supported resources for a
- *          given stack.</p>
+ * <p>Returns drift information for the resources that have been checked for drift in the specified stack. This
+ *    includes actual and expected configuration values for resources where CloudFormation detects configuration drift.</p>
+ *          <p>For a given stack, there will be one <code>StackResourceDrift</code> for each stack resource that has been
+ *    checked for drift. Resources that haven't yet been checked for drift aren't included. Resources that don't currently
+ *    support drift detection aren't checked, and so not included. For a list of resources that support drift detection,
+ *    see <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-drift-resource-list.html">Resources that Support Drift Detection</a>.</p>
+ *          <p>Use <a>DetectStackResourceDrift</a> to detect drift on individual resources, or <a>DetectStackDrift</a> to detect drift on all supported resources for a given stack.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

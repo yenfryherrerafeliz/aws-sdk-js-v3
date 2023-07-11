@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { JsonListsInputOutput } from "../models/models_0";
 import { de_JsonListsCommand, se_JsonListsCommand } from "../protocols/Aws_restJson1";
 import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RestJsonProtocolClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -83,6 +87,44 @@ export interface JsonListsCommandOutput extends JsonListsInputOutput, __Metadata
  * };
  * const command = new JsonListsCommand(input);
  * const response = await client.send(command);
+ * // { // JsonListsInputOutput
+ * //   stringList: [ // StringList
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   sparseStringList: [ // SparseStringList
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   stringSet: [ // StringSet
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   integerList: [ // IntegerList
+ * //     Number("int"),
+ * //   ],
+ * //   booleanList: [ // BooleanList
+ * //     true || false,
+ * //   ],
+ * //   timestampList: [ // TimestampList
+ * //     new Date("TIMESTAMP"),
+ * //   ],
+ * //   enumList: [ // FooEnumList
+ * //     "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   ],
+ * //   intEnumList: [ // IntegerEnumList
+ * //     1 || 2 || 3,
+ * //   ],
+ * //   nestedStringList: [ // NestedStringList
+ * //     [
+ * //       "STRING_VALUE",
+ * //     ],
+ * //   ],
+ * //   structureList: [ // StructureList
+ * //     { // StructureListMember
+ * //       a: "STRING_VALUE",
+ * //       b: "STRING_VALUE",
+ * //     },
+ * //   ],
+ * // };
+ *
  * ```
  *
  * @param JsonListsCommandInput - {@link JsonListsCommandInput}
@@ -91,6 +133,8 @@ export interface JsonListsCommandOutput extends JsonListsInputOutput, __Metadata
  * @see {@link JsonListsCommandOutput} for command's `response` shape.
  * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
  *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
  *
  */
 export class JsonListsCommand extends $Command<

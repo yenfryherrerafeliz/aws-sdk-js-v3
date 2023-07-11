@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { DeactivateTypeInput, DeactivateTypeOutput } from "../models/models_0";
 import { de_DeactivateTypeCommand, se_DeactivateTypeCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,12 +36,11 @@ export interface DeactivateTypeCommandOutput extends DeactivateTypeOutput, __Met
 
 /**
  * @public
- * <p>Deactivates a public extension that was previously activated in this account and
- *          region.</p>
- *          <p>Once deactivated, an extension can't be used in any CloudFormation operation.
- *          This includes stack update operations where the stack template includes the extension, even
- *          if no updates are being made to the extension. In addition, deactivated extensions aren't
- *          automatically updated if a new version of the extension is released.</p>
+ * <p>Deactivates a public extension that was previously activated in this account and Region.</p>
+ *          <p>Once deactivated, an extension can't be used in any CloudFormation operation. This includes stack
+ *    update operations where the stack template includes the extension, even if no updates are being made to the
+ *    extension. In addition, deactivated extensions aren't automatically updated if a new version of the extension is
+ *    released.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

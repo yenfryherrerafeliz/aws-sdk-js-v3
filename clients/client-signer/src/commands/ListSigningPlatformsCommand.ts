@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ListSigningPlatformsRequest, ListSigningPlatformsResponse } from "../models/models_0";
 import { de_ListSigningPlatformsCommand, se_ListSigningPlatformsCommand } from "../protocols/Aws_restJson1";
 import { ServiceInputTypes, ServiceOutputTypes, SignerClientResolvedConfig } from "../SignerClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -61,26 +65,26 @@ export interface ListSigningPlatformsCommandOutput extends ListSigningPlatformsR
  * //       displayName: "STRING_VALUE",
  * //       partner: "STRING_VALUE",
  * //       target: "STRING_VALUE",
- * //       category: "STRING_VALUE",
+ * //       category: "AWSIoT",
  * //       signingConfiguration: { // SigningConfiguration
  * //         encryptionAlgorithmOptions: { // EncryptionAlgorithmOptions
  * //           allowedValues: [ // EncryptionAlgorithms // required
- * //             "STRING_VALUE",
+ * //             "RSA" || "ECDSA",
  * //           ],
- * //           defaultValue: "STRING_VALUE", // required
+ * //           defaultValue: "RSA" || "ECDSA", // required
  * //         },
  * //         hashAlgorithmOptions: { // HashAlgorithmOptions
  * //           allowedValues: [ // HashAlgorithms // required
- * //             "STRING_VALUE",
+ * //             "SHA1" || "SHA256",
  * //           ],
- * //           defaultValue: "STRING_VALUE", // required
+ * //           defaultValue: "SHA1" || "SHA256", // required
  * //         },
  * //       },
  * //       signingImageFormat: { // SigningImageFormat
  * //         supportedFormats: [ // ImageFormats // required
- * //           "STRING_VALUE",
+ * //           "JSON" || "JSONEmbedded" || "JSONDetached",
  * //         ],
- * //         defaultFormat: "STRING_VALUE", // required
+ * //         defaultFormat: "JSON" || "JSONEmbedded" || "JSONDetached", // required
  * //       },
  * //       maxSizeInMB: Number("int"),
  * //       revocationSupported: true || false,

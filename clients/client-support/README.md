@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-support
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-support/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-support)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-support.svg)](https://www.npmjs.com/package/@aws-sdk/client-support)
-
 ## Description
 
 AWS SDK for JavaScript Support Client for Node.js, Browser and React Native.
@@ -300,6 +297,14 @@ DescribeCommunications
 </details>
 <details>
 <summary>
+DescribeCreateCaseOptions
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-support/classes/describecreatecaseoptionscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-support/interfaces/describecreatecaseoptionscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-support/interfaces/describecreatecaseoptionscommandoutput.html)
+
+</details>
+<details>
+<summary>
 DescribeServices
 </summary>
 
@@ -312,6 +317,14 @@ DescribeSeverityLevels
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-support/classes/describeseveritylevelscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-support/interfaces/describeseveritylevelscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-support/interfaces/describeseveritylevelscommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeSupportedLanguages
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-support/classes/describesupportedlanguagescommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-support/interfaces/describesupportedlanguagescommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-support/interfaces/describesupportedlanguagescommandoutput.html)
 
 </details>
 <details>

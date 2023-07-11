@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { JSONRPC10ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../JSONRPC10Client";
 import { JsonUnionsInput, JsonUnionsOutput } from "../models/models_0";
 import { de_JsonUnionsCommand, se_JsonUnionsCommand } from "../protocols/Aws_json1_0";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -60,6 +64,27 @@ export interface JsonUnionsCommandOutput extends JsonUnionsOutput, __MetadataBea
  * };
  * const command = new JsonUnionsCommand(input);
  * const response = await client.send(command);
+ * // { // JsonUnionsOutput
+ * //   contents: { // MyUnion Union: only one key present
+ * //     stringValue: "STRING_VALUE",
+ * //     booleanValue: true || false,
+ * //     numberValue: Number("int"),
+ * //     blobValue: "BLOB_VALUE",
+ * //     timestampValue: new Date("TIMESTAMP"),
+ * //     enumValue: "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //     intEnumValue: 1 || 2 || 3,
+ * //     listValue: [ // StringList
+ * //       "STRING_VALUE",
+ * //     ],
+ * //     mapValue: { // StringMap
+ * //       "<keys>": "STRING_VALUE",
+ * //     },
+ * //     structureValue: { // GreetingStruct
+ * //       hi: "STRING_VALUE",
+ * //     },
+ * //   },
+ * // };
+ *
  * ```
  *
  * @param JsonUnionsCommandInput - {@link JsonUnionsCommandInput}
@@ -68,6 +93,8 @@ export interface JsonUnionsCommandOutput extends JsonUnionsOutput, __MetadataBea
  * @see {@link JsonUnionsCommandOutput} for command's `response` shape.
  * @see {@link JSONRPC10ClientResolvedConfig | config} for JSONRPC10Client's `config` shape.
  *
+ * @throws {@link JSONRPC10ServiceException}
+ * <p>Base exception class for all service exceptions from JSONRPC10 service.</p>
  *
  */
 export class JsonUnionsCommand extends $Command<

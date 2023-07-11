@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { XmlListsOutput } from "../models/models_0";
 import { de_XmlListsCommand, se_XmlListsCommand } from "../protocols/Aws_query";
 import { QueryProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../QueryProtocolClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -50,6 +54,56 @@ export interface XmlListsCommandOutput extends XmlListsOutput, __MetadataBearer 
  * const input = {};
  * const command = new XmlListsCommand(input);
  * const response = await client.send(command);
+ * // { // XmlListsOutput
+ * //   stringList: [ // StringList
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   stringSet: [ // StringSet
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   integerList: [ // IntegerList
+ * //     Number("int"),
+ * //   ],
+ * //   booleanList: [ // BooleanList
+ * //     true || false,
+ * //   ],
+ * //   timestampList: [ // TimestampList
+ * //     new Date("TIMESTAMP"),
+ * //   ],
+ * //   enumList: [ // FooEnumList
+ * //     "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   ],
+ * //   intEnumList: [ // IntegerEnumList
+ * //     1 || 2 || 3,
+ * //   ],
+ * //   nestedStringList: [ // NestedStringList
+ * //     [
+ * //       "STRING_VALUE",
+ * //     ],
+ * //   ],
+ * //   renamedListMembers: [ // RenamedListMembers
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   flattenedList: [
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   flattenedList2: [
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   flattenedListWithMemberNamespace: [ // ListWithMemberNamespace
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   flattenedListWithNamespace: [ // ListWithNamespace
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   structureList: [ // StructureList
+ * //     { // StructureListMember
+ * //       a: "STRING_VALUE",
+ * //       b: "STRING_VALUE",
+ * //     },
+ * //   ],
+ * // };
+ *
  * ```
  *
  * @param XmlListsCommandInput - {@link XmlListsCommandInput}
@@ -58,6 +112,8 @@ export interface XmlListsCommandOutput extends XmlListsOutput, __MetadataBearer 
  * @see {@link XmlListsCommandOutput} for command's `response` shape.
  * @see {@link QueryProtocolClientResolvedConfig | config} for QueryProtocolClient's `config` shape.
  *
+ * @throws {@link QueryProtocolServiceException}
+ * <p>Base exception class for all service exceptions from QueryProtocol service.</p>
  *
  */
 export class XmlListsCommand extends $Command<

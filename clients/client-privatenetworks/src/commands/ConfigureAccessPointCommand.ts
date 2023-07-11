@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   ConfigureAccessPointRequest,
@@ -22,6 +22,10 @@ import {
 import { PrivateNetworksClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../PrivateNetworksClient";
 import { de_ConfigureAccessPointCommand, se_ConfigureAccessPointCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -37,14 +41,11 @@ export interface ConfigureAccessPointCommandOutput extends ConfigureAccessPointR
 
 /**
  * @public
- * <p>Configures the specified network resource.
- *         </p>
- *          <p>
- *             Use this action to specify the geographic
- *             position of the hardware. You must provide Certified Professional Installer (CPI)
- *             credentials in the request so that we can obtain spectrum grants. For more information,
- *             see <a href="https://docs.aws.amazon.com/private-networks/latest/userguide/radio-units.html">Radio
- *                 units</a> in the <i>Amazon Web Services Private 5G User Guide</i>. </p>
+ * <p>Configures the specified network resource. </p>
+ *          <p> Use this action to specify the geographic position of the hardware. You must provide
+ *             Certified Professional Installer (CPI) credentials in the request so that we can obtain
+ *             spectrum grants. For more information, see <a href="https://docs.aws.amazon.com/private-networks/latest/userguide/radio-units.html">Radio units</a> in the
+ *                     <i>Amazon Web Services Private 5G User Guide</i>. </p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -107,10 +108,19 @@ export interface ConfigureAccessPointCommandOutput extends ConfigureAccessPointR
  * //         street1: "STRING_VALUE", // required
  * //         street2: "STRING_VALUE",
  * //         street3: "STRING_VALUE",
+ * //         emailAddress: "STRING_VALUE",
  * //       },
  * //       returnReason: "STRING_VALUE",
  * //       replacementOrderArn: "STRING_VALUE",
  * //       shippingLabel: "STRING_VALUE",
+ * //     },
+ * //     commitmentInformation: { // CommitmentInformation
+ * //       commitmentConfiguration: { // CommitmentConfiguration
+ * //         commitmentLength: "STRING_VALUE", // required
+ * //         automaticRenewal: true || false, // required
+ * //       },
+ * //       startAt: new Date("TIMESTAMP"),
+ * //       expiresOn: new Date("TIMESTAMP"),
  * //     },
  * //   },
  * // };

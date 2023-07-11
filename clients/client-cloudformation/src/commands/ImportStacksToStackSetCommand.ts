@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { ImportStacksToStackSetInput, ImportStacksToStackSetOutput } from "../models/models_0";
 import { de_ImportStacksToStackSetCommand, se_ImportStacksToStackSetCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,15 +36,9 @@ export interface ImportStacksToStackSetCommandOutput extends ImportStacksToStack
 
 /**
  * @public
- * <p>Import existing stacks into a new stack sets. Use the stack import operation to import
- *          up to 10 stacks into a new stack set in the same account as the source stack or in a
- *          different administrator account and Region, by specifying the stack ID of the stack you
- *          intend to import.</p>
- *          <note>
- *             <p>
- *                <code>ImportStacksToStackSet</code> is only supported by self-managed
- *             permissions.</p>
- *          </note>
+ * <p>Import existing stacks into a new stack sets. Use the stack import operation to import up to 10 stacks into a
+ *    new stack set in the same account as the source stack or in a different administrator account and Region, by
+ *    specifying the stack ID of the stack you intend to import.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -88,26 +86,24 @@ export interface ImportStacksToStackSetCommandOutput extends ImportStacksToStack
  *
  * @throws {@link LimitExceededException} (client fault)
  *  <p>The quota for the resource has already been reached.</p>
- *          <p>For information about resource and stack limitations, see <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html">CloudFormation
- *             quotas</a> in the <i>CloudFormation User Guide</i>.</p>
+ *          <p>For information about resource and stack limitations, see <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html">CloudFormation quotas</a> in the
+ *     <i>CloudFormation User Guide</i>.</p>
  *
  * @throws {@link OperationIdAlreadyExistsException} (client fault)
  *  <p>The specified operation ID already exists.</p>
  *
  * @throws {@link OperationInProgressException} (client fault)
- *  <p>Another operation is currently in progress for this stack set. Only one operation can be
- *          performed for a stack set at a given time.</p>
+ *  <p>Another operation is currently in progress for this stack set. Only one operation can be performed for a stack
+ *    set at a given time.</p>
  *
  * @throws {@link StackNotFoundException} (client fault)
- *  <p>The specified stack ARN doesn't exist or stack doesn't exist corresponding to the ARN in
- *          input.</p>
+ *  <p>The specified stack ARN doesn't exist or stack doesn't exist corresponding to the ARN in input.</p>
  *
  * @throws {@link StackSetNotFoundException} (client fault)
  *  <p>The specified stack set doesn't exist.</p>
  *
  * @throws {@link StaleRequestException} (client fault)
- *  <p>Another operation has been performed on this stack set since the specified operation was
- *          performed.</p>
+ *  <p>Another operation has been performed on this stack set since the specified operation was performed.</p>
  *
  * @throws {@link CloudFormationServiceException}
  * <p>Base exception class for all service exceptions from CloudFormation service.</p>

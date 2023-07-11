@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { BlobTypes } from "@aws-sdk/types";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,7 +11,8 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
 import { HttpPayloadTraitsInputOutput } from "../models/models_0";
 import { de_HttpPayloadTraitsCommand, se_HttpPayloadTraitsCommand } from "../protocols/Aws_restJson1";
@@ -18,16 +20,34 @@ import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputT
 
 /**
  * @public
+ */
+export { __MetadataBearer, $Command };
+/**
+ * @public
+ */
+export type HttpPayloadTraitsCommandInputType = Omit<HttpPayloadTraitsInputOutput, "blob"> & {
+  blob?: BlobTypes;
+};
+
+/**
+ * @public
  *
  * The input for {@link HttpPayloadTraitsCommand}.
  */
-export interface HttpPayloadTraitsCommandInput extends HttpPayloadTraitsInputOutput {}
+export interface HttpPayloadTraitsCommandInput extends HttpPayloadTraitsCommandInputType {}
+/**
+ * @public
+ */
+export type HttpPayloadTraitsCommandOutputType = Omit<HttpPayloadTraitsInputOutput, "blob"> & {
+  blob?: Uint8ArrayBlobAdapter;
+};
+
 /**
  * @public
  *
  * The output of {@link HttpPayloadTraitsCommand}.
  */
-export interface HttpPayloadTraitsCommandOutput extends HttpPayloadTraitsInputOutput, __MetadataBearer {}
+export interface HttpPayloadTraitsCommandOutput extends HttpPayloadTraitsCommandOutputType, __MetadataBearer {}
 
 /**
  * @public
@@ -47,6 +67,11 @@ export interface HttpPayloadTraitsCommandOutput extends HttpPayloadTraitsInputOu
  * };
  * const command = new HttpPayloadTraitsCommand(input);
  * const response = await client.send(command);
+ * // { // HttpPayloadTraitsInputOutput
+ * //   foo: "STRING_VALUE",
+ * //   blob: "BLOB_VALUE",
+ * // };
+ *
  * ```
  *
  * @param HttpPayloadTraitsCommandInput - {@link HttpPayloadTraitsCommandInput}
@@ -55,6 +80,8 @@ export interface HttpPayloadTraitsCommandOutput extends HttpPayloadTraitsInputOu
  * @see {@link HttpPayloadTraitsCommandOutput} for command's `response` shape.
  * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
  *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
  *
  */
 export class HttpPayloadTraitsCommand extends $Command<

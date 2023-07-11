@@ -1,6 +1,6 @@
 // smithy-typescript generated code
-import { createAggregatedClient } from "@aws-sdk/smithy-client";
-import { HttpHandlerOptions as __HttpHandlerOptions } from "@aws-sdk/types";
+import { createAggregatedClient } from "@smithy/smithy-client";
+import { HttpHandlerOptions as __HttpHandlerOptions } from "@smithy/types";
 
 import {
   AddProfileKeyCommand,
@@ -8,10 +8,20 @@ import {
   AddProfileKeyCommandOutput,
 } from "./commands/AddProfileKeyCommand";
 import {
+  CreateCalculatedAttributeDefinitionCommand,
+  CreateCalculatedAttributeDefinitionCommandInput,
+  CreateCalculatedAttributeDefinitionCommandOutput,
+} from "./commands/CreateCalculatedAttributeDefinitionCommand";
+import {
   CreateDomainCommand,
   CreateDomainCommandInput,
   CreateDomainCommandOutput,
 } from "./commands/CreateDomainCommand";
+import {
+  CreateEventStreamCommand,
+  CreateEventStreamCommandInput,
+  CreateEventStreamCommandOutput,
+} from "./commands/CreateEventStreamCommand";
 import {
   CreateIntegrationWorkflowCommand,
   CreateIntegrationWorkflowCommandInput,
@@ -23,10 +33,20 @@ import {
   CreateProfileCommandOutput,
 } from "./commands/CreateProfileCommand";
 import {
+  DeleteCalculatedAttributeDefinitionCommand,
+  DeleteCalculatedAttributeDefinitionCommandInput,
+  DeleteCalculatedAttributeDefinitionCommandOutput,
+} from "./commands/DeleteCalculatedAttributeDefinitionCommand";
+import {
   DeleteDomainCommand,
   DeleteDomainCommandInput,
   DeleteDomainCommandOutput,
 } from "./commands/DeleteDomainCommand";
+import {
+  DeleteEventStreamCommand,
+  DeleteEventStreamCommandInput,
+  DeleteEventStreamCommandOutput,
+} from "./commands/DeleteEventStreamCommand";
 import {
   DeleteIntegrationCommand,
   DeleteIntegrationCommandInput,
@@ -62,7 +82,22 @@ import {
   GetAutoMergingPreviewCommandInput,
   GetAutoMergingPreviewCommandOutput,
 } from "./commands/GetAutoMergingPreviewCommand";
+import {
+  GetCalculatedAttributeDefinitionCommand,
+  GetCalculatedAttributeDefinitionCommandInput,
+  GetCalculatedAttributeDefinitionCommandOutput,
+} from "./commands/GetCalculatedAttributeDefinitionCommand";
+import {
+  GetCalculatedAttributeForProfileCommand,
+  GetCalculatedAttributeForProfileCommandInput,
+  GetCalculatedAttributeForProfileCommandOutput,
+} from "./commands/GetCalculatedAttributeForProfileCommand";
 import { GetDomainCommand, GetDomainCommandInput, GetDomainCommandOutput } from "./commands/GetDomainCommand";
+import {
+  GetEventStreamCommand,
+  GetEventStreamCommandInput,
+  GetEventStreamCommandOutput,
+} from "./commands/GetEventStreamCommand";
 import {
   GetIdentityResolutionJobCommand,
   GetIdentityResolutionJobCommandInput,
@@ -95,7 +130,22 @@ import {
   ListAccountIntegrationsCommandInput,
   ListAccountIntegrationsCommandOutput,
 } from "./commands/ListAccountIntegrationsCommand";
+import {
+  ListCalculatedAttributeDefinitionsCommand,
+  ListCalculatedAttributeDefinitionsCommandInput,
+  ListCalculatedAttributeDefinitionsCommandOutput,
+} from "./commands/ListCalculatedAttributeDefinitionsCommand";
+import {
+  ListCalculatedAttributesForProfileCommand,
+  ListCalculatedAttributesForProfileCommandInput,
+  ListCalculatedAttributesForProfileCommandOutput,
+} from "./commands/ListCalculatedAttributesForProfileCommand";
 import { ListDomainsCommand, ListDomainsCommandInput, ListDomainsCommandOutput } from "./commands/ListDomainsCommand";
+import {
+  ListEventStreamsCommand,
+  ListEventStreamsCommandInput,
+  ListEventStreamsCommandOutput,
+} from "./commands/ListEventStreamsCommand";
 import {
   ListIdentityResolutionJobsCommand,
   ListIdentityResolutionJobsCommandInput,
@@ -163,6 +213,11 @@ import {
   UntagResourceCommandOutput,
 } from "./commands/UntagResourceCommand";
 import {
+  UpdateCalculatedAttributeDefinitionCommand,
+  UpdateCalculatedAttributeDefinitionCommandInput,
+  UpdateCalculatedAttributeDefinitionCommandOutput,
+} from "./commands/UpdateCalculatedAttributeDefinitionCommand";
+import {
   UpdateDomainCommand,
   UpdateDomainCommandInput,
   UpdateDomainCommandOutput,
@@ -176,10 +231,14 @@ import { CustomerProfilesClient, CustomerProfilesClientConfig } from "./Customer
 
 const commands = {
   AddProfileKeyCommand,
+  CreateCalculatedAttributeDefinitionCommand,
   CreateDomainCommand,
+  CreateEventStreamCommand,
   CreateIntegrationWorkflowCommand,
   CreateProfileCommand,
+  DeleteCalculatedAttributeDefinitionCommand,
   DeleteDomainCommand,
+  DeleteEventStreamCommand,
   DeleteIntegrationCommand,
   DeleteProfileCommand,
   DeleteProfileKeyCommand,
@@ -187,7 +246,10 @@ const commands = {
   DeleteProfileObjectTypeCommand,
   DeleteWorkflowCommand,
   GetAutoMergingPreviewCommand,
+  GetCalculatedAttributeDefinitionCommand,
+  GetCalculatedAttributeForProfileCommand,
   GetDomainCommand,
+  GetEventStreamCommand,
   GetIdentityResolutionJobCommand,
   GetIntegrationCommand,
   GetMatchesCommand,
@@ -196,7 +258,10 @@ const commands = {
   GetWorkflowCommand,
   GetWorkflowStepsCommand,
   ListAccountIntegrationsCommand,
+  ListCalculatedAttributeDefinitionsCommand,
+  ListCalculatedAttributesForProfileCommand,
   ListDomainsCommand,
+  ListEventStreamsCommand,
   ListIdentityResolutionJobsCommand,
   ListIntegrationsCommand,
   ListProfileObjectsCommand,
@@ -211,6 +276,7 @@ const commands = {
   SearchProfilesCommand,
   TagResourceCommand,
   UntagResourceCommand,
+  UpdateCalculatedAttributeDefinitionCommand,
   UpdateDomainCommand,
   UpdateProfileCommand,
 };
@@ -228,6 +294,23 @@ export interface CustomerProfiles {
   ): void;
 
   /**
+   * @see {@link CreateCalculatedAttributeDefinitionCommand}
+   */
+  createCalculatedAttributeDefinition(
+    args: CreateCalculatedAttributeDefinitionCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<CreateCalculatedAttributeDefinitionCommandOutput>;
+  createCalculatedAttributeDefinition(
+    args: CreateCalculatedAttributeDefinitionCommandInput,
+    cb: (err: any, data?: CreateCalculatedAttributeDefinitionCommandOutput) => void
+  ): void;
+  createCalculatedAttributeDefinition(
+    args: CreateCalculatedAttributeDefinitionCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: CreateCalculatedAttributeDefinitionCommandOutput) => void
+  ): void;
+
+  /**
    * @see {@link CreateDomainCommand}
    */
   createDomain(args: CreateDomainCommandInput, options?: __HttpHandlerOptions): Promise<CreateDomainCommandOutput>;
@@ -236,6 +319,23 @@ export interface CustomerProfiles {
     args: CreateDomainCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: CreateDomainCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link CreateEventStreamCommand}
+   */
+  createEventStream(
+    args: CreateEventStreamCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<CreateEventStreamCommandOutput>;
+  createEventStream(
+    args: CreateEventStreamCommandInput,
+    cb: (err: any, data?: CreateEventStreamCommandOutput) => void
+  ): void;
+  createEventStream(
+    args: CreateEventStreamCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: CreateEventStreamCommandOutput) => void
   ): void;
 
   /**
@@ -267,6 +367,23 @@ export interface CustomerProfiles {
   ): void;
 
   /**
+   * @see {@link DeleteCalculatedAttributeDefinitionCommand}
+   */
+  deleteCalculatedAttributeDefinition(
+    args: DeleteCalculatedAttributeDefinitionCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<DeleteCalculatedAttributeDefinitionCommandOutput>;
+  deleteCalculatedAttributeDefinition(
+    args: DeleteCalculatedAttributeDefinitionCommandInput,
+    cb: (err: any, data?: DeleteCalculatedAttributeDefinitionCommandOutput) => void
+  ): void;
+  deleteCalculatedAttributeDefinition(
+    args: DeleteCalculatedAttributeDefinitionCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: DeleteCalculatedAttributeDefinitionCommandOutput) => void
+  ): void;
+
+  /**
    * @see {@link DeleteDomainCommand}
    */
   deleteDomain(args: DeleteDomainCommandInput, options?: __HttpHandlerOptions): Promise<DeleteDomainCommandOutput>;
@@ -275,6 +392,23 @@ export interface CustomerProfiles {
     args: DeleteDomainCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: DeleteDomainCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link DeleteEventStreamCommand}
+   */
+  deleteEventStream(
+    args: DeleteEventStreamCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<DeleteEventStreamCommandOutput>;
+  deleteEventStream(
+    args: DeleteEventStreamCommandInput,
+    cb: (err: any, data?: DeleteEventStreamCommandOutput) => void
+  ): void;
+  deleteEventStream(
+    args: DeleteEventStreamCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: DeleteEventStreamCommandOutput) => void
   ): void;
 
   /**
@@ -388,6 +522,40 @@ export interface CustomerProfiles {
   ): void;
 
   /**
+   * @see {@link GetCalculatedAttributeDefinitionCommand}
+   */
+  getCalculatedAttributeDefinition(
+    args: GetCalculatedAttributeDefinitionCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<GetCalculatedAttributeDefinitionCommandOutput>;
+  getCalculatedAttributeDefinition(
+    args: GetCalculatedAttributeDefinitionCommandInput,
+    cb: (err: any, data?: GetCalculatedAttributeDefinitionCommandOutput) => void
+  ): void;
+  getCalculatedAttributeDefinition(
+    args: GetCalculatedAttributeDefinitionCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: GetCalculatedAttributeDefinitionCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link GetCalculatedAttributeForProfileCommand}
+   */
+  getCalculatedAttributeForProfile(
+    args: GetCalculatedAttributeForProfileCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<GetCalculatedAttributeForProfileCommandOutput>;
+  getCalculatedAttributeForProfile(
+    args: GetCalculatedAttributeForProfileCommandInput,
+    cb: (err: any, data?: GetCalculatedAttributeForProfileCommandOutput) => void
+  ): void;
+  getCalculatedAttributeForProfile(
+    args: GetCalculatedAttributeForProfileCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: GetCalculatedAttributeForProfileCommandOutput) => void
+  ): void;
+
+  /**
    * @see {@link GetDomainCommand}
    */
   getDomain(args: GetDomainCommandInput, options?: __HttpHandlerOptions): Promise<GetDomainCommandOutput>;
@@ -396,6 +564,20 @@ export interface CustomerProfiles {
     args: GetDomainCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: GetDomainCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link GetEventStreamCommand}
+   */
+  getEventStream(
+    args: GetEventStreamCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<GetEventStreamCommandOutput>;
+  getEventStream(args: GetEventStreamCommandInput, cb: (err: any, data?: GetEventStreamCommandOutput) => void): void;
+  getEventStream(
+    args: GetEventStreamCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: GetEventStreamCommandOutput) => void
   ): void;
 
   /**
@@ -520,6 +702,40 @@ export interface CustomerProfiles {
   ): void;
 
   /**
+   * @see {@link ListCalculatedAttributeDefinitionsCommand}
+   */
+  listCalculatedAttributeDefinitions(
+    args: ListCalculatedAttributeDefinitionsCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<ListCalculatedAttributeDefinitionsCommandOutput>;
+  listCalculatedAttributeDefinitions(
+    args: ListCalculatedAttributeDefinitionsCommandInput,
+    cb: (err: any, data?: ListCalculatedAttributeDefinitionsCommandOutput) => void
+  ): void;
+  listCalculatedAttributeDefinitions(
+    args: ListCalculatedAttributeDefinitionsCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: ListCalculatedAttributeDefinitionsCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link ListCalculatedAttributesForProfileCommand}
+   */
+  listCalculatedAttributesForProfile(
+    args: ListCalculatedAttributesForProfileCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<ListCalculatedAttributesForProfileCommandOutput>;
+  listCalculatedAttributesForProfile(
+    args: ListCalculatedAttributesForProfileCommandInput,
+    cb: (err: any, data?: ListCalculatedAttributesForProfileCommandOutput) => void
+  ): void;
+  listCalculatedAttributesForProfile(
+    args: ListCalculatedAttributesForProfileCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: ListCalculatedAttributesForProfileCommandOutput) => void
+  ): void;
+
+  /**
    * @see {@link ListDomainsCommand}
    */
   listDomains(args: ListDomainsCommandInput, options?: __HttpHandlerOptions): Promise<ListDomainsCommandOutput>;
@@ -528,6 +744,23 @@ export interface CustomerProfiles {
     args: ListDomainsCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: ListDomainsCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link ListEventStreamsCommand}
+   */
+  listEventStreams(
+    args: ListEventStreamsCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<ListEventStreamsCommandOutput>;
+  listEventStreams(
+    args: ListEventStreamsCommandInput,
+    cb: (err: any, data?: ListEventStreamsCommandOutput) => void
+  ): void;
+  listEventStreams(
+    args: ListEventStreamsCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: ListEventStreamsCommandOutput) => void
   ): void;
 
   /**
@@ -736,6 +969,23 @@ export interface CustomerProfiles {
     args: UntagResourceCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: UntagResourceCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link UpdateCalculatedAttributeDefinitionCommand}
+   */
+  updateCalculatedAttributeDefinition(
+    args: UpdateCalculatedAttributeDefinitionCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<UpdateCalculatedAttributeDefinitionCommandOutput>;
+  updateCalculatedAttributeDefinition(
+    args: UpdateCalculatedAttributeDefinitionCommandInput,
+    cb: (err: any, data?: UpdateCalculatedAttributeDefinitionCommandOutput) => void
+  ): void;
+  updateCalculatedAttributeDefinition(
+    args: UpdateCalculatedAttributeDefinitionCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: UpdateCalculatedAttributeDefinitionCommandOutput) => void
   ): void;
 
   /**

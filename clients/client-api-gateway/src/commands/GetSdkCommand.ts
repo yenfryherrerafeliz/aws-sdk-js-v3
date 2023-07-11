@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,17 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
 import { APIGatewayClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../APIGatewayClient";
 import { GetSdkRequest, SdkResponse } from "../models/models_0";
 import { de_GetSdkCommand, se_GetSdkCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -25,10 +30,17 @@ import { de_GetSdkCommand, se_GetSdkCommand } from "../protocols/Aws_restJson1";
 export interface GetSdkCommandInput extends GetSdkRequest {}
 /**
  * @public
+ */
+export type GetSdkCommandOutputType = Omit<SdkResponse, "body"> & {
+  body?: Uint8ArrayBlobAdapter;
+};
+
+/**
+ * @public
  *
  * The output of {@link GetSdkCommand}.
  */
-export interface GetSdkCommandOutput extends SdkResponse, __MetadataBearer {}
+export interface GetSdkCommandOutput extends GetSdkCommandOutputType, __MetadataBearer {}
 
 /**
  * @public

@@ -1,8 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { BlobTypes } from "@aws-sdk/types";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +12,8 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
 import { AppConfigClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppConfigClient";
 import {
@@ -27,16 +29,40 @@ import {
 
 /**
  * @public
+ */
+export { __MetadataBearer, $Command };
+/**
+ * @public
+ */
+export type CreateHostedConfigurationVersionCommandInputType = Omit<
+  CreateHostedConfigurationVersionRequest,
+  "Content"
+> & {
+  Content: BlobTypes;
+};
+
+/**
+ * @public
  *
  * The input for {@link CreateHostedConfigurationVersionCommand}.
  */
-export interface CreateHostedConfigurationVersionCommandInput extends CreateHostedConfigurationVersionRequest {}
+export interface CreateHostedConfigurationVersionCommandInput
+  extends CreateHostedConfigurationVersionCommandInputType {}
+/**
+ * @public
+ */
+export type CreateHostedConfigurationVersionCommandOutputType = Omit<HostedConfigurationVersion, "Content"> & {
+  Content?: Uint8ArrayBlobAdapter;
+};
+
 /**
  * @public
  *
  * The output of {@link CreateHostedConfigurationVersionCommand}.
  */
-export interface CreateHostedConfigurationVersionCommandOutput extends HostedConfigurationVersion, __MetadataBearer {}
+export interface CreateHostedConfigurationVersionCommandOutput
+  extends CreateHostedConfigurationVersionCommandOutputType,
+    __MetadataBearer {}
 
 /**
  * @public

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { ValidateTemplateInput, ValidateTemplateOutput } from "../models/models_0";
 import { de_ValidateTemplateCommand, se_ValidateTemplateCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,9 +36,9 @@ export interface ValidateTemplateCommandOutput extends ValidateTemplateOutput, _
 
 /**
  * @public
- * <p>Validates a specified template. CloudFormation first checks if the template is
- *          valid JSON. If it isn't, CloudFormation checks if the template is valid YAML. If
- *          both these checks fail, CloudFormation returns a template validation error.</p>
+ * <p>Validates a specified template. CloudFormation first checks if the template is valid JSON. If it isn't,
+ *     CloudFormation checks if the template is valid YAML. If both these checks fail, CloudFormation
+ *    returns a template validation error.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

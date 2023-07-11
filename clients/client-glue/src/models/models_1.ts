@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { GlueServiceException as __BaseException } from "./GlueServiceException";
 import {
@@ -22,8 +22,9 @@ import {
   FederatedDatabase,
   GlueTable,
   JobRun,
+  MLUserDataEncryption,
   Partition,
-  PartitionIndex,
+  PartitionInput,
   PartitionValueList,
   PhysicalConnectionRequirements,
   Predicate,
@@ -31,15 +32,248 @@ import {
   SchemaId,
   StorageDescriptor,
   TaskStatusType,
-  TransformEncryption,
   TransformParameters,
   TransformType,
   Trigger,
   TriggerType,
   WorkerType,
-  Workflow,
-  WorkflowRun,
 } from "./models_0";
+
+/**
+ * @public
+ * <p>The encryption-at-rest settings of the transform that apply to accessing user data. Machine learning transforms can access user data encrypted in Amazon S3 using KMS.</p>
+ *          <p>Additionally, imported labels and trained transforms can now be encrypted using a customer provided KMS key.</p>
+ */
+export interface TransformEncryption {
+  /**
+   * <p>An <code>MLUserDataEncryption</code> object containing the encryption mode and customer-provided KMS key ID.</p>
+   */
+  MlUserDataEncryption?: MLUserDataEncryption;
+
+  /**
+   * <p>The name of the security configuration.</p>
+   */
+  TaskRunSecurityConfigurationName?: string;
+}
+
+/**
+ * @public
+ */
+export interface CreateMLTransformRequest {
+  /**
+   * <p>The unique name that you give the transform when you create it.</p>
+   */
+  Name: string | undefined;
+
+  /**
+   * <p>A description of the machine learning transform that is being defined. The default is an
+   *       empty string.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>A list of Glue table definitions used by the transform.</p>
+   */
+  InputRecordTables: GlueTable[] | undefined;
+
+  /**
+   * <p>The algorithmic parameters that are specific to the transform type used. Conditionally
+   *       dependent on the transform type.</p>
+   */
+  Parameters: TransformParameters | undefined;
+
+  /**
+   * <p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions. The required permissions include both Glue service role permissions to Glue resources, and Amazon S3 permissions required by the transform. </p>
+   *          <ul>
+   *             <li>
+   *                <p>This role needs Glue service role permissions to allow access to resources in Glue. See <a href="https://docs.aws.amazon.com/glue/latest/dg/attach-policy-iam-user.html">Attach a Policy to IAM Users That Access Glue</a>.</p>
+   *             </li>
+   *             <li>
+   *                <p>This role needs permission to your Amazon Simple Storage Service (Amazon S3) sources, targets, temporary directory, scripts, and any libraries used by the task run for this transform.</p>
+   *             </li>
+   *          </ul>
+   */
+  Role: string | undefined;
+
+  /**
+   * <p>This value determines which version of Glue this machine learning transform is compatible with. Glue 1.0 is recommended for most customers. If the value is not set, the Glue compatibility defaults to Glue 0.9.  For more information, see <a href="https://docs.aws.amazon.com/glue/latest/dg/release-notes.html#release-notes-versions">Glue Versions</a> in the developer guide.</p>
+   */
+  GlueVersion?: string;
+
+  /**
+   * <p>The number of Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of
+   *       processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more
+   *       information, see the <a href="https://aws.amazon.com/glue/pricing/">Glue pricing
+   *         page</a>. </p>
+   *          <p>
+   *             <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p>
+   *          <ul>
+   *             <li>
+   *                <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p>
+   *             </li>
+   *             <li>
+   *                <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p>
+   *             </li>
+   *             <li>
+   *                <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p>
+   *             </li>
+   *          </ul>
+   *          <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>
+   *          <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>
+   */
+  MaxCapacity?: number;
+
+  /**
+   * <p>The type of predefined worker that is allocated when this task runs. Accepts a value of Standard, G.1X, or G.2X.</p>
+   *          <ul>
+   *             <li>
+   *                <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p>
+   *             </li>
+   *             <li>
+   *                <p>For the <code>G.1X</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 64GB disk, and 1 executor per worker.</p>
+   *             </li>
+   *             <li>
+   *                <p>For the <code>G.2X</code> worker type, each worker provides 8 vCPU, 32 GB of memory and a 128GB disk, and 1 executor per worker.</p>
+   *             </li>
+   *          </ul>
+   *          <p>
+   *             <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p>
+   *          <ul>
+   *             <li>
+   *                <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p>
+   *             </li>
+   *             <li>
+   *                <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p>
+   *             </li>
+   *             <li>
+   *                <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p>
+   *             </li>
+   *          </ul>
+   */
+  WorkerType?: WorkerType | string;
+
+  /**
+   * <p>The number of workers of a defined <code>workerType</code> that are allocated when this task runs.</p>
+   *          <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p>
+   */
+  NumberOfWorkers?: number;
+
+  /**
+   * <p>The timeout of the task run for this transform in minutes. This is the maximum time that a task run for this transform can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>
+   */
+  Timeout?: number;
+
+  /**
+   * <p>The maximum number of times to retry a task for this transform after a task run fails.</p>
+   */
+  MaxRetries?: number;
+
+  /**
+   * <p>The tags to use with this machine learning transform. You may use tags to limit access to the machine learning transform. For more information about tags in Glue, see <a href="https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html">Amazon Web Services Tags in Glue</a> in the developer guide.</p>
+   */
+  Tags?: Record<string, string>;
+
+  /**
+   * <p>The encryption-at-rest settings of the transform that apply to accessing user data. Machine learning transforms can access user data encrypted in Amazon S3 using KMS.</p>
+   */
+  TransformEncryption?: TransformEncryption;
+}
+
+/**
+ * @public
+ */
+export interface CreateMLTransformResponse {
+  /**
+   * <p>A unique identifier that is generated for the transform.</p>
+   */
+  TransformId?: string;
+}
+
+/**
+ * @public
+ */
+export interface CreatePartitionRequest {
+  /**
+   * <p>The Amazon Web Services account ID of the catalog in which the partition is to be created.</p>
+   */
+  CatalogId?: string;
+
+  /**
+   * <p>The name of the metadata database in which the partition is
+   *       to be created.</p>
+   */
+  DatabaseName: string | undefined;
+
+  /**
+   * <p>The name of the metadata table in which the partition is to be created.</p>
+   */
+  TableName: string | undefined;
+
+  /**
+   * <p>A <code>PartitionInput</code> structure defining the partition
+   *       to be created.</p>
+   */
+  PartitionInput: PartitionInput | undefined;
+}
+
+/**
+ * @public
+ */
+export interface CreatePartitionResponse {}
+
+/**
+ * @public
+ * <p>A structure for a partition index.</p>
+ */
+export interface PartitionIndex {
+  /**
+   * <p>The keys for the partition index.</p>
+   */
+  Keys: string[] | undefined;
+
+  /**
+   * <p>The name of the partition index.</p>
+   */
+  IndexName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface CreatePartitionIndexRequest {
+  /**
+   * <p>The catalog ID where the table resides.</p>
+   */
+  CatalogId?: string;
+
+  /**
+   * <p>Specifies the name of a database in which you want to create a partition index.</p>
+   */
+  DatabaseName: string | undefined;
+
+  /**
+   * <p>Specifies the name of a table in which you want to create a partition index.</p>
+   */
+  TableName: string | undefined;
+
+  /**
+   * <p>Specifies a <code>PartitionIndex</code> structure to create a partition index in an existing table.</p>
+   */
+  PartitionIndex: PartitionIndex | undefined;
+}
+
+/**
+ * @public
+ */
+export interface CreatePartitionIndexResponse {}
 
 /**
  * @public
@@ -785,6 +1019,46 @@ export interface CreateSessionResponse {
 
 /**
  * @public
+ * @enum
+ */
+export const MetadataOperation = {
+  CREATE: "CREATE",
+} as const;
+
+/**
+ * @public
+ */
+export type MetadataOperation = (typeof MetadataOperation)[keyof typeof MetadataOperation];
+
+/**
+ * @public
+ * <p>A structure that defines an Apache Iceberg metadata table to create in the catalog.</p>
+ */
+export interface IcebergInput {
+  /**
+   * <p>A required metadata operation. Can only be set to <code>CREATE</code>.</p>
+   */
+  MetadataOperation: MetadataOperation | string | undefined;
+
+  /**
+   * <p>The table version for the Iceberg table. Defaults to 2.</p>
+   */
+  Version?: string;
+}
+
+/**
+ * @public
+ * <p>A structure representing an open format table.</p>
+ */
+export interface OpenTableFormatInput {
+  /**
+   * <p>Specifies an <code>IcebergInput</code> structure that defines an Apache Iceberg metadata table.</p>
+   */
+  IcebergInput?: IcebergInput;
+}
+
+/**
+ * @public
  * <p>A structure that describes a target table for resource linking.</p>
  */
 export interface TableIdentifier {
@@ -802,6 +1076,11 @@ export interface TableIdentifier {
    * <p>The name of the target table.</p>
    */
   Name?: string;
+
+  /**
+   * <p>Region of the target table.</p>
+   */
+  Region?: string;
 }
 
 /**
@@ -931,6 +1210,11 @@ export interface CreateTableRequest {
    * <p>The ID of the transaction.</p>
    */
   TransactionId?: string;
+
+  /**
+   * <p>Specifies an <code>OpenTableFormatInput</code> structure when creating an open format table.</p>
+   */
+  OpenTableFormatInput?: OpenTableFormatInput;
 }
 
 /**
@@ -3826,6 +4110,11 @@ export interface GetDataQualityRulesetEvaluationRunResponse {
    * <p>A list of result IDs for the data quality results for the run.</p>
    */
   ResultIds?: string[];
+
+  /**
+   * <p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>
+   */
+  AdditionalDataSources?: Record<string, DataSource>;
 }
 
 /**
@@ -6924,228 +7213,4 @@ export interface GetUnfilteredTableMetadataRequest {
    * <p>(Required) A list of supported permission types. </p>
    */
   SupportedPermissionTypes: (PermissionType | string)[] | undefined;
-}
-
-/**
- * @public
- * <p>A filter that uses both column-level and row-level filtering.</p>
- */
-export interface ColumnRowFilter {
-  /**
-   * <p>A string containing the name of the column.</p>
-   */
-  ColumnName?: string;
-
-  /**
-   * <p>A string containing the row-level filter expression.</p>
-   */
-  RowFilterExpression?: string;
-}
-
-/**
- * @public
- */
-export interface GetUnfilteredTableMetadataResponse {
-  /**
-   * <p>A Table object containing the table metadata.</p>
-   */
-  Table?: Table;
-
-  /**
-   * <p>A list of column names that the user has been granted access to.</p>
-   */
-  AuthorizedColumns?: string[];
-
-  /**
-   * <p>A Boolean value that indicates whether the partition location is registered
-   *           with Lake Formation.</p>
-   */
-  IsRegisteredWithLakeFormation?: boolean;
-
-  /**
-   * <p>A list of column row filters.</p>
-   */
-  CellFilters?: ColumnRowFilter[];
-}
-
-/**
- * @public
- */
-export interface GetUserDefinedFunctionRequest {
-  /**
-   * <p>The ID of the Data Catalog where the function to be retrieved is located. If none is
-   *       provided, the Amazon Web Services account ID is used by default.</p>
-   */
-  CatalogId?: string;
-
-  /**
-   * <p>The name of the catalog database where the function is located.</p>
-   */
-  DatabaseName: string | undefined;
-
-  /**
-   * <p>The name of the function.</p>
-   */
-  FunctionName: string | undefined;
-}
-
-/**
- * @public
- * <p>Represents the equivalent of a Hive user-defined function
- *       (<code>UDF</code>) definition.</p>
- */
-export interface UserDefinedFunction {
-  /**
-   * <p>The name of the function.</p>
-   */
-  FunctionName?: string;
-
-  /**
-   * <p>The name of the catalog database that contains the function.</p>
-   */
-  DatabaseName?: string;
-
-  /**
-   * <p>The Java class that contains the function code.</p>
-   */
-  ClassName?: string;
-
-  /**
-   * <p>The owner of the function.</p>
-   */
-  OwnerName?: string;
-
-  /**
-   * <p>The owner type.</p>
-   */
-  OwnerType?: PrincipalType | string;
-
-  /**
-   * <p>The time at which the function was created.</p>
-   */
-  CreateTime?: Date;
-
-  /**
-   * <p>The resource URIs for the function.</p>
-   */
-  ResourceUris?: ResourceUri[];
-
-  /**
-   * <p>The ID of the Data Catalog in which the function resides.</p>
-   */
-  CatalogId?: string;
-}
-
-/**
- * @public
- */
-export interface GetUserDefinedFunctionResponse {
-  /**
-   * <p>The requested function definition.</p>
-   */
-  UserDefinedFunction?: UserDefinedFunction;
-}
-
-/**
- * @public
- */
-export interface GetUserDefinedFunctionsRequest {
-  /**
-   * <p>The ID of the Data Catalog where the functions to be retrieved are located. If none is
-   *       provided, the Amazon Web Services account ID is used by default.</p>
-   */
-  CatalogId?: string;
-
-  /**
-   * <p>The name of the catalog database where the functions are located. If none is provided, functions from all the
-   *       databases across the catalog will be returned.</p>
-   */
-  DatabaseName?: string;
-
-  /**
-   * <p>An optional function-name pattern string that filters the function
-   *       definitions returned.</p>
-   */
-  Pattern: string | undefined;
-
-  /**
-   * <p>A continuation token, if this is a continuation call.</p>
-   */
-  NextToken?: string;
-
-  /**
-   * <p>The maximum number of functions to return in one response.</p>
-   */
-  MaxResults?: number;
-}
-
-/**
- * @public
- */
-export interface GetUserDefinedFunctionsResponse {
-  /**
-   * <p>A list of requested function definitions.</p>
-   */
-  UserDefinedFunctions?: UserDefinedFunction[];
-
-  /**
-   * <p>A continuation token, if the list of functions returned does
-   *       not include the last requested function.</p>
-   */
-  NextToken?: string;
-}
-
-/**
- * @public
- */
-export interface GetWorkflowRequest {
-  /**
-   * <p>The name of the workflow to retrieve.</p>
-   */
-  Name: string | undefined;
-
-  /**
-   * <p>Specifies whether to include a graph when returning the workflow resource metadata.</p>
-   */
-  IncludeGraph?: boolean;
-}
-
-/**
- * @public
- */
-export interface GetWorkflowResponse {
-  /**
-   * <p>The resource metadata for the workflow.</p>
-   */
-  Workflow?: Workflow;
-}
-
-/**
- * @public
- */
-export interface GetWorkflowRunRequest {
-  /**
-   * <p>Name of the workflow being run.</p>
-   */
-  Name: string | undefined;
-
-  /**
-   * <p>The ID of the workflow run.</p>
-   */
-  RunId: string | undefined;
-
-  /**
-   * <p>Specifies whether to include the workflow graph in response or not.</p>
-   */
-  IncludeGraph?: boolean;
-}
-
-/**
- * @public
- */
-export interface GetWorkflowRunResponse {
-  /**
-   * <p>The requested workflow run metadata.</p>
-   */
-  Run?: WorkflowRun;
 }

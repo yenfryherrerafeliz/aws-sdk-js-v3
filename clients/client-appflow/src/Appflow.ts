@@ -1,6 +1,6 @@
 // smithy-typescript generated code
-import { createAggregatedClient } from "@aws-sdk/smithy-client";
-import { HttpHandlerOptions as __HttpHandlerOptions } from "@aws-sdk/types";
+import { createAggregatedClient } from "@smithy/smithy-client";
+import { HttpHandlerOptions as __HttpHandlerOptions } from "@smithy/types";
 
 import { AppflowClient, AppflowClientConfig } from "./AppflowClient";
 import {
@@ -71,6 +71,11 @@ import {
   RegisterConnectorCommandInput,
   RegisterConnectorCommandOutput,
 } from "./commands/RegisterConnectorCommand";
+import {
+  ResetConnectorMetadataCacheCommand,
+  ResetConnectorMetadataCacheCommandInput,
+  ResetConnectorMetadataCacheCommandOutput,
+} from "./commands/ResetConnectorMetadataCacheCommand";
 import { StartFlowCommand, StartFlowCommandInput, StartFlowCommandOutput } from "./commands/StartFlowCommand";
 import { StopFlowCommand, StopFlowCommandInput, StopFlowCommandOutput } from "./commands/StopFlowCommand";
 import { TagResourceCommand, TagResourceCommandInput, TagResourceCommandOutput } from "./commands/TagResourceCommand";
@@ -113,6 +118,7 @@ const commands = {
   ListFlowsCommand,
   ListTagsForResourceCommand,
   RegisterConnectorCommand,
+  ResetConnectorMetadataCacheCommand,
   StartFlowCommand,
   StopFlowCommand,
   TagResourceCommand,
@@ -367,6 +373,23 @@ export interface Appflow {
     args: RegisterConnectorCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: RegisterConnectorCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link ResetConnectorMetadataCacheCommand}
+   */
+  resetConnectorMetadataCache(
+    args: ResetConnectorMetadataCacheCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<ResetConnectorMetadataCacheCommandOutput>;
+  resetConnectorMetadataCache(
+    args: ResetConnectorMetadataCacheCommandInput,
+    cb: (err: any, data?: ResetConnectorMetadataCacheCommandOutput) => void
+  ): void;
+  resetConnectorMetadataCache(
+    args: ResetConnectorMetadataCacheCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: ResetConnectorMetadataCacheCommandOutput) => void
   ): void;
 
   /**

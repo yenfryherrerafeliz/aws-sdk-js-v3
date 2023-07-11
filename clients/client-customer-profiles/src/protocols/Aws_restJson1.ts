@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -18,21 +19,31 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AddProfileKeyCommandInput, AddProfileKeyCommandOutput } from "../commands/AddProfileKeyCommand";
+import {
+  CreateCalculatedAttributeDefinitionCommandInput,
+  CreateCalculatedAttributeDefinitionCommandOutput,
+} from "../commands/CreateCalculatedAttributeDefinitionCommand";
 import { CreateDomainCommandInput, CreateDomainCommandOutput } from "../commands/CreateDomainCommand";
+import { CreateEventStreamCommandInput, CreateEventStreamCommandOutput } from "../commands/CreateEventStreamCommand";
 import {
   CreateIntegrationWorkflowCommandInput,
   CreateIntegrationWorkflowCommandOutput,
 } from "../commands/CreateIntegrationWorkflowCommand";
 import { CreateProfileCommandInput, CreateProfileCommandOutput } from "../commands/CreateProfileCommand";
+import {
+  DeleteCalculatedAttributeDefinitionCommandInput,
+  DeleteCalculatedAttributeDefinitionCommandOutput,
+} from "../commands/DeleteCalculatedAttributeDefinitionCommand";
 import { DeleteDomainCommandInput, DeleteDomainCommandOutput } from "../commands/DeleteDomainCommand";
+import { DeleteEventStreamCommandInput, DeleteEventStreamCommandOutput } from "../commands/DeleteEventStreamCommand";
 import { DeleteIntegrationCommandInput, DeleteIntegrationCommandOutput } from "../commands/DeleteIntegrationCommand";
 import { DeleteProfileCommandInput, DeleteProfileCommandOutput } from "../commands/DeleteProfileCommand";
 import { DeleteProfileKeyCommandInput, DeleteProfileKeyCommandOutput } from "../commands/DeleteProfileKeyCommand";
@@ -49,7 +60,16 @@ import {
   GetAutoMergingPreviewCommandInput,
   GetAutoMergingPreviewCommandOutput,
 } from "../commands/GetAutoMergingPreviewCommand";
+import {
+  GetCalculatedAttributeDefinitionCommandInput,
+  GetCalculatedAttributeDefinitionCommandOutput,
+} from "../commands/GetCalculatedAttributeDefinitionCommand";
+import {
+  GetCalculatedAttributeForProfileCommandInput,
+  GetCalculatedAttributeForProfileCommandOutput,
+} from "../commands/GetCalculatedAttributeForProfileCommand";
 import { GetDomainCommandInput, GetDomainCommandOutput } from "../commands/GetDomainCommand";
+import { GetEventStreamCommandInput, GetEventStreamCommandOutput } from "../commands/GetEventStreamCommand";
 import {
   GetIdentityResolutionJobCommandInput,
   GetIdentityResolutionJobCommandOutput,
@@ -70,7 +90,16 @@ import {
   ListAccountIntegrationsCommandInput,
   ListAccountIntegrationsCommandOutput,
 } from "../commands/ListAccountIntegrationsCommand";
+import {
+  ListCalculatedAttributeDefinitionsCommandInput,
+  ListCalculatedAttributeDefinitionsCommandOutput,
+} from "../commands/ListCalculatedAttributeDefinitionsCommand";
+import {
+  ListCalculatedAttributesForProfileCommandInput,
+  ListCalculatedAttributesForProfileCommandOutput,
+} from "../commands/ListCalculatedAttributesForProfileCommand";
 import { ListDomainsCommandInput, ListDomainsCommandOutput } from "../commands/ListDomainsCommand";
+import { ListEventStreamsCommandInput, ListEventStreamsCommandOutput } from "../commands/ListEventStreamsCommand";
 import {
   ListIdentityResolutionJobsCommandInput,
   ListIdentityResolutionJobsCommandOutput,
@@ -100,6 +129,10 @@ import {
 import { SearchProfilesCommandInput, SearchProfilesCommandOutput } from "../commands/SearchProfilesCommand";
 import { TagResourceCommandInput, TagResourceCommandOutput } from "../commands/TagResourceCommand";
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "../commands/UntagResourceCommand";
+import {
+  UpdateCalculatedAttributeDefinitionCommandInput,
+  UpdateCalculatedAttributeDefinitionCommandOutput,
+} from "../commands/UpdateCalculatedAttributeDefinitionCommand";
 import { UpdateDomainCommandInput, UpdateDomainCommandOutput } from "../commands/UpdateDomainCommand";
 import { UpdateProfileCommandInput, UpdateProfileCommandOutput } from "../commands/UpdateProfileCommand";
 import { CustomerProfilesServiceException as __BaseException } from "../models/CustomerProfilesServiceException";
@@ -109,12 +142,18 @@ import {
   Address,
   AppflowIntegration,
   AppflowIntegrationWorkflowStep,
+  AttributeDetails,
+  AttributeItem,
   AutoMerging,
   BadRequestException,
   Batch,
+  Conditions,
   ConflictResolution,
   ConnectorOperator,
   Consolidation,
+  DestinationSummary,
+  EventStreamDestinationDetails,
+  EventStreamSummary,
   ExportingConfig,
   FieldSourceProfileIds,
   FlowDefinition,
@@ -123,6 +162,7 @@ import {
   IntegrationConfig,
   InternalServerException,
   JobSchedule,
+  ListCalculatedAttributeDefinitionItem,
   ListDomainItem,
   ListIntegrationItem,
   ListProfileObjectTypeItem,
@@ -134,6 +174,7 @@ import {
   ObjectFilter,
   ObjectTypeField,
   ObjectTypeKey,
+  Range,
   ResourceNotFoundException,
   S3ExportingConfig,
   S3SourceProperties,
@@ -144,6 +185,7 @@ import {
   SourceFlowConfig,
   StandardIdentifier,
   Task,
+  Threshold,
   ThrottlingException,
   TriggerConfig,
   TriggerProperties,
@@ -186,6 +228,51 @@ export const se_AddProfileKeyCommand = async (
 };
 
 /**
+ * serializeAws_restJson1CreateCalculatedAttributeDefinitionCommand
+ */
+export const se_CreateCalculatedAttributeDefinitionCommand = async (
+  input: CreateCalculatedAttributeDefinitionCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/domains/{DomainName}/calculated-attributes/{CalculatedAttributeName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "CalculatedAttributeName",
+    () => input.CalculatedAttributeName!,
+    "{CalculatedAttributeName}",
+    false
+  );
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      AttributeDetails: (_) => _json(_),
+      Conditions: (_) => _json(_),
+      Description: [],
+      DisplayName: [],
+      Statistic: [],
+      Tags: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1CreateDomainCommand
  */
 export const se_CreateDomainCommand = async (
@@ -206,6 +293,47 @@ export const se_CreateDomainCommand = async (
       DefaultExpirationDays: [],
       Matching: (_) => se_MatchingRequest(_, context),
       Tags: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1CreateEventStreamCommand
+ */
+export const se_CreateEventStreamCommand = async (
+  input: CreateEventStreamCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/domains/{DomainName}/event-streams/{EventStreamName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "EventStreamName",
+    () => input.EventStreamName!,
+    "{EventStreamName}",
+    false
+  );
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      Tags: (_) => _json(_),
+      Uri: [],
     })
   );
   return new __HttpRequest({
@@ -309,6 +437,39 @@ export const se_CreateProfileCommand = async (
 };
 
 /**
+ * serializeAws_restJson1DeleteCalculatedAttributeDefinitionCommand
+ */
+export const se_DeleteCalculatedAttributeDefinitionCommand = async (
+  input: DeleteCalculatedAttributeDefinitionCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/domains/{DomainName}/calculated-attributes/{CalculatedAttributeName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "CalculatedAttributeName",
+    () => input.CalculatedAttributeName!,
+    "{CalculatedAttributeName}",
+    false
+  );
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "DELETE",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1DeleteDomainCommand
  */
 export const se_DeleteDomainCommand = async (
@@ -319,6 +480,39 @@ export const se_DeleteDomainCommand = async (
   const headers: any = {};
   let resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/domains/{DomainName}";
   resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "DELETE",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1DeleteEventStreamCommand
+ */
+export const se_DeleteEventStreamCommand = async (
+  input: DeleteEventStreamCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/domains/{DomainName}/event-streams/{EventStreamName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "EventStreamName",
+    () => input.EventStreamName!,
+    "{EventStreamName}",
+    false
+  );
   let body: any;
   return new __HttpRequest({
     protocol,
@@ -555,6 +749,73 @@ export const se_GetAutoMergingPreviewCommand = async (
 };
 
 /**
+ * serializeAws_restJson1GetCalculatedAttributeDefinitionCommand
+ */
+export const se_GetCalculatedAttributeDefinitionCommand = async (
+  input: GetCalculatedAttributeDefinitionCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/domains/{DomainName}/calculated-attributes/{CalculatedAttributeName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "CalculatedAttributeName",
+    () => input.CalculatedAttributeName!,
+    "{CalculatedAttributeName}",
+    false
+  );
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1GetCalculatedAttributeForProfileCommand
+ */
+export const se_GetCalculatedAttributeForProfileCommand = async (
+  input: GetCalculatedAttributeForProfileCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/domains/{DomainName}/profile/{ProfileId}/calculated-attributes/{CalculatedAttributeName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  resolvedPath = __resolvedPath(resolvedPath, input, "ProfileId", () => input.ProfileId!, "{ProfileId}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "CalculatedAttributeName",
+    () => input.CalculatedAttributeName!,
+    "{CalculatedAttributeName}",
+    false
+  );
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1GetDomainCommand
  */
 export const se_GetDomainCommand = async (
@@ -565,6 +826,39 @@ export const se_GetDomainCommand = async (
   const headers: any = {};
   let resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/domains/{DomainName}";
   resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1GetEventStreamCommand
+ */
+export const se_GetEventStreamCommand = async (
+  input: GetEventStreamCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/domains/{DomainName}/event-streams/{EventStreamName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "EventStreamName",
+    () => input.EventStreamName!,
+    "{EventStreamName}",
+    false
+  );
   let body: any;
   return new __HttpRequest({
     protocol,
@@ -812,6 +1106,67 @@ export const se_ListAccountIntegrationsCommand = async (
 };
 
 /**
+ * serializeAws_restJson1ListCalculatedAttributeDefinitionsCommand
+ */
+export const se_ListCalculatedAttributeDefinitionsCommand = async (
+  input: ListCalculatedAttributeDefinitionsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/domains/{DomainName}/calculated-attributes";
+  resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  const query: any = map({
+    "next-token": [, input.NextToken!],
+    "max-results": [() => input.MaxResults !== void 0, () => input.MaxResults!.toString()],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ListCalculatedAttributesForProfileCommand
+ */
+export const se_ListCalculatedAttributesForProfileCommand = async (
+  input: ListCalculatedAttributesForProfileCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/domains/{DomainName}/profile/{ProfileId}/calculated-attributes";
+  resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  resolvedPath = __resolvedPath(resolvedPath, input, "ProfileId", () => input.ProfileId!, "{ProfileId}", false);
+  const query: any = map({
+    "next-token": [, input.NextToken!],
+    "max-results": [() => input.MaxResults !== void 0, () => input.MaxResults!.toString()],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1ListDomainsCommand
  */
 export const se_ListDomainsCommand = async (
@@ -821,6 +1176,35 @@ export const se_ListDomainsCommand = async (
   const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
   const headers: any = {};
   const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/domains";
+  const query: any = map({
+    "next-token": [, input.NextToken!],
+    "max-results": [() => input.MaxResults !== void 0, () => input.MaxResults!.toString()],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ListEventStreamsCommand
+ */
+export const se_ListEventStreamsCommand = async (
+  input: ListEventStreamsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/domains/{DomainName}/event-streams";
+  resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
   const query: any = map({
     "next-token": [, input.NextToken!],
     "max-results": [() => input.MaxResults !== void 0, () => input.MaxResults!.toString()],
@@ -1303,6 +1687,48 @@ export const se_UntagResourceCommand = async (
 };
 
 /**
+ * serializeAws_restJson1UpdateCalculatedAttributeDefinitionCommand
+ */
+export const se_UpdateCalculatedAttributeDefinitionCommand = async (
+  input: UpdateCalculatedAttributeDefinitionCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/domains/{DomainName}/calculated-attributes/{CalculatedAttributeName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "DomainName", () => input.DomainName!, "{DomainName}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "CalculatedAttributeName",
+    () => input.CalculatedAttributeName!,
+    "{CalculatedAttributeName}",
+    false
+  );
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      Conditions: (_) => _json(_),
+      Description: [],
+      DisplayName: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PUT",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1UpdateDomainCommand
  */
 export const se_UpdateDomainCommand = async (
@@ -1451,6 +1877,73 @@ const de_AddProfileKeyCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1CreateCalculatedAttributeDefinitionCommand
+ */
+export const de_CreateCalculatedAttributeDefinitionCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateCalculatedAttributeDefinitionCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CreateCalculatedAttributeDefinitionCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    AttributeDetails: _json,
+    CalculatedAttributeName: __expectString,
+    Conditions: _json,
+    CreatedAt: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Description: __expectString,
+    DisplayName: __expectString,
+    LastUpdatedAt: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Statistic: __expectString,
+    Tags: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1CreateCalculatedAttributeDefinitionCommandError
+ */
+const de_CreateCalculatedAttributeDefinitionCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateCalculatedAttributeDefinitionCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.customerprofiles#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "BadRequestException":
+    case "com.amazonaws.customerprofiles#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.customerprofiles#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.customerprofiles#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.customerprofiles#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1CreateDomainCommand
  */
 export const de_CreateDomainCommand = async (
@@ -1485,6 +1978,66 @@ const de_CreateDomainCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<CreateDomainCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.customerprofiles#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "BadRequestException":
+    case "com.amazonaws.customerprofiles#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.customerprofiles#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.customerprofiles#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.customerprofiles#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1CreateEventStreamCommand
+ */
+export const de_CreateEventStreamCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateEventStreamCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CreateEventStreamCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    EventStreamArn: __expectString,
+    Tags: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1CreateEventStreamCommandError
+ */
+const de_CreateEventStreamCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateEventStreamCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -1636,6 +2189,61 @@ const de_CreateProfileCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1DeleteCalculatedAttributeDefinitionCommand
+ */
+export const de_DeleteCalculatedAttributeDefinitionCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteCalculatedAttributeDefinitionCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_DeleteCalculatedAttributeDefinitionCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1DeleteCalculatedAttributeDefinitionCommandError
+ */
+const de_DeleteCalculatedAttributeDefinitionCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteCalculatedAttributeDefinitionCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.customerprofiles#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "BadRequestException":
+    case "com.amazonaws.customerprofiles#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.customerprofiles#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.customerprofiles#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.customerprofiles#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1DeleteDomainCommand
  */
 export const de_DeleteDomainCommand = async (
@@ -1663,6 +2271,61 @@ const de_DeleteDomainCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<DeleteDomainCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.customerprofiles#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "BadRequestException":
+    case "com.amazonaws.customerprofiles#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.customerprofiles#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.customerprofiles#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.customerprofiles#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1DeleteEventStreamCommand
+ */
+export const de_DeleteEventStreamCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteEventStreamCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_DeleteEventStreamCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1DeleteEventStreamCommandError
+ */
+const de_DeleteEventStreamCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteEventStreamCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -2107,6 +2770,135 @@ const de_GetAutoMergingPreviewCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1GetCalculatedAttributeDefinitionCommand
+ */
+export const de_GetCalculatedAttributeDefinitionCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetCalculatedAttributeDefinitionCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetCalculatedAttributeDefinitionCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    AttributeDetails: _json,
+    CalculatedAttributeName: __expectString,
+    Conditions: _json,
+    CreatedAt: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Description: __expectString,
+    DisplayName: __expectString,
+    LastUpdatedAt: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Statistic: __expectString,
+    Tags: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetCalculatedAttributeDefinitionCommandError
+ */
+const de_GetCalculatedAttributeDefinitionCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetCalculatedAttributeDefinitionCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.customerprofiles#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "BadRequestException":
+    case "com.amazonaws.customerprofiles#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.customerprofiles#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.customerprofiles#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.customerprofiles#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1GetCalculatedAttributeForProfileCommand
+ */
+export const de_GetCalculatedAttributeForProfileCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetCalculatedAttributeForProfileCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetCalculatedAttributeForProfileCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    CalculatedAttributeName: __expectString,
+    DisplayName: __expectString,
+    IsDataPartial: __expectString,
+    Value: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetCalculatedAttributeForProfileCommandError
+ */
+const de_GetCalculatedAttributeForProfileCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetCalculatedAttributeForProfileCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.customerprofiles#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "BadRequestException":
+    case "com.amazonaws.customerprofiles#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.customerprofiles#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.customerprofiles#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.customerprofiles#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1GetDomainCommand
  */
 export const de_GetDomainCommand = async (
@@ -2142,6 +2934,71 @@ const de_GetDomainCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<GetDomainCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.customerprofiles#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "BadRequestException":
+    case "com.amazonaws.customerprofiles#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.customerprofiles#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.customerprofiles#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.customerprofiles#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1GetEventStreamCommand
+ */
+export const de_GetEventStreamCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetEventStreamCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetEventStreamCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    CreatedAt: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    DestinationDetails: (_) => de_EventStreamDestinationDetails(_, context),
+    DomainName: __expectString,
+    EventStreamArn: __expectString,
+    State: __expectString,
+    StoppedSince: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Tags: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetEventStreamCommandError
+ */
+const de_GetEventStreamCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetEventStreamCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -2695,6 +3552,126 @@ const de_ListAccountIntegrationsCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1ListCalculatedAttributeDefinitionsCommand
+ */
+export const de_ListCalculatedAttributeDefinitionsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListCalculatedAttributeDefinitionsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListCalculatedAttributeDefinitionsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    Items: (_) => de_CalculatedAttributeDefinitionsList(_, context),
+    NextToken: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListCalculatedAttributeDefinitionsCommandError
+ */
+const de_ListCalculatedAttributeDefinitionsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListCalculatedAttributeDefinitionsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.customerprofiles#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "BadRequestException":
+    case "com.amazonaws.customerprofiles#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.customerprofiles#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.customerprofiles#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.customerprofiles#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1ListCalculatedAttributesForProfileCommand
+ */
+export const de_ListCalculatedAttributesForProfileCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListCalculatedAttributesForProfileCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListCalculatedAttributesForProfileCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    Items: _json,
+    NextToken: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListCalculatedAttributesForProfileCommandError
+ */
+const de_ListCalculatedAttributesForProfileCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListCalculatedAttributesForProfileCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.customerprofiles#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "BadRequestException":
+    case "com.amazonaws.customerprofiles#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.customerprofiles#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.customerprofiles#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.customerprofiles#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1ListDomainsCommand
  */
 export const de_ListDomainsCommand = async (
@@ -2723,6 +3700,66 @@ const de_ListDomainsCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<ListDomainsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.customerprofiles#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "BadRequestException":
+    case "com.amazonaws.customerprofiles#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.customerprofiles#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.customerprofiles#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.customerprofiles#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1ListEventStreamsCommand
+ */
+export const de_ListEventStreamsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListEventStreamsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListEventStreamsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    Items: (_) => de_EventStreamSummaryList(_, context),
+    NextToken: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListEventStreamsCommandError
+ */
+const de_ListEventStreamsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListEventStreamsCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -3578,6 +4615,73 @@ const de_UntagResourceCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1UpdateCalculatedAttributeDefinitionCommand
+ */
+export const de_UpdateCalculatedAttributeDefinitionCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdateCalculatedAttributeDefinitionCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_UpdateCalculatedAttributeDefinitionCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    AttributeDetails: _json,
+    CalculatedAttributeName: __expectString,
+    Conditions: _json,
+    CreatedAt: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Description: __expectString,
+    DisplayName: __expectString,
+    LastUpdatedAt: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Statistic: __expectString,
+    Tags: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1UpdateCalculatedAttributeDefinitionCommandError
+ */
+const de_UpdateCalculatedAttributeDefinitionCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdateCalculatedAttributeDefinitionCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.customerprofiles#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "BadRequestException":
+    case "com.amazonaws.customerprofiles#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.customerprofiles#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.customerprofiles#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.customerprofiles#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1UpdateDomainCommand
  */
 export const de_UpdateDomainCommand = async (
@@ -3813,6 +4917,12 @@ const se_AppflowIntegration = (input: AppflowIntegration, context: __SerdeContex
   });
 };
 
+// se_AttributeDetails omitted.
+
+// se_AttributeItem omitted.
+
+// se_AttributeList omitted.
+
 // se_Attributes omitted.
 
 // se_AttributeSourceIdMap omitted.
@@ -3849,6 +4959,8 @@ const se_Batches = (input: Batch[], context: __SerdeContext): any => {
       return se_Batch(entry, context);
     });
 };
+
+// se_Conditions omitted.
 
 // se_ConflictResolution omitted.
 
@@ -3923,6 +5035,8 @@ const se_MatchingRequest = (input: MatchingRequest, context: __SerdeContext): an
 
 // se_ProfileIdToBeMergedList omitted.
 
+// se_Range omitted.
+
 // se_requestValueList omitted.
 
 // se_S3ExportingConfig omitted.
@@ -3963,6 +5077,8 @@ const se_ScheduledTriggerProperties = (input: ScheduledTriggerProperties, contex
 // se_TaskPropertiesMap omitted.
 
 // se_Tasks omitted.
+
+// se_Threshold omitted.
 
 /**
  * serializeAws_restJson1TriggerConfig
@@ -4011,6 +5127,12 @@ const de_AppflowIntegrationWorkflowStep = (output: any, context: __SerdeContext)
   }) as any;
 };
 
+// de_AttributeDetails omitted.
+
+// de_AttributeItem omitted.
+
+// de_AttributeList omitted.
+
 // de_Attributes omitted.
 
 /**
@@ -4025,9 +5147,39 @@ const de_AutoMerging = (output: any, context: __SerdeContext): AutoMerging => {
   }) as any;
 };
 
+/**
+ * deserializeAws_restJson1CalculatedAttributeDefinitionsList
+ */
+const de_CalculatedAttributeDefinitionsList = (
+  output: any,
+  context: __SerdeContext
+): ListCalculatedAttributeDefinitionItem[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_ListCalculatedAttributeDefinitionItem(entry, context);
+    });
+  return retVal;
+};
+
+// de_CalculatedAttributesForProfileList omitted.
+
+// de_Conditions omitted.
+
 // de_ConflictResolution omitted.
 
 // de_Consolidation omitted.
+
+/**
+ * deserializeAws_restJson1DestinationSummary
+ */
+const de_DestinationSummary = (output: any, context: __SerdeContext): DestinationSummary => {
+  return take(output, {
+    Status: __expectString,
+    UnhealthySince: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Uri: __expectString,
+  }) as any;
+};
 
 /**
  * deserializeAws_restJson1DomainList
@@ -4042,6 +5194,45 @@ const de_DomainList = (output: any, context: __SerdeContext): ListDomainItem[] =
 };
 
 // de_DomainStats omitted.
+
+/**
+ * deserializeAws_restJson1EventStreamDestinationDetails
+ */
+const de_EventStreamDestinationDetails = (output: any, context: __SerdeContext): EventStreamDestinationDetails => {
+  return take(output, {
+    Message: __expectString,
+    Status: __expectString,
+    UnhealthySince: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Uri: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1EventStreamSummary
+ */
+const de_EventStreamSummary = (output: any, context: __SerdeContext): EventStreamSummary => {
+  return take(output, {
+    DestinationSummary: (_: any) => de_DestinationSummary(_, context),
+    DomainName: __expectString,
+    EventStreamArn: __expectString,
+    EventStreamName: __expectString,
+    State: __expectString,
+    StoppedSince: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Tags: _json,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1EventStreamSummaryList
+ */
+const de_EventStreamSummaryList = (output: any, context: __SerdeContext): EventStreamSummary[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_EventStreamSummary(entry, context);
+    });
+  return retVal;
+};
 
 // de_ExportingConfig omitted.
 
@@ -4100,6 +5291,25 @@ const de_IntegrationList = (output: any, context: __SerdeContext): ListIntegrati
 // de_JobStats omitted.
 
 // de_KeyMap omitted.
+
+/**
+ * deserializeAws_restJson1ListCalculatedAttributeDefinitionItem
+ */
+const de_ListCalculatedAttributeDefinitionItem = (
+  output: any,
+  context: __SerdeContext
+): ListCalculatedAttributeDefinitionItem => {
+  return take(output, {
+    CalculatedAttributeName: __expectString,
+    CreatedAt: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Description: __expectString,
+    DisplayName: __expectString,
+    LastUpdatedAt: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Tags: _json,
+  }) as any;
+};
+
+// de_ListCalculatedAttributeForProfileItem omitted.
 
 /**
  * deserializeAws_restJson1ListDomainItem
@@ -4230,6 +5440,8 @@ const de_ProfileObjectTypeList = (output: any, context: __SerdeContext): ListPro
 
 // de_ProfileObjectTypeTemplateList omitted.
 
+// de_Range omitted.
+
 // de_requestValueList omitted.
 
 // de_S3ExportingConfig omitted.
@@ -4239,6 +5451,8 @@ const de_ProfileObjectTypeList = (output: any, context: __SerdeContext): ListPro
 // de_StandardIdentifierList omitted.
 
 // de_TagMap omitted.
+
+// de_Threshold omitted.
 
 // de_WorkflowAttributes omitted.
 
@@ -4284,14 +5498,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
 import { PurchaseScheduledInstancesRequest, PurchaseScheduledInstancesResult } from "../models/models_6";
 import { de_PurchaseScheduledInstancesCommand, se_PurchaseScheduledInstancesCommand } from "../protocols/Aws_ec2";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -99,52 +103,6 @@ export interface PurchaseScheduledInstancesCommandOutput extends PurchaseSchedul
  *
  * @throws {@link EC2ServiceException}
  * <p>Base exception class for all service exceptions from EC2 service.</p>
- *
- * @example To purchase a Scheduled Instance
- * ```javascript
- * // This example purchases a Scheduled Instance.
- * const input = {
- *   "PurchaseRequests": [
- *     {
- *       "InstanceCount": 1,
- *       "PurchaseToken": "eyJ2IjoiMSIsInMiOjEsImMiOi..."
- *     }
- *   ]
- * };
- * const command = new PurchaseScheduledInstancesCommand(input);
- * const response = await client.send(command);
- * /* response ==
- * {
- *   "ScheduledInstanceSet": [
- *     {
- *       "AvailabilityZone": "us-west-2b",
- *       "CreateDate": "2016-01-25T21:43:38.612Z",
- *       "HourlyPrice": "0.095",
- *       "InstanceCount": 1,
- *       "InstanceType": "c4.large",
- *       "NetworkPlatform": "EC2-VPC",
- *       "NextSlotStartTime": "2016-01-31T09:00:00Z",
- *       "Platform": "Linux/UNIX",
- *       "Recurrence": {
- *         "Frequency": "Weekly",
- *         "Interval": 1,
- *         "OccurrenceDaySet": [
- *           1
- *         ],
- *         "OccurrenceRelativeToEnd": false,
- *         "OccurrenceUnit": ""
- *       },
- *       "ScheduledInstanceId": "sci-1234-1234-1234-1234-123456789012",
- *       "SlotDurationInHours": 32,
- *       "TermEndDate": "2017-01-31T09:00:00Z",
- *       "TermStartDate": "2016-01-31T09:00:00Z",
- *       "TotalScheduledInstanceHours": 1696
- *     }
- *   ]
- * }
- * *\/
- * // example id: ec2-purchase-scheduled-instances-1
- * ```
  *
  */
 export class PurchaseScheduledInstancesCommand extends $Command<

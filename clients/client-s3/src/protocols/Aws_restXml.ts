@@ -1,10 +1,12 @@
 // smithy-typescript generated code
+import { XmlNode as __XmlNode, XmlText as __XmlText } from "@aws-sdk/xml-builder";
 import {
   HttpRequest as __HttpRequest,
   HttpResponse as __HttpResponse,
   isValidHostname as __isValidHostname,
-} from "@aws-sdk/protocol-http";
+} from "@smithy/protocol-http";
 import {
+  collectBody,
   dateToUtcString as __dateToUtcString,
   decorateServiceException as __decorateServiceException,
   expectNonNull as __expectNonNull,
@@ -22,15 +24,14 @@ import {
   strictParseInt32 as __strictParseInt32,
   strictParseLong as __strictParseLong,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   EventStreamSerdeContext as __EventStreamSerdeContext,
   ResponseMetadata as __ResponseMetadata,
   SdkStreamSerdeContext as __SdkStreamSerdeContext,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
-import { XmlNode as __XmlNode, XmlText as __XmlText } from "@aws-sdk/xml-builder";
+} from "@smithy/types";
 import { XMLParser } from "fast-xml-parser";
 
 import {
@@ -381,6 +382,7 @@ import {
   ReplicationTime,
   ReplicationTimeValue,
   RequestPaymentConfiguration,
+  RestoreStatus,
   RoutingRule,
   S3KeyFilter,
   ServerSideEncryptionByDefault,
@@ -1242,6 +1244,7 @@ export const se_GetBucketAccelerateConfigurationCommand = async (
   const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
   const headers: any = map({}, isSerializableHeaderValue, {
     "x-amz-expected-bucket-owner": input.ExpectedBucketOwner!,
+    "x-amz-request-payer": input.RequestPayer!,
   });
   let resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/";
   resolvedPath = __resolvedPath(resolvedPath, input, "Bucket", () => input.Bucket!, "{Bucket}", false);
@@ -2362,6 +2365,7 @@ export const se_ListMultipartUploadsCommand = async (
   const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
   const headers: any = map({}, isSerializableHeaderValue, {
     "x-amz-expected-bucket-owner": input.ExpectedBucketOwner!,
+    "x-amz-request-payer": input.RequestPayer!,
   });
   let resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/";
   resolvedPath = __resolvedPath(resolvedPath, input, "Bucket", () => input.Bucket!, "{Bucket}", false);
@@ -2398,6 +2402,10 @@ export const se_ListObjectsCommand = async (
   const headers: any = map({}, isSerializableHeaderValue, {
     "x-amz-request-payer": input.RequestPayer!,
     "x-amz-expected-bucket-owner": input.ExpectedBucketOwner!,
+    "x-amz-optional-object-attributes": [
+      () => isSerializableHeaderValue(input.OptionalObjectAttributes),
+      () => (input.OptionalObjectAttributes! || []).map((_entry) => _entry as any).join(", "),
+    ],
   });
   let resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/";
   resolvedPath = __resolvedPath(resolvedPath, input, "Bucket", () => input.Bucket!, "{Bucket}", false);
@@ -2432,6 +2440,10 @@ export const se_ListObjectsV2Command = async (
   const headers: any = map({}, isSerializableHeaderValue, {
     "x-amz-request-payer": input.RequestPayer!,
     "x-amz-expected-bucket-owner": input.ExpectedBucketOwner!,
+    "x-amz-optional-object-attributes": [
+      () => isSerializableHeaderValue(input.OptionalObjectAttributes),
+      () => (input.OptionalObjectAttributes! || []).map((_entry) => _entry as any).join(", "),
+    ],
   });
   let resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/";
   resolvedPath = __resolvedPath(resolvedPath, input, "Bucket", () => input.Bucket!, "{Bucket}", false);
@@ -2468,6 +2480,11 @@ export const se_ListObjectVersionsCommand = async (
   const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
   const headers: any = map({}, isSerializableHeaderValue, {
     "x-amz-expected-bucket-owner": input.ExpectedBucketOwner!,
+    "x-amz-request-payer": input.RequestPayer!,
+    "x-amz-optional-object-attributes": [
+      () => isSerializableHeaderValue(input.OptionalObjectAttributes),
+      () => (input.OptionalObjectAttributes! || []).map((_entry) => _entry as any).join(", "),
+    ],
   });
   let resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/";
   resolvedPath = __resolvedPath(resolvedPath, input, "Bucket", () => input.Bucket!, "{Bucket}", false);
@@ -4918,6 +4935,7 @@ export const de_GetBucketAccelerateConfigurationCommand = async (
   }
   const contents: any = map({
     $metadata: deserializeMetadata(output),
+    RequestCharged: [, output.headers["x-amz-request-charged"]],
   });
   const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
   if (data["Status"] !== undefined) {
@@ -6635,6 +6653,7 @@ export const de_ListMultipartUploadsCommand = async (
   }
   const contents: any = map({
     $metadata: deserializeMetadata(output),
+    RequestCharged: [, output.headers["x-amz-request-charged"]],
   });
   const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
   if (data["Bucket"] !== undefined) {
@@ -6712,6 +6731,7 @@ export const de_ListObjectsCommand = async (
   }
   const contents: any = map({
     $metadata: deserializeMetadata(output),
+    RequestCharged: [, output.headers["x-amz-request-charged"]],
   });
   const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
   if (data.CommonPrefixes === "") {
@@ -6789,6 +6809,7 @@ export const de_ListObjectsV2Command = async (
   }
   const contents: any = map({
     $metadata: deserializeMetadata(output),
+    RequestCharged: [, output.headers["x-amz-request-charged"]],
   });
   const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
   if (data.CommonPrefixes === "") {
@@ -6872,6 +6893,7 @@ export const de_ListObjectVersionsCommand = async (
   }
   const contents: any = map({
     $metadata: deserializeMetadata(output),
+    RequestCharged: [, output.headers["x-amz-request-charged"]],
   });
   const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
   if (data.CommonPrefixes === "") {
@@ -12091,6 +12113,9 @@ const de__Object = (output: any, context: __SerdeContext): _Object => {
   if (output["Owner"] !== undefined) {
     contents.Owner = de_Owner(output["Owner"], context);
   }
+  if (output["RestoreStatus"] !== undefined) {
+    contents.RestoreStatus = de_RestoreStatus(output["RestoreStatus"], context);
+  }
   return contents;
 };
 
@@ -12214,6 +12239,9 @@ const de_ObjectVersion = (output: any, context: __SerdeContext): ObjectVersion =
   }
   if (output["Owner"] !== undefined) {
     contents.Owner = de_Owner(output["Owner"], context);
+  }
+  if (output["RestoreStatus"] !== undefined) {
+    contents.RestoreStatus = de_RestoreStatus(output["RestoreStatus"], context);
   }
   return contents;
 };
@@ -12589,6 +12617,20 @@ const de_ReplicationTimeValue = (output: any, context: __SerdeContext): Replicat
 };
 
 /**
+ * deserializeAws_restXmlRestoreStatus
+ */
+const de_RestoreStatus = (output: any, context: __SerdeContext): RestoreStatus => {
+  const contents: any = {};
+  if (output["IsRestoreInProgress"] !== undefined) {
+    contents.IsRestoreInProgress = __parseBoolean(output["IsRestoreInProgress"]);
+  }
+  if (output["RestoreExpiryDate"] !== undefined) {
+    contents.RestoreExpiryDate = __expectNonNull(__parseRfc3339DateTimeWithOffset(output["RestoreExpiryDate"]));
+  }
+  return contents;
+};
+
+/**
  * deserializeAws_restXmlRoutingRule
  */
 const de_RoutingRule = (output: any, context: __SerdeContext): RoutingRule => {
@@ -12914,14 +12956,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   cfId: output.headers["x-amz-cf-id"],
 });
 
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
-
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>
   collectBody(streamBody, context).then((body) => context.utf8Encoder(body));
@@ -12943,7 +12977,7 @@ const parseBody = (streamBody: any, context: __SerdeContext): any =>
         ignoreDeclaration: true,
         parseTagValue: false,
         trimValues: false,
-        tagValueProcessor: (_, val) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
+        tagValueProcessor: (_: any, val: any) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
       });
       parser.addEntity("#xD", "\r");
       parser.addEntity("#10", "\n");

@@ -1,6 +1,7 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectNonNull as __expectNonNull,
   expectString as __expectString,
@@ -11,13 +12,13 @@ import {
   parseRfc3339DateTimeWithOffset as __parseRfc3339DateTimeWithOffset,
   strictParseInt32 as __strictParseInt32,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { XMLParser } from "fast-xml-parser";
 
 import {
@@ -170,6 +171,7 @@ import { GetGroupCommandInput, GetGroupCommandOutput } from "../commands/GetGrou
 import { GetGroupPolicyCommandInput, GetGroupPolicyCommandOutput } from "../commands/GetGroupPolicyCommand";
 import { GetInstanceProfileCommandInput, GetInstanceProfileCommandOutput } from "../commands/GetInstanceProfileCommand";
 import { GetLoginProfileCommandInput, GetLoginProfileCommandOutput } from "../commands/GetLoginProfileCommand";
+import { GetMFADeviceCommandInput, GetMFADeviceCommandOutput } from "../commands/GetMFADeviceCommand";
 import {
   GetOpenIDConnectProviderCommandInput,
   GetOpenIDConnectProviderCommandOutput,
@@ -510,6 +512,8 @@ import {
   GetInstanceProfileResponse,
   GetLoginProfileRequest,
   GetLoginProfileResponse,
+  GetMFADeviceRequest,
+  GetMFADeviceResponse,
   GetOpenIDConnectProviderRequest,
   GetOpenIDConnectProviderResponse,
   GetOrganizationsAccessReportRequest,
@@ -682,8 +686,6 @@ import {
   UnmodifiableEntityException,
   UnrecognizedPublicKeyEncodingException,
   UntagInstanceProfileRequest,
-  UntagMFADeviceRequest,
-  UntagOpenIDConnectProviderRequest,
   User,
   UserDetail,
   VirtualMFADevice,
@@ -695,6 +697,8 @@ import {
   InvalidPublicKeyException,
   KeyPairMismatchException,
   MalformedCertificateException,
+  UntagMFADeviceRequest,
+  UntagOpenIDConnectProviderRequest,
   UntagPolicyRequest,
   UntagRoleRequest,
   UntagSAMLProviderRequest,
@@ -1781,6 +1785,23 @@ export const se_GetLoginProfileCommand = async (
   body = buildFormUrlencodedString({
     ...se_GetLoginProfileRequest(input, context),
     Action: "GetLoginProfile",
+    Version: "2010-05-08",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_queryGetMFADeviceCommand
+ */
+export const se_GetMFADeviceCommand = async (
+  input: GetMFADeviceCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_GetMFADeviceRequest(input, context),
+    Action: "GetMFADevice",
     Version: "2010-05-08",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -3865,6 +3886,9 @@ const de_CreateAccountAliasCommandError = async (
   };
   const errorCode = loadQueryErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "ConcurrentModification":
+    case "com.amazonaws.iam#ConcurrentModificationException":
+      throw await de_ConcurrentModificationExceptionRes(parsedOutput, context);
     case "EntityAlreadyExists":
     case "com.amazonaws.iam#EntityAlreadyExistsException":
       throw await de_EntityAlreadyExistsExceptionRes(parsedOutput, context);
@@ -4607,6 +4631,9 @@ const de_DeactivateMFADeviceCommandError = async (
   };
   const errorCode = loadQueryErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "ConcurrentModification":
+    case "com.amazonaws.iam#ConcurrentModificationException":
+      throw await de_ConcurrentModificationExceptionRes(parsedOutput, context);
     case "EntityTemporarilyUnmodifiable":
     case "com.amazonaws.iam#EntityTemporarilyUnmodifiableException":
       throw await de_EntityTemporarilyUnmodifiableExceptionRes(parsedOutput, context);
@@ -4708,6 +4735,9 @@ const de_DeleteAccountAliasCommandError = async (
   };
   const errorCode = loadQueryErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "ConcurrentModification":
+    case "com.amazonaws.iam#ConcurrentModificationException":
+      throw await de_ConcurrentModificationExceptionRes(parsedOutput, context);
     case "LimitExceeded":
     case "com.amazonaws.iam#LimitExceededException":
       throw await de_LimitExceededExceptionRes(parsedOutput, context);
@@ -5528,6 +5558,9 @@ const de_DeleteSigningCertificateCommandError = async (
   };
   const errorCode = loadQueryErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "ConcurrentModification":
+    case "com.amazonaws.iam#ConcurrentModificationException":
+      throw await de_ConcurrentModificationExceptionRes(parsedOutput, context);
     case "LimitExceeded":
     case "com.amazonaws.iam#LimitExceededException":
       throw await de_LimitExceededExceptionRes(parsedOutput, context);
@@ -5770,6 +5803,9 @@ const de_DeleteVirtualMFADeviceCommandError = async (
   };
   const errorCode = loadQueryErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "ConcurrentModification":
+    case "com.amazonaws.iam#ConcurrentModificationException":
+      throw await de_ConcurrentModificationExceptionRes(parsedOutput, context);
     case "DeleteConflict":
     case "com.amazonaws.iam#DeleteConflictException":
       throw await de_DeleteConflictExceptionRes(parsedOutput, context);
@@ -5981,6 +6017,9 @@ const de_EnableMFADeviceCommandError = async (
   };
   const errorCode = loadQueryErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "ConcurrentModification":
+    case "com.amazonaws.iam#ConcurrentModificationException":
+      throw await de_ConcurrentModificationExceptionRes(parsedOutput, context);
     case "EntityAlreadyExists":
     case "com.amazonaws.iam#EntityAlreadyExistsException":
       throw await de_EntityAlreadyExistsExceptionRes(parsedOutput, context);
@@ -6664,6 +6703,55 @@ const de_GetLoginProfileCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<GetLoginProfileCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "NoSuchEntity":
+    case "com.amazonaws.iam#NoSuchEntityException":
+      throw await de_NoSuchEntityExceptionRes(parsedOutput, context);
+    case "ServiceFailure":
+    case "com.amazonaws.iam#ServiceFailureException":
+      throw await de_ServiceFailureExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_queryGetMFADeviceCommand
+ */
+export const de_GetMFADeviceCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetMFADeviceCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_GetMFADeviceCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_GetMFADeviceResponse(data.GetMFADeviceResult, context);
+  const response: GetMFADeviceCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryGetMFADeviceCommandError
+ */
+const de_GetMFADeviceCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetMFADeviceCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -9533,6 +9621,9 @@ const de_ResyncMFADeviceCommandError = async (
   };
   const errorCode = loadQueryErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "ConcurrentModification":
+    case "com.amazonaws.iam#ConcurrentModificationException":
+      throw await de_ConcurrentModificationExceptionRes(parsedOutput, context);
     case "InvalidAuthenticationCode":
     case "com.amazonaws.iam#InvalidAuthenticationCodeException":
       throw await de_InvalidAuthenticationCodeExceptionRes(parsedOutput, context);
@@ -11414,6 +11505,9 @@ const de_UploadSigningCertificateCommandError = async (
   };
   const errorCode = loadQueryErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "ConcurrentModification":
+    case "com.amazonaws.iam#ConcurrentModificationException":
+      throw await de_ConcurrentModificationExceptionRes(parsedOutput, context);
     case "DuplicateCertificate":
     case "com.amazonaws.iam#DuplicateCertificateException":
       throw await de_DuplicateCertificateExceptionRes(parsedOutput, context);
@@ -12974,6 +13068,20 @@ const se_GetInstanceProfileRequest = (input: GetInstanceProfileRequest, context:
  */
 const se_GetLoginProfileRequest = (input: GetLoginProfileRequest, context: __SerdeContext): any => {
   const entries: any = {};
+  if (input.UserName != null) {
+    entries["UserName"] = input.UserName;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_queryGetMFADeviceRequest
+ */
+const se_GetMFADeviceRequest = (input: GetMFADeviceRequest, context: __SerdeContext): any => {
+  const entries: any = {};
+  if (input.SerialNumber != null) {
+    entries["SerialNumber"] = input.SerialNumber;
+  }
   if (input.UserName != null) {
     entries["UserName"] = input.UserName;
   }
@@ -15095,6 +15203,19 @@ const de_certificateListType = (output: any, context: __SerdeContext): SigningCe
 };
 
 /**
+ * deserializeAws_queryCertificationMapType
+ */
+const de_CertificationMapType = (output: any, context: __SerdeContext): Record<string, string> => {
+  return output.reduce((acc: any, pair: any) => {
+    if (pair["value"] === null) {
+      return acc;
+    }
+    acc[pair["key"]] = __expectString(pair["value"]) as any;
+    return acc;
+  }, {});
+};
+
+/**
  * deserializeAws_queryclientIDListType
  */
 const de_clientIDListType = (output: any, context: __SerdeContext): string[] => {
@@ -15788,6 +15909,31 @@ const de_GetLoginProfileResponse = (output: any, context: __SerdeContext): GetLo
   const contents: any = {};
   if (output["LoginProfile"] !== undefined) {
     contents.LoginProfile = de_LoginProfile(output["LoginProfile"], context);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryGetMFADeviceResponse
+ */
+const de_GetMFADeviceResponse = (output: any, context: __SerdeContext): GetMFADeviceResponse => {
+  const contents: any = {};
+  if (output["UserName"] !== undefined) {
+    contents.UserName = __expectString(output["UserName"]);
+  }
+  if (output["SerialNumber"] !== undefined) {
+    contents.SerialNumber = __expectString(output["SerialNumber"]);
+  }
+  if (output["EnableDate"] !== undefined) {
+    contents.EnableDate = __expectNonNull(__parseRfc3339DateTimeWithOffset(output["EnableDate"]));
+  }
+  if (output.Certifications === "") {
+    contents.Certifications = {};
+  } else if (output["Certifications"] !== undefined && output["Certifications"]["entry"] !== undefined) {
+    contents.Certifications = de_CertificationMapType(
+      __getArrayIfSingleItem(output["Certifications"]["entry"]),
+      context
+    );
   }
   return contents;
 };
@@ -18521,14 +18667,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   cfId: output.headers["x-amz-cf-id"],
 });
 
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
-
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>
   collectBody(streamBody, context).then((body) => context.utf8Encoder(body));
@@ -18572,7 +18710,7 @@ const parseBody = (streamBody: any, context: __SerdeContext): any =>
         ignoreDeclaration: true,
         parseTagValue: false,
         trimValues: false,
-        tagValueProcessor: (_, val) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
+        tagValueProcessor: (_: any, val: any) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
       });
       parser.addEntity("#xD", "\r");
       parser.addEntity("#10", "\n");

@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -15,12 +16,12 @@ import {
   resolvedPath as __resolvedPath,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   AssociateAssessmentReportEvidenceFolderCommandInput,
@@ -97,6 +98,10 @@ import {
   GetEvidenceByEvidenceFolderCommandOutput,
 } from "../commands/GetEvidenceByEvidenceFolderCommand";
 import { GetEvidenceCommandInput, GetEvidenceCommandOutput } from "../commands/GetEvidenceCommand";
+import {
+  GetEvidenceFileUploadUrlCommandInput,
+  GetEvidenceFileUploadUrlCommandOutput,
+} from "../commands/GetEvidenceFileUploadUrlCommand";
 import { GetEvidenceFolderCommandInput, GetEvidenceFolderCommandOutput } from "../commands/GetEvidenceFolderCommand";
 import {
   GetEvidenceFoldersByAssessmentCommandInput,
@@ -224,6 +229,7 @@ import {
   CreateAssessmentFrameworkControlSet,
   CreateControlMappingSource,
   CreateDelegationRequest,
+  DefaultExportDestination,
   Delegation,
   DelegationMetadata,
   DeregistrationPolicy,
@@ -1169,6 +1175,32 @@ export const se_GetEvidenceByEvidenceFolderCommand = async (
   const query: any = map({
     nextToken: [, input.nextToken!],
     maxResults: [() => input.maxResults !== void 0, () => input.maxResults!.toString()],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1GetEvidenceFileUploadUrlCommand
+ */
+export const se_GetEvidenceFileUploadUrlCommand = async (
+  input: GetEvidenceFileUploadUrlCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/evidenceFileUploadUrl";
+  const query: any = map({
+    fileName: [, __expectNonNull(input.fileName!, `fileName`)],
   });
   let body: any;
   return new __HttpRequest({
@@ -2227,6 +2259,7 @@ export const se_UpdateSettingsCommand = async (
   body = JSON.stringify(
     take(input, {
       defaultAssessmentReportsDestination: (_) => _json(_),
+      defaultExportDestination: (_) => _json(_),
       defaultProcessOwners: (_) => _json(_),
       deregistrationPolicy: (_) => _json(_),
       evidenceFinderEnabled: [],
@@ -2597,6 +2630,9 @@ const de_BatchImportEvidenceToAssessmentControlCommandError = async (
     case "ResourceNotFoundException":
     case "com.amazonaws.auditmanager#ResourceNotFoundException":
       throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.auditmanager#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
     case "ValidationException":
     case "com.amazonaws.auditmanager#ValidationException":
       throw await de_ValidationExceptionRes(parsedOutput, context);
@@ -3746,6 +3782,63 @@ const de_GetEvidenceByEvidenceFolderCommandError = async (
     case "ResourceNotFoundException":
     case "com.amazonaws.auditmanager#ResourceNotFoundException":
       throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.auditmanager#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1GetEvidenceFileUploadUrlCommand
+ */
+export const de_GetEvidenceFileUploadUrlCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetEvidenceFileUploadUrlCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetEvidenceFileUploadUrlCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    evidenceFileName: __expectString,
+    uploadUrl: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetEvidenceFileUploadUrlCommandError
+ */
+const de_GetEvidenceFileUploadUrlCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetEvidenceFileUploadUrlCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.auditmanager#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.auditmanager#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.auditmanager#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
     case "ValidationException":
     case "com.amazonaws.auditmanager#ValidationException":
       throw await de_ValidationExceptionRes(parsedOutput, context);
@@ -5784,6 +5877,8 @@ const de_ValidationExceptionRes = async (parsedOutput: any, context: __SerdeCont
 
 // se_CreateDelegationRequests omitted.
 
+// se_DefaultExportDestination omitted.
+
 // se_DelegationIds omitted.
 
 // se_DeregistrationPolicy omitted.
@@ -6310,6 +6405,8 @@ const de_ControlSets = (output: any, context: __SerdeContext): ControlSet[] => {
 
 // de_CreateDelegationRequest omitted.
 
+// de_DefaultExportDestination omitted.
+
 /**
  * deserializeAws_restJson1Delegation
  */
@@ -6559,14 +6656,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

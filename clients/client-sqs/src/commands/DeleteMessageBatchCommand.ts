@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { DeleteMessageBatchRequest, DeleteMessageBatchResult } from "../models/models_0";
 import { de_DeleteMessageBatchCommand, se_DeleteMessageBatchCommand } from "../protocols/Aws_query";
 import { ServiceInputTypes, ServiceOutputTypes, SQSClientResolvedConfig } from "../SQSClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,18 +36,13 @@ export interface DeleteMessageBatchCommandOutput extends DeleteMessageBatchResul
 
 /**
  * @public
- * <p>Deletes up to ten messages from the specified queue. This is a batch version of <code>
- *                <a>DeleteMessage</a>.</code> The result of the action on each message is reported individually in the response.</p>
+ * <p>Deletes up to ten messages from the specified queue. This is a batch version of
+ *                     <code>
+ *                <a>DeleteMessage</a>.</code> The result of the action on each
+ *             message is reported individually in the response.</p>
  *          <important>
  *             <p>Because the batch request can result in a combination of successful and unsuccessful actions, you should check for batch errors even when the call returns an HTTP status code of <code>200</code>.</p>
  *          </important>
- *          <p>Some actions take lists of parameters. These lists are specified using the <code>param.n</code> notation. Values of <code>n</code> are integers starting from 1. For example, a parameter list with two elements looks like this:</p>
- *          <p>
- *             <code>&AttributeName.1=first</code>
- *          </p>
- *          <p>
- *             <code>&AttributeName.2=second</code>
- *          </p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -92,7 +91,8 @@ export interface DeleteMessageBatchCommandOutput extends DeleteMessageBatchResul
  *  <p>The batch request doesn't contain any entries.</p>
  *
  * @throws {@link InvalidBatchEntryId} (client fault)
- *  <p>The <code>Id</code> of a batch entry in a batch request doesn't abide by the specification.</p>
+ *  <p>The <code>Id</code> of a batch entry in a batch request doesn't abide by the
+ *             specification.</p>
  *
  * @throws {@link TooManyEntriesInBatchRequest} (client fault)
  *  <p>The batch request contains more entries than permissible.</p>

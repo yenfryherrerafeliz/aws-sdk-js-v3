@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -18,12 +19,12 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import {
@@ -110,6 +111,11 @@ import {
   CreateMitigationActionCommandOutput,
 } from "../commands/CreateMitigationActionCommand";
 import { CreateOTAUpdateCommandInput, CreateOTAUpdateCommandOutput } from "../commands/CreateOTAUpdateCommand";
+import { CreatePackageCommandInput, CreatePackageCommandOutput } from "../commands/CreatePackageCommand";
+import {
+  CreatePackageVersionCommandInput,
+  CreatePackageVersionCommandOutput,
+} from "../commands/CreatePackageVersionCommand";
 import { CreatePolicyCommandInput, CreatePolicyCommandOutput } from "../commands/CreatePolicyCommand";
 import {
   CreatePolicyVersionCommandInput,
@@ -179,6 +185,11 @@ import {
   DeleteMitigationActionCommandOutput,
 } from "../commands/DeleteMitigationActionCommand";
 import { DeleteOTAUpdateCommandInput, DeleteOTAUpdateCommandOutput } from "../commands/DeleteOTAUpdateCommand";
+import { DeletePackageCommandInput, DeletePackageCommandOutput } from "../commands/DeletePackageCommand";
+import {
+  DeletePackageVersionCommandInput,
+  DeletePackageVersionCommandOutput,
+} from "../commands/DeletePackageVersionCommand";
 import { DeletePolicyCommandInput, DeletePolicyCommandOutput } from "../commands/DeletePolicyCommand";
 import {
   DeletePolicyVersionCommandInput,
@@ -353,6 +364,12 @@ import {
 import { GetJobDocumentCommandInput, GetJobDocumentCommandOutput } from "../commands/GetJobDocumentCommand";
 import { GetLoggingOptionsCommandInput, GetLoggingOptionsCommandOutput } from "../commands/GetLoggingOptionsCommand";
 import { GetOTAUpdateCommandInput, GetOTAUpdateCommandOutput } from "../commands/GetOTAUpdateCommand";
+import { GetPackageCommandInput, GetPackageCommandOutput } from "../commands/GetPackageCommand";
+import {
+  GetPackageConfigurationCommandInput,
+  GetPackageConfigurationCommandOutput,
+} from "../commands/GetPackageConfigurationCommand";
+import { GetPackageVersionCommandInput, GetPackageVersionCommandOutput } from "../commands/GetPackageVersionCommand";
 import { GetPercentilesCommandInput, GetPercentilesCommandOutput } from "../commands/GetPercentilesCommand";
 import { GetPolicyCommandInput, GetPolicyCommandOutput } from "../commands/GetPolicyCommand";
 import { GetPolicyVersionCommandInput, GetPolicyVersionCommandOutput } from "../commands/GetPolicyVersionCommand";
@@ -440,6 +457,11 @@ import {
   ListOutgoingCertificatesCommandInput,
   ListOutgoingCertificatesCommandOutput,
 } from "../commands/ListOutgoingCertificatesCommand";
+import { ListPackagesCommandInput, ListPackagesCommandOutput } from "../commands/ListPackagesCommand";
+import {
+  ListPackageVersionsCommandInput,
+  ListPackageVersionsCommandOutput,
+} from "../commands/ListPackageVersionsCommand";
 import { ListPoliciesCommandInput, ListPoliciesCommandOutput } from "../commands/ListPoliciesCommand";
 import {
   ListPolicyPrincipalsCommandInput,
@@ -647,6 +669,15 @@ import {
   UpdateMitigationActionCommandInput,
   UpdateMitigationActionCommandOutput,
 } from "../commands/UpdateMitigationActionCommand";
+import { UpdatePackageCommandInput, UpdatePackageCommandOutput } from "../commands/UpdatePackageCommand";
+import {
+  UpdatePackageConfigurationCommandInput,
+  UpdatePackageConfigurationCommandOutput,
+} from "../commands/UpdatePackageConfigurationCommand";
+import {
+  UpdatePackageVersionCommandInput,
+  UpdatePackageVersionCommandOutput,
+} from "../commands/UpdatePackageVersionCommand";
 import {
   UpdateProvisioningTemplateCommandInput,
   UpdateProvisioningTemplateCommandOutput,
@@ -736,6 +767,7 @@ import {
   IndexNotReadyException,
   InternalException,
   InternalFailureException,
+  InternalServerException,
   InvalidAggregationException,
   InvalidQueryException,
   InvalidRequestException,
@@ -781,6 +813,7 @@ import {
   S3Location,
   SalesforceAction,
   SchedulingConfig,
+  ServiceQuotaExceededException,
   ServiceUnavailableException,
   SigningProfileParameter,
   SigV4Authorization,
@@ -808,6 +841,7 @@ import {
   UpdateCACertificateParams,
   UpdateDeviceCertificateParams,
   UserProperty,
+  ValidationException,
   VersionConflictException,
   VersionsLimitExceededException,
   VpcDestinationConfiguration,
@@ -827,7 +861,6 @@ import {
   DetectMitigationActionsTaskTarget,
   Field,
   IndexingFilter,
-  InternalServerException,
   Job,
   JobExecution,
   JobExecutionSummary,
@@ -841,10 +874,10 @@ import {
   OTAUpdateInfo,
   OTAUpdateSummary,
   OutgoingCertificate,
+  PackageSummary,
+  PackageVersionSummary,
   PercentPair,
   PolicyVersion,
-  ProvisioningTemplateSummary,
-  ProvisioningTemplateVersionSummary,
   RegistrationConfig,
   RoleAliasDescription,
   Statistics,
@@ -856,6 +889,7 @@ import {
   ThingTypeMetadata,
   TopicRule,
   TransferData,
+  VersionUpdateByJobsConfig,
   ViolationEventOccurrenceRange,
 } from "../models/models_1";
 import {
@@ -865,6 +899,8 @@ import {
   LoggingOptionsPayload,
   LogTarget,
   MqttContext,
+  ProvisioningTemplateSummary,
+  ProvisioningTemplateVersionSummary,
   RegistrationCodeValidationException,
   ResourceRegistrationFailureException,
   TaskAlreadyExistsException,
@@ -1729,6 +1765,7 @@ export const se_CreateJobCommand = async (
     take(input, {
       abortConfig: (_) => se_AbortConfig(_, context),
       description: [],
+      destinationPackageVersions: (_) => _json(_),
       document: [],
       documentParameters: (_) => _json(_),
       documentSource: [],
@@ -1781,6 +1818,7 @@ export const se_CreateJobTemplateCommand = async (
     take(input, {
       abortConfig: (_) => se_AbortConfig(_, context),
       description: [],
+      destinationPackageVersions: (_) => _json(_),
       document: [],
       documentSource: [],
       jobArn: [],
@@ -1900,6 +1938,80 @@ export const se_CreateOTAUpdateCommand = async (
     method: "POST",
     headers,
     path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1CreatePackageCommand
+ */
+export const se_CreatePackageCommand = async (
+  input: CreatePackageCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/packages/{packageName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "packageName", () => input.packageName!, "{packageName}", false);
+  const query: any = map({
+    clientToken: [, input.clientToken ?? generateIdempotencyToken()],
+  });
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      description: [],
+      tags: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PUT",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1CreatePackageVersionCommand
+ */
+export const se_CreatePackageVersionCommand = async (
+  input: CreatePackageVersionCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/packages/{packageName}/versions/{versionName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "packageName", () => input.packageName!, "{packageName}", false);
+  resolvedPath = __resolvedPath(resolvedPath, input, "versionName", () => input.versionName!, "{versionName}", false);
+  const query: any = map({
+    clientToken: [, input.clientToken ?? generateIdempotencyToken()],
+  });
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      attributes: (_) => _json(_),
+      description: [],
+      tags: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PUT",
+    headers,
+    path: resolvedPath,
+    query,
     body,
   });
 };
@@ -2878,6 +2990,63 @@ export const se_DeleteOTAUpdateCommand = async (
   const query: any = map({
     deleteStream: [() => input.deleteStream !== void 0, () => input.deleteStream!.toString()],
     forceDeleteAWSJob: [() => input.forceDeleteAWSJob !== void 0, () => input.forceDeleteAWSJob!.toString()],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "DELETE",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1DeletePackageCommand
+ */
+export const se_DeletePackageCommand = async (
+  input: DeletePackageCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/packages/{packageName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "packageName", () => input.packageName!, "{packageName}", false);
+  const query: any = map({
+    clientToken: [, input.clientToken ?? generateIdempotencyToken()],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "DELETE",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1DeletePackageVersionCommand
+ */
+export const se_DeletePackageVersionCommand = async (
+  input: DeletePackageVersionCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/packages/{packageName}/versions/{versionName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "packageName", () => input.packageName!, "{packageName}", false);
+  resolvedPath = __resolvedPath(resolvedPath, input, "versionName", () => input.versionName!, "{versionName}", false);
+  const query: any = map({
+    clientToken: [, input.clientToken ?? generateIdempotencyToken()],
   });
   let body: any;
   return new __HttpRequest({
@@ -4664,6 +4833,80 @@ export const se_GetOTAUpdateCommand = async (
 };
 
 /**
+ * serializeAws_restJson1GetPackageCommand
+ */
+export const se_GetPackageCommand = async (
+  input: GetPackageCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/packages/{packageName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "packageName", () => input.packageName!, "{packageName}", false);
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1GetPackageConfigurationCommand
+ */
+export const se_GetPackageConfigurationCommand = async (
+  input: GetPackageConfigurationCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/package-configuration";
+  let body: any;
+  body = "";
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1GetPackageVersionCommand
+ */
+export const se_GetPackageVersionCommand = async (
+  input: GetPackageVersionCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/packages/{packageName}/versions/{versionName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "packageName", () => input.packageName!, "{packageName}", false);
+  resolvedPath = __resolvedPath(resolvedPath, input, "versionName", () => input.versionName!, "{versionName}", false);
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1GetPercentilesCommand
  */
 export const se_GetPercentilesCommand = async (
@@ -5736,6 +5979,63 @@ export const se_ListOutgoingCertificatesCommand = async (
     pageSize: [() => input.pageSize !== void 0, () => input.pageSize!.toString()],
     marker: [, input.marker!],
     isAscendingOrder: [() => input.ascendingOrder !== void 0, () => input.ascendingOrder!.toString()],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ListPackagesCommand
+ */
+export const se_ListPackagesCommand = async (
+  input: ListPackagesCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/packages";
+  const query: any = map({
+    maxResults: [() => input.maxResults !== void 0, () => input.maxResults!.toString()],
+    nextToken: [, input.nextToken!],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ListPackageVersionsCommand
+ */
+export const se_ListPackageVersionsCommand = async (
+  input: ListPackageVersionsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/packages/{packageName}/versions";
+  resolvedPath = __resolvedPath(resolvedPath, input, "packageName", () => input.packageName!, "{packageName}", false);
+  const query: any = map({
+    status: [, input.status!],
+    maxResults: [() => input.maxResults !== void 0, () => input.maxResults!.toString()],
+    nextToken: [, input.nextToken!],
   });
   let body: any;
   return new __HttpRequest({
@@ -7998,6 +8298,114 @@ export const se_UpdateMitigationActionCommand = async (
 };
 
 /**
+ * serializeAws_restJson1UpdatePackageCommand
+ */
+export const se_UpdatePackageCommand = async (
+  input: UpdatePackageCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/packages/{packageName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "packageName", () => input.packageName!, "{packageName}", false);
+  const query: any = map({
+    clientToken: [, input.clientToken ?? generateIdempotencyToken()],
+  });
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      defaultVersionName: [],
+      description: [],
+      unsetDefaultVersion: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PATCH",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1UpdatePackageConfigurationCommand
+ */
+export const se_UpdatePackageConfigurationCommand = async (
+  input: UpdatePackageConfigurationCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/package-configuration";
+  const query: any = map({
+    clientToken: [, input.clientToken ?? generateIdempotencyToken()],
+  });
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      versionUpdateByJobsConfig: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PATCH",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1UpdatePackageVersionCommand
+ */
+export const se_UpdatePackageVersionCommand = async (
+  input: UpdatePackageVersionCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/packages/{packageName}/versions/{versionName}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "packageName", () => input.packageName!, "{packageName}", false);
+  resolvedPath = __resolvedPath(resolvedPath, input, "versionName", () => input.versionName!, "{versionName}", false);
+  const query: any = map({
+    clientToken: [, input.clientToken ?? generateIdempotencyToken()],
+  });
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      action: [],
+      attributes: (_) => _json(_),
+      description: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PATCH",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1UpdateProvisioningTemplateCommand
  */
 export const se_UpdateProvisioningTemplateCommand = async (
@@ -10172,6 +10580,132 @@ const de_CreateOTAUpdateCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1CreatePackageCommand
+ */
+export const de_CreatePackageCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreatePackageCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CreatePackageCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    description: __expectString,
+    packageArn: __expectString,
+    packageName: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1CreatePackageCommandError
+ */
+const de_CreatePackageCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreatePackageCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "ConflictException":
+    case "com.amazonaws.iot#ConflictException":
+      throw await de_ConflictExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ServiceQuotaExceededException":
+    case "com.amazonaws.iot#ServiceQuotaExceededException":
+      throw await de_ServiceQuotaExceededExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.iot#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1CreatePackageVersionCommand
+ */
+export const de_CreatePackageVersionCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreatePackageVersionCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CreatePackageVersionCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    attributes: _json,
+    description: __expectString,
+    errorReason: __expectString,
+    packageName: __expectString,
+    packageVersionArn: __expectString,
+    status: __expectString,
+    versionName: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1CreatePackageVersionCommandError
+ */
+const de_CreatePackageVersionCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreatePackageVersionCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "ConflictException":
+    case "com.amazonaws.iot#ConflictException":
+      throw await de_ConflictExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ServiceQuotaExceededException":
+    case "com.amazonaws.iot#ServiceQuotaExceededException":
+      throw await de_ServiceQuotaExceededExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.iot#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1CreatePolicyCommand
  */
 export const de_CreatePolicyCommand = async (
@@ -11936,6 +12470,104 @@ const de_DeleteOTAUpdateCommandError = async (
     case "VersionConflictException":
     case "com.amazonaws.iot#VersionConflictException":
       throw await de_VersionConflictExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1DeletePackageCommand
+ */
+export const de_DeletePackageCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeletePackageCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_DeletePackageCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1DeletePackageCommandError
+ */
+const de_DeletePackageCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeletePackageCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.iot#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1DeletePackageVersionCommand
+ */
+export const de_DeletePackageVersionCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeletePackageVersionCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_DeletePackageVersionCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1DeletePackageVersionCommandError
+ */
+const de_DeletePackageVersionCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeletePackageVersionCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.iot#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -14086,6 +14718,7 @@ export const de_DescribeJobTemplateCommand = async (
     abortConfig: (_) => de_AbortConfig(_, context),
     createdAt: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     description: __expectString,
+    destinationPackageVersions: _json,
     document: __expectString,
     documentSource: __expectString,
     jobExecutionsRetryConfig: _json,
@@ -15734,6 +16367,181 @@ const de_GetOTAUpdateCommandError = async (
     case "UnauthorizedException":
     case "com.amazonaws.iot#UnauthorizedException":
       throw await de_UnauthorizedExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1GetPackageCommand
+ */
+export const de_GetPackageCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetPackageCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetPackageCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    creationDate: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    defaultVersionName: __expectString,
+    description: __expectString,
+    lastModifiedDate: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    packageArn: __expectString,
+    packageName: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetPackageCommandError
+ */
+const de_GetPackageCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetPackageCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.iot#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.iot#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1GetPackageConfigurationCommand
+ */
+export const de_GetPackageConfigurationCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetPackageConfigurationCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetPackageConfigurationCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    versionUpdateByJobsConfig: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetPackageConfigurationCommandError
+ */
+const de_GetPackageConfigurationCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetPackageConfigurationCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1GetPackageVersionCommand
+ */
+export const de_GetPackageVersionCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetPackageVersionCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetPackageVersionCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    attributes: _json,
+    creationDate: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    description: __expectString,
+    errorReason: __expectString,
+    lastModifiedDate: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    packageName: __expectString,
+    packageVersionArn: __expectString,
+    status: __expectString,
+    versionName: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetPackageVersionCommandError
+ */
+const de_GetPackageVersionCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetPackageVersionCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.iot#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.iot#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -17839,6 +18647,114 @@ const de_ListOutgoingCertificatesCommandError = async (
     case "UnauthorizedException":
     case "com.amazonaws.iot#UnauthorizedException":
       throw await de_UnauthorizedExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1ListPackagesCommand
+ */
+export const de_ListPackagesCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListPackagesCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListPackagesCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    nextToken: __expectString,
+    packageSummaries: (_) => de_PackageSummaryList(_, context),
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListPackagesCommandError
+ */
+const de_ListPackagesCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListPackagesCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.iot#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1ListPackageVersionsCommand
+ */
+export const de_ListPackageVersionsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListPackageVersionsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListPackageVersionsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    nextToken: __expectString,
+    packageVersionSummaries: (_) => de_PackageVersionSummaryList(_, context),
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListPackageVersionsCommandError
+ */
+const de_ListPackageVersionsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListPackageVersionsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.iot#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -21924,6 +22840,159 @@ const de_UpdateMitigationActionCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1UpdatePackageCommand
+ */
+export const de_UpdatePackageCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdatePackageCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_UpdatePackageCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1UpdatePackageCommandError
+ */
+const de_UpdatePackageCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdatePackageCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.iot#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.iot#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1UpdatePackageConfigurationCommand
+ */
+export const de_UpdatePackageConfigurationCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdatePackageConfigurationCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_UpdatePackageConfigurationCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1UpdatePackageConfigurationCommandError
+ */
+const de_UpdatePackageConfigurationCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdatePackageConfigurationCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.iot#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1UpdatePackageVersionCommand
+ */
+export const de_UpdatePackageVersionCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdatePackageVersionCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_UpdatePackageVersionCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1UpdatePackageVersionCommandError
+ */
+const de_UpdatePackageVersionCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdatePackageVersionCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.iot#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.iot#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.iot#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.iot#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1UpdateProvisioningTemplateCommand
  */
 export const de_UpdateProvisioningTemplateCommand = async (
@@ -22580,6 +23649,7 @@ const de_ConflictExceptionRes = async (parsedOutput: any, context: __SerdeContex
   const data: any = parsedOutput.body;
   const doc = take(data, {
     message: __expectString,
+    resourceId: __expectString,
   });
   Object.assign(contents, doc);
   const exception = new ConflictException({
@@ -22949,6 +24019,26 @@ const de_ResourceRegistrationFailureExceptionRes = async (
 };
 
 /**
+ * deserializeAws_restJson1ServiceQuotaExceededExceptionRes
+ */
+const de_ServiceQuotaExceededExceptionRes = async (
+  parsedOutput: any,
+  context: __SerdeContext
+): Promise<ServiceQuotaExceededException> => {
+  const contents: any = map({});
+  const data: any = parsedOutput.body;
+  const doc = take(data, {
+    message: __expectString,
+  });
+  Object.assign(contents, doc);
+  const exception = new ServiceQuotaExceededException({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...contents,
+  });
+  return __decorateServiceException(exception, parsedOutput.body);
+};
+
+/**
  * deserializeAws_restJson1ServiceUnavailableExceptionRes
  */
 const de_ServiceUnavailableExceptionRes = async (
@@ -23076,6 +24166,23 @@ const de_UnauthorizedExceptionRes = async (
   });
   Object.assign(contents, doc);
   const exception = new UnauthorizedException({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...contents,
+  });
+  return __decorateServiceException(exception, parsedOutput.body);
+};
+
+/**
+ * deserializeAws_restJson1ValidationExceptionRes
+ */
+const de_ValidationExceptionRes = async (parsedOutput: any, context: __SerdeContext): Promise<ValidationException> => {
+  const contents: any = map({});
+  const data: any = parsedOutput.body;
+  const doc = take(data, {
+    message: __expectString,
+  });
+  Object.assign(contents, doc);
+  const exception = new ValidationException({
     $metadata: deserializeMetadata(parsedOutput),
     ...contents,
   });
@@ -23358,6 +24465,8 @@ const se_CustomCodeSigning = (input: CustomCodeSigning, context: __SerdeContext)
 
 // se_Destination omitted.
 
+// se_DestinationPackageVersions omitted.
+
 // se_DetailsMap omitted.
 
 // se_DetectMitigationActionsTaskTarget omitted.
@@ -23577,6 +24686,8 @@ const se_PercentList = (input: number[], context: __SerdeContext): any => {
 
 // se_RepublishAction omitted.
 
+// se_ResourceAttributes omitted.
+
 // se_ResourceIdentifier omitted.
 
 // se_Resources omitted.
@@ -23631,6 +24742,8 @@ const se_PercentList = (input: number[], context: __SerdeContext): any => {
 
 // se_TagList omitted.
 
+// se_TagMap omitted.
+
 // se_TargetAuditCheckNames omitted.
 
 // se_Targets omitted.
@@ -23676,6 +24789,8 @@ const se_PercentList = (input: number[], context: __SerdeContext): any => {
 // se_UserProperties omitted.
 
 // se_UserProperty omitted.
+
+// se_VersionUpdateByJobsConfig omitted.
 
 /**
  * serializeAws_restJson1ViolationEventOccurrenceRange
@@ -24221,6 +25336,8 @@ const de_CustomCodeSigning = (output: any, context: __SerdeContext): CustomCodeS
 
 // de_Destination omitted.
 
+// de_DestinationPackageVersions omitted.
+
 // de_DetailsMap omitted.
 
 /**
@@ -24390,6 +25507,7 @@ const de_Job = (output: any, context: __SerdeContext): Job => {
     completedAt: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     createdAt: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     description: __expectString,
+    destinationPackageVersions: _json,
     documentParameters: _json,
     forceCanceled: __expectBoolean,
     isConcurrent: __expectBoolean,
@@ -24782,6 +25900,55 @@ const de_OutgoingCertificates = (output: any, context: __SerdeContext): Outgoing
   return retVal;
 };
 
+/**
+ * deserializeAws_restJson1PackageSummary
+ */
+const de_PackageSummary = (output: any, context: __SerdeContext): PackageSummary => {
+  return take(output, {
+    creationDate: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    defaultVersionName: __expectString,
+    lastModifiedDate: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    packageName: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1PackageSummaryList
+ */
+const de_PackageSummaryList = (output: any, context: __SerdeContext): PackageSummary[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_PackageSummary(entry, context);
+    });
+  return retVal;
+};
+
+/**
+ * deserializeAws_restJson1PackageVersionSummary
+ */
+const de_PackageVersionSummary = (output: any, context: __SerdeContext): PackageVersionSummary => {
+  return take(output, {
+    creationDate: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    lastModifiedDate: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    packageName: __expectString,
+    status: __expectString,
+    versionName: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1PackageVersionSummaryList
+ */
+const de_PackageVersionSummaryList = (output: any, context: __SerdeContext): PackageVersionSummary[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_PackageVersionSummary(entry, context);
+    });
+  return retVal;
+};
+
 // de_ParameterMap omitted.
 
 /**
@@ -24932,6 +26099,8 @@ const de_ProvisioningTemplateVersionSummary = (
 // de_RepublishAction omitted.
 
 // de_ResourceArns omitted.
+
+// de_ResourceAttributes omitted.
 
 // de_ResourceIdentifier omitted.
 
@@ -25272,6 +26441,8 @@ const de_TransferData = (output: any, context: __SerdeContext): TransferData => 
 
 // de_ValidationErrors omitted.
 
+// de_VersionUpdateByJobsConfig omitted.
+
 /**
  * deserializeAws_restJson1ViolationEvent
  */
@@ -25325,14 +26496,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

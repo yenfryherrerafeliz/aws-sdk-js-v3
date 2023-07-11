@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-kendra
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-kendra/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-kendra)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-kendra.svg)](https://www.npmjs.com/package/@aws-sdk/client-kendra)
-
 ## Description
 
 AWS SDK for JavaScript Kendra Client for Node.js, Browser and React Native.
@@ -620,6 +617,14 @@ Query
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kendra/classes/querycommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kendra/interfaces/querycommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kendra/interfaces/querycommandoutput.html)
+
+</details>
+<details>
+<summary>
+Retrieve
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kendra/classes/retrievecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kendra/interfaces/retrievecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kendra/interfaces/retrievecommandoutput.html)
 
 </details>
 <details>

@@ -3,15 +3,25 @@ import {
   BatchExecuteStatementCommand as __BatchExecuteStatementCommand,
   BatchExecuteStatementCommandInput as __BatchExecuteStatementCommandInput,
   BatchExecuteStatementCommandOutput as __BatchExecuteStatementCommandOutput,
+  BatchStatementError,
   BatchStatementRequest,
   BatchStatementResponse,
 } from "@aws-sdk/client-dynamodb";
-import { Handler, HttpHandlerOptions as __HttpHandlerOptions, MiddlewareStack } from "@aws-sdk/types";
 import { NativeAttributeValue } from "@aws-sdk/util-dynamodb";
+import { Command as $Command } from "@smithy/smithy-client";
+import { Handler, HttpHandlerOptions as __HttpHandlerOptions, MiddlewareStack } from "@smithy/types";
 
 import { DynamoDBDocumentClientCommand } from "../baseCommand/DynamoDBDocumentClientCommand";
 import { DynamoDBDocumentClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DynamoDBDocumentClient";
 
+/**
+ * @public
+ */
+export { DynamoDBDocumentClientCommand, $Command };
+
+/**
+ * @public
+ */
 export type BatchExecuteStatementCommandInput = Omit<__BatchExecuteStatementCommandInput, "Statements"> & {
   Statements:
     | (Omit<BatchStatementRequest, "Parameters"> & {
@@ -20,18 +30,26 @@ export type BatchExecuteStatementCommandInput = Omit<__BatchExecuteStatementComm
     | undefined;
 };
 
+/**
+ * @public
+ */
 export type BatchExecuteStatementCommandOutput = Omit<__BatchExecuteStatementCommandOutput, "Responses"> & {
-  Responses?: (Omit<BatchStatementResponse, "Item"> & {
+  Responses?: (Omit<BatchStatementResponse, "Error" | "Item"> & {
+    Error?: Omit<BatchStatementError, "Item"> & {
+      Item?: Record<string, NativeAttributeValue>;
+    };
     Item?: Record<string, NativeAttributeValue>;
   })[];
 };
 
 /**
  * Accepts native JavaScript types instead of `AttributeValue`s, and calls
- * BatchExecuteStatementCommand operation from {@link https://www.npmjs.com/package/@aws-sdk/client-dynamodb @aws-sdk/client-dynamodb}.
+ * BatchExecuteStatementCommand operation from {@link @aws-sdk/client-dynamodb#BatchExecuteStatementCommand}.
  *
  * JavaScript objects passed in as parameters are marshalled into `AttributeValue` shapes
  * required by Amazon DynamoDB. Responses from DynamoDB are unmarshalled into plain JavaScript objects.
+ *
+ * @public
  */
 export class BatchExecuteStatementCommand extends DynamoDBDocumentClientCommand<
   BatchExecuteStatementCommandInput,
@@ -41,7 +59,9 @@ export class BatchExecuteStatementCommand extends DynamoDBDocumentClientCommand<
   DynamoDBDocumentClientResolvedConfig
 > {
   protected readonly inputKeyNodes = [{ key: "Statements", children: [{ key: "Parameters" }] }];
-  protected readonly outputKeyNodes = [{ key: "Responses", children: [{ key: "Item" }] }];
+  protected readonly outputKeyNodes = [
+    { key: "Responses", children: [{ key: "Error", children: [{ key: "Item" }] }, { key: "Item" }] },
+  ];
 
   protected readonly clientCommand: __BatchExecuteStatementCommand;
   public readonly middlewareStack: MiddlewareStack<

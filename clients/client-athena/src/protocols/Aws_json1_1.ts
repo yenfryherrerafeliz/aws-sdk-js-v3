@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectInt32 as __expectInt32,
   expectLong as __expectLong,
@@ -11,13 +12,13 @@ import {
   parseEpochTimestamp as __parseEpochTimestamp,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import { BatchGetNamedQueryCommandInput, BatchGetNamedQueryCommandOutput } from "../commands/BatchGetNamedQueryCommand";
@@ -49,6 +50,10 @@ import {
   CreatePresignedNotebookUrlCommandOutput,
 } from "../commands/CreatePresignedNotebookUrlCommand";
 import { CreateWorkGroupCommandInput, CreateWorkGroupCommandOutput } from "../commands/CreateWorkGroupCommand";
+import {
+  DeleteCapacityReservationCommandInput,
+  DeleteCapacityReservationCommandOutput,
+} from "../commands/DeleteCapacityReservationCommand";
 import { DeleteDataCatalogCommandInput, DeleteDataCatalogCommandOutput } from "../commands/DeleteDataCatalogCommand";
 import { DeleteNamedQueryCommandInput, DeleteNamedQueryCommandOutput } from "../commands/DeleteNamedQueryCommand";
 import { DeleteNotebookCommandInput, DeleteNotebookCommandOutput } from "../commands/DeleteNotebookCommand";
@@ -200,6 +205,7 @@ import {
   CreatePresignedNotebookUrlRequest,
   CreateWorkGroupInput,
   CustomerContentEncryptionConfiguration,
+  DeleteCapacityReservationInput,
   DeleteDataCatalogInput,
   DeleteNamedQueryInput,
   DeleteNotebookInput,
@@ -448,6 +454,19 @@ export const se_CreateWorkGroupCommand = async (
   context: __SerdeContext
 ): Promise<__HttpRequest> => {
   const headers: __HeaderBag = sharedHeaders("CreateWorkGroup");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1DeleteCapacityReservationCommand
+ */
+export const se_DeleteCapacityReservationCommand = async (
+  input: DeleteCapacityReservationCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("DeleteCapacityReservation");
   let body: any;
   body = JSON.stringify(_json(input));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -1704,6 +1723,55 @@ const de_CreateWorkGroupCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<CreateWorkGroupCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.athena#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "InvalidRequestException":
+    case "com.amazonaws.athena#InvalidRequestException":
+      throw await de_InvalidRequestExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_json1_1DeleteCapacityReservationCommand
+ */
+export const de_DeleteCapacityReservationCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteCapacityReservationCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DeleteCapacityReservationCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: DeleteCapacityReservationCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1DeleteCapacityReservationCommandError
+ */
+const de_DeleteCapacityReservationCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteCapacityReservationCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -4712,6 +4780,8 @@ const se_CreateNamedQueryInput = (input: CreateNamedQueryInput, context: __Serde
 
 // se_CustomerContentEncryptionConfiguration omitted.
 
+// se_DeleteCapacityReservationInput omitted.
+
 // se_DeleteDataCatalogInput omitted.
 
 /**
@@ -5044,6 +5114,8 @@ const de_CapacityReservationsList = (output: any, context: __SerdeContext): Capa
 // de_Datum omitted.
 
 // de_datumList omitted.
+
+// de_DeleteCapacityReservationOutput omitted.
 
 // de_DeleteDataCatalogOutput omitted.
 
@@ -5731,14 +5803,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { AthenaServiceException as __BaseException } from "./AthenaServiceException";
 
@@ -705,7 +705,7 @@ export interface QueryExecution {
 
   /**
    * <p>A list of values for the parameters in a query. The values are applied sequentially to
-   *             the parameters in the query in the order in which the parameters occur.</p>
+   *             the parameters in the query in the order in which the parameters occur. The list of parameters is not returned in the response.</p>
    */
   ExecutionParameters?: string[];
 
@@ -1167,7 +1167,7 @@ export class ResourceNotFoundException extends __BaseException {
 
 /**
  * @public
- * <p>Specifies the KMS key that is used to encrypt the user's data stores in Athena.</p>
+ * <p>Specifies the KMS key that is used to encrypt the user's data stores in Athena. This setting does not apply to Athena SQL workgroups.</p>
  */
 export interface CustomerContentEncryptionConfiguration {
   /**
@@ -1243,7 +1243,7 @@ export interface WorkGroupConfiguration {
   ExecutionRole?: string;
 
   /**
-   * <p>Specifies the KMS key that is used to encrypt the user's data stores in Athena.</p>
+   * <p>Specifies the KMS key that is used to encrypt the user's data stores in Athena. This setting does not apply to Athena SQL workgroups.</p>
    */
   CustomerContentEncryptionConfiguration?: CustomerContentEncryptionConfiguration;
 
@@ -1292,6 +1292,21 @@ export interface CreateWorkGroupInput {
  * @public
  */
 export interface CreateWorkGroupOutput {}
+
+/**
+ * @public
+ */
+export interface DeleteCapacityReservationInput {
+  /**
+   * <p>The name of the capacity reservation to delete.</p>
+   */
+  Name: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DeleteCapacityReservationOutput {}
 
 /**
  * @public
@@ -2389,6 +2404,11 @@ export interface EngineConfiguration {
    *                 Athena notebook ID.</p>
    */
   AdditionalConfigs?: Record<string, string>;
+
+  /**
+   * <p>Specifies custom jar files and Spark properties for use cases like cluster encryption, table formats, and general Spark tuning.</p>
+   */
+  SparkProperties?: Record<string, string>;
 }
 
 /**
@@ -4512,7 +4532,7 @@ export interface WorkGroupConfigurationUpdates {
   EngineVersion?: EngineVersion;
 
   /**
-   * <p>Removes content encryption configuration for a workgroup.</p>
+   * <p>Removes content encryption configuration from an Apache Spark-enabled Athena workgroup.</p>
    */
   RemoveCustomerContentEncryptionConfiguration?: boolean;
 
@@ -4527,7 +4547,7 @@ export interface WorkGroupConfigurationUpdates {
   ExecutionRole?: string;
 
   /**
-   * <p>Specifies the KMS key that is used to encrypt the user's data stores in Athena.</p>
+   * <p>Specifies the KMS key that is used to encrypt the user's data stores in Athena. This setting does not apply to Athena SQL workgroups.</p>
    */
   CustomerContentEncryptionConfiguration?: CustomerContentEncryptionConfiguration;
 

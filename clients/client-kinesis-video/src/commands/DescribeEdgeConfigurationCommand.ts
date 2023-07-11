@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { KinesisVideoClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KinesisVideoClient";
 import {
@@ -21,6 +21,10 @@ import {
 } from "../models/models_0";
 import { de_DescribeEdgeConfigurationCommand, se_DescribeEdgeConfigurationCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,9 +40,11 @@ export interface DescribeEdgeConfigurationCommandOutput extends DescribeEdgeConf
 
 /**
  * @public
- * <p>Describes a stream’s edge configuration that was set using the <code>StartEdgeConfigurationUpdate</code> API.
- *              Use this API to get the status of the configuration if the configuration is in sync with the
- *             Edge Agent.</p>
+ * <p>Describes a stream’s edge configuration that was set using the
+ *                 <code>StartEdgeConfigurationUpdate</code> API and the latest status of the edge
+ *             agent's recorder and uploader jobs. Use this API to get the status of the configuration
+ *             to determine if the configuration is in sync with the Edge Agent. Use this API to
+ *             evaluate the health of the Edge Agent.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -56,7 +62,7 @@ export interface DescribeEdgeConfigurationCommandOutput extends DescribeEdgeConf
  * //   StreamARN: "STRING_VALUE",
  * //   CreationTime: new Date("TIMESTAMP"),
  * //   LastUpdatedTime: new Date("TIMESTAMP"),
- * //   SyncStatus: "SYNCING" || "ACKNOWLEDGED" || "IN_SYNC" || "SYNC_FAILED" || "DELETING" || "DELETE_FAILED",
+ * //   SyncStatus: "SYNCING" || "ACKNOWLEDGED" || "IN_SYNC" || "SYNC_FAILED" || "DELETING" || "DELETE_FAILED" || "DELETING_ACKNOWLEDGED",
  * //   FailedStatusDetails: "STRING_VALUE",
  * //   EdgeConfig: { // EdgeConfig
  * //     HubDeviceArn: "STRING_VALUE", // required
@@ -83,6 +89,20 @@ export interface DescribeEdgeConfigurationCommandOutput extends DescribeEdgeConf
  * //         StrategyOnFullSize: "DELETE_OLDEST_MEDIA" || "DENY_NEW_MEDIA",
  * //       },
  * //       DeleteAfterUpload: true || false,
+ * //     },
+ * //   },
+ * //   EdgeAgentStatus: { // EdgeAgentStatus
+ * //     LastRecorderStatus: { // LastRecorderStatus
+ * //       JobStatusDetails: "STRING_VALUE",
+ * //       LastCollectedTime: new Date("TIMESTAMP"),
+ * //       LastUpdatedTime: new Date("TIMESTAMP"),
+ * //       RecorderStatus: "SUCCESS" || "USER_ERROR" || "SYSTEM_ERROR",
+ * //     },
+ * //     LastUploaderStatus: { // LastUploaderStatus
+ * //       JobStatusDetails: "STRING_VALUE",
+ * //       LastCollectedTime: new Date("TIMESTAMP"),
+ * //       LastUpdatedTime: new Date("TIMESTAMP"),
+ * //       UploaderStatus: "SUCCESS" || "USER_ERROR" || "SYSTEM_ERROR",
  * //     },
  * //   },
  * // };

@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
 import { getAwsAuthPlugin } from "@aws-sdk/middleware-signing";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,7 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CognitoIdentityProviderClientResolvedConfig,
@@ -27,6 +27,10 @@ import {
 } from "../models/models_1";
 import { de_UpdateUserPoolClientCommand, se_UpdateUserPoolClientCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -44,11 +48,11 @@ export interface UpdateUserPoolClientCommandOutput extends UpdateUserPoolClientR
  * @public
  * <p>Updates the specified user pool app client with the specified attributes. You can get
  *             a list of the current user pool app client settings using <a href="https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_DescribeUserPoolClient.html">DescribeUserPoolClient</a>.</p>
- *         <important>
+ *          <important>
  *             <p>If you don't provide a value for an attribute, it will be set to the default
  *                 value.</p>
- *         </important>
- *         <p>You can also use this operation to enable token revocation for user pool clients. For
+ *          </important>
+ *          <p>You can also use this operation to enable token revocation for user pool clients. For
  *             more information about revoking tokens, see <a href="https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html">RevokeToken</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.

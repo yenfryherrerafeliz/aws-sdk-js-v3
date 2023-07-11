@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { FMSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FMSClient";
 import { ListAdminAccountsForOrganizationRequest, ListAdminAccountsForOrganizationResponse } from "../models/models_0";
@@ -20,6 +20,10 @@ import {
   se_ListAdminAccountsForOrganizationCommand,
 } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -80,6 +84,12 @@ export interface ListAdminAccountsForOrganizationCommandOutput
  *             was already set as the Firewall Manager administrator. Or you might have tried to access a Region
  *   that's disabled by default, and that you need to enable for the Firewall Manager
  *   administrator account and for Organizations before you can access it.</p>
+ *
+ * @throws {@link LimitExceededException} (client fault)
+ *  <p>The operation exceeds a resource limit, for example, the maximum number of
+ *         <code>policy</code> objects that you can create for an Amazon Web Services account. For more information,
+ *       see <a href="https://docs.aws.amazon.com/waf/latest/developerguide/fms-limits.html">Firewall
+ *         Manager Limits</a> in the <i>WAF Developer Guide</i>.</p>
  *
  * @throws {@link ResourceNotFoundException} (client fault)
  *  <p>The specified resource was not found.</p>

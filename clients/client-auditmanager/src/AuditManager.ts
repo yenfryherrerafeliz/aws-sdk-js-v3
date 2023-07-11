@@ -1,6 +1,6 @@
 // smithy-typescript generated code
-import { createAggregatedClient } from "@aws-sdk/smithy-client";
-import { HttpHandlerOptions as __HttpHandlerOptions } from "@aws-sdk/types";
+import { createAggregatedClient } from "@smithy/smithy-client";
+import { HttpHandlerOptions as __HttpHandlerOptions } from "@smithy/types";
 
 import { AuditManagerClient, AuditManagerClientConfig } from "./AuditManagerClient";
 import {
@@ -130,6 +130,11 @@ import {
   GetEvidenceByEvidenceFolderCommandOutput,
 } from "./commands/GetEvidenceByEvidenceFolderCommand";
 import { GetEvidenceCommand, GetEvidenceCommandInput, GetEvidenceCommandOutput } from "./commands/GetEvidenceCommand";
+import {
+  GetEvidenceFileUploadUrlCommand,
+  GetEvidenceFileUploadUrlCommandInput,
+  GetEvidenceFileUploadUrlCommandOutput,
+} from "./commands/GetEvidenceFileUploadUrlCommand";
 import {
   GetEvidenceFolderCommand,
   GetEvidenceFolderCommandInput,
@@ -317,6 +322,7 @@ const commands = {
   GetDelegationsCommand,
   GetEvidenceCommand,
   GetEvidenceByEvidenceFolderCommand,
+  GetEvidenceFileUploadUrlCommand,
   GetEvidenceFolderCommand,
   GetEvidenceFoldersByAssessmentCommand,
   GetEvidenceFoldersByAssessmentControlCommand,
@@ -772,6 +778,23 @@ export interface AuditManager {
     args: GetEvidenceByEvidenceFolderCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: GetEvidenceByEvidenceFolderCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link GetEvidenceFileUploadUrlCommand}
+   */
+  getEvidenceFileUploadUrl(
+    args: GetEvidenceFileUploadUrlCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<GetEvidenceFileUploadUrlCommandOutput>;
+  getEvidenceFileUploadUrl(
+    args: GetEvidenceFileUploadUrlCommandInput,
+    cb: (err: any, data?: GetEvidenceFileUploadUrlCommandOutput) => void
+  ): void;
+  getEvidenceFileUploadUrl(
+    args: GetEvidenceFileUploadUrlCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: GetEvidenceFileUploadUrlCommandOutput) => void
   ): void;
 
   /**

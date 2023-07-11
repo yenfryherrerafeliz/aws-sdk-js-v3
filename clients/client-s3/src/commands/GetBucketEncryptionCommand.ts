@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   GetBucketEncryptionOutput,
@@ -21,6 +21,10 @@ import {
 import { de_GetBucketEncryptionCommand, se_GetBucketEncryptionCommand } from "../protocols/Aws_restXml";
 import { S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../S3Client";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,9 +40,9 @@ export interface GetBucketEncryptionCommandOutput extends GetBucketEncryptionOut
 
 /**
  * @public
- * <p>Returns the default encryption configuration for an Amazon S3 bucket. By default, all buckets have a default encryption configuration that
- *          uses server-side encryption with Amazon S3 managed keys (SSE-S3). For information
- *          about the bucket default encryption feature, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html">Amazon S3 Bucket
+ * <p>Returns the default encryption configuration for an Amazon S3 bucket. By default, all buckets
+ *          have a default encryption configuration that uses server-side encryption with Amazon S3 managed
+ *          keys (SSE-S3). For information about the bucket default encryption feature, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html">Amazon S3 Bucket
  *             Default Encryption</a> in the <i>Amazon S3 User Guide</i>.</p>
  *          <p>To use this operation, you must have permission to perform the
  *             <code>s3:GetEncryptionConfiguration</code> action. The bucket owner has this permission
@@ -75,7 +79,7 @@ export interface GetBucketEncryptionCommandOutput extends GetBucketEncryptionOut
  * //     Rules: [ // ServerSideEncryptionRules // required
  * //       { // ServerSideEncryptionRule
  * //         ApplyServerSideEncryptionByDefault: { // ServerSideEncryptionByDefault
- * //           SSEAlgorithm: "AES256" || "aws:kms", // required
+ * //           SSEAlgorithm: "AES256" || "aws:kms" || "aws:kms:dsse", // required
  * //           KMSMasterKeyID: "STRING_VALUE",
  * //         },
  * //         BucketKeyEnabled: true || false,

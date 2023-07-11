@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { UpdateShareInvitationInput, UpdateShareInvitationOutput } from "../models/models_0";
 import { de_UpdateShareInvitationCommand, se_UpdateShareInvitationCommand } from "../protocols/Aws_restJson1";
 import { ServiceInputTypes, ServiceOutputTypes, WellArchitectedClientResolvedConfig } from "../WellArchitectedClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -51,10 +55,11 @@ export interface UpdateShareInvitationCommandOutput extends UpdateShareInvitatio
  * // { // UpdateShareInvitationOutput
  * //   ShareInvitation: { // ShareInvitation
  * //     ShareInvitationId: "STRING_VALUE",
- * //     ShareResourceType: "WORKLOAD" || "LENS",
+ * //     ShareResourceType: "WORKLOAD" || "LENS" || "PROFILE",
  * //     WorkloadId: "STRING_VALUE",
  * //     LensAlias: "STRING_VALUE",
  * //     LensArn: "STRING_VALUE",
+ * //     ProfileArn: "STRING_VALUE",
  * //   },
  * // };
  *

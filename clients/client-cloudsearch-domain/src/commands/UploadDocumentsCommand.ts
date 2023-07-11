@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CloudSearchDomainClientResolvedConfig,
@@ -27,9 +27,8 @@ import { de_UploadDocumentsCommand, se_UploadDocumentsCommand } from "../protoco
 
 /**
  * @public
- *
- * The input for {@link UploadDocumentsCommand}.
  */
+export { __MetadataBearer, $Command };
 export type UploadDocumentsCommandInputType = Omit<UploadDocumentsRequest, "documents"> & {
   /**
    * For *`UploadDocumentsRequest["documents"]`*, see {@link UploadDocumentsRequest.documents}.
@@ -37,7 +36,9 @@ export type UploadDocumentsCommandInputType = Omit<UploadDocumentsRequest, "docu
   documents: UploadDocumentsRequest["documents"] | string | Uint8Array | Buffer;
 };
 /**
- * This interface extends from `UploadDocumentsRequest` interface. There are more parameters than `documents` defined in {@link UploadDocumentsRequest}
+ * @public
+ *
+ * The input for {@link UploadDocumentsCommand}.
  */
 export interface UploadDocumentsCommandInput extends UploadDocumentsCommandInputType {}
 /**

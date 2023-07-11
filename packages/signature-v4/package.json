@@ -1,6 +1,6 @@
 {
   "name": "@aws-sdk/signature-v4",
-  "version": "3.310.0",
+  "version": "3.369.0",
   "description": "A standalone implementation of the AWS Signature V4 request signing algorithm",
   "main": "./dist-cjs/index.js",
   "module": "./dist-es/index.js",
@@ -13,6 +13,7 @@
     "build:types": "tsc -p tsconfig.types.json",
     "build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
     "clean": "rimraf ./dist-* && rimraf *.tsbuildinfo",
+    "extract:docs": "api-extractor run --local",
     "test": "jest --coverage"
   },
   "author": {
@@ -21,6 +22,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
+    "@aws-sdk/eventstream-codec": "*",
     "@aws-sdk/is-array-buffer": "*",
     "@aws-sdk/types": "*",
     "@aws-sdk/util-hex-encoding": "*",

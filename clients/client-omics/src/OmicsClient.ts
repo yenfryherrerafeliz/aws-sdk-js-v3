@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -48,8 +48,12 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
+import {
+  AbortMultipartReadSetUploadCommandInput,
+  AbortMultipartReadSetUploadCommandOutput,
+} from "./commands/AbortMultipartReadSetUploadCommand";
 import { BatchDeleteReadSetCommandInput, BatchDeleteReadSetCommandOutput } from "./commands/BatchDeleteReadSetCommand";
 import {
   CancelAnnotationImportJobCommandInput,
@@ -61,9 +65,17 @@ import {
   CancelVariantImportJobCommandOutput,
 } from "./commands/CancelVariantImportJobCommand";
 import {
+  CompleteMultipartReadSetUploadCommandInput,
+  CompleteMultipartReadSetUploadCommandOutput,
+} from "./commands/CompleteMultipartReadSetUploadCommand";
+import {
   CreateAnnotationStoreCommandInput,
   CreateAnnotationStoreCommandOutput,
 } from "./commands/CreateAnnotationStoreCommand";
+import {
+  CreateMultipartReadSetUploadCommandInput,
+  CreateMultipartReadSetUploadCommandOutput,
+} from "./commands/CreateMultipartReadSetUploadCommand";
 import {
   CreateReferenceStoreCommandInput,
   CreateReferenceStoreCommandOutput,
@@ -140,6 +152,10 @@ import {
   ListAnnotationStoresCommandOutput,
 } from "./commands/ListAnnotationStoresCommand";
 import {
+  ListMultipartReadSetUploadsCommandInput,
+  ListMultipartReadSetUploadsCommandOutput,
+} from "./commands/ListMultipartReadSetUploadsCommand";
+import {
   ListReadSetActivationJobsCommandInput,
   ListReadSetActivationJobsCommandOutput,
 } from "./commands/ListReadSetActivationJobsCommand";
@@ -152,6 +168,10 @@ import {
   ListReadSetImportJobsCommandOutput,
 } from "./commands/ListReadSetImportJobsCommand";
 import { ListReadSetsCommandInput, ListReadSetsCommandOutput } from "./commands/ListReadSetsCommand";
+import {
+  ListReadSetUploadPartsCommandInput,
+  ListReadSetUploadPartsCommandOutput,
+} from "./commands/ListReadSetUploadPartsCommand";
 import {
   ListReferenceImportJobsCommandInput,
   ListReferenceImportJobsCommandOutput,
@@ -209,6 +229,7 @@ import {
 import { UpdateRunGroupCommandInput, UpdateRunGroupCommandOutput } from "./commands/UpdateRunGroupCommand";
 import { UpdateVariantStoreCommandInput, UpdateVariantStoreCommandOutput } from "./commands/UpdateVariantStoreCommand";
 import { UpdateWorkflowCommandInput, UpdateWorkflowCommandOutput } from "./commands/UpdateWorkflowCommand";
+import { UploadReadSetPartCommandInput, UploadReadSetPartCommandOutput } from "./commands/UploadReadSetPartCommand";
 import {
   ClientInputEndpointParameters,
   ClientResolvedEndpointParameters,
@@ -217,15 +238,20 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
 export type ServiceInputTypes =
+  | AbortMultipartReadSetUploadCommandInput
   | BatchDeleteReadSetCommandInput
   | CancelAnnotationImportJobCommandInput
   | CancelRunCommandInput
   | CancelVariantImportJobCommandInput
+  | CompleteMultipartReadSetUploadCommandInput
   | CreateAnnotationStoreCommandInput
+  | CreateMultipartReadSetUploadCommandInput
   | CreateReferenceStoreCommandInput
   | CreateRunGroupCommandInput
   | CreateSequenceStoreCommandInput
@@ -259,9 +285,11 @@ export type ServiceInputTypes =
   | GetWorkflowCommandInput
   | ListAnnotationImportJobsCommandInput
   | ListAnnotationStoresCommandInput
+  | ListMultipartReadSetUploadsCommandInput
   | ListReadSetActivationJobsCommandInput
   | ListReadSetExportJobsCommandInput
   | ListReadSetImportJobsCommandInput
+  | ListReadSetUploadPartsCommandInput
   | ListReadSetsCommandInput
   | ListReferenceImportJobsCommandInput
   | ListReferenceStoresCommandInput
@@ -286,17 +314,21 @@ export type ServiceInputTypes =
   | UpdateAnnotationStoreCommandInput
   | UpdateRunGroupCommandInput
   | UpdateVariantStoreCommandInput
-  | UpdateWorkflowCommandInput;
+  | UpdateWorkflowCommandInput
+  | UploadReadSetPartCommandInput;
 
 /**
  * @public
  */
 export type ServiceOutputTypes =
+  | AbortMultipartReadSetUploadCommandOutput
   | BatchDeleteReadSetCommandOutput
   | CancelAnnotationImportJobCommandOutput
   | CancelRunCommandOutput
   | CancelVariantImportJobCommandOutput
+  | CompleteMultipartReadSetUploadCommandOutput
   | CreateAnnotationStoreCommandOutput
+  | CreateMultipartReadSetUploadCommandOutput
   | CreateReferenceStoreCommandOutput
   | CreateRunGroupCommandOutput
   | CreateSequenceStoreCommandOutput
@@ -330,9 +362,11 @@ export type ServiceOutputTypes =
   | GetWorkflowCommandOutput
   | ListAnnotationImportJobsCommandOutput
   | ListAnnotationStoresCommandOutput
+  | ListMultipartReadSetUploadsCommandOutput
   | ListReadSetActivationJobsCommandOutput
   | ListReadSetExportJobsCommandOutput
   | ListReadSetImportJobsCommandOutput
+  | ListReadSetUploadPartsCommandOutput
   | ListReadSetsCommandOutput
   | ListReferenceImportJobsCommandOutput
   | ListReferenceStoresCommandOutput
@@ -357,7 +391,8 @@ export type ServiceOutputTypes =
   | UpdateAnnotationStoreCommandOutput
   | UpdateRunGroupCommandOutput
   | UpdateVariantStoreCommandOutput
-  | UpdateWorkflowCommandOutput;
+  | UpdateWorkflowCommandOutput
+  | UploadReadSetPartCommandOutput;
 
 /**
  * @public
@@ -369,7 +404,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -424,7 +459,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -478,7 +513,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 
@@ -492,7 +527,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type OmicsClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type OmicsClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -511,7 +546,7 @@ export interface OmicsClientConfig extends OmicsClientConfigType {}
 /**
  * @public
  */
-type OmicsClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type OmicsClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
@@ -530,7 +565,7 @@ export interface OmicsClientResolvedConfig extends OmicsClientResolvedConfigType
 /**
  * @public
  * <p>This is the <i>Amazon Omics API Reference</i>. For an introduction to the service, see <a href="https://docs.aws.amazon.com/omics/latest/dev/">What is Amazon Omics?</a> in the
- *       <i>Amazon Omics Developer Guide</i>.</p>
+ *       <i>Amazon Omics User Guide</i>.</p>
  */
 export class OmicsClient extends __Client<
   __HttpHandlerOptions,

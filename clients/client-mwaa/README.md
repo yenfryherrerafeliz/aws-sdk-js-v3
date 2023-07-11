@@ -2,16 +2,13 @@
 
 # @aws-sdk/client-mwaa
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-mwaa/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-mwaa)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-mwaa.svg)](https://www.npmjs.com/package/@aws-sdk/client-mwaa)
-
 ## Description
 
 AWS SDK for JavaScript MWAA Client for Node.js, Browser and React Native.
 
 <fullname>Amazon Managed Workflows for Apache Airflow</fullname>
 
-<p>This section contains the Amazon Managed Workflows for Apache Airflow (MWAA) API reference documentation. For more information, see <a href="https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html">What Is Amazon MWAA?</a>.</p>
+<p>This section contains the Amazon Managed Workflows for Apache Airflow (MWAA) API reference documentation. For more information, see <a href="https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html">What is Amazon MWAA?</a>.</p>
 <p>
 <b>Endpoints</b>
 </p>

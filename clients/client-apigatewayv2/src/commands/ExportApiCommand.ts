@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,17 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
 import { ApiGatewayV2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ApiGatewayV2Client";
 import { ExportApiRequest, ExportApiResponse } from "../models/models_0";
 import { de_ExportApiCommand, se_ExportApiCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -25,10 +30,17 @@ import { de_ExportApiCommand, se_ExportApiCommand } from "../protocols/Aws_restJ
 export interface ExportApiCommandInput extends ExportApiRequest {}
 /**
  * @public
+ */
+export type ExportApiCommandOutputType = Omit<ExportApiResponse, "body"> & {
+  body?: Uint8ArrayBlobAdapter;
+};
+
+/**
+ * @public
  *
  * The output of {@link ExportApiCommand}.
  */
-export interface ExportApiCommandOutput extends ExportApiResponse, __MetadataBearer {}
+export interface ExportApiCommandOutput extends ExportApiCommandOutputType, __MetadataBearer {}
 
 export class ExportApiCommand extends $Command<
   ExportApiCommandInput,

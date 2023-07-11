@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,16 +47,26 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AddProfileKeyCommandInput, AddProfileKeyCommandOutput } from "./commands/AddProfileKeyCommand";
+import {
+  CreateCalculatedAttributeDefinitionCommandInput,
+  CreateCalculatedAttributeDefinitionCommandOutput,
+} from "./commands/CreateCalculatedAttributeDefinitionCommand";
 import { CreateDomainCommandInput, CreateDomainCommandOutput } from "./commands/CreateDomainCommand";
+import { CreateEventStreamCommandInput, CreateEventStreamCommandOutput } from "./commands/CreateEventStreamCommand";
 import {
   CreateIntegrationWorkflowCommandInput,
   CreateIntegrationWorkflowCommandOutput,
 } from "./commands/CreateIntegrationWorkflowCommand";
 import { CreateProfileCommandInput, CreateProfileCommandOutput } from "./commands/CreateProfileCommand";
+import {
+  DeleteCalculatedAttributeDefinitionCommandInput,
+  DeleteCalculatedAttributeDefinitionCommandOutput,
+} from "./commands/DeleteCalculatedAttributeDefinitionCommand";
 import { DeleteDomainCommandInput, DeleteDomainCommandOutput } from "./commands/DeleteDomainCommand";
+import { DeleteEventStreamCommandInput, DeleteEventStreamCommandOutput } from "./commands/DeleteEventStreamCommand";
 import { DeleteIntegrationCommandInput, DeleteIntegrationCommandOutput } from "./commands/DeleteIntegrationCommand";
 import { DeleteProfileCommandInput, DeleteProfileCommandOutput } from "./commands/DeleteProfileCommand";
 import { DeleteProfileKeyCommandInput, DeleteProfileKeyCommandOutput } from "./commands/DeleteProfileKeyCommand";
@@ -73,7 +83,16 @@ import {
   GetAutoMergingPreviewCommandInput,
   GetAutoMergingPreviewCommandOutput,
 } from "./commands/GetAutoMergingPreviewCommand";
+import {
+  GetCalculatedAttributeDefinitionCommandInput,
+  GetCalculatedAttributeDefinitionCommandOutput,
+} from "./commands/GetCalculatedAttributeDefinitionCommand";
+import {
+  GetCalculatedAttributeForProfileCommandInput,
+  GetCalculatedAttributeForProfileCommandOutput,
+} from "./commands/GetCalculatedAttributeForProfileCommand";
 import { GetDomainCommandInput, GetDomainCommandOutput } from "./commands/GetDomainCommand";
+import { GetEventStreamCommandInput, GetEventStreamCommandOutput } from "./commands/GetEventStreamCommand";
 import {
   GetIdentityResolutionJobCommandInput,
   GetIdentityResolutionJobCommandOutput,
@@ -94,7 +113,16 @@ import {
   ListAccountIntegrationsCommandInput,
   ListAccountIntegrationsCommandOutput,
 } from "./commands/ListAccountIntegrationsCommand";
+import {
+  ListCalculatedAttributeDefinitionsCommandInput,
+  ListCalculatedAttributeDefinitionsCommandOutput,
+} from "./commands/ListCalculatedAttributeDefinitionsCommand";
+import {
+  ListCalculatedAttributesForProfileCommandInput,
+  ListCalculatedAttributesForProfileCommandOutput,
+} from "./commands/ListCalculatedAttributesForProfileCommand";
 import { ListDomainsCommandInput, ListDomainsCommandOutput } from "./commands/ListDomainsCommand";
+import { ListEventStreamsCommandInput, ListEventStreamsCommandOutput } from "./commands/ListEventStreamsCommand";
 import {
   ListIdentityResolutionJobsCommandInput,
   ListIdentityResolutionJobsCommandOutput,
@@ -124,6 +152,10 @@ import {
 import { SearchProfilesCommandInput, SearchProfilesCommandOutput } from "./commands/SearchProfilesCommand";
 import { TagResourceCommandInput, TagResourceCommandOutput } from "./commands/TagResourceCommand";
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "./commands/UntagResourceCommand";
+import {
+  UpdateCalculatedAttributeDefinitionCommandInput,
+  UpdateCalculatedAttributeDefinitionCommandOutput,
+} from "./commands/UpdateCalculatedAttributeDefinitionCommand";
 import { UpdateDomainCommandInput, UpdateDomainCommandOutput } from "./commands/UpdateDomainCommand";
 import { UpdateProfileCommandInput, UpdateProfileCommandOutput } from "./commands/UpdateProfileCommand";
 import {
@@ -134,15 +166,21 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
 export type ServiceInputTypes =
   | AddProfileKeyCommandInput
+  | CreateCalculatedAttributeDefinitionCommandInput
   | CreateDomainCommandInput
+  | CreateEventStreamCommandInput
   | CreateIntegrationWorkflowCommandInput
   | CreateProfileCommandInput
+  | DeleteCalculatedAttributeDefinitionCommandInput
   | DeleteDomainCommandInput
+  | DeleteEventStreamCommandInput
   | DeleteIntegrationCommandInput
   | DeleteProfileCommandInput
   | DeleteProfileKeyCommandInput
@@ -150,7 +188,10 @@ export type ServiceInputTypes =
   | DeleteProfileObjectTypeCommandInput
   | DeleteWorkflowCommandInput
   | GetAutoMergingPreviewCommandInput
+  | GetCalculatedAttributeDefinitionCommandInput
+  | GetCalculatedAttributeForProfileCommandInput
   | GetDomainCommandInput
+  | GetEventStreamCommandInput
   | GetIdentityResolutionJobCommandInput
   | GetIntegrationCommandInput
   | GetMatchesCommandInput
@@ -159,7 +200,10 @@ export type ServiceInputTypes =
   | GetWorkflowCommandInput
   | GetWorkflowStepsCommandInput
   | ListAccountIntegrationsCommandInput
+  | ListCalculatedAttributeDefinitionsCommandInput
+  | ListCalculatedAttributesForProfileCommandInput
   | ListDomainsCommandInput
+  | ListEventStreamsCommandInput
   | ListIdentityResolutionJobsCommandInput
   | ListIntegrationsCommandInput
   | ListProfileObjectTypeTemplatesCommandInput
@@ -174,6 +218,7 @@ export type ServiceInputTypes =
   | SearchProfilesCommandInput
   | TagResourceCommandInput
   | UntagResourceCommandInput
+  | UpdateCalculatedAttributeDefinitionCommandInput
   | UpdateDomainCommandInput
   | UpdateProfileCommandInput;
 
@@ -182,10 +227,14 @@ export type ServiceInputTypes =
  */
 export type ServiceOutputTypes =
   | AddProfileKeyCommandOutput
+  | CreateCalculatedAttributeDefinitionCommandOutput
   | CreateDomainCommandOutput
+  | CreateEventStreamCommandOutput
   | CreateIntegrationWorkflowCommandOutput
   | CreateProfileCommandOutput
+  | DeleteCalculatedAttributeDefinitionCommandOutput
   | DeleteDomainCommandOutput
+  | DeleteEventStreamCommandOutput
   | DeleteIntegrationCommandOutput
   | DeleteProfileCommandOutput
   | DeleteProfileKeyCommandOutput
@@ -193,7 +242,10 @@ export type ServiceOutputTypes =
   | DeleteProfileObjectTypeCommandOutput
   | DeleteWorkflowCommandOutput
   | GetAutoMergingPreviewCommandOutput
+  | GetCalculatedAttributeDefinitionCommandOutput
+  | GetCalculatedAttributeForProfileCommandOutput
   | GetDomainCommandOutput
+  | GetEventStreamCommandOutput
   | GetIdentityResolutionJobCommandOutput
   | GetIntegrationCommandOutput
   | GetMatchesCommandOutput
@@ -202,7 +254,10 @@ export type ServiceOutputTypes =
   | GetWorkflowCommandOutput
   | GetWorkflowStepsCommandOutput
   | ListAccountIntegrationsCommandOutput
+  | ListCalculatedAttributeDefinitionsCommandOutput
+  | ListCalculatedAttributesForProfileCommandOutput
   | ListDomainsCommandOutput
+  | ListEventStreamsCommandOutput
   | ListIdentityResolutionJobsCommandOutput
   | ListIntegrationsCommandOutput
   | ListProfileObjectTypeTemplatesCommandOutput
@@ -217,6 +272,7 @@ export type ServiceOutputTypes =
   | SearchProfilesCommandOutput
   | TagResourceCommandOutput
   | UntagResourceCommandOutput
+  | UpdateCalculatedAttributeDefinitionCommandOutput
   | UpdateDomainCommandOutput
   | UpdateProfileCommandOutput;
 
@@ -230,7 +286,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -285,7 +341,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -339,7 +395,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -347,7 +403,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type CustomerProfilesClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type CustomerProfilesClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -366,7 +422,7 @@ export interface CustomerProfilesClientConfig extends CustomerProfilesClientConf
 /**
  * @public
  */
-type CustomerProfilesClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type CustomerProfilesClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

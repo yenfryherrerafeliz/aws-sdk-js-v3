@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,7 +47,7 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CancelJobRunCommandInput, CancelJobRunCommandOutput } from "./commands/CancelJobRunCommand";
 import { CreateApplicationCommandInput, CreateApplicationCommandOutput } from "./commands/CreateApplicationCommand";
@@ -77,6 +77,8 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+
+export { __Client };
 
 /**
  * @public
@@ -128,7 +130,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -183,7 +185,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -237,7 +239,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -245,7 +247,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type EMRServerlessClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type EMRServerlessClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -264,7 +266,7 @@ export interface EMRServerlessClientConfig extends EMRServerlessClientConfigType
 /**
  * @public
  */
-type EMRServerlessClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type EMRServerlessClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
@@ -282,25 +284,25 @@ export interface EMRServerlessClientResolvedConfig extends EMRServerlessClientRe
 
 /**
  * @public
- * <p>Amazon EMR Serverless is a new deployment option for Amazon EMR. EMR Serverless provides
+ * <p>Amazon EMR  Serverless is a new deployment option for Amazon EMR. Amazon EMR Serverless provides
  *          a serverless runtime environment that simplifies running analytics applications using the
- *          latest open source frameworks such as Apache Spark and Apache Hive. With EMR Serverless,
+ *          latest open source frameworks such as Apache Spark and Apache Hive. With Amazon EMR Serverless,
  *          you don’t have to configure, optimize, secure, or operate clusters to run applications with
  *          these frameworks.</p>
- *          <p>The API reference to Amazon EMR Serverless is <code>emr-serverless</code>. The
+ *          <p>The API reference to Amazon EMR  Serverless is <code>emr-serverless</code>. The
  *             <code>emr-serverless</code> prefix is used in the following scenarios: </p>
  *          <ul>
  *             <li>
- *                <p>It is the prefix in the CLI commands for Amazon EMR Serverless. For example,
+ *                <p>It is the prefix in the CLI commands for Amazon EMR  Serverless. For example,
  *                   <code>aws emr-serverless start-job-run</code>.</p>
  *             </li>
  *             <li>
- *                <p>It is the prefix before IAM policy actions for Amazon EMR Serverless. For example,
+ *                <p>It is the prefix before IAM policy actions for Amazon EMR  Serverless. For example,
  *                   <code>"Action": ["emr-serverless:StartJobRun"]</code>. For more information, see
- *                   <a href="https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/security_iam_service-with-iam.html#security_iam_service-with-iam-id-based-policies-actions">Policy actions for Amazon EMR Serverless</a>.</p>
+ *                   <a href="https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/security_iam_service-with-iam.html#security_iam_service-with-iam-id-based-policies-actions">Policy actions for Amazon EMR  Serverless</a>.</p>
  *             </li>
  *             <li>
- *                <p>It is the prefix used in Amazon EMR Serverless service endpoints. For example,
+ *                <p>It is the prefix used in Amazon EMR  Serverless service endpoints. For example,
  *                   <code>emr-serverless.us-east-2.amazonaws.com</code>.</p>
  *             </li>
  *          </ul>

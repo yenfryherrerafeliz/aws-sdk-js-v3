@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@smithy/smithy-client";
 
 import { ConnectServiceException as __BaseException } from "./ConnectServiceException";
 import {
@@ -11,13 +11,12 @@ import {
   AgentStatusType,
   Attribute,
   Channel,
-  ContactFilter,
   ContactFlowModuleState,
   ContactFlowState,
   ContactFlowType,
-  Dimensions,
+  ContactState,
+  CurrentMetric,
   DirectoryType,
-  Evaluation,
   EvaluationAnswerData,
   EvaluationFormQuestion,
   EvaluationFormScoringStrategy,
@@ -29,6 +28,7 @@ import {
   Filters,
   Grouping,
   HierarchyGroupSummary,
+  HoursOfOperation,
   HoursOfOperationConfig,
   InstanceAttributeType,
   InstanceStatus,
@@ -42,15 +42,17 @@ import {
   OutboundCallerConfig,
   PhoneNumberCountryCode,
   PhoneNumberType,
+  Prompt,
   Queue,
+  QueueReference,
   QueueStatus,
+  QuickConnect,
   QuickConnectConfig,
   QuickConnectType,
   Reference,
   ReferenceType,
   RoutingProfile,
   RoutingProfileQueueConfig,
-  RoutingProfileReference,
   RuleAction,
   RulePublishStatus,
   SourceType,
@@ -66,6 +68,114 @@ import {
   VocabularyLanguageCode,
   VocabularyState,
 } from "./models_0";
+
+/**
+ * @public
+ * <p>Contains the data for a real-time metric.</p>
+ */
+export interface CurrentMetricData {
+  /**
+   * <p>Information about the metric.</p>
+   */
+  Metric?: CurrentMetric;
+
+  /**
+   * <p>The value of the metric.</p>
+   */
+  Value?: number;
+}
+
+/**
+ * @public
+ * <p>Information about the routing profile assigned to the user.</p>
+ */
+export interface RoutingProfileReference {
+  /**
+   * <p>The identifier of the routing profile.</p>
+   */
+  Id?: string;
+
+  /**
+   * <p>The Amazon Resource Name (ARN) of the routing profile.</p>
+   */
+  Arn?: string;
+}
+
+/**
+ * @public
+ * <p>Contains information about the dimensions for a set of metrics.</p>
+ */
+export interface Dimensions {
+  /**
+   * <p>Information about the queue for which metrics are returned.</p>
+   */
+  Queue?: QueueReference;
+
+  /**
+   * <p>The channel used for grouping and filters.</p>
+   */
+  Channel?: Channel | string;
+
+  /**
+   * <p>Information about the routing profile assigned to the user.</p>
+   */
+  RoutingProfile?: RoutingProfileReference;
+}
+
+/**
+ * @public
+ * <p>Contains information about a set of real-time metrics.</p>
+ */
+export interface CurrentMetricResult {
+  /**
+   * <p>The dimensions for the metrics.</p>
+   */
+  Dimensions?: Dimensions;
+
+  /**
+   * <p>The set of metrics.</p>
+   */
+  Collections?: CurrentMetricData[];
+}
+
+/**
+ * @public
+ */
+export interface GetCurrentMetricDataResponse {
+  /**
+   * <p>If there are additional results, this is the token for the next set of results.</p>
+   *          <p>The token expires after 5 minutes from the time it is created. Subsequent requests that use
+   *    the token must use the same request parameters as the request that generated the token.</p>
+   */
+  NextToken?: string;
+
+  /**
+   * <p>Information about the real-time metrics.</p>
+   */
+  MetricResults?: CurrentMetricResult[];
+
+  /**
+   * <p>The time at which the metrics were retrieved and cached for pagination.</p>
+   */
+  DataSnapshotTime?: Date;
+
+  /**
+   * <p>The total count of the result, regardless of the current page size. </p>
+   */
+  ApproximateTotalCount?: number;
+}
+
+/**
+ * @public
+ * <p>Filters user data based on the contact information that is associated to the users. It
+ *    contains a list of <a href="https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-states.html">contact states</a>.</p>
+ */
+export interface ContactFilter {
+  /**
+   * <p>A list of up to 9 <a href="https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-states.html">contact states</a>.</p>
+   */
+  ContactStates?: (ContactState | string)[];
+}
 
 /**
  * @public
@@ -759,7 +869,8 @@ export interface MetricFilterV2 {
    * <p>The key to use for filtering data. </p>
    *          <p>Valid metric filter keys: <code>INITIATION_METHOD</code>, <code>DISCONNECT_REASON</code>.
    *    These are the same values as the <code>InitiationMethod</code> and <code>DisconnectReason</code>
-   *    in the contact record. For more information, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord">ContactTraceRecord</a> in the <i>Amazon Connect Administrator's Guide</i>. </p>
+   *    in the contact record. For more information, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord">ContactTraceRecord</a> in the <i>Amazon Connect Administrator's
+   *    Guide</i>. </p>
    */
   MetricFilterKey?: string;
 
@@ -802,6 +913,9 @@ export interface ThresholdV2 {
 export interface MetricV2 {
   /**
    * <p>The name of the metric.</p>
+   *          <important>
+   *             <p>This parameter is required. The following Required = No is incorrect.</p>
+   *          </important>
    */
   Name?: string;
 
@@ -830,7 +944,7 @@ export interface GetMetricDataV2Request {
    * <p>The timestamp, in UNIX Epoch time format, at which to start the reporting interval for the
    *    retrieval of historical metrics data. The time must be before the end time timestamp. The time
    *    range between the start and end time must be less than 24 hours. The start time cannot be earlier
-   *    than 14 days before the time of the request. Historical metrics are available for 14 days.</p>
+   *    than 35 days before the time of the request. Historical metrics are available for 35 days.</p>
    */
   StartTime: Date | undefined;
 
@@ -880,10 +994,10 @@ export interface GetMetricDataV2Request {
    *             <li>
    *                <p>
    *                   <b>Filter values</b>: A maximum of 100 filter values are
-   *      supported in a single request. For example, a <code>GetMetricDataV2</code> request can filter
-   *      by 50 queues, 35 agents, and 15 routing profiles for a total of 100 filter values.
-   *       <code>VOICE</code>, <code>CHAT</code>, and <code>TASK</code> are valid
-   *       <code>filterValue</code> for the <code>CHANNEL</code> filter key.</p>
+   *      supported in a single request. VOICE, CHAT, and TASK are valid <code>filterValue</code> for the CHANNEL
+   *      filter key. They do not count towards limitation of 100 filter values. For example, a
+   *      GetMetricDataV2 request can filter by 50 queues, 35 agents, and 15 routing profiles for a total
+   *      of 100 filter values, along with 3 channel filters.</p>
    *             </li>
    *          </ul>
    */
@@ -1128,6 +1242,32 @@ export interface GetMetricDataV2Response {
    *    summary of metric data is returned. </p>
    */
   MetricResults?: MetricResultV2[];
+}
+
+/**
+ * @public
+ */
+export interface GetPromptFileRequest {
+  /**
+   * <p>The identifier of the Amazon Connect instance. You can <a href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
+   */
+  InstanceId: string | undefined;
+
+  /**
+   * <p>A unique identifier for the prompt.</p>
+   */
+  PromptId: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface GetPromptFileResponse {
+  /**
+   * <p>A generated URL to the prompt that can be given to an unauthorized user so they can access
+   *    the prompt in S3.</p>
+   */
+  PromptPresignedUrl?: string;
 }
 
 /**
@@ -2385,6 +2525,11 @@ export interface InstanceSummary {
    * <p>Whether outbound calls are enabled.</p>
    */
   OutboundCallsEnabled?: boolean;
+
+  /**
+   * <p>This URL allows contact center users to access Amazon Connect admin website.</p>
+   */
+  InstanceAccessUrl?: string;
 }
 
 /**
@@ -3791,8 +3936,8 @@ export interface ListUsersResponse {
  */
 export interface MonitorContactRequest {
   /**
-   * <p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the
-   *    instance.</p>
+   * <p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of
+   *    the instance.</p>
    */
   InstanceId: string | undefined;
 
@@ -4026,19 +4171,6 @@ export interface SearchAvailablePhoneNumbersResponse {
  * @public
  * @enum
  */
-export const SearchableQueueType = {
-  STANDARD: "STANDARD",
-} as const;
-
-/**
- * @public
- */
-export type SearchableQueueType = (typeof SearchableQueueType)[keyof typeof SearchableQueueType];
-
-/**
- * @public
- * @enum
- */
 export const StringComparisonType = {
   CONTAINS: "CONTAINS",
   EXACT: "EXACT",
@@ -4053,10 +4185,6 @@ export type StringComparisonType = (typeof StringComparisonType)[keyof typeof St
 /**
  * @public
  * <p>A leaf node condition which can be used to specify a string condition. </p>
- *          <note>
- *             <p>The currently supported value for <code>FieldName</code>: <code>name</code>
- *             </p>
- *          </note>
  */
 export interface StringCondition {
   /**
@@ -4130,6 +4258,103 @@ export interface ControlPlaneTagFilter {
  * @public
  * <p>Filters to be applied to search results.</p>
  */
+export interface HoursOfOperationSearchFilter {
+  /**
+   * <p>An object that can be used to specify Tag conditions inside the <code>SearchFilter</code>.
+   *    This accepts an <code>OR</code> of <code>AND</code> (List of List) input where: </p>
+   *          <ul>
+   *             <li>
+   *                <p>Top level list specifies conditions that need to be applied with <code>OR</code>
+   *      operator</p>
+   *             </li>
+   *             <li>
+   *                <p>Inner list specifies conditions that need to be applied with <code>AND</code>
+   *      operator.</p>
+   *             </li>
+   *          </ul>
+   */
+  TagFilter?: ControlPlaneTagFilter;
+}
+
+/**
+ * @public
+ */
+export interface SearchHoursOfOperationsResponse {
+  /**
+   * <p>Information about the hours of operations.</p>
+   */
+  HoursOfOperations?: HoursOfOperation[];
+
+  /**
+   * <p>If there are additional results, this is the token for the next set of results.</p>
+   */
+  NextToken?: string;
+
+  /**
+   * <p>The total number of hours of operations which matched your search query.</p>
+   */
+  ApproximateTotalCount?: number;
+}
+
+/**
+ * @public
+ * <p>Filters to be applied to search results.</p>
+ */
+export interface PromptSearchFilter {
+  /**
+   * <p>An object that can be used to specify Tag conditions inside the <code>SearchFilter</code>.
+   *    This accepts an <code>OR</code> of <code>AND</code> (List of List) input where: </p>
+   *          <ul>
+   *             <li>
+   *                <p>Top level list specifies conditions that need to be applied with <code>OR</code>
+   *      operator</p>
+   *             </li>
+   *             <li>
+   *                <p>Inner list specifies conditions that need to be applied with <code>AND</code>
+   *      operator.</p>
+   *             </li>
+   *          </ul>
+   */
+  TagFilter?: ControlPlaneTagFilter;
+}
+
+/**
+ * @public
+ */
+export interface SearchPromptsResponse {
+  /**
+   * <p>Information about the prompts.</p>
+   */
+  Prompts?: Prompt[];
+
+  /**
+   * <p>If there are additional results, this is the token for the next set of results.</p>
+   */
+  NextToken?: string;
+
+  /**
+   * <p>The total number of quick connects which matched your search query.</p>
+   */
+  ApproximateTotalCount?: number;
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const SearchableQueueType = {
+  STANDARD: "STANDARD",
+} as const;
+
+/**
+ * @public
+ */
+export type SearchableQueueType = (typeof SearchableQueueType)[keyof typeof SearchableQueueType];
+
+/**
+ * @public
+ * <p>Filters to be applied to search results.</p>
+ */
 export interface QueueSearchFilter {
   /**
    * <p>An object that can be used to specify Tag conditions inside the <code>SearchFilter</code>.
@@ -4166,6 +4391,174 @@ export interface SearchQueuesResponse {
    * <p>The total number of queues which matched your search query.</p>
    */
   ApproximateTotalCount?: number;
+}
+
+/**
+ * @public
+ * <p>Filters to be applied to search results.</p>
+ */
+export interface QuickConnectSearchFilter {
+  /**
+   * <p>An object that can be used to specify Tag conditions inside the <code>SearchFilter</code>.
+   *    This accepts an <code>OR</code> of <code>AND</code> (List of List) input where: </p>
+   *          <ul>
+   *             <li>
+   *                <p>Top level list specifies conditions that need to be applied with <code>OR</code>
+   *      operator</p>
+   *             </li>
+   *             <li>
+   *                <p>Inner list specifies conditions that need to be applied with <code>AND</code>
+   *      operator.</p>
+   *             </li>
+   *          </ul>
+   */
+  TagFilter?: ControlPlaneTagFilter;
+}
+
+/**
+ * @public
+ */
+export interface SearchQuickConnectsResponse {
+  /**
+   * <p>Information about the quick connects.</p>
+   */
+  QuickConnects?: QuickConnect[];
+
+  /**
+   * <p>If there are additional results, this is the token for the next set of results.</p>
+   */
+  NextToken?: string;
+
+  /**
+   * <p>The total number of quick connects which matched your search query.</p>
+   */
+  ApproximateTotalCount?: number;
+}
+
+/**
+ * @public
+ * <p>Maximum number (1000) of tags have been returned with current request. Consider changing
+ *    request parameters to get more tags.</p>
+ */
+export class MaximumResultReturnedException extends __BaseException {
+  readonly name: "MaximumResultReturnedException" = "MaximumResultReturnedException";
+  readonly $fault: "client" = "client";
+  Message?: string;
+  /**
+   * @internal
+   */
+  constructor(opts: __ExceptionOptionType<MaximumResultReturnedException, __BaseException>) {
+    super({
+      name: "MaximumResultReturnedException",
+      $fault: "client",
+      ...opts,
+    });
+    Object.setPrototypeOf(this, MaximumResultReturnedException.prototype);
+    this.Message = opts.Message;
+  }
+}
+
+/**
+ * @public
+ * <p>The search criteria to be used to return tags.</p>
+ */
+export interface TagSearchCondition {
+  /**
+   * <p>The tag key used in the tag search condition.</p>
+   */
+  tagKey?: string;
+
+  /**
+   * <p>The tag value used in the tag search condition.</p>
+   */
+  tagValue?: string;
+
+  /**
+   * <p>The type of comparison to be made when evaluating the tag key in tag search
+   *    condition.</p>
+   */
+  tagKeyComparisonType?: StringComparisonType | string;
+
+  /**
+   * <p>The type of comparison to be made when evaluating the tag value in tag search
+   *    condition.</p>
+   */
+  tagValueComparisonType?: StringComparisonType | string;
+}
+
+/**
+ * @public
+ * <p>The search criteria to be used to search tags.</p>
+ */
+export interface ResourceTagsSearchCriteria {
+  /**
+   * <p>The search criteria to be used to return tags.</p>
+   */
+  TagSearchCondition?: TagSearchCondition;
+}
+
+/**
+ * @public
+ */
+export interface SearchResourceTagsRequest {
+  /**
+   * <p>The identifier of the Amazon Connect instance. You can find the instanceId in the Amazon
+   *    Resource Name (ARN) of the instance.</p>
+   */
+  InstanceId: string | undefined;
+
+  /**
+   * <p>The list of resource types to be used to search tags from. If not provided or if any empty
+   *    list is provided, this API will search from all supported resource types.</p>
+   */
+  ResourceTypes?: string[];
+
+  /**
+   * <p>The token for the next set of results. Use the value returned in the previous response in
+   *    the next request to retrieve the next set of results.</p>
+   */
+  NextToken?: string;
+
+  /**
+   * <p>The maximum number of results to return per page.</p>
+   */
+  MaxResults?: number;
+
+  /**
+   * <p>The search criteria to be used to return tags.</p>
+   */
+  SearchCriteria?: ResourceTagsSearchCriteria;
+}
+
+/**
+ * @public
+ * <p>A tag set contains tag key and tag value.</p>
+ */
+export interface TagSet {
+  /**
+   * <p>The tag key in the tagSet.</p>
+   */
+  key?: string;
+
+  /**
+   * <p>The tag value in the tagSet.</p>
+   */
+  value?: string;
+}
+
+/**
+ * @public
+ */
+export interface SearchResourceTagsResponse {
+  /**
+   * <p>A list of tags used in the Amazon Connect instance.</p>
+   */
+  Tags?: TagSet[];
+
+  /**
+   * <p>If there are additional results, this is the token for the next set of results.</p>
+   */
+  NextToken?: string;
 }
 
 /**
@@ -4699,8 +5092,8 @@ export interface StartChatContactRequest {
   PersistentChat?: PersistentChat;
 
   /**
-   * <p>The unique identifier for an Amazon Connect contact. This identifier is related to the chat
-   *    starting.</p>
+   * <p>The unique identifier for an Amazon Connect contact. This identifier is related to the
+   *    chat starting.</p>
    *          <note>
    *             <p>You cannot provide data for both RelatedContactId and PersistentChat. </p>
    *          </note>
@@ -6061,6 +6454,51 @@ export interface UpdatePhoneNumberResponse {
 /**
  * @public
  */
+export interface UpdatePromptRequest {
+  /**
+   * <p>The identifier of the Amazon Connect instance. You can <a href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
+   */
+  InstanceId: string | undefined;
+
+  /**
+   * <p>A unique identifier for the prompt.</p>
+   */
+  PromptId: string | undefined;
+
+  /**
+   * <p>The name of the prompt.</p>
+   */
+  Name?: string;
+
+  /**
+   * <p>A description of the prompt.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>The URI for the S3 bucket where the prompt is stored.</p>
+   */
+  S3Uri?: string;
+}
+
+/**
+ * @public
+ */
+export interface UpdatePromptResponse {
+  /**
+   * <p>The Amazon Resource Name (ARN) of the prompt.</p>
+   */
+  PromptARN?: string;
+
+  /**
+   * <p>A unique identifier for the prompt.</p>
+   */
+  PromptId?: string;
+}
+
+/**
+ * @public
+ */
 export interface UpdateQueueHoursOfOperationRequest {
   /**
    * <p>The identifier of the Amazon Connect instance. You can <a href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
@@ -6765,7 +7203,7 @@ export interface EvaluationFormSection {
   /**
    * <p>The items of the section.</p>
    */
-  Items?: EvaluationFormItem[];
+  Items: EvaluationFormItem[] | undefined;
 
   /**
    * <p>The scoring weight of the section.</p>
@@ -6930,6 +7368,56 @@ export interface EvaluationFormContent {
 
 /**
  * @public
+ * <p>The search criteria to be used to return hours of operations.</p>
+ */
+export interface HoursOfOperationSearchCriteria {
+  /**
+   * <p>A list of conditions which would be applied together with an OR condition.</p>
+   */
+  OrConditions?: HoursOfOperationSearchCriteria[];
+
+  /**
+   * <p>A list of conditions which would be applied together with an AND condition.</p>
+   */
+  AndConditions?: HoursOfOperationSearchCriteria[];
+
+  /**
+   * <p>A leaf node condition which can be used to specify a string condition.</p>
+   *          <note>
+   *             <p>The currently supported values for <code>FieldName</code> are <code>name</code>,
+   *      <code>description</code>, <code>timezone</code>, and <code>resourceID</code>.</p>
+   *          </note>
+   */
+  StringCondition?: StringCondition;
+}
+
+/**
+ * @public
+ * <p>The search criteria to be used to return prompts.</p>
+ */
+export interface PromptSearchCriteria {
+  /**
+   * <p>A list of conditions which would be applied together with an OR condition.</p>
+   */
+  OrConditions?: PromptSearchCriteria[];
+
+  /**
+   * <p>A list of conditions which would be applied together with an AND condition.</p>
+   */
+  AndConditions?: PromptSearchCriteria[];
+
+  /**
+   * <p>A leaf node condition which can be used to specify a string condition.</p>
+   *          <note>
+   *             <p>The currently supported values for <code>FieldName</code> are <code>name</code>,
+   *      <code>description</code>, and <code>resourceID</code>.</p>
+   *          </note>
+   */
+  StringCondition?: StringCondition;
+}
+
+/**
+ * @public
  * <p>The search criteria to be used to return queues.</p>
  *          <note>
  *             <p>The <code>name</code> and <code>description</code> fields support "contains" queries with
@@ -6949,10 +7437,10 @@ export interface QueueSearchCriteria {
   AndConditions?: QueueSearchCriteria[];
 
   /**
-   * <p>A leaf node condition which can be used to specify a string condition. </p>
+   * <p>A leaf node condition which can be used to specify a string condition.</p>
    *          <note>
-   *             <p>The currently supported value for <code>FieldName</code>: <code>name</code>
-   *             </p>
+   *             <p>The currently supported values for <code>FieldName</code> are <code>name</code>,
+   *      <code>description</code>, and <code>resourceID</code>.</p>
    *          </note>
    */
   StringCondition?: StringCondition;
@@ -6961,325 +7449,6 @@ export interface QueueSearchCriteria {
    * <p>The type of queue.</p>
    */
   QueueTypeCondition?: SearchableQueueType | string;
-}
-
-/**
- * @public
- * <p>The search criteria to be used to return routing profiles.</p>
- *          <note>
- *             <p>The <code>name</code> and <code>description</code> fields support "contains" queries with
- *     a minimum of 2 characters and a maximum of 25 characters. Any queries with character lengths
- *     outside of this range will throw invalid results. </p>
- *          </note>
- */
-export interface RoutingProfileSearchCriteria {
-  /**
-   * <p>A list of conditions which would be applied together with an OR condition.</p>
-   */
-  OrConditions?: RoutingProfileSearchCriteria[];
-
-  /**
-   * <p>A list of conditions which would be applied together with an AND condition.</p>
-   */
-  AndConditions?: RoutingProfileSearchCriteria[];
-
-  /**
-   * <p>A leaf node condition which can be used to specify a string condition. </p>
-   *          <note>
-   *             <p>The currently supported value for <code>FieldName</code>: <code>name</code>
-   *             </p>
-   *          </note>
-   */
-  StringCondition?: StringCondition;
-}
-
-/**
- * @public
- * <p>The search criteria to be used to return security profiles.</p>
- *          <note>
- *             <p>The <code>name</code> field support "contains" queries with a minimum of 2 characters and
- *     maximum of 25 characters. Any queries with character lengths outside of this range will throw
- *     invalid results.</p>
- *          </note>
- */
-export interface SecurityProfileSearchCriteria {
-  /**
-   * <p>A list of conditions which would be applied together with an OR condition.</p>
-   */
-  OrConditions?: SecurityProfileSearchCriteria[];
-
-  /**
-   * <p>A list of conditions which would be applied together with an AND condition.</p>
-   */
-  AndConditions?: SecurityProfileSearchCriteria[];
-
-  /**
-   * <p>A leaf node condition which can be used to specify a string condition. </p>
-   *          <note>
-   *             <p>The currently supported value for <code>FieldName</code>: <code>name</code>
-   *             </p>
-   *          </note>
-   */
-  StringCondition?: StringCondition;
-}
-
-/**
- * @public
- */
-export interface UpdateEvaluationFormRequest {
-  /**
-   * <p>The identifier of the Amazon Connect instance. You can <a href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
-   */
-  InstanceId: string | undefined;
-
-  /**
-   * <p>The unique identifier for the evaluation form.</p>
-   */
-  EvaluationFormId: string | undefined;
-
-  /**
-   * <p>A version of the evaluation form to update.</p>
-   */
-  EvaluationFormVersion: number | undefined;
-
-  /**
-   * <p>A flag indicating whether the operation must create a new version.</p>
-   */
-  CreateNewVersion?: boolean;
-
-  /**
-   * <p>A title of the evaluation form.</p>
-   */
-  Title: string | undefined;
-
-  /**
-   * <p>The description of the evaluation form.</p>
-   */
-  Description?: string;
-
-  /**
-   * <p>Items that are part of the evaluation form.  The total number of sections and questions must not exceed 100 each.  Questions must be contained in a section.</p>
-   */
-  Items: EvaluationFormItem[] | undefined;
-
-  /**
-   * <p>A scoring strategy of the evaluation form.</p>
-   */
-  ScoringStrategy?: EvaluationFormScoringStrategy;
-
-  /**
-   * <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the
-   *             request. If not provided, the Amazon Web Services
-   *             SDK populates this field. For more information about idempotency, see
-   *             <a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making retries safe with idempotent APIs</a>.</p>
-   */
-  ClientToken?: string;
-}
-
-/**
- * @public
- * <p>The search criteria to be used to return users.</p>
- *          <note>
- *             <p>The <code>name</code> and <code>description</code> fields support "contains" queries with
- *     a minimum of 2 characters and a maximum of 25 characters. Any queries with character lengths
- *     outside of this range will throw invalid results.  </p>
- *          </note>
- */
-export interface UserSearchCriteria {
-  /**
-   * <p>A list of conditions which would be applied together with an <code>OR</code>
-   *    condition.</p>
-   */
-  OrConditions?: UserSearchCriteria[];
-
-  /**
-   * <p>A list of conditions which would be applied together with an <code>AND</code> condition.
-   *   </p>
-   */
-  AndConditions?: UserSearchCriteria[];
-
-  /**
-   * <p>A leaf node condition which can be used to specify a string condition.</p>
-   */
-  StringCondition?: StringCondition;
-
-  /**
-   * <p>A leaf node condition which can be used to specify a hierarchy group condition.</p>
-   */
-  HierarchyGroupCondition?: HierarchyGroupCondition;
-}
-
-/**
- * @public
- */
-export interface DescribeContactEvaluationResponse {
-  /**
-   * <p>Information about the evaluation form completed for a specific contact.</p>
-   */
-  Evaluation: Evaluation | undefined;
-
-  /**
-   * <p>Information about the evaluation form.</p>
-   */
-  EvaluationForm: EvaluationFormContent | undefined;
-}
-
-/**
- * @public
- */
-export interface DescribeEvaluationFormResponse {
-  /**
-   * <p>Information about the evaluation form.</p>
-   */
-  EvaluationForm: EvaluationForm | undefined;
-}
-
-/**
- * @public
- */
-export interface SearchQueuesRequest {
-  /**
-   * <p>The identifier of the Amazon Connect instance. You can <a href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
-   */
-  InstanceId: string | undefined;
-
-  /**
-   * <p>The token for the next set of results. Use the value returned in the previous
-   * response in the next request to retrieve the next set of results.</p>
-   */
-  NextToken?: string;
-
-  /**
-   * <p>The maximum number of results to return per page.</p>
-   */
-  MaxResults?: number;
-
-  /**
-   * <p>Filters to be applied to search results.</p>
-   */
-  SearchFilter?: QueueSearchFilter;
-
-  /**
-   * <p>The search criteria to be used to return queues.</p>
-   *          <note>
-   *             <p>The <code>name</code> and <code>description</code> fields support "contains" queries with
-   *     a minimum of 2 characters and a maximum of 25 characters. Any queries with character lengths
-   *     outside of this range will throw invalid results. </p>
-   *          </note>
-   */
-  SearchCriteria?: QueueSearchCriteria;
-}
-
-/**
- * @public
- */
-export interface SearchRoutingProfilesRequest {
-  /**
-   * <p>The identifier of the Amazon Connect instance. You can <a href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
-   */
-  InstanceId: string | undefined;
-
-  /**
-   * <p>The token for the next set of results. Use the value returned in the previous
-   * response in the next request to retrieve the next set of results.</p>
-   */
-  NextToken?: string;
-
-  /**
-   * <p>The maximum number of results to return per page.</p>
-   */
-  MaxResults?: number;
-
-  /**
-   * <p>Filters to be applied to search results.</p>
-   */
-  SearchFilter?: RoutingProfileSearchFilter;
-
-  /**
-   * <p>The search criteria to be used to return routing profiles.</p>
-   *          <note>
-   *             <p>The <code>name</code> and <code>description</code> fields support "contains" queries with
-   *     a minimum of 2 characters and a maximum of 25 characters. Any queries with character lengths
-   *     outside of this range will throw invalid results. </p>
-   *          </note>
-   */
-  SearchCriteria?: RoutingProfileSearchCriteria;
-}
-
-/**
- * @public
- */
-export interface SearchSecurityProfilesRequest {
-  /**
-   * <p>The identifier of the Amazon Connect instance. You can <a href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
-   */
-  InstanceId: string | undefined;
-
-  /**
-   * <p>The token for the next set of results. Use the value returned in the previous
-   * response in the next request to retrieve the next set of results.</p>
-   */
-  NextToken?: string;
-
-  /**
-   * <p>The maximum number of results to return per page.</p>
-   */
-  MaxResults?: number;
-
-  /**
-   * <p>The search criteria to be used to return security profiles. </p>
-   *          <note>
-   *             <p>The <code>name</code> field support "contains" queries with a minimum of 2 characters and
-   *     maximum of 25 characters. Any queries with character lengths outside of this range will throw
-   *     invalid results.</p>
-   *          </note>
-   *          <note>
-   *             <p>The currently supported value for <code>FieldName</code>: <code>name</code>
-   *             </p>
-   *          </note>
-   */
-  SearchCriteria?: SecurityProfileSearchCriteria;
-
-  /**
-   * <p>Filters to be applied to search results.</p>
-   */
-  SearchFilter?: SecurityProfilesSearchFilter;
-}
-
-/**
- * @public
- */
-export interface SearchUsersRequest {
-  /**
-   * <p>The identifier of the Amazon Connect instance. You can <a href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
-   */
-  InstanceId?: string;
-
-  /**
-   * <p>The token for the next set of results. Use the value returned in the previous
-   * response in the next request to retrieve the next set of results.</p>
-   */
-  NextToken?: string;
-
-  /**
-   * <p>The maximum number of results to return per page.</p>
-   */
-  MaxResults?: number;
-
-  /**
-   * <p>Filters to be applied to search results.</p>
-   */
-  SearchFilter?: UserSearchFilter;
-
-  /**
-   * <p>The search criteria to be used to return users.</p>
-   *          <note>
-   *             <p>The <code>name</code> and <code>description</code> fields support "contains" queries with
-   *     a minimum of 2 characters and a maximum of 25 characters. Any queries with character lengths
-   *     outside of this range will throw invalid results.  </p>
-   *          </note>
-   */
-  SearchCriteria?: UserSearchCriteria;
 }
 
 /**

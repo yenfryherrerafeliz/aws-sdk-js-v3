@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CodePipelineClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodePipelineClient";
 import { CreatePipelineInput, CreatePipelineOutput } from "../models/models_0";
 import { de_CreatePipelineCommand, se_CreatePipelineCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -33,12 +37,12 @@ export interface CreatePipelineCommandOutput extends CreatePipelineOutput, __Met
 /**
  * @public
  * <p>Creates a pipeline.</p>
- *         <note>
+ *          <note>
  *             <p>In the pipeline structure, you must include either <code>artifactStore</code>
  *                 or <code>artifactStores</code> in your pipeline, but you cannot use both. If you
  *                 create a cross-region action in your pipeline, you must use
  *                     <code>artifactStores</code>.</p>
- *         </note>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -50,20 +54,20 @@ export interface CreatePipelineCommandOutput extends CreatePipelineOutput, __Met
  *     name: "STRING_VALUE", // required
  *     roleArn: "STRING_VALUE", // required
  *     artifactStore: { // ArtifactStore
- *       type: "STRING_VALUE", // required
+ *       type: "S3", // required
  *       location: "STRING_VALUE", // required
  *       encryptionKey: { // EncryptionKey
  *         id: "STRING_VALUE", // required
- *         type: "STRING_VALUE", // required
+ *         type: "KMS", // required
  *       },
  *     },
  *     artifactStores: { // ArtifactStoreMap
  *       "<keys>": {
- *         type: "STRING_VALUE", // required
+ *         type: "S3", // required
  *         location: "STRING_VALUE", // required
  *         encryptionKey: {
  *           id: "STRING_VALUE", // required
- *           type: "STRING_VALUE", // required
+ *           type: "KMS", // required
  *         },
  *       },
  *     },
@@ -73,15 +77,15 @@ export interface CreatePipelineCommandOutput extends CreatePipelineOutput, __Met
  *         blockers: [ // StageBlockerDeclarationList
  *           { // BlockerDeclaration
  *             name: "STRING_VALUE", // required
- *             type: "STRING_VALUE", // required
+ *             type: "Schedule", // required
  *           },
  *         ],
  *         actions: [ // StageActionDeclarationList // required
  *           { // ActionDeclaration
  *             name: "STRING_VALUE", // required
  *             actionTypeId: { // ActionTypeId
- *               category: "STRING_VALUE", // required
- *               owner: "STRING_VALUE", // required
+ *               category: "Source" || "Build" || "Deploy" || "Test" || "Invoke" || "Approval", // required
+ *               owner: "AWS" || "ThirdParty" || "Custom", // required
  *               provider: "STRING_VALUE", // required
  *               version: "STRING_VALUE", // required
  *             },
@@ -122,20 +126,20 @@ export interface CreatePipelineCommandOutput extends CreatePipelineOutput, __Met
  * //     name: "STRING_VALUE", // required
  * //     roleArn: "STRING_VALUE", // required
  * //     artifactStore: { // ArtifactStore
- * //       type: "STRING_VALUE", // required
+ * //       type: "S3", // required
  * //       location: "STRING_VALUE", // required
  * //       encryptionKey: { // EncryptionKey
  * //         id: "STRING_VALUE", // required
- * //         type: "STRING_VALUE", // required
+ * //         type: "KMS", // required
  * //       },
  * //     },
  * //     artifactStores: { // ArtifactStoreMap
  * //       "<keys>": {
- * //         type: "STRING_VALUE", // required
+ * //         type: "S3", // required
  * //         location: "STRING_VALUE", // required
  * //         encryptionKey: {
  * //           id: "STRING_VALUE", // required
- * //           type: "STRING_VALUE", // required
+ * //           type: "KMS", // required
  * //         },
  * //       },
  * //     },
@@ -145,15 +149,15 @@ export interface CreatePipelineCommandOutput extends CreatePipelineOutput, __Met
  * //         blockers: [ // StageBlockerDeclarationList
  * //           { // BlockerDeclaration
  * //             name: "STRING_VALUE", // required
- * //             type: "STRING_VALUE", // required
+ * //             type: "Schedule", // required
  * //           },
  * //         ],
  * //         actions: [ // StageActionDeclarationList // required
  * //           { // ActionDeclaration
  * //             name: "STRING_VALUE", // required
  * //             actionTypeId: { // ActionTypeId
- * //               category: "STRING_VALUE", // required
- * //               owner: "STRING_VALUE", // required
+ * //               category: "Source" || "Build" || "Deploy" || "Test" || "Invoke" || "Approval", // required
+ * //               owner: "AWS" || "ThirdParty" || "Custom", // required
  * //               provider: "STRING_VALUE", // required
  * //               version: "STRING_VALUE", // required
  * //             },
@@ -215,8 +219,8 @@ export interface CreatePipelineCommandOutput extends CreatePipelineOutput, __Met
  *  <p>The specified resource tags are invalid.</p>
  *
  * @throws {@link LimitExceededException} (client fault)
- *  <p>The number of pipelines associated with the AWS account has exceeded the limit
- *             allowed for the account.</p>
+ *  <p>The number of pipelines associated with the Amazon Web Services account has exceeded
+ *             the limit allowed for the account.</p>
  *
  * @throws {@link PipelineNameInUseException} (client fault)
  *  <p>The specified pipeline name is already in use.</p>

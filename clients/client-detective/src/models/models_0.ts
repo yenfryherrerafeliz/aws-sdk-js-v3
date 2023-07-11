@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { DetectiveServiceException as __BaseException } from "./DetectiveServiceException";
 
@@ -239,6 +239,7 @@ export interface BatchGetGraphMemberDatasourcesRequest {
  * @enum
  */
 export const DatasourcePackage = {
+  ASFF_SECURITYHUB_FINDING: "ASFF_SECURITYHUB_FINDING",
   DETECTIVE_CORE: "DETECTIVE_CORE",
   EKS_AUDIT: "EKS_AUDIT",
 } as const;

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,17 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
 import { IoTWirelessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTWirelessClient";
 import { GetPositionEstimateRequest, GetPositionEstimateResponse } from "../models/models_0";
 import { de_GetPositionEstimateCommand, se_GetPositionEstimateCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -25,15 +30,23 @@ import { de_GetPositionEstimateCommand, se_GetPositionEstimateCommand } from "..
 export interface GetPositionEstimateCommandInput extends GetPositionEstimateRequest {}
 /**
  * @public
- *
- * The output of {@link GetPositionEstimateCommand}.
  */
-export interface GetPositionEstimateCommandOutput extends GetPositionEstimateResponse, __MetadataBearer {}
+export type GetPositionEstimateCommandOutputType = Omit<GetPositionEstimateResponse, "GeoJsonPayload"> & {
+  GeoJsonPayload?: Uint8ArrayBlobAdapter;
+};
 
 /**
  * @public
- * <p>Get estimated position information as a payload in GeoJSON format. The payload measurement data is
- *           resolved using solvers that are provided by third-party vendors.</p>
+ *
+ * The output of {@link GetPositionEstimateCommand}.
+ */
+export interface GetPositionEstimateCommandOutput extends GetPositionEstimateCommandOutputType, __MetadataBearer {}
+
+/**
+ * @public
+ * <p>Get estimated position information as a payload in GeoJSON format. The payload
+ *             measurement data is resolved using solvers that are provided by third-party
+ *             vendors.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

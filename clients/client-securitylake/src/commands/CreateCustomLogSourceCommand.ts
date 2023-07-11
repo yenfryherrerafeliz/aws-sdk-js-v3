@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CreateCustomLogSourceRequest, CreateCustomLogSourceResponse } from "../models/models_0";
 import { de_CreateCustomLogSourceCommand, se_CreateCustomLogSourceCommand } from "../protocols/Aws_restJson1";
 import { SecurityLakeClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../SecurityLakeClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -37,7 +41,8 @@ export interface CreateCustomLogSourceCommandOutput extends CreateCustomLogSourc
  *          third-party custom sources. After creating the appropriate IAM role to
  *          invoke Glue crawler, use this API to add a custom source name in Security Lake. This
  *          operation creates a partition in the Amazon S3 bucket for Security Lake as the target
- *          location for log files from the custom source in addition to an associated Glue table and an Glue crawler.</p>
+ *          location for log files from the custom source. In addition, this operation also creates an
+ *          associated Glue table and an Glue crawler.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -45,19 +50,37 @@ export interface CreateCustomLogSourceCommandOutput extends CreateCustomLogSourc
  * // const { SecurityLakeClient, CreateCustomLogSourceCommand } = require("@aws-sdk/client-securitylake"); // CommonJS import
  * const client = new SecurityLakeClient(config);
  * const input = { // CreateCustomLogSourceRequest
- *   customSourceName: "STRING_VALUE", // required
- *   eventClass: "STRING_VALUE", // required
- *   glueInvocationRoleArn: "STRING_VALUE", // required
- *   logProviderAccountId: "STRING_VALUE", // required
+ *   sourceName: "STRING_VALUE", // required
+ *   sourceVersion: "STRING_VALUE",
+ *   eventClasses: [ // OcsfEventClassList
+ *     "STRING_VALUE",
+ *   ],
+ *   configuration: { // CustomLogSourceConfiguration
+ *     crawlerConfiguration: { // CustomLogSourceCrawlerConfiguration
+ *       roleArn: "STRING_VALUE", // required
+ *     },
+ *     providerIdentity: { // AwsIdentity
+ *       principal: "STRING_VALUE", // required
+ *       externalId: "STRING_VALUE", // required
+ *     },
+ *   },
  * };
  * const command = new CreateCustomLogSourceCommand(input);
  * const response = await client.send(command);
  * // { // CreateCustomLogSourceResponse
- * //   customDataLocation: "STRING_VALUE", // required
- * //   glueCrawlerName: "STRING_VALUE", // required
- * //   glueTableName: "STRING_VALUE", // required
- * //   glueDatabaseName: "STRING_VALUE", // required
- * //   logProviderAccessRoleArn: "STRING_VALUE", // required
+ * //   source: { // CustomLogSourceResource
+ * //     sourceName: "STRING_VALUE",
+ * //     sourceVersion: "STRING_VALUE",
+ * //     provider: { // CustomLogSourceProvider
+ * //       roleArn: "STRING_VALUE",
+ * //       location: "STRING_VALUE",
+ * //     },
+ * //     attributes: { // CustomLogSourceAttributes
+ * //       crawlerArn: "STRING_VALUE",
+ * //       databaseArn: "STRING_VALUE",
+ * //       tableArn: "STRING_VALUE",
+ * //     },
+ * //   },
  * // };
  *
  * ```
@@ -74,27 +97,24 @@ export interface CreateCustomLogSourceCommandOutput extends CreateCustomLogSourc
  *          Amazon Web Services action. An implicit denial occurs when there is no applicable Deny statement and also
  *          no applicable Allow statement.</p>
  *
- * @throws {@link AccountNotFoundException} (client fault)
- *  <p>Amazon Security Lake cannot find an Amazon Web Services account with the accountID that you
- *          specified, or the account whose credentials you used to make this request isn't a member of
- *          an organization.</p>
+ * @throws {@link BadRequestException} (client fault)
+ *  <p>The request is malformed or contains an error such as an invalid parameter value or a missing required parameter.</p>
  *
- * @throws {@link BucketNotFoundException} (client fault)
- *  <p>Amazon Security Lake  generally returns 404 errors if the requested object is missing from the
- *          bucket.</p>
- *
- * @throws {@link ConflictSourceNamesException} (client fault)
- *  <p>There was a conflict when you attempted to modify a Security Lake source name. </p>
+ * @throws {@link ConflictException} (client fault)
+ *  <p>Occurs when a conflict with a previous successful write is detected. This generally
+ *          occurs when the previous write did not have time to propagate to the host serving the
+ *          current request. A retry (with appropriate backoff logic) is the recommended response to
+ *          this exception.</p>
  *
  * @throws {@link InternalServerException} (server fault)
  *  <p>Internal service exceptions are sometimes caused by transient issues. Before you start
- *          troubleshooting, perform the operation again. </p>
+ *          troubleshooting, perform the operation again.</p>
  *
  * @throws {@link ResourceNotFoundException} (client fault)
  *  <p>The resource could not be found.</p>
  *
- * @throws {@link ValidationException} (client fault)
- *  <p>Your signing certificate could not be validated. </p>
+ * @throws {@link ThrottlingException} (client fault)
+ *  <p>The limit on the number of requests per second was exceeded.</p>
  *
  * @throws {@link SecurityLakeServiceException}
  * <p>Base exception class for all service exceptions from SecurityLake service.</p>

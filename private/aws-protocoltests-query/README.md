@@ -2,9 +2,6 @@
 
 # @aws-sdk/aws-protocoltests-query
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/aws-protocoltests-query/latest.svg)](https://www.npmjs.com/package/@aws-sdk/aws-protocoltests-query)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/aws-protocoltests-query.svg)](https://www.npmjs.com/package/@aws-sdk/aws-protocoltests-query)
-
 ## Description
 
 AWS SDK for JavaScript QueryProtocol Client for Node.js, Browser and React Native.
@@ -288,6 +285,14 @@ NoInputAndOutput
 </details>
 <details>
 <summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandoutput.html)
+
+</details>
+<details>
+<summary>
 QueryIdempotencyTokenAutoFill
 </summary>
 
@@ -512,6 +517,14 @@ PutAndGetInlineDocuments
 </details>
 <details>
 <summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandoutput.html)
+
+</details>
+<details>
+<summary>
 SimpleScalarProperties
 </summary>
 
@@ -580,6 +593,14 @@ NoInputAndOutput
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/noinputandoutputcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/noinputandoutputcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/noinputandoutputcommandoutput.html)
+
+</details>
+<details>
+<summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandoutput.html)
 
 </details>
 <details>
@@ -708,6 +729,14 @@ NoInputAndOutput
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/noinputandoutputcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/noinputandoutputcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/noinputandoutputcommandoutput.html)
+
+</details>
+<details>
+<summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandoutput.html)
 
 </details>
 <details>
@@ -1472,6 +1501,14 @@ PostUnionWithJsonName
 </details>
 <details>
 <summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandoutput.html)
+
+</details>
+<details>
+<summary>
 QueryIdempotencyTokenAutoFill
 </summary>
 
@@ -1976,6 +2013,14 @@ OmitsNullSerializesEmptyString
 </details>
 <details>
 <summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/putwithcontentencodingcommandoutput.html)
+
+</details>
+<details>
+<summary>
 QueryIdempotencyTokenAutoFill
 </summary>
 
@@ -2180,6 +2225,14 @@ Predict
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/predictcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/predictcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/predictcommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteObjectTagging
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/deleteobjecttaggingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/deleteobjecttaggingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/deleteobjecttaggingcommandoutput.html)
 
 </details>
 <details>

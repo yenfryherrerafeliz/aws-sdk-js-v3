@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AlexaForBusinessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AlexaForBusinessClient";
 import { UpdateBusinessReportScheduleRequest, UpdateBusinessReportScheduleResponse } from "../models/models_0";
@@ -20,6 +20,10 @@ import {
   se_UpdateBusinessReportScheduleCommand,
 } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -37,6 +41,8 @@ export interface UpdateBusinessReportScheduleCommandOutput
 
 /**
  * @public
+ * @deprecated
+ *
  * <p>Updates the configuration of the report delivery schedule with the specified schedule
  *          ARN.</p>
  * @example
@@ -49,7 +55,7 @@ export interface UpdateBusinessReportScheduleCommandOutput
  *   ScheduleArn: "STRING_VALUE", // required
  *   S3BucketName: "STRING_VALUE",
  *   S3KeyPrefix: "STRING_VALUE",
- *   Format: "STRING_VALUE",
+ *   Format: "CSV" || "CSV_ZIP",
  *   ScheduleName: "STRING_VALUE",
  *   Recurrence: { // BusinessReportRecurrence
  *     StartDate: "STRING_VALUE",

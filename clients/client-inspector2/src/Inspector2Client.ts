@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,13 +47,17 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AssociateMemberCommandInput, AssociateMemberCommandOutput } from "./commands/AssociateMemberCommand";
 import {
   BatchGetAccountStatusCommandInput,
   BatchGetAccountStatusCommandOutput,
 } from "./commands/BatchGetAccountStatusCommand";
+import {
+  BatchGetCodeSnippetCommandInput,
+  BatchGetCodeSnippetCommandOutput,
+} from "./commands/BatchGetCodeSnippetCommand";
 import {
   BatchGetFreeTrialInfoCommandInput,
   BatchGetFreeTrialInfoCommandOutput,
@@ -70,11 +74,13 @@ import {
   CancelFindingsReportCommandInput,
   CancelFindingsReportCommandOutput,
 } from "./commands/CancelFindingsReportCommand";
+import { CancelSbomExportCommandInput, CancelSbomExportCommandOutput } from "./commands/CancelSbomExportCommand";
 import { CreateFilterCommandInput, CreateFilterCommandOutput } from "./commands/CreateFilterCommand";
 import {
   CreateFindingsReportCommandInput,
   CreateFindingsReportCommandOutput,
 } from "./commands/CreateFindingsReportCommand";
+import { CreateSbomExportCommandInput, CreateSbomExportCommandOutput } from "./commands/CreateSbomExportCommand";
 import { DeleteFilterCommandInput, DeleteFilterCommandOutput } from "./commands/DeleteFilterCommand";
 import {
   DescribeOrganizationConfigurationCommandInput,
@@ -100,11 +106,13 @@ import {
   GetEc2DeepInspectionConfigurationCommandInput,
   GetEc2DeepInspectionConfigurationCommandOutput,
 } from "./commands/GetEc2DeepInspectionConfigurationCommand";
+import { GetEncryptionKeyCommandInput, GetEncryptionKeyCommandOutput } from "./commands/GetEncryptionKeyCommand";
 import {
   GetFindingsReportStatusCommandInput,
   GetFindingsReportStatusCommandOutput,
 } from "./commands/GetFindingsReportStatusCommand";
 import { GetMemberCommandInput, GetMemberCommandOutput } from "./commands/GetMemberCommand";
+import { GetSbomExportCommandInput, GetSbomExportCommandOutput } from "./commands/GetSbomExportCommand";
 import {
   ListAccountPermissionsCommandInput,
   ListAccountPermissionsCommandOutput,
@@ -130,6 +138,7 @@ import {
   ListTagsForResourceCommandOutput,
 } from "./commands/ListTagsForResourceCommand";
 import { ListUsageTotalsCommandInput, ListUsageTotalsCommandOutput } from "./commands/ListUsageTotalsCommand";
+import { ResetEncryptionKeyCommandInput, ResetEncryptionKeyCommandOutput } from "./commands/ResetEncryptionKeyCommand";
 import {
   SearchVulnerabilitiesCommandInput,
   SearchVulnerabilitiesCommandOutput,
@@ -144,6 +153,10 @@ import {
   UpdateEc2DeepInspectionConfigurationCommandInput,
   UpdateEc2DeepInspectionConfigurationCommandOutput,
 } from "./commands/UpdateEc2DeepInspectionConfigurationCommand";
+import {
+  UpdateEncryptionKeyCommandInput,
+  UpdateEncryptionKeyCommandOutput,
+} from "./commands/UpdateEncryptionKeyCommand";
 import { UpdateFilterCommandInput, UpdateFilterCommandOutput } from "./commands/UpdateFilterCommand";
 import {
   UpdateOrganizationConfigurationCommandInput,
@@ -161,18 +174,23 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
 export type ServiceInputTypes =
   | AssociateMemberCommandInput
   | BatchGetAccountStatusCommandInput
+  | BatchGetCodeSnippetCommandInput
   | BatchGetFreeTrialInfoCommandInput
   | BatchGetMemberEc2DeepInspectionStatusCommandInput
   | BatchUpdateMemberEc2DeepInspectionStatusCommandInput
   | CancelFindingsReportCommandInput
+  | CancelSbomExportCommandInput
   | CreateFilterCommandInput
   | CreateFindingsReportCommandInput
+  | CreateSbomExportCommandInput
   | DeleteFilterCommandInput
   | DescribeOrganizationConfigurationCommandInput
   | DisableCommandInput
@@ -183,8 +201,10 @@ export type ServiceInputTypes =
   | GetConfigurationCommandInput
   | GetDelegatedAdminAccountCommandInput
   | GetEc2DeepInspectionConfigurationCommandInput
+  | GetEncryptionKeyCommandInput
   | GetFindingsReportStatusCommandInput
   | GetMemberCommandInput
+  | GetSbomExportCommandInput
   | ListAccountPermissionsCommandInput
   | ListCoverageCommandInput
   | ListCoverageStatisticsCommandInput
@@ -195,11 +215,13 @@ export type ServiceInputTypes =
   | ListMembersCommandInput
   | ListTagsForResourceCommandInput
   | ListUsageTotalsCommandInput
+  | ResetEncryptionKeyCommandInput
   | SearchVulnerabilitiesCommandInput
   | TagResourceCommandInput
   | UntagResourceCommandInput
   | UpdateConfigurationCommandInput
   | UpdateEc2DeepInspectionConfigurationCommandInput
+  | UpdateEncryptionKeyCommandInput
   | UpdateFilterCommandInput
   | UpdateOrgEc2DeepInspectionConfigurationCommandInput
   | UpdateOrganizationConfigurationCommandInput;
@@ -210,12 +232,15 @@ export type ServiceInputTypes =
 export type ServiceOutputTypes =
   | AssociateMemberCommandOutput
   | BatchGetAccountStatusCommandOutput
+  | BatchGetCodeSnippetCommandOutput
   | BatchGetFreeTrialInfoCommandOutput
   | BatchGetMemberEc2DeepInspectionStatusCommandOutput
   | BatchUpdateMemberEc2DeepInspectionStatusCommandOutput
   | CancelFindingsReportCommandOutput
+  | CancelSbomExportCommandOutput
   | CreateFilterCommandOutput
   | CreateFindingsReportCommandOutput
+  | CreateSbomExportCommandOutput
   | DeleteFilterCommandOutput
   | DescribeOrganizationConfigurationCommandOutput
   | DisableCommandOutput
@@ -226,8 +251,10 @@ export type ServiceOutputTypes =
   | GetConfigurationCommandOutput
   | GetDelegatedAdminAccountCommandOutput
   | GetEc2DeepInspectionConfigurationCommandOutput
+  | GetEncryptionKeyCommandOutput
   | GetFindingsReportStatusCommandOutput
   | GetMemberCommandOutput
+  | GetSbomExportCommandOutput
   | ListAccountPermissionsCommandOutput
   | ListCoverageCommandOutput
   | ListCoverageStatisticsCommandOutput
@@ -238,11 +265,13 @@ export type ServiceOutputTypes =
   | ListMembersCommandOutput
   | ListTagsForResourceCommandOutput
   | ListUsageTotalsCommandOutput
+  | ResetEncryptionKeyCommandOutput
   | SearchVulnerabilitiesCommandOutput
   | TagResourceCommandOutput
   | UntagResourceCommandOutput
   | UpdateConfigurationCommandOutput
   | UpdateEc2DeepInspectionConfigurationCommandOutput
+  | UpdateEncryptionKeyCommandOutput
   | UpdateFilterCommandOutput
   | UpdateOrgEc2DeepInspectionConfigurationCommandOutput
   | UpdateOrganizationConfigurationCommandOutput;
@@ -257,7 +286,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -312,7 +341,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -366,7 +395,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -374,7 +403,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type Inspector2ClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type Inspector2ClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -393,7 +422,7 @@ export interface Inspector2ClientConfig extends Inspector2ClientConfigType {}
 /**
  * @public
  */
-type Inspector2ClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type Inspector2ClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

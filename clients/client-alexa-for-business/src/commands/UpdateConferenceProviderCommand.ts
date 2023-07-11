@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AlexaForBusinessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AlexaForBusinessClient";
 import { UpdateConferenceProviderRequest, UpdateConferenceProviderResponse } from "../models/models_0";
 import { de_UpdateConferenceProviderCommand, se_UpdateConferenceProviderCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,6 +36,8 @@ export interface UpdateConferenceProviderCommandOutput extends UpdateConferenceP
 
 /**
  * @public
+ * @deprecated
+ *
  * <p>Updates an existing conference provider's settings.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -41,10 +47,10 @@ export interface UpdateConferenceProviderCommandOutput extends UpdateConferenceP
  * const client = new AlexaForBusinessClient(config);
  * const input = { // UpdateConferenceProviderRequest
  *   ConferenceProviderArn: "STRING_VALUE", // required
- *   ConferenceProviderType: "STRING_VALUE", // required
+ *   ConferenceProviderType: "CHIME" || "BLUEJEANS" || "FUZE" || "GOOGLE_HANGOUTS" || "POLYCOM" || "RINGCENTRAL" || "SKYPE_FOR_BUSINESS" || "WEBEX" || "ZOOM" || "CUSTOM", // required
  *   IPDialIn: { // IPDialIn
  *     Endpoint: "STRING_VALUE", // required
- *     CommsProtocol: "STRING_VALUE", // required
+ *     CommsProtocol: "SIP" || "SIPS" || "H323", // required
  *   },
  *   PSTNDialIn: { // PSTNDialIn
  *     CountryCode: "STRING_VALUE", // required
@@ -53,7 +59,7 @@ export interface UpdateConferenceProviderCommandOutput extends UpdateConferenceP
  *     OneClickPinDelay: "STRING_VALUE", // required
  *   },
  *   MeetingSetting: { // MeetingSetting
- *     RequirePin: "STRING_VALUE", // required
+ *     RequirePin: "YES" || "NO" || "OPTIONAL", // required
  *   },
  * };
  * const command = new UpdateConferenceProviderCommand(input);

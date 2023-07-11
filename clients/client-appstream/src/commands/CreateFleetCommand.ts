@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AppStreamClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppStreamClient";
 import { CreateFleetRequest, CreateFleetResult } from "../models/models_0";
 import { de_CreateFleetCommand, se_CreateFleetCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -78,7 +82,7 @@ export interface CreateFleetCommandOutput extends CreateFleetResult, __MetadataB
  *   ],
  *   SessionScriptS3Location: { // S3Location
  *     S3Bucket: "STRING_VALUE", // required
- *     S3Key: "STRING_VALUE", // required
+ *     S3Key: "STRING_VALUE",
  *   },
  * };
  * const command = new CreateFleetCommand(input);
@@ -132,7 +136,7 @@ export interface CreateFleetCommandOutput extends CreateFleetResult, __MetadataB
  * //     ],
  * //     SessionScriptS3Location: { // S3Location
  * //       S3Bucket: "STRING_VALUE", // required
- * //       S3Key: "STRING_VALUE", // required
+ * //       S3Key: "STRING_VALUE",
  * //     },
  * //   },
  * // };

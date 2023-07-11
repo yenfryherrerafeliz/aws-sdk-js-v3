@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@smithy/smithy-client";
 
 import { GameLiftServiceException as __BaseException } from "./GameLiftServiceException";
 
@@ -342,6 +342,7 @@ export type BalancingStrategy = (typeof BalancingStrategy)[keyof typeof Balancin
 export const OperatingSystem = {
   AMAZON_LINUX: "AMAZON_LINUX",
   AMAZON_LINUX_2: "AMAZON_LINUX_2",
+  AMAZON_LINUX_2023: "AMAZON_LINUX_2023",
   WINDOWS_2012: "WINDOWS_2012",
   WINDOWS_2016: "WINDOWS_2016",
 } as const;
@@ -488,6 +489,37 @@ export interface CertificateConfiguration {
 
 /**
  * @public
+ * @enum
+ */
+export const FilterInstanceStatus = {
+  ACTIVE: "ACTIVE",
+  DRAINING: "DRAINING",
+} as const;
+
+/**
+ * @public
+ */
+export type FilterInstanceStatus = (typeof FilterInstanceStatus)[keyof typeof FilterInstanceStatus];
+
+/**
+ * @public
+ * <p>
+ *             <b>This data type is used with the Amazon GameLift FleetIQ and game server groups.</b>
+ *          </p>
+ *          <p>
+ *         Filters which game servers may be claimed when calling <code>ClaimGameServer</code>.
+ *     </p>
+ */
+export interface ClaimFilterOption {
+  /**
+   * <p>List of instance statuses that game servers may be claimed on. If provided, the list must contain the
+   *             <code>ACTIVE</code> status.</p>
+   */
+  InstanceStatuses?: (FilterInstanceStatus | string)[];
+}
+
+/**
+ * @public
  */
 export interface ClaimGameServerInput {
   /**
@@ -507,6 +539,11 @@ export interface ClaimGameServerInput {
    *             is passed to a game client or service when it requests information on game servers. </p>
    */
   GameServerData?: string;
+
+  /**
+   * <p>Object that restricts how a claimed game server is chosen.</p>
+   */
+  FilterOption?: ClaimFilterOption;
 }
 
 /**
@@ -1142,11 +1179,17 @@ export interface CreateBuildInput {
   StorageLocation?: S3Location;
 
   /**
-   * <p>The operating system that you built the game server binaries to run on. This value
-   *             determines the type of fleet resources that you can use for this build. If your game
-   *             build contains multiple executables, they all must run on the same operating system. If
-   *             an operating system isn't specified when creating a build, Amazon GameLift uses the
-   *             default value (WINDOWS_2012). This value can't be changed later.</p>
+   * <p>The operating system that your game server binaries run on. This value determines the
+   *             type of fleet resources that you use for this build. If your game build contains
+   *             multiple executables, they all must run on the same operating system. You must specify a
+   *             valid operating system in this request. There is no default value. You can't change a
+   *             build's operating system later.</p>
+   *          <note>
+   *             <p>If you have active fleets using the Windows Server 2012 operating system, you can continue to
+   *                 create new builds using this OS until October 10, 2023, when Microsoft ends its
+   *                 support. All others must use Windows Server 2016 when creating new Windows-based
+   *                 builds.</p>
+   *          </note>
    */
   OperatingSystem?: OperatingSystem | string;
 
@@ -3042,7 +3085,7 @@ export interface CreateGameSessionQueueInput {
   Name: string | undefined;
 
   /**
-   * <p>The maximum time, in seconds, that a new game session placement request remains in the queue. When a request exceeds this time, the game session placement changes to a <code>TIMED_OUT</code> status.</p>
+   * <p>The maximum time, in seconds, that a new game session placement request remains in the queue. When a request exceeds this time, the game session placement changes to a <code>TIMED_OUT</code> status. By default, this property is set to <code>600</code>.</p>
    */
   TimeoutInSeconds?: number;
 
@@ -3116,7 +3159,7 @@ export interface GameSessionQueue {
   GameSessionQueueArn?: string;
 
   /**
-   * <p>The maximum time, in seconds, that a new game session placement request remains in the queue. When a request exceeds this time, the game session placement changes to a <code>TIMED_OUT</code> status.</p>
+   * <p>The maximum time, in seconds, that a new game session placement request remains in the queue. When a request exceeds this time, the game session placement changes to a <code>TIMED_OUT</code> status. By default, this property is set to <code>600</code>.</p>
    */
   TimeoutInSeconds?: number;
 
@@ -3291,7 +3334,7 @@ export interface CreateMatchmakingConfigurationInput {
 
   /**
    * <p>The number of player slots in a match to keep open for future players. For example, if the configuration's rule set specifies
-   *             a match for a single 12-person team, and the additional player count is set to 2, only 10 players are selected for the match. This parameter is not used if <code>FlexMatchMode</code> is set to
+   *             a match for a single 10-person team, and the additional player count is set to 2, 10 players will be selected for the match and 2 more player slots will be open for future players. This parameter is not used if <code>FlexMatchMode</code> is set to
    *                 <code>STANDALONE</code>.</p>
    */
   AdditionalPlayerCount?: number;
@@ -3426,7 +3469,7 @@ export interface MatchmakingConfiguration {
 
   /**
    * <p>The number of player slots in a match to keep open for future players. For example, if the configuration's rule set specifies
-   *             a match for a single 12-person team, and the additional player count is set to 2, only 10 players are selected for the match. This parameter is not used when <code>FlexMatchMode</code> is set to
+   *             a match for a single 10-person team, and the additional player count is set to 2, 10 players will be selected for the match and 2 more player slots will be open for future players. This parameter is not used when <code>FlexMatchMode</code> is set to
    *                 <code>STANDALONE</code>.</p>
    */
   AdditionalPlayerCount?: number;
@@ -8584,48 +8627,6 @@ export interface UpdateFleetCapacityInput {
    *             Amazon Web Services Region code such as <code>us-west-2</code>.</p>
    */
   Location?: string;
-}
-
-/**
- * @public
- */
-export interface UpdateFleetCapacityOutput {
-  /**
-   * <p>A unique identifier for the fleet that was updated.</p>
-   */
-  FleetId?: string;
-
-  /**
-   * <p>The Amazon Resource Name (<a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that is assigned to a Amazon GameLift fleet resource and uniquely identifies it. ARNs are unique across all Regions. Format is <code>arn:aws:gamelift:<region>::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>. </p>
-   */
-  FleetArn?: string;
-
-  /**
-   * <p>The remote location being updated, expressed as an Amazon Web Services Region code, such as
-   *                 <code>us-west-2</code>.</p>
-   */
-  Location?: string;
-}
-
-/**
- * @public
- */
-export interface UpdateFleetPortSettingsInput {
-  /**
-   * <p>A unique identifier for the fleet to update port settings for. You can use either the fleet ID or ARN
-   *             value.</p>
-   */
-  FleetId: string | undefined;
-
-  /**
-   * <p>A collection of port settings to be added to the fleet resource.</p>
-   */
-  InboundPermissionAuthorizations?: IpPermission[];
-
-  /**
-   * <p>A collection of port settings to be removed from the fleet resource.</p>
-   */
-  InboundPermissionRevocations?: IpPermission[];
 }
 
 /**

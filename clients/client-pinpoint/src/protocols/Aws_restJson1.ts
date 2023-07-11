@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -16,12 +17,12 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CreateAppCommandInput, CreateAppCommandOutput } from "../commands/CreateAppCommand";
 import { CreateCampaignCommandInput, CreateCampaignCommandOutput } from "../commands/CreateCampaignCommand";
@@ -270,6 +271,7 @@ import {
 import { VerifyOTPMessageCommandInput, VerifyOTPMessageCommandOutput } from "../commands/VerifyOTPMessageCommand";
 import {
   __EndpointTypesElement,
+  __TimezoneEstimationMethodsElement,
   Activity,
   AddressConfiguration,
   ADMChannelRequest,
@@ -12870,6 +12872,8 @@ const se_JourneySchedule = (input: JourneySchedule, context: __SerdeContext): an
 
 // se_ListOf__string omitted.
 
+// se_ListOf__TimezoneEstimationMethodsElement omitted.
+
 // se_ListOfClosedDaysRules omitted.
 
 /**
@@ -13362,6 +13366,7 @@ const se_WriteJourneyRequest = (input: WriteJourneyRequest, context: __SerdeCont
     StartActivity: [],
     StartCondition: (_) => se_StartCondition(_, context),
     State: [],
+    TimezoneEstimationMethods: _json,
     WaitForQuietTime: [],
   });
 };
@@ -13883,6 +13888,7 @@ const de_JourneyResponse = (output: any, context: __SerdeContext): JourneyRespon
     StartActivity: __expectString,
     StartCondition: (_: any) => de_StartCondition(_, context),
     State: __expectString,
+    TimezoneEstimationMethods: _json,
     WaitForQuietTime: __expectBoolean,
     tags: [, _json, `tags`],
   }) as any;
@@ -13922,6 +13928,8 @@ const de_JourneysResponse = (output: any, context: __SerdeContext): JourneysResp
 // de_ListOf__EndpointTypesElement omitted.
 
 // de_ListOf__string omitted.
+
+// de_ListOf__TimezoneEstimationMethodsElement omitted.
 
 // de_ListOfActivityResponse omitted.
 
@@ -14495,14 +14503,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

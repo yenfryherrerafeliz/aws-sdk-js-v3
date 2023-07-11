@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,12 +47,16 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   AssociateBrowserSettingsCommandInput,
   AssociateBrowserSettingsCommandOutput,
 } from "./commands/AssociateBrowserSettingsCommand";
+import {
+  AssociateIpAccessSettingsCommandInput,
+  AssociateIpAccessSettingsCommandOutput,
+} from "./commands/AssociateIpAccessSettingsCommand";
 import {
   AssociateNetworkSettingsCommandInput,
   AssociateNetworkSettingsCommandOutput,
@@ -78,6 +82,10 @@ import {
   CreateIdentityProviderCommandOutput,
 } from "./commands/CreateIdentityProviderCommand";
 import {
+  CreateIpAccessSettingsCommandInput,
+  CreateIpAccessSettingsCommandOutput,
+} from "./commands/CreateIpAccessSettingsCommand";
+import {
   CreateNetworkSettingsCommandInput,
   CreateNetworkSettingsCommandOutput,
 } from "./commands/CreateNetworkSettingsCommand";
@@ -97,6 +105,10 @@ import {
   DeleteIdentityProviderCommandOutput,
 } from "./commands/DeleteIdentityProviderCommand";
 import {
+  DeleteIpAccessSettingsCommandInput,
+  DeleteIpAccessSettingsCommandOutput,
+} from "./commands/DeleteIpAccessSettingsCommand";
+import {
   DeleteNetworkSettingsCommandInput,
   DeleteNetworkSettingsCommandOutput,
 } from "./commands/DeleteNetworkSettingsCommand";
@@ -111,6 +123,10 @@ import {
   DisassociateBrowserSettingsCommandInput,
   DisassociateBrowserSettingsCommandOutput,
 } from "./commands/DisassociateBrowserSettingsCommand";
+import {
+  DisassociateIpAccessSettingsCommandInput,
+  DisassociateIpAccessSettingsCommandOutput,
+} from "./commands/DisassociateIpAccessSettingsCommand";
 import {
   DisassociateNetworkSettingsCommandInput,
   DisassociateNetworkSettingsCommandOutput,
@@ -132,6 +148,10 @@ import {
   GetIdentityProviderCommandInput,
   GetIdentityProviderCommandOutput,
 } from "./commands/GetIdentityProviderCommand";
+import {
+  GetIpAccessSettingsCommandInput,
+  GetIpAccessSettingsCommandOutput,
+} from "./commands/GetIpAccessSettingsCommand";
 import { GetNetworkSettingsCommandInput, GetNetworkSettingsCommandOutput } from "./commands/GetNetworkSettingsCommand";
 import { GetPortalCommandInput, GetPortalCommandOutput } from "./commands/GetPortalCommand";
 import {
@@ -156,6 +176,10 @@ import {
   ListIdentityProvidersCommandInput,
   ListIdentityProvidersCommandOutput,
 } from "./commands/ListIdentityProvidersCommand";
+import {
+  ListIpAccessSettingsCommandInput,
+  ListIpAccessSettingsCommandOutput,
+} from "./commands/ListIpAccessSettingsCommand";
 import {
   ListNetworkSettingsCommandInput,
   ListNetworkSettingsCommandOutput,
@@ -186,6 +210,10 @@ import {
   UpdateIdentityProviderCommandOutput,
 } from "./commands/UpdateIdentityProviderCommand";
 import {
+  UpdateIpAccessSettingsCommandInput,
+  UpdateIpAccessSettingsCommandOutput,
+} from "./commands/UpdateIpAccessSettingsCommand";
+import {
   UpdateNetworkSettingsCommandInput,
   UpdateNetworkSettingsCommandOutput,
 } from "./commands/UpdateNetworkSettingsCommand";
@@ -204,17 +232,21 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
 export type ServiceInputTypes =
   | AssociateBrowserSettingsCommandInput
+  | AssociateIpAccessSettingsCommandInput
   | AssociateNetworkSettingsCommandInput
   | AssociateTrustStoreCommandInput
   | AssociateUserAccessLoggingSettingsCommandInput
   | AssociateUserSettingsCommandInput
   | CreateBrowserSettingsCommandInput
   | CreateIdentityProviderCommandInput
+  | CreateIpAccessSettingsCommandInput
   | CreateNetworkSettingsCommandInput
   | CreatePortalCommandInput
   | CreateTrustStoreCommandInput
@@ -222,18 +254,21 @@ export type ServiceInputTypes =
   | CreateUserSettingsCommandInput
   | DeleteBrowserSettingsCommandInput
   | DeleteIdentityProviderCommandInput
+  | DeleteIpAccessSettingsCommandInput
   | DeleteNetworkSettingsCommandInput
   | DeletePortalCommandInput
   | DeleteTrustStoreCommandInput
   | DeleteUserAccessLoggingSettingsCommandInput
   | DeleteUserSettingsCommandInput
   | DisassociateBrowserSettingsCommandInput
+  | DisassociateIpAccessSettingsCommandInput
   | DisassociateNetworkSettingsCommandInput
   | DisassociateTrustStoreCommandInput
   | DisassociateUserAccessLoggingSettingsCommandInput
   | DisassociateUserSettingsCommandInput
   | GetBrowserSettingsCommandInput
   | GetIdentityProviderCommandInput
+  | GetIpAccessSettingsCommandInput
   | GetNetworkSettingsCommandInput
   | GetPortalCommandInput
   | GetPortalServiceProviderMetadataCommandInput
@@ -243,6 +278,7 @@ export type ServiceInputTypes =
   | GetUserSettingsCommandInput
   | ListBrowserSettingsCommandInput
   | ListIdentityProvidersCommandInput
+  | ListIpAccessSettingsCommandInput
   | ListNetworkSettingsCommandInput
   | ListPortalsCommandInput
   | ListTagsForResourceCommandInput
@@ -254,6 +290,7 @@ export type ServiceInputTypes =
   | UntagResourceCommandInput
   | UpdateBrowserSettingsCommandInput
   | UpdateIdentityProviderCommandInput
+  | UpdateIpAccessSettingsCommandInput
   | UpdateNetworkSettingsCommandInput
   | UpdatePortalCommandInput
   | UpdateTrustStoreCommandInput
@@ -265,12 +302,14 @@ export type ServiceInputTypes =
  */
 export type ServiceOutputTypes =
   | AssociateBrowserSettingsCommandOutput
+  | AssociateIpAccessSettingsCommandOutput
   | AssociateNetworkSettingsCommandOutput
   | AssociateTrustStoreCommandOutput
   | AssociateUserAccessLoggingSettingsCommandOutput
   | AssociateUserSettingsCommandOutput
   | CreateBrowserSettingsCommandOutput
   | CreateIdentityProviderCommandOutput
+  | CreateIpAccessSettingsCommandOutput
   | CreateNetworkSettingsCommandOutput
   | CreatePortalCommandOutput
   | CreateTrustStoreCommandOutput
@@ -278,18 +317,21 @@ export type ServiceOutputTypes =
   | CreateUserSettingsCommandOutput
   | DeleteBrowserSettingsCommandOutput
   | DeleteIdentityProviderCommandOutput
+  | DeleteIpAccessSettingsCommandOutput
   | DeleteNetworkSettingsCommandOutput
   | DeletePortalCommandOutput
   | DeleteTrustStoreCommandOutput
   | DeleteUserAccessLoggingSettingsCommandOutput
   | DeleteUserSettingsCommandOutput
   | DisassociateBrowserSettingsCommandOutput
+  | DisassociateIpAccessSettingsCommandOutput
   | DisassociateNetworkSettingsCommandOutput
   | DisassociateTrustStoreCommandOutput
   | DisassociateUserAccessLoggingSettingsCommandOutput
   | DisassociateUserSettingsCommandOutput
   | GetBrowserSettingsCommandOutput
   | GetIdentityProviderCommandOutput
+  | GetIpAccessSettingsCommandOutput
   | GetNetworkSettingsCommandOutput
   | GetPortalCommandOutput
   | GetPortalServiceProviderMetadataCommandOutput
@@ -299,6 +341,7 @@ export type ServiceOutputTypes =
   | GetUserSettingsCommandOutput
   | ListBrowserSettingsCommandOutput
   | ListIdentityProvidersCommandOutput
+  | ListIpAccessSettingsCommandOutput
   | ListNetworkSettingsCommandOutput
   | ListPortalsCommandOutput
   | ListTagsForResourceCommandOutput
@@ -310,6 +353,7 @@ export type ServiceOutputTypes =
   | UntagResourceCommandOutput
   | UpdateBrowserSettingsCommandOutput
   | UpdateIdentityProviderCommandOutput
+  | UpdateIpAccessSettingsCommandOutput
   | UpdateNetworkSettingsCommandOutput
   | UpdatePortalCommandOutput
   | UpdateTrustStoreCommandOutput
@@ -326,7 +370,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -381,7 +425,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -435,7 +479,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -443,7 +487,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type WorkSpacesWebClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type WorkSpacesWebClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -462,7 +506,7 @@ export interface WorkSpacesWebClientConfig extends WorkSpacesWebClientConfigType
 /**
  * @public
  */
-type WorkSpacesWebClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type WorkSpacesWebClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

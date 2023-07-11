@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudTrailClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudTrailClient";
 import { PutEventSelectorsRequest, PutEventSelectorsResponse } from "../models/models_0";
 import { de_PutEventSelectorsCommand, se_PutEventSelectorsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -34,7 +38,9 @@ export interface PutEventSelectorsCommandOutput extends PutEventSelectorsRespons
  * @public
  * <p>Configures an event selector or advanced event selectors for your trail. Use event
  *          selectors or advanced event selectors to specify management and data event settings for
- *          your trail. By default, trails created without specific event selectors are configured to
+ *          your trail. If you want your trail to log Insights events, be sure the event selector
+ *          enables logging of the Insights event types you want configured for your trail. For more information about logging Insights events, see <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-insights-events-with-cloudtrail.html">Logging Insights events for trails</a> in the <i>CloudTrail User Guide</i>.
+ *          By default, trails created without specific event selectors are configured to
  *          log all read and write management events, and no data events.</p>
  *          <p>When an event occurs in your account, CloudTrail evaluates the event selectors or
  *          advanced event selectors in all trails. For each trail, if the event matches any event
@@ -62,19 +68,19 @@ export interface PutEventSelectorsCommandOutput extends PutEventSelectorsRespons
  *                event selector. The trail doesn't log the event. </p>
  *             </li>
  *          </ol>
- *          <p>The <code>PutEventSelectors</code> operation must be called from the region in which the
+ *          <p>The <code>PutEventSelectors</code> operation must be called from the Region in which the
  *          trail was created; otherwise, an <code>InvalidHomeRegionException</code> exception is
  *          thrown.</p>
  *          <p>You can configure up to five event selectors for each trail. For more information, see
- *             <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html">Logging management events for trails </a>, <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html">Logging
- *             data events for trails </a>, and <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/WhatIsCloudTrail-Limits.html">Quotas in CloudTrail</a> in the <i>CloudTrail User
+ *             <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html">Logging management events</a>, <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html">Logging
+ *             data events</a>, and <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/WhatIsCloudTrail-Limits.html">Quotas in CloudTrail</a> in the <i>CloudTrail User
  *          Guide</i>.</p>
  *          <p>You can add advanced event selectors, and conditions for your advanced event selectors,
  *          up to a maximum of 500 values for all conditions and selectors on a trail. You can use
  *          either <code>AdvancedEventSelectors</code> or <code>EventSelectors</code>, but not both. If
  *          you apply <code>AdvancedEventSelectors</code> to a trail, any existing
  *             <code>EventSelectors</code> are overwritten. For more information about advanced event
- *          selectors, see <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html">Logging data events for trails</a> in the <i>CloudTrail User Guide</i>.</p>
+ *          selectors, see <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html">Logging data events</a> in the <i>CloudTrail User Guide</i>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -192,14 +198,20 @@ export interface PutEventSelectorsCommandOutput extends PutEventSelectorsRespons
  *          </p>
  *          <p>This exception is also thrown when you call <code>AddTags</code> or <code>RemoveTags</code> on a trail, event data store, or channel with a resource ARN that is not valid.</p>
  *          <p>The following is the format of an event data store ARN:
- *          <code>arn:aws:cloudtrail:us-east-2:12345678910:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
+ *          <code>arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
  *          </p>
  *          <p>The following is the format of a channel ARN:
  *          <code>arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890</code>
  *          </p>
  *
+ * @throws {@link ConflictException} (client fault)
+ *  <p>This exception is thrown when the specified resource is not ready for an operation. This
+ *          can occur when you try to run an operation on a resource before CloudTrail has time
+ *          to fully load the resource, or because another operation is modifying the resource. If this exception occurs, wait a few minutes, and then try the
+ *          operation again.</p>
+ *
  * @throws {@link InsufficientDependencyServiceAccessPermissionException} (client fault)
- *  <p>This exception is thrown when the IAM user or role that is used to create
+ *  <p>This exception is thrown when the IAM identity that is used to create
  *          the organization resource lacks one or more required permissions for creating an
  *          organization resource in a required service.</p>
  *
@@ -234,8 +246,8 @@ export interface PutEventSelectorsCommandOutput extends PutEventSelectorsRespons
  *          </ul>
  *
  * @throws {@link InvalidHomeRegionException} (client fault)
- *  <p>This exception is thrown when an operation is called on a trail from a region other than
- *          the region in which the trail was created.</p>
+ *  <p>This exception is thrown when an operation is called on a trail from a Region other than
+ *          the Region in which the trail was created.</p>
  *
  * @throws {@link InvalidTrailNameException} (client fault)
  *  <p>This exception is thrown when the provided trail name is not valid. Trail names must

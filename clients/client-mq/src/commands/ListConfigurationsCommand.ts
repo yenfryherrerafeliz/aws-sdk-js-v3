@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ListConfigurationsRequest, ListConfigurationsResponse } from "../models/models_0";
 import { MqClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MqClient";
 import { de_ListConfigurationsCommand, se_ListConfigurationsCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -49,10 +53,10 @@ export interface ListConfigurationsCommandOutput extends ListConfigurationsRespo
  * //   Configurations: [ // __listOfConfiguration
  * //     { // Configuration
  * //       Arn: "STRING_VALUE", // required
- * //       AuthenticationStrategy: "STRING_VALUE", // required
+ * //       AuthenticationStrategy: "SIMPLE" || "LDAP", // required
  * //       Created: new Date("TIMESTAMP"), // required
  * //       Description: "STRING_VALUE", // required
- * //       EngineType: "STRING_VALUE", // required
+ * //       EngineType: "ACTIVEMQ" || "RABBITMQ", // required
  * //       EngineVersion: "STRING_VALUE", // required
  * //       Id: "STRING_VALUE", // required
  * //       LatestRevision: { // ConfigurationRevision

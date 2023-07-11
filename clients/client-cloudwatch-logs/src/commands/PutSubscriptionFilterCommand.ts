@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudWatchLogsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchLogsClient";
 import { PutSubscriptionFilterRequest } from "../models/models_0";
 import { de_PutSubscriptionFilterCommand, se_PutSubscriptionFilterCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -44,7 +48,8 @@ export interface PutSubscriptionFilterCommandOutput extends __MetadataBearer {}
  *           filter, for same-account delivery.</p>
  *             </li>
  *             <li>
- *                <p>A logical destination that belongs to a different account, for cross-account delivery.</p>
+ *                <p>A logical destination created with <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html">PutDestination</a> that belongs to a different account, for cross-account delivery.
+ *           We currently support Kinesis Data Streams and Kinesis Data Firehose as logical destinations.</p>
  *             </li>
  *             <li>
  *                <p>An Amazon Kinesis Data Firehose delivery stream that belongs to the same account as
@@ -58,7 +63,8 @@ export interface PutSubscriptionFilterCommandOutput extends __MetadataBearer {}
  *          <p>Each log group can have up to two subscription filters associated with it. If you are
  *       updating an existing filter, you must specify the correct name in <code>filterName</code>.
  *       </p>
- *          <p>To perform a <code>PutSubscriptionFilter</code> operation, you must also have the
+ *          <p>To perform a <code>PutSubscriptionFilter</code> operation for any destination except a Lambda function,
+ *     you must also have the
  *       <code>iam:PassRole</code> permission.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CreateDashboardRequest,
@@ -21,6 +21,10 @@ import {
 import { de_CreateDashboardCommand, se_CreateDashboardCommand } from "../protocols/Aws_restJson1";
 import { QuickSightClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../QuickSightClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -1395,6 +1399,15 @@ export interface CreateDashboardCommandOutput extends CreateDashboardResponse, _
  *                       Width: "STRING_VALUE",
  *                     },
  *                   ],
+ *                   CollapseStateOptions: [ // PivotTableFieldCollapseStateOptionList
+ *                     { // PivotTableFieldCollapseStateOption
+ *                       Target: { // PivotTableFieldCollapseStateTarget
+ *                         FieldId: "STRING_VALUE",
+ *                         FieldDataPathValues: "<DataPathValueList>",
+ *                       },
+ *                       State: "COLLAPSED" || "EXPANDED",
+ *                     },
+ *                   ],
  *                 },
  *                 PaginatedReportOptions: { // PivotTablePaginatedReportOptions
  *                   VerticalOverflowVisibility: "HIDDEN" || "VISIBLE",
@@ -1447,6 +1460,11 @@ export interface CreateDashboardCommandOutput extends CreateDashboardResponse, _
  *                       Scope: { // PivotTableConditionalFormattingScope
  *                         Role: "FIELD" || "FIELD_TOTAL" || "GRAND_TOTAL",
  *                       },
+ *                       Scopes: [ // PivotTableConditionalFormattingScopeList
+ *                         {
+ *                           Role: "FIELD" || "FIELD_TOTAL" || "GRAND_TOTAL",
+ *                         },
+ *                       ],
  *                     },
  *                   },
  *                 ],
@@ -1717,6 +1735,14 @@ export interface CreateDashboardCommandOutput extends CreateDashboardResponse, _
  *                     GutterSpacing: "STRING_VALUE",
  *                     BackgroundVisibility: "HIDDEN" || "VISIBLE",
  *                     BackgroundColor: "STRING_VALUE",
+ *                   },
+ *                   XAxis: { // SmallMultiplesAxisProperties
+ *                     Scale: "SHARED" || "INDEPENDENT",
+ *                     Placement: "OUTSIDE" || "INSIDE",
+ *                   },
+ *                   YAxis: {
+ *                     Scale: "SHARED" || "INDEPENDENT",
+ *                     Placement: "OUTSIDE" || "INSIDE",
  *                   },
  *                 },
  *                 CategoryAxis: { // AxisDisplayOptions
@@ -2432,6 +2458,14 @@ export interface CreateDashboardCommandOutput extends CreateDashboardResponse, _
  *                     BackgroundVisibility: "HIDDEN" || "VISIBLE",
  *                     BackgroundColor: "STRING_VALUE",
  *                   },
+ *                   XAxis: {
+ *                     Scale: "SHARED" || "INDEPENDENT",
+ *                     Placement: "OUTSIDE" || "INSIDE",
+ *                   },
+ *                   YAxis: {
+ *                     Scale: "SHARED" || "INDEPENDENT",
+ *                     Placement: "OUTSIDE" || "INSIDE",
+ *                   },
  *                 },
  *                 CategoryLabelOptions: {
  *                   Visibility: "HIDDEN" || "VISIBLE",
@@ -2829,6 +2863,11 @@ export interface CreateDashboardCommandOutput extends CreateDashboardResponse, _
  *                     BackgroundVisibility: "HIDDEN" || "VISIBLE",
  *                     BackgroundColor: "STRING_VALUE",
  *                   },
+ *                   XAxis: {
+ *                     Scale: "SHARED" || "INDEPENDENT",
+ *                     Placement: "OUTSIDE" || "INSIDE",
+ *                   },
+ *                   YAxis: "<SmallMultiplesAxisProperties>",
  *                 },
  *                 XAxisDisplayOptions: {
  *                   TickLabelOptions: {
@@ -3370,12 +3409,21 @@ export interface CreateDashboardCommandOutput extends CreateDashboardResponse, _
  *                   BaseMapStyle: "LIGHT_GRAY" || "DARK_GRAY" || "STREET" || "IMAGERY",
  *                 },
  *                 PointStyleOptions: { // GeospatialPointStyleOptions
- *                   SelectedPointStyle: "POINT" || "CLUSTER",
+ *                   SelectedPointStyle: "POINT" || "CLUSTER" || "HEATMAP",
  *                   ClusterMarkerConfiguration: { // ClusterMarkerConfiguration
  *                     ClusterMarker: { // ClusterMarker
  *                       SimpleClusterMarker: { // SimpleClusterMarker
  *                         Color: "STRING_VALUE",
  *                       },
+ *                     },
+ *                   },
+ *                   HeatmapConfiguration: { // GeospatialHeatmapConfiguration
+ *                     HeatmapColor: { // GeospatialHeatmapColorScale
+ *                       Colors: [ // GeospatialHeatmapDataColorList
+ *                         { // GeospatialHeatmapDataColor
+ *                           Color: "STRING_VALUE", // required
+ *                         },
+ *                       ],
  *                     },
  *                   },
  *                 },
@@ -3915,6 +3963,7 @@ export interface CreateDashboardCommandOutput extends CreateDashboardResponse, _
  *                 ColorAxis: "<AxisDisplayOptions>",
  *                 ColorLabelOptions: "<ChartAxisLabelOptions>",
  *                 Legend: "<LegendOptions>",
+ *                 AxesRangeScale: "AUTO" || "INDEPENDENT" || "SHARED",
  *               },
  *               Actions: "<VisualCustomActionList>",
  *               ColumnHierarchies: "<ColumnHierarchyList>",
@@ -4352,7 +4401,7 @@ export interface CreateDashboardCommandOutput extends CreateDashboardResponse, _
  *                 { // AggregationSortConfiguration
  *                   Column: "<ColumnIdentifier>", // required
  *                   SortDirection: "ASC" || "DESC", // required
- *                   AggregationFunction: "<AggregationFunction>", // required
+ *                   AggregationFunction: "<AggregationFunction>",
  *                 },
  *               ],
  *               TimeGranularity: "YEAR" || "QUARTER" || "MONTH" || "WEEK" || "DAY" || "HOUR" || "MINUTE" || "SECOND" || "MILLISECOND",
@@ -4386,6 +4435,15 @@ export interface CreateDashboardCommandOutput extends CreateDashboardResponse, _
  *           DateTimeFormatConfiguration: "<DateTimeFormatConfiguration>",
  *         },
  *         Role: "DIMENSION" || "MEASURE",
+ *         ColorsConfiguration: { // ColorsConfiguration
+ *           CustomColors: [ // CustomColorsList
+ *             { // CustomColor
+ *               FieldValue: "STRING_VALUE",
+ *               Color: "STRING_VALUE", // required
+ *               SpecialValue: "EMPTY" || "NULL" || "OTHER",
+ *             },
+ *           ],
+ *         },
  *       },
  *     ],
  *     AnalysisDefaults: { // AnalysisDefaults

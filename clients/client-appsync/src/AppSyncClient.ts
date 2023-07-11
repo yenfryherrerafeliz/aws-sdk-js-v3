@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,9 +47,17 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AssociateApiCommandInput, AssociateApiCommandOutput } from "./commands/AssociateApiCommand";
+import {
+  AssociateMergedGraphqlApiCommandInput,
+  AssociateMergedGraphqlApiCommandOutput,
+} from "./commands/AssociateMergedGraphqlApiCommand";
+import {
+  AssociateSourceGraphqlApiCommandInput,
+  AssociateSourceGraphqlApiCommandOutput,
+} from "./commands/AssociateSourceGraphqlApiCommand";
 import { CreateApiCacheCommandInput, CreateApiCacheCommandOutput } from "./commands/CreateApiCacheCommand";
 import { CreateApiKeyCommandInput, CreateApiKeyCommandOutput } from "./commands/CreateApiKeyCommand";
 import { CreateDataSourceCommandInput, CreateDataSourceCommandOutput } from "./commands/CreateDataSourceCommand";
@@ -67,6 +75,14 @@ import { DeleteGraphqlApiCommandInput, DeleteGraphqlApiCommandOutput } from "./c
 import { DeleteResolverCommandInput, DeleteResolverCommandOutput } from "./commands/DeleteResolverCommand";
 import { DeleteTypeCommandInput, DeleteTypeCommandOutput } from "./commands/DeleteTypeCommand";
 import { DisassociateApiCommandInput, DisassociateApiCommandOutput } from "./commands/DisassociateApiCommand";
+import {
+  DisassociateMergedGraphqlApiCommandInput,
+  DisassociateMergedGraphqlApiCommandOutput,
+} from "./commands/DisassociateMergedGraphqlApiCommand";
+import {
+  DisassociateSourceGraphqlApiCommandInput,
+  DisassociateSourceGraphqlApiCommandOutput,
+} from "./commands/DisassociateSourceGraphqlApiCommand";
 import { EvaluateCodeCommandInput, EvaluateCodeCommandOutput } from "./commands/EvaluateCodeCommand";
 import {
   EvaluateMappingTemplateCommandInput,
@@ -88,6 +104,10 @@ import {
   GetSchemaCreationStatusCommandInput,
   GetSchemaCreationStatusCommandOutput,
 } from "./commands/GetSchemaCreationStatusCommand";
+import {
+  GetSourceApiAssociationCommandInput,
+  GetSourceApiAssociationCommandOutput,
+} from "./commands/GetSourceApiAssociationCommand";
 import { GetTypeCommandInput, GetTypeCommandOutput } from "./commands/GetTypeCommand";
 import { ListApiKeysCommandInput, ListApiKeysCommandOutput } from "./commands/ListApiKeysCommand";
 import { ListDataSourcesCommandInput, ListDataSourcesCommandOutput } from "./commands/ListDataSourcesCommand";
@@ -100,14 +120,23 @@ import {
 } from "./commands/ListResolversByFunctionCommand";
 import { ListResolversCommandInput, ListResolversCommandOutput } from "./commands/ListResolversCommand";
 import {
+  ListSourceApiAssociationsCommandInput,
+  ListSourceApiAssociationsCommandOutput,
+} from "./commands/ListSourceApiAssociationsCommand";
+import {
   ListTagsForResourceCommandInput,
   ListTagsForResourceCommandOutput,
 } from "./commands/ListTagsForResourceCommand";
+import {
+  ListTypesByAssociationCommandInput,
+  ListTypesByAssociationCommandOutput,
+} from "./commands/ListTypesByAssociationCommand";
 import { ListTypesCommandInput, ListTypesCommandOutput } from "./commands/ListTypesCommand";
 import {
   StartSchemaCreationCommandInput,
   StartSchemaCreationCommandOutput,
 } from "./commands/StartSchemaCreationCommand";
+import { StartSchemaMergeCommandInput, StartSchemaMergeCommandOutput } from "./commands/StartSchemaMergeCommand";
 import { TagResourceCommandInput, TagResourceCommandOutput } from "./commands/TagResourceCommand";
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "./commands/UntagResourceCommand";
 import { UpdateApiCacheCommandInput, UpdateApiCacheCommandOutput } from "./commands/UpdateApiCacheCommand";
@@ -117,6 +146,10 @@ import { UpdateDomainNameCommandInput, UpdateDomainNameCommandOutput } from "./c
 import { UpdateFunctionCommandInput, UpdateFunctionCommandOutput } from "./commands/UpdateFunctionCommand";
 import { UpdateGraphqlApiCommandInput, UpdateGraphqlApiCommandOutput } from "./commands/UpdateGraphqlApiCommand";
 import { UpdateResolverCommandInput, UpdateResolverCommandOutput } from "./commands/UpdateResolverCommand";
+import {
+  UpdateSourceApiAssociationCommandInput,
+  UpdateSourceApiAssociationCommandOutput,
+} from "./commands/UpdateSourceApiAssociationCommand";
 import { UpdateTypeCommandInput, UpdateTypeCommandOutput } from "./commands/UpdateTypeCommand";
 import {
   ClientInputEndpointParameters,
@@ -126,11 +159,15 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
 export type ServiceInputTypes =
   | AssociateApiCommandInput
+  | AssociateMergedGraphqlApiCommandInput
+  | AssociateSourceGraphqlApiCommandInput
   | CreateApiCacheCommandInput
   | CreateApiKeyCommandInput
   | CreateDataSourceCommandInput
@@ -148,6 +185,8 @@ export type ServiceInputTypes =
   | DeleteResolverCommandInput
   | DeleteTypeCommandInput
   | DisassociateApiCommandInput
+  | DisassociateMergedGraphqlApiCommandInput
+  | DisassociateSourceGraphqlApiCommandInput
   | EvaluateCodeCommandInput
   | EvaluateMappingTemplateCommandInput
   | FlushApiCacheCommandInput
@@ -160,6 +199,7 @@ export type ServiceInputTypes =
   | GetIntrospectionSchemaCommandInput
   | GetResolverCommandInput
   | GetSchemaCreationStatusCommandInput
+  | GetSourceApiAssociationCommandInput
   | GetTypeCommandInput
   | ListApiKeysCommandInput
   | ListDataSourcesCommandInput
@@ -168,9 +208,12 @@ export type ServiceInputTypes =
   | ListGraphqlApisCommandInput
   | ListResolversByFunctionCommandInput
   | ListResolversCommandInput
+  | ListSourceApiAssociationsCommandInput
   | ListTagsForResourceCommandInput
+  | ListTypesByAssociationCommandInput
   | ListTypesCommandInput
   | StartSchemaCreationCommandInput
+  | StartSchemaMergeCommandInput
   | TagResourceCommandInput
   | UntagResourceCommandInput
   | UpdateApiCacheCommandInput
@@ -180,6 +223,7 @@ export type ServiceInputTypes =
   | UpdateFunctionCommandInput
   | UpdateGraphqlApiCommandInput
   | UpdateResolverCommandInput
+  | UpdateSourceApiAssociationCommandInput
   | UpdateTypeCommandInput;
 
 /**
@@ -187,6 +231,8 @@ export type ServiceInputTypes =
  */
 export type ServiceOutputTypes =
   | AssociateApiCommandOutput
+  | AssociateMergedGraphqlApiCommandOutput
+  | AssociateSourceGraphqlApiCommandOutput
   | CreateApiCacheCommandOutput
   | CreateApiKeyCommandOutput
   | CreateDataSourceCommandOutput
@@ -204,6 +250,8 @@ export type ServiceOutputTypes =
   | DeleteResolverCommandOutput
   | DeleteTypeCommandOutput
   | DisassociateApiCommandOutput
+  | DisassociateMergedGraphqlApiCommandOutput
+  | DisassociateSourceGraphqlApiCommandOutput
   | EvaluateCodeCommandOutput
   | EvaluateMappingTemplateCommandOutput
   | FlushApiCacheCommandOutput
@@ -216,6 +264,7 @@ export type ServiceOutputTypes =
   | GetIntrospectionSchemaCommandOutput
   | GetResolverCommandOutput
   | GetSchemaCreationStatusCommandOutput
+  | GetSourceApiAssociationCommandOutput
   | GetTypeCommandOutput
   | ListApiKeysCommandOutput
   | ListDataSourcesCommandOutput
@@ -224,9 +273,12 @@ export type ServiceOutputTypes =
   | ListGraphqlApisCommandOutput
   | ListResolversByFunctionCommandOutput
   | ListResolversCommandOutput
+  | ListSourceApiAssociationsCommandOutput
   | ListTagsForResourceCommandOutput
+  | ListTypesByAssociationCommandOutput
   | ListTypesCommandOutput
   | StartSchemaCreationCommandOutput
+  | StartSchemaMergeCommandOutput
   | TagResourceCommandOutput
   | UntagResourceCommandOutput
   | UpdateApiCacheCommandOutput
@@ -236,6 +288,7 @@ export type ServiceOutputTypes =
   | UpdateFunctionCommandOutput
   | UpdateGraphqlApiCommandOutput
   | UpdateResolverCommandOutput
+  | UpdateSourceApiAssociationCommandOutput
   | UpdateTypeCommandOutput;
 
 /**
@@ -248,7 +301,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -303,7 +356,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -357,7 +410,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -365,7 +418,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type AppSyncClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type AppSyncClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -384,7 +437,7 @@ export interface AppSyncClientConfig extends AppSyncClientConfigType {}
 /**
  * @public
  */
-type AppSyncClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type AppSyncClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

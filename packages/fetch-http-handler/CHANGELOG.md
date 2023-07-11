@@ -3,6 +3,85 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.369.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.368.0...v3.369.0) (2023-07-11)
+
+**Note:** Version bump only for package @aws-sdk/fetch-http-handler
+
+
+
+
+
+# [3.357.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.356.0...v3.357.0) (2023-06-21)
+
+**Note:** Version bump only for package @aws-sdk/fetch-http-handler
+
+
+
+
+
+# [3.353.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.352.0...v3.353.0) (2023-06-15)
+
+**Note:** Version bump only for package @aws-sdk/fetch-http-handler
+
+
+
+
+
+# [3.347.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.346.0...v3.347.0) (2023-06-06)
+
+
+### Features
+
+* **protocol-http:** add reason to HttpResponse ([#4772](https://github.com/aws/aws-sdk-js-v3/issues/4772)) ([d29cb58](https://github.com/aws/aws-sdk-js-v3/commit/d29cb588373dff875ed82cda709ce0bf67c1de54))
+* **protocol-http:** add uri type and implementation ([#4771](https://github.com/aws/aws-sdk-js-v3/issues/4771)) ([5c7b40e](https://github.com/aws/aws-sdk-js-v3/commit/5c7b40e16e40fe55ba8428bd9cab5b7fd181d1e7))
+
+
+
+
+
+# [3.342.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.341.0...v3.342.0) (2023-05-30)
+
+**Note:** Version bump only for package @aws-sdk/fetch-http-handler
+
+
+
+
+
+# [3.341.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.340.0...v3.341.0) (2023-05-26)
+
+**Note:** Version bump only for package @aws-sdk/fetch-http-handler
+
+
+
+
+
+# [3.338.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.337.0...v3.338.0) (2023-05-23)
+
+**Note:** Version bump only for package @aws-sdk/fetch-http-handler
+
+
+
+
+
+# [3.337.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.336.0...v3.337.0) (2023-05-22)
+
+**Note:** Version bump only for package @aws-sdk/fetch-http-handler
+
+
+
+
+
+# [3.329.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.328.0...v3.329.0) (2023-05-08)
+
+
+### Bug Fixes
+
+* **fetch-http-handler:** check for null fetch response.body ([#4705](https://github.com/aws/aws-sdk-js-v3/issues/4705)) ([4468be6](https://github.com/aws/aws-sdk-js-v3/commit/4468be6dee40ac6715352fcfee7a697a143eefc2))
+
+
+
+
+
 # [3.310.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.309.0...v3.310.0) (2023-04-10)
 
 

@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-medialive
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-medialive/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-medialive)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-medialive.svg)](https://www.npmjs.com/package/@aws-sdk/client-medialive)
-
 ## Description
 
 AWS SDK for JavaScript MediaLive Client for Node.js, Browser and React Native.
@@ -384,6 +381,14 @@ DeleteTags
 </details>
 <details>
 <summary>
+DescribeAccountConfiguration
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/classes/describeaccountconfigurationcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/interfaces/describeaccountconfigurationcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/interfaces/describeaccountconfigurationcommandoutput.html)
+
+</details>
+<details>
+<summary>
 DescribeChannel
 </summary>
 
@@ -460,6 +465,14 @@ DescribeSchedule
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/classes/describeschedulecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/interfaces/describeschedulecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/interfaces/describeschedulecommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeThumbnails
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/classes/describethumbnailscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/interfaces/describethumbnailscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/interfaces/describethumbnailscommandoutput.html)
 
 </details>
 <details>
@@ -612,6 +625,14 @@ TransferInputDevice
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/classes/transferinputdevicecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/interfaces/transferinputdevicecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/interfaces/transferinputdevicecommandoutput.html)
+
+</details>
+<details>
+<summary>
+UpdateAccountConfiguration
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/classes/updateaccountconfigurationcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/interfaces/updateaccountconfigurationcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-medialive/interfaces/updateaccountconfigurationcommandoutput.html)
 
 </details>
 <details>

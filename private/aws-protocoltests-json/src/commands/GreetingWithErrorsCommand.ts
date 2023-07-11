@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { JsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../JsonProtocolClient";
 import { GreetingWithErrorsOutput } from "../models/models_0";
 import { de_GreetingWithErrorsCommand, se_GreetingWithErrorsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -48,6 +52,10 @@ export interface GreetingWithErrorsCommandOutput extends GreetingWithErrorsOutpu
  * const input = {};
  * const command = new GreetingWithErrorsCommand(input);
  * const response = await client.send(command);
+ * // { // GreetingWithErrorsOutput
+ * //   greeting: "STRING_VALUE",
+ * // };
+ *
  * ```
  *
  * @param GreetingWithErrorsCommandInput - {@link GreetingWithErrorsCommandInput}
@@ -66,6 +74,8 @@ export interface GreetingWithErrorsCommandOutput extends GreetingWithErrorsOutpu
  *  This error has test cases that test some of the dark corners of Amazon service
  * framework history. It should only be implemented by clients.
  *
+ * @throws {@link JsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from JsonProtocol service.</p>
  *
  */
 export class GreetingWithErrorsCommand extends $Command<

@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectLong as __expectLong,
   expectString as __expectString,
@@ -9,19 +10,23 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AssociateKmsKeyCommandInput, AssociateKmsKeyCommandOutput } from "../commands/AssociateKmsKeyCommand";
 import { CancelExportTaskCommandInput, CancelExportTaskCommandOutput } from "../commands/CancelExportTaskCommand";
 import { CreateExportTaskCommandInput, CreateExportTaskCommandOutput } from "../commands/CreateExportTaskCommand";
 import { CreateLogGroupCommandInput, CreateLogGroupCommandOutput } from "../commands/CreateLogGroupCommand";
 import { CreateLogStreamCommandInput, CreateLogStreamCommandOutput } from "../commands/CreateLogStreamCommand";
+import {
+  DeleteAccountPolicyCommandInput,
+  DeleteAccountPolicyCommandOutput,
+} from "../commands/DeleteAccountPolicyCommand";
 import {
   DeleteDataProtectionPolicyCommandInput,
   DeleteDataProtectionPolicyCommandOutput,
@@ -46,6 +51,10 @@ import {
   DeleteSubscriptionFilterCommandInput,
   DeleteSubscriptionFilterCommandOutput,
 } from "../commands/DeleteSubscriptionFilterCommand";
+import {
+  DescribeAccountPoliciesCommandInput,
+  DescribeAccountPoliciesCommandOutput,
+} from "../commands/DescribeAccountPoliciesCommand";
 import {
   DescribeDestinationsCommandInput,
   DescribeDestinationsCommandOutput,
@@ -88,6 +97,7 @@ import {
   ListTagsForResourceCommandOutput,
 } from "../commands/ListTagsForResourceCommand";
 import { ListTagsLogGroupCommandInput, ListTagsLogGroupCommandOutput } from "../commands/ListTagsLogGroupCommand";
+import { PutAccountPolicyCommandInput, PutAccountPolicyCommandOutput } from "../commands/PutAccountPolicyCommand";
 import {
   PutDataProtectionPolicyCommandInput,
   PutDataProtectionPolicyCommandOutput,
@@ -121,6 +131,7 @@ import {
   CreateLogGroupRequest,
   CreateLogStreamRequest,
   DataAlreadyAcceptedException,
+  DeleteAccountPolicyRequest,
   DeleteDataProtectionPolicyRequest,
   DeleteDestinationRequest,
   DeleteLogGroupRequest,
@@ -130,6 +141,7 @@ import {
   DeleteResourcePolicyRequest,
   DeleteRetentionPolicyRequest,
   DeleteSubscriptionFilterRequest,
+  DescribeAccountPoliciesRequest,
   DescribeDestinationsRequest,
   DescribeExportTasksRequest,
   DescribeLogGroupsRequest,
@@ -159,6 +171,7 @@ import {
   MetricFilter,
   MetricTransformation,
   OperationAbortedException,
+  PutAccountPolicyRequest,
   PutDataProtectionPolicyRequest,
   PutDestinationPolicyRequest,
   PutDestinationRequest,
@@ -243,6 +256,19 @@ export const se_CreateLogStreamCommand = async (
   context: __SerdeContext
 ): Promise<__HttpRequest> => {
   const headers: __HeaderBag = sharedHeaders("CreateLogStream");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1DeleteAccountPolicyCommand
+ */
+export const se_DeleteAccountPolicyCommand = async (
+  input: DeleteAccountPolicyCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("DeleteAccountPolicy");
   let body: any;
   body = JSON.stringify(_json(input));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -360,6 +386,19 @@ export const se_DeleteSubscriptionFilterCommand = async (
   context: __SerdeContext
 ): Promise<__HttpRequest> => {
   const headers: __HeaderBag = sharedHeaders("DeleteSubscriptionFilter");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1DescribeAccountPoliciesCommand
+ */
+export const se_DescribeAccountPoliciesCommand = async (
+  input: DescribeAccountPoliciesCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("DescribeAccountPolicies");
   let body: any;
   body = JSON.stringify(_json(input));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -594,6 +633,19 @@ export const se_ListTagsLogGroupCommand = async (
   context: __SerdeContext
 ): Promise<__HttpRequest> => {
   const headers: __HeaderBag = sharedHeaders("ListTagsLogGroup");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1PutAccountPolicyCommand
+ */
+export const se_PutAccountPolicyCommand = async (
+  input: PutAccountPolicyCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("PutAccountPolicy");
   let body: any;
   body = JSON.stringify(_json(input));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -1080,6 +1132,58 @@ const de_CreateLogStreamCommandError = async (
 };
 
 /**
+ * deserializeAws_json1_1DeleteAccountPolicyCommand
+ */
+export const de_DeleteAccountPolicyCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteAccountPolicyCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DeleteAccountPolicyCommandError(output, context);
+  }
+  await collectBody(output.body, context);
+  const response: DeleteAccountPolicyCommandOutput = {
+    $metadata: deserializeMetadata(output),
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1DeleteAccountPolicyCommandError
+ */
+const de_DeleteAccountPolicyCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteAccountPolicyCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InvalidParameterException":
+    case "com.amazonaws.cloudwatchlogs#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "OperationAbortedException":
+    case "com.amazonaws.cloudwatchlogs#OperationAbortedException":
+      throw await de_OperationAbortedExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.cloudwatchlogs#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ServiceUnavailableException":
+    case "com.amazonaws.cloudwatchlogs#ServiceUnavailableException":
+      throw await de_ServiceUnavailableExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_json1_1DeleteDataProtectionPolicyCommand
  */
 export const de_DeleteDataProtectionPolicyCommand = async (
@@ -1516,6 +1620,61 @@ const de_DeleteSubscriptionFilterCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<DeleteSubscriptionFilterCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InvalidParameterException":
+    case "com.amazonaws.cloudwatchlogs#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "OperationAbortedException":
+    case "com.amazonaws.cloudwatchlogs#OperationAbortedException":
+      throw await de_OperationAbortedExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.cloudwatchlogs#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ServiceUnavailableException":
+    case "com.amazonaws.cloudwatchlogs#ServiceUnavailableException":
+      throw await de_ServiceUnavailableExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_json1_1DescribeAccountPoliciesCommand
+ */
+export const de_DescribeAccountPoliciesCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeAccountPoliciesCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DescribeAccountPoliciesCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: DescribeAccountPoliciesCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1DescribeAccountPoliciesCommandError
+ */
+const de_DescribeAccountPoliciesCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeAccountPoliciesCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -2458,6 +2617,61 @@ const de_ListTagsLogGroupCommandError = async (
     case "ResourceNotFoundException":
     case "com.amazonaws.cloudwatchlogs#ResourceNotFoundException":
       throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ServiceUnavailableException":
+    case "com.amazonaws.cloudwatchlogs#ServiceUnavailableException":
+      throw await de_ServiceUnavailableExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_json1_1PutAccountPolicyCommand
+ */
+export const de_PutAccountPolicyCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<PutAccountPolicyCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_PutAccountPolicyCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: PutAccountPolicyCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1PutAccountPolicyCommandError
+ */
+const de_PutAccountPolicyCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<PutAccountPolicyCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InvalidParameterException":
+    case "com.amazonaws.cloudwatchlogs#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "LimitExceededException":
+    case "com.amazonaws.cloudwatchlogs#LimitExceededException":
+      throw await de_LimitExceededExceptionRes(parsedOutput, context);
+    case "OperationAbortedException":
+    case "com.amazonaws.cloudwatchlogs#OperationAbortedException":
+      throw await de_OperationAbortedExceptionRes(parsedOutput, context);
     case "ServiceUnavailableException":
     case "com.amazonaws.cloudwatchlogs#ServiceUnavailableException":
       throw await de_ServiceUnavailableExceptionRes(parsedOutput, context);
@@ -3513,6 +3727,8 @@ const de_UnrecognizedClientExceptionRes = async (
 
 // se_CreateLogStreamRequest omitted.
 
+// se_DeleteAccountPolicyRequest omitted.
+
 // se_DeleteDataProtectionPolicyRequest omitted.
 
 // se_DeleteDestinationRequest omitted.
@@ -3530,6 +3746,8 @@ const de_UnrecognizedClientExceptionRes = async (
 // se_DeleteRetentionPolicyRequest omitted.
 
 // se_DeleteSubscriptionFilterRequest omitted.
+
+// se_DescribeAccountPoliciesRequest omitted.
 
 // se_DescribeDestinationsRequest omitted.
 
@@ -3604,6 +3822,8 @@ const se_MetricTransformations = (input: MetricTransformation[], context: __Serd
     });
 };
 
+// se_PutAccountPolicyRequest omitted.
+
 // se_PutDataProtectionPolicyRequest omitted.
 
 // se_PutDestinationPolicyRequest omitted.
@@ -3654,11 +3874,17 @@ const se_PutMetricFilterRequest = (input: PutMetricFilterRequest, context: __Ser
 
 // se_UntagResourceRequest omitted.
 
+// de_AccountPolicies omitted.
+
+// de_AccountPolicy omitted.
+
 // de_CreateExportTaskResponse omitted.
 
 // de_DataAlreadyAcceptedException omitted.
 
 // de_DeleteQueryDefinitionResponse omitted.
+
+// de_DescribeAccountPoliciesResponse omitted.
 
 // de_DescribeDestinationsResponse omitted.
 
@@ -3721,11 +3947,14 @@ const de_DescribeMetricFiltersResponse = (output: any, context: __SerdeContext):
  */
 const de_GetQueryResultsResponse = (output: any, context: __SerdeContext): GetQueryResultsResponse => {
   return take(output, {
+    encryptionKey: __expectString,
     results: _json,
     statistics: (_: any) => de_QueryStatistics(_, context),
     status: __expectString,
   }) as any;
 };
+
+// de_InheritedProperties omitted.
 
 // de_InvalidOperationException omitted.
 
@@ -3818,6 +4047,8 @@ const de_MetricTransformations = (output: any, context: __SerdeContext): MetricT
 
 // de_OutputLogEvents omitted.
 
+// de_PutAccountPolicyResponse omitted.
+
 // de_PutDataProtectionPolicyResponse omitted.
 
 // de_PutDestinationResponse omitted.
@@ -3896,14 +4127,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

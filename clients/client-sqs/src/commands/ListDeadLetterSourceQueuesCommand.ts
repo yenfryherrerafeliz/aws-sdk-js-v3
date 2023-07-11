@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ListDeadLetterSourceQueuesRequest, ListDeadLetterSourceQueuesResult } from "../models/models_0";
 import { de_ListDeadLetterSourceQueuesCommand, se_ListDeadLetterSourceQueuesCommand } from "../protocols/Aws_query";
 import { ServiceInputTypes, ServiceOutputTypes, SQSClientResolvedConfig } from "../SQSClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,16 +36,17 @@ export interface ListDeadLetterSourceQueuesCommandOutput extends ListDeadLetterS
 
 /**
  * @public
- * <p>Returns a list of your queues that have the <code>RedrivePolicy</code> queue attribute configured with a dead-letter queue.</p>
- *          <p> The <code>ListDeadLetterSourceQueues</code> methods supports
- *           pagination. Set parameter <code>MaxResults</code> in the request to specify the maximum number of
- *           results to be returned in the response. If you do not set <code>MaxResults</code>,
- *           the response includes a maximum of 1,000 results. If you set <code>MaxResults</code> and there are additional results to
- *           display, the response includes a value for <code>NextToken</code>. Use
- *           <code>NextToken</code> as a parameter in your next request to
- *           <code>ListDeadLetterSourceQueues</code> to receive the next page of results.   </p>
- *          <p>For more information about using dead-letter queues, see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html">Using Amazon SQS Dead-Letter Queues</a>
- *           in the <i>Amazon SQS Developer Guide</i>.</p>
+ * <p>Returns a list of your queues that have the <code>RedrivePolicy</code> queue attribute
+ *             configured with a dead-letter queue.</p>
+ *          <p> The <code>ListDeadLetterSourceQueues</code> methods supports pagination. Set
+ *             parameter <code>MaxResults</code> in the request to specify the maximum number of
+ *             results to be returned in the response. If you do not set <code>MaxResults</code>, the
+ *             response includes a maximum of 1,000 results. If you set <code>MaxResults</code> and
+ *             there are additional results to display, the response includes a value for
+ *                 <code>NextToken</code>. Use <code>NextToken</code> as a parameter in your next
+ *             request to <code>ListDeadLetterSourceQueues</code> to receive the next page of results. </p>
+ *          <p>For more information about using dead-letter queues, see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html">Using Amazon SQS Dead-Letter Queues</a> in the <i>Amazon SQS Developer
+ *                 Guide</i>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { JsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../JsonProtocolClient";
 import { JsonEnumsInputOutput } from "../models/models_0";
 import { de_JsonEnumsCommand, se_JsonEnumsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -54,6 +58,21 @@ export interface JsonEnumsCommandOutput extends JsonEnumsInputOutput, __Metadata
  * };
  * const command = new JsonEnumsCommand(input);
  * const response = await client.send(command);
+ * // { // JsonEnumsInputOutput
+ * //   fooEnum1: "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   fooEnum2: "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   fooEnum3: "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   fooEnumList: [ // FooEnumList
+ * //     "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   ],
+ * //   fooEnumSet: [ // FooEnumSet
+ * //     "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   ],
+ * //   fooEnumMap: { // FooEnumMap
+ * //     "<keys>": "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   },
+ * // };
+ *
  * ```
  *
  * @param JsonEnumsCommandInput - {@link JsonEnumsCommandInput}
@@ -62,6 +81,8 @@ export interface JsonEnumsCommandOutput extends JsonEnumsInputOutput, __Metadata
  * @see {@link JsonEnumsCommandOutput} for command's `response` shape.
  * @see {@link JsonProtocolClientResolvedConfig | config} for JsonProtocolClient's `config` shape.
  *
+ * @throws {@link JsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from JsonProtocol service.</p>
  *
  */
 export class JsonEnumsCommand extends $Command<

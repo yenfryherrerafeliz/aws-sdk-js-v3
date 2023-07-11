@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { BackupStorageClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../BackupStorageClient";
 import { PutChunkInput, PutChunkInputFilterSensitiveLog, PutChunkOutput } from "../models/models_0";
@@ -19,9 +19,8 @@ import { de_PutChunkCommand, se_PutChunkCommand } from "../protocols/Aws_restJso
 
 /**
  * @public
- *
- * The input for {@link PutChunkCommand}.
  */
+export { __MetadataBearer, $Command };
 export type PutChunkCommandInputType = Omit<PutChunkInput, "Data"> & {
   /**
    * For *`PutChunkInput["Data"]`*, see {@link PutChunkInput.Data}.
@@ -29,7 +28,9 @@ export type PutChunkCommandInputType = Omit<PutChunkInput, "Data"> & {
   Data: PutChunkInput["Data"] | string | Uint8Array | Buffer;
 };
 /**
- * This interface extends from `PutChunkInput` interface. There are more parameters than `Data` defined in {@link PutChunkInput}
+ * @public
+ *
+ * The input for {@link PutChunkCommand}.
  */
 export interface PutChunkCommandInput extends PutChunkCommandInputType {}
 /**

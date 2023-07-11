@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { BackupStorageClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../BackupStorageClient";
 import { PutObjectInput, PutObjectInputFilterSensitiveLog, PutObjectOutput } from "../models/models_0";
@@ -19,9 +19,8 @@ import { de_PutObjectCommand, se_PutObjectCommand } from "../protocols/Aws_restJ
 
 /**
  * @public
- *
- * The input for {@link PutObjectCommand}.
  */
+export { __MetadataBearer, $Command };
 export type PutObjectCommandInputType = Omit<PutObjectInput, "InlineChunk"> & {
   /**
    * For *`PutObjectInput["InlineChunk"]`*, see {@link PutObjectInput.InlineChunk}.
@@ -29,7 +28,9 @@ export type PutObjectCommandInputType = Omit<PutObjectInput, "InlineChunk"> & {
   InlineChunk?: PutObjectInput["InlineChunk"] | string | Uint8Array | Buffer;
 };
 /**
- * This interface extends from `PutObjectInput` interface. There are more parameters than `InlineChunk` defined in {@link PutObjectInput}
+ * @public
+ *
+ * The input for {@link PutObjectCommand}.
  */
 export interface PutObjectCommandInput extends PutObjectCommandInputType {}
 /**

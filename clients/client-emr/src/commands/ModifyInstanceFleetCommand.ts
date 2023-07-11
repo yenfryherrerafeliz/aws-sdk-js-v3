@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EMRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EMRClient";
 import { ModifyInstanceFleetInput } from "../models/models_0";
 import { de_ModifyInstanceFleetCommand, se_ModifyInstanceFleetCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,7 +40,7 @@ export interface ModifyInstanceFleetCommandOutput extends __MetadataBearer {}
  *          specified InstanceFleetID within the cluster specified using ClusterID. The call either
  *          succeeds or fails atomically.</p>
  *          <note>
- *             <p>The instance fleet configuration is available only in Amazon EMR versions
+ *             <p>The instance fleet configuration is available only in Amazon EMR releases
  *             4.8.0 and later, excluding 5.0.x versions.</p>
  *          </note>
  * @example

@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-emr
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-emr/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-emr)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-emr.svg)](https://www.npmjs.com/package/@aws-sdk/client-emr)
-
 ## Description
 
 AWS SDK for JavaScript EMR Client for Node.js, Browser and React Native.
@@ -478,6 +475,14 @@ ListStudioSessionMappings
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-emr/classes/liststudiosessionmappingscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-emr/interfaces/liststudiosessionmappingscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-emr/interfaces/liststudiosessionmappingscommandoutput.html)
+
+</details>
+<details>
+<summary>
+ListSupportedInstanceTypes
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-emr/classes/listsupportedinstancetypescommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-emr/interfaces/listsupportedinstancetypescommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-emr/interfaces/listsupportedinstancetypescommandoutput.html)
 
 </details>
 <details>

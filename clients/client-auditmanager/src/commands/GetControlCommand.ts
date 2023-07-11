@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AuditManagerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AuditManagerClient";
 import { GetControlRequest, GetControlResponse } from "../models/models_0";
 import { de_GetControlCommand, se_GetControlCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,7 +36,7 @@ export interface GetControlCommandOutput extends GetControlResponse, __MetadataB
 
 /**
  * @public
- * <p> Returns a control from Audit Manager. </p>
+ * <p> Gets information about a specified control.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -63,7 +67,7 @@ export interface GetControlCommandOutput extends GetControlResponse, __MetadataB
  * //         sourceSetUpOption: "System_Controls_Mapping" || "Procedural_Controls_Mapping",
  * //         sourceType: "AWS_Cloudtrail" || "AWS_Config" || "AWS_Security_Hub" || "AWS_API_Call" || "MANUAL",
  * //         sourceKeyword: { // SourceKeyword
- * //           keywordInputType: "SELECT_FROM_LIST",
+ * //           keywordInputType: "SELECT_FROM_LIST" || "UPLOAD_FILE" || "INPUT_TEXT",
  * //           keywordValue: "STRING_VALUE",
  * //         },
  * //         sourceFrequency: "DAILY" || "WEEKLY" || "MONTHLY",

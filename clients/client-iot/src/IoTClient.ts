@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,13 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import {
-  getOmitRetryHeadersPlugin,
-  getRetryPlugin,
-  resolveRetryConfig,
-  RetryInputConfig,
-  RetryResolvedConfig,
-} from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -29,18 +19,28 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import {
+  getOmitRetryHeadersPlugin,
+  getRetryPlugin,
+  resolveRetryConfig,
+  RetryInputConfig,
+  RetryResolvedConfig,
+} from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -53,7 +53,7 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   AcceptCertificateTransferCommandInput,
@@ -139,6 +139,11 @@ import {
   CreateMitigationActionCommandOutput,
 } from "./commands/CreateMitigationActionCommand";
 import { CreateOTAUpdateCommandInput, CreateOTAUpdateCommandOutput } from "./commands/CreateOTAUpdateCommand";
+import { CreatePackageCommandInput, CreatePackageCommandOutput } from "./commands/CreatePackageCommand";
+import {
+  CreatePackageVersionCommandInput,
+  CreatePackageVersionCommandOutput,
+} from "./commands/CreatePackageVersionCommand";
 import { CreatePolicyCommandInput, CreatePolicyCommandOutput } from "./commands/CreatePolicyCommand";
 import {
   CreatePolicyVersionCommandInput,
@@ -208,6 +213,11 @@ import {
   DeleteMitigationActionCommandOutput,
 } from "./commands/DeleteMitigationActionCommand";
 import { DeleteOTAUpdateCommandInput, DeleteOTAUpdateCommandOutput } from "./commands/DeleteOTAUpdateCommand";
+import { DeletePackageCommandInput, DeletePackageCommandOutput } from "./commands/DeletePackageCommand";
+import {
+  DeletePackageVersionCommandInput,
+  DeletePackageVersionCommandOutput,
+} from "./commands/DeletePackageVersionCommand";
 import { DeletePolicyCommandInput, DeletePolicyCommandOutput } from "./commands/DeletePolicyCommand";
 import {
   DeletePolicyVersionCommandInput,
@@ -382,6 +392,12 @@ import {
 import { GetJobDocumentCommandInput, GetJobDocumentCommandOutput } from "./commands/GetJobDocumentCommand";
 import { GetLoggingOptionsCommandInput, GetLoggingOptionsCommandOutput } from "./commands/GetLoggingOptionsCommand";
 import { GetOTAUpdateCommandInput, GetOTAUpdateCommandOutput } from "./commands/GetOTAUpdateCommand";
+import { GetPackageCommandInput, GetPackageCommandOutput } from "./commands/GetPackageCommand";
+import {
+  GetPackageConfigurationCommandInput,
+  GetPackageConfigurationCommandOutput,
+} from "./commands/GetPackageConfigurationCommand";
+import { GetPackageVersionCommandInput, GetPackageVersionCommandOutput } from "./commands/GetPackageVersionCommand";
 import { GetPercentilesCommandInput, GetPercentilesCommandOutput } from "./commands/GetPercentilesCommand";
 import { GetPolicyCommandInput, GetPolicyCommandOutput } from "./commands/GetPolicyCommand";
 import { GetPolicyVersionCommandInput, GetPolicyVersionCommandOutput } from "./commands/GetPolicyVersionCommand";
@@ -469,6 +485,11 @@ import {
   ListOutgoingCertificatesCommandInput,
   ListOutgoingCertificatesCommandOutput,
 } from "./commands/ListOutgoingCertificatesCommand";
+import { ListPackagesCommandInput, ListPackagesCommandOutput } from "./commands/ListPackagesCommand";
+import {
+  ListPackageVersionsCommandInput,
+  ListPackageVersionsCommandOutput,
+} from "./commands/ListPackageVersionsCommand";
 import { ListPoliciesCommandInput, ListPoliciesCommandOutput } from "./commands/ListPoliciesCommand";
 import {
   ListPolicyPrincipalsCommandInput,
@@ -676,6 +697,15 @@ import {
   UpdateMitigationActionCommandInput,
   UpdateMitigationActionCommandOutput,
 } from "./commands/UpdateMitigationActionCommand";
+import { UpdatePackageCommandInput, UpdatePackageCommandOutput } from "./commands/UpdatePackageCommand";
+import {
+  UpdatePackageConfigurationCommandInput,
+  UpdatePackageConfigurationCommandOutput,
+} from "./commands/UpdatePackageConfigurationCommand";
+import {
+  UpdatePackageVersionCommandInput,
+  UpdatePackageVersionCommandOutput,
+} from "./commands/UpdatePackageVersionCommand";
 import {
   UpdateProvisioningTemplateCommandInput,
   UpdateProvisioningTemplateCommandOutput,
@@ -712,6 +742,8 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
@@ -746,6 +778,8 @@ export type ServiceInputTypes =
   | CreateKeysAndCertificateCommandInput
   | CreateMitigationActionCommandInput
   | CreateOTAUpdateCommandInput
+  | CreatePackageCommandInput
+  | CreatePackageVersionCommandInput
   | CreatePolicyCommandInput
   | CreatePolicyVersionCommandInput
   | CreateProvisioningClaimCommandInput
@@ -776,6 +810,8 @@ export type ServiceInputTypes =
   | DeleteJobTemplateCommandInput
   | DeleteMitigationActionCommandInput
   | DeleteOTAUpdateCommandInput
+  | DeletePackageCommandInput
+  | DeletePackageVersionCommandInput
   | DeletePolicyCommandInput
   | DeletePolicyVersionCommandInput
   | DeleteProvisioningTemplateCommandInput
@@ -839,6 +875,9 @@ export type ServiceInputTypes =
   | GetJobDocumentCommandInput
   | GetLoggingOptionsCommandInput
   | GetOTAUpdateCommandInput
+  | GetPackageCommandInput
+  | GetPackageConfigurationCommandInput
+  | GetPackageVersionCommandInput
   | GetPercentilesCommandInput
   | GetPolicyCommandInput
   | GetPolicyVersionCommandInput
@@ -875,6 +914,8 @@ export type ServiceInputTypes =
   | ListMitigationActionsCommandInput
   | ListOTAUpdatesCommandInput
   | ListOutgoingCertificatesCommandInput
+  | ListPackageVersionsCommandInput
+  | ListPackagesCommandInput
   | ListPoliciesCommandInput
   | ListPolicyPrincipalsCommandInput
   | ListPolicyVersionsCommandInput
@@ -944,6 +985,9 @@ export type ServiceInputTypes =
   | UpdateIndexingConfigurationCommandInput
   | UpdateJobCommandInput
   | UpdateMitigationActionCommandInput
+  | UpdatePackageCommandInput
+  | UpdatePackageConfigurationCommandInput
+  | UpdatePackageVersionCommandInput
   | UpdateProvisioningTemplateCommandInput
   | UpdateRoleAliasCommandInput
   | UpdateScheduledAuditCommandInput
@@ -989,6 +1033,8 @@ export type ServiceOutputTypes =
   | CreateKeysAndCertificateCommandOutput
   | CreateMitigationActionCommandOutput
   | CreateOTAUpdateCommandOutput
+  | CreatePackageCommandOutput
+  | CreatePackageVersionCommandOutput
   | CreatePolicyCommandOutput
   | CreatePolicyVersionCommandOutput
   | CreateProvisioningClaimCommandOutput
@@ -1019,6 +1065,8 @@ export type ServiceOutputTypes =
   | DeleteJobTemplateCommandOutput
   | DeleteMitigationActionCommandOutput
   | DeleteOTAUpdateCommandOutput
+  | DeletePackageCommandOutput
+  | DeletePackageVersionCommandOutput
   | DeletePolicyCommandOutput
   | DeletePolicyVersionCommandOutput
   | DeleteProvisioningTemplateCommandOutput
@@ -1082,6 +1130,9 @@ export type ServiceOutputTypes =
   | GetJobDocumentCommandOutput
   | GetLoggingOptionsCommandOutput
   | GetOTAUpdateCommandOutput
+  | GetPackageCommandOutput
+  | GetPackageConfigurationCommandOutput
+  | GetPackageVersionCommandOutput
   | GetPercentilesCommandOutput
   | GetPolicyCommandOutput
   | GetPolicyVersionCommandOutput
@@ -1118,6 +1169,8 @@ export type ServiceOutputTypes =
   | ListMitigationActionsCommandOutput
   | ListOTAUpdatesCommandOutput
   | ListOutgoingCertificatesCommandOutput
+  | ListPackageVersionsCommandOutput
+  | ListPackagesCommandOutput
   | ListPoliciesCommandOutput
   | ListPolicyPrincipalsCommandOutput
   | ListPolicyVersionsCommandOutput
@@ -1187,6 +1240,9 @@ export type ServiceOutputTypes =
   | UpdateIndexingConfigurationCommandOutput
   | UpdateJobCommandOutput
   | UpdateMitigationActionCommandOutput
+  | UpdatePackageCommandOutput
+  | UpdatePackageConfigurationCommandOutput
+  | UpdatePackageVersionCommandOutput
   | UpdateProvisioningTemplateCommandOutput
   | UpdateRoleAliasCommandOutput
   | UpdateScheduledAuditCommandOutput
@@ -1208,7 +1264,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -1263,7 +1319,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -1317,7 +1373,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -1325,7 +1381,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type IoTClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type IoTClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -1344,7 +1400,7 @@ export interface IoTClientConfig extends IoTClientConfigType {}
 /**
  * @public
  */
-type IoTClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type IoTClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

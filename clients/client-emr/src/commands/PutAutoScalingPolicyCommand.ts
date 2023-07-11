@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EMRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EMRClient";
 import { PutAutoScalingPolicyInput, PutAutoScalingPolicyOutput } from "../models/models_0";
 import { de_PutAutoScalingPolicyCommand, se_PutAutoScalingPolicyCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -34,8 +38,8 @@ export interface PutAutoScalingPolicyCommandOutput extends PutAutoScalingPolicyO
  * @public
  * <p>Creates or updates an automatic scaling policy for a core instance group or task
  *          instance group in an Amazon EMR cluster. The automatic scaling policy defines how
- *          an instance group dynamically adds and terminates EC2 instances in response to the value of
- *          a CloudWatch metric.</p>
+ *          an instance group dynamically adds and terminates Amazon EC2 instances in response
+ *          to the value of a CloudWatch metric.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,16 +11,20 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   DescribeAnalysisDefinitionRequest,
   DescribeAnalysisDefinitionResponse,
   DescribeAnalysisDefinitionResponseFilterSensitiveLog,
-} from "../models/models_2";
+} from "../models/models_3";
 import { de_DescribeAnalysisDefinitionCommand, se_DescribeAnalysisDefinitionCommand } from "../protocols/Aws_restJson1";
 import { QuickSightClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../QuickSightClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -1315,6 +1319,15 @@ export interface DescribeAnalysisDefinitionCommandOutput extends DescribeAnalysi
  * //                       Width: "STRING_VALUE",
  * //                     },
  * //                   ],
+ * //                   CollapseStateOptions: [ // PivotTableFieldCollapseStateOptionList
+ * //                     { // PivotTableFieldCollapseStateOption
+ * //                       Target: { // PivotTableFieldCollapseStateTarget
+ * //                         FieldId: "STRING_VALUE",
+ * //                         FieldDataPathValues: "<DataPathValueList>",
+ * //                       },
+ * //                       State: "COLLAPSED" || "EXPANDED",
+ * //                     },
+ * //                   ],
  * //                 },
  * //                 PaginatedReportOptions: { // PivotTablePaginatedReportOptions
  * //                   VerticalOverflowVisibility: "HIDDEN" || "VISIBLE",
@@ -1367,6 +1380,11 @@ export interface DescribeAnalysisDefinitionCommandOutput extends DescribeAnalysi
  * //                       Scope: { // PivotTableConditionalFormattingScope
  * //                         Role: "FIELD" || "FIELD_TOTAL" || "GRAND_TOTAL",
  * //                       },
+ * //                       Scopes: [ // PivotTableConditionalFormattingScopeList
+ * //                         {
+ * //                           Role: "FIELD" || "FIELD_TOTAL" || "GRAND_TOTAL",
+ * //                         },
+ * //                       ],
  * //                     },
  * //                   },
  * //                 ],
@@ -1637,6 +1655,14 @@ export interface DescribeAnalysisDefinitionCommandOutput extends DescribeAnalysi
  * //                     GutterSpacing: "STRING_VALUE",
  * //                     BackgroundVisibility: "HIDDEN" || "VISIBLE",
  * //                     BackgroundColor: "STRING_VALUE",
+ * //                   },
+ * //                   XAxis: { // SmallMultiplesAxisProperties
+ * //                     Scale: "SHARED" || "INDEPENDENT",
+ * //                     Placement: "OUTSIDE" || "INSIDE",
+ * //                   },
+ * //                   YAxis: {
+ * //                     Scale: "SHARED" || "INDEPENDENT",
+ * //                     Placement: "OUTSIDE" || "INSIDE",
  * //                   },
  * //                 },
  * //                 CategoryAxis: { // AxisDisplayOptions
@@ -2352,6 +2378,14 @@ export interface DescribeAnalysisDefinitionCommandOutput extends DescribeAnalysi
  * //                     BackgroundVisibility: "HIDDEN" || "VISIBLE",
  * //                     BackgroundColor: "STRING_VALUE",
  * //                   },
+ * //                   XAxis: {
+ * //                     Scale: "SHARED" || "INDEPENDENT",
+ * //                     Placement: "OUTSIDE" || "INSIDE",
+ * //                   },
+ * //                   YAxis: {
+ * //                     Scale: "SHARED" || "INDEPENDENT",
+ * //                     Placement: "OUTSIDE" || "INSIDE",
+ * //                   },
  * //                 },
  * //                 CategoryLabelOptions: {
  * //                   Visibility: "HIDDEN" || "VISIBLE",
@@ -2749,6 +2783,11 @@ export interface DescribeAnalysisDefinitionCommandOutput extends DescribeAnalysi
  * //                     BackgroundVisibility: "HIDDEN" || "VISIBLE",
  * //                     BackgroundColor: "STRING_VALUE",
  * //                   },
+ * //                   XAxis: {
+ * //                     Scale: "SHARED" || "INDEPENDENT",
+ * //                     Placement: "OUTSIDE" || "INSIDE",
+ * //                   },
+ * //                   YAxis: "<SmallMultiplesAxisProperties>",
  * //                 },
  * //                 XAxisDisplayOptions: {
  * //                   TickLabelOptions: {
@@ -3290,12 +3329,21 @@ export interface DescribeAnalysisDefinitionCommandOutput extends DescribeAnalysi
  * //                   BaseMapStyle: "LIGHT_GRAY" || "DARK_GRAY" || "STREET" || "IMAGERY",
  * //                 },
  * //                 PointStyleOptions: { // GeospatialPointStyleOptions
- * //                   SelectedPointStyle: "POINT" || "CLUSTER",
+ * //                   SelectedPointStyle: "POINT" || "CLUSTER" || "HEATMAP",
  * //                   ClusterMarkerConfiguration: { // ClusterMarkerConfiguration
  * //                     ClusterMarker: { // ClusterMarker
  * //                       SimpleClusterMarker: { // SimpleClusterMarker
  * //                         Color: "STRING_VALUE",
  * //                       },
+ * //                     },
+ * //                   },
+ * //                   HeatmapConfiguration: { // GeospatialHeatmapConfiguration
+ * //                     HeatmapColor: { // GeospatialHeatmapColorScale
+ * //                       Colors: [ // GeospatialHeatmapDataColorList
+ * //                         { // GeospatialHeatmapDataColor
+ * //                           Color: "STRING_VALUE", // required
+ * //                         },
+ * //                       ],
  * //                     },
  * //                   },
  * //                 },
@@ -3835,6 +3883,7 @@ export interface DescribeAnalysisDefinitionCommandOutput extends DescribeAnalysi
  * //                 ColorAxis: "<AxisDisplayOptions>",
  * //                 ColorLabelOptions: "<ChartAxisLabelOptions>",
  * //                 Legend: "<LegendOptions>",
+ * //                 AxesRangeScale: "AUTO" || "INDEPENDENT" || "SHARED",
  * //               },
  * //               Actions: "<VisualCustomActionList>",
  * //               ColumnHierarchies: "<ColumnHierarchyList>",
@@ -4272,7 +4321,7 @@ export interface DescribeAnalysisDefinitionCommandOutput extends DescribeAnalysi
  * //                 { // AggregationSortConfiguration
  * //                   Column: "<ColumnIdentifier>", // required
  * //                   SortDirection: "ASC" || "DESC", // required
- * //                   AggregationFunction: "<AggregationFunction>", // required
+ * //                   AggregationFunction: "<AggregationFunction>",
  * //                 },
  * //               ],
  * //               TimeGranularity: "YEAR" || "QUARTER" || "MONTH" || "WEEK" || "DAY" || "HOUR" || "MINUTE" || "SECOND" || "MILLISECOND",
@@ -4306,6 +4355,15 @@ export interface DescribeAnalysisDefinitionCommandOutput extends DescribeAnalysi
  * //           DateTimeFormatConfiguration: "<DateTimeFormatConfiguration>",
  * //         },
  * //         Role: "DIMENSION" || "MEASURE",
+ * //         ColorsConfiguration: { // ColorsConfiguration
+ * //           CustomColors: [ // CustomColorsList
+ * //             { // CustomColor
+ * //               FieldValue: "STRING_VALUE",
+ * //               Color: "STRING_VALUE", // required
+ * //               SpecialValue: "EMPTY" || "NULL" || "OTHER",
+ * //             },
+ * //           ],
+ * //         },
  * //       },
  * //     ],
  * //     AnalysisDefaults: { // AnalysisDefaults

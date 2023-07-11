@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@smithy/smithy-client";
 import { Readable } from "stream";
 
 import { PollyServiceException as __BaseException } from "./PollyServiceException";
@@ -94,6 +94,7 @@ export const LanguageCode = {
   en_AU: "en-AU",
   en_GB: "en-GB",
   en_GB_WLS: "en-GB-WLS",
+  en_IE: "en-IE",
   en_IN: "en-IN",
   en_NZ: "en-NZ",
   en_US: "en-US",
@@ -245,6 +246,7 @@ export const VoiceId = {
   Miguel: "Miguel",
   Mizuki: "Mizuki",
   Naja: "Naja",
+  Niamh: "Niamh",
   Nicole: "Nicole",
   Ola: "Ola",
   Olivia: "Olivia",
@@ -259,6 +261,7 @@ export const VoiceId = {
   Salli: "Salli",
   Seoyeon: "Seoyeon",
   Sergio: "Sergio",
+  Sofie: "Sofie",
   Stephen: "Stephen",
   Suvi: "Suvi",
   Takumi: "Takumi",

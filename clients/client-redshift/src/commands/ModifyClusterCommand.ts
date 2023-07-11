@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ModifyClusterMessage, ModifyClusterResult } from "../models/models_1";
 import { de_ModifyClusterCommand, se_ModifyClusterCommand } from "../protocols/Aws_query";
 import { RedshiftClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RedshiftClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -251,6 +255,9 @@ export interface ModifyClusterCommandOutput extends ModifyClusterResult, __Metad
  * //       TargetReservedNodeType: "STRING_VALUE",
  * //       TargetReservedNodeCount: Number("int"),
  * //     },
+ * //     CustomDomainName: "STRING_VALUE",
+ * //     CustomDomainCertificateArn: "STRING_VALUE",
+ * //     CustomDomainCertificateExpiryDate: new Date("TIMESTAMP"),
  * //   },
  * // };
  *
@@ -275,6 +282,9 @@ export interface ModifyClusterCommandOutput extends ModifyClusterResult, __Metad
  * @throws {@link ClusterSecurityGroupNotFoundFault} (client fault)
  *  <p>The cluster security group name does not refer to an existing cluster security
  *             group.</p>
+ *
+ * @throws {@link CustomCnameAssociationFault} (client fault)
+ *  <p>An error occurred when an attempt was made to change the custom domain association.</p>
  *
  * @throws {@link DependentServiceRequestThrottlingFault} (client fault)
  *  <p>The request cannot be completed because a dependent service is throttling requests
@@ -326,6 +336,9 @@ export interface ModifyClusterCommandOutput extends ModifyClusterResult, __Metad
  *
  * @throws {@link UnauthorizedOperation} (client fault)
  *  <p>Your account is not authorized to perform the requested operation.</p>
+ *
+ * @throws {@link UnsupportedOperationFault} (client fault)
+ *  <p>The requested operation isn't supported.</p>
  *
  * @throws {@link UnsupportedOptionFault} (client fault)
  *  <p>A request option was specified that is not supported.</p>

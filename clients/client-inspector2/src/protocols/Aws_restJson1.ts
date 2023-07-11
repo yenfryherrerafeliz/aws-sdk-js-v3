@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectLong as __expectLong,
@@ -19,12 +20,12 @@ import {
   strictParseInt32 as __strictParseInt32,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import { AssociateMemberCommandInput, AssociateMemberCommandOutput } from "../commands/AssociateMemberCommand";
@@ -32,6 +33,10 @@ import {
   BatchGetAccountStatusCommandInput,
   BatchGetAccountStatusCommandOutput,
 } from "../commands/BatchGetAccountStatusCommand";
+import {
+  BatchGetCodeSnippetCommandInput,
+  BatchGetCodeSnippetCommandOutput,
+} from "../commands/BatchGetCodeSnippetCommand";
 import {
   BatchGetFreeTrialInfoCommandInput,
   BatchGetFreeTrialInfoCommandOutput,
@@ -48,11 +53,13 @@ import {
   CancelFindingsReportCommandInput,
   CancelFindingsReportCommandOutput,
 } from "../commands/CancelFindingsReportCommand";
+import { CancelSbomExportCommandInput, CancelSbomExportCommandOutput } from "../commands/CancelSbomExportCommand";
 import { CreateFilterCommandInput, CreateFilterCommandOutput } from "../commands/CreateFilterCommand";
 import {
   CreateFindingsReportCommandInput,
   CreateFindingsReportCommandOutput,
 } from "../commands/CreateFindingsReportCommand";
+import { CreateSbomExportCommandInput, CreateSbomExportCommandOutput } from "../commands/CreateSbomExportCommand";
 import { DeleteFilterCommandInput, DeleteFilterCommandOutput } from "../commands/DeleteFilterCommand";
 import {
   DescribeOrganizationConfigurationCommandInput,
@@ -78,11 +85,13 @@ import {
   GetEc2DeepInspectionConfigurationCommandInput,
   GetEc2DeepInspectionConfigurationCommandOutput,
 } from "../commands/GetEc2DeepInspectionConfigurationCommand";
+import { GetEncryptionKeyCommandInput, GetEncryptionKeyCommandOutput } from "../commands/GetEncryptionKeyCommand";
 import {
   GetFindingsReportStatusCommandInput,
   GetFindingsReportStatusCommandOutput,
 } from "../commands/GetFindingsReportStatusCommand";
 import { GetMemberCommandInput, GetMemberCommandOutput } from "../commands/GetMemberCommand";
+import { GetSbomExportCommandInput, GetSbomExportCommandOutput } from "../commands/GetSbomExportCommand";
 import {
   ListAccountPermissionsCommandInput,
   ListAccountPermissionsCommandOutput,
@@ -108,6 +117,7 @@ import {
   ListTagsForResourceCommandOutput,
 } from "../commands/ListTagsForResourceCommand";
 import { ListUsageTotalsCommandInput, ListUsageTotalsCommandOutput } from "../commands/ListUsageTotalsCommand";
+import { ResetEncryptionKeyCommandInput, ResetEncryptionKeyCommandOutput } from "../commands/ResetEncryptionKeyCommand";
 import {
   SearchVulnerabilitiesCommandInput,
   SearchVulnerabilitiesCommandOutput,
@@ -122,6 +132,10 @@ import {
   UpdateEc2DeepInspectionConfigurationCommandInput,
   UpdateEc2DeepInspectionConfigurationCommandOutput,
 } from "../commands/UpdateEc2DeepInspectionConfigurationCommand";
+import {
+  UpdateEncryptionKeyCommandInput,
+  UpdateEncryptionKeyCommandOutput,
+} from "../commands/UpdateEncryptionKeyCommand";
 import { UpdateFilterCommandInput, UpdateFilterCommandOutput } from "../commands/UpdateFilterCommand";
 import {
   UpdateOrganizationConfigurationCommandInput,
@@ -147,9 +161,11 @@ import {
   BadRequestException,
   CisaData,
   ConflictException,
+  CoverageDateFilter,
   CoverageFilterCriteria,
   CoverageMapFilter,
   CoverageStringFilter,
+  CoveredResource,
   Cvss2,
   Cvss3,
   CvssScore,
@@ -161,6 +177,7 @@ import {
   EcrConfigurationState,
   EcrRescanDurationState,
   Epss,
+  EpssDetails,
   ExploitabilityDetails,
   ExploitObserved,
   Filter,
@@ -186,8 +203,11 @@ import {
   RepositoryAggregation,
   Resource,
   ResourceDetails,
+  ResourceFilterCriteria,
+  ResourceMapFilter,
   ResourceNotFoundException,
   ResourceScanType,
+  ResourceStringFilter,
   SearchVulnerabilitiesFilterCriteria,
   ServiceQuotaExceededException,
   SortCriteria,
@@ -245,6 +265,35 @@ export const se_BatchGetAccountStatusCommand = async (
   body = JSON.stringify(
     take(input, {
       accountIds: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1BatchGetCodeSnippetCommand
+ */
+export const se_BatchGetCodeSnippetCommand = async (
+  input: BatchGetCodeSnippetCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/codesnippet/batchget";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      findingArns: (_) => _json(_),
     })
   );
   return new __HttpRequest({
@@ -379,6 +428,35 @@ export const se_CancelFindingsReportCommand = async (
 };
 
 /**
+ * serializeAws_restJson1CancelSbomExportCommand
+ */
+export const se_CancelSbomExportCommand = async (
+  input: CancelSbomExportCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/sbomexport/cancel";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      reportId: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1CreateFilterCommand
  */
 export const se_CreateFilterCommand = async (
@@ -429,6 +507,37 @@ export const se_CreateFindingsReportCommand = async (
     take(input, {
       filterCriteria: (_) => se_FilterCriteria(_, context),
       reportFormat: [],
+      s3Destination: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1CreateSbomExportCommand
+ */
+export const se_CreateSbomExportCommand = async (
+  input: CreateSbomExportCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/sbomexport/create";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      reportFormat: [],
+      resourceFilterCriteria: (_) => _json(_),
       s3Destination: (_) => _json(_),
     })
   );
@@ -724,6 +833,33 @@ export const se_GetEc2DeepInspectionConfigurationCommand = async (
 };
 
 /**
+ * serializeAws_restJson1GetEncryptionKeyCommand
+ */
+export const se_GetEncryptionKeyCommand = async (
+  input: GetEncryptionKeyCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/encryptionkey/get";
+  const query: any = map({
+    scanType: [, __expectNonNull(input.scanType!, `scanType`)],
+    resourceType: [, __expectNonNull(input.resourceType!, `resourceType`)],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1GetFindingsReportStatusCommand
  */
 export const se_GetFindingsReportStatusCommand = async (
@@ -768,6 +904,35 @@ export const se_GetMemberCommand = async (
   body = JSON.stringify(
     take(input, {
       accountId: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1GetSbomExportCommand
+ */
+export const se_GetSbomExportCommand = async (
+  input: GetSbomExportCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/sbomexport/get";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      reportId: [],
     })
   );
   return new __HttpRequest({
@@ -828,7 +993,7 @@ export const se_ListCoverageCommand = async (
   let body: any;
   body = JSON.stringify(
     take(input, {
-      filterCriteria: (_) => _json(_),
+      filterCriteria: (_) => se_CoverageFilterCriteria(_, context),
       maxResults: [],
       nextToken: [],
     })
@@ -860,7 +1025,7 @@ export const se_ListCoverageStatisticsCommand = async (
   let body: any;
   body = JSON.stringify(
     take(input, {
-      filterCriteria: (_) => _json(_),
+      filterCriteria: (_) => se_CoverageFilterCriteria(_, context),
       groupBy: [],
       nextToken: [],
     })
@@ -1091,6 +1256,36 @@ export const se_ListUsageTotalsCommand = async (
 };
 
 /**
+ * serializeAws_restJson1ResetEncryptionKeyCommand
+ */
+export const se_ResetEncryptionKeyCommand = async (
+  input: ResetEncryptionKeyCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/encryptionkey/reset";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      resourceType: [],
+      scanType: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PUT",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1SearchVulnerabilitiesCommand
  */
 export const se_SearchVulnerabilitiesCommand = async (
@@ -1235,6 +1430,37 @@ export const se_UpdateEc2DeepInspectionConfigurationCommand = async (
     hostname,
     port,
     method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1UpdateEncryptionKeyCommand
+ */
+export const se_UpdateEncryptionKeyCommand = async (
+  input: UpdateEncryptionKeyCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/encryptionkey/update";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      kmsKeyId: [],
+      resourceType: [],
+      scanType: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PUT",
     headers,
     path: resolvedPath,
     body,
@@ -1436,6 +1662,63 @@ const de_BatchGetAccountStatusCommandError = async (
     case "ResourceNotFoundException":
     case "com.amazonaws.inspector2#ResourceNotFoundException":
       throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.inspector2#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.inspector2#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1BatchGetCodeSnippetCommand
+ */
+export const de_BatchGetCodeSnippetCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<BatchGetCodeSnippetCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_BatchGetCodeSnippetCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    codeSnippetResults: _json,
+    errors: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1BatchGetCodeSnippetCommandError
+ */
+const de_BatchGetCodeSnippetCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<BatchGetCodeSnippetCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.inspector2#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.inspector2#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
     case "ThrottlingException":
     case "com.amazonaws.inspector2#ThrottlingException":
       throw await de_ThrottlingExceptionRes(parsedOutput, context);
@@ -1683,6 +1966,65 @@ const de_CancelFindingsReportCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1CancelSbomExportCommand
+ */
+export const de_CancelSbomExportCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CancelSbomExportCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CancelSbomExportCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    reportId: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1CancelSbomExportCommandError
+ */
+const de_CancelSbomExportCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CancelSbomExportCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.inspector2#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.inspector2#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.inspector2#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.inspector2#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.inspector2#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1CreateFilterCommand
  */
 export const de_CreateFilterCommand = async (
@@ -1772,6 +2114,65 @@ const de_CreateFindingsReportCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<CreateFindingsReportCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.inspector2#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.inspector2#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.inspector2#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.inspector2#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.inspector2#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1CreateSbomExportCommand
+ */
+export const de_CreateSbomExportCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateSbomExportCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CreateSbomExportCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    reportId: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1CreateSbomExportCommandError
+ */
+const de_CreateSbomExportCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateSbomExportCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -2388,6 +2789,65 @@ const de_GetEc2DeepInspectionConfigurationCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1GetEncryptionKeyCommand
+ */
+export const de_GetEncryptionKeyCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetEncryptionKeyCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetEncryptionKeyCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    kmsKeyId: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetEncryptionKeyCommandError
+ */
+const de_GetEncryptionKeyCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetEncryptionKeyCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.inspector2#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.inspector2#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.inspector2#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.inspector2#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.inspector2#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1GetFindingsReportStatusCommand
  */
 export const de_GetFindingsReportStatusCommand = async (
@@ -2511,6 +2971,71 @@ const de_GetMemberCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1GetSbomExportCommand
+ */
+export const de_GetSbomExportCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetSbomExportCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetSbomExportCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    errorCode: __expectString,
+    errorMessage: __expectString,
+    filterCriteria: _json,
+    format: __expectString,
+    reportId: __expectString,
+    s3Destination: _json,
+    status: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetSbomExportCommandError
+ */
+const de_GetSbomExportCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetSbomExportCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.inspector2#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.inspector2#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.inspector2#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.inspector2#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.inspector2#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1ListAccountPermissionsCommand
  */
 export const de_ListAccountPermissionsCommand = async (
@@ -2582,7 +3107,7 @@ export const de_ListCoverageCommand = async (
   });
   const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
   const doc = take(data, {
-    coveredResources: _json,
+    coveredResources: (_) => de_CoveredResources(_, context),
     nextToken: __expectString,
   });
   Object.assign(contents, doc);
@@ -3070,6 +3595,61 @@ const de_ListUsageTotalsCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1ResetEncryptionKeyCommand
+ */
+export const de_ResetEncryptionKeyCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ResetEncryptionKeyCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ResetEncryptionKeyCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ResetEncryptionKeyCommandError
+ */
+const de_ResetEncryptionKeyCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ResetEncryptionKeyCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.inspector2#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.inspector2#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.inspector2#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.inspector2#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.inspector2#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1SearchVulnerabilitiesCommand
  */
 export const de_SearchVulnerabilitiesCommand = async (
@@ -3328,6 +3908,61 @@ const de_UpdateEc2DeepInspectionConfigurationCommandError = async (
     case "InternalServerException":
     case "com.amazonaws.inspector2#InternalServerException":
       throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.inspector2#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.inspector2#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1UpdateEncryptionKeyCommand
+ */
+export const de_UpdateEncryptionKeyCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdateEncryptionKeyCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_UpdateEncryptionKeyCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1UpdateEncryptionKeyCommandError
+ */
+const de_UpdateEncryptionKeyCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdateEncryptionKeyCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.inspector2#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.inspector2#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.inspector2#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
     case "ThrottlingException":
     case "com.amazonaws.inspector2#ThrottlingException":
       throw await de_ThrottlingExceptionRes(parsedOutput, context);
@@ -3687,7 +4322,47 @@ const de_ValidationExceptionRes = async (parsedOutput: any, context: __SerdeCont
 
 // se_AwsEcrContainerAggregation omitted.
 
-// se_CoverageFilterCriteria omitted.
+/**
+ * serializeAws_restJson1CoverageDateFilter
+ */
+const se_CoverageDateFilter = (input: CoverageDateFilter, context: __SerdeContext): any => {
+  return take(input, {
+    endInclusive: (_) => Math.round(_.getTime() / 1000),
+    startInclusive: (_) => Math.round(_.getTime() / 1000),
+  });
+};
+
+/**
+ * serializeAws_restJson1CoverageDateFilterList
+ */
+const se_CoverageDateFilterList = (input: CoverageDateFilter[], context: __SerdeContext): any => {
+  return input
+    .filter((e: any) => e != null)
+    .map((entry) => {
+      return se_CoverageDateFilter(entry, context);
+    });
+};
+
+/**
+ * serializeAws_restJson1CoverageFilterCriteria
+ */
+const se_CoverageFilterCriteria = (input: CoverageFilterCriteria, context: __SerdeContext): any => {
+  return take(input, {
+    accountId: _json,
+    ec2InstanceTags: _json,
+    ecrImageTags: _json,
+    ecrRepositoryName: _json,
+    lambdaFunctionName: _json,
+    lambdaFunctionRuntime: _json,
+    lambdaFunctionTags: _json,
+    lastScannedAt: (_) => se_CoverageDateFilterList(_, context),
+    resourceId: _json,
+    resourceType: _json,
+    scanStatusCode: _json,
+    scanStatusReason: _json,
+    scanType: _json,
+  });
+};
 
 // se_CoverageMapFilter omitted.
 
@@ -3736,6 +4411,9 @@ const se_DateFilterList = (input: DateFilter[], context: __SerdeContext): any =>
 const se_FilterCriteria = (input: FilterCriteria, context: __SerdeContext): any => {
   return take(input, {
     awsAccountId: _json,
+    codeVulnerabilityDetectorName: _json,
+    codeVulnerabilityDetectorTags: _json,
+    codeVulnerabilityFilePath: _json,
     componentId: _json,
     componentType: _json,
     ec2InstanceImageId: _json,
@@ -3747,6 +4425,7 @@ const se_FilterCriteria = (input: FilterCriteria, context: __SerdeContext): any 
     ecrImageRegistry: _json,
     ecrImageRepositoryName: _json,
     ecrImageTags: _json,
+    epssScore: (_) => se_NumberFilterList(_, context),
     exploitAvailable: _json,
     findingArn: _json,
     findingStatus: _json,
@@ -3775,6 +4454,8 @@ const se_FilterCriteria = (input: FilterCriteria, context: __SerdeContext): any 
     vulnerablePackages: (_) => se_PackageFilterList(_, context),
   });
 };
+
+// se_FindingArns omitted.
 
 // se_FindingTypeAggregation omitted.
 
@@ -3850,6 +4531,16 @@ const se_PackageFilterList = (input: PackageFilter[], context: __SerdeContext): 
 // se_PortRangeFilterList omitted.
 
 // se_RepositoryAggregation omitted.
+
+// se_ResourceFilterCriteria omitted.
+
+// se_ResourceMapFilter omitted.
+
+// se_ResourceMapFilterList omitted.
+
+// se_ResourceStringFilter omitted.
+
+// se_ResourceStringFilterList omitted.
 
 // se_SearchVulnerabilitiesFilterCriteria omitted.
 
@@ -4034,13 +4725,52 @@ const de_CisaData = (output: any, context: __SerdeContext): CisaData => {
   }) as any;
 };
 
+// de_CodeFilePath omitted.
+
+// de_CodeLine omitted.
+
+// de_CodeLineList omitted.
+
+// de_CodeSnippetError omitted.
+
+// de_CodeSnippetErrorList omitted.
+
+// de_CodeSnippetResult omitted.
+
+// de_CodeSnippetResultList omitted.
+
+// de_CodeVulnerabilityDetails omitted.
+
 // de_Counts omitted.
 
 // de_CountsList omitted.
 
-// de_CoveredResource omitted.
+/**
+ * deserializeAws_restJson1CoveredResource
+ */
+const de_CoveredResource = (output: any, context: __SerdeContext): CoveredResource => {
+  return take(output, {
+    accountId: __expectString,
+    lastScannedAt: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    resourceId: __expectString,
+    resourceMetadata: _json,
+    resourceType: __expectString,
+    scanStatus: _json,
+    scanType: __expectString,
+  }) as any;
+};
 
-// de_CoveredResources omitted.
+/**
+ * deserializeAws_restJson1CoveredResources
+ */
+const de_CoveredResources = (output: any, context: __SerdeContext): CoveredResource[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_CoveredResource(entry, context);
+    });
+  return retVal;
+};
 
 /**
  * deserializeAws_restJson1Cvss2
@@ -4104,6 +4834,8 @@ const de_CvssScoreList = (output: any, context: __SerdeContext): CvssScore[] => 
   return retVal;
 };
 
+// de_CweList omitted.
+
 // de_Cwes omitted.
 
 /**
@@ -4138,6 +4870,8 @@ const de_DateFilterList = (output: any, context: __SerdeContext): DateFilter[] =
 
 // de_DetectionPlatforms omitted.
 
+// de_DetectorTagList omitted.
+
 // de_Ec2InstanceAggregationResponse omitted.
 
 // de_Ec2Metadata omitted.
@@ -4170,6 +4904,15 @@ const de_EcrRescanDurationState = (output: any, context: __SerdeContext): EcrRes
  * deserializeAws_restJson1Epss
  */
 const de_Epss = (output: any, context: __SerdeContext): Epss => {
+  return take(output, {
+    score: __limitedParseDouble,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1EpssDetails
+ */
+const de_EpssDetails = (output: any, context: __SerdeContext): EpssDetails => {
   return take(output, {
     score: __limitedParseDouble,
   }) as any;
@@ -4226,6 +4969,9 @@ const de_Filter = (output: any, context: __SerdeContext): Filter => {
 const de_FilterCriteria = (output: any, context: __SerdeContext): FilterCriteria => {
   return take(output, {
     awsAccountId: _json,
+    codeVulnerabilityDetectorName: _json,
+    codeVulnerabilityDetectorTags: _json,
+    codeVulnerabilityFilePath: _json,
     componentId: _json,
     componentType: _json,
     ec2InstanceImageId: _json,
@@ -4237,6 +4983,7 @@ const de_FilterCriteria = (output: any, context: __SerdeContext): FilterCriteria
     ecrImageRegistry: _json,
     ecrImageRepositoryName: _json,
     ecrImageTags: _json,
+    epssScore: (_: any) => de_NumberFilterList(_, context),
     exploitAvailable: _json,
     findingArn: _json,
     findingStatus: _json,
@@ -4284,7 +5031,9 @@ const de_FilterList = (output: any, context: __SerdeContext): Filter[] => {
 const de_Finding = (output: any, context: __SerdeContext): Finding => {
   return take(output, {
     awsAccountId: __expectString,
+    codeVulnerabilityDetails: _json,
     description: __expectString,
+    epss: (_: any) => de_EpssDetails(_, context),
     exploitAvailable: __expectString,
     exploitabilityDetails: (_: any) => de_ExploitabilityDetails(_, context),
     findingArn: __expectString,
@@ -4535,6 +5284,8 @@ const de_PackageVulnerabilityDetails = (output: any, context: __SerdeContext): P
 
 // de_Recommendation omitted.
 
+// de_ReferenceUrls omitted.
+
 // de_RelatedVulnerabilities omitted.
 
 // de_Remediation omitted.
@@ -4566,6 +5317,8 @@ const de_ResourceDetails = (output: any, context: __SerdeContext): ResourceDetai
   }) as any;
 };
 
+// de_ResourceFilterCriteria omitted.
+
 /**
  * deserializeAws_restJson1ResourceList
  */
@@ -4578,11 +5331,19 @@ const de_ResourceList = (output: any, context: __SerdeContext): Resource[] => {
   return retVal;
 };
 
+// de_ResourceMapFilter omitted.
+
+// de_ResourceMapFilterList omitted.
+
 // de_ResourceScanMetadata omitted.
 
 // de_ResourceState omitted.
 
 // de_ResourceStatus omitted.
+
+// de_ResourceStringFilter omitted.
+
+// de_ResourceStringFilterList omitted.
 
 // de_ScanStatus omitted.
 
@@ -4603,6 +5364,10 @@ const de_ResourceList = (output: any, context: __SerdeContext): Resource[] => {
 // de_StringList omitted.
 
 // de_SubnetIdList omitted.
+
+// de_SuggestedFix omitted.
+
+// de_SuggestedFixes omitted.
 
 // de_TagList omitted.
 
@@ -4716,14 +5481,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

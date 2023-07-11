@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@smithy/smithy-client";
 
 import { IAMServiceException as __BaseException } from "./IAMServiceException";
 
@@ -666,6 +666,27 @@ export interface CreateAccessKeyResponse {
 
 /**
  * @public
+ * <p>The request was rejected because multiple requests to change this object were submitted
+ *       simultaneously. Wait a few minutes and submit your request again.</p>
+ */
+export class ConcurrentModificationException extends __BaseException {
+  readonly name: "ConcurrentModificationException" = "ConcurrentModificationException";
+  readonly $fault: "client" = "client";
+  /**
+   * @internal
+   */
+  constructor(opts: __ExceptionOptionType<ConcurrentModificationException, __BaseException>) {
+    super({
+      name: "ConcurrentModificationException",
+      $fault: "client",
+      ...opts,
+    });
+    Object.setPrototypeOf(this, ConcurrentModificationException.prototype);
+  }
+}
+
+/**
+ * @public
  */
 export interface CreateAccountAliasRequest {
   /**
@@ -765,27 +786,6 @@ export interface CreateGroupResponse {
    * <p>A structure containing details about the new group.</p>
    */
   Group: Group | undefined;
-}
-
-/**
- * @public
- * <p>The request was rejected because multiple requests to change this object were submitted
- *       simultaneously. Wait a few minutes and submit your request again.</p>
- */
-export class ConcurrentModificationException extends __BaseException {
-  readonly name: "ConcurrentModificationException" = "ConcurrentModificationException";
-  readonly $fault: "client" = "client";
-  /**
-   * @internal
-   */
-  constructor(opts: __ExceptionOptionType<ConcurrentModificationException, __BaseException>) {
-    super({
-      name: "ConcurrentModificationException",
-      $fault: "client",
-      ...opts,
-    });
-    Object.setPrototypeOf(this, ConcurrentModificationException.prototype);
-  }
 }
 
 /**
@@ -1991,7 +1991,7 @@ export interface VirtualMFADevice {
   SerialNumber: string | undefined;
 
   /**
-   * <p> The base32 seed defined as specified in <a href="https://tools.ietf.org/html/rfc3548.txt">RFC3548</a>. The <code>Base32StringSeed</code> is base64-encoded. </p>
+   * <p> The base32 seed defined as specified in <a href="https://tools.ietf.org/html/rfc3548.txt">RFC3548</a>. The <code>Base32StringSeed</code> is base32-encoded. </p>
    */
   Base32StringSeed?: Uint8Array;
 
@@ -3555,6 +3555,49 @@ export interface GetLoginProfileResponse {
    *             user.</p>
    */
   LoginProfile: LoginProfile | undefined;
+}
+
+/**
+ * @public
+ */
+export interface GetMFADeviceRequest {
+  /**
+   * <p>Serial number that uniquely identifies the MFA device. For this API, we only accept
+   *             FIDO security key <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html">ARNs</a>.</p>
+   */
+  SerialNumber: string | undefined;
+
+  /**
+   * <p>The friendly name identifying the user.</p>
+   */
+  UserName?: string;
+}
+
+/**
+ * @public
+ */
+export interface GetMFADeviceResponse {
+  /**
+   * <p>The friendly name identifying the user.</p>
+   */
+  UserName?: string;
+
+  /**
+   * <p>Serial number that uniquely identifies the MFA device. For this API, we only accept
+   *             FIDO security key <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html">ARNs</a>.</p>
+   */
+  SerialNumber: string | undefined;
+
+  /**
+   * <p>The date that a specified user's MFA device was first enabled.</p>
+   */
+  EnableDate?: Date;
+
+  /**
+   * <p>The certifications of a specified user's MFA device. We currently provide FIPS-140-2, FIPS-140-3, and FIDO certification levels
+   *             obtained from <a href="https://fidoalliance.org/metadata/"> FIDO Alliance Metadata Service (MDS)</a>.</p>
+   */
+  Certifications?: Record<string, string>;
 }
 
 /**
@@ -8367,43 +8410,6 @@ export interface UntagInstanceProfileRequest {
   /**
    * <p>A list of key names as a simple array of strings. The tags with matching keys are
    *       removed from the specified instance profile.</p>
-   */
-  TagKeys: string[] | undefined;
-}
-
-/**
- * @public
- */
-export interface UntagMFADeviceRequest {
-  /**
-   * <p>The unique identifier for the IAM virtual MFA device from which you want to remove
-   *       tags. For virtual MFA devices, the serial number is the same as the ARN.</p>
-   *          <p>This parameter allows (through its <a href="http://wikipedia.org/wiki/regex">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric
-   *     characters with no spaces. You can also include any of the following characters: _+=,.@-</p>
-   */
-  SerialNumber: string | undefined;
-
-  /**
-   * <p>A list of key names as a simple array of strings. The tags with matching keys are
-   *       removed from the specified instance profile.</p>
-   */
-  TagKeys: string[] | undefined;
-}
-
-/**
- * @public
- */
-export interface UntagOpenIDConnectProviderRequest {
-  /**
-   * <p>The ARN of the OIDC provider in IAM from which you want to remove tags.</p>
-   *          <p>This parameter allows (through its <a href="http://wikipedia.org/wiki/regex">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric
-   *     characters with no spaces. You can also include any of the following characters: _+=,.@-</p>
-   */
-  OpenIDConnectProviderArn: string | undefined;
-
-  /**
-   * <p>A list of key names as a simple array of strings. The tags with matching keys are
-   *       removed from the specified OIDC provider.</p>
    */
   TagKeys: string[] | undefined;
 }

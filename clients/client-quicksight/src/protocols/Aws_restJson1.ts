@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -19,12 +20,12 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CancelIngestionCommandInput, CancelIngestionCommandOutput } from "../commands/CancelIngestionCommand";
 import {
@@ -152,6 +153,14 @@ import {
   DescribeAnalysisPermissionsCommandInput,
   DescribeAnalysisPermissionsCommandOutput,
 } from "../commands/DescribeAnalysisPermissionsCommand";
+import {
+  DescribeAssetBundleExportJobCommandInput,
+  DescribeAssetBundleExportJobCommandOutput,
+} from "../commands/DescribeAssetBundleExportJobCommand";
+import {
+  DescribeAssetBundleImportJobCommandInput,
+  DescribeAssetBundleImportJobCommandOutput,
+} from "../commands/DescribeAssetBundleImportJobCommand";
 import { DescribeDashboardCommandInput, DescribeDashboardCommandOutput } from "../commands/DescribeDashboardCommand";
 import {
   DescribeDashboardDefinitionCommandInput,
@@ -254,6 +263,14 @@ import {
 } from "../commands/GetDashboardEmbedUrlCommand";
 import { GetSessionEmbedUrlCommandInput, GetSessionEmbedUrlCommandOutput } from "../commands/GetSessionEmbedUrlCommand";
 import { ListAnalysesCommandInput, ListAnalysesCommandOutput } from "../commands/ListAnalysesCommand";
+import {
+  ListAssetBundleExportJobsCommandInput,
+  ListAssetBundleExportJobsCommandOutput,
+} from "../commands/ListAssetBundleExportJobsCommand";
+import {
+  ListAssetBundleImportJobsCommandInput,
+  ListAssetBundleImportJobsCommandOutput,
+} from "../commands/ListAssetBundleImportJobsCommand";
 import { ListDashboardsCommandInput, ListDashboardsCommandOutput } from "../commands/ListDashboardsCommand";
 import {
   ListDashboardVersionsCommandInput,
@@ -318,6 +335,14 @@ import { SearchDataSetsCommandInput, SearchDataSetsCommandOutput } from "../comm
 import { SearchDataSourcesCommandInput, SearchDataSourcesCommandOutput } from "../commands/SearchDataSourcesCommand";
 import { SearchFoldersCommandInput, SearchFoldersCommandOutput } from "../commands/SearchFoldersCommand";
 import { SearchGroupsCommandInput, SearchGroupsCommandOutput } from "../commands/SearchGroupsCommand";
+import {
+  StartAssetBundleExportJobCommandInput,
+  StartAssetBundleExportJobCommandOutput,
+} from "../commands/StartAssetBundleExportJobCommand";
+import {
+  StartAssetBundleImportJobCommandInput,
+  StartAssetBundleImportJobCommandOutput,
+} from "../commands/StartAssetBundleImportJobCommand";
 import { TagResourceCommandInput, TagResourceCommandOutput } from "../commands/TagResourceCommand";
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "../commands/UntagResourceCommand";
 import {
@@ -433,12 +458,9 @@ import {
   BodySectionConfiguration,
   BodySectionContent,
   BoxPlotAggregatedFieldWells,
-  BoxPlotChartConfiguration,
   BoxPlotFieldWells,
   BoxPlotOptions,
-  BoxPlotSortConfiguration,
   BoxPlotStyleOptions,
-  BoxPlotVisual,
   CalculatedField,
   CalculatedMeasureField,
   CascadingControlConfiguration,
@@ -449,20 +471,19 @@ import {
   CategoryFilter,
   CategoryFilterConfiguration,
   ChartAxisLabelOptions,
+  ColorsConfiguration,
   ColumnConfiguration,
   ColumnHierarchy,
   ColumnIdentifier,
   ColumnSort,
   ColumnTooltipItem,
-  ComboChartAggregatedFieldWells,
-  ComboChartFieldWells,
-  ComboChartSortConfiguration,
   ContributionAnalysisDefault,
   CurrencyDisplayFormatConfiguration,
   CustomActionFilterOperation,
   CustomActionNavigationOperation,
   CustomActionSetParametersOperation,
   CustomActionURLOperation,
+  CustomColor,
   CustomFilterConfiguration,
   CustomFilterListConfiguration,
   CustomParameterValues,
@@ -614,6 +635,7 @@ import {
   SheetVisualScopingConfiguration,
   ShortFormatText,
   SliderControlDisplayOptions,
+  SmallMultiplesAxisProperties,
   SmallMultiplesOptions,
   Spacing,
   StringDefaultValues,
@@ -652,31 +674,38 @@ import {
   ArcAxisDisplayRange,
   ArcConfiguration,
   ArcOptions,
-  AthenaParameters,
-  AuroraParameters,
-  AuroraPostgreSqlParameters,
-  AuthorSpecifiedAggregation,
-  AwsIotAnalyticsParameters,
+  AssetBundleCloudFormationOverridePropertyConfiguration,
+  AssetBundleExportJobAnalysisOverrideProperties,
+  AssetBundleExportJobAnalysisPropertyToOverride,
+  AssetBundleExportJobDashboardOverrideProperties,
+  AssetBundleExportJobDashboardPropertyToOverride,
+  AssetBundleExportJobDataSetOverrideProperties,
+  AssetBundleExportJobDataSetPropertyToOverride,
+  AssetBundleExportJobDataSourceOverrideProperties,
+  AssetBundleExportJobDataSourcePropertyToOverride,
+  AssetBundleExportJobRefreshScheduleOverrideProperties,
+  AssetBundleExportJobRefreshSchedulePropertyToOverride,
+  AssetBundleExportJobResourceIdOverrideConfiguration,
+  AssetBundleExportJobSummary,
+  AssetBundleExportJobThemeOverrideProperties,
+  AssetBundleExportJobThemePropertyToOverride,
+  AssetBundleExportJobVPCConnectionOverrideProperties,
+  AssetBundleExportJobVPCConnectionPropertyToOverride,
+  AssetBundleImportJobAnalysisOverrideParameters,
+  AssetBundleImportJobDashboardOverrideParameters,
+  AssetBundleImportJobDataSetOverrideParameters,
   BinCountOptions,
   BinWidthOptions,
-  BookmarksConfigurations,
-  BorderStyle,
-  CalculatedColumn,
-  CastColumnTypeOperation,
-  CellValueSynonym,
+  BoxPlotChartConfiguration,
+  BoxPlotSortConfiguration,
+  BoxPlotVisual,
   ClusterMarker,
   ClusterMarkerConfiguration,
-  CollectiveConstant,
   ColorScale,
-  ColumnDescription,
-  ColumnGroup,
-  ColumnGroupColumnSchema,
-  ColumnGroupSchema,
-  ColumnLevelPermissionRule,
-  ColumnSchema,
-  ColumnTag,
-  ColumnTagName,
+  ComboChartAggregatedFieldWells,
   ComboChartConfiguration,
+  ComboChartFieldWells,
+  ComboChartSortConfiguration,
   ComboChartVisual,
   ComparisonConfiguration,
   ComparisonFormatConfiguration,
@@ -727,8 +756,10 @@ import {
   GaugeChartOptions,
   GaugeChartPrimaryValueConditionalFormatting,
   GaugeChartVisual,
-  GeoSpatialColumnGroup,
   GeospatialCoordinateBounds,
+  GeospatialHeatmapColorScale,
+  GeospatialHeatmapConfiguration,
+  GeospatialHeatmapDataColor,
   GeospatialMapAggregatedFieldWells,
   GeospatialMapConfiguration,
   GeospatialMapFieldWells,
@@ -752,8 +783,6 @@ import {
   HistogramVisual,
   InsightConfiguration,
   InsightVisual,
-  InternalFailureException,
-  InvalidParameterValueException,
   KPIConditionalFormatting,
   KPIConditionalFormattingOption,
   KPIConfiguration,
@@ -791,6 +820,8 @@ import {
   PivotTableConditionalFormattingScope,
   PivotTableConfiguration,
   PivotTableDataPathOption,
+  PivotTableFieldCollapseStateOption,
+  PivotTableFieldCollapseStateTarget,
   PivotTableFieldOption,
   PivotTableFieldOptions,
   PivotTableFieldSubtotalOptions,
@@ -810,8 +841,6 @@ import {
   RadarChartSeriesSettings,
   RadarChartSortConfiguration,
   RadarChartVisual,
-  ResourceExistsException,
-  ResourceNotFoundException,
   RowAlternateColorOptions,
   SankeyDiagramAggregatedFieldWells,
   SankeyDiagramChartConfiguration,
@@ -855,7 +884,6 @@ import {
   TableUnaggregatedFieldWells,
   TableVisual,
   TextConditionalFormat,
-  ThrottlingException,
   TimeBasedForecastProperties,
   TopBottomMoversComputation,
   TopBottomRankedComputation,
@@ -887,6 +915,35 @@ import {
 } from "../models/models_1";
 import {
   _Parameters,
+  AssetBundleImportJobDataSourceCredentialPair,
+  AssetBundleImportJobDataSourceCredentials,
+  AssetBundleImportJobDataSourceOverrideParameters,
+  AssetBundleImportJobOverrideParameters,
+  AssetBundleImportJobRefreshScheduleOverrideParameters,
+  AssetBundleImportJobResourceIdOverrideConfiguration,
+  AssetBundleImportJobSummary,
+  AssetBundleImportJobThemeOverrideParameters,
+  AssetBundleImportJobVPCConnectionOverrideParameters,
+  AssetBundleImportSource,
+  AthenaParameters,
+  AuroraParameters,
+  AuroraPostgreSqlParameters,
+  AuthorSpecifiedAggregation,
+  AwsIotAnalyticsParameters,
+  BookmarksConfigurations,
+  BorderStyle,
+  CalculatedColumn,
+  CastColumnTypeOperation,
+  CellValueSynonym,
+  CollectiveConstant,
+  ColumnDescription,
+  ColumnGroup,
+  ColumnGroupColumnSchema,
+  ColumnGroupSchema,
+  ColumnLevelPermissionRule,
+  ColumnSchema,
+  ColumnTag,
+  ColumnTagName,
   ComparativeOrder,
   ConcurrentUpdatingException,
   ConflictException,
@@ -938,12 +995,15 @@ import {
   FieldFolder,
   FilterOperation,
   Font,
+  GeoSpatialColumnGroup,
   GutterStyle,
   IncrementalRefresh,
   InputColumn,
   IntegerDatasetParameter,
   IntegerDatasetParameterDefaultValues,
   IntegerParameter,
+  InternalFailureException,
+  InvalidParameterValueException,
   JiraParameters,
   JoinInstruction,
   JoinKeyProperties,
@@ -974,6 +1034,8 @@ import {
   RefreshSchedule,
   RelationalTable,
   RenameColumnOperation,
+  ResourceExistsException,
+  ResourceNotFoundException,
   ResourcePermission,
   ResourceUnavailableException,
   RowLevelPermissionDataSet,
@@ -1003,6 +1065,7 @@ import {
   TemplateVersionDefinition,
   TeradataParameters,
   ThemeConfiguration,
+  ThrottlingException,
   TileLayoutStyle,
   TileStyle,
   TopicCalculatedField,
@@ -3008,6 +3071,86 @@ export const se_DescribeAnalysisPermissionsCommand = async (
 };
 
 /**
+ * serializeAws_restJson1DescribeAssetBundleExportJobCommand
+ */
+export const se_DescribeAssetBundleExportJobCommand = async (
+  input: DescribeAssetBundleExportJobCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/accounts/{AwsAccountId}/asset-bundle-export-jobs/{AssetBundleExportJobId}";
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "AwsAccountId",
+    () => input.AwsAccountId!,
+    "{AwsAccountId}",
+    false
+  );
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "AssetBundleExportJobId",
+    () => input.AssetBundleExportJobId!,
+    "{AssetBundleExportJobId}",
+    false
+  );
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1DescribeAssetBundleImportJobCommand
+ */
+export const se_DescribeAssetBundleImportJobCommand = async (
+  input: DescribeAssetBundleImportJobCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/accounts/{AwsAccountId}/asset-bundle-import-jobs/{AssetBundleImportJobId}";
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "AwsAccountId",
+    () => input.AwsAccountId!,
+    "{AwsAccountId}",
+    false
+  );
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "AssetBundleImportJobId",
+    () => input.AssetBundleImportJobId!,
+    "{AssetBundleImportJobId}",
+    false
+  );
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1DescribeDashboardCommand
  */
 export const se_DescribeDashboardCommand = async (
@@ -4281,6 +4424,80 @@ export const se_ListAnalysesCommand = async (
   const headers: any = {};
   let resolvedPath =
     `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/accounts/{AwsAccountId}/analyses";
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "AwsAccountId",
+    () => input.AwsAccountId!,
+    "{AwsAccountId}",
+    false
+  );
+  const query: any = map({
+    "next-token": [, input.NextToken!],
+    "max-results": [() => input.MaxResults !== void 0, () => input.MaxResults!.toString()],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ListAssetBundleExportJobsCommand
+ */
+export const se_ListAssetBundleExportJobsCommand = async (
+  input: ListAssetBundleExportJobsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/accounts/{AwsAccountId}/asset-bundle-export-jobs";
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "AwsAccountId",
+    () => input.AwsAccountId!,
+    "{AwsAccountId}",
+    false
+  );
+  const query: any = map({
+    "next-token": [, input.NextToken!],
+    "max-results": [() => input.MaxResults !== void 0, () => input.MaxResults!.toString()],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ListAssetBundleImportJobsCommand
+ */
+export const se_ListAssetBundleImportJobsCommand = async (
+  input: ListAssetBundleImportJobsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/accounts/{AwsAccountId}/asset-bundle-import-jobs";
   resolvedPath = __resolvedPath(
     resolvedPath,
     input,
@@ -5584,6 +5801,91 @@ export const se_SearchGroupsCommand = async (
     headers,
     path: resolvedPath,
     query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1StartAssetBundleExportJobCommand
+ */
+export const se_StartAssetBundleExportJobCommand = async (
+  input: StartAssetBundleExportJobCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/accounts/{AwsAccountId}/asset-bundle-export-jobs/export";
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "AwsAccountId",
+    () => input.AwsAccountId!,
+    "{AwsAccountId}",
+    false
+  );
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      AssetBundleExportJobId: [],
+      CloudFormationOverridePropertyConfiguration: (_) => _json(_),
+      ExportFormat: [],
+      IncludeAllDependencies: [],
+      ResourceArns: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1StartAssetBundleImportJobCommand
+ */
+export const se_StartAssetBundleImportJobCommand = async (
+  input: StartAssetBundleImportJobCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/accounts/{AwsAccountId}/asset-bundle-import-jobs/import";
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "AwsAccountId",
+    () => input.AwsAccountId!,
+    "{AwsAccountId}",
+    false
+  );
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      AssetBundleImportJobId: [],
+      AssetBundleImportSource: (_) => se_AssetBundleImportSource(_, context),
+      FailureAction: [],
+      OverrideParameters: (_) => se_AssetBundleImportJobOverrideParameters(_, context),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
     body,
   });
 };
@@ -10494,6 +10796,139 @@ const de_DescribeAnalysisPermissionsCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1DescribeAssetBundleExportJobCommand
+ */
+export const de_DescribeAssetBundleExportJobCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeAssetBundleExportJobCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_DescribeAssetBundleExportJobCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    Arn: __expectString,
+    AssetBundleExportJobId: __expectString,
+    AwsAccountId: __expectString,
+    CloudFormationOverridePropertyConfiguration: _json,
+    CreatedTime: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    DownloadUrl: __expectString,
+    Errors: _json,
+    ExportFormat: __expectString,
+    IncludeAllDependencies: __expectBoolean,
+    JobStatus: __expectString,
+    RequestId: __expectString,
+    ResourceArns: _json,
+  });
+  Object.assign(contents, doc);
+  map(contents, {
+    Status: [, output.statusCode],
+  });
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1DescribeAssetBundleExportJobCommandError
+ */
+const de_DescribeAssetBundleExportJobCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeAssetBundleExportJobCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "ResourceNotFoundException":
+    case "com.amazonaws.quicksight#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.quicksight#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "UnsupportedUserEditionException":
+    case "com.amazonaws.quicksight#UnsupportedUserEditionException":
+      throw await de_UnsupportedUserEditionExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1DescribeAssetBundleImportJobCommand
+ */
+export const de_DescribeAssetBundleImportJobCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeAssetBundleImportJobCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_DescribeAssetBundleImportJobCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    Arn: __expectString,
+    AssetBundleImportJobId: __expectString,
+    AssetBundleImportSource: _json,
+    AwsAccountId: __expectString,
+    CreatedTime: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Errors: _json,
+    FailureAction: __expectString,
+    JobStatus: __expectString,
+    OverrideParameters: (_) => de_AssetBundleImportJobOverrideParameters(_, context),
+    RequestId: __expectString,
+    RollbackErrors: _json,
+  });
+  Object.assign(contents, doc);
+  map(contents, {
+    Status: [, output.statusCode],
+  });
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1DescribeAssetBundleImportJobCommandError
+ */
+const de_DescribeAssetBundleImportJobCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeAssetBundleImportJobCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "ResourceNotFoundException":
+    case "com.amazonaws.quicksight#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.quicksight#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "UnsupportedUserEditionException":
+    case "com.amazonaws.quicksight#UnsupportedUserEditionException":
+      throw await de_UnsupportedUserEditionExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1DescribeDashboardCommand
  */
 export const de_DescribeDashboardCommand = async (
@@ -12948,6 +13383,134 @@ const de_ListAnalysesCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1ListAssetBundleExportJobsCommand
+ */
+export const de_ListAssetBundleExportJobsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListAssetBundleExportJobsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListAssetBundleExportJobsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    AssetBundleExportJobSummaryList: (_) => de_AssetBundleExportJobSummaryList(_, context),
+    NextToken: __expectString,
+    RequestId: __expectString,
+  });
+  Object.assign(contents, doc);
+  map(contents, {
+    Status: [, output.statusCode],
+  });
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListAssetBundleExportJobsCommandError
+ */
+const de_ListAssetBundleExportJobsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListAssetBundleExportJobsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.quicksight#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InvalidNextTokenException":
+    case "com.amazonaws.quicksight#InvalidNextTokenException":
+      throw await de_InvalidNextTokenExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.quicksight#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.quicksight#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "UnsupportedUserEditionException":
+    case "com.amazonaws.quicksight#UnsupportedUserEditionException":
+      throw await de_UnsupportedUserEditionExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1ListAssetBundleImportJobsCommand
+ */
+export const de_ListAssetBundleImportJobsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListAssetBundleImportJobsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListAssetBundleImportJobsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    AssetBundleImportJobSummaryList: (_) => de_AssetBundleImportJobSummaryList(_, context),
+    NextToken: __expectString,
+    RequestId: __expectString,
+  });
+  Object.assign(contents, doc);
+  map(contents, {
+    Status: [, output.statusCode],
+  });
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListAssetBundleImportJobsCommandError
+ */
+const de_ListAssetBundleImportJobsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListAssetBundleImportJobsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.quicksight#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InvalidNextTokenException":
+    case "com.amazonaws.quicksight#InvalidNextTokenException":
+      throw await de_InvalidNextTokenExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.quicksight#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.quicksight#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "UnsupportedUserEditionException":
+    case "com.amazonaws.quicksight#UnsupportedUserEditionException":
+      throw await de_UnsupportedUserEditionExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1ListDashboardsCommand
  */
 export const de_ListDashboardsCommand = async (
@@ -15272,6 +15835,146 @@ const de_SearchGroupsCommandError = async (
     case "ThrottlingException":
     case "com.amazonaws.quicksight#ThrottlingException":
       throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1StartAssetBundleExportJobCommand
+ */
+export const de_StartAssetBundleExportJobCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StartAssetBundleExportJobCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_StartAssetBundleExportJobCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    Arn: __expectString,
+    AssetBundleExportJobId: __expectString,
+    RequestId: __expectString,
+  });
+  Object.assign(contents, doc);
+  map(contents, {
+    Status: [, output.statusCode],
+  });
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1StartAssetBundleExportJobCommandError
+ */
+const de_StartAssetBundleExportJobCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StartAssetBundleExportJobCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.quicksight#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "ConflictException":
+    case "com.amazonaws.quicksight#ConflictException":
+      throw await de_ConflictExceptionRes(parsedOutput, context);
+    case "InvalidParameterValueException":
+    case "com.amazonaws.quicksight#InvalidParameterValueException":
+      throw await de_InvalidParameterValueExceptionRes(parsedOutput, context);
+    case "LimitExceededException":
+    case "com.amazonaws.quicksight#LimitExceededException":
+      throw await de_LimitExceededExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.quicksight#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.quicksight#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "UnsupportedUserEditionException":
+    case "com.amazonaws.quicksight#UnsupportedUserEditionException":
+      throw await de_UnsupportedUserEditionExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1StartAssetBundleImportJobCommand
+ */
+export const de_StartAssetBundleImportJobCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StartAssetBundleImportJobCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_StartAssetBundleImportJobCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    Arn: __expectString,
+    AssetBundleImportJobId: __expectString,
+    RequestId: __expectString,
+  });
+  Object.assign(contents, doc);
+  map(contents, {
+    Status: [, output.statusCode],
+  });
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1StartAssetBundleImportJobCommandError
+ */
+const de_StartAssetBundleImportJobCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StartAssetBundleImportJobCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.quicksight#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "ConflictException":
+    case "com.amazonaws.quicksight#ConflictException":
+      throw await de_ConflictExceptionRes(parsedOutput, context);
+    case "InvalidParameterValueException":
+    case "com.amazonaws.quicksight#InvalidParameterValueException":
+      throw await de_InvalidParameterValueExceptionRes(parsedOutput, context);
+    case "LimitExceededException":
+    case "com.amazonaws.quicksight#LimitExceededException":
+      throw await de_LimitExceededExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.quicksight#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.quicksight#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "UnsupportedUserEditionException":
+    case "com.amazonaws.quicksight#UnsupportedUserEditionException":
+      throw await de_UnsupportedUserEditionExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -17961,6 +18664,141 @@ const se_ArcConfiguration = (input: ArcConfiguration, context: __SerdeContext): 
 
 // se_ArnList omitted.
 
+// se_AssetBundleCloudFormationOverridePropertyConfiguration omitted.
+
+// se_AssetBundleExportJobAnalysisOverrideProperties omitted.
+
+// se_AssetBundleExportJobAnalysisOverridePropertiesList omitted.
+
+// se_AssetBundleExportJobAnalysisPropertyToOverrideList omitted.
+
+// se_AssetBundleExportJobDashboardOverrideProperties omitted.
+
+// se_AssetBundleExportJobDashboardOverridePropertiesList omitted.
+
+// se_AssetBundleExportJobDashboardPropertyToOverrideList omitted.
+
+// se_AssetBundleExportJobDataSetOverrideProperties omitted.
+
+// se_AssetBundleExportJobDataSetOverridePropertiesList omitted.
+
+// se_AssetBundleExportJobDataSetPropertyToOverrideList omitted.
+
+// se_AssetBundleExportJobDataSourceOverrideProperties omitted.
+
+// se_AssetBundleExportJobDataSourceOverridePropertiesList omitted.
+
+// se_AssetBundleExportJobDataSourcePropertyToOverrideList omitted.
+
+// se_AssetBundleExportJobRefreshScheduleOverrideProperties omitted.
+
+// se_AssetBundleExportJobRefreshScheduleOverridePropertiesList omitted.
+
+// se_AssetBundleExportJobRefreshSchedulePropertyToOverrideList omitted.
+
+// se_AssetBundleExportJobResourceIdOverrideConfiguration omitted.
+
+// se_AssetBundleExportJobThemeOverrideProperties omitted.
+
+// se_AssetBundleExportJobThemeOverridePropertiesList omitted.
+
+// se_AssetBundleExportJobThemePropertyToOverrideList omitted.
+
+// se_AssetBundleExportJobVPCConnectionOverrideProperties omitted.
+
+// se_AssetBundleExportJobVPCConnectionOverridePropertiesList omitted.
+
+// se_AssetBundleExportJobVPCConnectionPropertyToOverrideList omitted.
+
+// se_AssetBundleImportJobAnalysisOverrideParameters omitted.
+
+// se_AssetBundleImportJobAnalysisOverrideParametersList omitted.
+
+// se_AssetBundleImportJobDashboardOverrideParameters omitted.
+
+// se_AssetBundleImportJobDashboardOverrideParametersList omitted.
+
+// se_AssetBundleImportJobDataSetOverrideParameters omitted.
+
+// se_AssetBundleImportJobDataSetOverrideParametersList omitted.
+
+// se_AssetBundleImportJobDataSourceCredentialPair omitted.
+
+// se_AssetBundleImportJobDataSourceCredentials omitted.
+
+// se_AssetBundleImportJobDataSourceOverrideParameters omitted.
+
+// se_AssetBundleImportJobDataSourceOverrideParametersList omitted.
+
+/**
+ * serializeAws_restJson1AssetBundleImportJobOverrideParameters
+ */
+const se_AssetBundleImportJobOverrideParameters = (
+  input: AssetBundleImportJobOverrideParameters,
+  context: __SerdeContext
+): any => {
+  return take(input, {
+    Analyses: _json,
+    Dashboards: _json,
+    DataSets: _json,
+    DataSources: _json,
+    RefreshSchedules: (_) => se_AssetBundleImportJobRefreshScheduleOverrideParametersList(_, context),
+    ResourceIdOverrideConfiguration: _json,
+    Themes: _json,
+    VPCConnections: _json,
+  });
+};
+
+/**
+ * serializeAws_restJson1AssetBundleImportJobRefreshScheduleOverrideParameters
+ */
+const se_AssetBundleImportJobRefreshScheduleOverrideParameters = (
+  input: AssetBundleImportJobRefreshScheduleOverrideParameters,
+  context: __SerdeContext
+): any => {
+  return take(input, {
+    DataSetId: [],
+    ScheduleId: [],
+    StartAfterDateTime: (_) => Math.round(_.getTime() / 1000),
+  });
+};
+
+/**
+ * serializeAws_restJson1AssetBundleImportJobRefreshScheduleOverrideParametersList
+ */
+const se_AssetBundleImportJobRefreshScheduleOverrideParametersList = (
+  input: AssetBundleImportJobRefreshScheduleOverrideParameters[],
+  context: __SerdeContext
+): any => {
+  return input
+    .filter((e: any) => e != null)
+    .map((entry) => {
+      return se_AssetBundleImportJobRefreshScheduleOverrideParameters(entry, context);
+    });
+};
+
+// se_AssetBundleImportJobResourceIdOverrideConfiguration omitted.
+
+// se_AssetBundleImportJobThemeOverrideParameters omitted.
+
+// se_AssetBundleImportJobThemeOverrideParametersList omitted.
+
+// se_AssetBundleImportJobVPCConnectionOverrideParameters omitted.
+
+// se_AssetBundleImportJobVPCConnectionOverrideParametersList omitted.
+
+/**
+ * serializeAws_restJson1AssetBundleImportSource
+ */
+const se_AssetBundleImportSource = (input: AssetBundleImportSource, context: __SerdeContext): any => {
+  return take(input, {
+    Body: context.base64Encoder,
+    S3Uri: [],
+  });
+};
+
+// se_AssetBundleResourceArns omitted.
+
 // se_AthenaParameters omitted.
 
 // se_AuroraParameters omitted.
@@ -18302,6 +19140,8 @@ const se_ColorScaleColorList = (input: DataColor[], context: __SerdeContext): an
     });
 };
 
+// se_ColorsConfiguration omitted.
+
 // se_ColumnConfiguration omitted.
 
 // se_ColumnConfigurationList omitted.
@@ -18557,6 +19397,10 @@ const se_CustomActionSetParametersOperation = (
 };
 
 // se_CustomActionURLOperation omitted.
+
+// se_CustomColor omitted.
+
+// se_CustomColorsList omitted.
 
 // se_CustomContentConfiguration omitted.
 
@@ -19631,6 +20475,14 @@ const se_GeospatialCoordinateBounds = (input: GeospatialCoordinateBounds, contex
     West: __serializeFloat,
   });
 };
+
+// se_GeospatialHeatmapColorScale omitted.
+
+// se_GeospatialHeatmapConfiguration omitted.
+
+// se_GeospatialHeatmapDataColor omitted.
+
+// se_GeospatialHeatmapDataColorList omitted.
 
 /**
  * serializeAws_restJson1GeospatialMapAggregatedFieldWells
@@ -20714,6 +21566,7 @@ const se_PivotTableCellConditionalFormatting = (
   return take(input, {
     FieldId: [],
     Scope: _json,
+    Scopes: _json,
     TextFormat: (_) => se_TextConditionalFormat(_, context),
   });
 };
@@ -20755,6 +21608,8 @@ const se_PivotTableConditionalFormattingOptionList = (
 
 // se_PivotTableConditionalFormattingScope omitted.
 
+// se_PivotTableConditionalFormattingScopeList omitted.
+
 /**
  * serializeAws_restJson1PivotTableConfiguration
  */
@@ -20774,6 +21629,12 @@ const se_PivotTableConfiguration = (input: PivotTableConfiguration, context: __S
 // se_PivotTableDataPathOptionList omitted.
 
 // se_PivotTableDimensionList omitted.
+
+// se_PivotTableFieldCollapseStateOption omitted.
+
+// se_PivotTableFieldCollapseStateOptionList omitted.
+
+// se_PivotTableFieldCollapseStateTarget omitted.
 
 // se_PivotTableFieldOption omitted.
 
@@ -20886,6 +21747,7 @@ const se_RadarChartConfiguration = (input: RadarChartConfiguration, context: __S
     AlternateBandColorsVisibility: [],
     AlternateBandEvenColor: [],
     AlternateBandOddColor: [],
+    AxesRangeScale: [],
     BaseSeriesSettings: _json,
     CategoryAxis: (_) => se_AxisDisplayOptions(_, context),
     CategoryLabelOptions: _json,
@@ -21411,6 +22273,8 @@ const se_SheetDefinitionList = (input: SheetDefinition[], context: __SerdeContex
 // se_SimpleClusterMarker omitted.
 
 // se_SliderControlDisplayOptions omitted.
+
+// se_SmallMultiplesAxisProperties omitted.
 
 // se_SmallMultiplesDimensionFieldList omitted.
 
@@ -22413,6 +23277,193 @@ const de_ArcConfiguration = (output: any, context: __SerdeContext): ArcConfigura
 
 // de_ArcOptions omitted.
 
+// de_AssetBundleCloudFormationOverridePropertyConfiguration omitted.
+
+// de_AssetBundleExportJobAnalysisOverrideProperties omitted.
+
+// de_AssetBundleExportJobAnalysisOverridePropertiesList omitted.
+
+// de_AssetBundleExportJobAnalysisPropertyToOverrideList omitted.
+
+// de_AssetBundleExportJobDashboardOverrideProperties omitted.
+
+// de_AssetBundleExportJobDashboardOverridePropertiesList omitted.
+
+// de_AssetBundleExportJobDashboardPropertyToOverrideList omitted.
+
+// de_AssetBundleExportJobDataSetOverrideProperties omitted.
+
+// de_AssetBundleExportJobDataSetOverridePropertiesList omitted.
+
+// de_AssetBundleExportJobDataSetPropertyToOverrideList omitted.
+
+// de_AssetBundleExportJobDataSourceOverrideProperties omitted.
+
+// de_AssetBundleExportJobDataSourceOverridePropertiesList omitted.
+
+// de_AssetBundleExportJobDataSourcePropertyToOverrideList omitted.
+
+// de_AssetBundleExportJobError omitted.
+
+// de_AssetBundleExportJobErrorList omitted.
+
+// de_AssetBundleExportJobRefreshScheduleOverrideProperties omitted.
+
+// de_AssetBundleExportJobRefreshScheduleOverridePropertiesList omitted.
+
+// de_AssetBundleExportJobRefreshSchedulePropertyToOverrideList omitted.
+
+// de_AssetBundleExportJobResourceIdOverrideConfiguration omitted.
+
+/**
+ * deserializeAws_restJson1AssetBundleExportJobSummary
+ */
+const de_AssetBundleExportJobSummary = (output: any, context: __SerdeContext): AssetBundleExportJobSummary => {
+  return take(output, {
+    Arn: __expectString,
+    AssetBundleExportJobId: __expectString,
+    CreatedTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    ExportFormat: __expectString,
+    IncludeAllDependencies: __expectBoolean,
+    JobStatus: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1AssetBundleExportJobSummaryList
+ */
+const de_AssetBundleExportJobSummaryList = (output: any, context: __SerdeContext): AssetBundleExportJobSummary[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_AssetBundleExportJobSummary(entry, context);
+    });
+  return retVal;
+};
+
+// de_AssetBundleExportJobThemeOverrideProperties omitted.
+
+// de_AssetBundleExportJobThemeOverridePropertiesList omitted.
+
+// de_AssetBundleExportJobThemePropertyToOverrideList omitted.
+
+// de_AssetBundleExportJobVPCConnectionOverrideProperties omitted.
+
+// de_AssetBundleExportJobVPCConnectionOverridePropertiesList omitted.
+
+// de_AssetBundleExportJobVPCConnectionPropertyToOverrideList omitted.
+
+// de_AssetBundleImportJobAnalysisOverrideParameters omitted.
+
+// de_AssetBundleImportJobAnalysisOverrideParametersList omitted.
+
+// de_AssetBundleImportJobDashboardOverrideParameters omitted.
+
+// de_AssetBundleImportJobDashboardOverrideParametersList omitted.
+
+// de_AssetBundleImportJobDataSetOverrideParameters omitted.
+
+// de_AssetBundleImportJobDataSetOverrideParametersList omitted.
+
+// de_AssetBundleImportJobDataSourceCredentialPair omitted.
+
+// de_AssetBundleImportJobDataSourceCredentials omitted.
+
+// de_AssetBundleImportJobDataSourceOverrideParameters omitted.
+
+// de_AssetBundleImportJobDataSourceOverrideParametersList omitted.
+
+// de_AssetBundleImportJobError omitted.
+
+// de_AssetBundleImportJobErrorList omitted.
+
+/**
+ * deserializeAws_restJson1AssetBundleImportJobOverrideParameters
+ */
+const de_AssetBundleImportJobOverrideParameters = (
+  output: any,
+  context: __SerdeContext
+): AssetBundleImportJobOverrideParameters => {
+  return take(output, {
+    Analyses: _json,
+    Dashboards: _json,
+    DataSets: _json,
+    DataSources: _json,
+    RefreshSchedules: (_: any) => de_AssetBundleImportJobRefreshScheduleOverrideParametersList(_, context),
+    ResourceIdOverrideConfiguration: _json,
+    Themes: _json,
+    VPCConnections: _json,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1AssetBundleImportJobRefreshScheduleOverrideParameters
+ */
+const de_AssetBundleImportJobRefreshScheduleOverrideParameters = (
+  output: any,
+  context: __SerdeContext
+): AssetBundleImportJobRefreshScheduleOverrideParameters => {
+  return take(output, {
+    DataSetId: __expectString,
+    ScheduleId: __expectString,
+    StartAfterDateTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1AssetBundleImportJobRefreshScheduleOverrideParametersList
+ */
+const de_AssetBundleImportJobRefreshScheduleOverrideParametersList = (
+  output: any,
+  context: __SerdeContext
+): AssetBundleImportJobRefreshScheduleOverrideParameters[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_AssetBundleImportJobRefreshScheduleOverrideParameters(entry, context);
+    });
+  return retVal;
+};
+
+// de_AssetBundleImportJobResourceIdOverrideConfiguration omitted.
+
+/**
+ * deserializeAws_restJson1AssetBundleImportJobSummary
+ */
+const de_AssetBundleImportJobSummary = (output: any, context: __SerdeContext): AssetBundleImportJobSummary => {
+  return take(output, {
+    Arn: __expectString,
+    AssetBundleImportJobId: __expectString,
+    CreatedTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    FailureAction: __expectString,
+    JobStatus: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1AssetBundleImportJobSummaryList
+ */
+const de_AssetBundleImportJobSummaryList = (output: any, context: __SerdeContext): AssetBundleImportJobSummary[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_AssetBundleImportJobSummary(entry, context);
+    });
+  return retVal;
+};
+
+// de_AssetBundleImportJobThemeOverrideParameters omitted.
+
+// de_AssetBundleImportJobThemeOverrideParametersList omitted.
+
+// de_AssetBundleImportJobVPCConnectionOverrideParameters omitted.
+
+// de_AssetBundleImportJobVPCConnectionOverrideParametersList omitted.
+
+// de_AssetBundleImportSourceDescription omitted.
+
+// de_AssetBundleResourceArns omitted.
+
 // de_AthenaParameters omitted.
 
 // de_AuroraParameters omitted.
@@ -22754,6 +23805,8 @@ const de_ColorScaleColorList = (output: any, context: __SerdeContext): DataColor
   return retVal;
 };
 
+// de_ColorsConfiguration omitted.
+
 // de_ColumnConfiguration omitted.
 
 // de_ColumnConfigurationList omitted.
@@ -23009,6 +24062,10 @@ const de_CustomActionSetParametersOperation = (
 };
 
 // de_CustomActionURLOperation omitted.
+
+// de_CustomColor omitted.
+
+// de_CustomColorsList omitted.
 
 // de_CustomContentConfiguration omitted.
 
@@ -23599,6 +24656,8 @@ const de_DestinationParameterValueConfiguration = (
 // de_DimensionFieldList omitted.
 
 // de_DisplayFormatOptions omitted.
+
+// de_DnsResolverList omitted.
 
 // de_DonutCenterOptions omitted.
 
@@ -24284,6 +25343,14 @@ const de_GeospatialCoordinateBounds = (output: any, context: __SerdeContext): Ge
     West: __limitedParseDouble,
   }) as any;
 };
+
+// de_GeospatialHeatmapColorScale omitted.
+
+// de_GeospatialHeatmapConfiguration omitted.
+
+// de_GeospatialHeatmapDataColor omitted.
+
+// de_GeospatialHeatmapDataColorList omitted.
 
 /**
  * deserializeAws_restJson1GeospatialMapAggregatedFieldWells
@@ -25420,6 +26487,7 @@ const de_PivotTableCellConditionalFormatting = (
   return take(output, {
     FieldId: __expectString,
     Scope: _json,
+    Scopes: _json,
     TextFormat: (_: any) => de_TextConditionalFormat(_, context),
   }) as any;
 };
@@ -25462,6 +26530,8 @@ const de_PivotTableConditionalFormattingOptionList = (
 
 // de_PivotTableConditionalFormattingScope omitted.
 
+// de_PivotTableConditionalFormattingScopeList omitted.
+
 /**
  * deserializeAws_restJson1PivotTableConfiguration
  */
@@ -25481,6 +26551,12 @@ const de_PivotTableConfiguration = (output: any, context: __SerdeContext): Pivot
 // de_PivotTableDataPathOptionList omitted.
 
 // de_PivotTableDimensionList omitted.
+
+// de_PivotTableFieldCollapseStateOption omitted.
+
+// de_PivotTableFieldCollapseStateOptionList omitted.
+
+// de_PivotTableFieldCollapseStateTarget omitted.
 
 // de_PivotTableFieldOption omitted.
 
@@ -25595,6 +26671,7 @@ const de_RadarChartConfiguration = (output: any, context: __SerdeContext): Radar
     AlternateBandColorsVisibility: __expectString,
     AlternateBandEvenColor: __expectString,
     AlternateBandOddColor: __expectString,
+    AxesRangeScale: __expectString,
     BaseSeriesSettings: _json,
     CategoryAxis: (_: any) => de_AxisDisplayOptions(_, context),
     CategoryLabelOptions: _json,
@@ -26105,6 +27182,8 @@ const de_SheetDefinitionList = (output: any, context: __SerdeContext): SheetDefi
 
 // de_SliderControlDisplayOptions omitted.
 
+// de_SmallMultiplesAxisProperties omitted.
+
 // de_SmallMultiplesDimensionFieldList omitted.
 
 // de_SmallMultiplesOptions omitted.
@@ -26136,6 +27215,8 @@ const de_SheetDefinitionList = (output: any, context: __SerdeContext): SheetDefi
 // de_StringParameterDeclaration omitted.
 
 // de_StringValueWhenUnsetConfiguration omitted.
+
+// de_SubnetIdList omitted.
 
 // de_SubtotalOptions omitted.
 
@@ -27250,14 +28331,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

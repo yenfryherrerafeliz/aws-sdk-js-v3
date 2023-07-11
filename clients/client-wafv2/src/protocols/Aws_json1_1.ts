@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -12,13 +13,13 @@ import {
   parseEpochTimestamp as __parseEpochTimestamp,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AssociateWebACLCommandInput, AssociateWebACLCommandOutput } from "../commands/AssociateWebACLCommand";
 import { CheckCapacityCommandInput, CheckCapacityCommandOutput } from "../commands/CheckCapacityCommand";
@@ -49,6 +50,14 @@ import {
 } from "../commands/DeleteRegexPatternSetCommand";
 import { DeleteRuleGroupCommandInput, DeleteRuleGroupCommandOutput } from "../commands/DeleteRuleGroupCommand";
 import { DeleteWebACLCommandInput, DeleteWebACLCommandOutput } from "../commands/DeleteWebACLCommand";
+import {
+  DescribeAllManagedProductsCommandInput,
+  DescribeAllManagedProductsCommandOutput,
+} from "../commands/DescribeAllManagedProductsCommand";
+import {
+  DescribeManagedProductsByVendorCommandInput,
+  DescribeManagedProductsByVendorCommandOutput,
+} from "../commands/DescribeManagedProductsByVendorCommand";
 import {
   DescribeManagedRuleGroupCommandInput,
   DescribeManagedRuleGroupCommandOutput,
@@ -148,6 +157,7 @@ import { UpdateRuleGroupCommandInput, UpdateRuleGroupCommandOutput } from "../co
 import { UpdateWebACLCommandInput, UpdateWebACLCommandOutput } from "../commands/UpdateWebACLCommand";
 import {
   ActionCondition,
+  AddressField,
   All,
   AllowAction,
   AllQueryArguments,
@@ -155,6 +165,7 @@ import {
   APIKeySummary,
   AssociateWebACLRequest,
   AssociationConfig,
+  AWSManagedRulesACFPRuleSet,
   AWSManagedRulesATPRuleSet,
   AWSManagedRulesBotControlRuleSet,
   BlockAction,
@@ -187,8 +198,11 @@ import {
   DeleteRegexPatternSetRequest,
   DeleteRuleGroupRequest,
   DeleteWebACLRequest,
+  DescribeAllManagedProductsRequest,
+  DescribeManagedProductsByVendorRequest,
   DescribeManagedRuleGroupRequest,
   DisassociateWebACLRequest,
+  EmailField,
   ExcludedRule,
   FieldToMatch,
   Filter,
@@ -217,6 +231,7 @@ import {
   GetWebACLRequest,
   GetWebACLResponse,
   HeaderMatchPattern,
+  HeaderOrder,
   Headers,
   ImmunityTimeProperty,
   IPSetForwardedIPConfig,
@@ -255,17 +270,28 @@ import {
   OrStatement,
   OverrideAction,
   PasswordField,
+  PhoneNumberField,
   PutLoggingConfigurationRequest,
   PutManagedRuleSetVersionsRequest,
   PutPermissionPolicyRequest,
   QueryString,
   RateBasedStatement,
+  RateBasedStatementCustomKey,
+  RateLimitCookie,
+  RateLimitForwardedIP,
+  RateLimitHeader,
+  RateLimitHTTPMethod,
+  RateLimitIP,
+  RateLimitLabelNamespace,
+  RateLimitQueryArgument,
+  RateLimitQueryString,
   Regex,
   RegexMatchStatement,
   RegexPatternSetReferenceStatement,
   ReleaseSummary,
   RequestBodyAssociatedResourceTypeConfig,
   RequestInspection,
+  RequestInspectionACFP,
   ResponseInspection,
   ResponseInspectionBodyContains,
   ResponseInspectionHeader,
@@ -315,6 +341,7 @@ import {
   WAFTagOperationException,
   WAFTagOperationInternalErrorException,
   WAFUnavailableEntityException,
+  WAFUnsupportedAggregateKeyTypeException,
   WebACL,
   XssMatchStatement,
 } from "../models/models_0";
@@ -497,6 +524,32 @@ export const se_DeleteWebACLCommand = async (
   context: __SerdeContext
 ): Promise<__HttpRequest> => {
   const headers: __HeaderBag = sharedHeaders("DeleteWebACL");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1DescribeAllManagedProductsCommand
+ */
+export const se_DescribeAllManagedProductsCommand = async (
+  input: DescribeAllManagedProductsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("DescribeAllManagedProducts");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1DescribeManagedProductsByVendorCommand
+ */
+export const se_DescribeManagedProductsByVendorCommand = async (
+  input: DescribeManagedProductsByVendorCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("DescribeManagedProductsByVendor");
   let body: any;
   body = JSON.stringify(_json(input));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -1898,6 +1951,107 @@ const de_DeleteWebACLCommandError = async (
 };
 
 /**
+ * deserializeAws_json1_1DescribeAllManagedProductsCommand
+ */
+export const de_DescribeAllManagedProductsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeAllManagedProductsCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DescribeAllManagedProductsCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: DescribeAllManagedProductsCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1DescribeAllManagedProductsCommandError
+ */
+const de_DescribeAllManagedProductsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeAllManagedProductsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "WAFInternalErrorException":
+    case "com.amazonaws.wafv2#WAFInternalErrorException":
+      throw await de_WAFInternalErrorExceptionRes(parsedOutput, context);
+    case "WAFInvalidOperationException":
+    case "com.amazonaws.wafv2#WAFInvalidOperationException":
+      throw await de_WAFInvalidOperationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_json1_1DescribeManagedProductsByVendorCommand
+ */
+export const de_DescribeManagedProductsByVendorCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeManagedProductsByVendorCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DescribeManagedProductsByVendorCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: DescribeManagedProductsByVendorCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1DescribeManagedProductsByVendorCommandError
+ */
+const de_DescribeManagedProductsByVendorCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeManagedProductsByVendorCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "WAFInternalErrorException":
+    case "com.amazonaws.wafv2#WAFInternalErrorException":
+      throw await de_WAFInternalErrorExceptionRes(parsedOutput, context);
+    case "WAFInvalidOperationException":
+    case "com.amazonaws.wafv2#WAFInvalidOperationException":
+      throw await de_WAFInvalidOperationExceptionRes(parsedOutput, context);
+    case "WAFInvalidParameterException":
+    case "com.amazonaws.wafv2#WAFInvalidParameterException":
+      throw await de_WAFInvalidParameterExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_json1_1DescribeManagedRuleGroupCommand
  */
 export const de_DescribeManagedRuleGroupCommand = async (
@@ -2440,6 +2594,9 @@ const de_GetRateBasedStatementManagedKeysCommandError = async (
     case "WAFNonexistentItemException":
     case "com.amazonaws.wafv2#WAFNonexistentItemException":
       throw await de_WAFNonexistentItemExceptionRes(parsedOutput, context);
+    case "WAFUnsupportedAggregateKeyTypeException":
+    case "com.amazonaws.wafv2#WAFUnsupportedAggregateKeyTypeException":
+      throw await de_WAFUnsupportedAggregateKeyTypeExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -4298,7 +4455,27 @@ const de_WAFUnavailableEntityExceptionRes = async (
   return __decorateServiceException(exception, body);
 };
 
+/**
+ * deserializeAws_json1_1WAFUnsupportedAggregateKeyTypeExceptionRes
+ */
+const de_WAFUnsupportedAggregateKeyTypeExceptionRes = async (
+  parsedOutput: any,
+  context: __SerdeContext
+): Promise<WAFUnsupportedAggregateKeyTypeException> => {
+  const body = parsedOutput.body;
+  const deserialized: any = _json(body);
+  const exception = new WAFUnsupportedAggregateKeyTypeException({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...deserialized,
+  });
+  return __decorateServiceException(exception, body);
+};
+
 // se_ActionCondition omitted.
+
+// se_AddressField omitted.
+
+// se_AddressFields omitted.
 
 // se_All omitted.
 
@@ -4320,6 +4497,8 @@ const se_AndStatement = (input: AndStatement, context: __SerdeContext): any => {
 // se_AssociateWebACLRequest omitted.
 
 // se_AssociationConfig omitted.
+
+// se_AWSManagedRulesACFPRuleSet omitted.
 
 // se_AWSManagedRulesATPRuleSet omitted.
 
@@ -4443,9 +4622,15 @@ const se_CreateWebACLRequest = (input: CreateWebACLRequest, context: __SerdeCont
 
 // se_DeleteWebACLRequest omitted.
 
+// se_DescribeAllManagedProductsRequest omitted.
+
+// se_DescribeManagedProductsByVendorRequest omitted.
+
 // se_DescribeManagedRuleGroupRequest omitted.
 
 // se_DisassociateWebACLRequest omitted.
+
+// se_EmailField omitted.
 
 // se_ExcludedRule omitted.
 
@@ -4501,6 +4686,8 @@ const se_GetSampledRequestsRequest = (input: GetSampledRequestsRequest, context:
 // se_HeaderMatchPattern omitted.
 
 // se_HeaderNames omitted.
+
+// se_HeaderOrder omitted.
 
 // se_Headers omitted.
 
@@ -4601,6 +4788,10 @@ const se_OrStatement = (input: OrStatement, context: __SerdeContext): any => {
 
 // se_PasswordField omitted.
 
+// se_PhoneNumberField omitted.
+
+// se_PhoneNumberFields omitted.
+
 // se_PutLoggingConfigurationRequest omitted.
 
 // se_PutManagedRuleSetVersionsRequest omitted.
@@ -4615,11 +4806,32 @@ const se_OrStatement = (input: OrStatement, context: __SerdeContext): any => {
 const se_RateBasedStatement = (input: RateBasedStatement, context: __SerdeContext): any => {
   return take(input, {
     AggregateKeyType: [],
+    CustomKeys: _json,
     ForwardedIPConfig: _json,
     Limit: [],
     ScopeDownStatement: (_) => se_Statement(_, context),
   });
 };
+
+// se_RateBasedStatementCustomKey omitted.
+
+// se_RateBasedStatementCustomKeys omitted.
+
+// se_RateLimitCookie omitted.
+
+// se_RateLimitForwardedIP omitted.
+
+// se_RateLimitHeader omitted.
+
+// se_RateLimitHTTPMethod omitted.
+
+// se_RateLimitIP omitted.
+
+// se_RateLimitLabelNamespace omitted.
+
+// se_RateLimitQueryArgument omitted.
+
+// se_RateLimitQueryString omitted.
 
 // se_RedactedFields omitted.
 
@@ -4636,6 +4848,8 @@ const se_RateBasedStatement = (input: RateBasedStatement, context: __SerdeContex
 // se_RequestBodyAssociatedResourceTypeConfig omitted.
 
 // se_RequestInspection omitted.
+
+// se_RequestInspectionACFP omitted.
 
 // se_ResponseInspection omitted.
 
@@ -4839,6 +5053,10 @@ const se_UpdateWebACLRequest = (input: UpdateWebACLRequest, context: __SerdeCont
 
 // de_ActionCondition omitted.
 
+// de_AddressField omitted.
+
+// de_AddressFields omitted.
+
 // de_All omitted.
 
 // de_AllowAction omitted.
@@ -4881,6 +5099,8 @@ const de_APIKeySummary = (output: any, context: __SerdeContext): APIKeySummary =
 // de_AssociateWebACLResponse omitted.
 
 // de_AssociationConfig omitted.
+
+// de_AWSManagedRulesACFPRuleSet omitted.
 
 // de_AWSManagedRulesATPRuleSet omitted.
 
@@ -4968,9 +5188,15 @@ const de_ByteMatchStatement = (output: any, context: __SerdeContext): ByteMatchS
 
 // de_DeleteWebACLResponse omitted.
 
+// de_DescribeAllManagedProductsResponse omitted.
+
+// de_DescribeManagedProductsByVendorResponse omitted.
+
 // de_DescribeManagedRuleGroupResponse omitted.
 
 // de_DisassociateWebACLResponse omitted.
+
+// de_EmailField omitted.
 
 // de_ExcludedRule omitted.
 
@@ -5107,6 +5333,8 @@ const de_GetWebACLResponse = (output: any, context: __SerdeContext): GetWebACLRe
 
 // de_HeaderNames omitted.
 
+// de_HeaderOrder omitted.
+
 // de_Headers omitted.
 
 // de_HTTPHeader omitted.
@@ -5207,6 +5435,10 @@ const de_ListMobileSdkReleasesResponse = (output: any, context: __SerdeContext):
 // de_LoggingConfigurations omitted.
 
 // de_LoggingFilter omitted.
+
+// de_ManagedProductDescriptor omitted.
+
+// de_ManagedProductDescriptors omitted.
 
 // de_ManagedRuleGroupConfig omitted.
 
@@ -5324,6 +5556,10 @@ const de_OrStatement = (output: any, context: __SerdeContext): OrStatement => {
 
 // de_PasswordField omitted.
 
+// de_PhoneNumberField omitted.
+
+// de_PhoneNumberFields omitted.
+
 /**
  * deserializeAws_json1_1PublishedVersions
  */
@@ -5351,13 +5587,34 @@ const de_PublishedVersions = (output: any, context: __SerdeContext): Record<stri
 const de_RateBasedStatement = (output: any, context: __SerdeContext): RateBasedStatement => {
   return take(output, {
     AggregateKeyType: __expectString,
+    CustomKeys: _json,
     ForwardedIPConfig: _json,
     Limit: __expectLong,
     ScopeDownStatement: (_: any) => de_Statement(_, context),
   }) as any;
 };
 
+// de_RateBasedStatementCustomKey omitted.
+
+// de_RateBasedStatementCustomKeys omitted.
+
 // de_RateBasedStatementManagedKeysIPSet omitted.
+
+// de_RateLimitCookie omitted.
+
+// de_RateLimitForwardedIP omitted.
+
+// de_RateLimitHeader omitted.
+
+// de_RateLimitHTTPMethod omitted.
+
+// de_RateLimitIP omitted.
+
+// de_RateLimitLabelNamespace omitted.
+
+// de_RateLimitQueryArgument omitted.
+
+// de_RateLimitQueryString omitted.
 
 // de_RedactedFields omitted.
 
@@ -5402,6 +5659,8 @@ const de_ReleaseSummary = (output: any, context: __SerdeContext): ReleaseSummary
 // de_RequestBodyAssociatedResourceTypeConfig omitted.
 
 // de_RequestInspection omitted.
+
+// de_RequestInspectionACFP omitted.
 
 // de_ResourceArns omitted.
 
@@ -5659,6 +5918,8 @@ const de_UpdateManagedRuleSetVersionExpiryDateResponse = (
 
 // de_WAFUnavailableEntityException omitted.
 
+// de_WAFUnsupportedAggregateKeyTypeException omitted.
+
 /**
  * deserializeAws_json1_1WebACL
  */
@@ -5697,14 +5958,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

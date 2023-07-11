@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,13 +11,17 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
 import { CreateEvaluationFormResponse } from "../models/models_0";
 import { CreateEvaluationFormRequest } from "../models/models_1";
 import { de_CreateEvaluationFormCommand, se_CreateEvaluationFormCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -33,9 +37,10 @@ export interface CreateEvaluationFormCommandOutput extends CreateEvaluationFormR
 
 /**
  * @public
- * <p>Creates an evaluation form in the specified Amazon Connect instance. The form can be used to define
- *    questions related to agent performance, and create sections to organize such questions.  Question and section identifiers
- *    cannot be duplicated within the same evaluation form.</p>
+ * <p>Creates an evaluation form in the specified Amazon Connect instance. The form can be
+ *    used to define questions related to agent performance, and create sections to organize such
+ *    questions. Question and section identifiers cannot be duplicated within the same evaluation
+ *    form.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -52,13 +57,13 @@ export interface CreateEvaluationFormCommandOutput extends CreateEvaluationFormR
  *         Title: "STRING_VALUE", // required
  *         RefId: "STRING_VALUE", // required
  *         Instructions: "STRING_VALUE",
- *         Items: [
+ *         Items: [ // required
  *           {//  Union: only one key present
  *             Section: {
  *               Title: "STRING_VALUE", // required
  *               RefId: "STRING_VALUE", // required
  *               Instructions: "STRING_VALUE",
- *               Items: "<EvaluationFormItemsList>",
+ *               Items: "<EvaluationFormItemsList>", // required
  *               Weight: Number("double"),
  *             },
  *             Question: { // EvaluationFormQuestion

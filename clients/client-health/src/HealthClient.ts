@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,7 +47,7 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   DescribeAffectedAccountsForOrganizationCommandInput,
@@ -103,6 +103,8 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
@@ -149,7 +151,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -204,7 +206,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -258,7 +260,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -266,7 +268,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type HealthClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type HealthClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -285,7 +287,7 @@ export interface HealthClientConfig extends HealthClientConfigType {}
 /**
  * @public
  */
-type HealthClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type HealthClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
@@ -304,29 +306,23 @@ export interface HealthClientResolvedConfig extends HealthClientResolvedConfigTy
 /**
  * @public
  * <fullname>Health</fullname>
- *
- *          <p>The Health API provides programmatic access to the Health information that
- *          appears in the <a href="https://phd.aws.amazon.com/phd/home#/">Personal Health Dashboard</a>. You
- *          can use the API operations to get information about events that might affect your Amazon Web Services services and resources.</p>
- *          <note>
- *             <ul>
- *                <li>
- *                   <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan from <a href="http://aws.amazon.com/premiumsupport/">Amazon Web Services Support</a> to use the Health
- *                   API. If you call the Health API from an Amazon Web Services account that
- *                   doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, you receive a
- *                      <code>SubscriptionRequiredException</code> error.</p>
- *                </li>
- *                <li>
- *                   <p>You can use the Health endpoint health.us-east-1.amazonaws.com (HTTPS) to
- *                   call the Health API operations. Health supports a multi-Region
- *                   application architecture and has two regional endpoints in an active-passive
- *                   configuration. You can use the high availability endpoint example to determine
- *                   which Amazon Web Services Region is active, so that you can get the latest information from the
- *                   API. For more information, see <a href="https://docs.aws.amazon.com/health/latest/ug/health-api.html">Accessing the Health API</a> in the
- *                      <i>Health User Guide</i>.</p>
- *                </li>
- *             </ul>
- *          </note>
+ *          <p>The Health API provides access to the Health information that appears in the
+ *             <a href="https://health.aws.amazon.com/health/home">Health Dashboard</a>. You can use
+ *          the API operations to get information about events that might affect your Amazon Web Services and resources.</p>
+ *          <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan from <a href="http://aws.amazon.com/premiumsupport/">Amazon Web Services Support</a> to use the Health API. If you call the Health API from an
+ *             Amazon Web Services account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, you receive a
+ *             <code>SubscriptionRequiredException</code> error.</p>
+ *          <p>For API access, you need an access key ID and a secret access key. Use temporary
+ *          credentials instead of long-term access keys when possible. Temporary credentials include
+ *          an access key ID, a secret access key, and a security token that indicates when the
+ *          credentials expire. For more information, see <a href="https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html">Best practices for managing
+ *             Amazon Web Services access keys</a> in the <i>Amazon Web Services General Reference</i>.</p>
+ *          <p>You can use the Health endpoint health.us-east-1.amazonaws.com (HTTPS) to call the
+ *          Health API operations. Health supports a multi-Region application architecture
+ *          and has two regional endpoints in an active-passive configuration. You can use the high
+ *          availability endpoint example to determine which Amazon Web Services Region is active, so that you can
+ *          get the latest information from the API. For more information, see <a href="https://docs.aws.amazon.com/health/latest/ug/health-api.html">Accessing the Health
+ *             API</a> in the <i>Health User Guide</i>.</p>
  *          <p>For authentication of requests, Health uses the <a href="https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html">Signature Version 4 Signing
  *             Process</a>.</p>
  *          <p>If your Amazon Web Services account is part of Organizations, you can use the Health organizational

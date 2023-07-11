@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ListSigningProfilesRequest, ListSigningProfilesResponse } from "../models/models_0";
 import { de_ListSigningProfilesCommand, se_ListSigningProfilesCommand } from "../protocols/Aws_restJson1";
 import { ServiceInputTypes, ServiceOutputTypes, SignerClientResolvedConfig } from "../SignerClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -52,7 +56,7 @@ export interface ListSigningProfilesCommandOutput extends ListSigningProfilesRes
  *   nextToken: "STRING_VALUE",
  *   platformId: "STRING_VALUE",
  *   statuses: [ // Statuses
- *     "STRING_VALUE",
+ *     "Active" || "Canceled" || "Revoked",
  *   ],
  * };
  * const command = new ListSigningProfilesCommand(input);
@@ -68,14 +72,14 @@ export interface ListSigningProfilesCommandOutput extends ListSigningProfilesRes
  * //       },
  * //       signatureValidityPeriod: { // SignatureValidityPeriod
  * //         value: Number("int"),
- * //         type: "STRING_VALUE",
+ * //         type: "DAYS" || "MONTHS" || "YEARS",
  * //       },
  * //       platformId: "STRING_VALUE",
  * //       platformDisplayName: "STRING_VALUE",
  * //       signingParameters: { // SigningParameters
  * //         "<keys>": "STRING_VALUE",
  * //       },
- * //       status: "STRING_VALUE",
+ * //       status: "Active" || "Canceled" || "Revoked",
  * //       arn: "STRING_VALUE",
  * //       tags: { // TagMap
  * //         "<keys>": "STRING_VALUE",

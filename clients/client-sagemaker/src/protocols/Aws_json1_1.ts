@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -17,13 +18,13 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import { AddAssociationCommandInput, AddAssociationCommandOutput } from "../commands/AddAssociationCommand";
@@ -790,6 +791,7 @@ import {
   AddAssociationRequest,
   AdditionalInferenceSpecificationDefinition,
   AddTagsInput,
+  AggregationTransformationValue,
   Alarm,
   AlgorithmSpecification,
   AlgorithmSummary,
@@ -826,7 +828,9 @@ import {
   AutoMLProblemTypeConfig,
   AutoMLS3DataSource,
   AutoMLSecurityConfig,
+  AutoParameter,
   AutoRollbackConfig,
+  Autotune,
   BatchDataCaptureConfig,
   BatchDescribeModelPackageInput,
   BatchDescribeModelPackageOutput,
@@ -835,6 +839,7 @@ import {
   BestObjectiveNotImproving,
   Bias,
   BlueGreenUpdatePolicy,
+  CandidateGenerationConfig,
   CandidateProperties,
   CanvasAppSettings,
   CapacitySize,
@@ -879,20 +884,12 @@ import {
   CreateContextRequest,
   CreateDataQualityJobDefinitionRequest,
   CreateDeviceFleetRequest,
-  CreateDomainRequest,
-  CreateEdgeDeploymentPlanRequest,
-  CreateEdgeDeploymentStageRequest,
   CustomImage,
   DataQualityAppSpecification,
   DataQualityBaselineConfig,
   DataQualityJobInput,
   DataSource,
   DefaultSpaceSettings,
-  DeploymentStage,
-  DeviceSelectionConfig,
-  DomainSettings,
-  EdgeDeploymentConfig,
-  EdgeDeploymentModelConfig,
   EdgeOutputConfig,
   EndpointInput,
   FileSystemConfig,
@@ -915,6 +912,7 @@ import {
   MetricDatum,
   MetricDefinition,
   MetricsSource,
+  ModelDataSource,
   ModelDeployConfig,
   ModelInput,
   ModelPackageContainerDefinition,
@@ -946,17 +944,18 @@ import {
   ResourceNotFound,
   ResourceSpec,
   RSessionAppSettings,
-  RStudioServerProAppSettings,
-  RStudioServerProDomainSettings,
   S3DataSource,
-  SharingSettings,
+  S3ModelDataSource,
   ShuffleConfig,
   StoppingCondition,
+  TabularJobConfig,
   Tag,
   TargetPlatform,
-  TensorBoardAppSettings,
   TextClassificationJobConfig,
+  TimeSeriesConfig,
+  TimeSeriesForecastingJobConfig,
   TimeSeriesForecastingSettings,
+  TimeSeriesTransformations,
   TrafficRoutingConfig,
   TrainingImageConfig,
   TrainingInputMode,
@@ -971,10 +970,12 @@ import {
   TransformOutput,
   TransformResources,
   TransformS3DataSource,
-  UserSettings,
   VpcConfig,
 } from "../models/models_0";
 import {
+  CreateDomainRequest,
+  CreateEdgeDeploymentPlanRequest,
+  CreateEdgeDeploymentStageRequest,
   CreateEdgePackagingJobRequest,
   CreateEndpointConfigInput,
   CreateEndpointInput,
@@ -1042,30 +1043,17 @@ import {
   DeleteHubContentRequest,
   DeleteHubRequest,
   DeleteHumanTaskUiRequest,
-  DeleteImageRequest,
-  DeleteImageVersionRequest,
-  DeleteInferenceExperimentRequest,
-  DeleteModelBiasJobDefinitionRequest,
-  DeleteModelCardRequest,
-  DeleteModelExplainabilityJobDefinitionRequest,
-  DeleteModelInput,
-  DeleteModelPackageGroupInput,
-  DeleteModelPackageGroupPolicyInput,
-  DeleteModelPackageInput,
-  DeleteModelQualityJobDefinitionRequest,
-  DeleteMonitoringScheduleRequest,
-  DeleteNotebookInstanceInput,
-  DeleteNotebookInstanceLifecycleConfigInput,
-  DeletePipelineRequest,
-  DeleteProjectInput,
-  DeleteSpaceRequest,
-  DeleteStudioLifecycleConfigRequest,
   DeploymentConfig,
+  DeploymentStage,
+  DeviceSelectionConfig,
+  DomainSettings,
   DriftCheckBaselines,
   DriftCheckBias,
   DriftCheckExplainability,
   DriftCheckModelDataQuality,
   DriftCheckModelQuality,
+  EdgeDeploymentConfig,
+  EdgeDeploymentModelConfig,
   EndpointInfo,
   EndpointInputConfiguration,
   EnvironmentParameterRanges,
@@ -1173,27 +1161,52 @@ import {
   ResourceLimits,
   RetentionPolicy,
   RetryStrategy,
+  RollingUpdatePolicy,
+  RStudioServerProAppSettings,
+  RStudioServerProDomainSettings,
   S3StorageConfig,
   ScheduleConfig,
   ServiceCatalogProvisioningDetails,
   ShadowModeConfig,
   ShadowModelVariantConfig,
+  SharingSettings,
   SourceAlgorithm,
   SourceAlgorithmSpecification,
   SourceIpConfig,
   SpaceSettings,
+  TensorBoardAppSettings,
   TensorBoardOutputConfig,
   TrafficPattern,
   TrialComponentArtifact,
   TrialComponentParameterValue,
   TrialComponentStatus,
+  TtlDuration,
   TuningJobCompletionCriteria,
   UiConfig,
   UiTemplate,
   USD,
+  UserSettings,
   WorkforceVpcConfigRequest,
 } from "../models/models_1";
 import {
+  DeleteImageRequest,
+  DeleteImageVersionRequest,
+  DeleteInferenceExperimentRequest,
+  DeleteModelBiasJobDefinitionRequest,
+  DeleteModelCardRequest,
+  DeleteModelExplainabilityJobDefinitionRequest,
+  DeleteModelInput,
+  DeleteModelPackageGroupInput,
+  DeleteModelPackageGroupPolicyInput,
+  DeleteModelPackageInput,
+  DeleteModelQualityJobDefinitionRequest,
+  DeleteMonitoringScheduleRequest,
+  DeleteNotebookInstanceInput,
+  DeleteNotebookInstanceLifecycleConfigInput,
+  DeletePipelineRequest,
+  DeleteProjectInput,
+  DeleteSpaceRequest,
+  DeleteStudioLifecycleConfigRequest,
   DeleteTagsInput,
   DeleteTrialComponentRequest,
   DeleteTrialRequest,
@@ -1349,41 +1362,41 @@ import {
   GetLineageGroupPolicyRequest,
   GetModelPackageGroupPolicyInput,
   GetSagemakerServicecatalogPortfolioStatusInput,
+  HyperParameterTrainingJobSummary,
+  HyperParameterTuningJobCompletionDetails,
+  InferenceRecommendation,
+  MetricData,
+  MonitoringExecutionSummary,
+  MonitoringSchedule,
+  PendingDeploymentSummary,
+  PendingProductionVariantSummary,
+  ProductionVariantServerlessUpdateConfig,
+  ProductionVariantStatus,
+  ProductionVariantSummary,
+  ProfilerRuleEvaluationStatus,
+  RecommendationMetrics,
+  RStudioServerProDomainSettingsForUpdate,
+  SecondaryStatusTransition,
+  SelectedStep,
+  SelectiveExecutionConfig,
+  TrialComponentMetricSummary,
+  Workforce,
+  Workteam,
+} from "../models/models_2";
+import {
   GetSearchSuggestionsRequest,
   GitConfigForUpdate,
   HubContentInfo,
   HubInfo,
   HumanTaskUiSummary,
-  HyperParameterTrainingJobSummary,
-  HyperParameterTuningJobCompletionDetails,
   HyperParameterTuningJobSearchEntity,
   HyperParameterTuningJobSummary,
   Image,
   ImageVersion,
   ImportHubContentRequest,
   InferenceExperimentSummary,
-  InferenceRecommendation,
   InferenceRecommendationsJob,
   InferenceRecommendationsJobStep,
-  MetricData,
-  MonitoringExecutionSummary,
-  MonitoringSchedule,
-  PendingDeploymentSummary,
-  PendingProductionVariantSummary,
-  ProductionVariantStatus,
-  ProductionVariantSummary,
-  ProfilerRuleEvaluationStatus,
-  PropertyNameQuery,
-  RecommendationJobInferenceBenchmark,
-  RecommendationMetrics,
-  RStudioServerProDomainSettingsForUpdate,
-  SecondaryStatusTransition,
-  SuggestionQuery,
-  TrialComponentMetricSummary,
-  Workforce,
-  Workteam,
-} from "../models/models_2";
-import {
   LabelingJobForWorkteamSummary,
   LabelingJobSummary,
   LineageGroupSummary,
@@ -1549,6 +1562,7 @@ import {
   NestedFilters,
   NotebookInstanceLifecycleConfigSummary,
   NotebookInstanceSummary,
+  OnlineStoreConfigUpdate,
   Parameter,
   Pipeline,
   PipelineExecution,
@@ -1560,19 +1574,38 @@ import {
   ProfilerConfigForUpdate,
   Project,
   ProjectSummary,
+  PropertyNameQuery,
   PutModelPackageGroupPolicyInput,
   QueryFilters,
   QueryLineageRequest,
+  RecommendationJobInferenceBenchmark,
   RegisterDevicesRequest,
   RenderableTask,
   RenderUiTemplateRequest,
   ResourceConfigForUpdate,
   RetryPipelineExecutionRequest,
+  SpaceDetails,
+  StudioLifecycleConfigDetails,
+  SuggestionQuery,
+  TrainingJob,
+  TrainingJobSummary,
+  TransformJob,
+  TransformJobSummary,
+  Trial,
+  TrialComponentSimpleSummary,
+  TrialComponentSourceDetail,
+  TrialComponentSummary,
+  TrialSummary,
+  UserProfileDetails,
+} from "../models/models_3";
+import {
+  SearchExpression,
   SearchRecord,
+  SearchRequest,
   SearchResponse,
   SendPipelineExecutionStepFailureRequest,
   SendPipelineExecutionStepSuccessRequest,
-  SpaceDetails,
+  ServiceCatalogProvisioningUpdateDetails,
   StartEdgeDeploymentStageRequest,
   StartInferenceExperimentRequest,
   StartMonitoringScheduleRequest,
@@ -1592,24 +1625,8 @@ import {
   StopProcessingJobRequest,
   StopTrainingJobRequest,
   StopTransformJobRequest,
-  StudioLifecycleConfigDetails,
-  TrainingJob,
-  TrainingJobSummary,
-  TransformJob,
-  TransformJobSummary,
-  Trial,
   TrialComponent,
-  TrialComponentSimpleSummary,
-  TrialComponentSourceDetail,
-  TrialComponentSummary,
-  TrialSummary,
   UpdateActionRequest,
-  UserProfileDetails,
-} from "../models/models_3";
-import {
-  SearchExpression,
-  SearchRequest,
-  ServiceCatalogProvisioningUpdateDetails,
   UpdateAppImageConfigRequest,
   UpdateArtifactRequest,
   UpdateCodeRepositoryInput,
@@ -19032,6 +19049,8 @@ const de_ResourceNotFoundRes = async (parsedOutput: any, context: __SerdeContext
 
 // se_AddTagsInput omitted.
 
+// se_AggregationTransformations omitted.
+
 // se_Alarm omitted.
 
 // se_AlarmList omitted.
@@ -19122,7 +19141,13 @@ const se_AutoMLJobConfig = (input: AutoMLJobConfig, context: __SerdeContext): an
 
 // se_AutoMLSecurityConfig omitted.
 
+// se_AutoParameter omitted.
+
+// se_AutoParameters omitted.
+
 // se_AutoRollbackConfig omitted.
+
+// se_Autotune omitted.
 
 // se_BatchDataCaptureConfig omitted.
 
@@ -19152,6 +19177,8 @@ const se_BatchTransformInput = (input: BatchTransformInput, context: __SerdeCont
 // se_Bias omitted.
 
 // se_BlueGreenUpdatePolicy omitted.
+
+// se_CandidateGenerationConfig omitted.
 
 // se_CanvasAppSettings omitted.
 
@@ -19371,6 +19398,7 @@ const se_CreateHyperParameterTuningJobRequest = (
   context: __SerdeContext
 ): any => {
   return take(input, {
+    Autotune: _json,
     HyperParameterTuningJobConfig: (_) => se_HyperParameterTuningJobConfig(_, context),
     HyperParameterTuningJobName: [],
     Tags: _json,
@@ -19866,6 +19894,7 @@ const se_DesiredWeightAndCapacity = (input: DesiredWeightAndCapacity, context: _
   return take(input, {
     DesiredInstanceCount: [],
     DesiredWeight: __serializeFloat,
+    ServerlessUpdateConfig: _json,
     VariantName: [],
   });
 };
@@ -19973,6 +20002,10 @@ const se_EndpointInput = (input: EndpointInput, context: __SerdeContext): any =>
 
 // se_FileSystemDataSource omitted.
 
+// se_FillingTransformationMap omitted.
+
+// se_FillingTransformations omitted.
+
 // se_Filter omitted.
 
 // se_FilterList omitted.
@@ -19980,6 +20013,8 @@ const se_EndpointInput = (input: EndpointInput, context: __SerdeContext): any =>
 // se_FlowDefinitionOutputConfig omitted.
 
 // se_FlowDefinitionTaskKeywords omitted.
+
+// se_ForecastQuantiles omitted.
 
 // se_GetDeviceFleetReportRequest omitted.
 
@@ -19994,6 +20029,8 @@ const se_EndpointInput = (input: EndpointInput, context: __SerdeContext): any =>
 // se_GitConfig omitted.
 
 // se_GitConfigForUpdate omitted.
+
+// se_GroupingAttributeNames omitted.
 
 // se_Groups omitted.
 
@@ -20633,6 +20670,8 @@ const se_ListInferenceRecommendationsJobsRequest = (
     LastModifiedTimeAfter: (_) => Math.round(_.getTime() / 1000),
     LastModifiedTimeBefore: (_) => Math.round(_.getTime() / 1000),
     MaxResults: [],
+    ModelNameEquals: [],
+    ModelPackageVersionArnEquals: [],
     NameContains: [],
     NextToken: [],
     SortBy: [],
@@ -21171,6 +21210,8 @@ const se_ModelBiasJobInput = (input: ModelBiasJobInput, context: __SerdeContext)
 
 // se_ModelDataQuality omitted.
 
+// se_ModelDataSource omitted.
+
 // se_ModelDeployConfig omitted.
 
 // se_ModelExplainabilityAppSpecification omitted.
@@ -21358,6 +21399,8 @@ const se_MonitoringScheduleConfig = (input: MonitoringScheduleConfig, context: _
 
 // se_OnlineStoreConfig omitted.
 
+// se_OnlineStoreConfigUpdate omitted.
+
 // se_OnlineStoreSecurityConfig omitted.
 
 // se_OutputConfig omitted.
@@ -21448,6 +21491,8 @@ const se_ProductionVariantList = (input: ProductionVariant[], context: __SerdeCo
 };
 
 // se_ProductionVariantServerlessConfig omitted.
+
+// se_ProductionVariantServerlessUpdateConfig omitted.
 
 // se_ProfilerConfig omitted.
 
@@ -21570,6 +21615,8 @@ const se_RetryPipelineExecutionRequest = (input: RetryPipelineExecutionRequest, 
 
 // se_RetryStrategy omitted.
 
+// se_RollingUpdatePolicy omitted.
+
 // se_RSessionAppSettings omitted.
 
 // se_RStudioServerProAppSettings omitted.
@@ -21581,6 +21628,8 @@ const se_RetryPipelineExecutionRequest = (input: RetryPipelineExecutionRequest, 
 // se_RuleParameters omitted.
 
 // se_S3DataSource omitted.
+
+// se_S3ModelDataSource omitted.
 
 // se_S3StorageConfig omitted.
 
@@ -21626,6 +21675,12 @@ const se_SearchRequest = (input: SearchRequest, context: __SerdeContext): any =>
 };
 
 // se_SecurityGroupIds omitted.
+
+// se_SelectedStep omitted.
+
+// se_SelectedStepList omitted.
+
+// se_SelectiveExecutionConfig omitted.
 
 /**
  * serializeAws_json1_1SendPipelineExecutionStepFailureRequest
@@ -21698,6 +21753,7 @@ const se_StartPipelineExecutionRequest = (input: StartPipelineExecutionRequest, 
     PipelineExecutionDisplayName: [],
     PipelineName: [],
     PipelineParameters: _json,
+    SelectiveExecutionConfig: _json,
   });
 };
 
@@ -21743,6 +21799,8 @@ const se_StopPipelineExecutionRequest = (input: StopPipelineExecutionRequest, co
 
 // se_SuggestionQuery omitted.
 
+// se_TabularJobConfig omitted.
+
 // se_Tag omitted.
 
 // se_TagKeyList omitted.
@@ -21759,7 +21817,13 @@ const se_StopPipelineExecutionRequest = (input: StopPipelineExecutionRequest, co
 
 // se_TextClassificationJobConfig omitted.
 
+// se_TimeSeriesConfig omitted.
+
+// se_TimeSeriesForecastingJobConfig omitted.
+
 // se_TimeSeriesForecastingSettings omitted.
+
+// se_TimeSeriesTransformations omitted.
 
 // se_TrafficPattern omitted.
 
@@ -21829,6 +21893,8 @@ const se_TrialComponentParameterValue = (input: TrialComponentParameterValue, co
 };
 
 // se_TrialComponentStatus omitted.
+
+// se_TtlDuration omitted.
 
 /**
  * serializeAws_json1_1TuningJobCompletionCriteria
@@ -22019,6 +22085,8 @@ const de_ActionSummary = (output: any, context: __SerdeContext): ActionSummary =
 // de_AgentVersion omitted.
 
 // de_AgentVersions omitted.
+
+// de_AggregationTransformations omitted.
 
 // de_Alarm omitted.
 
@@ -22321,11 +22389,21 @@ const de_AutoMLJobSummary = (output: any, context: __SerdeContext): AutoMLJobSum
 
 // de_AutoMLProblemTypeConfig omitted.
 
+// de_AutoMLProblemTypeResolvedAttributes omitted.
+
+// de_AutoMLResolvedAttributes omitted.
+
 // de_AutoMLS3DataSource omitted.
 
 // de_AutoMLSecurityConfig omitted.
 
+// de_AutoParameter omitted.
+
+// de_AutoParameters omitted.
+
 // de_AutoRollbackConfig omitted.
+
+// de_Autotune omitted.
 
 // de_BatchDataCaptureConfig omitted.
 
@@ -22392,6 +22470,8 @@ const de_BatchTransformInput = (output: any, context: __SerdeContext): BatchTran
 // de_CallbackStepMetadata omitted.
 
 // de_CandidateArtifactLocations omitted.
+
+// de_CandidateGenerationConfig omitted.
 
 /**
  * deserializeAws_json1_1CandidateProperties
@@ -22805,6 +22885,8 @@ const de_DeployedImages = (output: any, context: __SerdeContext): DeployedImage[
 
 // de_DeploymentConfig omitted.
 
+// de_DeploymentRecommendation omitted.
+
 /**
  * deserializeAws_json1_1DeploymentStageStatusSummaries
  */
@@ -22956,12 +23038,14 @@ const de_DescribeAutoMLJobResponse = (output: any, context: __SerdeContext): Des
 const de_DescribeAutoMLJobV2Response = (output: any, context: __SerdeContext): DescribeAutoMLJobV2Response => {
   return take(output, {
     AutoMLJobArn: __expectString,
+    AutoMLJobArtifacts: _json,
     AutoMLJobInputDataConfig: _json,
     AutoMLJobName: __expectString,
     AutoMLJobObjective: _json,
     AutoMLJobSecondaryStatus: __expectString,
     AutoMLJobStatus: __expectString,
     AutoMLProblemTypeConfig: (_: any) => _json(__expectUnion(_)),
+    AutoMLProblemTypeConfigName: __expectString,
     BestCandidate: (_: any) => de_AutoMLCandidate(_, context),
     CreationTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     DataSplitConfig: (_: any) => de_AutoMLDataSplitConfig(_, context),
@@ -22972,6 +23056,7 @@ const de_DescribeAutoMLJobV2Response = (output: any, context: __SerdeContext): D
     ModelDeployResult: _json,
     OutputDataConfig: _json,
     PartialFailureReasons: _json,
+    ResolvedAttributes: _json,
     RoleArn: __expectString,
     SecurityConfig: _json,
   }) as any;
@@ -23346,6 +23431,7 @@ const de_DescribeHyperParameterTuningJobResponse = (
   context: __SerdeContext
 ): DescribeHyperParameterTuningJobResponse => {
   return take(output, {
+    Autotune: _json,
     BestTrainingJob: (_: any) => de_HyperParameterTrainingJobSummary(_, context),
     ConsumedResources: _json,
     CreationTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
@@ -23592,6 +23678,7 @@ const de_DescribeModelOutput = (output: any, context: __SerdeContext): DescribeM
   return take(output, {
     Containers: _json,
     CreationTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    DeploymentRecommendation: _json,
     EnableNetworkIsolation: __expectBoolean,
     ExecutionRoleArn: __expectString,
     InferenceExecutionConfig: _json,
@@ -23772,6 +23859,7 @@ const de_DescribePipelineExecutionResponse = (
     PipelineExecutionDisplayName: __expectString,
     PipelineExecutionStatus: __expectString,
     PipelineExperimentConfig: _json,
+    SelectiveExecutionConfig: _json,
   }) as any;
 };
 
@@ -24537,6 +24625,10 @@ const de_FeatureMetadata = (output: any, context: __SerdeContext): FeatureMetada
 
 // de_FileSystemDataSource omitted.
 
+// de_FillingTransformationMap omitted.
+
+// de_FillingTransformations omitted.
+
 /**
  * deserializeAws_json1_1FinalAutoMLJobObjectiveMetric
  */
@@ -24604,6 +24696,8 @@ const de_FlowDefinitionSummary = (output: any, context: __SerdeContext): FlowDef
 
 // de_FlowDefinitionTaskKeywords omitted.
 
+// de_ForecastQuantiles omitted.
+
 /**
  * deserializeAws_json1_1GetDeviceFleetReportResponse
  */
@@ -24629,6 +24723,8 @@ const de_GetDeviceFleetReportResponse = (output: any, context: __SerdeContext): 
 // de_GetSearchSuggestionsResponse omitted.
 
 // de_GitConfig omitted.
+
+// de_GroupingAttributeNames omitted.
 
 // de_Groups omitted.
 
@@ -25028,6 +25124,8 @@ const de_InferenceExperimentSummary = (output: any, context: __SerdeContext): In
 const de_InferenceRecommendation = (output: any, context: __SerdeContext): InferenceRecommendation => {
   return take(output, {
     EndpointConfiguration: _json,
+    InvocationEndTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    InvocationStartTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     Metrics: (_: any) => de_RecommendationMetrics(_, context),
     ModelConfiguration: _json,
     RecommendationId: __expectString,
@@ -25059,7 +25157,10 @@ const de_InferenceRecommendationsJob = (output: any, context: __SerdeContext): I
     JobName: __expectString,
     JobType: __expectString,
     LastModifiedTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    ModelName: __expectString,
+    ModelPackageVersionArn: __expectString,
     RoleArn: __expectString,
+    SamplePayloadUrl: __expectString,
     Status: __expectString,
   }) as any;
 };
@@ -26027,6 +26128,7 @@ const de_Model = (output: any, context: __SerdeContext): Model => {
   return take(output, {
     Containers: _json,
     CreationTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    DeploymentRecommendation: _json,
     EnableNetworkIsolation: __expectBoolean,
     ExecutionRoleArn: __expectString,
     InferenceExecutionConfig: _json,
@@ -26070,6 +26172,7 @@ const de_ModelCard = (output: any, context: __SerdeContext): ModelCard => {
     ModelCardStatus: __expectString,
     ModelCardVersion: __expectInt32,
     ModelId: __expectString,
+    ModelPackageGroupName: __expectString,
     RiskRating: __expectString,
     SecurityConfig: _json,
     Tags: _json,
@@ -26262,6 +26365,8 @@ const de_ModelDashboardMonitoringSchedules = (
 };
 
 // de_ModelDataQuality omitted.
+
+// de_ModelDataSource omitted.
 
 // de_ModelDeployConfig omitted.
 
@@ -26949,6 +27054,7 @@ const de_PipelineExecution = (output: any, context: __SerdeContext): PipelineExe
     PipelineExecutionStatus: __expectString,
     PipelineExperimentConfig: _json,
     PipelineParameters: _json,
+    SelectiveExecutionConfig: _json,
   }) as any;
 };
 
@@ -26962,6 +27068,7 @@ const de_PipelineExecutionStep = (output: any, context: __SerdeContext): Pipelin
     EndTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     FailureReason: __expectString,
     Metadata: _json,
+    SelectiveExecutionResult: _json,
     StartTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     StepDescription: __expectString,
     StepDisplayName: __expectString,
@@ -27313,6 +27420,10 @@ const de_ProjectSummaryList = (output: any, context: __SerdeContext): ProjectSum
 
 // de_RealtimeInferenceInstanceTypes omitted.
 
+// de_RealTimeInferenceRecommendation omitted.
+
+// de_RealTimeInferenceRecommendations omitted.
+
 // de_RecommendationJobContainerConfig omitted.
 
 /**
@@ -27326,6 +27437,8 @@ const de_RecommendationJobInferenceBenchmark = (
     EndpointConfiguration: _json,
     EndpointMetrics: _json,
     FailureReason: __expectString,
+    InvocationEndTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    InvocationStartTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     Metrics: (_: any) => de_RecommendationMetrics(_, context),
     ModelConfiguration: _json,
   }) as any;
@@ -27360,6 +27473,7 @@ const de_RecommendationMetrics = (output: any, context: __SerdeContext): Recomme
     MaxInvocations: __expectInt32,
     MemoryUtilization: __limitedParseFloat32,
     ModelLatency: __expectInt32,
+    ModelSetupTime: __expectInt32,
   }) as any;
 };
 
@@ -27395,6 +27509,8 @@ const de_RecommendationMetrics = (output: any, context: __SerdeContext): Recomme
 
 // de_RetryStrategy omitted.
 
+// de_RollingUpdatePolicy omitted.
+
 // de_RSessionAppSettings omitted.
 
 // de_RStudioServerProAppSettings omitted.
@@ -27404,6 +27520,8 @@ const de_RecommendationMetrics = (output: any, context: __SerdeContext): Recomme
 // de_RuleParameters omitted.
 
 // de_S3DataSource omitted.
+
+// de_S3ModelDataSource omitted.
 
 // de_S3StorageConfig omitted.
 
@@ -27481,6 +27599,14 @@ const de_SecondaryStatusTransitions = (output: any, context: __SerdeContext): Se
 };
 
 // de_SecurityGroupIds omitted.
+
+// de_SelectedStep omitted.
+
+// de_SelectedStepList omitted.
+
+// de_SelectiveExecutionConfig omitted.
+
+// de_SelectiveExecutionResult omitted.
 
 // de_SendPipelineExecutionStepFailureResponse omitted.
 
@@ -27576,6 +27702,10 @@ const de_StudioLifecycleConfigsList = (output: any, context: __SerdeContext): St
 
 // de_SubscribedWorkteams omitted.
 
+// de_TabularJobConfig omitted.
+
+// de_TabularResolvedAttributes omitted.
+
 // de_Tag omitted.
 
 // de_TagList omitted.
@@ -27590,7 +27720,13 @@ const de_StudioLifecycleConfigsList = (output: any, context: __SerdeContext): St
 
 // de_TextClassificationJobConfig omitted.
 
+// de_TimeSeriesConfig omitted.
+
+// de_TimeSeriesForecastingJobConfig omitted.
+
 // de_TimeSeriesForecastingSettings omitted.
+
+// de_TimeSeriesTransformations omitted.
 
 // de_TrafficPattern omitted.
 
@@ -27978,6 +28114,8 @@ const de_TrialSummary = (output: any, context: __SerdeContext): TrialSummary => 
   }) as any;
 };
 
+// de_TtlDuration omitted.
+
 /**
  * deserializeAws_json1_1TuningJobCompletionCriteria
  */
@@ -28184,14 +28322,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

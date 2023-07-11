@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { DrsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DrsClient";
 import { DescribeJobLogItemsRequest, DescribeJobLogItemsResponse } from "../models/models_0";
 import { de_DescribeJobLogItemsCommand, se_DescribeJobLogItemsCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -67,6 +71,14 @@ export interface DescribeJobLogItemsCommandOutput extends DescribeJobLogItemsRes
  * //           dataTimestamp: "STRING_VALUE",
  * //           volumeToVolumeSize: { // VolumeToSizeMap
  * //             "<keys>": Number("long"),
+ * //           },
+ * //         },
+ * //         eventResourceData: { // EventResourceData Union: only one key present
+ * //           sourceNetworkData: { // SourceNetworkData
+ * //             sourceNetworkID: "STRING_VALUE",
+ * //             sourceVpc: "STRING_VALUE",
+ * //             targetVpc: "STRING_VALUE",
+ * //             stackName: "STRING_VALUE",
  * //           },
  * //         },
  * //       },

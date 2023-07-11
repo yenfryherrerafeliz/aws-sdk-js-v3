@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CodePipelineClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodePipelineClient";
 import { ListWebhooksInput, ListWebhooksOutput } from "../models/models_0";
 import { de_ListWebhooksCommand, se_ListWebhooksCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,9 +36,9 @@ export interface ListWebhooksCommandOutput extends ListWebhooksOutput, __Metadat
 
 /**
  * @public
- * <p>Gets a listing of all the webhooks in this AWS Region for this account. The output
- *             lists all webhooks and includes the webhook URL and ARN and the configuration for each
- *             webhook.</p>
+ * <p>Gets a listing of all the webhooks in this Amazon Web Services Region for this
+ *             account. The output lists all webhooks and includes the webhook URL and ARN and the
+ *             configuration for each webhook.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -60,7 +64,7 @@ export interface ListWebhooksCommandOutput extends ListWebhooksOutput, __Metadat
  * //             matchEquals: "STRING_VALUE",
  * //           },
  * //         ],
- * //         authentication: "STRING_VALUE", // required
+ * //         authentication: "GITHUB_HMAC" || "IP" || "UNAUTHENTICATED", // required
  * //         authenticationConfiguration: { // WebhookAuthConfiguration
  * //           AllowedIPRange: "STRING_VALUE",
  * //           SecretToken: "STRING_VALUE",

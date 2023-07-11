@@ -1,6 +1,6 @@
 // smithy-typescript generated code
-import { getRegionInfo, PartitionHash, RegionHash } from "@aws-sdk/config-resolver";
 import { RegionInfoProvider, RegionInfoProviderOptions } from "@aws-sdk/types";
+import { getRegionInfo, PartitionHash, RegionHash } from "@smithy/config-resolver";
 
 const regionHash: RegionHash = {};
 
@@ -101,6 +101,34 @@ const partitionHash: PartitionHash = {
       },
       {
         hostname: "awsquery-fips.{region}.sc2s.sgov.gov",
+        tags: ["fips"],
+      },
+    ],
+  },
+  "aws-iso-e": {
+    regions: [],
+    regionRegex: "^eu\\-isoe\\-\\w+\\-\\d+$",
+    variants: [
+      {
+        hostname: "awsquery.{region}.cloud.adc-e.uk",
+        tags: [],
+      },
+      {
+        hostname: "awsquery-fips.{region}.cloud.adc-e.uk",
+        tags: ["fips"],
+      },
+    ],
+  },
+  "aws-iso-f": {
+    regions: [],
+    regionRegex: "^us\\-isof\\-\\w+\\-\\d+$",
+    variants: [
+      {
+        hostname: "awsquery.{region}.csp.hci.ic.gov",
+        tags: [],
+      },
+      {
+        hostname: "awsquery-fips.{region}.csp.hci.ic.gov",
         tags: ["fips"],
       },
     ],

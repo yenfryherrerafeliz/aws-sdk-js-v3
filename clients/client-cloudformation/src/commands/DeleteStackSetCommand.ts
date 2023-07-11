@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { DeleteStackSetInput, DeleteStackSetOutput } from "../models/models_0";
 import { de_DeleteStackSetCommand, se_DeleteStackSetCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,8 +36,8 @@ export interface DeleteStackSetCommandOutput extends DeleteStackSetOutput, __Met
 
 /**
  * @public
- * <p>Deletes a stack set. Before you can delete a stack set, all its member stack instances
- *          must be deleted. For more information about how to complete this, see <a>DeleteStackInstances</a>.</p>
+ * <p>Deletes a stack set. Before you can delete a stack set, all its member stack instances must be deleted. For more
+ *    information about how to complete this, see <a>DeleteStackInstances</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -57,13 +61,12 @@ export interface DeleteStackSetCommandOutput extends DeleteStackSetOutput, __Met
  * @see {@link CloudFormationClientResolvedConfig | config} for CloudFormationClient's `config` shape.
  *
  * @throws {@link OperationInProgressException} (client fault)
- *  <p>Another operation is currently in progress for this stack set. Only one operation can be
- *          performed for a stack set at a given time.</p>
+ *  <p>Another operation is currently in progress for this stack set. Only one operation can be performed for a stack
+ *    set at a given time.</p>
  *
  * @throws {@link StackSetNotEmptyException} (client fault)
- *  <p>You can't yet delete this stack set, because it still contains one or more stack
- *          instances. Delete all stack instances from the stack set before deleting the stack
- *          set.</p>
+ *  <p>You can't yet delete this stack set, because it still contains one or more stack instances. Delete all stack
+ *    instances from the stack set before deleting the stack set.</p>
  *
  * @throws {@link CloudFormationServiceException}
  * <p>Base exception class for all service exceptions from CloudFormation service.</p>

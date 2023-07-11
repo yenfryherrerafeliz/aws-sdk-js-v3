@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { GetTemplateSummaryInput, GetTemplateSummaryOutput } from "../models/models_0";
 import { de_GetTemplateSummaryCommand, se_GetTemplateSummaryCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,15 +36,13 @@ export interface GetTemplateSummaryCommandOutput extends GetTemplateSummaryOutpu
 
 /**
  * @public
- * <p>Returns information about a new or existing template. The
- *             <code>GetTemplateSummary</code> action is useful for viewing parameter information, such
- *          as default parameter values and parameter types, before you create or update a stack or
- *          stack set.</p>
- *          <p>You can use the <code>GetTemplateSummary</code> action when you submit a template, or
- *          you can get template information for a stack set, or a running or deleted stack.</p>
- *          <p>For deleted stacks, <code>GetTemplateSummary</code> returns the template information for
- *          up to 90 days after the stack has been deleted. If the template doesn't exist, a
- *             <code>ValidationError</code> is returned.</p>
+ * <p>Returns information about a new or existing template. The <code>GetTemplateSummary</code> action is useful for
+ *    viewing parameter information, such as default parameter values and parameter types, before you create or update a
+ *    stack or stack set.</p>
+ *          <p>You can use the <code>GetTemplateSummary</code> action when you submit a template, or you can get template
+ *    information for a stack set, or a running or deleted stack.</p>
+ *          <p>For deleted stacks, <code>GetTemplateSummary</code> returns the template information for up to 90 days after the
+ *    stack has been deleted. If the template doesn't exist, a <code>ValidationError</code> is returned.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

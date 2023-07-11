@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,7 +47,7 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { DescribeServicesCommandInput, DescribeServicesCommandOutput } from "./commands/DescribeServicesCommand";
 import { GetAttributeValuesCommandInput, GetAttributeValuesCommandOutput } from "./commands/GetAttributeValuesCommand";
@@ -64,6 +64,8 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+
+export { __Client };
 
 /**
  * @public
@@ -95,7 +97,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -150,7 +152,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -204,7 +206,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -212,7 +214,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type PricingClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type PricingClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -231,7 +233,7 @@ export interface PricingClientConfig extends PricingClientConfigType {}
 /**
  * @public
  */
-type PricingClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type PricingClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
@@ -249,22 +251,33 @@ export interface PricingClientResolvedConfig extends PricingClientResolvedConfig
 
 /**
  * @public
- * <p>Amazon Web Services Price List API is a centralized and convenient way to
- *          programmatically query Amazon Web Services for services, products, and pricing information. The Amazon Web Services Price List
- *          uses standardized product attributes such as <code>Location</code>, <code>Storage
- *             Class</code>, and <code>Operating System</code>, and provides prices at the SKU
- *          level. You can use the Amazon Web Services Price List to build cost control and scenario planning tools, reconcile
- *          billing data, forecast future spend for budgeting purposes, and provide cost benefit
- *          analysis that compare your internal workloads with Amazon Web Services.</p>
- *          <p>Use <code>GetServices</code> without a service code to retrieve the service codes for all AWS services, then
- *          <code>GetServices</code> with a service code to retrieve the attribute names for
- *          that service. After you have the service code and attribute names, you can use <code>GetAttributeValues</code>
- *          to see what values are available for an attribute. With the service code and an attribute name and value,
- *          you can use <code>GetProducts</code> to find specific products that you're interested in, such as
+ * <p>The Amazon Web Services Price List API is a centralized and convenient way to programmatically
+ *          query Amazon Web Services for services, products, and pricing information. The Amazon Web Services Price List uses standardized product attributes such as <code>Location</code>,
+ *             <code>Storage Class</code>, and <code>Operating System</code>, and provides prices at
+ *          the SKU level. You can use the Amazon Web Services Price List to do the following:</p>
+ *          <ul>
+ *             <li>
+ *                <p>Build cost control and scenario planning tools</p>
+ *             </li>
+ *             <li>
+ *                <p>Reconcile billing data</p>
+ *             </li>
+ *             <li>
+ *                <p>Forecast future spend for budgeting purposes</p>
+ *             </li>
+ *             <li>
+ *                <p>Provide cost benefit analysis that compare your internal workloads with Amazon Web Services</p>
+ *             </li>
+ *          </ul>
+ *          <p>Use <code>GetServices</code> without a service code to retrieve the service codes for
+ *          all Amazon Web Services, then <code>GetServices</code> with a service code to
+ *          retrieve the attribute names for that service. After you have the service code and
+ *          attribute names, you can use <code>GetAttributeValues</code> to see what values are
+ *          available for an attribute. With the service code and an attribute name and value, you can
+ *          use <code>GetProducts</code> to find specific products that you're interested in, such as
  *          an <code>AmazonEC2</code> instance, with a <code>Provisioned IOPS</code>
  *             <code>volumeType</code>.</p>
- *          <p>Service Endpoint</p>
- *          <p>Amazon Web Services Price List service API provides the following two endpoints:</p>
+ *          <p>You can use the following endpoints for the Amazon Web Services Price List API:</p>
  *          <ul>
  *             <li>
  *                <p>https://api.pricing.us-east-1.amazonaws.com</p>

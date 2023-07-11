@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EFSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EFSClient";
 import { AccessPointDescription, CreateAccessPointRequest } from "../models/models_0";
 import { de_CreateAccessPointCommand, se_CreateAccessPointCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -41,11 +45,17 @@ export interface CreateAccessPointCommandOutput extends AccessPointDescription, 
  *         points</a>.</p>
  *          <note>
  *             <p>If multiple requests to create access points on the same file system are sent in quick
- *         succession, and the file system is near the limit of 1000 access points, you may experience
+ *         succession, and the file system is near the limit of 1,000 access points, you may experience
  *         a throttling response for these requests. This is to ensure that the file system does not
  *         exceed the stated access point limit.</p>
  *          </note>
  *          <p>This operation requires permissions for the <code>elasticfilesystem:CreateAccessPoint</code> action.</p>
+ *          <p>Access points can be tagged on creation. If tags are specified in the creation action, IAM
+ *       performs additional authorization on the <code>elasticfilesystem:TagResource</code> action to
+ *       verify if users have permissions to create tags. Therefore, you must grant explicit
+ *       permissions to use the <code>elasticfilesystem:TagResource</code> action. For more
+ *       information, see <a href="https://docs.aws.amazon.com/efs/latest/ug/using-tags-efs.html#supported-iam-actions-tagging.html">Granting
+ *         permissions to tag resources during creation</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

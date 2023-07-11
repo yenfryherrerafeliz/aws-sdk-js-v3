@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
 import { getFlexibleChecksumsPlugin } from "@aws-sdk/middleware-flexible-checksums";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,7 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { PutBucketLifecycleConfigurationRequest } from "../models/models_0";
 import {
@@ -21,6 +21,10 @@ import {
 } from "../protocols/Aws_restXml";
 import { S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../S3Client";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -57,11 +61,11 @@ export interface PutBucketLifecycleConfigurationCommandOutput extends __Metadata
  *                   of the following:</p>
  *                <ul>
  *                   <li>
- *                      <p>Filter identifying a subset of objects to which the rule applies. The filter can
+ *                      <p>A filter identifying a subset of objects to which the rule applies. The filter can
  *                         be based on a key name prefix, object tags, or a combination of both.</p>
  *                   </li>
  *                   <li>
- *                      <p>Status whether the rule is in effect.</p>
+ *                      <p>A status indicating whether the rule is in effect.</p>
  *                   </li>
  *                   <li>
  *                      <p>One or more lifecycle transition and expiration actions that you want Amazon S3 to
@@ -83,7 +87,7 @@ export interface PutBucketLifecycleConfigurationCommandOutput extends __Metadata
  *                   resource owner can optionally grant access permissions to others by writing an access
  *                   policy. For this operation, a user must get the <code>s3:PutLifecycleConfiguration</code>
  *                   permission.</p>
- *                <p>You can also explicitly deny permissions. Explicit deny also supersedes any other
+ *                <p>You can also explicitly deny permissions. An explicit deny also supersedes any other
  *                   permissions. If you want to block users or accounts from removing or deleting objects from
  *                   your bucket, you must deny them permissions for the following actions:</p>
  *                <ul>

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AppSyncClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppSyncClient";
 import { UpdateGraphqlApiRequest, UpdateGraphqlApiResponse } from "../models/models_0";
 import { de_UpdateGraphqlApiCommand, se_UpdateGraphqlApiCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -87,6 +91,8 @@ export interface UpdateGraphqlApiCommandOutput extends UpdateGraphqlApiResponse,
  *     authorizerUri: "STRING_VALUE", // required
  *     identityValidationExpression: "STRING_VALUE",
  *   },
+ *   mergedApiExecutionRoleArn: "STRING_VALUE",
+ *   ownerContact: "STRING_VALUE",
  * };
  * const command = new UpdateGraphqlApiCommand(input);
  * const response = await client.send(command);
@@ -151,6 +157,10 @@ export interface UpdateGraphqlApiCommandOutput extends UpdateGraphqlApiResponse,
  * //       "<keys>": "STRING_VALUE",
  * //     },
  * //     visibility: "GLOBAL" || "PRIVATE",
+ * //     apiType: "GRAPHQL" || "MERGED",
+ * //     mergedApiExecutionRoleArn: "STRING_VALUE",
+ * //     owner: "STRING_VALUE",
+ * //     ownerContact: "STRING_VALUE",
  * //   },
  * // };
  *

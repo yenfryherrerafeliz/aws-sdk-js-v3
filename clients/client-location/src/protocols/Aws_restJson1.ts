@@ -3,9 +3,10 @@ import {
   HttpRequest as __HttpRequest,
   HttpResponse as __HttpResponse,
   isValidHostname as __isValidHostname,
-} from "@aws-sdk/protocol-http";
+} from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -20,12 +21,12 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   AssociateTrackerConsumerCommandInput,
@@ -193,6 +194,7 @@ import {
   ListRouteCalculatorsResponseEntry,
   ListTrackersResponseEntry,
   MapConfiguration,
+  MapConfigurationUpdate,
   Place,
   PlaceGeometry,
   PositionalAccuracy,
@@ -528,6 +530,9 @@ export const se_CalculateRouteCommand = async (
     "{CalculatorName}",
     false
   );
+  const query: any = map({
+    key: [, input.Key!],
+  });
   let body: any;
   body = JSON.stringify(
     take(input, {
@@ -557,6 +562,7 @@ export const se_CalculateRouteCommand = async (
     method: "POST",
     headers,
     path: resolvedPath,
+    query,
     body,
   });
 };
@@ -583,6 +589,9 @@ export const se_CalculateRouteMatrixCommand = async (
     "{CalculatorName}",
     false
   );
+  const query: any = map({
+    key: [, input.Key!],
+  });
   let body: any;
   body = JSON.stringify(
     take(input, {
@@ -610,6 +619,7 @@ export const se_CalculateRouteMatrixCommand = async (
     method: "POST",
     headers,
     path: resolvedPath,
+    query,
     body,
   });
 };
@@ -834,6 +844,7 @@ export const se_CreateTrackerCommand = async (
   body = JSON.stringify(
     take(input, {
       Description: [],
+      EventBridgeEnabled: [],
       KmsKeyId: [],
       PositionFiltering: [],
       PricingPlan: [],
@@ -1580,6 +1591,7 @@ export const se_GetPlaceCommand = async (
   resolvedPath = __resolvedPath(resolvedPath, input, "PlaceId", () => input.PlaceId!, "{PlaceId}", false);
   const query: any = map({
     language: [, input.Language!],
+    key: [, input.Key!],
   });
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
@@ -2011,6 +2023,7 @@ export const se_PutGeofenceCommand = async (
   let body: any;
   body = JSON.stringify(
     take(input, {
+      GeofenceProperties: (_) => _json(_),
       Geometry: (_) => se_GeofenceGeometry(_, context),
     })
   );
@@ -2047,6 +2060,9 @@ export const se_SearchPlaceIndexForPositionCommand = async (
     `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
     "/places/v0/indexes/{IndexName}/search/position";
   resolvedPath = __resolvedPath(resolvedPath, input, "IndexName", () => input.IndexName!, "{IndexName}", false);
+  const query: any = map({
+    key: [, input.Key!],
+  });
   let body: any;
   body = JSON.stringify(
     take(input, {
@@ -2069,6 +2085,7 @@ export const se_SearchPlaceIndexForPositionCommand = async (
     method: "POST",
     headers,
     path: resolvedPath,
+    query,
     body,
   });
 };
@@ -2088,11 +2105,15 @@ export const se_SearchPlaceIndexForSuggestionsCommand = async (
     `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
     "/places/v0/indexes/{IndexName}/search/suggestions";
   resolvedPath = __resolvedPath(resolvedPath, input, "IndexName", () => input.IndexName!, "{IndexName}", false);
+  const query: any = map({
+    key: [, input.Key!],
+  });
   let body: any;
   body = JSON.stringify(
     take(input, {
       BiasPosition: (_) => se_Position(_, context),
       FilterBBox: (_) => se_BoundingBox(_, context),
+      FilterCategories: (_) => _json(_),
       FilterCountries: (_) => _json(_),
       Language: [],
       MaxResults: [],
@@ -2113,6 +2134,7 @@ export const se_SearchPlaceIndexForSuggestionsCommand = async (
     method: "POST",
     headers,
     path: resolvedPath,
+    query,
     body,
   });
 };
@@ -2132,11 +2154,15 @@ export const se_SearchPlaceIndexForTextCommand = async (
     `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
     "/places/v0/indexes/{IndexName}/search/text";
   resolvedPath = __resolvedPath(resolvedPath, input, "IndexName", () => input.IndexName!, "{IndexName}", false);
+  const query: any = map({
+    key: [, input.Key!],
+  });
   let body: any;
   body = JSON.stringify(
     take(input, {
       BiasPosition: (_) => se_Position(_, context),
       FilterBBox: (_) => se_BoundingBox(_, context),
+      FilterCategories: (_) => _json(_),
       FilterCountries: (_) => _json(_),
       Language: [],
       MaxResults: [],
@@ -2157,6 +2183,7 @@ export const se_SearchPlaceIndexForTextCommand = async (
     method: "POST",
     headers,
     path: resolvedPath,
+    query,
     body,
   });
 };
@@ -2341,6 +2368,7 @@ export const se_UpdateMapCommand = async (
   let body: any;
   body = JSON.stringify(
     take(input, {
+      ConfigurationUpdate: (_) => _json(_),
       Description: [],
       PricingPlan: [],
     })
@@ -2467,6 +2495,7 @@ export const se_UpdateTrackerCommand = async (
   body = JSON.stringify(
     take(input, {
       Description: [],
+      EventBridgeEnabled: [],
       PositionFiltering: [],
       PricingPlan: [],
       PricingPlanDataSource: [],
@@ -3395,6 +3424,9 @@ const de_CreateTrackerCommandError = async (
     case "InternalServerException":
     case "com.amazonaws.location#InternalServerException":
       throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ServiceQuotaExceededException":
+    case "com.amazonaws.location#ServiceQuotaExceededException":
+      throw await de_ServiceQuotaExceededExceptionRes(parsedOutput, context);
     case "ThrottlingException":
     case "com.amazonaws.location#ThrottlingException":
       throw await de_ThrottlingExceptionRes(parsedOutput, context);
@@ -4092,6 +4124,7 @@ export const de_DescribeTrackerCommand = async (
   const doc = take(data, {
     CreateTime: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     Description: __expectString,
+    EventBridgeEnabled: __expectBoolean,
     KmsKeyId: __expectString,
     PositionFiltering: __expectString,
     PricingPlan: __expectString,
@@ -4339,6 +4372,7 @@ export const de_GetGeofenceCommand = async (
   const doc = take(data, {
     CreateTime: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     GeofenceId: __expectString,
+    GeofenceProperties: _json,
     Geometry: (_) => de_GeofenceGeometry(_, context),
     Status: __expectString,
     UpdateTime: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
@@ -6120,6 +6154,7 @@ const de_ValidationExceptionRes = async (parsedOutput: any, context: __SerdeCont
 const se_BatchPutGeofenceRequestEntry = (input: BatchPutGeofenceRequestEntry, context: __SerdeContext): any => {
   return take(input, {
     GeofenceId: [],
+    GeofenceProperties: _json,
     Geometry: (_) => se_GeofenceGeometry(_, context),
   });
 };
@@ -6200,6 +6235,8 @@ const se_DevicePositionUpdateList = (input: DevicePositionUpdate[], context: __S
     });
 };
 
+// se_FilterPlaceCategoryList omitted.
+
 // se_GeoArnList omitted.
 
 /**
@@ -6237,6 +6274,8 @@ const se_LinearRings = (input: number[][][], context: __SerdeContext): any => {
 };
 
 // se_MapConfiguration omitted.
+
+// se_MapConfigurationUpdate omitted.
 
 /**
  * serializeAws_restJson1Position
@@ -6471,6 +6510,8 @@ const de_DevicePositionList = (output: any, context: __SerdeContext): DevicePosi
   return retVal;
 };
 
+// de_FilterPlaceCategoryList omitted.
+
 // de_GeoArnList omitted.
 
 /**
@@ -6624,6 +6665,7 @@ const de_ListGeofenceResponseEntry = (output: any, context: __SerdeContext): Lis
   return take(output, {
     CreateTime: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     GeofenceId: __expectString,
+    GeofenceProperties: _json,
     Geometry: (_: any) => de_GeofenceGeometry(_, context),
     Status: __expectString,
     UpdateTime: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
@@ -6789,6 +6831,7 @@ const de_ListTrackersResponseEntryList = (output: any, context: __SerdeContext):
 const de_Place = (output: any, context: __SerdeContext): Place => {
   return take(output, {
     AddressNumber: __expectString,
+    Categories: _json,
     Country: __expectString,
     Geometry: (_: any) => de_PlaceGeometry(_, context),
     Interpolated: __expectBoolean,
@@ -6799,11 +6842,14 @@ const de_Place = (output: any, context: __SerdeContext): Place => {
     Region: __expectString,
     Street: __expectString,
     SubRegion: __expectString,
+    SupplementalCategories: _json,
     TimeZone: _json,
     UnitNumber: __expectString,
     UnitType: __expectString,
   }) as any;
 };
+
+// de_PlaceCategoryList omitted.
 
 /**
  * deserializeAws_restJson1PlaceGeometry
@@ -6813,6 +6859,8 @@ const de_PlaceGeometry = (output: any, context: __SerdeContext): PlaceGeometry =
     Point: (_: any) => de_Position(_, context),
   }) as any;
 };
+
+// de_PlaceSupplementalCategoryList omitted.
 
 /**
  * deserializeAws_restJson1Position
@@ -6965,6 +7013,7 @@ const de_SearchPlaceIndexForSuggestionsSummary = (
     BiasPosition: (_: any) => de_Position(_, context),
     DataSource: __expectString,
     FilterBBox: (_: any) => de_BoundingBox(_, context),
+    FilterCategories: _json,
     FilterCountries: _json,
     Language: __expectString,
     MaxResults: __expectInt32,
@@ -6980,6 +7029,7 @@ const de_SearchPlaceIndexForTextSummary = (output: any, context: __SerdeContext)
     BiasPosition: (_: any) => de_Position(_, context),
     DataSource: __expectString,
     FilterBBox: (_: any) => de_BoundingBox(_, context),
+    FilterCategories: _json,
     FilterCountries: _json,
     Language: __expectString,
     MaxResults: __expectInt32,
@@ -7046,14 +7096,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

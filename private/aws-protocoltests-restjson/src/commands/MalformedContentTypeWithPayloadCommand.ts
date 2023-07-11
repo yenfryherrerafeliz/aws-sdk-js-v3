@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { BlobTypes } from "@aws-sdk/types";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { MalformedContentTypeWithPayloadInput } from "../models/models_0";
 import {
@@ -21,10 +22,21 @@ import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputT
 
 /**
  * @public
+ */
+export { __MetadataBearer, $Command };
+/**
+ * @public
+ */
+export type MalformedContentTypeWithPayloadCommandInputType = Omit<MalformedContentTypeWithPayloadInput, "payload"> & {
+  payload?: BlobTypes;
+};
+
+/**
+ * @public
  *
  * The input for {@link MalformedContentTypeWithPayloadCommand}.
  */
-export interface MalformedContentTypeWithPayloadCommandInput extends MalformedContentTypeWithPayloadInput {}
+export interface MalformedContentTypeWithPayloadCommandInput extends MalformedContentTypeWithPayloadCommandInputType {}
 /**
  * @public
  *

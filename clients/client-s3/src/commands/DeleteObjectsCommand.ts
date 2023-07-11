@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
 import { getFlexibleChecksumsPlugin } from "@aws-sdk/middleware-flexible-checksums";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,12 +12,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { DeleteObjectsOutput, DeleteObjectsRequest } from "../models/models_0";
 import { de_DeleteObjectsCommand, se_DeleteObjectsCommand } from "../protocols/Aws_restXml";
 import { S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../S3Client";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -140,44 +144,6 @@ export interface DeleteObjectsCommandOutput extends DeleteObjectsOutput, __Metad
  * @throws {@link S3ServiceException}
  * <p>Base exception class for all service exceptions from S3 service.</p>
  *
- * @example To delete multiple object versions from a versioned bucket
- * ```javascript
- * // The following example deletes objects from a bucket. The request specifies object versions. S3 deletes specific object versions and returns the key and versions of deleted objects in the response.
- * const input = {
- *   "Bucket": "examplebucket",
- *   "Delete": {
- *     "Objects": [
- *       {
- *         "Key": "HappyFace.jpg",
- *         "VersionId": "2LWg7lQLnY41.maGB5Z6SWW.dcq0vx7b"
- *       },
- *       {
- *         "Key": "HappyFace.jpg",
- *         "VersionId": "yoz3HB.ZhCS_tKVEmIOr7qYyyAaZSKVd"
- *       }
- *     ],
- *     "Quiet": false
- *   }
- * };
- * const command = new DeleteObjectsCommand(input);
- * const response = await client.send(command);
- * /* response ==
- * {
- *   "Deleted": [
- *     {
- *       "Key": "HappyFace.jpg",
- *       "VersionId": "yoz3HB.ZhCS_tKVEmIOr7qYyyAaZSKVd"
- *     },
- *     {
- *       "Key": "HappyFace.jpg",
- *       "VersionId": "2LWg7lQLnY41.maGB5Z6SWW.dcq0vx7b"
- *     }
- *   ]
- * }
- * *\/
- * // example id: to-delete-multiple-object-versions-from-a-versioned-bucket-1483147087737
- * ```
- *
  * @example To delete multiple objects from a versioned bucket
  * ```javascript
  * // The following example deletes objects from a bucket. The bucket is versioned, and the request does not specify the object version to delete. In this case, all versions remain in the bucket and S3 adds a delete marker.
@@ -214,6 +180,44 @@ export interface DeleteObjectsCommandOutput extends DeleteObjectsOutput, __Metad
  * }
  * *\/
  * // example id: to-delete-multiple-objects-from-a-versioned-bucket-1483146248805
+ * ```
+ *
+ * @example To delete multiple object versions from a versioned bucket
+ * ```javascript
+ * // The following example deletes objects from a bucket. The request specifies object versions. S3 deletes specific object versions and returns the key and versions of deleted objects in the response.
+ * const input = {
+ *   "Bucket": "examplebucket",
+ *   "Delete": {
+ *     "Objects": [
+ *       {
+ *         "Key": "HappyFace.jpg",
+ *         "VersionId": "2LWg7lQLnY41.maGB5Z6SWW.dcq0vx7b"
+ *       },
+ *       {
+ *         "Key": "HappyFace.jpg",
+ *         "VersionId": "yoz3HB.ZhCS_tKVEmIOr7qYyyAaZSKVd"
+ *       }
+ *     ],
+ *     "Quiet": false
+ *   }
+ * };
+ * const command = new DeleteObjectsCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "Deleted": [
+ *     {
+ *       "Key": "HappyFace.jpg",
+ *       "VersionId": "yoz3HB.ZhCS_tKVEmIOr7qYyyAaZSKVd"
+ *     },
+ *     {
+ *       "Key": "HappyFace.jpg",
+ *       "VersionId": "2LWg7lQLnY41.maGB5Z6SWW.dcq0vx7b"
+ *     }
+ *   ]
+ * }
+ * *\/
+ * // example id: to-delete-multiple-object-versions-from-a-versioned-bucket-1483147087737
  * ```
  *
  */

@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,12 +47,15 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AssociateLensesCommandInput, AssociateLensesCommandOutput } from "./commands/AssociateLensesCommand";
+import { AssociateProfilesCommandInput, AssociateProfilesCommandOutput } from "./commands/AssociateProfilesCommand";
 import { CreateLensShareCommandInput, CreateLensShareCommandOutput } from "./commands/CreateLensShareCommand";
 import { CreateLensVersionCommandInput, CreateLensVersionCommandOutput } from "./commands/CreateLensVersionCommand";
 import { CreateMilestoneCommandInput, CreateMilestoneCommandOutput } from "./commands/CreateMilestoneCommand";
+import { CreateProfileCommandInput, CreateProfileCommandOutput } from "./commands/CreateProfileCommand";
+import { CreateProfileShareCommandInput, CreateProfileShareCommandOutput } from "./commands/CreateProfileShareCommand";
 import { CreateWorkloadCommandInput, CreateWorkloadCommandOutput } from "./commands/CreateWorkloadCommand";
 import {
   CreateWorkloadShareCommandInput,
@@ -60,12 +63,18 @@ import {
 } from "./commands/CreateWorkloadShareCommand";
 import { DeleteLensCommandInput, DeleteLensCommandOutput } from "./commands/DeleteLensCommand";
 import { DeleteLensShareCommandInput, DeleteLensShareCommandOutput } from "./commands/DeleteLensShareCommand";
+import { DeleteProfileCommandInput, DeleteProfileCommandOutput } from "./commands/DeleteProfileCommand";
+import { DeleteProfileShareCommandInput, DeleteProfileShareCommandOutput } from "./commands/DeleteProfileShareCommand";
 import { DeleteWorkloadCommandInput, DeleteWorkloadCommandOutput } from "./commands/DeleteWorkloadCommand";
 import {
   DeleteWorkloadShareCommandInput,
   DeleteWorkloadShareCommandOutput,
 } from "./commands/DeleteWorkloadShareCommand";
 import { DisassociateLensesCommandInput, DisassociateLensesCommandOutput } from "./commands/DisassociateLensesCommand";
+import {
+  DisassociateProfilesCommandInput,
+  DisassociateProfilesCommandOutput,
+} from "./commands/DisassociateProfilesCommand";
 import { ExportLensCommandInput, ExportLensCommandOutput } from "./commands/ExportLensCommand";
 import { GetAnswerCommandInput, GetAnswerCommandOutput } from "./commands/GetAnswerCommand";
 import {
@@ -83,6 +92,8 @@ import {
   GetLensVersionDifferenceCommandOutput,
 } from "./commands/GetLensVersionDifferenceCommand";
 import { GetMilestoneCommandInput, GetMilestoneCommandOutput } from "./commands/GetMilestoneCommand";
+import { GetProfileCommandInput, GetProfileCommandOutput } from "./commands/GetProfileCommand";
+import { GetProfileTemplateCommandInput, GetProfileTemplateCommandOutput } from "./commands/GetProfileTemplateCommand";
 import { GetWorkloadCommandInput, GetWorkloadCommandOutput } from "./commands/GetWorkloadCommand";
 import { ImportLensCommandInput, ImportLensCommandOutput } from "./commands/ImportLensCommand";
 import { ListAnswersCommandInput, ListAnswersCommandOutput } from "./commands/ListAnswersCommand";
@@ -97,6 +108,12 @@ import { ListLensReviewsCommandInput, ListLensReviewsCommandOutput } from "./com
 import { ListLensSharesCommandInput, ListLensSharesCommandOutput } from "./commands/ListLensSharesCommand";
 import { ListMilestonesCommandInput, ListMilestonesCommandOutput } from "./commands/ListMilestonesCommand";
 import { ListNotificationsCommandInput, ListNotificationsCommandOutput } from "./commands/ListNotificationsCommand";
+import {
+  ListProfileNotificationsCommandInput,
+  ListProfileNotificationsCommandOutput,
+} from "./commands/ListProfileNotificationsCommand";
+import { ListProfilesCommandInput, ListProfilesCommandOutput } from "./commands/ListProfilesCommand";
+import { ListProfileSharesCommandInput, ListProfileSharesCommandOutput } from "./commands/ListProfileSharesCommand";
 import {
   ListShareInvitationsCommandInput,
   ListShareInvitationsCommandOutput,
@@ -115,6 +132,7 @@ import {
   UpdateGlobalSettingsCommandOutput,
 } from "./commands/UpdateGlobalSettingsCommand";
 import { UpdateLensReviewCommandInput, UpdateLensReviewCommandOutput } from "./commands/UpdateLensReviewCommand";
+import { UpdateProfileCommandInput, UpdateProfileCommandOutput } from "./commands/UpdateProfileCommand";
 import {
   UpdateShareInvitationCommandInput,
   UpdateShareInvitationCommandOutput,
@@ -126,6 +144,10 @@ import {
 } from "./commands/UpdateWorkloadShareCommand";
 import { UpgradeLensReviewCommandInput, UpgradeLensReviewCommandOutput } from "./commands/UpgradeLensReviewCommand";
 import {
+  UpgradeProfileVersionCommandInput,
+  UpgradeProfileVersionCommandOutput,
+} from "./commands/UpgradeProfileVersionCommand";
+import {
   ClientInputEndpointParameters,
   ClientResolvedEndpointParameters,
   EndpointParameters,
@@ -133,21 +155,29 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
 export type ServiceInputTypes =
   | AssociateLensesCommandInput
+  | AssociateProfilesCommandInput
   | CreateLensShareCommandInput
   | CreateLensVersionCommandInput
   | CreateMilestoneCommandInput
+  | CreateProfileCommandInput
+  | CreateProfileShareCommandInput
   | CreateWorkloadCommandInput
   | CreateWorkloadShareCommandInput
   | DeleteLensCommandInput
   | DeleteLensShareCommandInput
+  | DeleteProfileCommandInput
+  | DeleteProfileShareCommandInput
   | DeleteWorkloadCommandInput
   | DeleteWorkloadShareCommandInput
   | DisassociateLensesCommandInput
+  | DisassociateProfilesCommandInput
   | ExportLensCommandInput
   | GetAnswerCommandInput
   | GetConsolidatedReportCommandInput
@@ -156,6 +186,8 @@ export type ServiceInputTypes =
   | GetLensReviewReportCommandInput
   | GetLensVersionDifferenceCommandInput
   | GetMilestoneCommandInput
+  | GetProfileCommandInput
+  | GetProfileTemplateCommandInput
   | GetWorkloadCommandInput
   | ImportLensCommandInput
   | ListAnswersCommandInput
@@ -167,6 +199,9 @@ export type ServiceInputTypes =
   | ListLensesCommandInput
   | ListMilestonesCommandInput
   | ListNotificationsCommandInput
+  | ListProfileNotificationsCommandInput
+  | ListProfileSharesCommandInput
+  | ListProfilesCommandInput
   | ListShareInvitationsCommandInput
   | ListTagsForResourceCommandInput
   | ListWorkloadSharesCommandInput
@@ -176,26 +211,34 @@ export type ServiceInputTypes =
   | UpdateAnswerCommandInput
   | UpdateGlobalSettingsCommandInput
   | UpdateLensReviewCommandInput
+  | UpdateProfileCommandInput
   | UpdateShareInvitationCommandInput
   | UpdateWorkloadCommandInput
   | UpdateWorkloadShareCommandInput
-  | UpgradeLensReviewCommandInput;
+  | UpgradeLensReviewCommandInput
+  | UpgradeProfileVersionCommandInput;
 
 /**
  * @public
  */
 export type ServiceOutputTypes =
   | AssociateLensesCommandOutput
+  | AssociateProfilesCommandOutput
   | CreateLensShareCommandOutput
   | CreateLensVersionCommandOutput
   | CreateMilestoneCommandOutput
+  | CreateProfileCommandOutput
+  | CreateProfileShareCommandOutput
   | CreateWorkloadCommandOutput
   | CreateWorkloadShareCommandOutput
   | DeleteLensCommandOutput
   | DeleteLensShareCommandOutput
+  | DeleteProfileCommandOutput
+  | DeleteProfileShareCommandOutput
   | DeleteWorkloadCommandOutput
   | DeleteWorkloadShareCommandOutput
   | DisassociateLensesCommandOutput
+  | DisassociateProfilesCommandOutput
   | ExportLensCommandOutput
   | GetAnswerCommandOutput
   | GetConsolidatedReportCommandOutput
@@ -204,6 +247,8 @@ export type ServiceOutputTypes =
   | GetLensReviewReportCommandOutput
   | GetLensVersionDifferenceCommandOutput
   | GetMilestoneCommandOutput
+  | GetProfileCommandOutput
+  | GetProfileTemplateCommandOutput
   | GetWorkloadCommandOutput
   | ImportLensCommandOutput
   | ListAnswersCommandOutput
@@ -215,6 +260,9 @@ export type ServiceOutputTypes =
   | ListLensesCommandOutput
   | ListMilestonesCommandOutput
   | ListNotificationsCommandOutput
+  | ListProfileNotificationsCommandOutput
+  | ListProfileSharesCommandOutput
+  | ListProfilesCommandOutput
   | ListShareInvitationsCommandOutput
   | ListTagsForResourceCommandOutput
   | ListWorkloadSharesCommandOutput
@@ -224,10 +272,12 @@ export type ServiceOutputTypes =
   | UpdateAnswerCommandOutput
   | UpdateGlobalSettingsCommandOutput
   | UpdateLensReviewCommandOutput
+  | UpdateProfileCommandOutput
   | UpdateShareInvitationCommandOutput
   | UpdateWorkloadCommandOutput
   | UpdateWorkloadShareCommandOutput
-  | UpgradeLensReviewCommandOutput;
+  | UpgradeLensReviewCommandOutput
+  | UpgradeProfileVersionCommandOutput;
 
 /**
  * @public
@@ -239,7 +289,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -294,7 +344,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -348,7 +398,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -356,7 +406,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type WellArchitectedClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type WellArchitectedClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -375,7 +425,7 @@ export interface WellArchitectedClientConfig extends WellArchitectedClientConfig
 /**
  * @public
  */
-type WellArchitectedClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type WellArchitectedClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

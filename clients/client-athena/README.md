@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-athena
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-athena/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-athena)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-athena.svg)](https://www.npmjs.com/package/@aws-sdk/client-athena)
-
 ## Description
 
 AWS SDK for JavaScript Athena Client for Node.js, Browser and React Native.
@@ -305,6 +302,14 @@ CreateWorkGroup
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-athena/classes/createworkgroupcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-athena/interfaces/createworkgroupcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-athena/interfaces/createworkgroupcommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteCapacityReservation
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-athena/classes/deletecapacityreservationcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-athena/interfaces/deletecapacityreservationcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-athena/interfaces/deletecapacityreservationcommandoutput.html)
 
 </details>
 <details>

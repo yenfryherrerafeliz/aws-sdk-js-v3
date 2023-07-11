@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
 import { DisassociateAddressRequest } from "../models/models_5";
 import { de_DisassociateAddressCommand, se_DisassociateAddressCommand } from "../protocols/Aws_ec2";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -33,12 +37,6 @@ export interface DisassociateAddressCommandOutput extends __MetadataBearer {}
 /**
  * @public
  * <p>Disassociates an Elastic IP address from the instance or network interface it's associated with.</p>
- *          <p>An Elastic IP address is for use in either the EC2-Classic platform or in a VPC. For more
- * 			information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP
- * 				Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
- *          <note>
- *             <p>We are retiring EC2-Classic. We recommend that you migrate from EC2-Classic to a VPC. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-migrate.html">Migrate from EC2-Classic to a VPC</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
- *          </note>
  *          <p>This is an idempotent operation. If you perform the operation more than once, Amazon EC2 doesn't return an error.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -66,26 +64,15 @@ export interface DisassociateAddressCommandOutput extends __MetadataBearer {}
  * @throws {@link EC2ServiceException}
  * <p>Base exception class for all service exceptions from EC2 service.</p>
  *
- * @example To disassociate an Elastic IP address in EC2-VPC
+ * @example To disassociate an Elastic IP address
  * ```javascript
- * // This example disassociates an Elastic IP address from an instance in a VPC.
+ * // This example disassociates an Elastic IP address from an instance.
  * const input = {
  *   "AssociationId": "eipassoc-2bebb745"
  * };
  * const command = new DisassociateAddressCommand(input);
  * await client.send(command);
  * // example id: ec2-disassociate-address-1
- * ```
- *
- * @example To disassociate an Elastic IP addresses in EC2-Classic
- * ```javascript
- * // This example disassociates an Elastic IP address from an instance in EC2-Classic.
- * const input = {
- *   "PublicIp": "198.51.100.0"
- * };
- * const command = new DisassociateAddressCommand(input);
- * await client.send(command);
- * // example id: ec2-disassociate-address-2
  * ```
  *
  */

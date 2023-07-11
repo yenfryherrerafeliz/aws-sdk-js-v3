@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -13,13 +14,13 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CreateBatchInferenceJobCommandInput,
@@ -331,6 +332,7 @@ import {
   TagResourceRequest,
   TooManyTagKeysException,
   TooManyTagsException,
+  TrainingDataConfig,
   UntagResourceRequest,
   UpdateCampaignRequest,
   UpdateMetricAttributionRequest,
@@ -4763,6 +4765,8 @@ const de_TooManyTagsExceptionRes = async (
 
 // se_CategoricalValues omitted.
 
+// se_ColumnNamesList omitted.
+
 /**
  * serializeAws_json1_1ContinuousHyperParameterRange
  */
@@ -4883,6 +4887,8 @@ const se_CreateSolutionRequest = (input: CreateSolutionRequest, context: __Serde
 
 // se_DescribeSolutionVersionRequest omitted.
 
+// se_ExcludedDatasetColumns omitted.
+
 // se_FeatureTransformationParameters omitted.
 
 // se_GetSolutionMetricsRequest omitted.
@@ -4978,6 +4984,7 @@ const se_SolutionConfig = (input: SolutionConfig, context: __SerdeContext): any 
     featureTransformationParameters: _json,
     hpoConfig: (_) => se_HPOConfig(_, context),
     optimizationObjective: _json,
+    trainingDataConfig: _json,
   });
 };
 
@@ -4994,6 +5001,8 @@ const se_SolutionConfig = (input: SolutionConfig, context: __SerdeContext): any 
 // se_TagResourceRequest omitted.
 
 // se_Tags omitted.
+
+// se_TrainingDataConfig omitted.
 
 // se_UntagResourceRequest omitted.
 
@@ -5200,6 +5209,8 @@ const de_CampaignUpdateSummary = (output: any, context: __SerdeContext): Campaig
 // de_CategoricalHyperParameterRanges omitted.
 
 // de_CategoricalValues omitted.
+
+// de_ColumnNamesList omitted.
 
 /**
  * deserializeAws_json1_1ContinuousHyperParameterRange
@@ -5717,6 +5728,8 @@ const de_EventTrackerSummary = (output: any, context: __SerdeContext): EventTrac
   }) as any;
 };
 
+// de_ExcludedDatasetColumns omitted.
+
 /**
  * deserializeAws_json1_1FeatureTransformation
  */
@@ -6202,6 +6215,7 @@ const de_SolutionConfig = (output: any, context: __SerdeContext): SolutionConfig
     featureTransformationParameters: _json,
     hpoConfig: (_: any) => de_HPOConfig(_, context),
     optimizationObjective: _json,
+    trainingDataConfig: _json,
   }) as any;
 };
 
@@ -6294,6 +6308,8 @@ const de_SolutionVersionSummary = (output: any, context: __SerdeContext): Soluti
 
 // de_TooManyTagsException omitted.
 
+// de_TrainingDataConfig omitted.
+
 // de_TunedHPOParams omitted.
 
 // de_UntagResourceResponse omitted.
@@ -6311,14 +6327,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

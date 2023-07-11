@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
 import { getAwsAuthPlugin } from "@aws-sdk/middleware-signing";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,7 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CognitoIdentityProviderClientResolvedConfig,
@@ -27,6 +27,10 @@ import {
 } from "../models/models_0";
 import { de_SetUICustomizationCommand, se_SetUICustomizationCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -44,17 +48,17 @@ export interface SetUICustomizationCommandOutput extends SetUICustomizationRespo
  * @public
  * <p>Sets the user interface (UI) customization information for a user pool's built-in app
  *             UI.</p>
- *         <p>You can specify app UI customization settings for a single client (with a specific
+ *          <p>You can specify app UI customization settings for a single client (with a specific
  *                 <code>clientId</code>) or for all clients (by setting the <code>clientId</code> to
  *                 <code>ALL</code>). If you specify <code>ALL</code>, the default configuration is
  *             used for every client that has no previously set UI customization. If you specify UI
  *             customization settings for a particular client, it will no longer return to the
  *                 <code>ALL</code> configuration.</p>
- *         <note>
+ *          <note>
  *             <p>To use this API, your user pool must have a domain associated with it. Otherwise,
  *                 there is no place to host the app's pages, and the service will throw an
  *                 error.</p>
- *         </note>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

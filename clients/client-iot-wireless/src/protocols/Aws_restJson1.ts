@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -20,12 +21,12 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import {
@@ -891,6 +892,7 @@ export const se_CreateNetworkAnalyzerConfigurationCommand = async (
     take(input, {
       ClientRequestToken: [true, (_) => _ ?? generateIdempotencyToken()],
       Description: [],
+      MulticastGroups: (_) => _json(_),
       Name: [],
       Tags: (_) => _json(_),
       TraceContent: (_) => _json(_),
@@ -3494,6 +3496,8 @@ export const se_UpdateNetworkAnalyzerConfigurationCommand = async (
   body = JSON.stringify(
     take(input, {
       Description: [],
+      MulticastGroupsToAdd: (_) => _json(_),
+      MulticastGroupsToRemove: (_) => _json(_),
       TraceContent: (_) => _json(_),
       WirelessDevicesToAdd: (_) => _json(_),
       WirelessDevicesToRemove: (_) => _json(_),
@@ -6446,6 +6450,7 @@ export const de_GetNetworkAnalyzerConfigurationCommand = async (
   const doc = take(data, {
     Arn: __expectString,
     Description: __expectString,
+    MulticastGroups: _json,
     Name: __expectString,
     TraceContent: _json,
     WirelessDevices: _json,
@@ -10561,6 +10566,8 @@ const se_LteObj = (input: LteObj, context: __SerdeContext): any => {
 
 // se_NetIdFilters omitted.
 
+// se_NetworkAnalyzerMulticastGroupList omitted.
+
 // se_OtaaV1_0_x omitted.
 
 // se_OtaaV1_1 omitted.
@@ -10906,6 +10913,8 @@ const de_LoRaWANMulticastSession = (output: any, context: __SerdeContext): LoRaW
 
 // de_NetworkAnalyzerConfigurations omitted.
 
+// de_NetworkAnalyzerMulticastGroupList omitted.
+
 // de_OtaaV1_0_x omitted.
 
 // de_OtaaV1_1 omitted.
@@ -11070,14 +11079,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

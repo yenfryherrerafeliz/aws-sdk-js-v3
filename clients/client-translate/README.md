@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-translate
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-translate/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-translate)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-translate.svg)](https://www.npmjs.com/package/@aws-sdk/client-translate)
-
 ## Description
 
 AWS SDK for JavaScript Translate Client for Node.js, Browser and React Native.
@@ -324,6 +321,14 @@ TagResource
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-translate/classes/tagresourcecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-translate/interfaces/tagresourcecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-translate/interfaces/tagresourcecommandoutput.html)
+
+</details>
+<details>
+<summary>
+TranslateDocument
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-translate/classes/translatedocumentcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-translate/interfaces/translatedocumentcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-translate/interfaces/translatedocumentcommandoutput.html)
 
 </details>
 <details>

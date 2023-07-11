@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AlexaForBusinessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AlexaForBusinessClient";
 import { SearchUsersRequest, SearchUsersResponse } from "../models/models_0";
 import { de_SearchUsersCommand, se_SearchUsersCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,6 +36,8 @@ export interface SearchUsersCommandOutput extends SearchUsersResponse, __Metadat
 
 /**
  * @public
+ * @deprecated
+ *
  * <p>Searches users and lists the ones that meet a set of filter and sort
  *          criteria.</p>
  * @example
@@ -54,7 +60,7 @@ export interface SearchUsersCommandOutput extends SearchUsersResponse, __Metadat
  *   SortCriteria: [ // SortList
  *     { // Sort
  *       Key: "STRING_VALUE", // required
- *       Value: "STRING_VALUE", // required
+ *       Value: "ASC" || "DESC", // required
  *     },
  *   ],
  * };
@@ -67,7 +73,7 @@ export interface SearchUsersCommandOutput extends SearchUsersResponse, __Metadat
  * //       FirstName: "STRING_VALUE",
  * //       LastName: "STRING_VALUE",
  * //       Email: "STRING_VALUE",
- * //       EnrollmentStatus: "STRING_VALUE",
+ * //       EnrollmentStatus: "INITIALIZED" || "PENDING" || "REGISTERED" || "DISASSOCIATING" || "DEREGISTERING",
  * //       EnrollmentId: "STRING_VALUE",
  * //     },
  * //   ],

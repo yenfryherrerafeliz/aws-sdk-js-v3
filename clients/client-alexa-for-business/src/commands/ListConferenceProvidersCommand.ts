@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AlexaForBusinessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AlexaForBusinessClient";
 import { ListConferenceProvidersRequest, ListConferenceProvidersResponse } from "../models/models_0";
 import { de_ListConferenceProvidersCommand, se_ListConferenceProvidersCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,6 +36,8 @@ export interface ListConferenceProvidersCommandOutput extends ListConferenceProv
 
 /**
  * @public
+ * @deprecated
+ *
  * <p>Lists conference providers under a specific AWS account.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -50,10 +56,10 @@ export interface ListConferenceProvidersCommandOutput extends ListConferenceProv
  * //     { // ConferenceProvider
  * //       Arn: "STRING_VALUE",
  * //       Name: "STRING_VALUE",
- * //       Type: "STRING_VALUE",
+ * //       Type: "CHIME" || "BLUEJEANS" || "FUZE" || "GOOGLE_HANGOUTS" || "POLYCOM" || "RINGCENTRAL" || "SKYPE_FOR_BUSINESS" || "WEBEX" || "ZOOM" || "CUSTOM",
  * //       IPDialIn: { // IPDialIn
  * //         Endpoint: "STRING_VALUE", // required
- * //         CommsProtocol: "STRING_VALUE", // required
+ * //         CommsProtocol: "SIP" || "SIPS" || "H323", // required
  * //       },
  * //       PSTNDialIn: { // PSTNDialIn
  * //         CountryCode: "STRING_VALUE", // required
@@ -62,7 +68,7 @@ export interface ListConferenceProvidersCommandOutput extends ListConferenceProv
  * //         OneClickPinDelay: "STRING_VALUE", // required
  * //       },
  * //       MeetingSetting: { // MeetingSetting
- * //         RequirePin: "STRING_VALUE", // required
+ * //         RequirePin: "YES" || "NO" || "OPTIONAL", // required
  * //       },
  * //     },
  * //   ],

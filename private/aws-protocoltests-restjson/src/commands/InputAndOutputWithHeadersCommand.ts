@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { InputAndOutputWithHeadersIO } from "../models/models_0";
 import { de_InputAndOutputWithHeadersCommand, se_InputAndOutputWithHeadersCommand } from "../protocols/Aws_restJson1";
 import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RestJsonProtocolClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -75,6 +79,41 @@ export interface InputAndOutputWithHeadersCommandOutput extends InputAndOutputWi
  * };
  * const command = new InputAndOutputWithHeadersCommand(input);
  * const response = await client.send(command);
+ * // { // InputAndOutputWithHeadersIO
+ * //   headerString: "STRING_VALUE",
+ * //   headerByte: "BYTE_VALUE",
+ * //   headerShort: Number("short"),
+ * //   headerInteger: Number("int"),
+ * //   headerLong: Number("long"),
+ * //   headerFloat: Number("float"),
+ * //   headerDouble: Number("double"),
+ * //   headerTrueBool: true || false,
+ * //   headerFalseBool: true || false,
+ * //   headerStringList: [ // StringList
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   headerStringSet: [ // StringSet
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   headerIntegerList: [ // IntegerList
+ * //     Number("int"),
+ * //   ],
+ * //   headerBooleanList: [ // BooleanList
+ * //     true || false,
+ * //   ],
+ * //   headerTimestampList: [ // TimestampList
+ * //     new Date("TIMESTAMP"),
+ * //   ],
+ * //   headerEnum: "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   headerEnumList: [ // FooEnumList
+ * //     "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   ],
+ * //   headerIntegerEnum: 1 || 2 || 3,
+ * //   headerIntegerEnumList: [ // IntegerEnumList
+ * //     1 || 2 || 3,
+ * //   ],
+ * // };
+ *
  * ```
  *
  * @param InputAndOutputWithHeadersCommandInput - {@link InputAndOutputWithHeadersCommandInput}
@@ -83,6 +122,8 @@ export interface InputAndOutputWithHeadersCommandOutput extends InputAndOutputWi
  * @see {@link InputAndOutputWithHeadersCommandOutput} for command's `response` shape.
  * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
  *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
  *
  */
 export class InputAndOutputWithHeadersCommand extends $Command<

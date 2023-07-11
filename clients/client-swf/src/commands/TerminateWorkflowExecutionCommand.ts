@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { TerminateWorkflowExecutionInput } from "../models/models_0";
 import { de_TerminateWorkflowExecutionCommand, se_TerminateWorkflowExecutionCommand } from "../protocols/Aws_json1_0";
 import { ServiceInputTypes, ServiceOutputTypes, SWFClientResolvedConfig } from "../SWFClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,23 +40,19 @@ export interface TerminateWorkflowExecutionCommandOutput extends __MetadataBeare
  *       workflow execution identified by the given domain, runId, and workflowId. The child policy,
  *       registered with the workflow type or specified when starting this execution, is applied to any
  *       open child workflow executions of this workflow execution.</p>
- *
  *          <important>
  *             <p>If the identified workflow execution was in progress, it is terminated
  *         immediately.</p>
  *          </important>
- *
  *          <note>
  *             <p>If a runId isn't specified, then the <code>WorkflowExecutionTerminated</code> event
  *         is recorded in the history of the current open workflow with the matching workflowId in the
  *         domain.</p>
  *          </note>
- *
  *          <note>
  *             <p>You should consider using <a>RequestCancelWorkflowExecution</a> action
  *         instead because it allows the workflow to gracefully close while <a>TerminateWorkflowExecution</a> doesn't.</p>
  *          </note>
- *
  *          <p>
  *             <b>Access Control</b>
  *          </p>

@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { MediaTypeHeaderInput, MediaTypeHeaderOutput } from "../models/models_0";
 import { de_MediaTypeHeaderCommand, se_MediaTypeHeaderCommand } from "../protocols/Aws_restJson1";
 import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RestJsonProtocolClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -43,6 +47,10 @@ export interface MediaTypeHeaderCommandOutput extends MediaTypeHeaderOutput, __M
  * };
  * const command = new MediaTypeHeaderCommand(input);
  * const response = await client.send(command);
+ * // { // MediaTypeHeaderOutput
+ * //   json: "STRING_VALUE",
+ * // };
+ *
  * ```
  *
  * @param MediaTypeHeaderCommandInput - {@link MediaTypeHeaderCommandInput}
@@ -51,6 +59,8 @@ export interface MediaTypeHeaderCommandOutput extends MediaTypeHeaderOutput, __M
  * @see {@link MediaTypeHeaderCommandOutput} for command's `response` shape.
  * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
  *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
  *
  */
 export class MediaTypeHeaderCommand extends $Command<

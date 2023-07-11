@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { DescribeStackEventsInput, DescribeStackEventsOutput } from "../models/models_0";
 import { de_DescribeStackEventsCommand, se_DescribeStackEventsCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,12 +36,11 @@ export interface DescribeStackEventsCommandOutput extends DescribeStackEventsOut
 
 /**
  * @public
- * <p>Returns all stack related events for a specified stack in reverse chronological order.
- *          For more information about a stack's event history, go to <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/concept-stack.html">Stacks</a> in the
- *          CloudFormation User Guide.</p>
+ * <p>Returns all stack related events for a specified stack in reverse chronological order. For more information
+ *    about a stack's event history, go to <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/concept-stack.html">Stacks</a> in the CloudFormation User Guide.</p>
  *          <note>
- *             <p>You can list events for stacks that have failed to create or have been deleted by
- *             specifying the unique stack identifier (stack ID).</p>
+ *             <p>You can list events for stacks that have failed to create or have been deleted by specifying the unique stack
+ *     identifier (stack ID).</p>
  *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.

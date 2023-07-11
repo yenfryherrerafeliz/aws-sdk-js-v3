@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,7 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   StreamingTraitsRequireLengthInput,
@@ -24,9 +24,8 @@ import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputT
 
 /**
  * @public
- *
- * The input for {@link StreamingTraitsRequireLengthCommand}.
  */
+export { __MetadataBearer, $Command };
 export type StreamingTraitsRequireLengthCommandInputType = Omit<StreamingTraitsRequireLengthInput, "blob"> & {
   /**
    * For *`StreamingTraitsRequireLengthInput["blob"]`*, see {@link StreamingTraitsRequireLengthInput.blob}.
@@ -34,7 +33,9 @@ export type StreamingTraitsRequireLengthCommandInputType = Omit<StreamingTraitsR
   blob?: StreamingTraitsRequireLengthInput["blob"] | string | Uint8Array | Buffer;
 };
 /**
- * This interface extends from `StreamingTraitsRequireLengthInput` interface. There are more parameters than `blob` defined in {@link StreamingTraitsRequireLengthInput}
+ * @public
+ *
+ * The input for {@link StreamingTraitsRequireLengthCommand}.
  */
 export interface StreamingTraitsRequireLengthCommandInput extends StreamingTraitsRequireLengthCommandInputType {}
 /**
@@ -63,6 +64,8 @@ export interface StreamingTraitsRequireLengthCommandOutput extends __MetadataBea
  * };
  * const command = new StreamingTraitsRequireLengthCommand(input);
  * const response = await client.send(command);
+ * // {};
+ *
  * ```
  *
  * @param StreamingTraitsRequireLengthCommandInput - {@link StreamingTraitsRequireLengthCommandInput}
@@ -71,6 +74,8 @@ export interface StreamingTraitsRequireLengthCommandOutput extends __MetadataBea
  * @see {@link StreamingTraitsRequireLengthCommandOutput} for command's `response` shape.
  * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
  *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
  *
  */
 export class StreamingTraitsRequireLengthCommand extends $Command<

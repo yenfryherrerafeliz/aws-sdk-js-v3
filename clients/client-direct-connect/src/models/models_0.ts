@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { DirectConnectServiceException as __BaseException } from "./DirectConnectServiceException";
 
@@ -497,7 +497,7 @@ export interface Connection {
   awsDevice?: string;
 
   /**
-   * <p>Indicates whether jumbo frames (9001 MTU) are supported.</p>
+   * <p>Indicates whether jumbo frames are supported.</p>
    */
   jumboFrameCapable?: boolean;
 
@@ -964,12 +964,12 @@ export interface VirtualInterface {
   customerRouterConfig?: string;
 
   /**
-   * <p>The maximum transmission unit (MTU), in bytes. The supported values are 1500 and 9001. The default value is 1500.</p>
+   * <p>The maximum transmission unit (MTU), in bytes. The supported values are 1500 and 8500. The default value is 1500</p>
    */
   mtu?: number;
 
   /**
-   * <p>Indicates whether jumbo frames (9001 MTU) are supported.</p>
+   * <p>Indicates whether jumbo frames are supported.</p>
    */
   jumboFrameCapable?: boolean;
 
@@ -1114,7 +1114,7 @@ export interface NewTransitVirtualInterfaceAllocation {
   asn?: number;
 
   /**
-   * <p>The maximum transmission unit (MTU), in bytes. The supported values are 1500 and 9001. The default value is 1500. </p>
+   * <p>The maximum transmission unit (MTU), in bytes. The supported values are 1500 and 8500. The default value is 1500 </p>
    */
   mtu?: number;
 
@@ -2031,7 +2031,7 @@ export interface Interconnect {
   awsDevice?: string;
 
   /**
-   * <p>Indicates whether jumbo frames (9001 MTU) are supported.</p>
+   * <p>Indicates whether jumbo frames are supported.</p>
    */
   jumboFrameCapable?: boolean;
 
@@ -2247,7 +2247,7 @@ export interface Lag {
   allowsHostedConnections?: boolean;
 
   /**
-   * <p>Indicates whether jumbo frames (9001 MTU) are supported.</p>
+   * <p>Indicates whether jumbo frames are supported.</p>
    */
   jumboFrameCapable?: boolean;
 

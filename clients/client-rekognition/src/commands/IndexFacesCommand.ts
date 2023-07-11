@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { IndexFacesRequest, IndexFacesResponse } from "../models/models_0";
 import { de_IndexFacesCommand, se_IndexFacesCommand } from "../protocols/Aws_json1_1";
 import { RekognitionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RekognitionClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -143,7 +147,7 @@ export interface IndexFacesCommandOutput extends IndexFacesResponse, __MetadataB
  *   },
  *   ExternalImageId: "STRING_VALUE",
  *   DetectionAttributes: [ // Attributes
- *     "DEFAULT" || "ALL" || "AGE_RANGE" || "BEARD" || "EMOTIONS" || "EYEGLASSES" || "EYES_OPEN" || "GENDER" || "MOUTH_OPEN" || "MUSTACHE" || "FACE_OCCLUDED" || "SMILE" || "SUNGLASSES",
+ *     "DEFAULT" || "ALL" || "AGE_RANGE" || "BEARD" || "EMOTIONS" || "EYE_DIRECTION" || "EYEGLASSES" || "EYES_OPEN" || "GENDER" || "MOUTH_OPEN" || "MUSTACHE" || "FACE_OCCLUDED" || "SMILE" || "SUNGLASSES",
  *   ],
  *   MaxFaces: Number("int"),
  *   QualityFilter: "NONE" || "AUTO" || "LOW" || "MEDIUM" || "HIGH",
@@ -165,6 +169,7 @@ export interface IndexFacesCommandOutput extends IndexFacesResponse, __MetadataB
  * //         ExternalImageId: "STRING_VALUE",
  * //         Confidence: Number("float"),
  * //         IndexFacesModelVersion: "STRING_VALUE",
+ * //         UserId: "STRING_VALUE",
  * //       },
  * //       FaceDetail: { // FaceDetail
  * //         BoundingBox: {
@@ -234,6 +239,11 @@ export interface IndexFacesCommandOutput extends IndexFacesResponse, __MetadataB
  * //         Confidence: Number("float"),
  * //         FaceOccluded: { // FaceOccluded
  * //           Value: true || false,
+ * //           Confidence: Number("float"),
+ * //         },
+ * //         EyeDirection: { // EyeDirection
+ * //           Yaw: Number("float"),
+ * //           Pitch: Number("float"),
  * //           Confidence: Number("float"),
  * //         },
  * //       },
@@ -314,6 +324,11 @@ export interface IndexFacesCommandOutput extends IndexFacesResponse, __MetadataB
  * //         Confidence: Number("float"),
  * //         FaceOccluded: {
  * //           Value: true || false,
+ * //           Confidence: Number("float"),
+ * //         },
+ * //         EyeDirection: {
+ * //           Yaw: Number("float"),
+ * //           Pitch: Number("float"),
  * //           Confidence: Number("float"),
  * //         },
  * //       },

@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectInt32 as __expectInt32,
   expectNonNull as __expectNonNull,
@@ -12,18 +13,22 @@ import {
   parseEpochTimestamp as __parseEpochTimestamp,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CreateSignalingChannelCommandInput,
   CreateSignalingChannelCommandOutput,
 } from "../commands/CreateSignalingChannelCommand";
 import { CreateStreamCommandInput, CreateStreamCommandOutput } from "../commands/CreateStreamCommand";
+import {
+  DeleteEdgeConfigurationCommandInput,
+  DeleteEdgeConfigurationCommandOutput,
+} from "../commands/DeleteEdgeConfigurationCommand";
 import {
   DeleteSignalingChannelCommandInput,
   DeleteSignalingChannelCommandOutput,
@@ -59,6 +64,10 @@ import {
   GetSignalingChannelEndpointCommandInput,
   GetSignalingChannelEndpointCommandOutput,
 } from "../commands/GetSignalingChannelEndpointCommand";
+import {
+  ListEdgeAgentConfigurationsCommandInput,
+  ListEdgeAgentConfigurationsCommandOutput,
+} from "../commands/ListEdgeAgentConfigurationsCommand";
 import {
   ListSignalingChannelsCommandInput,
   ListSignalingChannelsCommandOutput,
@@ -109,12 +118,16 @@ import {
   ClientLimitExceededException,
   DeletionConfig,
   DeviceStreamLimitExceededException,
+  EdgeAgentStatus,
   EdgeConfig,
   ImageGenerationConfiguration,
   ImageGenerationDestinationConfig,
   InvalidArgumentException,
   InvalidDeviceException,
   InvalidResourceFormatException,
+  LastRecorderStatus,
+  LastUploaderStatus,
+  ListEdgeAgentConfigurationsEdgeConfig,
   LocalSizeConfig,
   MediaSourceConfig,
   MediaStorageConfiguration,
@@ -191,6 +204,37 @@ export const se_CreateStreamCommand = async (
       MediaType: [],
       StreamName: [],
       Tags: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1DeleteEdgeConfigurationCommand
+ */
+export const se_DeleteEdgeConfigurationCommand = async (
+  input: DeleteEdgeConfigurationCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/deleteEdgeConfiguration";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      StreamARN: [],
+      StreamName: [],
     })
   );
   return new __HttpRequest({
@@ -532,6 +576,38 @@ export const se_GetSignalingChannelEndpointCommand = async (
     take(input, {
       ChannelARN: [],
       SingleMasterChannelEndpointConfiguration: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ListEdgeAgentConfigurationsCommand
+ */
+export const se_ListEdgeAgentConfigurationsCommand = async (
+  input: ListEdgeAgentConfigurationsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/listEdgeAgentConfigurations";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      HubDeviceArn: [],
+      MaxResults: [],
+      NextToken: [],
     })
   );
   return new __HttpRequest({
@@ -1143,6 +1219,61 @@ const de_CreateStreamCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1DeleteEdgeConfigurationCommand
+ */
+export const de_DeleteEdgeConfigurationCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteEdgeConfigurationCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_DeleteEdgeConfigurationCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1DeleteEdgeConfigurationCommandError
+ */
+const de_DeleteEdgeConfigurationCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteEdgeConfigurationCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.kinesisvideo#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "ClientLimitExceededException":
+    case "com.amazonaws.kinesisvideo#ClientLimitExceededException":
+      throw await de_ClientLimitExceededExceptionRes(parsedOutput, context);
+    case "InvalidArgumentException":
+    case "com.amazonaws.kinesisvideo#InvalidArgumentException":
+      throw await de_InvalidArgumentExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.kinesisvideo#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "StreamEdgeConfigurationNotFoundException":
+    case "com.amazonaws.kinesisvideo#StreamEdgeConfigurationNotFoundException":
+      throw await de_StreamEdgeConfigurationNotFoundExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1DeleteSignalingChannelCommand
  */
 export const de_DeleteSignalingChannelCommand = async (
@@ -1274,6 +1405,7 @@ export const de_DescribeEdgeConfigurationCommand = async (
   const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
   const doc = take(data, {
     CreationTime: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    EdgeAgentStatus: (_) => de_EdgeAgentStatus(_, context),
     EdgeConfig: _json,
     FailedStatusDetails: __expectString,
     LastUpdatedTime: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
@@ -1765,6 +1897,60 @@ const de_GetSignalingChannelEndpointCommandError = async (
     case "ResourceNotFoundException":
     case "com.amazonaws.kinesisvideo#ResourceNotFoundException":
       throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1ListEdgeAgentConfigurationsCommand
+ */
+export const de_ListEdgeAgentConfigurationsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListEdgeAgentConfigurationsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListEdgeAgentConfigurationsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    EdgeConfigs: (_) => de_ListEdgeAgentConfigurationsEdgeConfigList(_, context),
+    NextToken: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListEdgeAgentConfigurationsCommandError
+ */
+const de_ListEdgeAgentConfigurationsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListEdgeAgentConfigurationsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "ClientLimitExceededException":
+    case "com.amazonaws.kinesisvideo#ClientLimitExceededException":
+      throw await de_ClientLimitExceededExceptionRes(parsedOutput, context);
+    case "InvalidArgumentException":
+    case "com.amazonaws.kinesisvideo#InvalidArgumentException":
+      throw await de_InvalidArgumentExceptionRes(parsedOutput, context);
+    case "NotAuthorizedException":
+    case "com.amazonaws.kinesisvideo#NotAuthorizedException":
+      throw await de_NotAuthorizedExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -3009,6 +3195,16 @@ const de_ChannelInfoList = (output: any, context: __SerdeContext): ChannelInfo[]
 
 // de_DeletionConfig omitted.
 
+/**
+ * deserializeAws_restJson1EdgeAgentStatus
+ */
+const de_EdgeAgentStatus = (output: any, context: __SerdeContext): EdgeAgentStatus => {
+  return take(output, {
+    LastRecorderStatus: (_: any) => de_LastRecorderStatus(_, context),
+    LastUploaderStatus: (_: any) => de_LastUploaderStatus(_, context),
+  }) as any;
+};
+
 // de_EdgeConfig omitted.
 
 // de_FormatConfig omitted.
@@ -3016,6 +3212,63 @@ const de_ChannelInfoList = (output: any, context: __SerdeContext): ChannelInfo[]
 // de_ImageGenerationConfiguration omitted.
 
 // de_ImageGenerationDestinationConfig omitted.
+
+/**
+ * deserializeAws_restJson1LastRecorderStatus
+ */
+const de_LastRecorderStatus = (output: any, context: __SerdeContext): LastRecorderStatus => {
+  return take(output, {
+    JobStatusDetails: __expectString,
+    LastCollectedTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    LastUpdatedTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    RecorderStatus: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1LastUploaderStatus
+ */
+const de_LastUploaderStatus = (output: any, context: __SerdeContext): LastUploaderStatus => {
+  return take(output, {
+    JobStatusDetails: __expectString,
+    LastCollectedTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    LastUpdatedTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    UploaderStatus: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1ListEdgeAgentConfigurationsEdgeConfig
+ */
+const de_ListEdgeAgentConfigurationsEdgeConfig = (
+  output: any,
+  context: __SerdeContext
+): ListEdgeAgentConfigurationsEdgeConfig => {
+  return take(output, {
+    CreationTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    EdgeConfig: _json,
+    FailedStatusDetails: __expectString,
+    LastUpdatedTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    StreamARN: __expectString,
+    StreamName: __expectString,
+    SyncStatus: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1ListEdgeAgentConfigurationsEdgeConfigList
+ */
+const de_ListEdgeAgentConfigurationsEdgeConfigList = (
+  output: any,
+  context: __SerdeContext
+): ListEdgeAgentConfigurationsEdgeConfig[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_ListEdgeAgentConfigurationsEdgeConfig(entry, context);
+    });
+  return retVal;
+};
 
 // de_LocalSizeConfig omitted.
 
@@ -3081,14 +3334,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -17,12 +18,12 @@ import {
   resolvedPath as __resolvedPath,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import {
@@ -65,6 +66,10 @@ import {
   ListTagsForResourceCommandOutput,
 } from "../commands/ListTagsForResourceCommand";
 import { RegisterConnectorCommandInput, RegisterConnectorCommandOutput } from "../commands/RegisterConnectorCommand";
+import {
+  ResetConnectorMetadataCacheCommandInput,
+  ResetConnectorMetadataCacheCommandOutput,
+} from "../commands/ResetConnectorMetadataCacheCommand";
 import { StartFlowCommandInput, StartFlowCommandOutput } from "../commands/StartFlowCommand";
 import { StopFlowCommandInput, StopFlowCommandOutput } from "../commands/StopFlowCommand";
 import { TagResourceCommandInput, TagResourceCommandOutput } from "../commands/TagResourceCommand";
@@ -114,6 +119,7 @@ import {
   DatadogConnectorProfileCredentials,
   DatadogConnectorProfileProperties,
   DatadogSourceProperties,
+  DataTransferApi,
   DestinationConnectorProperties,
   DestinationFlowConfig,
   DynatraceConnectorProfileCredentials,
@@ -701,6 +707,40 @@ export const se_RegisterConnectorCommand = async (
       connectorProvisioningConfig: (_) => _json(_),
       connectorProvisioningType: [],
       description: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ResetConnectorMetadataCacheCommand
+ */
+export const se_ResetConnectorMetadataCacheCommand = async (
+  input: ResetConnectorMetadataCacheCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/reset-connector-metadata-cache";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      apiVersion: [],
+      connectorEntityName: [],
+      connectorProfileName: [],
+      connectorType: [],
+      entitiesPath: [],
     })
   );
   return new __HttpRequest({
@@ -1871,6 +1911,58 @@ const de_RegisterConnectorCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1ResetConnectorMetadataCacheCommand
+ */
+export const de_ResetConnectorMetadataCacheCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ResetConnectorMetadataCacheCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ResetConnectorMetadataCacheCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ResetConnectorMetadataCacheCommandError
+ */
+const de_ResetConnectorMetadataCacheCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ResetConnectorMetadataCacheCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "ConflictException":
+    case "com.amazonaws.appflow#ConflictException":
+      throw await de_ConflictExceptionRes(parsedOutput, context);
+    case "InternalServerException":
+    case "com.amazonaws.appflow#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.appflow#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.appflow#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1StartFlowCommand
  */
 export const de_StartFlowCommand = async (
@@ -2569,6 +2661,8 @@ const de_ValidationExceptionRes = async (parsedOutput: any, context: __SerdeCont
 
 // se_DatadogSourceProperties omitted.
 
+// se_DataTransferApi omitted.
+
 // se_DestinationConnectorProperties omitted.
 
 // se_DestinationFlowConfig omitted.
@@ -2820,6 +2914,8 @@ const de_ConnectorConfiguration = (output: any, context: __SerdeContext): Connec
     registeredAt: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     registeredBy: __expectString,
     supportedApiVersions: _json,
+    supportedDataTransferApis: _json,
+    supportedDataTransferTypes: _json,
     supportedDestinationConnectors: _json,
     supportedOperators: _json,
     supportedSchedulingFrequencies: _json,
@@ -2863,6 +2959,7 @@ const de_ConnectorDetail = (output: any, context: __SerdeContext): ConnectorDeta
     connectorVersion: __expectString,
     registeredAt: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     registeredBy: __expectString,
+    supportedDataTransferTypes: _json,
   }) as any;
 };
 
@@ -2986,6 +3083,8 @@ const de_ConnectorProfileDetailList = (output: any, context: __SerdeContext): Co
 // de_DatadogMetadata omitted.
 
 // de_DatadogSourceProperties omitted.
+
+// de_DataTransferApi omitted.
 
 // de_DestinationConnectorProperties omitted.
 
@@ -3276,6 +3375,10 @@ const de_ScheduledTriggerProperties = (output: any, context: __SerdeContext): Sc
 
 // de_SupportedApiVersionList omitted.
 
+// de_SupportedDataTransferApis omitted.
+
+// de_SupportedDataTransferTypeList omitted.
+
 /**
  * deserializeAws_restJson1SupportedFieldTypeDetails
  */
@@ -3357,14 +3460,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

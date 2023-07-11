@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectInt32 as __expectInt32,
   expectNonNull as __expectNonNull,
@@ -13,12 +14,12 @@ import {
   resolvedPath as __resolvedPath,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CreateAccessTokenCommandInput, CreateAccessTokenCommandOutput } from "../commands/CreateAccessTokenCommand";
 import {
@@ -49,6 +50,10 @@ import {
   ListDevEnvironmentsCommandInput,
   ListDevEnvironmentsCommandOutput,
 } from "../commands/ListDevEnvironmentsCommand";
+import {
+  ListDevEnvironmentSessionsCommandInput,
+  ListDevEnvironmentSessionsCommandOutput,
+} from "../commands/ListDevEnvironmentSessionsCommand";
 import { ListEventLogsCommandInput, ListEventLogsCommandOutput } from "../commands/ListEventLogsCommand";
 import { ListProjectsCommandInput, ListProjectsCommandOutput } from "../commands/ListProjectsCommand";
 import {
@@ -84,6 +89,7 @@ import {
   AccessTokenSummary,
   ConflictException,
   DevEnvironmentSessionConfiguration,
+  DevEnvironmentSessionSummary,
   DevEnvironmentSummary,
   EventLogEntry,
   ExecuteCommandSessionConfiguration,
@@ -503,6 +509,48 @@ export const se_ListDevEnvironmentsCommand = async (
   body = JSON.stringify(
     take(input, {
       filters: (_) => _json(_),
+      maxResults: [],
+      nextToken: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ListDevEnvironmentSessionsCommand
+ */
+export const se_ListDevEnvironmentSessionsCommand = async (
+  input: ListDevEnvironmentSessionsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/v1/spaces/{spaceName}/projects/{projectName}/devEnvironments/{devEnvironmentId}/sessions";
+  resolvedPath = __resolvedPath(resolvedPath, input, "spaceName", () => input.spaceName!, "{spaceName}", false);
+  resolvedPath = __resolvedPath(resolvedPath, input, "projectName", () => input.projectName!, "{projectName}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "devEnvironmentId",
+    () => input.devEnvironmentId!,
+    "{devEnvironmentId}",
+    false
+  );
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
       maxResults: [],
       nextToken: [],
     })
@@ -1782,6 +1830,69 @@ const de_ListDevEnvironmentsCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1ListDevEnvironmentSessionsCommand
+ */
+export const de_ListDevEnvironmentSessionsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListDevEnvironmentSessionsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListDevEnvironmentSessionsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    items: (_) => de_DevEnvironmentSessionsSummaryList(_, context),
+    nextToken: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListDevEnvironmentSessionsCommandError
+ */
+const de_ListDevEnvironmentSessionsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListDevEnvironmentSessionsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.codecatalyst#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "ConflictException":
+    case "com.amazonaws.codecatalyst#ConflictException":
+      throw await de_ConflictExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.codecatalyst#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ServiceQuotaExceededException":
+    case "com.amazonaws.codecatalyst#ServiceQuotaExceededException":
+      throw await de_ServiceQuotaExceededExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.codecatalyst#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.codecatalyst#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1ListEventLogsCommand
  */
 export const de_ListEventLogsCommand = async (
@@ -2656,6 +2767,31 @@ const de_AccessTokenSummary = (output: any, context: __SerdeContext): AccessToke
 // de_DevEnvironmentRepositorySummary omitted.
 
 /**
+ * deserializeAws_restJson1DevEnvironmentSessionsSummaryList
+ */
+const de_DevEnvironmentSessionsSummaryList = (output: any, context: __SerdeContext): DevEnvironmentSessionSummary[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_DevEnvironmentSessionSummary(entry, context);
+    });
+  return retVal;
+};
+
+/**
+ * deserializeAws_restJson1DevEnvironmentSessionSummary
+ */
+const de_DevEnvironmentSessionSummary = (output: any, context: __SerdeContext): DevEnvironmentSessionSummary => {
+  return take(output, {
+    devEnvironmentId: __expectString,
+    id: __expectString,
+    projectName: __expectString,
+    spaceName: __expectString,
+    startedTime: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
+  }) as any;
+};
+
+/**
  * deserializeAws_restJson1DevEnvironmentSummary
  */
 const de_DevEnvironmentSummary = (output: any, context: __SerdeContext): DevEnvironmentSummary => {
@@ -2811,14 +2947,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

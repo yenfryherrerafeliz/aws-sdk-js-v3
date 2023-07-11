@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { CancelUpdateStackInput } from "../models/models_0";
 import { de_CancelUpdateStackCommand, se_CancelUpdateStackCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,11 +36,10 @@ export interface CancelUpdateStackCommandOutput extends __MetadataBearer {}
 
 /**
  * @public
- * <p>Cancels an update on the specified stack. If the call completes successfully, the stack
- *          rolls back the update and reverts to the previous stack configuration.</p>
+ * <p>Cancels an update on the specified stack. If the call completes successfully, the stack rolls back the update
+ *    and reverts to the previous stack configuration.</p>
  *          <note>
- *             <p>You can cancel only stacks that are in the <code>UPDATE_IN_PROGRESS</code>
- *             state.</p>
+ *             <p>You can cancel only stacks that are in the <code>UPDATE_IN_PROGRESS</code> state.</p>
  *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.

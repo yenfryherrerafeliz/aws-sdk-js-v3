@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,89 +47,81 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CreateAwsLogSourceCommandInput, CreateAwsLogSourceCommandOutput } from "./commands/CreateAwsLogSourceCommand";
 import {
   CreateCustomLogSourceCommandInput,
   CreateCustomLogSourceCommandOutput,
 } from "./commands/CreateCustomLogSourceCommand";
+import { CreateDataLakeCommandInput, CreateDataLakeCommandOutput } from "./commands/CreateDataLakeCommand";
 import {
-  CreateDatalakeAutoEnableCommandInput,
-  CreateDatalakeAutoEnableCommandOutput,
-} from "./commands/CreateDatalakeAutoEnableCommand";
-import { CreateDatalakeCommandInput, CreateDatalakeCommandOutput } from "./commands/CreateDatalakeCommand";
+  CreateDataLakeExceptionSubscriptionCommandInput,
+  CreateDataLakeExceptionSubscriptionCommandOutput,
+} from "./commands/CreateDataLakeExceptionSubscriptionCommand";
 import {
-  CreateDatalakeDelegatedAdminCommandInput,
-  CreateDatalakeDelegatedAdminCommandOutput,
-} from "./commands/CreateDatalakeDelegatedAdminCommand";
-import {
-  CreateDatalakeExceptionsSubscriptionCommandInput,
-  CreateDatalakeExceptionsSubscriptionCommandOutput,
-} from "./commands/CreateDatalakeExceptionsSubscriptionCommand";
+  CreateDataLakeOrganizationConfigurationCommandInput,
+  CreateDataLakeOrganizationConfigurationCommandOutput,
+} from "./commands/CreateDataLakeOrganizationConfigurationCommand";
 import { CreateSubscriberCommandInput, CreateSubscriberCommandOutput } from "./commands/CreateSubscriberCommand";
 import {
-  CreateSubscriptionNotificationConfigurationCommandInput,
-  CreateSubscriptionNotificationConfigurationCommandOutput,
-} from "./commands/CreateSubscriptionNotificationConfigurationCommand";
+  CreateSubscriberNotificationCommandInput,
+  CreateSubscriberNotificationCommandOutput,
+} from "./commands/CreateSubscriberNotificationCommand";
 import { DeleteAwsLogSourceCommandInput, DeleteAwsLogSourceCommandOutput } from "./commands/DeleteAwsLogSourceCommand";
 import {
   DeleteCustomLogSourceCommandInput,
   DeleteCustomLogSourceCommandOutput,
 } from "./commands/DeleteCustomLogSourceCommand";
+import { DeleteDataLakeCommandInput, DeleteDataLakeCommandOutput } from "./commands/DeleteDataLakeCommand";
 import {
-  DeleteDatalakeAutoEnableCommandInput,
-  DeleteDatalakeAutoEnableCommandOutput,
-} from "./commands/DeleteDatalakeAutoEnableCommand";
-import { DeleteDatalakeCommandInput, DeleteDatalakeCommandOutput } from "./commands/DeleteDatalakeCommand";
+  DeleteDataLakeExceptionSubscriptionCommandInput,
+  DeleteDataLakeExceptionSubscriptionCommandOutput,
+} from "./commands/DeleteDataLakeExceptionSubscriptionCommand";
 import {
-  DeleteDatalakeDelegatedAdminCommandInput,
-  DeleteDatalakeDelegatedAdminCommandOutput,
-} from "./commands/DeleteDatalakeDelegatedAdminCommand";
-import {
-  DeleteDatalakeExceptionsSubscriptionCommandInput,
-  DeleteDatalakeExceptionsSubscriptionCommandOutput,
-} from "./commands/DeleteDatalakeExceptionsSubscriptionCommand";
+  DeleteDataLakeOrganizationConfigurationCommandInput,
+  DeleteDataLakeOrganizationConfigurationCommandOutput,
+} from "./commands/DeleteDataLakeOrganizationConfigurationCommand";
 import { DeleteSubscriberCommandInput, DeleteSubscriberCommandOutput } from "./commands/DeleteSubscriberCommand";
 import {
-  DeleteSubscriptionNotificationConfigurationCommandInput,
-  DeleteSubscriptionNotificationConfigurationCommandOutput,
-} from "./commands/DeleteSubscriptionNotificationConfigurationCommand";
+  DeleteSubscriberNotificationCommandInput,
+  DeleteSubscriberNotificationCommandOutput,
+} from "./commands/DeleteSubscriberNotificationCommand";
 import {
-  GetDatalakeAutoEnableCommandInput,
-  GetDatalakeAutoEnableCommandOutput,
-} from "./commands/GetDatalakeAutoEnableCommand";
-import { GetDatalakeCommandInput, GetDatalakeCommandOutput } from "./commands/GetDatalakeCommand";
+  DeregisterDataLakeDelegatedAdministratorCommandInput,
+  DeregisterDataLakeDelegatedAdministratorCommandOutput,
+} from "./commands/DeregisterDataLakeDelegatedAdministratorCommand";
 import {
-  GetDatalakeExceptionsExpiryCommandInput,
-  GetDatalakeExceptionsExpiryCommandOutput,
-} from "./commands/GetDatalakeExceptionsExpiryCommand";
+  GetDataLakeExceptionSubscriptionCommandInput,
+  GetDataLakeExceptionSubscriptionCommandOutput,
+} from "./commands/GetDataLakeExceptionSubscriptionCommand";
 import {
-  GetDatalakeExceptionsSubscriptionCommandInput,
-  GetDatalakeExceptionsSubscriptionCommandOutput,
-} from "./commands/GetDatalakeExceptionsSubscriptionCommand";
-import { GetDatalakeStatusCommandInput, GetDatalakeStatusCommandOutput } from "./commands/GetDatalakeStatusCommand";
+  GetDataLakeOrganizationConfigurationCommandInput,
+  GetDataLakeOrganizationConfigurationCommandOutput,
+} from "./commands/GetDataLakeOrganizationConfigurationCommand";
+import { GetDataLakeSourcesCommandInput, GetDataLakeSourcesCommandOutput } from "./commands/GetDataLakeSourcesCommand";
 import { GetSubscriberCommandInput, GetSubscriberCommandOutput } from "./commands/GetSubscriberCommand";
 import {
-  ListDatalakeExceptionsCommandInput,
-  ListDatalakeExceptionsCommandOutput,
-} from "./commands/ListDatalakeExceptionsCommand";
+  ListDataLakeExceptionsCommandInput,
+  ListDataLakeExceptionsCommandOutput,
+} from "./commands/ListDataLakeExceptionsCommand";
+import { ListDataLakesCommandInput, ListDataLakesCommandOutput } from "./commands/ListDataLakesCommand";
 import { ListLogSourcesCommandInput, ListLogSourcesCommandOutput } from "./commands/ListLogSourcesCommand";
 import { ListSubscribersCommandInput, ListSubscribersCommandOutput } from "./commands/ListSubscribersCommand";
-import { UpdateDatalakeCommandInput, UpdateDatalakeCommandOutput } from "./commands/UpdateDatalakeCommand";
 import {
-  UpdateDatalakeExceptionsExpiryCommandInput,
-  UpdateDatalakeExceptionsExpiryCommandOutput,
-} from "./commands/UpdateDatalakeExceptionsExpiryCommand";
+  RegisterDataLakeDelegatedAdministratorCommandInput,
+  RegisterDataLakeDelegatedAdministratorCommandOutput,
+} from "./commands/RegisterDataLakeDelegatedAdministratorCommand";
+import { UpdateDataLakeCommandInput, UpdateDataLakeCommandOutput } from "./commands/UpdateDataLakeCommand";
 import {
-  UpdateDatalakeExceptionsSubscriptionCommandInput,
-  UpdateDatalakeExceptionsSubscriptionCommandOutput,
-} from "./commands/UpdateDatalakeExceptionsSubscriptionCommand";
+  UpdateDataLakeExceptionSubscriptionCommandInput,
+  UpdateDataLakeExceptionSubscriptionCommandOutput,
+} from "./commands/UpdateDataLakeExceptionSubscriptionCommand";
 import { UpdateSubscriberCommandInput, UpdateSubscriberCommandOutput } from "./commands/UpdateSubscriberCommand";
 import {
-  UpdateSubscriptionNotificationConfigurationCommandInput,
-  UpdateSubscriptionNotificationConfigurationCommandOutput,
-} from "./commands/UpdateSubscriptionNotificationConfigurationCommand";
+  UpdateSubscriberNotificationCommandInput,
+  UpdateSubscriberNotificationCommandOutput,
+} from "./commands/UpdateSubscriberNotificationCommand";
 import {
   ClientInputEndpointParameters,
   ClientResolvedEndpointParameters,
@@ -138,40 +130,40 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
 export type ServiceInputTypes =
   | CreateAwsLogSourceCommandInput
   | CreateCustomLogSourceCommandInput
-  | CreateDatalakeAutoEnableCommandInput
-  | CreateDatalakeCommandInput
-  | CreateDatalakeDelegatedAdminCommandInput
-  | CreateDatalakeExceptionsSubscriptionCommandInput
+  | CreateDataLakeCommandInput
+  | CreateDataLakeExceptionSubscriptionCommandInput
+  | CreateDataLakeOrganizationConfigurationCommandInput
   | CreateSubscriberCommandInput
-  | CreateSubscriptionNotificationConfigurationCommandInput
+  | CreateSubscriberNotificationCommandInput
   | DeleteAwsLogSourceCommandInput
   | DeleteCustomLogSourceCommandInput
-  | DeleteDatalakeAutoEnableCommandInput
-  | DeleteDatalakeCommandInput
-  | DeleteDatalakeDelegatedAdminCommandInput
-  | DeleteDatalakeExceptionsSubscriptionCommandInput
+  | DeleteDataLakeCommandInput
+  | DeleteDataLakeExceptionSubscriptionCommandInput
+  | DeleteDataLakeOrganizationConfigurationCommandInput
   | DeleteSubscriberCommandInput
-  | DeleteSubscriptionNotificationConfigurationCommandInput
-  | GetDatalakeAutoEnableCommandInput
-  | GetDatalakeCommandInput
-  | GetDatalakeExceptionsExpiryCommandInput
-  | GetDatalakeExceptionsSubscriptionCommandInput
-  | GetDatalakeStatusCommandInput
+  | DeleteSubscriberNotificationCommandInput
+  | DeregisterDataLakeDelegatedAdministratorCommandInput
+  | GetDataLakeExceptionSubscriptionCommandInput
+  | GetDataLakeOrganizationConfigurationCommandInput
+  | GetDataLakeSourcesCommandInput
   | GetSubscriberCommandInput
-  | ListDatalakeExceptionsCommandInput
+  | ListDataLakeExceptionsCommandInput
+  | ListDataLakesCommandInput
   | ListLogSourcesCommandInput
   | ListSubscribersCommandInput
-  | UpdateDatalakeCommandInput
-  | UpdateDatalakeExceptionsExpiryCommandInput
-  | UpdateDatalakeExceptionsSubscriptionCommandInput
+  | RegisterDataLakeDelegatedAdministratorCommandInput
+  | UpdateDataLakeCommandInput
+  | UpdateDataLakeExceptionSubscriptionCommandInput
   | UpdateSubscriberCommandInput
-  | UpdateSubscriptionNotificationConfigurationCommandInput;
+  | UpdateSubscriberNotificationCommandInput;
 
 /**
  * @public
@@ -179,34 +171,32 @@ export type ServiceInputTypes =
 export type ServiceOutputTypes =
   | CreateAwsLogSourceCommandOutput
   | CreateCustomLogSourceCommandOutput
-  | CreateDatalakeAutoEnableCommandOutput
-  | CreateDatalakeCommandOutput
-  | CreateDatalakeDelegatedAdminCommandOutput
-  | CreateDatalakeExceptionsSubscriptionCommandOutput
+  | CreateDataLakeCommandOutput
+  | CreateDataLakeExceptionSubscriptionCommandOutput
+  | CreateDataLakeOrganizationConfigurationCommandOutput
   | CreateSubscriberCommandOutput
-  | CreateSubscriptionNotificationConfigurationCommandOutput
+  | CreateSubscriberNotificationCommandOutput
   | DeleteAwsLogSourceCommandOutput
   | DeleteCustomLogSourceCommandOutput
-  | DeleteDatalakeAutoEnableCommandOutput
-  | DeleteDatalakeCommandOutput
-  | DeleteDatalakeDelegatedAdminCommandOutput
-  | DeleteDatalakeExceptionsSubscriptionCommandOutput
+  | DeleteDataLakeCommandOutput
+  | DeleteDataLakeExceptionSubscriptionCommandOutput
+  | DeleteDataLakeOrganizationConfigurationCommandOutput
   | DeleteSubscriberCommandOutput
-  | DeleteSubscriptionNotificationConfigurationCommandOutput
-  | GetDatalakeAutoEnableCommandOutput
-  | GetDatalakeCommandOutput
-  | GetDatalakeExceptionsExpiryCommandOutput
-  | GetDatalakeExceptionsSubscriptionCommandOutput
-  | GetDatalakeStatusCommandOutput
+  | DeleteSubscriberNotificationCommandOutput
+  | DeregisterDataLakeDelegatedAdministratorCommandOutput
+  | GetDataLakeExceptionSubscriptionCommandOutput
+  | GetDataLakeOrganizationConfigurationCommandOutput
+  | GetDataLakeSourcesCommandOutput
   | GetSubscriberCommandOutput
-  | ListDatalakeExceptionsCommandOutput
+  | ListDataLakeExceptionsCommandOutput
+  | ListDataLakesCommandOutput
   | ListLogSourcesCommandOutput
   | ListSubscribersCommandOutput
-  | UpdateDatalakeCommandOutput
-  | UpdateDatalakeExceptionsExpiryCommandOutput
-  | UpdateDatalakeExceptionsSubscriptionCommandOutput
+  | RegisterDataLakeDelegatedAdministratorCommandOutput
+  | UpdateDataLakeCommandOutput
+  | UpdateDataLakeExceptionSubscriptionCommandOutput
   | UpdateSubscriberCommandOutput
-  | UpdateSubscriptionNotificationConfigurationCommandOutput;
+  | UpdateSubscriberNotificationCommandOutput;
 
 /**
  * @public
@@ -218,7 +208,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -273,7 +263,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -327,7 +317,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -335,7 +325,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type SecurityLakeClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type SecurityLakeClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -354,7 +344,7 @@ export interface SecurityLakeClientConfig extends SecurityLakeClientConfigType {
 /**
  * @public
  */
-type SecurityLakeClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type SecurityLakeClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
@@ -372,14 +362,9 @@ export interface SecurityLakeClientResolvedConfig extends SecurityLakeClientReso
 
 /**
  * @public
- * <note>
- *             <p>Amazon Security Lake is in preview release. Your use of the Security Lake preview is subject to
- *             Section 2 of the <a href="http://aws.amazon.com/service-terms/">Amazon Web Services Service
- *                Terms</a>("Betas and Previews").</p>
- *          </note>
- *          <p>Amazon Security Lake is a fully managed security data lake service. You can use Security Lake to
+ * <p>Amazon Security Lake is a fully managed security data lake service. You can use Security Lake to
  *          automatically centralize security data from cloud, on-premises, and custom sources into a
- *          data lake that's stored in your Amazon Web Servicesaccount. Amazon Web Services Organizations
+ *          data lake that's stored in your Amazon Web Services account. Amazon Web Services Organizations
  *          is an account management service that lets you consolidate multiple Amazon Web Services
  *          accounts into an organization that you create and centrally manage. With Organizations, you
  *          can create member accounts and invite existing accounts to join your organization.
@@ -387,9 +372,9 @@ export interface SecurityLakeClientResolvedConfig extends SecurityLakeClientReso
  *          security posture across the entire organization. It can also help you improve the
  *          protection of your workloads, applications, and data.</p>
  *          <p>The data lake is backed by Amazon Simple Storage Service (Amazon S3) buckets, and you
- *          retain ownership over your data.   </p>
+ *          retain ownership over your data.</p>
  *          <p>Amazon Security Lake integrates with CloudTrail, a service that provides a record of
- *          actions taken by a user, role, or an Amazon Web Services service in Security Lake CloudTrail captures API calls for Security Lake as events. The calls captured include calls
+ *          actions taken by a user, role, or an Amazon Web Services service. In Security Lake, CloudTrail captures API calls for Security Lake as events. The calls captured include calls
  *          from the Security Lake console and code calls to the Security Lake API operations. If you create a
  *          trail, you can enable continuous delivery of CloudTrail events to an Amazon S3 bucket, including events for Security Lake. If you don't configure a trail, you can still
  *          view the most recent events in the CloudTrail console in Event history. Using the

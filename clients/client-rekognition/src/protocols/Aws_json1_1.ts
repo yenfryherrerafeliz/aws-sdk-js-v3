@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -15,14 +16,16 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { v4 as generateIdempotencyToken } from "uuid";
 
+import { AssociateFacesCommandInput, AssociateFacesCommandOutput } from "../commands/AssociateFacesCommand";
 import { CompareFacesCommandInput, CompareFacesCommandOutput } from "../commands/CompareFacesCommand";
 import { CopyProjectVersionCommandInput, CopyProjectVersionCommandOutput } from "../commands/CopyProjectVersionCommand";
 import { CreateCollectionCommandInput, CreateCollectionCommandOutput } from "../commands/CreateCollectionCommand";
@@ -40,6 +43,7 @@ import {
   CreateStreamProcessorCommandInput,
   CreateStreamProcessorCommandOutput,
 } from "../commands/CreateStreamProcessorCommand";
+import { CreateUserCommandInput, CreateUserCommandOutput } from "../commands/CreateUserCommand";
 import { DeleteCollectionCommandInput, DeleteCollectionCommandOutput } from "../commands/DeleteCollectionCommand";
 import { DeleteDatasetCommandInput, DeleteDatasetCommandOutput } from "../commands/DeleteDatasetCommand";
 import { DeleteFacesCommandInput, DeleteFacesCommandOutput } from "../commands/DeleteFacesCommand";
@@ -56,6 +60,7 @@ import {
   DeleteStreamProcessorCommandInput,
   DeleteStreamProcessorCommandOutput,
 } from "../commands/DeleteStreamProcessorCommand";
+import { DeleteUserCommandInput, DeleteUserCommandOutput } from "../commands/DeleteUserCommand";
 import { DescribeCollectionCommandInput, DescribeCollectionCommandOutput } from "../commands/DescribeCollectionCommand";
 import { DescribeDatasetCommandInput, DescribeDatasetCommandOutput } from "../commands/DescribeDatasetCommand";
 import { DescribeProjectsCommandInput, DescribeProjectsCommandOutput } from "../commands/DescribeProjectsCommand";
@@ -79,6 +84,7 @@ import {
   DetectProtectiveEquipmentCommandOutput,
 } from "../commands/DetectProtectiveEquipmentCommand";
 import { DetectTextCommandInput, DetectTextCommandOutput } from "../commands/DetectTextCommand";
+import { DisassociateFacesCommandInput, DisassociateFacesCommandOutput } from "../commands/DisassociateFacesCommand";
 import {
   DistributeDatasetEntriesCommandInput,
   DistributeDatasetEntriesCommandOutput,
@@ -122,6 +128,7 @@ import {
   ListTagsForResourceCommandInput,
   ListTagsForResourceCommandOutput,
 } from "../commands/ListTagsForResourceCommand";
+import { ListUsersCommandInput, ListUsersCommandOutput } from "../commands/ListUsersCommand";
 import { PutProjectPolicyCommandInput, PutProjectPolicyCommandOutput } from "../commands/PutProjectPolicyCommand";
 import {
   RecognizeCelebritiesCommandInput,
@@ -129,6 +136,8 @@ import {
 } from "../commands/RecognizeCelebritiesCommand";
 import { SearchFacesByImageCommandInput, SearchFacesByImageCommandOutput } from "../commands/SearchFacesByImageCommand";
 import { SearchFacesCommandInput, SearchFacesCommandOutput } from "../commands/SearchFacesCommand";
+import { SearchUsersByImageCommandInput, SearchUsersByImageCommandOutput } from "../commands/SearchUsersByImageCommand";
+import { SearchUsersCommandInput, SearchUsersCommandOutput } from "../commands/SearchUsersCommand";
 import {
   StartCelebrityRecognitionCommandInput,
   StartCelebrityRecognitionCommandOutput,
@@ -178,6 +187,8 @@ import {
 import {
   AccessDeniedException,
   Asset,
+  AssociateFacesRequest,
+  AssociateFacesResponse,
   Attribute,
   AuditImage,
   Beard,
@@ -191,6 +202,7 @@ import {
   CompareFacesMatch,
   CompareFacesRequest,
   CompareFacesResponse,
+  ConflictException,
   ConnectedHomeSettings,
   ConnectedHomeSettingsForUpdate,
   ContentClassifier,
@@ -204,6 +216,7 @@ import {
   CreateProjectRequest,
   CreateProjectVersionRequest,
   CreateStreamProcessorRequest,
+  CreateUserRequest,
   CustomLabel,
   DatasetChanges,
   DatasetDescription,
@@ -216,6 +229,7 @@ import {
   DeleteProjectRequest,
   DeleteProjectVersionRequest,
   DeleteStreamProcessorRequest,
+  DeleteUserRequest,
   DescribeCollectionRequest,
   DescribeCollectionResponse,
   DescribeDatasetRequest,
@@ -247,12 +261,14 @@ import {
   DetectTextFilters,
   DetectTextRequest,
   DetectTextResponse,
+  DisassociateFacesRequest,
   DistributeDataset,
   DistributeDatasetEntriesRequest,
   DominantColor,
   Emotion,
   EquipmentDetection,
   EvaluationResult,
+  EyeDirection,
   Eyeglasses,
   EyeOpen,
   Face,
@@ -320,6 +336,7 @@ import {
   ListProjectPoliciesResponse,
   ListStreamProcessorsRequest,
   ListTagsForResourceRequest,
+  ListUsersRequest,
   LivenessOutputConfig,
   MalformedPolicyDocumentException,
   ModerationLabel,
@@ -350,10 +367,15 @@ import {
   ResourceNotReadyException,
   S3Destination,
   S3Object,
+  SearchedFaceDetails,
   SearchFacesByImageRequest,
   SearchFacesByImageResponse,
   SearchFacesRequest,
   SearchFacesResponse,
+  SearchUsersByImageRequest,
+  SearchUsersByImageResponse,
+  SearchUsersRequest,
+  SearchUsersResponse,
   SegmentDetection,
   SegmentType,
   ServiceQuotaExceededException,
@@ -361,6 +383,26 @@ import {
   ShotSegment,
   Smile,
   StartCelebrityRecognitionRequest,
+  StreamProcessorDataSharingPreference,
+  StreamProcessorInput,
+  StreamProcessorNotificationChannel,
+  StreamProcessorOutput,
+  StreamProcessorSettings,
+  Sunglasses,
+  TechnicalCueSegment,
+  TestingData,
+  TextDetection,
+  TextDetectionResult,
+  ThrottlingException,
+  TrainingData,
+  UnindexedFace,
+  UnsearchedFace,
+  UnsuccessfulFaceAssociation,
+  UserMatch,
+  Video,
+  VideoMetadata,
+} from "../models/models_0";
+import {
   StartContentModerationRequest,
   StartFaceDetectionRequest,
   StartFaceSearchRequest,
@@ -378,32 +420,28 @@ import {
   StopStreamProcessorRequest,
   StreamProcessingStartSelector,
   StreamProcessingStopSelector,
-  StreamProcessorDataSharingPreference,
-  StreamProcessorInput,
-  StreamProcessorNotificationChannel,
-  StreamProcessorOutput,
-  StreamProcessorSettings,
-  Sunglasses,
-  TagResourceRequest,
-  TechnicalCueSegment,
-  TestingData,
-  TextDetection,
-  TextDetectionResult,
-  ThrottlingException,
-  TrainingData,
-  UnindexedFace,
-  UntagResourceRequest,
-  Video,
-  VideoMetadata,
-  VideoTooLargeException,
-} from "../models/models_0";
-import {
   StreamProcessorParameterToDelete,
   StreamProcessorSettingsForUpdate,
+  TagResourceRequest,
+  UntagResourceRequest,
   UpdateDatasetEntriesRequest,
   UpdateStreamProcessorRequest,
+  VideoTooLargeException,
 } from "../models/models_1";
 import { RekognitionServiceException as __BaseException } from "../models/RekognitionServiceException";
+
+/**
+ * serializeAws_json1_1AssociateFacesCommand
+ */
+export const se_AssociateFacesCommand = async (
+  input: AssociateFacesCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("AssociateFaces");
+  let body: any;
+  body = JSON.stringify(se_AssociateFacesRequest(input, context));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
 
 /**
  * serializeAws_json1_1CompareFacesCommand
@@ -510,6 +548,19 @@ export const se_CreateStreamProcessorCommand = async (
 };
 
 /**
+ * serializeAws_json1_1CreateUserCommand
+ */
+export const se_CreateUserCommand = async (
+  input: CreateUserCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("CreateUser");
+  let body: any;
+  body = JSON.stringify(se_CreateUserRequest(input, context));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
  * serializeAws_json1_1DeleteCollectionCommand
  */
 export const se_DeleteCollectionCommand = async (
@@ -597,6 +648,19 @@ export const se_DeleteStreamProcessorCommand = async (
   const headers: __HeaderBag = sharedHeaders("DeleteStreamProcessor");
   let body: any;
   body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1DeleteUserCommand
+ */
+export const se_DeleteUserCommand = async (
+  input: DeleteUserCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("DeleteUser");
+  let body: any;
+  body = JSON.stringify(se_DeleteUserRequest(input, context));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
 };
 
@@ -740,6 +804,19 @@ export const se_DetectTextCommand = async (
   const headers: __HeaderBag = sharedHeaders("DetectText");
   let body: any;
   body = JSON.stringify(se_DetectTextRequest(input, context));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1DisassociateFacesCommand
+ */
+export const se_DisassociateFacesCommand = async (
+  input: DisassociateFacesCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("DisassociateFaces");
+  let body: any;
+  body = JSON.stringify(se_DisassociateFacesRequest(input, context));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
 };
 
@@ -991,6 +1068,19 @@ export const se_ListTagsForResourceCommand = async (
 };
 
 /**
+ * serializeAws_json1_1ListUsersCommand
+ */
+export const se_ListUsersCommand = async (
+  input: ListUsersCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("ListUsers");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
  * serializeAws_json1_1PutProjectPolicyCommand
  */
 export const se_PutProjectPolicyCommand = async (
@@ -1039,6 +1129,32 @@ export const se_SearchFacesByImageCommand = async (
   const headers: __HeaderBag = sharedHeaders("SearchFacesByImage");
   let body: any;
   body = JSON.stringify(se_SearchFacesByImageRequest(input, context));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1SearchUsersCommand
+ */
+export const se_SearchUsersCommand = async (
+  input: SearchUsersCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("SearchUsers");
+  let body: any;
+  body = JSON.stringify(se_SearchUsersRequest(input, context));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1SearchUsersByImageCommand
+ */
+export const se_SearchUsersByImageCommand = async (
+  input: SearchUsersByImageCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("SearchUsersByImage");
+  let body: any;
+  body = JSON.stringify(se_SearchUsersByImageRequest(input, context));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
 };
 
@@ -1248,6 +1364,76 @@ export const se_UpdateStreamProcessorCommand = async (
   let body: any;
   body = JSON.stringify(se_UpdateStreamProcessorRequest(input, context));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * deserializeAws_json1_1AssociateFacesCommand
+ */
+export const de_AssociateFacesCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<AssociateFacesCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_AssociateFacesCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_AssociateFacesResponse(data, context);
+  const response: AssociateFacesCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1AssociateFacesCommandError
+ */
+const de_AssociateFacesCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<AssociateFacesCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.rekognition#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "ConflictException":
+    case "com.amazonaws.rekognition#ConflictException":
+      throw await de_ConflictExceptionRes(parsedOutput, context);
+    case "IdempotentParameterMismatchException":
+    case "com.amazonaws.rekognition#IdempotentParameterMismatchException":
+      throw await de_IdempotentParameterMismatchExceptionRes(parsedOutput, context);
+    case "InternalServerError":
+    case "com.amazonaws.rekognition#InternalServerError":
+      throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.rekognition#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "ProvisionedThroughputExceededException":
+    case "com.amazonaws.rekognition#ProvisionedThroughputExceededException":
+      throw await de_ProvisionedThroughputExceededExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.rekognition#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ServiceQuotaExceededException":
+    case "com.amazonaws.rekognition#ServiceQuotaExceededException":
+      throw await de_ServiceQuotaExceededExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.rekognition#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
 };
 
 /**
@@ -1781,6 +1967,76 @@ const de_CreateStreamProcessorCommandError = async (
 };
 
 /**
+ * deserializeAws_json1_1CreateUserCommand
+ */
+export const de_CreateUserCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateUserCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_CreateUserCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: CreateUserCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1CreateUserCommandError
+ */
+const de_CreateUserCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateUserCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.rekognition#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "ConflictException":
+    case "com.amazonaws.rekognition#ConflictException":
+      throw await de_ConflictExceptionRes(parsedOutput, context);
+    case "IdempotentParameterMismatchException":
+    case "com.amazonaws.rekognition#IdempotentParameterMismatchException":
+      throw await de_IdempotentParameterMismatchExceptionRes(parsedOutput, context);
+    case "InternalServerError":
+    case "com.amazonaws.rekognition#InternalServerError":
+      throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.rekognition#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "ProvisionedThroughputExceededException":
+    case "com.amazonaws.rekognition#ProvisionedThroughputExceededException":
+      throw await de_ProvisionedThroughputExceededExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.rekognition#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ServiceQuotaExceededException":
+    case "com.amazonaws.rekognition#ServiceQuotaExceededException":
+      throw await de_ServiceQuotaExceededExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.rekognition#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_json1_1DeleteCollectionCommand
  */
 export const de_DeleteCollectionCommand = async (
@@ -2209,6 +2465,73 @@ const de_DeleteStreamProcessorCommandError = async (
     case "ResourceInUseException":
     case "com.amazonaws.rekognition#ResourceInUseException":
       throw await de_ResourceInUseExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.rekognition#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.rekognition#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_json1_1DeleteUserCommand
+ */
+export const de_DeleteUserCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteUserCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DeleteUserCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: DeleteUserCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1DeleteUserCommandError
+ */
+const de_DeleteUserCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteUserCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.rekognition#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "ConflictException":
+    case "com.amazonaws.rekognition#ConflictException":
+      throw await de_ConflictExceptionRes(parsedOutput, context);
+    case "IdempotentParameterMismatchException":
+    case "com.amazonaws.rekognition#IdempotentParameterMismatchException":
+      throw await de_IdempotentParameterMismatchExceptionRes(parsedOutput, context);
+    case "InternalServerError":
+    case "com.amazonaws.rekognition#InternalServerError":
+      throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.rekognition#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "ProvisionedThroughputExceededException":
+    case "com.amazonaws.rekognition#ProvisionedThroughputExceededException":
+      throw await de_ProvisionedThroughputExceededExceptionRes(parsedOutput, context);
     case "ResourceNotFoundException":
     case "com.amazonaws.rekognition#ResourceNotFoundException":
       throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
@@ -2934,6 +3257,73 @@ const de_DetectTextCommandError = async (
     case "ProvisionedThroughputExceededException":
     case "com.amazonaws.rekognition#ProvisionedThroughputExceededException":
       throw await de_ProvisionedThroughputExceededExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.rekognition#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_json1_1DisassociateFacesCommand
+ */
+export const de_DisassociateFacesCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DisassociateFacesCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DisassociateFacesCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: DisassociateFacesCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1DisassociateFacesCommandError
+ */
+const de_DisassociateFacesCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DisassociateFacesCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.rekognition#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "ConflictException":
+    case "com.amazonaws.rekognition#ConflictException":
+      throw await de_ConflictExceptionRes(parsedOutput, context);
+    case "IdempotentParameterMismatchException":
+    case "com.amazonaws.rekognition#IdempotentParameterMismatchException":
+      throw await de_IdempotentParameterMismatchExceptionRes(parsedOutput, context);
+    case "InternalServerError":
+    case "com.amazonaws.rekognition#InternalServerError":
+      throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.rekognition#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "ProvisionedThroughputExceededException":
+    case "com.amazonaws.rekognition#ProvisionedThroughputExceededException":
+      throw await de_ProvisionedThroughputExceededExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.rekognition#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
     case "ThrottlingException":
     case "com.amazonaws.rekognition#ThrottlingException":
       throw await de_ThrottlingExceptionRes(parsedOutput, context);
@@ -4173,6 +4563,70 @@ const de_ListTagsForResourceCommandError = async (
 };
 
 /**
+ * deserializeAws_json1_1ListUsersCommand
+ */
+export const de_ListUsersCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListUsersCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_ListUsersCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: ListUsersCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1ListUsersCommandError
+ */
+const de_ListUsersCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListUsersCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.rekognition#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServerError":
+    case "com.amazonaws.rekognition#InternalServerError":
+      throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "InvalidPaginationTokenException":
+    case "com.amazonaws.rekognition#InvalidPaginationTokenException":
+      throw await de_InvalidPaginationTokenExceptionRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.rekognition#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "ProvisionedThroughputExceededException":
+    case "com.amazonaws.rekognition#ProvisionedThroughputExceededException":
+      throw await de_ProvisionedThroughputExceededExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.rekognition#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.rekognition#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_json1_1PutProjectPolicyCommand
  */
 export const de_PutProjectPolicyCommand = async (
@@ -4403,6 +4857,137 @@ const de_SearchFacesByImageCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<SearchFacesByImageCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.rekognition#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "ImageTooLargeException":
+    case "com.amazonaws.rekognition#ImageTooLargeException":
+      throw await de_ImageTooLargeExceptionRes(parsedOutput, context);
+    case "InternalServerError":
+    case "com.amazonaws.rekognition#InternalServerError":
+      throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "InvalidImageFormatException":
+    case "com.amazonaws.rekognition#InvalidImageFormatException":
+      throw await de_InvalidImageFormatExceptionRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.rekognition#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "InvalidS3ObjectException":
+    case "com.amazonaws.rekognition#InvalidS3ObjectException":
+      throw await de_InvalidS3ObjectExceptionRes(parsedOutput, context);
+    case "ProvisionedThroughputExceededException":
+    case "com.amazonaws.rekognition#ProvisionedThroughputExceededException":
+      throw await de_ProvisionedThroughputExceededExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.rekognition#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.rekognition#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_json1_1SearchUsersCommand
+ */
+export const de_SearchUsersCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<SearchUsersCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_SearchUsersCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_SearchUsersResponse(data, context);
+  const response: SearchUsersCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1SearchUsersCommandError
+ */
+const de_SearchUsersCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<SearchUsersCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.rekognition#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServerError":
+    case "com.amazonaws.rekognition#InternalServerError":
+      throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.rekognition#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "ProvisionedThroughputExceededException":
+    case "com.amazonaws.rekognition#ProvisionedThroughputExceededException":
+      throw await de_ProvisionedThroughputExceededExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.rekognition#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.rekognition#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_json1_1SearchUsersByImageCommand
+ */
+export const de_SearchUsersByImageCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<SearchUsersByImageCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_SearchUsersByImageCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_SearchUsersByImageResponse(data, context);
+  const response: SearchUsersByImageCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1SearchUsersByImageCommandError
+ */
+const de_SearchUsersByImageCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<SearchUsersByImageCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -5541,6 +6126,19 @@ const de_AccessDeniedExceptionRes = async (
 };
 
 /**
+ * deserializeAws_json1_1ConflictExceptionRes
+ */
+const de_ConflictExceptionRes = async (parsedOutput: any, context: __SerdeContext): Promise<ConflictException> => {
+  const body = parsedOutput.body;
+  const deserialized: any = _json(body);
+  const exception = new ConflictException({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...deserialized,
+  });
+  return __decorateServiceException(exception, body);
+};
+
+/**
  * deserializeAws_json1_1HumanLoopQuotaExceededExceptionRes
  */
 const de_HumanLoopQuotaExceededExceptionRes = async (
@@ -5858,6 +6456,19 @@ const de_VideoTooLargeExceptionRes = async (
 
 // se_Assets omitted.
 
+/**
+ * serializeAws_json1_1AssociateFacesRequest
+ */
+const se_AssociateFacesRequest = (input: AssociateFacesRequest, context: __SerdeContext): any => {
+  return take(input, {
+    ClientRequestToken: [true, (_) => _ ?? generateIdempotencyToken()],
+    CollectionId: [],
+    FaceIds: _json,
+    UserId: [],
+    UserMatchThreshold: __serializeFloat,
+  });
+};
+
 // se_Attributes omitted.
 
 /**
@@ -5951,6 +6562,17 @@ const se_CreateStreamProcessorRequest = (input: CreateStreamProcessorRequest, co
 };
 
 /**
+ * serializeAws_json1_1CreateUserRequest
+ */
+const se_CreateUserRequest = (input: CreateUserRequest, context: __SerdeContext): any => {
+  return take(input, {
+    ClientRequestToken: [true, (_) => _ ?? generateIdempotencyToken()],
+    CollectionId: [],
+    UserId: [],
+  });
+};
+
+/**
  * serializeAws_json1_1DatasetChanges
  */
 const se_DatasetChanges = (input: DatasetChanges, context: __SerdeContext): any => {
@@ -5976,6 +6598,17 @@ const se_DatasetChanges = (input: DatasetChanges, context: __SerdeContext): any 
 // se_DeleteProjectVersionRequest omitted.
 
 // se_DeleteStreamProcessorRequest omitted.
+
+/**
+ * serializeAws_json1_1DeleteUserRequest
+ */
+const se_DeleteUserRequest = (input: DeleteUserRequest, context: __SerdeContext): any => {
+  return take(input, {
+    ClientRequestToken: [true, (_) => _ ?? generateIdempotencyToken()],
+    CollectionId: [],
+    UserId: [],
+  });
+};
 
 // se_DescribeCollectionRequest omitted.
 
@@ -6080,6 +6713,18 @@ const se_DetectTextRequest = (input: DetectTextRequest, context: __SerdeContext)
   });
 };
 
+/**
+ * serializeAws_json1_1DisassociateFacesRequest
+ */
+const se_DisassociateFacesRequest = (input: DisassociateFacesRequest, context: __SerdeContext): any => {
+  return take(input, {
+    ClientRequestToken: [true, (_) => _ ?? generateIdempotencyToken()],
+    CollectionId: [],
+    FaceIds: _json,
+    UserId: [],
+  });
+};
+
 // se_DistributeDataset omitted.
 
 // se_DistributeDatasetEntriesRequest omitted.
@@ -6175,6 +6820,8 @@ const se_IndexFacesRequest = (input: IndexFacesRequest, context: __SerdeContext)
 // se_ListStreamProcessorsRequest omitted.
 
 // se_ListTagsForResourceRequest omitted.
+
+// se_ListUsersRequest omitted.
 
 // se_LivenessOutputConfig omitted.
 
@@ -6278,6 +6925,32 @@ const se_SearchFacesRequest = (input: SearchFacesRequest, context: __SerdeContex
     FaceId: [],
     FaceMatchThreshold: __serializeFloat,
     MaxFaces: [],
+  });
+};
+
+/**
+ * serializeAws_json1_1SearchUsersByImageRequest
+ */
+const se_SearchUsersByImageRequest = (input: SearchUsersByImageRequest, context: __SerdeContext): any => {
+  return take(input, {
+    CollectionId: [],
+    Image: (_) => se_Image(_, context),
+    MaxUsers: [],
+    QualityFilter: [],
+    UserMatchThreshold: __serializeFloat,
+  });
+};
+
+/**
+ * serializeAws_json1_1SearchUsersRequest
+ */
+const se_SearchUsersRequest = (input: SearchUsersRequest, context: __SerdeContext): any => {
+  return take(input, {
+    CollectionId: [],
+    FaceId: [],
+    MaxUsers: [],
+    UserId: [],
+    UserMatchThreshold: __serializeFloat,
   });
 };
 
@@ -6473,6 +7146,8 @@ const se_UpdateStreamProcessorRequest = (input: UpdateStreamProcessorRequest, co
   });
 };
 
+// se_UserFaceIdList omitted.
+
 // se_VersionNames omitted.
 
 // se_Video omitted.
@@ -6484,6 +7159,21 @@ const se_UpdateStreamProcessorRequest = (input: UpdateStreamProcessorRequest, co
 // de_Asset omitted.
 
 // de_Assets omitted.
+
+// de_AssociatedFace omitted.
+
+// de_AssociatedFacesList omitted.
+
+/**
+ * deserializeAws_json1_1AssociateFacesResponse
+ */
+const de_AssociateFacesResponse = (output: any, context: __SerdeContext): AssociateFacesResponse => {
+  return take(output, {
+    AssociatedFaces: _json,
+    UnsuccessfulFaceAssociations: (_: any) => de_UnsuccessfulFaceAssociationList(_, context),
+    UserStatus: __expectString,
+  }) as any;
+};
 
 // de_AudioMetadata omitted.
 
@@ -6695,6 +7385,8 @@ const de_CompareFacesUnmatchList = (output: any, context: __SerdeContext): Compa
   return retVal;
 };
 
+// de_ConflictException omitted.
+
 // de_ConnectedHomeLabels omitted.
 
 /**
@@ -6755,6 +7447,8 @@ const de_CoversBodyPart = (output: any, context: __SerdeContext): CoversBodyPart
 // de_CreateProjectVersionResponse omitted.
 
 // de_CreateStreamProcessorResponse omitted.
+
+// de_CreateUserResponse omitted.
 
 /**
  * deserializeAws_json1_1CustomLabel
@@ -6843,6 +7537,8 @@ const de_DatasetMetadataList = (output: any, context: __SerdeContext): DatasetMe
 
 // de_DeleteStreamProcessorResponse omitted.
 
+// de_DeleteUserResponse omitted.
+
 /**
  * deserializeAws_json1_1DescribeCollectionResponse
  */
@@ -6852,6 +7548,7 @@ const de_DescribeCollectionResponse = (output: any, context: __SerdeContext): De
     CreationTimestamp: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     FaceCount: __expectLong,
     FaceModelVersion: __expectString,
+    UserCount: __expectLong,
   }) as any;
 };
 
@@ -7015,6 +7712,12 @@ const de_DetectTextResponse = (output: any, context: __SerdeContext): DetectText
   }) as any;
 };
 
+// de_DisassociatedFace omitted.
+
+// de_DisassociatedFacesList omitted.
+
+// de_DisassociateFacesResponse omitted.
+
 // de_DistributeDatasetEntriesResponse omitted.
 
 /**
@@ -7101,6 +7804,17 @@ const de_EvaluationResult = (output: any, context: __SerdeContext): EvaluationRe
 };
 
 /**
+ * deserializeAws_json1_1EyeDirection
+ */
+const de_EyeDirection = (output: any, context: __SerdeContext): EyeDirection => {
+  return take(output, {
+    Confidence: __limitedParseFloat32,
+    Pitch: __limitedParseFloat32,
+    Yaw: __limitedParseFloat32,
+  }) as any;
+};
+
+/**
  * deserializeAws_json1_1Eyeglasses
  */
 const de_Eyeglasses = (output: any, context: __SerdeContext): Eyeglasses => {
@@ -7131,6 +7845,7 @@ const de_Face = (output: any, context: __SerdeContext): Face => {
     FaceId: __expectString,
     ImageId: __expectString,
     IndexFacesModelVersion: __expectString,
+    UserId: __expectString,
   }) as any;
 };
 
@@ -7144,6 +7859,7 @@ const de_FaceDetail = (output: any, context: __SerdeContext): FaceDetail => {
     BoundingBox: (_: any) => de_BoundingBox(_, context),
     Confidence: __limitedParseFloat32,
     Emotions: (_: any) => de_Emotions(_, context),
+    EyeDirection: (_: any) => de_EyeDirection(_, context),
     Eyeglasses: (_: any) => de_Eyeglasses(_, context),
     EyesOpen: (_: any) => de_EyeOpen(_, context),
     FaceOccluded: (_: any) => de_FaceOccluded(_, context),
@@ -7648,7 +8364,11 @@ const de_ListProjectPoliciesResponse = (output: any, context: __SerdeContext): L
 
 // de_ListTagsForResourceResponse omitted.
 
+// de_ListUsersResponse omitted.
+
 // de_MalformedPolicyDocumentException omitted.
+
+// de_MatchedUser omitted.
 
 /**
  * deserializeAws_json1_1ModerationLabel
@@ -7963,6 +8683,19 @@ const de_RegionsOfInterest = (output: any, context: __SerdeContext): RegionOfInt
 
 // de_S3Object omitted.
 
+// de_SearchedFace omitted.
+
+/**
+ * deserializeAws_json1_1SearchedFaceDetails
+ */
+const de_SearchedFaceDetails = (output: any, context: __SerdeContext): SearchedFaceDetails => {
+  return take(output, {
+    FaceDetail: (_: any) => de_FaceDetail(_, context),
+  }) as any;
+};
+
+// de_SearchedUser omitted.
+
 /**
  * deserializeAws_json1_1SearchFacesByImageResponse
  */
@@ -7983,6 +8716,30 @@ const de_SearchFacesResponse = (output: any, context: __SerdeContext): SearchFac
     FaceMatches: (_: any) => de_FaceMatchList(_, context),
     FaceModelVersion: __expectString,
     SearchedFaceId: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_json1_1SearchUsersByImageResponse
+ */
+const de_SearchUsersByImageResponse = (output: any, context: __SerdeContext): SearchUsersByImageResponse => {
+  return take(output, {
+    FaceModelVersion: __expectString,
+    SearchedFace: (_: any) => de_SearchedFaceDetails(_, context),
+    UnsearchedFaces: (_: any) => de_UnsearchedFacesList(_, context),
+    UserMatches: (_: any) => de_UserMatchList(_, context),
+  }) as any;
+};
+
+/**
+ * deserializeAws_json1_1SearchUsersResponse
+ */
+const de_SearchUsersResponse = (output: any, context: __SerdeContext): SearchUsersResponse => {
+  return take(output, {
+    FaceModelVersion: __expectString,
+    SearchedFace: _json,
+    SearchedUser: _json,
+    UserMatches: (_: any) => de_UserMatchList(_, context),
   }) as any;
 };
 
@@ -8198,6 +8955,68 @@ const de_UnindexedFaces = (output: any, context: __SerdeContext): UnindexedFace[
   return retVal;
 };
 
+/**
+ * deserializeAws_json1_1UnsearchedFace
+ */
+const de_UnsearchedFace = (output: any, context: __SerdeContext): UnsearchedFace => {
+  return take(output, {
+    FaceDetails: (_: any) => de_FaceDetail(_, context),
+    Reasons: _json,
+  }) as any;
+};
+
+// de_UnsearchedFaceReasons omitted.
+
+/**
+ * deserializeAws_json1_1UnsearchedFacesList
+ */
+const de_UnsearchedFacesList = (output: any, context: __SerdeContext): UnsearchedFace[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_UnsearchedFace(entry, context);
+    });
+  return retVal;
+};
+
+/**
+ * deserializeAws_json1_1UnsuccessfulFaceAssociation
+ */
+const de_UnsuccessfulFaceAssociation = (output: any, context: __SerdeContext): UnsuccessfulFaceAssociation => {
+  return take(output, {
+    Confidence: __limitedParseFloat32,
+    FaceId: __expectString,
+    Reasons: _json,
+    UserId: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_json1_1UnsuccessfulFaceAssociationList
+ */
+const de_UnsuccessfulFaceAssociationList = (output: any, context: __SerdeContext): UnsuccessfulFaceAssociation[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_UnsuccessfulFaceAssociation(entry, context);
+    });
+  return retVal;
+};
+
+// de_UnsuccessfulFaceAssociationReasons omitted.
+
+// de_UnsuccessfulFaceDeletion omitted.
+
+// de_UnsuccessfulFaceDeletionReasons omitted.
+
+// de_UnsuccessfulFaceDeletionsList omitted.
+
+// de_UnsuccessfulFaceDisassociation omitted.
+
+// de_UnsuccessfulFaceDisassociationList omitted.
+
+// de_UnsuccessfulFaceDisassociationReasons omitted.
+
 // de_UntagResourceResponse omitted.
 
 // de_UpdateDatasetEntriesResponse omitted.
@@ -8205,6 +9024,32 @@ const de_UnindexedFaces = (output: any, context: __SerdeContext): UnindexedFace[
 // de_UpdateStreamProcessorResponse omitted.
 
 // de_Urls omitted.
+
+// de_User omitted.
+
+// de_UserList omitted.
+
+/**
+ * deserializeAws_json1_1UserMatch
+ */
+const de_UserMatch = (output: any, context: __SerdeContext): UserMatch => {
+  return take(output, {
+    Similarity: __limitedParseFloat32,
+    User: _json,
+  }) as any;
+};
+
+/**
+ * deserializeAws_json1_1UserMatchList
+ */
+const de_UserMatchList = (output: any, context: __SerdeContext): UserMatch[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_UserMatch(entry, context);
+    });
+  return retVal;
+};
 
 // de_ValidationData omitted.
 
@@ -8246,14 +9091,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

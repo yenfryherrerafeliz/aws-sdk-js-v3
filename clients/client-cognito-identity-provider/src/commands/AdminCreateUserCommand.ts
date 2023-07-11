@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
 import { getAwsAuthPlugin } from "@aws-sdk/middleware-signing";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,7 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CognitoIdentityProviderClientResolvedConfig,
@@ -29,6 +29,10 @@ import { de_AdminCreateUserCommand, se_AdminCreateUserCommand } from "../protoco
 
 /**
  * @public
+ */
+export { __MetadataBearer, $Command };
+/**
+ * @public
  *
  * The input for {@link AdminCreateUserCommand}.
  */
@@ -43,9 +47,8 @@ export interface AdminCreateUserCommandOutput extends AdminCreateUserResponse, _
 /**
  * @public
  * <p>Creates a new user in the specified user pool.</p>
- *         <p>If <code>MessageAction</code> isn't set, the default is to send a welcome message via
+ *          <p>If <code>MessageAction</code> isn't set, the default is to send a welcome message via
  *             email or phone (SMS).</p>
- *
  *          <note>
  *             <p>This action might generate an SMS text message. Starting June 1, 2021, US telecom carriers
  *                 require you to register an origination phone number before you can send SMS messages
@@ -63,15 +66,14 @@ export interface AdminCreateUserCommandOutput extends AdminCreateUserResponse, _
  *                 of the sandbox and into production. For more information, see <a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html"> SMS message settings for Amazon Cognito user pools</a> in the <i>Amazon Cognito
  *                     Developer Guide</i>.</p>
  *          </note>
- *
- *         <p>This message is based on a template that you configured in your call to create or
+ *          <p>This message is based on a template that you configured in your call to create or
  *             update a user pool. This template includes your custom sign-up instructions and
  *             placeholders for user name and temporary password.</p>
- *         <p>Alternatively, you can call <code>AdminCreateUser</code> with <code>SUPPRESS</code>
+ *          <p>Alternatively, you can call <code>AdminCreateUser</code> with <code>SUPPRESS</code>
  *             for the <code>MessageAction</code> parameter, and Amazon Cognito won't send any email. </p>
- *         <p>In either case, the user will be in the <code>FORCE_CHANGE_PASSWORD</code> state until
+ *          <p>In either case, the user will be in the <code>FORCE_CHANGE_PASSWORD</code> state until
  *             they sign in and change their password.</p>
- *         <p>
+ *          <p>
  *             <code>AdminCreateUser</code> requires developer credentials.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.

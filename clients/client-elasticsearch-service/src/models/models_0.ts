@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@smithy/smithy-client";
 
 import { ElasticsearchServiceServiceException as __BaseException } from "./ElasticsearchServiceServiceException";
 
@@ -3253,7 +3253,7 @@ export interface DescribePackagesFilter {
   Name?: DescribePackagesFilterName | string;
 
   /**
-   * <p>A list of values for the specified field.</p>
+   * <p>A non-empty list of values for the specified field.</p>
    */
   Value?: string[];
 }

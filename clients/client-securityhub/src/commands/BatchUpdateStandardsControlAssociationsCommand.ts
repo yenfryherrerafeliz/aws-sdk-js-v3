@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,18 +11,22 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   BatchUpdateStandardsControlAssociationsRequest,
   BatchUpdateStandardsControlAssociationsResponse,
-} from "../models/models_1";
+} from "../models/models_2";
 import {
   de_BatchUpdateStandardsControlAssociationsCommand,
   se_BatchUpdateStandardsControlAssociationsCommand,
 } from "../protocols/Aws_restJson1";
 import { SecurityHubClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../SecurityHubClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -101,6 +105,46 @@ export interface BatchUpdateStandardsControlAssociationsCommandOutput
  *
  * @throws {@link SecurityHubServiceException}
  * <p>Base exception class for all service exceptions from SecurityHub service.</p>
+ *
+ * @example To update enablement status of a batch of controls
+ * ```javascript
+ * // The following example disables CloudWatch.12 in CIS AWS Foundations Benchmark v1.2.0. The example returns an error for CloudTrail.1 because an invalid standard ARN is provided.
+ * const input = {
+ *   "StandardsControlAssociationUpdates": [
+ *     {
+ *       "AssociationStatus": "DISABLED",
+ *       "SecurityControlId": "CloudTrail.1",
+ *       "StandardsArn": "arn:aws:securityhub:::ruleset/sample-standard/v/1.1.0",
+ *       "UpdatedReason": "Not relevant to environment"
+ *     },
+ *     {
+ *       "AssociationStatus": "DISABLED",
+ *       "SecurityControlId": "CloudWatch.12",
+ *       "StandardsArn": "arn:aws:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0",
+ *       "UpdatedReason": "Not relevant to environment"
+ *     }
+ *   ]
+ * };
+ * const command = new BatchUpdateStandardsControlAssociationsCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "UnprocessedAssociationUpdates": [
+ *     {
+ *       "ErrorCode": "INVALID_INPUT",
+ *       "ErrorReason": "Invalid Standards Arn: 'arn:aws:securityhub:::ruleset/sample-standard/v/1.1.0'",
+ *       "StandardsControlAssociationUpdate": {
+ *         "AssociationStatus": "DISABLED",
+ *         "SecurityControlId": "CloudTrail.1",
+ *         "StandardsArn": "arn:aws:securityhub:::ruleset/sample-standard/v/1.1.0",
+ *         "UpdatedReason": "Test Reason"
+ *       }
+ *     }
+ *   ]
+ * }
+ * *\/
+ * // example id: to-update-enablement-status-of-a-batch-of-controls-1683300378416
+ * ```
  *
  */
 export class BatchUpdateStandardsControlAssociationsCommand extends $Command<

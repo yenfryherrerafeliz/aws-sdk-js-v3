@@ -18,18 +18,19 @@ describe("NodeHttpHandler", () => {
     let hRequestSpy: jest.SpyInstance;
     let hsRequestSpy: jest.SpyInstance;
     const randomMaxSocket = Math.round(Math.random() * 50) + 1;
-    const mockRequestImpl = (_options, cb) => {
+    const mockRequestImpl = (protocol: string) => (_options, cb) => {
       cb({
         statusCode: 200,
         body: "body",
         headers: {},
+        protocol,
       });
-      return new http.ClientRequest(_options);
+      return new http.ClientRequest({ ..._options, protocol });
     };
 
     beforeEach(() => {
-      hRequestSpy = jest.spyOn(http, "request").mockImplementation(mockRequestImpl);
-      hsRequestSpy = jest.spyOn(https, "request").mockImplementation(mockRequestImpl);
+      hRequestSpy = jest.spyOn(http, "request").mockImplementation(mockRequestImpl("http:"));
+      hsRequestSpy = jest.spyOn(https, "request").mockImplementation(mockRequestImpl("https:"));
     });
 
     afterEach(() => {
@@ -97,8 +98,8 @@ describe("NodeHttpHandler", () => {
           return {
             connectionTimeout: 12345,
             socketTimeout: 12345,
-            httpAgent: null,
-            httpsAgent: null,
+            httpAgent: void 0,
+            httpsAgent: void 0,
           };
         };
 
@@ -114,11 +115,35 @@ describe("NodeHttpHandler", () => {
         expect(providerInvokedCount).toBe(1);
         expect(providerResolvedCount).toBe(1);
       });
+
+      it("sends requests to the right url", async () => {
+        const nodeHttpHandler = new NodeHttpHandler({});
+        const httpRequest = {
+          protocol: "http:",
+          username: "username",
+          password: "password",
+          hostname: "host",
+          port: 1234,
+          path: "/some/path",
+          query: {
+            some: "query",
+          },
+          fragment: "fragment",
+        };
+        await nodeHttpHandler.handle(httpRequest as any);
+        expect(hRequestSpy.mock.calls[0][0]?.auth).toEqual("username:password");
+        expect(hRequestSpy.mock.calls[0][0]?.host).toEqual("host");
+        expect(hRequestSpy.mock.calls[0][0]?.port).toEqual(1234);
+        expect(hRequestSpy.mock.calls[0][0]?.path).toEqual("/some/path?some=query#fragment");
+      });
     });
   });
 
   describe("http", () => {
-    const mockHttpServer: HttpServer = createMockHttpServer().listen(54321);
+    let mockHttpServer: HttpServer;
+    beforeAll(() => {
+      mockHttpServer = createMockHttpServer().listen(54321);
+    });
 
     afterEach(() => {
       mockHttpServer.removeAllListeners("request");
@@ -137,6 +162,7 @@ describe("NodeHttpHandler", () => {
     it("can send http requests", async () => {
       const mockResponse = {
         statusCode: 200,
+        statusText: "OK",
         headers: {},
         body: "test",
       };
@@ -156,6 +182,7 @@ describe("NodeHttpHandler", () => {
       );
 
       expect(response.statusCode).toEqual(mockResponse.statusCode);
+      expect(response.reason).toEqual(mockResponse.statusText);
       expect(response.headers).toBeDefined();
       expect(response.headers).toMatchObject(mockResponse.headers);
       expect(response.body).toBeDefined();
@@ -544,6 +571,24 @@ describe("NodeHttpHandler", () => {
       ).rejects.toHaveProperty("name", "AbortError");
 
       expect(spy.mock.calls.length).toBe(0);
+    });
+
+    it(`won't throw uncatchable error in writeRequestBody`, async () => {
+      const nodeHttpHandler = new NodeHttpHandler();
+
+      await expect(
+        nodeHttpHandler.handle(
+          new HttpRequest({
+            hostname: "localhost",
+            method: "GET",
+            port: (mockHttpsServer.address() as AddressInfo).port,
+            protocol: "https:",
+            path: "/",
+            headers: {},
+            body: {},
+          })
+        )
+      ).rejects.toHaveProperty("name", "TypeError");
     });
 
     it("will destroy the request when aborted", async () => {

@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { CloudTrailServiceException as __BaseException } from "./CloudTrailServiceException";
 
@@ -137,7 +137,7 @@ export interface AddTagsRequest {
    *          <code>arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail</code>
    *          </p>
    *          <p>The format of an event data store ARN is:
-   *          <code>arn:aws:cloudtrail:us-east-2:12345678910:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
+   *          <code>arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
    *          </p>
    *          <p>The format of a channel ARN is:
    *          <code>arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890</code>
@@ -156,6 +156,32 @@ export interface AddTagsRequest {
  * <p>Returns the objects or data if successful. Otherwise, returns an error.</p>
  */
 export interface AddTagsResponse {}
+
+/**
+ * @public
+ * <p>This exception is thrown when the specified value of <code>ChannelARN</code> is not
+ *          valid.</p>
+ */
+export class ChannelARNInvalidException extends __BaseException {
+  readonly name: "ChannelARNInvalidException" = "ChannelARNInvalidException";
+  readonly $fault: "client" = "client";
+  /**
+   * <p>Brief description of the exception returned by the request.</p>
+   */
+  Message?: string;
+  /**
+   * @internal
+   */
+  constructor(opts: __ExceptionOptionType<ChannelARNInvalidException, __BaseException>) {
+    super({
+      name: "ChannelARNInvalidException",
+      $fault: "client",
+      ...opts,
+    });
+    Object.setPrototypeOf(this, ChannelARNInvalidException.prototype);
+    this.Message = opts.Message;
+  }
+}
 
 /**
  * @public
@@ -191,7 +217,7 @@ export class ChannelNotFoundException extends __BaseException {
  *          </p>
  *          <p>This exception is also thrown when you call <code>AddTags</code> or <code>RemoveTags</code> on a trail, event data store, or channel with a resource ARN that is not valid.</p>
  *          <p>The following is the format of an event data store ARN:
- *          <code>arn:aws:cloudtrail:us-east-2:12345678910:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
+ *          <code>arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
  *          </p>
  *          <p>The following is the format of a channel ARN:
  *          <code>arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890</code>
@@ -242,6 +268,32 @@ export class ConflictException extends __BaseException {
       ...opts,
     });
     Object.setPrototypeOf(this, ConflictException.prototype);
+    this.Message = opts.Message;
+  }
+}
+
+/**
+ * @public
+ * <p>The specified event data store ARN is not valid or does not map to an event data store
+ *          in your account.</p>
+ */
+export class EventDataStoreARNInvalidException extends __BaseException {
+  readonly name: "EventDataStoreARNInvalidException" = "EventDataStoreARNInvalidException";
+  readonly $fault: "client" = "client";
+  /**
+   * <p>Brief description of the exception returned by the request.</p>
+   */
+  Message?: string;
+  /**
+   * @internal
+   */
+  constructor(opts: __ExceptionOptionType<EventDataStoreARNInvalidException, __BaseException>) {
+    super({
+      name: "EventDataStoreARNInvalidException",
+      $fault: "client",
+      ...opts,
+    });
+    Object.setPrototypeOf(this, EventDataStoreARNInvalidException.prototype);
     this.Message = opts.Message;
   }
 }
@@ -632,12 +684,7 @@ export interface AdvancedFieldSelector {
    *                <ul>
    *                   <li>
    *                      <p>
-   *                         <code>AWS::CloudTrail::Channel</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>AWS::S3::Object</code>
+   *                         <code>AWS::DynamoDB::Table</code>
    *                      </p>
    *                   </li>
    *                   <li>
@@ -647,32 +694,22 @@ export interface AdvancedFieldSelector {
    *                   </li>
    *                   <li>
    *                      <p>
-   *                         <code>AWS::DynamoDB::Table</code>
+   *                         <code>AWS::S3::Object</code>
    *                      </p>
    *                   </li>
    *                   <li>
    *                      <p>
-   *                         <code>AWS::S3Outposts::Object</code>
+   *                         <code>AWS::CloudTrail::Channel</code>
    *                      </p>
    *                   </li>
    *                   <li>
    *                      <p>
-   *                         <code>AWS::ManagedBlockchain::Node</code>
+   *                         <code>AWS::CodeWhisperer::Profile</code>
    *                      </p>
    *                   </li>
    *                   <li>
    *                      <p>
-   *                         <code>AWS::S3ObjectLambda::AccessPoint</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>AWS::EC2::Snapshot</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>AWS::S3::AccessPoint</code>
+   *                         <code>AWS::Cognito::IdentityPool</code>
    *                      </p>
    *                   </li>
    *                   <li>
@@ -682,12 +719,37 @@ export interface AdvancedFieldSelector {
    *                   </li>
    *                   <li>
    *                      <p>
-   *                         <code>AWS::Glue::Table</code>
+   *                         <code>AWS::EC2::Snapshot</code>
+   *                      </p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>AWS::EMRWAL::Workspace</code>
    *                      </p>
    *                   </li>
    *                   <li>
    *                      <p>
    *                         <code>AWS::FinSpace::Environment</code>
+   *                      </p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>AWS::Glue::Table</code>
+   *                      </p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>AWS::GuardDuty::Detector</code>
+   *                      </p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>AWS::KendraRanking::ExecutionPlan</code>
+   *                      </p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>AWS::ManagedBlockchain::Node</code>
    *                      </p>
    *                   </li>
    *                   <li>
@@ -698,6 +760,21 @@ export interface AdvancedFieldSelector {
    *                   <li>
    *                      <p>
    *                         <code>AWS::SageMaker::FeatureGroup</code>
+   *                      </p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>AWS::S3::AccessPoint</code>
+   *                      </p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>AWS::S3ObjectLambda::AccessPoint</code>
+   *                      </p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>AWS::S3Outposts::Object</code>
    *                      </p>
    *                   </li>
    *                </ul>
@@ -730,20 +807,13 @@ export interface AdvancedFieldSelector {
    *                      </p>
    *                   </li>
    *                </ul>
-   *                <p>When <code>resources.type</code> equals <code>AWS::S3::AccessPoint</code>, and the
-   *                operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in
-   *                one of the following formats. To log events on all objects in an S3 access point, we
-   *                recommend that you use only the access point ARN, don’t include the object path, and
-   *                use the <code>StartsWith</code> or <code>NotStartsWith</code> operators.</p>
+   *                <p>When resources.type equals <code>AWS::DynamoDB::Table</code>, and the operator is
+   *                set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in the
+   *                following format:</p>
    *                <ul>
    *                   <li>
    *                      <p>
-   *                         <code>arn:<partition>:s3:<region>:<account_ID>:accesspoint/<access_point_name></code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>arn:<partition>:s3:<region>:<account_ID>:accesspoint/<access_point_name>/object/<object_path></code>
+   *                         <code>arn:<partition>:dynamodb:<region>:<account_ID>:table/<table_name></code>
    *                      </p>
    *                   </li>
    *                </ul>
@@ -757,16 +827,6 @@ export interface AdvancedFieldSelector {
    *                      </p>
    *                   </li>
    *                </ul>
-   *                <p>When resources.type equals <code>AWS::DynamoDB::Table</code>, and the operator is
-   *                set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in the
-   *                following format:</p>
-   *                <ul>
-   *                   <li>
-   *                      <p>
-   *                         <code>arn:<partition>:dynamodb:<region>:<account_ID>:table/<table_name></code>
-   *                      </p>
-   *                   </li>
-   *                </ul>
    *                <p>When resources.type equals <code>AWS::CloudTrail::Channel</code>, and the operator is
    *                set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in the
    *                following format:</p>
@@ -777,44 +837,23 @@ export interface AdvancedFieldSelector {
    *                      </p>
    *                   </li>
    *                </ul>
-   *                <p>When <code>resources.type</code> equals <code>AWS::S3Outposts::Object</code>, and
-   *                the operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be
-   *                in the following format:</p>
+   *                <p>When resources.type equals <code>AWS::CodeWhisperer::Profile</code>, and the operator is
+   *                set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in the
+   *                following format:</p>
    *                <ul>
    *                   <li>
    *                      <p>
-   *                         <code>arn:<partition>:s3-outposts:<region>:<account_ID>:<object_path></code>
+   *                         <code>arn:<partition>:codewhisperer:<region>:<account_ID>:profile/<profile_ID></code>
    *                      </p>
    *                   </li>
    *                </ul>
-   *                <p>When <code>resources.type</code> equals <code>AWS::ManagedBlockchain::Node</code>,
-   *                and the operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN
-   *                must be in the following format:</p>
+   *                <p>When resources.type equals <code>AWS::Cognito::IdentityPool</code>, and the operator is
+   *                set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in the
+   *                following format:</p>
    *                <ul>
    *                   <li>
    *                      <p>
-   *                         <code>arn:<partition>:managedblockchain:<region>:<account_ID>:nodes/<node_ID></code>
-   *                      </p>
-   *                   </li>
-   *                </ul>
-   *                <p>When <code>resources.type</code> equals
-   *                   <code>AWS::S3ObjectLambda::AccessPoint</code>, and the operator is set to
-   *                   <code>Equals</code> or <code>NotEquals</code>, the ARN must be in the following
-   *                format:</p>
-   *                <ul>
-   *                   <li>
-   *                      <p>
-   *                         <code>arn:<partition>:s3-object-lambda:<region>:<account_ID>:accesspoint/<access_point_name></code>
-   *                      </p>
-   *                   </li>
-   *                </ul>
-   *                <p>When <code>resources.type</code> equals <code>AWS::EC2::Snapshot</code>, and the
-   *                operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in
-   *                the following format:</p>
-   *                <ul>
-   *                   <li>
-   *                      <p>
-   *                         <code>arn:<partition>:ec2:<region>::snapshot/<snapshot_ID></code>
+   *                         <code>arn:<partition>:cognito-identity:<region>:<account_ID>:identitypool/<identity_pool_ID></code>
    *                      </p>
    *                   </li>
    *                </ul>
@@ -828,13 +867,23 @@ export interface AdvancedFieldSelector {
    *                      </p>
    *                   </li>
    *                </ul>
-   *                <p>When <code>resources.type</code> equals <code>AWS::Glue::Table</code>, and the
+   *                <p>When <code>resources.type</code> equals <code>AWS::EC2::Snapshot</code>, and the
    *                operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in
    *                the following format:</p>
    *                <ul>
    *                   <li>
    *                      <p>
-   *                         <code>arn:<partition>:glue:<region>:<account_ID>:table/<database_name>/<table_name></code>
+   *                         <code>arn:<partition>:ec2:<region>::snapshot/<snapshot_ID></code>
+   *                      </p>
+   *                   </li>
+   *                </ul>
+   *                <p>When <code>resources.type</code> equals <code>AWS::EMRWAL::Workspace</code>, and the
+   *                operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in
+   *                the following format:</p>
+   *                <ul>
+   *                   <li>
+   *                      <p>
+   *                         <code>arn:<partition>:emrwal:<region>::workspace/<workspace_name></code>
    *                      </p>
    *                   </li>
    *                </ul>
@@ -845,6 +894,46 @@ export interface AdvancedFieldSelector {
    *                   <li>
    *                      <p>
    *                         <code>arn:<partition>:finspace:<region>:<account_ID>:environment/<environment_ID></code>
+   *                      </p>
+   *                   </li>
+   *                </ul>
+   *                <p>When <code>resources.type</code> equals <code>AWS::Glue::Table</code>, and the
+   *                operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in
+   *                the following format:</p>
+   *                <ul>
+   *                   <li>
+   *                      <p>
+   *                         <code>arn:<partition>:glue:<region>:<account_ID>:table/<database_name>/<table_name></code>
+   *                      </p>
+   *                   </li>
+   *                </ul>
+   *                <p>When <code>resources.type</code> equals <code>AWS::GuardDuty::Detector</code>, and the
+   *                operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in
+   *                the following format:</p>
+   *                <ul>
+   *                   <li>
+   *                      <p>
+   *                         <code>arn:<partition>:guardduty:<region>:<account_ID>:detector/<detector_ID></code>
+   *                      </p>
+   *                   </li>
+   *                </ul>
+   *                <p>When <code>resources.type</code> equals <code>AWS::KendraRanking::ExecutionPlan</code>, and the
+   *                operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in
+   *                the following format:</p>
+   *                <ul>
+   *                   <li>
+   *                      <p>
+   *                         <code>arn:<partition>:kendra-ranking:<region>:<account_ID>:rescore-execution-plan/<rescore_execution_plan_ID></code>
+   *                      </p>
+   *                   </li>
+   *                </ul>
+   *                <p>When <code>resources.type</code> equals <code>AWS::ManagedBlockchain::Node</code>,
+   *                and the operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN
+   *                must be in the following format:</p>
+   *                <ul>
+   *                   <li>
+   *                      <p>
+   *                         <code>arn:<partition>:managedblockchain:<region>:<account_ID>:nodes/<node_ID></code>
    *                      </p>
    *                   </li>
    *                </ul>
@@ -863,6 +952,44 @@ export interface AdvancedFieldSelector {
    *                   <li>
    *                      <p>
    *                         <code>arn:<partition>:sagemaker:<region>:<account_ID>:feature-group/<feature_group_name></code>
+   *                      </p>
+   *                   </li>
+   *                </ul>
+   *                <p>When <code>resources.type</code> equals <code>AWS::S3::AccessPoint</code>, and the
+   *                operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be in
+   *                one of the following formats. To log events on all objects in an S3 access point, we
+   *                recommend that you use only the access point ARN, don’t include the object path, and
+   *                use the <code>StartsWith</code> or <code>NotStartsWith</code> operators.</p>
+   *                <ul>
+   *                   <li>
+   *                      <p>
+   *                         <code>arn:<partition>:s3:<region>:<account_ID>:accesspoint/<access_point_name></code>
+   *                      </p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>arn:<partition>:s3:<region>:<account_ID>:accesspoint/<access_point_name>/object/<object_path></code>
+   *                      </p>
+   *                   </li>
+   *                </ul>
+   *                <p>When <code>resources.type</code> equals
+   *                <code>AWS::S3ObjectLambda::AccessPoint</code>, and the operator is set to
+   *                <code>Equals</code> or <code>NotEquals</code>, the ARN must be in the following
+   *                format:</p>
+   *                <ul>
+   *                   <li>
+   *                      <p>
+   *                         <code>arn:<partition>:s3-object-lambda:<region>:<account_ID>:accesspoint/<access_point_name></code>
+   *                      </p>
+   *                   </li>
+   *                </ul>
+   *                <p>When <code>resources.type</code> equals <code>AWS::S3Outposts::Object</code>, and
+   *                the operator is set to <code>Equals</code> or <code>NotEquals</code>, the ARN must be
+   *                in the following format:</p>
+   *                <ul>
+   *                   <li>
+   *                      <p>
+   *                         <code>arn:<partition>:s3-outposts:<region>:<account_ID>:<object_path></code>
    *                      </p>
    *                   </li>
    *                </ul>
@@ -914,7 +1041,7 @@ export interface AdvancedFieldSelector {
  * @public
  * <p>Advanced event selectors let you create fine-grained selectors for the following CloudTrail event record ﬁelds. They help you control costs by logging only those
  *          events that are important to you. For more information about advanced event selectors, see
- *             <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html">Logging data events for trails</a> in the <i>CloudTrail User Guide</i>.</p>
+ *             <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html">Logging data events</a> in the <i>CloudTrail User Guide</i>.</p>
  *          <ul>
  *             <li>
  *                <p>
@@ -1013,32 +1140,6 @@ export interface CancelQueryResponse {
    *          values shown are either <code>RUNNING</code> or <code>CANCELLED</code>.</p>
    */
   QueryStatus: QueryStatus | string | undefined;
-}
-
-/**
- * @public
- * <p>The specified event data store ARN is not valid or does not map to an event data store
- *          in your account.</p>
- */
-export class EventDataStoreARNInvalidException extends __BaseException {
-  readonly name: "EventDataStoreARNInvalidException" = "EventDataStoreARNInvalidException";
-  readonly $fault: "client" = "client";
-  /**
-   * <p>Brief description of the exception returned by the request.</p>
-   */
-  Message?: string;
-  /**
-   * @internal
-   */
-  constructor(opts: __ExceptionOptionType<EventDataStoreARNInvalidException, __BaseException>) {
-    super({
-      name: "EventDataStoreARNInvalidException",
-      $fault: "client",
-      ...opts,
-    });
-    Object.setPrototypeOf(this, EventDataStoreARNInvalidException.prototype);
-    this.Message = opts.Message;
-  }
 }
 
 /**
@@ -1186,32 +1287,6 @@ export class ChannelAlreadyExistsException extends __BaseException {
       ...opts,
     });
     Object.setPrototypeOf(this, ChannelAlreadyExistsException.prototype);
-    this.Message = opts.Message;
-  }
-}
-
-/**
- * @public
- * <p>This exception is thrown when the specified value of <code>ChannelARN</code> is not
- *          valid.</p>
- */
-export class ChannelARNInvalidException extends __BaseException {
-  readonly name: "ChannelARNInvalidException" = "ChannelARNInvalidException";
-  readonly $fault: "client" = "client";
-  /**
-   * <p>Brief description of the exception returned by the request.</p>
-   */
-  Message?: string;
-  /**
-   * @internal
-   */
-  constructor(opts: __ExceptionOptionType<ChannelARNInvalidException, __BaseException>) {
-    super({
-      name: "ChannelARNInvalidException",
-      $fault: "client",
-      ...opts,
-    });
-    Object.setPrototypeOf(this, ChannelARNInvalidException.prototype);
     this.Message = opts.Message;
   }
 }
@@ -1458,8 +1533,8 @@ export interface CreateEventDataStoreRequest {
   AdvancedEventSelectors?: AdvancedEventSelector[];
 
   /**
-   * <p>Specifies whether the event data store includes events from all regions, or only from
-   *          the region in which the event data store is created.</p>
+   * <p>Specifies whether the event data store includes events from all Regions, or only from
+   *          the Region in which the event data store is created.</p>
    */
   MultiRegionEnabled?: boolean;
 
@@ -1528,6 +1603,11 @@ export interface CreateEventDataStoreRequest {
    *          </ul>
    */
   KmsKeyId?: string;
+
+  /**
+   * <p>Specifies whether the event data store should start ingesting live events. The default is true.</p>
+   */
+  StartIngestion?: boolean;
 }
 
 /**
@@ -1538,6 +1618,9 @@ export const EventDataStoreStatus = {
   CREATED: "CREATED",
   ENABLED: "ENABLED",
   PENDING_DELETION: "PENDING_DELETION",
+  STARTING_INGESTION: "STARTING_INGESTION",
+  STOPPED_INGESTION: "STOPPED_INGESTION",
+  STOPPING_INGESTION: "STOPPING_INGESTION",
 } as const;
 
 /**
@@ -1571,8 +1654,8 @@ export interface CreateEventDataStoreResponse {
   AdvancedEventSelectors?: AdvancedEventSelector[];
 
   /**
-   * <p>Indicates whether the event data store collects events from all regions, or only from
-   *          the region in which it was created.</p>
+   * <p>Indicates whether the event data store collects events from all Regions, or only from
+   *          the Region in which it was created.</p>
    */
   MultiRegionEnabled?: boolean;
 
@@ -1671,7 +1754,7 @@ export class EventDataStoreMaxLimitExceededException extends __BaseException {
 
 /**
  * @public
- * <p>This exception is thrown when the IAM user or role that is used to create
+ * <p>This exception is thrown when the IAM identity that is used to create
  *          the organization resource lacks one or more required permissions for creating an
  *          organization resource in a required service.</p>
  */
@@ -1829,8 +1912,8 @@ export class KmsException extends __BaseException {
 /**
  * @public
  * <p>This exception is thrown when the KMS key does not exist, when the S3
- *          bucket and the KMS key are not in the same region, or when the KMS key associated with the Amazon SNS topic either does not exist or is
- *          not in the same region.</p>
+ *          bucket and the KMS key are not in the same Region, or when the KMS key associated with the Amazon SNS topic either does not exist or is
+ *          not in the same Region.</p>
  */
 export class KmsKeyNotFoundException extends __BaseException {
   readonly name: "KmsKeyNotFoundException" = "KmsKeyNotFoundException";
@@ -1936,7 +2019,7 @@ export class CloudTrailInvalidClientTokenIdException extends __BaseException {
 
 /**
  * @public
- * <p>Cannot set a CloudWatch Logs delivery for this region.</p>
+ * <p>Cannot set a CloudWatch Logs delivery for this Region.</p>
  */
 export class CloudWatchLogsDeliveryUnavailableException extends __BaseException {
   readonly name: "CloudWatchLogsDeliveryUnavailableException" = "CloudWatchLogsDeliveryUnavailableException";
@@ -2015,9 +2098,9 @@ export interface CreateTrailRequest {
   IncludeGlobalServiceEvents?: boolean;
 
   /**
-   * <p>Specifies whether the trail is created in the current region or in all regions. The
-   *          default is false, which creates a trail only in the region where you are signed in. As a
-   *          best practice, consider creating trails that log events in all regions.</p>
+   * <p>Specifies whether the trail is created in the current Region or in all Regions. The
+   *          default is false, which creates a trail only in the Region where you are signed in. As a
+   *          best practice, consider creating trails that log events in all Regions.</p>
    */
   IsMultiRegionTrail?: boolean;
 
@@ -2121,7 +2204,7 @@ export interface CreateTrailResponse {
   /**
    * @deprecated
    *
-   * <p>This field is no longer in use. Use SnsTopicARN.</p>
+   * <p>This field is no longer in use. Use <code>SnsTopicARN</code>.</p>
    */
   SnsTopicName?: string;
 
@@ -2141,7 +2224,7 @@ export interface CreateTrailResponse {
   IncludeGlobalServiceEvents?: boolean;
 
   /**
-   * <p>Specifies whether the trail exists in one region or in all regions.</p>
+   * <p>Specifies whether the trail exists in one Region or in all Regions.</p>
    */
   IsMultiRegionTrail?: boolean;
 
@@ -2694,8 +2777,8 @@ export interface DeleteTrailResponse {}
 
 /**
  * @public
- * <p>This exception is thrown when an operation is called on a trail from a region other than
- *          the region in which the trail was created.</p>
+ * <p>This exception is thrown when an operation is called on a trail from a Region other than
+ *          the Region in which the trail was created.</p>
  */
 export class InvalidHomeRegionException extends __BaseException {
   readonly name: "InvalidHomeRegionException" = "InvalidHomeRegionException";
@@ -2804,7 +2887,14 @@ export interface DescribeQueryRequest {
   /**
    * <p>The query ID.</p>
    */
-  QueryId: string | undefined;
+  QueryId?: string;
+
+  /**
+   * <p>
+   *          The alias that identifies a query template.
+   *       </p>
+   */
+  QueryAlias?: string;
 }
 
 /**
@@ -2920,32 +3010,33 @@ export interface DescribeTrailsRequest {
    *          <p>
    *             <code>arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail</code>
    *          </p>
-   *          <p>If an empty list is specified, information for the trail in the current region is
+   *          <p>If an empty list is specified, information for the trail in the current Region is
    *          returned.</p>
    *          <ul>
    *             <li>
    *                <p>If an empty list is specified and <code>IncludeShadowTrails</code> is false, then
-   *                information for all trails in the current region is returned.</p>
+   *                information for all trails in the current Region is returned.</p>
    *             </li>
    *             <li>
    *                <p>If an empty list is specified and IncludeShadowTrails is null or true, then
-   *                information for all trails in the current region and any associated shadow trails in
-   *                other regions is returned.</p>
+   *                information for all trails in the current Region and any associated shadow trails in
+   *                other Regions is returned.</p>
    *             </li>
    *          </ul>
    *          <note>
    *             <p>If one or more trail names are specified, information is returned only if the names
-   *             match the names of trails belonging only to the current region and current account. To return information
-   *             about a trail in another region, you must specify its trail ARN.</p>
+   *             match the names of trails belonging only to the current Region and current account. To
+   *             return information about a trail in another Region, you must specify its trail
+   *             ARN.</p>
    *          </note>
    */
   trailNameList?: string[];
 
   /**
    * <p>Specifies whether to include shadow trails in the response. A shadow trail is the
-   *          replication in a region of a trail that was created in a different region, or in the case
+   *          replication in a Region of a trail that was created in a different Region, or in the case
    *          of an organization trail, the replication of an organization trail in member accounts. If
-   *          you do not include shadow trails, organization trails in a member account and region
+   *          you do not include shadow trails, organization trails in a member account and Region
    *          replication trails will not be returned. The default is true.</p>
    */
   includeShadowTrails?: boolean;
@@ -2979,7 +3070,7 @@ export interface Trail {
   /**
    * @deprecated
    *
-   * <p>This field is no longer in use. Use SnsTopicARN.</p>
+   * <p>This field is no longer in use. Use <code>SnsTopicARN</code>.</p>
    */
   SnsTopicName?: string;
 
@@ -3000,12 +3091,12 @@ export interface Trail {
   IncludeGlobalServiceEvents?: boolean;
 
   /**
-   * <p>Specifies whether the trail exists only in one region or exists in all regions.</p>
+   * <p>Specifies whether the trail exists only in one Region or exists in all Regions.</p>
    */
   IsMultiRegionTrail?: boolean;
 
   /**
-   * <p>The region in which the trail was created.</p>
+   * <p>The Region in which the trail was created.</p>
    */
   HomeRegion?: string;
 
@@ -3125,7 +3216,7 @@ export interface IngestionStatus {
  */
 export interface SourceConfig {
   /**
-   * <p> Specifies whether the channel applies to a single region or to all regions.</p>
+   * <p> Specifies whether the channel applies to a single Region or to all Regions.</p>
    */
   ApplyToAllRegions?: boolean;
 
@@ -3160,7 +3251,7 @@ export interface GetChannelResponse {
 
   /**
    * <p> Provides information about the advanced event selectors configured for the channel, and
-   *          whether the channel applies to all regions or a single region. </p>
+   *          whether the channel applies to all Regions or a single Region. </p>
    */
   SourceConfig?: SourceConfig;
 
@@ -3204,8 +3295,7 @@ export interface GetEventDataStoreResponse {
   Name?: string;
 
   /**
-   * <p>The status of an event data store. Values can be <code>ENABLED</code> and
-   *             <code>PENDING_DELETION</code>.</p>
+   * <p>The status of an event data store.</p>
    */
   Status?: EventDataStoreStatus | string;
 
@@ -3215,8 +3305,8 @@ export interface GetEventDataStoreResponse {
   AdvancedEventSelectors?: AdvancedEventSelector[];
 
   /**
-   * <p>Indicates whether the event data store includes events from all regions, or only from
-   *          the region in which it was created.</p>
+   * <p>Indicates whether the event data store includes events from all Regions, or only from
+   *          the Region in which it was created.</p>
    */
   MultiRegionEnabled?: boolean;
 
@@ -3361,7 +3451,7 @@ export interface DataResource {
    *          <ul>
    *             <li>
    *                <p>
-   *                   <code>AWS::S3::Object</code>
+   *                   <code>AWS::DynamoDB::Table</code>
    *                </p>
    *             </li>
    *             <li>
@@ -3371,14 +3461,14 @@ export interface DataResource {
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>AWS::DynamoDB::Table</code>
+   *                   <code>AWS::S3::Object</code>
    *                </p>
    *             </li>
    *          </ul>
    *          <p>The following resource types are also available through <i>advanced</i>
    *          event selectors. Basic event selector resource types are valid in advanced event selectors,
    *          but advanced event selector resource types are not valid in basic event selectors. For more
-   *          information, see <a>AdvancedFieldSelector$Field</a>.</p>
+   *          information, see <a href="https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_AdvancedFieldSelector.html">AdvancedFieldSelector</a>.</p>
    *          <ul>
    *             <li>
    *                <p>
@@ -3387,27 +3477,12 @@ export interface DataResource {
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>AWS::S3Outposts::Object</code>
+   *                   <code>AWS::CodeWhisperer::Profile</code>
    *                </p>
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>AWS::ManagedBlockchain::Node</code>
-   *                </p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>AWS::S3ObjectLambda::AccessPoint</code>
-   *                </p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>AWS::EC2::Snapshot</code>
-   *                </p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>AWS::S3::AccessPoint</code>
+   *                   <code>AWS::Cognito::IdentityPool</code>
    *                </p>
    *             </li>
    *             <li>
@@ -3417,12 +3492,37 @@ export interface DataResource {
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>AWS::Glue::Table</code>
+   *                   <code>AWS::EC2::Snapshot</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>AWS::EMRWAL::Workspace</code>
    *                </p>
    *             </li>
    *             <li>
    *                <p>
    *                   <code>AWS::FinSpace::Environment</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>AWS::Glue::Table</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>AWS::GuardDuty::Detector</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>AWS::KendraRanking::ExecutionPlan</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>AWS::ManagedBlockchain::Node</code>
    *                </p>
    *             </li>
    *             <li>
@@ -3433,6 +3533,21 @@ export interface DataResource {
    *             <li>
    *                <p>
    *                   <code>AWS::SageMaker::FeatureGroup</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>AWS::S3::AccessPoint</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>AWS::S3ObjectLambda::AccessPoint</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>AWS::S3Outposts::Object</code>
    *                </p>
    *             </li>
    *          </ul>
@@ -3532,7 +3647,7 @@ export interface EventSelector {
    *          Guide</i>.</p>
    *          <p>By default, the value is <code>true</code>.</p>
    *          <p>The first copy of management events is free. You are charged for additional copies of
-   *          management events that you are logging on any subsequent trail in the same region. For more
+   *          management events that you are logging on any subsequent trail in the same Region. For more
    *          information about CloudTrail pricing, see <a href="http://aws.amazon.com/cloudtrail/pricing/">CloudTrail Pricing</a>.</p>
    */
   IncludeManagementEvents?: boolean;
@@ -3555,7 +3670,7 @@ export interface EventSelector {
    *          containing <code>kms.amazonaws.com</code> or <code>rdsdata.amazonaws.com</code>. By
    *          default, <code>ExcludeManagementEventSources</code> is empty, and KMS and
    *             Amazon RDS Data API events are logged to your trail. You can exclude management
-   *          event sources only in regions that support the event source.</p>
+   *          event sources only in Regions that support the event source.</p>
    */
   ExcludeManagementEventSources?: string[];
 }
@@ -3601,7 +3716,7 @@ export interface S3ImportSource {
   S3LocationUri: string | undefined;
 
   /**
-   * <p> The region associated with the source S3 bucket. </p>
+   * <p> The Region associated with the source S3 bucket. </p>
    */
   S3BucketRegion: string | undefined;
 
@@ -3804,12 +3919,17 @@ export type InsightType = (typeof InsightType)[keyof typeof InsightType];
 
 /**
  * @public
- * <p>A JSON string that contains a list of insight types that are logged on a trail.</p>
+ * <p>A JSON string that contains a list of Insights types that are logged on a trail.</p>
  */
 export interface InsightSelector {
   /**
-   * <p>The type of insights to log on a trail. <code>ApiCallRateInsight</code> and
-   *             <code>ApiErrorRateInsight</code> are valid insight types.</p>
+   * <p>The type of Insights events to log on a trail. <code>ApiCallRateInsight</code> and
+   *             <code>ApiErrorRateInsight</code> are valid Insight types.</p>
+   *          <p>The <code>ApiCallRateInsight</code> Insights type analyzes write-only
+   *          management API calls that are aggregated per minute against a baseline API call volume.</p>
+   *          <p>The <code>ApiErrorRateInsight</code> Insights type analyzes management
+   *          API calls that result in error codes. The error is shown if the API call is
+   *          unsuccessful.</p>
    */
   InsightType?: InsightType | string;
 }
@@ -4055,7 +4175,7 @@ export interface GetTrailStatusRequest {
   /**
    * <p>Specifies the name or the CloudTrail ARN of the trail for which you are
    *          requesting status. To get the status of a shadow trail (a replication of the trail in
-   *          another region), you must specify its ARN. The following is the format of a trail
+   *          another Region), you must specify its ARN. The following is the format of a trail
    *          ARN.</p>
    *          <p>
    *             <code>arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail</code>
@@ -4260,8 +4380,7 @@ export interface EventDataStore {
   /**
    * @deprecated
    *
-   * <p>The status of an event data store. Values are
-   *             <code>ENABLED</code> and <code>PENDING_DELETION</code>.</p>
+   * <p>The status of an event data store.</p>
    */
   Status?: EventDataStoreStatus | string;
 
@@ -4277,7 +4396,7 @@ export interface EventDataStore {
    * @deprecated
    *
    * <p>Indicates whether the event data store includes events
-   *          from all regions, or only from the region in which it was created.</p>
+   *          from all Regions, or only from the Region in which it was created.</p>
    */
   MultiRegionEnabled?: boolean;
 
@@ -4319,7 +4438,7 @@ export interface EventDataStore {
 export interface ListEventDataStoresResponse {
   /**
    * <p>Contains information about event data stores in the account, in the current
-   *          region.</p>
+   *          Region.</p>
    */
   EventDataStores?: EventDataStore[];
 
@@ -4743,6 +4862,15 @@ export interface ListTagsRequest {
   /**
    * <p>Specifies a list of trail, event data store, or channel ARNs whose tags will be listed. The list
    *          has a limit of 20 ARNs.</p>
+   *          <p> Example trail ARN format:
+   *          <code>arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail</code>
+   *          </p>
+   *          <p>Example event data store ARN format:
+   *          <code>arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
+   *          </p>
+   *          <p>Example channel ARN format:
+   *          <code>arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890</code>
+   *          </p>
    */
   ResourceIdList: string[] | undefined;
 
@@ -4800,7 +4928,7 @@ export interface ListTrailsRequest {
 
 /**
  * @public
- * <p>Information about a CloudTrail trail, including the trail's name, home region,
+ * <p>Information about a CloudTrail trail, including the trail's name, home Region,
  *          and Amazon Resource Name (ARN).</p>
  */
 export interface TrailInfo {
@@ -4825,7 +4953,7 @@ export interface TrailInfo {
  */
 export interface ListTrailsResponse {
   /**
-   * <p>Returns the name, ARN, and home region of trails in the current account.</p>
+   * <p>Returns the name, ARN, and home Region of trails in the current account.</p>
    */
   Trails?: TrailInfo[];
 
@@ -5131,7 +5259,7 @@ export interface PutEventSelectorsRequest {
    *             <code>AdvancedEventSelectors</code> or <code>EventSelectors</code>, but not both. If you
    *          apply <code>AdvancedEventSelectors</code> to a trail, any existing
    *             <code>EventSelectors</code> are overwritten. For more information about advanced event
-   *          selectors, see <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html">Logging data events for trails</a> in the <i>CloudTrail User Guide</i>. </p>
+   *          selectors, see <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html">Logging data events</a> in the <i>CloudTrail User Guide</i>. </p>
    */
   AdvancedEventSelectors?: AdvancedEventSelector[];
 }
@@ -5200,8 +5328,13 @@ export interface PutInsightSelectorsRequest {
 
   /**
    * <p>A JSON string that contains the insight types you want to log on a trail.
-   *             <code>ApiCallRateInsight</code> and <code>ApiErrorRateInsight</code> are valid insight
+   *             <code>ApiCallRateInsight</code> and <code>ApiErrorRateInsight</code> are valid Insight
    *          types.</p>
+   *          <p>The <code>ApiCallRateInsight</code> Insights type analyzes write-only
+   *          management API calls that are aggregated per minute against a baseline API call volume.</p>
+   *          <p>The <code>ApiErrorRateInsight</code> Insights type analyzes management
+   *          API calls that result in error codes. The error is shown if the API call is
+   *          unsuccessful.</p>
    */
   InsightSelectors: InsightSelector[] | undefined;
 }
@@ -5384,7 +5517,7 @@ export interface RemoveTagsRequest {
    *             <code>arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail</code>
    *          </p>
    *          <p>Example event data store ARN format:
-   *             <code>arn:aws:cloudtrail:us-east-2:12345678910:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
+   *          <code>arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
    *          </p>
    *          <p>Example channel ARN format:
    *          <code>arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890</code>
@@ -5466,8 +5599,8 @@ export interface RestoreEventDataStoreResponse {
   AdvancedEventSelectors?: AdvancedEventSelector[];
 
   /**
-   * <p>Indicates whether the event data store is collecting events from all regions, or only
-   *          from the region in which the event data store was created.</p>
+   * <p>Indicates whether the event data store is collecting events from all Regions, or only
+   *          from the Region in which the event data store was created.</p>
    */
   MultiRegionEnabled?: boolean;
 
@@ -5509,6 +5642,21 @@ export interface RestoreEventDataStoreResponse {
    */
   KmsKeyId?: string;
 }
+
+/**
+ * @public
+ */
+export interface StartEventDataStoreIngestionRequest {
+  /**
+   * <p>The ARN (or ID suffix of the ARN) of the event data store for which you want to start ingestion.</p>
+   */
+  EventDataStore: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StartEventDataStoreIngestionResponse {}
 
 /**
  * @public
@@ -5709,12 +5857,26 @@ export interface StartQueryRequest {
   /**
    * <p>The SQL code of your query.</p>
    */
-  QueryStatement: string | undefined;
+  QueryStatement?: string;
 
   /**
    * <p> The URI for the S3 bucket where CloudTrail delivers the query results. </p>
    */
   DeliveryS3Uri?: string;
+
+  /**
+   * <p>
+   *          The alias that identifies a query template.
+   *       </p>
+   */
+  QueryAlias?: string;
+
+  /**
+   * <p>
+   *          The query parameters for the specified <code>QueryAlias</code>.
+   *       </p>
+   */
+  QueryParameters?: string[];
 }
 
 /**
@@ -5726,6 +5888,21 @@ export interface StartQueryResponse {
    */
   QueryId?: string;
 }
+
+/**
+ * @public
+ */
+export interface StopEventDataStoreIngestionRequest {
+  /**
+   * <p>The ARN (or ID suffix of the ARN) of the event data store for which you want to stop ingestion.</p>
+   */
+  EventDataStore: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopEventDataStoreIngestionResponse {}
 
 /**
  * @public
@@ -5884,8 +6061,8 @@ export interface UpdateEventDataStoreRequest {
   AdvancedEventSelectors?: AdvancedEventSelector[];
 
   /**
-   * <p>Specifies whether an event data store collects events from all regions, or only from the
-   *          region in which it was created.</p>
+   * <p>Specifies whether an event data store collects events from all Regions, or only from the
+   *          Region in which it was created.</p>
    */
   MultiRegionEnabled?: boolean;
 
@@ -5964,8 +6141,7 @@ export interface UpdateEventDataStoreResponse {
   Name?: string;
 
   /**
-   * <p>The status of an event data store. Values can be <code>ENABLED</code> and
-   *             <code>PENDING_DELETION</code>.</p>
+   * <p>The status of an event data store.</p>
    */
   Status?: EventDataStoreStatus | string;
 
@@ -5975,8 +6151,8 @@ export interface UpdateEventDataStoreResponse {
   AdvancedEventSelectors?: AdvancedEventSelector[];
 
   /**
-   * <p>Indicates whether the event data store includes events from all regions, or only from
-   *          the region in which it was created.</p>
+   * <p>Indicates whether the event data store includes events from all Regions, or only from
+   *          the Region in which it was created.</p>
    */
   MultiRegionEnabled?: boolean;
 
@@ -6078,12 +6254,12 @@ export interface UpdateTrailRequest {
   IncludeGlobalServiceEvents?: boolean;
 
   /**
-   * <p>Specifies whether the trail applies only to the current region or to all regions. The
-   *          default is false. If the trail exists only in the current region and this value is set to
-   *          true, shadow trails (replications of the trail) will be created in the other regions. If
-   *          the trail exists in all regions and this value is set to false, the trail will remain in
-   *          the region where it was created, and its shadow trails in other regions will be deleted. As
-   *          a best practice, consider using trails that log events in all regions.</p>
+   * <p>Specifies whether the trail applies only to the current Region or to all Regions. The
+   *          default is false. If the trail exists only in the current Region and this value is set to
+   *          true, shadow trails (replications of the trail) will be created in the other Regions. If
+   *          the trail exists in all Regions and this value is set to false, the trail will remain in
+   *          the Region where it was created, and its shadow trails in other Regions will be deleted. As
+   *          a best practice, consider using trails that log events in all Regions.</p>
    */
   IsMultiRegionTrail?: boolean;
 
@@ -6177,7 +6353,7 @@ export interface UpdateTrailResponse {
   /**
    * @deprecated
    *
-   * <p>This field is no longer in use. Use <a>UpdateTrailResponse$SnsTopicARN</a>.</p>
+   * <p>This field is no longer in use. Use <code>SnsTopicARN</code>.</p>
    */
   SnsTopicName?: string;
 
@@ -6197,7 +6373,7 @@ export interface UpdateTrailResponse {
   IncludeGlobalServiceEvents?: boolean;
 
   /**
-   * <p>Specifies whether the trail exists in one region or in all regions.</p>
+   * <p>Specifies whether the trail exists in one Region or in all Regions.</p>
    */
   IsMultiRegionTrail?: boolean;
 

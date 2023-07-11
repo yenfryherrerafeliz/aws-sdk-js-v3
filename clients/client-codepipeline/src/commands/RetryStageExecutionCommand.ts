@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CodePipelineClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodePipelineClient";
 import { RetryStageExecutionInput, RetryStageExecutionOutput } from "../models/models_0";
 import { de_RetryStageExecutionCommand, se_RetryStageExecutionCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -46,7 +50,7 @@ export interface RetryStageExecutionCommandOutput extends RetryStageExecutionOut
  *   pipelineName: "STRING_VALUE", // required
  *   stageName: "STRING_VALUE", // required
  *   pipelineExecutionId: "STRING_VALUE", // required
- *   retryMode: "STRING_VALUE", // required
+ *   retryMode: "FAILED_ACTIONS", // required
  * };
  * const command = new RetryStageExecutionCommand(input);
  * const response = await client.send(command);
@@ -67,8 +71,9 @@ export interface RetryStageExecutionCommandOutput extends RetryStageExecutionOut
  *             activities. Try again later.</p>
  *
  * @throws {@link NotLatestPipelineExecutionException} (client fault)
- *  <p>The stage has failed in a later run of the pipeline and the pipelineExecutionId
- *             associated with the request is out of date.</p>
+ *  <p>The stage has failed in a later run of the pipeline and the
+ *                 <code>pipelineExecutionId</code> associated with the request is out of
+ *             date.</p>
  *
  * @throws {@link PipelineNotFoundException} (client fault)
  *  <p>The pipeline was specified in an invalid format or cannot be found.</p>

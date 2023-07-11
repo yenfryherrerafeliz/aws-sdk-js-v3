@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { CustomerProfilesServiceException as __BaseException } from "./CustomerProfilesServiceException";
 
@@ -954,6 +954,33 @@ export interface AppflowIntegrationWorkflowStep {
 
 /**
  * @public
+ * <p>The details of a single attribute item specified in the mathematical expression.</p>
+ */
+export interface AttributeItem {
+  /**
+   * <p>The name of an attribute defined in a profile object type.</p>
+   */
+  Name: string | undefined;
+}
+
+/**
+ * @public
+ * <p>Mathematical expression and a list of attribute items specified in that expression.</p>
+ */
+export interface AttributeDetails {
+  /**
+   * <p>A list of attribute items specified in the mathematical expression.</p>
+   */
+  Attributes: AttributeItem[] | undefined;
+
+  /**
+   * <p>Mathematical expression that is performed on attribute items provided in the attribute list. Each element in the expression should follow the structure of \"\{ObjectTypeName.AttributeName\}\".</p>
+   */
+  Expression: string | undefined;
+}
+
+/**
+ * @public
  * @enum
  */
 export const ConflictResolvingModel = {
@@ -1037,6 +1064,265 @@ export interface AutoMerging {
    *          score means higher similarity required to merge profiles. </p>
    */
   MinAllowedConfidenceScoreForMerging?: number;
+}
+
+/**
+ * @public
+ * <p>The details of a single calculated attribute definition.</p>
+ */
+export interface ListCalculatedAttributeDefinitionItem {
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  CalculatedAttributeName?: string;
+
+  /**
+   * <p>The display name of the calculated attribute.</p>
+   */
+  DisplayName?: string;
+
+  /**
+   * <p>The threshold for the calculated attribute.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>The threshold for the calculated attribute.</p>
+   */
+  CreatedAt?: Date;
+
+  /**
+   * <p>The timestamp of when the calculated attribute definition was most recently edited.</p>
+   */
+  LastUpdatedAt?: Date;
+
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  Tags?: Record<string, string>;
+}
+
+/**
+ * @public
+ * <p>The details of a single calculated attribute for a profile.</p>
+ */
+export interface ListCalculatedAttributeForProfileItem {
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  CalculatedAttributeName?: string;
+
+  /**
+   * <p>The display name of the calculated attribute.</p>
+   */
+  DisplayName?: string;
+
+  /**
+   * <p>Indicates whether the calculated attribute’s value is based on partial data. If data is partial, it is set to true.</p>
+   */
+  IsDataPartial?: string;
+
+  /**
+   * <p>The value of the calculated attribute.</p>
+   */
+  Value?: string;
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const Unit = {
+  DAYS: "DAYS",
+} as const;
+
+/**
+ * @public
+ */
+export type Unit = (typeof Unit)[keyof typeof Unit];
+
+/**
+ * @public
+ * <p>The relative time period over which data is included in the aggregation.</p>
+ */
+export interface Range {
+  /**
+   * <p>The amount of time of the specified unit.</p>
+   */
+  Value: number | undefined;
+
+  /**
+   * <p>The unit of time.</p>
+   */
+  Unit: Unit | string | undefined;
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const Operator = {
+  EQUAL_TO: "EQUAL_TO",
+  GREATER_THAN: "GREATER_THAN",
+  LESS_THAN: "LESS_THAN",
+  NOT_EQUAL_TO: "NOT_EQUAL_TO",
+} as const;
+
+/**
+ * @public
+ */
+export type Operator = (typeof Operator)[keyof typeof Operator];
+
+/**
+ * @public
+ * <p>The threshold for the calculated attribute.</p>
+ */
+export interface Threshold {
+  /**
+   * <p>The value of the threshold.</p>
+   */
+  Value: string | undefined;
+
+  /**
+   * <p>The operator of the threshold.</p>
+   */
+  Operator: Operator | string | undefined;
+}
+
+/**
+ * @public
+ * <p>The conditions including range, object count, and threshold for the calculated attribute.</p>
+ */
+export interface Conditions {
+  /**
+   * <p>The relative time period over which data is included in the aggregation.</p>
+   */
+  Range?: Range;
+
+  /**
+   * <p>The number of profile objects used for the calculated attribute.</p>
+   */
+  ObjectCount?: number;
+
+  /**
+   * <p>The threshold for the calculated attribute.</p>
+   */
+  Threshold?: Threshold;
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const Statistic = {
+  AVERAGE: "AVERAGE",
+  COUNT: "COUNT",
+  FIRST_OCCURRENCE: "FIRST_OCCURRENCE",
+  LAST_OCCURRENCE: "LAST_OCCURRENCE",
+  MAXIMUM: "MAXIMUM",
+  MAX_OCCURRENCE: "MAX_OCCURRENCE",
+  MINIMUM: "MINIMUM",
+  SUM: "SUM",
+} as const;
+
+/**
+ * @public
+ */
+export type Statistic = (typeof Statistic)[keyof typeof Statistic];
+
+/**
+ * @public
+ */
+export interface CreateCalculatedAttributeDefinitionRequest {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  CalculatedAttributeName: string | undefined;
+
+  /**
+   * <p>The display name of the calculated attribute.</p>
+   */
+  DisplayName?: string;
+
+  /**
+   * <p>The description of the calculated attribute.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>Mathematical expression and a list of attribute items specified in that expression.</p>
+   */
+  AttributeDetails: AttributeDetails | undefined;
+
+  /**
+   * <p>The conditions including range, object count, and threshold for the calculated attribute.</p>
+   */
+  Conditions?: Conditions;
+
+  /**
+   * <p>The aggregation operation to perform for the calculated attribute.</p>
+   */
+  Statistic: Statistic | string | undefined;
+
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  Tags?: Record<string, string>;
+}
+
+/**
+ * @public
+ */
+export interface CreateCalculatedAttributeDefinitionResponse {
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  CalculatedAttributeName?: string;
+
+  /**
+   * <p>The display name of the calculated attribute.</p>
+   */
+  DisplayName?: string;
+
+  /**
+   * <p>The description of the calculated attribute.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>Mathematical expression and a list of attribute items specified in that expression.</p>
+   */
+  AttributeDetails?: AttributeDetails;
+
+  /**
+   * <p>The conditions including range, object count, and threshold for the calculated attribute.</p>
+   */
+  Conditions?: Conditions;
+
+  /**
+   * <p>The aggregation operation to perform for the calculated attribute.</p>
+   */
+  Statistic?: Statistic | string;
+
+  /**
+   * <p>The timestamp of when the calculated attribute definition was created.</p>
+   */
+  CreatedAt?: Date;
+
+  /**
+   * <p>The timestamp of when the calculated attribute definition was most recently edited.</p>
+   */
+  LastUpdatedAt?: Date;
+
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  Tags?: Record<string, string>;
 }
 
 /**
@@ -1253,6 +1539,47 @@ export interface CreateDomainResponse {
    * <p>The timestamp of when the domain was most recently edited.</p>
    */
   LastUpdatedAt: Date | undefined;
+
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  Tags?: Record<string, string>;
+}
+
+/**
+ * @public
+ */
+export interface CreateEventStreamRequest {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>The StreamARN of the destination to deliver profile events to. For example,
+   *          arn:aws:kinesis:region:account-id:stream/stream-name</p>
+   */
+  Uri: string | undefined;
+
+  /**
+   * <p>The name of the event stream.</p>
+   */
+  EventStreamName: string | undefined;
+
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  Tags?: Record<string, string>;
+}
+
+/**
+ * @public
+ */
+export interface CreateEventStreamResponse {
+  /**
+   * <p>A unique identifier for the event stream.</p>
+   */
+  EventStreamArn: string | undefined;
 
   /**
    * <p>The tags used to organize, track, or control access for this resource.</p>
@@ -1509,6 +1836,26 @@ export interface CreateProfileResponse {
 /**
  * @public
  */
+export interface DeleteCalculatedAttributeDefinitionRequest {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  CalculatedAttributeName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DeleteCalculatedAttributeDefinitionResponse {}
+
+/**
+ * @public
+ */
 export interface DeleteDomainRequest {
   /**
    * <p>The unique name of the domain.</p>
@@ -1525,6 +1872,26 @@ export interface DeleteDomainResponse {
    */
   Message: string | undefined;
 }
+
+/**
+ * @public
+ */
+export interface DeleteEventStreamRequest {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>The name of the event stream</p>
+   */
+  EventStreamName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DeleteEventStreamResponse {}
 
 /**
  * @public
@@ -1745,6 +2112,116 @@ export interface GetAutoMergingPreviewResponse {
 /**
  * @public
  */
+export interface GetCalculatedAttributeDefinitionRequest {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  CalculatedAttributeName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface GetCalculatedAttributeDefinitionResponse {
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  CalculatedAttributeName?: string;
+
+  /**
+   * <p>The display name of the calculated attribute.</p>
+   */
+  DisplayName?: string;
+
+  /**
+   * <p>The description of the calculated attribute.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>The timestamp of when the calculated attribute definition was created.</p>
+   */
+  CreatedAt?: Date;
+
+  /**
+   * <p>The timestamp of when the calculated attribute definition was most recently edited.</p>
+   */
+  LastUpdatedAt?: Date;
+
+  /**
+   * <p>The aggregation operation to perform for the calculated attribute.</p>
+   */
+  Statistic?: Statistic | string;
+
+  /**
+   * <p>The conditions including range, object count, and threshold for the calculated attribute.</p>
+   */
+  Conditions?: Conditions;
+
+  /**
+   * <p>Mathematical expression and a list of attribute items specified in that expression.</p>
+   */
+  AttributeDetails?: AttributeDetails;
+
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  Tags?: Record<string, string>;
+}
+
+/**
+ * @public
+ */
+export interface GetCalculatedAttributeForProfileRequest {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>The unique identifier of a customer profile.</p>
+   */
+  ProfileId: string | undefined;
+
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  CalculatedAttributeName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface GetCalculatedAttributeForProfileResponse {
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  CalculatedAttributeName?: string;
+
+  /**
+   * <p>The display name of the calculated attribute.</p>
+   */
+  DisplayName?: string;
+
+  /**
+   * <p>Indicates whether the calculated attribute’s value is based on partial data. If data is partial, it is set to true.</p>
+   */
+  IsDataPartial?: string;
+
+  /**
+   * <p>The value of the calculated attribute.</p>
+   */
+  Value?: string;
+}
+
+/**
+ * @public
+ */
 export interface GetDomainRequest {
   /**
    * <p>The unique name of the domain.</p>
@@ -1832,6 +2309,117 @@ export interface GetDomainResponse {
    * <p>The timestamp of when the domain was most recently edited.</p>
    */
   LastUpdatedAt: Date | undefined;
+
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  Tags?: Record<string, string>;
+}
+
+/**
+ * @public
+ */
+export interface GetEventStreamRequest {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>The name of the event stream provided during create operations.</p>
+   */
+  EventStreamName: string | undefined;
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const EventStreamDestinationStatus = {
+  HEALTHY: "HEALTHY",
+  UNHEALTHY: "UNHEALTHY",
+} as const;
+
+/**
+ * @public
+ */
+export type EventStreamDestinationStatus =
+  (typeof EventStreamDestinationStatus)[keyof typeof EventStreamDestinationStatus];
+
+/**
+ * @public
+ * <p>Details of the destination being used for the EventStream.</p>
+ */
+export interface EventStreamDestinationDetails {
+  /**
+   * <p>The StreamARN of the destination to deliver profile events to. For example,
+   *          arn:aws:kinesis:region:account-id:stream/stream-name.</p>
+   */
+  Uri: string | undefined;
+
+  /**
+   * <p>The status of enabling the Kinesis stream as a destination for export.</p>
+   */
+  Status: EventStreamDestinationStatus | string | undefined;
+
+  /**
+   * <p>The timestamp when the status last changed to <code>UNHEALHY</code>.</p>
+   */
+  UnhealthySince?: Date;
+
+  /**
+   * <p>The human-readable string that corresponds to the error or success while enabling the streaming destination.</p>
+   */
+  Message?: string;
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const EventStreamState = {
+  RUNNING: "RUNNING",
+  STOPPED: "STOPPED",
+} as const;
+
+/**
+ * @public
+ */
+export type EventStreamState = (typeof EventStreamState)[keyof typeof EventStreamState];
+
+/**
+ * @public
+ */
+export interface GetEventStreamResponse {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>A unique identifier for the event stream.</p>
+   */
+  EventStreamArn: string | undefined;
+
+  /**
+   * <p>The timestamp of when the export was created.</p>
+   */
+  CreatedAt: Date | undefined;
+
+  /**
+   * <p>The operational state of destination stream for export.</p>
+   */
+  State: EventStreamState | string | undefined;
+
+  /**
+   * <p>The timestamp when the <code>State</code> changed to <code>STOPPED</code>.</p>
+   */
+  StoppedSince?: Date;
+
+  /**
+   * <p>Details regarding the Kinesis stream.</p>
+   */
+  DestinationDetails: EventStreamDestinationDetails | undefined;
 
   /**
    * <p>The tags used to organize, track, or control access for this resource.</p>
@@ -2624,6 +3212,81 @@ export interface ListAccountIntegrationsResponse {
 /**
  * @public
  */
+export interface ListCalculatedAttributeDefinitionsRequest {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>The pagination token from the previous call to ListCalculatedAttributeDefinitions.</p>
+   */
+  NextToken?: string;
+
+  /**
+   * <p>The maximum number of calculated attribute definitions returned per page.</p>
+   */
+  MaxResults?: number;
+}
+
+/**
+ * @public
+ */
+export interface ListCalculatedAttributeDefinitionsResponse {
+  /**
+   * <p>The list of calculated attribute definitions.</p>
+   */
+  Items?: ListCalculatedAttributeDefinitionItem[];
+
+  /**
+   * <p>The pagination token from the previous call to ListCalculatedAttributeDefinitions.</p>
+   */
+  NextToken?: string;
+}
+
+/**
+ * @public
+ */
+export interface ListCalculatedAttributesForProfileRequest {
+  /**
+   * <p>The pagination token from the previous call to ListCalculatedAttributesForProfile.</p>
+   */
+  NextToken?: string;
+
+  /**
+   * <p>The maximum number of calculated attributes returned per page.</p>
+   */
+  MaxResults?: number;
+
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>The unique identifier of a customer profile.</p>
+   */
+  ProfileId: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface ListCalculatedAttributesForProfileResponse {
+  /**
+   * <p>The list of calculated attributes.</p>
+   */
+  Items?: ListCalculatedAttributeForProfileItem[];
+
+  /**
+   * <p>The pagination token from the previous call to ListCalculatedAttributesForProfile.</p>
+   */
+  NextToken?: string;
+}
+
+/**
+ * @public
+ */
 export interface ListDomainsRequest {
   /**
    * <p>The pagination token from the previous ListDomain API call.</p>
@@ -2673,6 +3336,104 @@ export interface ListDomainsResponse {
 
   /**
    * <p>The pagination token from the previous ListDomains API call.</p>
+   */
+  NextToken?: string;
+}
+
+/**
+ * @public
+ */
+export interface ListEventStreamsRequest {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>Identifies the next page of results to return.</p>
+   */
+  NextToken?: string;
+
+  /**
+   * <p>The maximum number of objects returned per page.</p>
+   */
+  MaxResults?: number;
+}
+
+/**
+ * @public
+ * <p>Summary information about the Kinesis data stream</p>
+ */
+export interface DestinationSummary {
+  /**
+   * <p>The StreamARN of the destination to deliver profile events to. For example,
+   *          arn:aws:kinesis:region:account-id:stream/stream-name.</p>
+   */
+  Uri: string | undefined;
+
+  /**
+   * <p>The status of enabling the Kinesis stream as a destination for export.</p>
+   */
+  Status: EventStreamDestinationStatus | string | undefined;
+
+  /**
+   * <p>The timestamp when the status last changed to <code>UNHEALHY</code>.</p>
+   */
+  UnhealthySince?: Date;
+}
+
+/**
+ * @public
+ * <p>An instance of EventStream in a list of EventStreams.</p>
+ */
+export interface EventStreamSummary {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>The name of the event stream.</p>
+   */
+  EventStreamName: string | undefined;
+
+  /**
+   * <p>A unique identifier for the event stream.</p>
+   */
+  EventStreamArn: string | undefined;
+
+  /**
+   * <p>The operational state of destination stream for export.</p>
+   */
+  State: EventStreamState | string | undefined;
+
+  /**
+   * <p>The timestamp when the <code>State</code> changed to <code>STOPPED</code>.</p>
+   */
+  StoppedSince?: Date;
+
+  /**
+   * <p>Summary information about the Kinesis data stream.</p>
+   */
+  DestinationSummary?: DestinationSummary;
+
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  Tags?: Record<string, string>;
+}
+
+/**
+ * @public
+ */
+export interface ListEventStreamsResponse {
+  /**
+   * <p>Contains summary information about an EventStream.</p>
+   */
+  Items?: EventStreamSummary[];
+
+  /**
+   * <p>Identifies the next page of results to return.</p>
    */
   NextToken?: string;
 }
@@ -2836,16 +3597,16 @@ export interface ListIntegrationsResponse {
 
 /**
  * @public
- * <p>The filter applied to ListProfileObjects response to include profile objects with the
- *          specified index values. This filter is only supported for ObjectTypeName _asset, _case and
- *          _order.</p>
+ * <p>The filter applied to <code>ListProfileObjects</code> response to include profile objects with the
+ *          specified index values.</p>
  */
 export interface ObjectFilter {
   /**
-   * <p>A searchable identifier of a standard profile object. The predefined keys you can use to
-   *          search for _asset include: _assetId, _assetName, _serialNumber. The predefined keys you can
-   *          use to search for _case include: _caseId. The predefined keys you can use to search for
-   *          _order include: _orderId.</p>
+   * <p>A searchable identifier of a profile object. The predefined keys you can use to
+   *          search for <code>_asset</code> include: <code>_assetId</code>, <code>_assetName</code>,
+   *          and <code>_serialNumber</code>. The predefined keys you can use to search for <code>_case</code>
+   *          include: <code>_caseId</code>. The predefined keys you can use to search for
+   *          <code>_order</code> include: <code>_orderId</code>.</p>
    */
   KeyName: string | undefined;
 
@@ -2886,7 +3647,7 @@ export interface ListProfileObjectsRequest {
 
   /**
    * <p>Applies a filter to the response to include profile objects with the specified index
-   *          values. This filter is only supported for ObjectTypeName _asset, _case and _order.</p>
+   *          values.</p>
    */
   ObjectFilter?: ObjectFilter;
 }
@@ -3877,6 +4638,86 @@ export interface UntagResourceRequest {
  * @public
  */
 export interface UntagResourceResponse {}
+
+/**
+ * @public
+ */
+export interface UpdateCalculatedAttributeDefinitionRequest {
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  DomainName: string | undefined;
+
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  CalculatedAttributeName: string | undefined;
+
+  /**
+   * <p>The display name of the calculated attribute.</p>
+   */
+  DisplayName?: string;
+
+  /**
+   * <p>The description of the calculated attribute.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>The conditions including range, object count, and threshold for the calculated attribute.</p>
+   */
+  Conditions?: Conditions;
+}
+
+/**
+ * @public
+ */
+export interface UpdateCalculatedAttributeDefinitionResponse {
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  CalculatedAttributeName?: string;
+
+  /**
+   * <p>The display name of the calculated attribute.</p>
+   */
+  DisplayName?: string;
+
+  /**
+   * <p>The description of the calculated attribute.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>The timestamp of when the calculated attribute definition was created.</p>
+   */
+  CreatedAt?: Date;
+
+  /**
+   * <p>The timestamp of when the calculated attribute definition was most recently edited.</p>
+   */
+  LastUpdatedAt?: Date;
+
+  /**
+   * <p>The aggregation operation to perform for the calculated attribute.</p>
+   */
+  Statistic?: Statistic | string;
+
+  /**
+   * <p>The conditions including range, object count, and threshold for the calculated attribute.</p>
+   */
+  Conditions?: Conditions;
+
+  /**
+   * <p>The mathematical expression and a list of attribute items specified in that expression.</p>
+   */
+  AttributeDetails?: AttributeDetails;
+
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  Tags?: Record<string, string>;
+}
 
 /**
  * @public

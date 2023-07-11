@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { KMSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KMSClient";
 import { GenerateDataKeyWithoutPlaintextRequest, GenerateDataKeyWithoutPlaintextResponse } from "../models/models_0";
@@ -20,6 +20,10 @@ import {
   se_GenerateDataKeyWithoutPlaintextCommand,
 } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -56,10 +60,11 @@ export interface GenerateDataKeyWithoutPlaintextCommandOutput
  *          <p>To request an asymmetric data key pair, use the <a>GenerateDataKeyPair</a> or
  *         <a>GenerateDataKeyPairWithoutPlaintext</a> operations.</p>
  *          <p>To generate a data key, you must specify the symmetric encryption KMS key that is used to
- *       encrypt the data key. You cannot use an asymmetric KMS key or a key in a custom key store to generate a data key. To get the
- *       type of your KMS key, use the <a>DescribeKey</a> operation.</p>
+ *       encrypt the data key. You cannot use an asymmetric KMS key or a key in a custom key store to
+ *       generate a data key. To get the type of your KMS key, use the <a>DescribeKey</a>
+ *       operation.</p>
  *          <p>You must also specify the length of the data key. Use either the <code>KeySpec</code> or
- *       <code>NumberOfBytes</code> parameters (but not both). For 128-bit and 256-bit data keys, use
+ *         <code>NumberOfBytes</code> parameters (but not both). For 128-bit and 256-bit data keys, use
  *       the <code>KeySpec</code> parameter.</p>
  *          <p>To generate an SM4 data key (China Regions only), specify a <code>KeySpec</code> value of
  *         <code>AES_128</code> or <code>NumberOfBytes</code> value of <code>16</code>. The symmetric
@@ -125,6 +130,7 @@ export interface GenerateDataKeyWithoutPlaintextCommandOutput
  *   GrantTokens: [ // GrantTokenList
  *     "STRING_VALUE",
  *   ],
+ *   DryRun: true || false,
  * };
  * const command = new GenerateDataKeyWithoutPlaintextCommand(input);
  * const response = await client.send(command);
@@ -147,6 +153,11 @@ export interface GenerateDataKeyWithoutPlaintextCommandOutput
  *
  * @throws {@link DisabledException} (client fault)
  *  <p>The request was rejected because the specified KMS key is not enabled.</p>
+ *
+ * @throws {@link DryRunOperationException} (client fault)
+ *  <p>
+ *       The request was rejected because the DryRun parameter was specified.
+ *     </p>
  *
  * @throws {@link InvalidGrantTokenException} (client fault)
  *  <p>The request was rejected because the specified grant token is not valid.</p>
@@ -194,7 +205,9 @@ export interface GenerateDataKeyWithoutPlaintextCommandOutput
  *                   </i>.</p>
  *             </li>
  *             <li>
- *                <p>For cryptographic operations on KMS keys in custom key stores, this exception represents a general failure with many possible causes. To identify the cause, see the error message that accompanies the exception.</p>
+ *                <p>For cryptographic operations on KMS keys in custom key stores, this exception
+ *           represents a general failure with many possible causes. To identify the cause, see the
+ *           error message that accompanies the exception.</p>
  *             </li>
  *          </ul>
  *

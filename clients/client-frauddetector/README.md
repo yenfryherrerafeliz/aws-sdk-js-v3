@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-frauddetector
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-frauddetector/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-frauddetector)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-frauddetector.svg)](https://www.npmjs.com/package/@aws-sdk/client-frauddetector)
-
 ## Description
 
 AWS SDK for JavaScript FraudDetector Client for Node.js, Browser and React Native.
@@ -16,7 +13,8 @@ more information about Amazon Fraud Detector features, see the <a href="https://
 <p>The Amazon Fraud Detector Query API provides HTTPS requests that use the HTTP verb GET or POST and a Query parameter <code>Action</code>. AWS SDK provides libraries,
 sample code, tutorials, and other resources for software developers who prefer to build applications using language-specific APIs instead of submitting a request over
 HTTP or HTTPS. These libraries provide basic functions that automatically take care of tasks such as cryptographically signing your requests, retrying requests, and
-handling error responses, so that it is easier for you to get started. For more information about the AWS SDKs, see <a href="https://docs.aws.amazon.com/https:/aws.amazon.com/tools/">Tools to build on AWS</a>.
+handling error responses, so that it is easier for you to get started. For more information about the AWS SDKs, go to <a href="https://aws.amazon.com/developer/tools/">Tools to build on AWS</a> page,
+scroll down to the <b>SDK</b> section, and choose plus (+) sign to expand the section.
 </p>
 
 ## Installing

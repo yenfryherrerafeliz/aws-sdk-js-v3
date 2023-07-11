@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudTrailClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudTrailClient";
 import { DescribeQueryRequest, DescribeQueryResponse } from "../models/models_0";
 import { de_DescribeQueryCommand, se_DescribeQueryCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -33,8 +37,11 @@ export interface DescribeQueryCommandOutput extends DescribeQueryResponse, __Met
 /**
  * @public
  * <p>Returns metadata about a query, including query run time in milliseconds, number of
- *          events scanned and matched, and query status. You must specify an ARN for
- *             <code>EventDataStore</code>, and a value for <code>QueryID</code>.</p>
+ *          events scanned and matched, and query status. If the query results were delivered to an S3 bucket,
+ *          the response also provides the S3 URI and the delivery status.</p>
+ *          <p>You must specify either a <code>QueryID</code> or a <code>QueryAlias</code>. Specifying
+ *          the <code>QueryAlias</code> parameter returns information about the last query run for the
+ *          alias.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -43,7 +50,8 @@ export interface DescribeQueryCommandOutput extends DescribeQueryResponse, __Met
  * const client = new CloudTrailClient(config);
  * const input = { // DescribeQueryRequest
  *   EventDataStore: "STRING_VALUE",
- *   QueryId: "STRING_VALUE", // required
+ *   QueryId: "STRING_VALUE",
+ *   QueryAlias: "STRING_VALUE",
  * };
  * const command = new DescribeQueryCommand(input);
  * const response = await client.send(command);

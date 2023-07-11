@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CreateCampaignRequest, CreateCampaignResponse } from "../models/models_0";
 import { PersonalizeClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../PersonalizeClient";
 import { de_CreateCampaignCommand, se_CreateCampaignCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -37,11 +41,14 @@ export interface CreateCampaignCommandOutput extends CreateCampaignResponse, __M
  *       and
  *       <a href="https://docs.aws.amazon.com/personalize/latest/dg/API_RS_GetPersonalizedRanking.html">GetPersonalizedRanking</a>
  *       APIs, a campaign is specified in the request.</p>
- *
  *          <p>
  *             <b>Minimum Provisioned TPS and Auto-Scaling</b>
  *          </p>
- *
+ *          <important>
+ *             <p> A high <code>minProvisionedTPS</code> will increase your bill. We recommend starting with 1 for <code>minProvisionedTPS</code> (the default). Track
+ *         your usage using Amazon CloudWatch metrics, and increase the <code>minProvisionedTPS</code>
+ *         as necessary.</p>
+ *          </important>
  *          <p>A transaction is a single <code>GetRecommendations</code> or
  *        <code>GetPersonalizedRanking</code> call. Transactions per second (TPS) is the throughput
  *        and unit of billing for Amazon Personalize. The minimum provisioned TPS
@@ -59,7 +66,6 @@ export interface CreateCampaignCommandOutput extends CreateCampaignResponse, __M
  *       We recommend starting with a low <code>minProvisionedTPS</code>, track
  *        your usage using Amazon CloudWatch metrics, and then increase the <code>minProvisionedTPS</code>
  *        as necessary.</p>
- *
  *          <p>
  *             <b>Status</b>
  *          </p>

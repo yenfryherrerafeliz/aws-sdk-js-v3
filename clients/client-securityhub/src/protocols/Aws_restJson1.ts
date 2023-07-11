@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -17,18 +18,22 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   AcceptAdministratorInvitationCommandInput,
   AcceptAdministratorInvitationCommandOutput,
 } from "../commands/AcceptAdministratorInvitationCommand";
 import { AcceptInvitationCommandInput, AcceptInvitationCommandOutput } from "../commands/AcceptInvitationCommand";
+import {
+  BatchDeleteAutomationRulesCommandInput,
+  BatchDeleteAutomationRulesCommandOutput,
+} from "../commands/BatchDeleteAutomationRulesCommand";
 import {
   BatchDisableStandardsCommandInput,
   BatchDisableStandardsCommandOutput,
@@ -37,6 +42,10 @@ import {
   BatchEnableStandardsCommandInput,
   BatchEnableStandardsCommandOutput,
 } from "../commands/BatchEnableStandardsCommand";
+import {
+  BatchGetAutomationRulesCommandInput,
+  BatchGetAutomationRulesCommandOutput,
+} from "../commands/BatchGetAutomationRulesCommand";
 import {
   BatchGetSecurityControlsCommandInput,
   BatchGetSecurityControlsCommandOutput,
@@ -50,6 +59,10 @@ import {
   BatchImportFindingsCommandOutput,
 } from "../commands/BatchImportFindingsCommand";
 import {
+  BatchUpdateAutomationRulesCommandInput,
+  BatchUpdateAutomationRulesCommandOutput,
+} from "../commands/BatchUpdateAutomationRulesCommand";
+import {
   BatchUpdateFindingsCommandInput,
   BatchUpdateFindingsCommandOutput,
 } from "../commands/BatchUpdateFindingsCommand";
@@ -58,6 +71,10 @@ import {
   BatchUpdateStandardsControlAssociationsCommandOutput,
 } from "../commands/BatchUpdateStandardsControlAssociationsCommand";
 import { CreateActionTargetCommandInput, CreateActionTargetCommandOutput } from "../commands/CreateActionTargetCommand";
+import {
+  CreateAutomationRuleCommandInput,
+  CreateAutomationRuleCommandOutput,
+} from "../commands/CreateAutomationRuleCommand";
 import {
   CreateFindingAggregatorCommandInput,
   CreateFindingAggregatorCommandOutput,
@@ -142,6 +159,10 @@ import { GetMasterAccountCommandInput, GetMasterAccountCommandOutput } from "../
 import { GetMembersCommandInput, GetMembersCommandOutput } from "../commands/GetMembersCommand";
 import { InviteMembersCommandInput, InviteMembersCommandOutput } from "../commands/InviteMembersCommand";
 import {
+  ListAutomationRulesCommandInput,
+  ListAutomationRulesCommandOutput,
+} from "../commands/ListAutomationRulesCommand";
+import {
   ListEnabledProductsForImportCommandInput,
   ListEnabledProductsForImportCommandOutput,
 } from "../commands/ListEnabledProductsForImportCommand";
@@ -200,7 +221,19 @@ import {
   AssociatedStandard,
   AssociationSetDetails,
   AssociationStateDetails,
+  AutomationRulesAction,
+  AutomationRulesConfig,
+  AutomationRulesFindingFieldsUpdate,
+  AutomationRulesFindingFilters,
+  AutomationRulesMetadata,
   AvailabilityZone,
+  AwsAmazonMqBrokerDetails,
+  AwsAmazonMqBrokerEncryptionOptionsDetails,
+  AwsAmazonMqBrokerLdapServerMetadataDetails,
+  AwsAmazonMqBrokerLogsDetails,
+  AwsAmazonMqBrokerLogsPendingDetails,
+  AwsAmazonMqBrokerMaintenanceWindowStartTimeDetails,
+  AwsAmazonMqBrokerUsersDetails,
   AwsApiCallAction,
   AwsApiCallActionDomainDetails,
   AwsApiGatewayAccessLogSettings,
@@ -212,6 +245,12 @@ import {
   AwsApiGatewayV2ApiDetails,
   AwsApiGatewayV2RouteSettings,
   AwsApiGatewayV2StageDetails,
+  AwsAppSyncGraphQlApiAdditionalAuthenticationProvidersDetails,
+  AwsAppSyncGraphQlApiDetails,
+  AwsAppSyncGraphQlApiLambdaAuthorizerConfigDetails,
+  AwsAppSyncGraphQlApiLogConfigDetails,
+  AwsAppSyncGraphQlApiOpenIdConnectConfigDetails,
+  AwsAppSyncGraphQlApiUserPoolConfigDetails,
   AwsAutoScalingAutoScalingGroupAvailabilityZonesListDetails,
   AwsAutoScalingAutoScalingGroupDetails,
   AwsAutoScalingAutoScalingGroupLaunchTemplateLaunchTemplateSpecification,
@@ -420,9 +459,44 @@ import {
   AwsEfsAccessPointPosixUserDetails,
   AwsEfsAccessPointRootDirectoryCreationInfoDetails,
   AwsEfsAccessPointRootDirectoryDetails,
-  AwsEksClusterDetails,
   AwsEksClusterLoggingClusterLoggingDetails,
   AwsEksClusterLoggingDetails,
+  AwsMountPoint,
+  CidrBlockAssociation,
+  City,
+  Country,
+  DateFilter,
+  DateRange,
+  DnsRequestAction,
+  GeoLocation,
+  IcmpTypeCode,
+  InternalException,
+  InvalidAccessException,
+  InvalidInputException,
+  IpOrganizationDetails,
+  Ipv6CidrBlockAssociation,
+  LimitExceededException,
+  MapFilter,
+  NetworkConnectionAction,
+  NoteUpdate,
+  NumberFilter,
+  PortProbeAction,
+  PortProbeDetail,
+  PortRangeFromTo,
+  PropagatingVgwSetDetails,
+  RelatedFinding,
+  ResourceNotFoundException,
+  RouteSetDetails,
+  SeverityUpdate,
+  StringFilter,
+  VpcInfoCidrBlockSetDetails,
+  VpcInfoIpv6CidrBlockSetDetails,
+  VpcInfoPeeringOptionsDetails,
+  WorkflowUpdate,
+} from "../models/models_0";
+import {
+  _Record,
+  AwsEksClusterDetails,
   AwsEksClusterResourcesVpcConfigDetails,
   AwsElasticBeanstalkEnvironmentDetails,
   AwsElasticBeanstalkEnvironmentEnvironmentLink,
@@ -456,33 +530,19 @@ import {
   AwsElbLoadBalancerSourceSecurityGroup,
   AwsElbv2LoadBalancerAttribute,
   AwsElbv2LoadBalancerDetails,
-  AwsMountPoint,
-  CidrBlockAssociation,
-  City,
-  Country,
-  DnsRequestAction,
-  GeoLocation,
-  IcmpTypeCode,
-  InternalException,
-  InvalidAccessException,
-  InvalidInputException,
-  IpOrganizationDetails,
-  Ipv6CidrBlockAssociation,
-  LimitExceededException,
-  LoadBalancerState,
-  NetworkConnectionAction,
-  PortProbeAction,
-  PortProbeDetail,
-  PortRangeFromTo,
-  PropagatingVgwSetDetails,
-  ResourceNotFoundException,
-  RouteSetDetails,
-  VpcInfoCidrBlockSetDetails,
-  VpcInfoIpv6CidrBlockSetDetails,
-  VpcInfoPeeringOptionsDetails,
-} from "../models/models_0";
-import {
-  _Record,
+  AwsEventSchemasRegistryDetails,
+  AwsGuardDutyDetectorDataSourcesCloudTrailDetails,
+  AwsGuardDutyDetectorDataSourcesDetails,
+  AwsGuardDutyDetectorDataSourcesDnsLogsDetails,
+  AwsGuardDutyDetectorDataSourcesFlowLogsDetails,
+  AwsGuardDutyDetectorDataSourcesKubernetesAuditLogsDetails,
+  AwsGuardDutyDetectorDataSourcesKubernetesDetails,
+  AwsGuardDutyDetectorDataSourcesMalwareProtectionDetails,
+  AwsGuardDutyDetectorDataSourcesMalwareProtectionScanEc2InstanceWithFindingsDetails,
+  AwsGuardDutyDetectorDataSourcesMalwareProtectionScanEc2InstanceWithFindingsEbsVolumesDetails,
+  AwsGuardDutyDetectorDataSourcesS3LogsDetails,
+  AwsGuardDutyDetectorDetails,
+  AwsGuardDutyDetectorFeaturesDetails,
   AwsIamAccessKeyDetails,
   AwsIamAccessKeySessionContext,
   AwsIamAccessKeySessionContextAttributes,
@@ -604,13 +664,17 @@ import {
   AwsSecretsManagerSecretRotationRules,
   AwsSecurityFinding,
   AwsSecurityFindingFilters,
-  AwsSecurityFindingIdentifier,
   AwsSnsTopicDetails,
   AwsSnsTopicSubscription,
   AwsSqsQueueDetails,
   AwsSsmComplianceSummary,
   AwsSsmPatch,
   AwsSsmPatchComplianceDetails,
+  AwsStepFunctionStateMachineDetails,
+  AwsStepFunctionStateMachineLoggingConfigurationDestinationsCloudWatchLogsLogGroupDetails,
+  AwsStepFunctionStateMachineLoggingConfigurationDestinationsDetails,
+  AwsStepFunctionStateMachineLoggingConfigurationDetails,
+  AwsStepFunctionStateMachineTracingConfigurationDetails,
   AwsWafRateBasedRuleDetails,
   AwsWafRateBasedRuleMatchPredicate,
   AwsWafRegionalRateBasedRuleDetails,
@@ -657,8 +721,6 @@ import {
   CustomDataIdentifiersResult,
   Cvss,
   DataClassificationDetails,
-  DateFilter,
-  DateRange,
   FilePaths,
   FindingProviderFields,
   FindingProviderSeverity,
@@ -668,15 +730,13 @@ import {
   FirewallPolicyStatelessRuleGroupReferencesDetails,
   IpFilter,
   KeywordFilter,
+  LoadBalancerState,
   Malware,
-  MapFilter,
   Network,
   NetworkHeader,
   NetworkPathComponent,
   NetworkPathComponentDetails,
   Note,
-  NoteUpdate,
-  NumberFilter,
   Occurrences,
   Page,
   PatchSummary,
@@ -684,10 +744,8 @@ import {
   ProcessDetails,
   Range,
   Recommendation,
-  RelatedFinding,
   Remediation,
   Resource,
-  ResourceConflictException,
   ResourceDetails,
   RuleGroupDetails,
   RuleGroupSource,
@@ -711,17 +769,11 @@ import {
   SensitiveDataDetections,
   SensitiveDataResult,
   Severity,
-  SeverityUpdate,
   SoftwarePackage,
-  StandardsControlAssociationDetail,
-  StandardsControlAssociationId,
-  StandardsControlAssociationUpdate,
-  StandardsSubscriptionRequest,
   StatelessCustomActionDefinition,
   StatelessCustomPublishMetricAction,
   StatelessCustomPublishMetricActionDimension,
   StatusReason,
-  StringFilter,
   Threat,
   ThreatIntelIndicator,
   VolumeMount,
@@ -731,16 +783,22 @@ import {
   WafExcludedRule,
   WafOverrideAction,
   Workflow,
-  WorkflowUpdate,
 } from "../models/models_1";
 import {
+  AwsSecurityFindingIdentifier,
   FindingHistoryRecord,
   Insight,
   Invitation,
   Member,
+  ResourceConflictException,
   SortCriterion,
   StandardsControl,
+  StandardsControlAssociationDetail,
+  StandardsControlAssociationId,
   StandardsControlAssociationSummary,
+  StandardsControlAssociationUpdate,
+  StandardsSubscriptionRequest,
+  UpdateAutomationRulesRequestItem,
 } from "../models/models_2";
 import { SecurityHubServiceException as __BaseException } from "../models/SecurityHubServiceException";
 
@@ -805,6 +863,36 @@ export const se_AcceptInvitationCommand = async (
 };
 
 /**
+ * serializeAws_restJson1BatchDeleteAutomationRulesCommand
+ */
+export const se_BatchDeleteAutomationRulesCommand = async (
+  input: BatchDeleteAutomationRulesCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/automationrules/delete";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      AutomationRulesArns: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1BatchDisableStandardsCommand
  */
 export const se_BatchDisableStandardsCommand = async (
@@ -849,6 +937,35 @@ export const se_BatchEnableStandardsCommand = async (
   body = JSON.stringify(
     take(input, {
       StandardsSubscriptionRequests: (_) => _json(_),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1BatchGetAutomationRulesCommand
+ */
+export const se_BatchGetAutomationRulesCommand = async (
+  input: BatchGetAutomationRulesCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/automationrules/get";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      AutomationRulesArns: (_) => _json(_),
     })
   );
   return new __HttpRequest({
@@ -951,6 +1068,36 @@ export const se_BatchImportFindingsCommand = async (
 };
 
 /**
+ * serializeAws_restJson1BatchUpdateAutomationRulesCommand
+ */
+export const se_BatchUpdateAutomationRulesCommand = async (
+  input: BatchUpdateAutomationRulesCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/automationrules/update";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      UpdateAutomationRulesRequestItems: (_) => se_UpdateAutomationRulesRequestItemsList(_, context),
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PATCH",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1BatchUpdateFindingsCommand
  */
 export const se_BatchUpdateFindingsCommand = async (
@@ -1035,6 +1182,43 @@ export const se_CreateActionTargetCommand = async (
       Description: [],
       Id: [],
       Name: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1CreateAutomationRuleCommand
+ */
+export const se_CreateAutomationRuleCommand = async (
+  input: CreateAutomationRuleCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/automationrules/create";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      Actions: (_) => se_ActionList(_, context),
+      Criteria: (_) => se_AutomationRulesFindingFilters(_, context),
+      Description: [],
+      IsTerminal: [],
+      RuleName: [],
+      RuleOrder: [],
+      RuleStatus: [],
+      Tags: (_) => _json(_),
     })
   );
   return new __HttpRequest({
@@ -2061,6 +2245,33 @@ export const se_InviteMembersCommand = async (
 };
 
 /**
+ * serializeAws_restJson1ListAutomationRulesCommand
+ */
+export const se_ListAutomationRulesCommand = async (
+  input: ListAutomationRulesCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/automationrules/list";
+  const query: any = map({
+    NextToken: [, input.NextToken!],
+    MaxResults: [() => input.MaxResults !== void 0, () => input.MaxResults!.toString()],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1ListEnabledProductsForImportCommand
  */
 export const se_ListEnabledProductsForImportCommand = async (
@@ -2682,6 +2893,66 @@ const de_AcceptInvitationCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1BatchDeleteAutomationRulesCommand
+ */
+export const de_BatchDeleteAutomationRulesCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<BatchDeleteAutomationRulesCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_BatchDeleteAutomationRulesCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    ProcessedAutomationRules: _json,
+    UnprocessedAutomationRules: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1BatchDeleteAutomationRulesCommandError
+ */
+const de_BatchDeleteAutomationRulesCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<BatchDeleteAutomationRulesCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalException":
+    case "com.amazonaws.securityhub#InternalException":
+      throw await de_InternalExceptionRes(parsedOutput, context);
+    case "InvalidAccessException":
+    case "com.amazonaws.securityhub#InvalidAccessException":
+      throw await de_InvalidAccessExceptionRes(parsedOutput, context);
+    case "InvalidInputException":
+    case "com.amazonaws.securityhub#InvalidInputException":
+      throw await de_InvalidInputExceptionRes(parsedOutput, context);
+    case "LimitExceededException":
+    case "com.amazonaws.securityhub#LimitExceededException":
+      throw await de_LimitExceededExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.securityhub#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1BatchDisableStandardsCommand
  */
 export const de_BatchDisableStandardsCommand = async (
@@ -2783,6 +3054,69 @@ const de_BatchEnableStandardsCommandError = async (
     case "LimitExceededException":
     case "com.amazonaws.securityhub#LimitExceededException":
       throw await de_LimitExceededExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1BatchGetAutomationRulesCommand
+ */
+export const de_BatchGetAutomationRulesCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<BatchGetAutomationRulesCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_BatchGetAutomationRulesCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    Rules: (_) => de_AutomationRulesConfigList(_, context),
+    UnprocessedAutomationRules: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1BatchGetAutomationRulesCommandError
+ */
+const de_BatchGetAutomationRulesCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<BatchGetAutomationRulesCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.securityhub#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalException":
+    case "com.amazonaws.securityhub#InternalException":
+      throw await de_InternalExceptionRes(parsedOutput, context);
+    case "InvalidAccessException":
+    case "com.amazonaws.securityhub#InvalidAccessException":
+      throw await de_InvalidAccessExceptionRes(parsedOutput, context);
+    case "InvalidInputException":
+    case "com.amazonaws.securityhub#InvalidInputException":
+      throw await de_InvalidInputExceptionRes(parsedOutput, context);
+    case "LimitExceededException":
+    case "com.amazonaws.securityhub#LimitExceededException":
+      throw await de_LimitExceededExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.securityhub#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -2966,6 +3300,66 @@ const de_BatchImportFindingsCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1BatchUpdateAutomationRulesCommand
+ */
+export const de_BatchUpdateAutomationRulesCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<BatchUpdateAutomationRulesCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_BatchUpdateAutomationRulesCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    ProcessedAutomationRules: _json,
+    UnprocessedAutomationRules: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1BatchUpdateAutomationRulesCommandError
+ */
+const de_BatchUpdateAutomationRulesCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<BatchUpdateAutomationRulesCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalException":
+    case "com.amazonaws.securityhub#InternalException":
+      throw await de_InternalExceptionRes(parsedOutput, context);
+    case "InvalidAccessException":
+    case "com.amazonaws.securityhub#InvalidAccessException":
+      throw await de_InvalidAccessExceptionRes(parsedOutput, context);
+    case "InvalidInputException":
+    case "com.amazonaws.securityhub#InvalidInputException":
+      throw await de_InvalidInputExceptionRes(parsedOutput, context);
+    case "LimitExceededException":
+    case "com.amazonaws.securityhub#LimitExceededException":
+      throw await de_LimitExceededExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.securityhub#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1BatchUpdateFindingsCommand
  */
 export const de_BatchUpdateFindingsCommand = async (
@@ -3127,6 +3521,65 @@ const de_CreateActionTargetCommandError = async (
     case "ResourceConflictException":
     case "com.amazonaws.securityhub#ResourceConflictException":
       throw await de_ResourceConflictExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1CreateAutomationRuleCommand
+ */
+export const de_CreateAutomationRuleCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateAutomationRuleCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CreateAutomationRuleCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    RuleArn: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1CreateAutomationRuleCommandError
+ */
+const de_CreateAutomationRuleCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateAutomationRuleCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.securityhub#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalException":
+    case "com.amazonaws.securityhub#InternalException":
+      throw await de_InternalExceptionRes(parsedOutput, context);
+    case "InvalidAccessException":
+    case "com.amazonaws.securityhub#InvalidAccessException":
+      throw await de_InvalidAccessExceptionRes(parsedOutput, context);
+    case "InvalidInputException":
+    case "com.amazonaws.securityhub#InvalidInputException":
+      throw await de_InvalidInputExceptionRes(parsedOutput, context);
+    case "LimitExceededException":
+    case "com.amazonaws.securityhub#LimitExceededException":
+      throw await de_LimitExceededExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -5148,6 +5601,66 @@ const de_InviteMembersCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1ListAutomationRulesCommand
+ */
+export const de_ListAutomationRulesCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListAutomationRulesCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListAutomationRulesCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    AutomationRulesMetadata: (_) => de_AutomationRulesMetadataList(_, context),
+    NextToken: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListAutomationRulesCommandError
+ */
+const de_ListAutomationRulesCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListAutomationRulesCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.securityhub#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalException":
+    case "com.amazonaws.securityhub#InternalException":
+      throw await de_InternalExceptionRes(parsedOutput, context);
+    case "InvalidAccessException":
+    case "com.amazonaws.securityhub#InvalidAccessException":
+      throw await de_InvalidAccessExceptionRes(parsedOutput, context);
+    case "InvalidInputException":
+    case "com.amazonaws.securityhub#InvalidInputException":
+      throw await de_InvalidInputExceptionRes(parsedOutput, context);
+    case "LimitExceededException":
+    case "com.amazonaws.securityhub#LimitExceededException":
+      throw await de_LimitExceededExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1ListEnabledProductsForImportCommand
  */
 export const de_ListEnabledProductsForImportCommand = async (
@@ -6247,6 +6760,17 @@ const se_Action = (input: Action, context: __SerdeContext): any => {
   });
 };
 
+/**
+ * serializeAws_restJson1ActionList
+ */
+const se_ActionList = (input: AutomationRulesAction[], context: __SerdeContext): any => {
+  return input
+    .filter((e: any) => e != null)
+    .map((entry) => {
+      return se_AutomationRulesAction(entry, context);
+    });
+};
+
 // se_ActionLocalIpDetails omitted.
 
 // se_ActionLocalPortDetails omitted.
@@ -6282,9 +6806,100 @@ const se_ActionRemoteIpDetails = (input: ActionRemoteIpDetails, context: __Serde
 
 // se_AssociationStateDetails omitted.
 
+/**
+ * serializeAws_restJson1AutomationRulesAction
+ */
+const se_AutomationRulesAction = (input: AutomationRulesAction, context: __SerdeContext): any => {
+  return take(input, {
+    FindingFieldsUpdate: (_) => se_AutomationRulesFindingFieldsUpdate(_, context),
+    Type: [],
+  });
+};
+
+// se_AutomationRulesArnsList omitted.
+
+/**
+ * serializeAws_restJson1AutomationRulesFindingFieldsUpdate
+ */
+const se_AutomationRulesFindingFieldsUpdate = (
+  input: AutomationRulesFindingFieldsUpdate,
+  context: __SerdeContext
+): any => {
+  return take(input, {
+    Confidence: [],
+    Criticality: [],
+    Note: _json,
+    RelatedFindings: _json,
+    Severity: (_) => se_SeverityUpdate(_, context),
+    Types: _json,
+    UserDefinedFields: _json,
+    VerificationState: [],
+    Workflow: _json,
+  });
+};
+
+/**
+ * serializeAws_restJson1AutomationRulesFindingFilters
+ */
+const se_AutomationRulesFindingFilters = (input: AutomationRulesFindingFilters, context: __SerdeContext): any => {
+  return take(input, {
+    AwsAccountId: _json,
+    CompanyName: _json,
+    ComplianceAssociatedStandardsId: _json,
+    ComplianceSecurityControlId: _json,
+    ComplianceStatus: _json,
+    Confidence: (_) => se_NumberFilterList(_, context),
+    CreatedAt: _json,
+    Criticality: (_) => se_NumberFilterList(_, context),
+    Description: _json,
+    FirstObservedAt: _json,
+    GeneratorId: _json,
+    Id: _json,
+    LastObservedAt: _json,
+    NoteText: _json,
+    NoteUpdatedAt: _json,
+    NoteUpdatedBy: _json,
+    ProductArn: _json,
+    ProductName: _json,
+    RecordState: _json,
+    RelatedFindingsId: _json,
+    RelatedFindingsProductArn: _json,
+    ResourceDetailsOther: _json,
+    ResourceId: _json,
+    ResourcePartition: _json,
+    ResourceRegion: _json,
+    ResourceTags: _json,
+    ResourceType: _json,
+    SeverityLabel: _json,
+    SourceUrl: _json,
+    Title: _json,
+    Type: _json,
+    UpdatedAt: _json,
+    UserDefinedFields: _json,
+    VerificationState: _json,
+    WorkflowStatus: _json,
+  });
+};
+
 // se_AvailabilityZone omitted.
 
 // se_AvailabilityZones omitted.
+
+// se_AwsAmazonMqBrokerDetails omitted.
+
+// se_AwsAmazonMqBrokerEncryptionOptionsDetails omitted.
+
+// se_AwsAmazonMqBrokerLdapServerMetadataDetails omitted.
+
+// se_AwsAmazonMqBrokerLogsDetails omitted.
+
+// se_AwsAmazonMqBrokerLogsPendingDetails omitted.
+
+// se_AwsAmazonMqBrokerMaintenanceWindowStartTimeDetails omitted.
+
+// se_AwsAmazonMqBrokerUsersDetails omitted.
+
+// se_AwsAmazonMqBrokerUsersList omitted.
 
 /**
  * serializeAws_restJson1AwsApiCallAction
@@ -6412,6 +7027,20 @@ const se_AwsApiGatewayV2StageDetails = (input: AwsApiGatewayV2StageDetails, cont
     StageVariables: _json,
   });
 };
+
+// se_AwsAppSyncGraphQlApiAdditionalAuthenticationProvidersDetails omitted.
+
+// se_AwsAppSyncGraphQlApiAdditionalAuthenticationProvidersList omitted.
+
+// se_AwsAppSyncGraphQlApiDetails omitted.
+
+// se_AwsAppSyncGraphQlApiLambdaAuthorizerConfigDetails omitted.
+
+// se_AwsAppSyncGraphQlApiLogConfigDetails omitted.
+
+// se_AwsAppSyncGraphQlApiOpenIdConnectConfigDetails omitted.
+
+// se_AwsAppSyncGraphQlApiUserPoolConfigDetails omitted.
 
 // se_AwsAutoScalingAutoScalingGroupAvailabilityZonesList omitted.
 
@@ -7200,6 +7829,34 @@ const se_AwsEc2LaunchTemplateDetails = (input: AwsEc2LaunchTemplateDetails, cont
 
 // se_AwsElbv2LoadBalancerDetails omitted.
 
+// se_AwsEventSchemasRegistryDetails omitted.
+
+// se_AwsGuardDutyDetectorDataSourcesCloudTrailDetails omitted.
+
+// se_AwsGuardDutyDetectorDataSourcesDetails omitted.
+
+// se_AwsGuardDutyDetectorDataSourcesDnsLogsDetails omitted.
+
+// se_AwsGuardDutyDetectorDataSourcesFlowLogsDetails omitted.
+
+// se_AwsGuardDutyDetectorDataSourcesKubernetesAuditLogsDetails omitted.
+
+// se_AwsGuardDutyDetectorDataSourcesKubernetesDetails omitted.
+
+// se_AwsGuardDutyDetectorDataSourcesMalwareProtectionDetails omitted.
+
+// se_AwsGuardDutyDetectorDataSourcesMalwareProtectionScanEc2InstanceWithFindingsDetails omitted.
+
+// se_AwsGuardDutyDetectorDataSourcesMalwareProtectionScanEc2InstanceWithFindingsEbsVolumesDetails omitted.
+
+// se_AwsGuardDutyDetectorDataSourcesS3LogsDetails omitted.
+
+// se_AwsGuardDutyDetectorDetails omitted.
+
+// se_AwsGuardDutyDetectorFeaturesDetails omitted.
+
+// se_AwsGuardDutyDetectorFeaturesList omitted.
+
 // se_AwsIamAccessKeyDetails omitted.
 
 // se_AwsIamAccessKeySessionContext omitted.
@@ -7782,6 +8439,18 @@ const se_AwsSecurityFindingFilters = (input: AwsSecurityFindingFilters, context:
 
 // se_AwsSsmPatchComplianceDetails omitted.
 
+// se_AwsStepFunctionStateMachineDetails omitted.
+
+// se_AwsStepFunctionStateMachineLoggingConfigurationDestinationsCloudWatchLogsLogGroupDetails omitted.
+
+// se_AwsStepFunctionStateMachineLoggingConfigurationDestinationsDetails omitted.
+
+// se_AwsStepFunctionStateMachineLoggingConfigurationDestinationsList omitted.
+
+// se_AwsStepFunctionStateMachineLoggingConfigurationDetails omitted.
+
+// se_AwsStepFunctionStateMachineTracingConfigurationDetails omitted.
+
 // se_AwsWafRateBasedRuleDetails omitted.
 
 // se_AwsWafRateBasedRuleMatchPredicate omitted.
@@ -8154,10 +8823,12 @@ const se_Resource = (input: Resource, context: __SerdeContext): any => {
  */
 const se_ResourceDetails = (input: ResourceDetails, context: __SerdeContext): any => {
   return take(input, {
+    AwsAmazonMqBroker: _json,
     AwsApiGatewayRestApi: _json,
     AwsApiGatewayStage: (_) => se_AwsApiGatewayStageDetails(_, context),
     AwsApiGatewayV2Api: _json,
     AwsApiGatewayV2Stage: (_) => se_AwsApiGatewayV2StageDetails(_, context),
+    AwsAppSyncGraphQlApi: _json,
     AwsAutoScalingAutoScalingGroup: _json,
     AwsAutoScalingLaunchConfiguration: _json,
     AwsBackupBackupPlan: _json,
@@ -8197,6 +8868,8 @@ const se_ResourceDetails = (input: ResourceDetails, context: __SerdeContext): an
     AwsElasticsearchDomain: _json,
     AwsElbLoadBalancer: _json,
     AwsElbv2LoadBalancer: _json,
+    AwsEventSchemasRegistry: _json,
+    AwsGuardDutyDetector: _json,
     AwsIamAccessKey: _json,
     AwsIamGroup: _json,
     AwsIamPolicy: _json,
@@ -8225,6 +8898,7 @@ const se_ResourceDetails = (input: ResourceDetails, context: __SerdeContext): an
     AwsSnsTopic: _json,
     AwsSqsQueue: _json,
     AwsSsmPatchCompliance: _json,
+    AwsStepFunctionStateMachine: _json,
     AwsWafRateBasedRule: _json,
     AwsWafRegionalRateBasedRule: _json,
     AwsWafRegionalRule: _json,
@@ -8403,6 +9077,36 @@ const se_SeverityUpdate = (input: SeverityUpdate, context: __SerdeContext): any 
 
 // se_TypeList omitted.
 
+/**
+ * serializeAws_restJson1UpdateAutomationRulesRequestItem
+ */
+const se_UpdateAutomationRulesRequestItem = (input: UpdateAutomationRulesRequestItem, context: __SerdeContext): any => {
+  return take(input, {
+    Actions: (_) => se_ActionList(_, context),
+    Criteria: (_) => se_AutomationRulesFindingFilters(_, context),
+    Description: [],
+    IsTerminal: [],
+    RuleArn: [],
+    RuleName: [],
+    RuleOrder: [],
+    RuleStatus: [],
+  });
+};
+
+/**
+ * serializeAws_restJson1UpdateAutomationRulesRequestItemsList
+ */
+const se_UpdateAutomationRulesRequestItemsList = (
+  input: UpdateAutomationRulesRequestItem[],
+  context: __SerdeContext
+): any => {
+  return input
+    .filter((e: any) => e != null)
+    .map((entry) => {
+      return se_UpdateAutomationRulesRequestItem(entry, context);
+    });
+};
+
 // se_VolumeMount omitted.
 
 // se_VolumeMountList omitted.
@@ -8470,6 +9174,18 @@ const de_Action = (output: any, context: __SerdeContext): Action => {
   }) as any;
 };
 
+/**
+ * deserializeAws_restJson1ActionList
+ */
+const de_ActionList = (output: any, context: __SerdeContext): AutomationRulesAction[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_AutomationRulesAction(entry, context);
+    });
+  return retVal;
+};
+
 // de_ActionLocalIpDetails omitted.
 
 // de_ActionLocalPortDetails omitted.
@@ -8511,9 +9227,160 @@ const de_ActionRemoteIpDetails = (output: any, context: __SerdeContext): ActionR
 
 // de_AssociationStateDetails omitted.
 
+/**
+ * deserializeAws_restJson1AutomationRulesAction
+ */
+const de_AutomationRulesAction = (output: any, context: __SerdeContext): AutomationRulesAction => {
+  return take(output, {
+    FindingFieldsUpdate: (_: any) => de_AutomationRulesFindingFieldsUpdate(_, context),
+    Type: __expectString,
+  }) as any;
+};
+
+// de_AutomationRulesArnsList omitted.
+
+/**
+ * deserializeAws_restJson1AutomationRulesConfig
+ */
+const de_AutomationRulesConfig = (output: any, context: __SerdeContext): AutomationRulesConfig => {
+  return take(output, {
+    Actions: (_: any) => de_ActionList(_, context),
+    CreatedAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
+    CreatedBy: __expectString,
+    Criteria: (_: any) => de_AutomationRulesFindingFilters(_, context),
+    Description: __expectString,
+    IsTerminal: __expectBoolean,
+    RuleArn: __expectString,
+    RuleName: __expectString,
+    RuleOrder: __expectInt32,
+    RuleStatus: __expectString,
+    UpdatedAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1AutomationRulesConfigList
+ */
+const de_AutomationRulesConfigList = (output: any, context: __SerdeContext): AutomationRulesConfig[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_AutomationRulesConfig(entry, context);
+    });
+  return retVal;
+};
+
+/**
+ * deserializeAws_restJson1AutomationRulesFindingFieldsUpdate
+ */
+const de_AutomationRulesFindingFieldsUpdate = (
+  output: any,
+  context: __SerdeContext
+): AutomationRulesFindingFieldsUpdate => {
+  return take(output, {
+    Confidence: __expectInt32,
+    Criticality: __expectInt32,
+    Note: _json,
+    RelatedFindings: _json,
+    Severity: (_: any) => de_SeverityUpdate(_, context),
+    Types: _json,
+    UserDefinedFields: _json,
+    VerificationState: __expectString,
+    Workflow: _json,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1AutomationRulesFindingFilters
+ */
+const de_AutomationRulesFindingFilters = (output: any, context: __SerdeContext): AutomationRulesFindingFilters => {
+  return take(output, {
+    AwsAccountId: _json,
+    CompanyName: _json,
+    ComplianceAssociatedStandardsId: _json,
+    ComplianceSecurityControlId: _json,
+    ComplianceStatus: _json,
+    Confidence: (_: any) => de_NumberFilterList(_, context),
+    CreatedAt: _json,
+    Criticality: (_: any) => de_NumberFilterList(_, context),
+    Description: _json,
+    FirstObservedAt: _json,
+    GeneratorId: _json,
+    Id: _json,
+    LastObservedAt: _json,
+    NoteText: _json,
+    NoteUpdatedAt: _json,
+    NoteUpdatedBy: _json,
+    ProductArn: _json,
+    ProductName: _json,
+    RecordState: _json,
+    RelatedFindingsId: _json,
+    RelatedFindingsProductArn: _json,
+    ResourceDetailsOther: _json,
+    ResourceId: _json,
+    ResourcePartition: _json,
+    ResourceRegion: _json,
+    ResourceTags: _json,
+    ResourceType: _json,
+    SeverityLabel: _json,
+    SourceUrl: _json,
+    Title: _json,
+    Type: _json,
+    UpdatedAt: _json,
+    UserDefinedFields: _json,
+    VerificationState: _json,
+    WorkflowStatus: _json,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1AutomationRulesMetadata
+ */
+const de_AutomationRulesMetadata = (output: any, context: __SerdeContext): AutomationRulesMetadata => {
+  return take(output, {
+    CreatedAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
+    CreatedBy: __expectString,
+    Description: __expectString,
+    IsTerminal: __expectBoolean,
+    RuleArn: __expectString,
+    RuleName: __expectString,
+    RuleOrder: __expectInt32,
+    RuleStatus: __expectString,
+    UpdatedAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1AutomationRulesMetadataList
+ */
+const de_AutomationRulesMetadataList = (output: any, context: __SerdeContext): AutomationRulesMetadata[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_AutomationRulesMetadata(entry, context);
+    });
+  return retVal;
+};
+
 // de_AvailabilityZone omitted.
 
 // de_AvailabilityZones omitted.
+
+// de_AwsAmazonMqBrokerDetails omitted.
+
+// de_AwsAmazonMqBrokerEncryptionOptionsDetails omitted.
+
+// de_AwsAmazonMqBrokerLdapServerMetadataDetails omitted.
+
+// de_AwsAmazonMqBrokerLogsDetails omitted.
+
+// de_AwsAmazonMqBrokerLogsPendingDetails omitted.
+
+// de_AwsAmazonMqBrokerMaintenanceWindowStartTimeDetails omitted.
+
+// de_AwsAmazonMqBrokerUsersDetails omitted.
+
+// de_AwsAmazonMqBrokerUsersList omitted.
 
 /**
  * deserializeAws_restJson1AwsApiCallAction
@@ -8642,6 +9509,20 @@ const de_AwsApiGatewayV2StageDetails = (output: any, context: __SerdeContext): A
     StageVariables: _json,
   }) as any;
 };
+
+// de_AwsAppSyncGraphQlApiAdditionalAuthenticationProvidersDetails omitted.
+
+// de_AwsAppSyncGraphQlApiAdditionalAuthenticationProvidersList omitted.
+
+// de_AwsAppSyncGraphQlApiDetails omitted.
+
+// de_AwsAppSyncGraphQlApiLambdaAuthorizerConfigDetails omitted.
+
+// de_AwsAppSyncGraphQlApiLogConfigDetails omitted.
+
+// de_AwsAppSyncGraphQlApiOpenIdConnectConfigDetails omitted.
+
+// de_AwsAppSyncGraphQlApiUserPoolConfigDetails omitted.
 
 // de_AwsAutoScalingAutoScalingGroupAvailabilityZonesList omitted.
 
@@ -9431,6 +10312,34 @@ const de_AwsEc2LaunchTemplateDetails = (output: any, context: __SerdeContext): A
 
 // de_AwsElbv2LoadBalancerDetails omitted.
 
+// de_AwsEventSchemasRegistryDetails omitted.
+
+// de_AwsGuardDutyDetectorDataSourcesCloudTrailDetails omitted.
+
+// de_AwsGuardDutyDetectorDataSourcesDetails omitted.
+
+// de_AwsGuardDutyDetectorDataSourcesDnsLogsDetails omitted.
+
+// de_AwsGuardDutyDetectorDataSourcesFlowLogsDetails omitted.
+
+// de_AwsGuardDutyDetectorDataSourcesKubernetesAuditLogsDetails omitted.
+
+// de_AwsGuardDutyDetectorDataSourcesKubernetesDetails omitted.
+
+// de_AwsGuardDutyDetectorDataSourcesMalwareProtectionDetails omitted.
+
+// de_AwsGuardDutyDetectorDataSourcesMalwareProtectionScanEc2InstanceWithFindingsDetails omitted.
+
+// de_AwsGuardDutyDetectorDataSourcesMalwareProtectionScanEc2InstanceWithFindingsEbsVolumesDetails omitted.
+
+// de_AwsGuardDutyDetectorDataSourcesS3LogsDetails omitted.
+
+// de_AwsGuardDutyDetectorDetails omitted.
+
+// de_AwsGuardDutyDetectorFeaturesDetails omitted.
+
+// de_AwsGuardDutyDetectorFeaturesList omitted.
+
 // de_AwsIamAccessKeyDetails omitted.
 
 // de_AwsIamAccessKeySessionContext omitted.
@@ -10025,6 +10934,18 @@ const de_AwsSecurityFindingList = (output: any, context: __SerdeContext): AwsSec
 
 // de_AwsSsmPatchComplianceDetails omitted.
 
+// de_AwsStepFunctionStateMachineDetails omitted.
+
+// de_AwsStepFunctionStateMachineLoggingConfigurationDestinationsCloudWatchLogsLogGroupDetails omitted.
+
+// de_AwsStepFunctionStateMachineLoggingConfigurationDestinationsDetails omitted.
+
+// de_AwsStepFunctionStateMachineLoggingConfigurationDestinationsList omitted.
+
+// de_AwsStepFunctionStateMachineLoggingConfigurationDetails omitted.
+
+// de_AwsStepFunctionStateMachineTracingConfigurationDetails omitted.
+
 // de_AwsWafRateBasedRuleDetails omitted.
 
 // de_AwsWafRateBasedRuleMatchPredicate omitted.
@@ -10401,6 +11322,8 @@ const de_NetworkConnectionAction = (output: any, context: __SerdeContext): Netwo
 
 // de_Note omitted.
 
+// de_NoteUpdate omitted.
+
 /**
  * deserializeAws_restJson1NumberFilter
  */
@@ -10522,10 +11445,12 @@ const de_Resource = (output: any, context: __SerdeContext): Resource => {
  */
 const de_ResourceDetails = (output: any, context: __SerdeContext): ResourceDetails => {
   return take(output, {
+    AwsAmazonMqBroker: _json,
     AwsApiGatewayRestApi: _json,
     AwsApiGatewayStage: (_: any) => de_AwsApiGatewayStageDetails(_, context),
     AwsApiGatewayV2Api: _json,
     AwsApiGatewayV2Stage: (_: any) => de_AwsApiGatewayV2StageDetails(_, context),
+    AwsAppSyncGraphQlApi: _json,
     AwsAutoScalingAutoScalingGroup: _json,
     AwsAutoScalingLaunchConfiguration: _json,
     AwsBackupBackupPlan: _json,
@@ -10565,6 +11490,8 @@ const de_ResourceDetails = (output: any, context: __SerdeContext): ResourceDetai
     AwsElasticsearchDomain: _json,
     AwsElbLoadBalancer: _json,
     AwsElbv2LoadBalancer: _json,
+    AwsEventSchemasRegistry: _json,
+    AwsGuardDutyDetector: _json,
     AwsIamAccessKey: _json,
     AwsIamGroup: _json,
     AwsIamPolicy: _json,
@@ -10593,6 +11520,7 @@ const de_ResourceDetails = (output: any, context: __SerdeContext): ResourceDetai
     AwsSnsTopic: _json,
     AwsSqsQueue: _json,
     AwsSsmPatchCompliance: _json,
+    AwsStepFunctionStateMachine: _json,
     AwsWafRateBasedRule: _json,
     AwsWafRegionalRateBasedRule: _json,
     AwsWafRegionalRule: _json,
@@ -10715,6 +11643,17 @@ const de_Severity = (output: any, context: __SerdeContext): Severity => {
     Label: __expectString,
     Normalized: __expectInt32,
     Original: __expectString,
+    Product: __limitedParseDouble,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1SeverityUpdate
+ */
+const de_SeverityUpdate = (output: any, context: __SerdeContext): SeverityUpdate => {
+  return take(output, {
+    Label: __expectString,
+    Normalized: __expectInt32,
     Product: __limitedParseDouble,
   }) as any;
 };
@@ -10874,6 +11813,10 @@ const de_StandardsControls = (output: any, context: __SerdeContext): StandardsCo
 
 // de_TypeList omitted.
 
+// de_UnprocessedAutomationRule omitted.
+
+// de_UnprocessedAutomationRulesList omitted.
+
 // de_UnprocessedSecurityControl omitted.
 
 // de_UnprocessedSecurityControls omitted.
@@ -10939,6 +11882,8 @@ const de_VulnerabilityList = (output: any, context: __SerdeContext): Vulnerabili
 
 // de_Workflow omitted.
 
+// de_WorkflowUpdate omitted.
+
 const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   httpStatusCode: output.statusCode,
   requestId:
@@ -10946,14 +11891,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

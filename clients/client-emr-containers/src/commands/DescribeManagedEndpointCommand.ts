@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EMRContainersClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EMRContainersClient";
 import {
@@ -21,6 +21,10 @@ import {
 } from "../models/models_0";
 import { de_DescribeManagedEndpointCommand, se_DescribeManagedEndpointCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -37,8 +41,7 @@ export interface DescribeManagedEndpointCommandOutput extends DescribeManagedEnd
 /**
  * @public
  * <p>Displays detailed information about a managed endpoint. A managed endpoint is a gateway
- *          that connects Amazon EMR Studio to Amazon EMR on EKS so that Amazon EMR Studio can communicate with
- *          your virtual cluster.</p>
+ *          that connects Amazon EMR Studio to Amazon EMR on EKS so that Amazon EMR Studio can communicate with your virtual cluster.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -92,6 +95,10 @@ export interface DescribeManagedEndpointCommandOutput extends DescribeManagedEnd
  * //         },
  * //         s3MonitoringConfiguration: { // S3MonitoringConfiguration
  * //           logUri: "STRING_VALUE", // required
+ * //         },
+ * //         containerLogRotationConfiguration: { // ContainerLogRotationConfiguration
+ * //           rotationSize: "STRING_VALUE", // required
+ * //           maxFilesToKeep: Number("int"), // required
  * //         },
  * //       },
  * //     },

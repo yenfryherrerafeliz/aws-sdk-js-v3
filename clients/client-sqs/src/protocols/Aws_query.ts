@@ -1,23 +1,30 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectString as __expectString,
   extendedEncodeURIComponent as __extendedEncodeURIComponent,
   getArrayIfSingleItem as __getArrayIfSingleItem,
   getValueFromTextNode as __getValueFromTextNode,
   parseBoolean as __parseBoolean,
+  strictParseInt32 as __strictParseInt32,
+  strictParseLong as __strictParseLong,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { XMLParser } from "fast-xml-parser";
 
 import { AddPermissionCommandInput, AddPermissionCommandOutput } from "../commands/AddPermissionCommand";
+import {
+  CancelMessageMoveTaskCommandInput,
+  CancelMessageMoveTaskCommandOutput,
+} from "../commands/CancelMessageMoveTaskCommand";
 import {
   ChangeMessageVisibilityBatchCommandInput,
   ChangeMessageVisibilityBatchCommandOutput,
@@ -36,6 +43,10 @@ import {
   ListDeadLetterSourceQueuesCommandInput,
   ListDeadLetterSourceQueuesCommandOutput,
 } from "../commands/ListDeadLetterSourceQueuesCommand";
+import {
+  ListMessageMoveTasksCommandInput,
+  ListMessageMoveTasksCommandOutput,
+} from "../commands/ListMessageMoveTasksCommand";
 import { ListQueuesCommandInput, ListQueuesCommandOutput } from "../commands/ListQueuesCommand";
 import { ListQueueTagsCommandInput, ListQueueTagsCommandOutput } from "../commands/ListQueueTagsCommand";
 import { PurgeQueueCommandInput, PurgeQueueCommandOutput } from "../commands/PurgeQueueCommand";
@@ -44,6 +55,10 @@ import { RemovePermissionCommandInput, RemovePermissionCommandOutput } from "../
 import { SendMessageBatchCommandInput, SendMessageBatchCommandOutput } from "../commands/SendMessageBatchCommand";
 import { SendMessageCommandInput, SendMessageCommandOutput } from "../commands/SendMessageCommand";
 import { SetQueueAttributesCommandInput, SetQueueAttributesCommandOutput } from "../commands/SetQueueAttributesCommand";
+import {
+  StartMessageMoveTaskCommandInput,
+  StartMessageMoveTaskCommandOutput,
+} from "../commands/StartMessageMoveTaskCommand";
 import { TagQueueCommandInput, TagQueueCommandOutput } from "../commands/TagQueueCommand";
 import { UntagQueueCommandInput, UntagQueueCommandOutput } from "../commands/UntagQueueCommand";
 import {
@@ -51,6 +66,8 @@ import {
   BatchEntryIdsNotDistinct,
   BatchRequestTooLong,
   BatchResultErrorEntry,
+  CancelMessageMoveTaskRequest,
+  CancelMessageMoveTaskResult,
   ChangeMessageVisibilityBatchRequest,
   ChangeMessageVisibilityBatchRequestEntry,
   ChangeMessageVisibilityBatchResult,
@@ -75,6 +92,9 @@ import {
   InvalidMessageContents,
   ListDeadLetterSourceQueuesRequest,
   ListDeadLetterSourceQueuesResult,
+  ListMessageMoveTasksRequest,
+  ListMessageMoveTasksResult,
+  ListMessageMoveTasksResultEntry,
   ListQueuesRequest,
   ListQueuesResult,
   ListQueueTagsRequest,
@@ -94,6 +114,7 @@ import {
   ReceiveMessageRequest,
   ReceiveMessageResult,
   RemovePermissionRequest,
+  ResourceNotFoundException,
   SendMessageBatchRequest,
   SendMessageBatchRequestEntry,
   SendMessageBatchResult,
@@ -101,6 +122,8 @@ import {
   SendMessageRequest,
   SendMessageResult,
   SetQueueAttributesRequest,
+  StartMessageMoveTaskRequest,
+  StartMessageMoveTaskResult,
   TagQueueRequest,
   TooManyEntriesInBatchRequest,
   UnsupportedOperation,
@@ -120,6 +143,23 @@ export const se_AddPermissionCommand = async (
   body = buildFormUrlencodedString({
     ...se_AddPermissionRequest(input, context),
     Action: "AddPermission",
+    Version: "2012-11-05",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_queryCancelMessageMoveTaskCommand
+ */
+export const se_CancelMessageMoveTaskCommand = async (
+  input: CancelMessageMoveTaskCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_CancelMessageMoveTaskRequest(input, context),
+    Action: "CancelMessageMoveTask",
     Version: "2012-11-05",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -279,6 +319,23 @@ export const se_ListDeadLetterSourceQueuesCommand = async (
 };
 
 /**
+ * serializeAws_queryListMessageMoveTasksCommand
+ */
+export const se_ListMessageMoveTasksCommand = async (
+  input: ListMessageMoveTasksCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_ListMessageMoveTasksRequest(input, context),
+    Action: "ListMessageMoveTasks",
+    Version: "2012-11-05",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
  * serializeAws_queryListQueuesCommand
  */
 export const se_ListQueuesCommand = async (
@@ -415,6 +472,23 @@ export const se_SetQueueAttributesCommand = async (
 };
 
 /**
+ * serializeAws_queryStartMessageMoveTaskCommand
+ */
+export const se_StartMessageMoveTaskCommand = async (
+  input: StartMessageMoveTaskCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_StartMessageMoveTaskRequest(input, context),
+    Action: "StartMessageMoveTask",
+    Version: "2012-11-05",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
  * serializeAws_queryTagQueueCommand
  */
 export const se_TagQueueCommand = async (
@@ -481,6 +555,55 @@ const de_AddPermissionCommandError = async (
     case "OverLimit":
     case "com.amazonaws.sqs#OverLimit":
       throw await de_OverLimitRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_queryCancelMessageMoveTaskCommand
+ */
+export const de_CancelMessageMoveTaskCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CancelMessageMoveTaskCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_CancelMessageMoveTaskCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_CancelMessageMoveTaskResult(data.CancelMessageMoveTaskResult, context);
+  const response: CancelMessageMoveTaskCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryCancelMessageMoveTaskCommandError
+ */
+const de_CancelMessageMoveTaskCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CancelMessageMoveTaskCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AWS.SimpleQueueService.UnsupportedOperation":
+    case "com.amazonaws.sqs#UnsupportedOperation":
+      throw await de_UnsupportedOperationRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.sqs#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -918,6 +1041,55 @@ const de_ListDeadLetterSourceQueuesCommandError = async (
 };
 
 /**
+ * deserializeAws_queryListMessageMoveTasksCommand
+ */
+export const de_ListMessageMoveTasksCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListMessageMoveTasksCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_ListMessageMoveTasksCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_ListMessageMoveTasksResult(data.ListMessageMoveTasksResult, context);
+  const response: ListMessageMoveTasksCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryListMessageMoveTasksCommandError
+ */
+const de_ListMessageMoveTasksCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListMessageMoveTasksCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AWS.SimpleQueueService.UnsupportedOperation":
+    case "com.amazonaws.sqs#UnsupportedOperation":
+      throw await de_UnsupportedOperationRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.sqs#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_queryListQueuesCommand
  */
 export const de_ListQueuesCommand = async (
@@ -1280,6 +1452,55 @@ const de_SetQueueAttributesCommandError = async (
 };
 
 /**
+ * deserializeAws_queryStartMessageMoveTaskCommand
+ */
+export const de_StartMessageMoveTaskCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StartMessageMoveTaskCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_StartMessageMoveTaskCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_StartMessageMoveTaskResult(data.StartMessageMoveTaskResult, context);
+  const response: StartMessageMoveTaskCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryStartMessageMoveTaskCommandError
+ */
+const de_StartMessageMoveTaskCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StartMessageMoveTaskCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AWS.SimpleQueueService.UnsupportedOperation":
+    case "com.amazonaws.sqs#UnsupportedOperation":
+      throw await de_UnsupportedOperationRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.sqs#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_queryTagQueueCommand
  */
 export const de_TagQueueCommand = async (
@@ -1554,6 +1775,22 @@ const de_ReceiptHandleIsInvalidRes = async (
 };
 
 /**
+ * deserializeAws_queryResourceNotFoundExceptionRes
+ */
+const de_ResourceNotFoundExceptionRes = async (
+  parsedOutput: any,
+  context: __SerdeContext
+): Promise<ResourceNotFoundException> => {
+  const body = parsedOutput.body;
+  const deserialized: any = de_ResourceNotFoundException(body.Error, context);
+  const exception = new ResourceNotFoundException({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...deserialized,
+  });
+  return __decorateServiceException(exception, body);
+};
+
+/**
  * deserializeAws_queryTooManyEntriesInBatchRequestRes
  */
 const de_TooManyEntriesInBatchRequestRes = async (
@@ -1679,6 +1916,17 @@ const se_BinaryList = (input: Uint8Array[], context: __SerdeContext): any => {
     }
     entries[`BinaryListValue.${counter}`] = context.base64Encoder(entry);
     counter++;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_queryCancelMessageMoveTaskRequest
+ */
+const se_CancelMessageMoveTaskRequest = (input: CancelMessageMoveTaskRequest, context: __SerdeContext): any => {
+  const entries: any = {};
+  if (input.TaskHandle != null) {
+    entries["TaskHandle"] = input.TaskHandle;
   }
   return entries;
 };
@@ -1921,6 +2169,20 @@ const se_ListDeadLetterSourceQueuesRequest = (
   }
   if (input.NextToken != null) {
     entries["NextToken"] = input.NextToken;
+  }
+  if (input.MaxResults != null) {
+    entries["MaxResults"] = input.MaxResults;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_queryListMessageMoveTasksRequest
+ */
+const se_ListMessageMoveTasksRequest = (input: ListMessageMoveTasksRequest, context: __SerdeContext): any => {
+  const entries: any = {};
+  if (input.SourceArn != null) {
+    entries["SourceArn"] = input.SourceArn;
   }
   if (input.MaxResults != null) {
     entries["MaxResults"] = input.MaxResults;
@@ -2304,6 +2566,23 @@ const se_SetQueueAttributesRequest = (input: SetQueueAttributesRequest, context:
 };
 
 /**
+ * serializeAws_queryStartMessageMoveTaskRequest
+ */
+const se_StartMessageMoveTaskRequest = (input: StartMessageMoveTaskRequest, context: __SerdeContext): any => {
+  const entries: any = {};
+  if (input.SourceArn != null) {
+    entries["SourceArn"] = input.SourceArn;
+  }
+  if (input.DestinationArn != null) {
+    entries["DestinationArn"] = input.DestinationArn;
+  }
+  if (input.MaxNumberOfMessagesPerSecond != null) {
+    entries["MaxNumberOfMessagesPerSecond"] = input.MaxNumberOfMessagesPerSecond;
+  }
+  return entries;
+};
+
+/**
  * serializeAws_queryStringList
  */
 const se_StringList = (input: string[], context: __SerdeContext): any => {
@@ -2446,6 +2725,17 @@ const de_BinaryList = (output: any, context: __SerdeContext): Uint8Array[] => {
     .map((entry: any) => {
       return context.base64Decoder(entry);
     });
+};
+
+/**
+ * deserializeAws_queryCancelMessageMoveTaskResult
+ */
+const de_CancelMessageMoveTaskResult = (output: any, context: __SerdeContext): CancelMessageMoveTaskResult => {
+  const contents: any = {};
+  if (output["ApproximateNumberOfMessagesMoved"] !== undefined) {
+    contents.ApproximateNumberOfMessagesMoved = __strictParseLong(output["ApproximateNumberOfMessagesMoved"]) as number;
+  }
+  return contents;
 };
 
 /**
@@ -2638,6 +2928,73 @@ const de_ListDeadLetterSourceQueuesResult = (
     contents.NextToken = __expectString(output["NextToken"]);
   }
   return contents;
+};
+
+/**
+ * deserializeAws_queryListMessageMoveTasksResult
+ */
+const de_ListMessageMoveTasksResult = (output: any, context: __SerdeContext): ListMessageMoveTasksResult => {
+  const contents: any = {};
+  if (output.ListMessageMoveTasksResultEntry === "") {
+    contents.Results = [];
+  } else if (output["ListMessageMoveTasksResultEntry"] !== undefined) {
+    contents.Results = de_ListMessageMoveTasksResultEntryList(
+      __getArrayIfSingleItem(output["ListMessageMoveTasksResultEntry"]),
+      context
+    );
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryListMessageMoveTasksResultEntry
+ */
+const de_ListMessageMoveTasksResultEntry = (output: any, context: __SerdeContext): ListMessageMoveTasksResultEntry => {
+  const contents: any = {};
+  if (output["TaskHandle"] !== undefined) {
+    contents.TaskHandle = __expectString(output["TaskHandle"]);
+  }
+  if (output["Status"] !== undefined) {
+    contents.Status = __expectString(output["Status"]);
+  }
+  if (output["SourceArn"] !== undefined) {
+    contents.SourceArn = __expectString(output["SourceArn"]);
+  }
+  if (output["DestinationArn"] !== undefined) {
+    contents.DestinationArn = __expectString(output["DestinationArn"]);
+  }
+  if (output["MaxNumberOfMessagesPerSecond"] !== undefined) {
+    contents.MaxNumberOfMessagesPerSecond = __strictParseInt32(output["MaxNumberOfMessagesPerSecond"]) as number;
+  }
+  if (output["ApproximateNumberOfMessagesMoved"] !== undefined) {
+    contents.ApproximateNumberOfMessagesMoved = __strictParseLong(output["ApproximateNumberOfMessagesMoved"]) as number;
+  }
+  if (output["ApproximateNumberOfMessagesToMove"] !== undefined) {
+    contents.ApproximateNumberOfMessagesToMove = __strictParseLong(
+      output["ApproximateNumberOfMessagesToMove"]
+    ) as number;
+  }
+  if (output["FailureReason"] !== undefined) {
+    contents.FailureReason = __expectString(output["FailureReason"]);
+  }
+  if (output["StartedTimestamp"] !== undefined) {
+    contents.StartedTimestamp = __strictParseLong(output["StartedTimestamp"]) as number;
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryListMessageMoveTasksResultEntryList
+ */
+const de_ListMessageMoveTasksResultEntryList = (
+  output: any,
+  context: __SerdeContext
+): ListMessageMoveTasksResultEntry[] => {
+  return (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_ListMessageMoveTasksResultEntry(entry, context);
+    });
 };
 
 /**
@@ -2863,6 +3220,14 @@ const de_ReceiveMessageResult = (output: any, context: __SerdeContext): ReceiveM
 };
 
 /**
+ * deserializeAws_queryResourceNotFoundException
+ */
+const de_ResourceNotFoundException = (output: any, context: __SerdeContext): ResourceNotFoundException => {
+  const contents: any = {};
+  return contents;
+};
+
+/**
  * deserializeAws_querySendMessageBatchResult
  */
 const de_SendMessageBatchResult = (output: any, context: __SerdeContext): SendMessageBatchResult => {
@@ -2944,6 +3309,17 @@ const de_SendMessageResult = (output: any, context: __SerdeContext): SendMessage
 };
 
 /**
+ * deserializeAws_queryStartMessageMoveTaskResult
+ */
+const de_StartMessageMoveTaskResult = (output: any, context: __SerdeContext): StartMessageMoveTaskResult => {
+  const contents: any = {};
+  if (output["TaskHandle"] !== undefined) {
+    contents.TaskHandle = __expectString(output["TaskHandle"]);
+  }
+  return contents;
+};
+
+/**
  * deserializeAws_queryStringList
  */
 const de_StringList = (output: any, context: __SerdeContext): string[] => {
@@ -2991,14 +3367,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   cfId: output.headers["x-amz-cf-id"],
 });
 
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
-
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>
   collectBody(streamBody, context).then((body) => context.utf8Encoder(body));
@@ -3042,7 +3410,7 @@ const parseBody = (streamBody: any, context: __SerdeContext): any =>
         ignoreDeclaration: true,
         parseTagValue: false,
         trimValues: false,
-        tagValueProcessor: (_, val) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
+        tagValueProcessor: (_: any, val: any) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
       });
       parser.addEntity("#xD", "\r");
       parser.addEntity("#10", "\n");

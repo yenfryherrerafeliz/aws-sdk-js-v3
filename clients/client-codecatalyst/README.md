@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-codecatalyst
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-codecatalyst/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-codecatalyst)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-codecatalyst.svg)](https://www.npmjs.com/package/@aws-sdk/client-codecatalyst)
-
 ## Description
 
 AWS SDK for JavaScript CodeCatalyst Client for Node.js, Browser and React Native.
@@ -63,6 +60,10 @@ and the billing plan for the space.</p>
 <li>
 <p>
 <a>ListDevEnvironments</a>, which retrieves a list of Dev Environments in a project.</p>
+</li>
+<li>
+<p>
+<a>ListDevEnvironmentSessions</a>, which retrieves a list of active Dev Environment sessions in a project.</p>
 </li>
 <li>
 <p>
@@ -431,6 +432,14 @@ ListDevEnvironments
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-codecatalyst/classes/listdevenvironmentscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-codecatalyst/interfaces/listdevenvironmentscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-codecatalyst/interfaces/listdevenvironmentscommandoutput.html)
+
+</details>
+<details>
+<summary>
+ListDevEnvironmentSessions
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-codecatalyst/classes/listdevenvironmentsessionscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-codecatalyst/interfaces/listdevenvironmentsessionscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-codecatalyst/interfaces/listdevenvironmentsessionscommandoutput.html)
 
 </details>
 <details>

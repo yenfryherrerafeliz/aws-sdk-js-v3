@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AppflowClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppflowClient";
 import { DescribeFlowExecutionRecordsRequest, DescribeFlowExecutionRecordsResponse } from "../models/models_0";
@@ -20,6 +20,10 @@ import {
   se_DescribeFlowExecutionRecordsCommand,
 } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -55,7 +59,7 @@ export interface DescribeFlowExecutionRecordsCommandOutput
  * //   flowExecutions: [ // FlowExecutionList
  * //     { // ExecutionRecord
  * //       executionId: "STRING_VALUE",
- * //       executionStatus: "InProgress" || "Successful" || "Error",
+ * //       executionStatus: "InProgress" || "Successful" || "Error" || "CancelStarted" || "Canceled",
  * //       executionResult: { // ExecutionResult
  * //         errorInfo: { // ErrorInfo
  * //           putFailuresCount: Number("long"),
@@ -76,12 +80,12 @@ export interface DescribeFlowExecutionRecordsCommandOutput
  * //           tableRegistrationOutput: { // RegistrationOutput
  * //             message: "STRING_VALUE",
  * //             result: "STRING_VALUE",
- * //             status: "InProgress" || "Successful" || "Error",
+ * //             status: "InProgress" || "Successful" || "Error" || "CancelStarted" || "Canceled",
  * //           },
  * //           partitionRegistrationOutput: {
  * //             message: "STRING_VALUE",
  * //             result: "STRING_VALUE",
- * //             status: "InProgress" || "Successful" || "Error",
+ * //             status: "InProgress" || "Successful" || "Error" || "CancelStarted" || "Canceled",
  * //           },
  * //         },
  * //       ],

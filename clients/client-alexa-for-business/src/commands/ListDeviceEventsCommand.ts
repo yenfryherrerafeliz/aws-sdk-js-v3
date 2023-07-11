@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AlexaForBusinessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AlexaForBusinessClient";
 import { ListDeviceEventsRequest, ListDeviceEventsResponse } from "../models/models_0";
 import { de_ListDeviceEventsCommand, se_ListDeviceEventsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,6 +36,8 @@ export interface ListDeviceEventsCommandOutput extends ListDeviceEventsResponse,
 
 /**
  * @public
+ * @deprecated
+ *
  * <p>Lists the device event history, including device connection status, for up to 30
  *          days.</p>
  * @example
@@ -42,7 +48,7 @@ export interface ListDeviceEventsCommandOutput extends ListDeviceEventsResponse,
  * const client = new AlexaForBusinessClient(config);
  * const input = { // ListDeviceEventsRequest
  *   DeviceArn: "STRING_VALUE", // required
- *   EventType: "STRING_VALUE",
+ *   EventType: "CONNECTION_STATUS" || "DEVICE_STATUS",
  *   NextToken: "STRING_VALUE",
  *   MaxResults: Number("int"),
  * };
@@ -51,7 +57,7 @@ export interface ListDeviceEventsCommandOutput extends ListDeviceEventsResponse,
  * // { // ListDeviceEventsResponse
  * //   DeviceEvents: [ // DeviceEventList
  * //     { // DeviceEvent
- * //       Type: "STRING_VALUE",
+ * //       Type: "CONNECTION_STATUS" || "DEVICE_STATUS",
  * //       Value: "STRING_VALUE",
  * //       Timestamp: new Date("TIMESTAMP"),
  * //     },

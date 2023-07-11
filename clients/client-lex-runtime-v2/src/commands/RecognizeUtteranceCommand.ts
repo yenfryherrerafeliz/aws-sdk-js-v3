@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -14,7 +14,7 @@ import {
   SdkStreamSerdeContext as __SdkStreamSerdeContext,
   SerdeContext as __SerdeContext,
   WithSdkStreamMixin as __WithSdkStreamMixin,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { LexRuntimeV2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LexRuntimeV2Client";
 import {
@@ -27,9 +27,8 @@ import { de_RecognizeUtteranceCommand, se_RecognizeUtteranceCommand } from "../p
 
 /**
  * @public
- *
- * The input for {@link RecognizeUtteranceCommand}.
  */
+export { __MetadataBearer, $Command };
 export type RecognizeUtteranceCommandInputType = Omit<RecognizeUtteranceRequest, "inputStream"> & {
   /**
    * For *`RecognizeUtteranceRequest["inputStream"]`*, see {@link RecognizeUtteranceRequest.inputStream}.
@@ -37,7 +36,9 @@ export type RecognizeUtteranceCommandInputType = Omit<RecognizeUtteranceRequest,
   inputStream?: RecognizeUtteranceRequest["inputStream"] | string | Uint8Array | Buffer;
 };
 /**
- * This interface extends from `RecognizeUtteranceRequest` interface. There are more parameters than `inputStream` defined in {@link RecognizeUtteranceRequest}
+ * @public
+ *
+ * The input for {@link RecognizeUtteranceCommand}.
  */
 export interface RecognizeUtteranceCommandInput extends RecognizeUtteranceCommandInputType {}
 /**

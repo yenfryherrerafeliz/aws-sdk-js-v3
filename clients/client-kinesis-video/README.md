@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-kinesis-video
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-kinesis-video/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-kinesis-video)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-kinesis-video.svg)](https://www.npmjs.com/package/@aws-sdk/client-kinesis-video)
-
 ## Description
 
 AWS SDK for JavaScript KinesisVideo Client for Node.js, Browser and React Native.
@@ -224,6 +221,14 @@ CreateStream
 </details>
 <details>
 <summary>
+DeleteEdgeConfiguration
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kinesis-video/classes/deleteedgeconfigurationcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kinesis-video/interfaces/deleteedgeconfigurationcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kinesis-video/interfaces/deleteedgeconfigurationcommandoutput.html)
+
+</details>
+<details>
+<summary>
 DeleteSignalingChannel
 </summary>
 
@@ -308,6 +313,14 @@ GetSignalingChannelEndpoint
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kinesis-video/classes/getsignalingchannelendpointcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kinesis-video/interfaces/getsignalingchannelendpointcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kinesis-video/interfaces/getsignalingchannelendpointcommandoutput.html)
+
+</details>
+<details>
+<summary>
+ListEdgeAgentConfigurations
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kinesis-video/classes/listedgeagentconfigurationscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kinesis-video/interfaces/listedgeagentconfigurationscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kinesis-video/interfaces/listedgeagentconfigurationscommandoutput.html)
 
 </details>
 <details>

@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -15,13 +16,13 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AcceptMatchCommandInput, AcceptMatchCommandOutput } from "../commands/AcceptMatchCommand";
 import { ClaimGameServerCommandInput, ClaimGameServerCommandOutput } from "../commands/ClaimGameServerCommand";
@@ -309,6 +310,7 @@ import {
   AttributeValue,
   Build,
   CertificateConfiguration,
+  ClaimFilterOption,
   ClaimGameServerInput,
   ClaimGameServerOutput,
   Compute,
@@ -405,6 +407,7 @@ import {
   DesiredPlayerSession,
   Event,
   FilterConfiguration,
+  FilterInstanceStatus,
   FleetAction,
   FleetAttributes,
   FleetCapacityExceededException,
@@ -507,10 +510,10 @@ import {
   UpdateBuildOutput,
   UpdateFleetAttributesInput,
   UpdateFleetCapacityInput,
-  UpdateFleetPortSettingsInput,
   VpcPeeringAuthorization,
 } from "../models/models_0";
 import {
+  UpdateFleetPortSettingsInput,
   UpdateGameServerGroupInput,
   UpdateGameServerGroupOutput,
   UpdateGameServerInput,
@@ -8018,6 +8021,8 @@ const se_AttributeValue = (input: AttributeValue, context: __SerdeContext): any 
 
 // se_CertificateConfiguration omitted.
 
+// se_ClaimFilterOption omitted.
+
 // se_ClaimGameServerInput omitted.
 
 // se_CreateAliasInput omitted.
@@ -8182,6 +8187,8 @@ const se_DescribeFleetEventsInput = (input: DescribeFleetEventsInput, context: _
 // se_DesiredPlayerSessionList omitted.
 
 // se_FilterConfiguration omitted.
+
+// se_FilterInstanceStatuses omitted.
 
 // se_FleetActionList omitted.
 
@@ -9934,14 +9941,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

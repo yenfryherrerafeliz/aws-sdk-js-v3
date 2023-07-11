@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
 import { getFlexibleChecksumsPlugin } from "@aws-sdk/middleware-flexible-checksums";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,12 +12,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { PutBucketLoggingRequest } from "../models/models_0";
 import { de_PutBucketLoggingCommand, se_PutBucketLoggingCommand } from "../protocols/Aws_restXml";
 import { S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../S3Client";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -51,7 +55,7 @@ export interface PutBucketLoggingCommandOutput extends __MetadataBearer {}
  *          <dl>
  *             <dt>Grantee Values</dt>
  *             <dd>
- *                <p>You can specify the person (grantee) to whom you're assigning access rights (using
+ *                <p>You can specify the person (grantee) to whom you're assigning access rights (by using
  *                   request elements) in the following ways:</p>
  *                <ul>
  *                   <li>
@@ -61,7 +65,8 @@ export interface PutBucketLoggingCommandOutput extends __MetadataBearer {}
  *                         xsi:type="CanonicalUser"><ID><>ID<></ID><DisplayName><>GranteesEmail<></DisplayName>
  *                         </Grantee></code>
  *                      </p>
- *                      <p>DisplayName is optional and ignored in the request.</p>
+ *                      <p>
+ *                         <code>DisplayName</code> is optional and ignored in the request.</p>
  *                   </li>
  *                   <li>
  *                      <p>By Email address:</p>
@@ -69,8 +74,8 @@ export interface PutBucketLoggingCommandOutput extends __MetadataBearer {}
  *                         <code> <Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  *                         xsi:type="AmazonCustomerByEmail"><EmailAddress><>Grantees@email.com<></EmailAddress></Grantee></code>
  *                      </p>
- *                      <p>The grantee is resolved to the CanonicalUser and, in a response to a GET Object
- *                         acl request, appears as the CanonicalUser.</p>
+ *                      <p>The grantee is resolved to the <code>CanonicalUser</code> and, in a response to a <code>GETObjectAcl</code>
+ *                          request, appears as the CanonicalUser.</p>
  *                   </li>
  *                   <li>
  *                      <p>By URI:</p>
@@ -82,8 +87,8 @@ export interface PutBucketLoggingCommandOutput extends __MetadataBearer {}
  *                </ul>
  *             </dd>
  *          </dl>
- *          <p>To enable logging, you use LoggingEnabled and its children request elements. To disable
- *          logging, you use an empty BucketLoggingStatus request element:</p>
+ *          <p>To enable logging, you use <code>LoggingEnabled</code> and its children request elements. To disable
+ *          logging, you use an empty <code>BucketLoggingStatus</code> request element:</p>
  *          <p>
  *             <code><BucketLoggingStatus xmlns="http://doc.s3.amazonaws.com/2006-03-01"
  *             /></code>

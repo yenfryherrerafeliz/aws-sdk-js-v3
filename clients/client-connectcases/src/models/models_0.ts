@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { ConnectCasesServiceException as __BaseException } from "./ConnectCasesServiceException";
 
@@ -1320,6 +1320,7 @@ export const FieldType = {
   NUMBER: "Number",
   SINGLE_SELECT: "SingleSelect",
   TEXT: "Text",
+  URL: "Url",
 } as const;
 
 /**

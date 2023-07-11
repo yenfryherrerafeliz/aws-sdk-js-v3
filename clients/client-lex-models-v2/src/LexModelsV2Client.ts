@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,7 +47,7 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   BatchCreateCustomVocabularyItemCommandInput,
@@ -78,6 +78,10 @@ import {
 } from "./commands/CreateResourcePolicyStatementCommand";
 import { CreateSlotCommandInput, CreateSlotCommandOutput } from "./commands/CreateSlotCommand";
 import { CreateSlotTypeCommandInput, CreateSlotTypeCommandOutput } from "./commands/CreateSlotTypeCommand";
+import {
+  CreateTestSetDiscrepancyReportCommandInput,
+  CreateTestSetDiscrepancyReportCommandOutput,
+} from "./commands/CreateTestSetDiscrepancyReportCommand";
 import { CreateUploadUrlCommandInput, CreateUploadUrlCommandOutput } from "./commands/CreateUploadUrlCommand";
 import { DeleteBotAliasCommandInput, DeleteBotAliasCommandOutput } from "./commands/DeleteBotAliasCommand";
 import { DeleteBotCommandInput, DeleteBotCommandOutput } from "./commands/DeleteBotCommand";
@@ -100,6 +104,7 @@ import {
 } from "./commands/DeleteResourcePolicyStatementCommand";
 import { DeleteSlotCommandInput, DeleteSlotCommandOutput } from "./commands/DeleteSlotCommand";
 import { DeleteSlotTypeCommandInput, DeleteSlotTypeCommandOutput } from "./commands/DeleteSlotTypeCommand";
+import { DeleteTestSetCommandInput, DeleteTestSetCommandOutput } from "./commands/DeleteTestSetCommand";
 import { DeleteUtterancesCommandInput, DeleteUtterancesCommandOutput } from "./commands/DeleteUtterancesCommand";
 import { DescribeBotAliasCommandInput, DescribeBotAliasCommandOutput } from "./commands/DescribeBotAliasCommand";
 import { DescribeBotCommandInput, DescribeBotCommandOutput } from "./commands/DescribeBotCommand";
@@ -122,6 +127,23 @@ import {
 } from "./commands/DescribeResourcePolicyCommand";
 import { DescribeSlotCommandInput, DescribeSlotCommandOutput } from "./commands/DescribeSlotCommand";
 import { DescribeSlotTypeCommandInput, DescribeSlotTypeCommandOutput } from "./commands/DescribeSlotTypeCommand";
+import {
+  DescribeTestExecutionCommandInput,
+  DescribeTestExecutionCommandOutput,
+} from "./commands/DescribeTestExecutionCommand";
+import { DescribeTestSetCommandInput, DescribeTestSetCommandOutput } from "./commands/DescribeTestSetCommand";
+import {
+  DescribeTestSetDiscrepancyReportCommandInput,
+  DescribeTestSetDiscrepancyReportCommandOutput,
+} from "./commands/DescribeTestSetDiscrepancyReportCommand";
+import {
+  DescribeTestSetGenerationCommandInput,
+  DescribeTestSetGenerationCommandOutput,
+} from "./commands/DescribeTestSetGenerationCommand";
+import {
+  GetTestExecutionArtifactsUrlCommandInput,
+  GetTestExecutionArtifactsUrlCommandOutput,
+} from "./commands/GetTestExecutionArtifactsUrlCommand";
 import {
   ListAggregatedUtterancesCommandInput,
   ListAggregatedUtterancesCommandOutput,
@@ -157,6 +179,13 @@ import {
   ListTagsForResourceCommandOutput,
 } from "./commands/ListTagsForResourceCommand";
 import {
+  ListTestExecutionResultItemsCommandInput,
+  ListTestExecutionResultItemsCommandOutput,
+} from "./commands/ListTestExecutionResultItemsCommand";
+import { ListTestExecutionsCommandInput, ListTestExecutionsCommandOutput } from "./commands/ListTestExecutionsCommand";
+import { ListTestSetRecordsCommandInput, ListTestSetRecordsCommandOutput } from "./commands/ListTestSetRecordsCommand";
+import { ListTestSetsCommandInput, ListTestSetsCommandOutput } from "./commands/ListTestSetsCommand";
+import {
   SearchAssociatedTranscriptsCommandInput,
   SearchAssociatedTranscriptsCommandOutput,
 } from "./commands/SearchAssociatedTranscriptsCommand";
@@ -165,6 +194,11 @@ import {
   StartBotRecommendationCommandOutput,
 } from "./commands/StartBotRecommendationCommand";
 import { StartImportCommandInput, StartImportCommandOutput } from "./commands/StartImportCommand";
+import { StartTestExecutionCommandInput, StartTestExecutionCommandOutput } from "./commands/StartTestExecutionCommand";
+import {
+  StartTestSetGenerationCommandInput,
+  StartTestSetGenerationCommandOutput,
+} from "./commands/StartTestSetGenerationCommand";
 import {
   StopBotRecommendationCommandInput,
   StopBotRecommendationCommandOutput,
@@ -186,6 +220,7 @@ import {
 } from "./commands/UpdateResourcePolicyCommand";
 import { UpdateSlotCommandInput, UpdateSlotCommandOutput } from "./commands/UpdateSlotCommand";
 import { UpdateSlotTypeCommandInput, UpdateSlotTypeCommandOutput } from "./commands/UpdateSlotTypeCommand";
+import { UpdateTestSetCommandInput, UpdateTestSetCommandOutput } from "./commands/UpdateTestSetCommand";
 import {
   ClientInputEndpointParameters,
   ClientResolvedEndpointParameters,
@@ -193,6 +228,8 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+
+export { __Client };
 
 /**
  * @public
@@ -212,6 +249,7 @@ export type ServiceInputTypes =
   | CreateResourcePolicyStatementCommandInput
   | CreateSlotCommandInput
   | CreateSlotTypeCommandInput
+  | CreateTestSetDiscrepancyReportCommandInput
   | CreateUploadUrlCommandInput
   | DeleteBotAliasCommandInput
   | DeleteBotCommandInput
@@ -225,6 +263,7 @@ export type ServiceInputTypes =
   | DeleteResourcePolicyStatementCommandInput
   | DeleteSlotCommandInput
   | DeleteSlotTypeCommandInput
+  | DeleteTestSetCommandInput
   | DeleteUtterancesCommandInput
   | DescribeBotAliasCommandInput
   | DescribeBotCommandInput
@@ -238,6 +277,11 @@ export type ServiceInputTypes =
   | DescribeResourcePolicyCommandInput
   | DescribeSlotCommandInput
   | DescribeSlotTypeCommandInput
+  | DescribeTestExecutionCommandInput
+  | DescribeTestSetCommandInput
+  | DescribeTestSetDiscrepancyReportCommandInput
+  | DescribeTestSetGenerationCommandInput
+  | GetTestExecutionArtifactsUrlCommandInput
   | ListAggregatedUtterancesCommandInput
   | ListBotAliasesCommandInput
   | ListBotLocalesCommandInput
@@ -254,9 +298,15 @@ export type ServiceInputTypes =
   | ListSlotTypesCommandInput
   | ListSlotsCommandInput
   | ListTagsForResourceCommandInput
+  | ListTestExecutionResultItemsCommandInput
+  | ListTestExecutionsCommandInput
+  | ListTestSetRecordsCommandInput
+  | ListTestSetsCommandInput
   | SearchAssociatedTranscriptsCommandInput
   | StartBotRecommendationCommandInput
   | StartImportCommandInput
+  | StartTestExecutionCommandInput
+  | StartTestSetGenerationCommandInput
   | StopBotRecommendationCommandInput
   | TagResourceCommandInput
   | UntagResourceCommandInput
@@ -268,7 +318,8 @@ export type ServiceInputTypes =
   | UpdateIntentCommandInput
   | UpdateResourcePolicyCommandInput
   | UpdateSlotCommandInput
-  | UpdateSlotTypeCommandInput;
+  | UpdateSlotTypeCommandInput
+  | UpdateTestSetCommandInput;
 
 /**
  * @public
@@ -288,6 +339,7 @@ export type ServiceOutputTypes =
   | CreateResourcePolicyStatementCommandOutput
   | CreateSlotCommandOutput
   | CreateSlotTypeCommandOutput
+  | CreateTestSetDiscrepancyReportCommandOutput
   | CreateUploadUrlCommandOutput
   | DeleteBotAliasCommandOutput
   | DeleteBotCommandOutput
@@ -301,6 +353,7 @@ export type ServiceOutputTypes =
   | DeleteResourcePolicyStatementCommandOutput
   | DeleteSlotCommandOutput
   | DeleteSlotTypeCommandOutput
+  | DeleteTestSetCommandOutput
   | DeleteUtterancesCommandOutput
   | DescribeBotAliasCommandOutput
   | DescribeBotCommandOutput
@@ -314,6 +367,11 @@ export type ServiceOutputTypes =
   | DescribeResourcePolicyCommandOutput
   | DescribeSlotCommandOutput
   | DescribeSlotTypeCommandOutput
+  | DescribeTestExecutionCommandOutput
+  | DescribeTestSetCommandOutput
+  | DescribeTestSetDiscrepancyReportCommandOutput
+  | DescribeTestSetGenerationCommandOutput
+  | GetTestExecutionArtifactsUrlCommandOutput
   | ListAggregatedUtterancesCommandOutput
   | ListBotAliasesCommandOutput
   | ListBotLocalesCommandOutput
@@ -330,9 +388,15 @@ export type ServiceOutputTypes =
   | ListSlotTypesCommandOutput
   | ListSlotsCommandOutput
   | ListTagsForResourceCommandOutput
+  | ListTestExecutionResultItemsCommandOutput
+  | ListTestExecutionsCommandOutput
+  | ListTestSetRecordsCommandOutput
+  | ListTestSetsCommandOutput
   | SearchAssociatedTranscriptsCommandOutput
   | StartBotRecommendationCommandOutput
   | StartImportCommandOutput
+  | StartTestExecutionCommandOutput
+  | StartTestSetGenerationCommandOutput
   | StopBotRecommendationCommandOutput
   | TagResourceCommandOutput
   | UntagResourceCommandOutput
@@ -344,7 +408,8 @@ export type ServiceOutputTypes =
   | UpdateIntentCommandOutput
   | UpdateResourcePolicyCommandOutput
   | UpdateSlotCommandOutput
-  | UpdateSlotTypeCommandOutput;
+  | UpdateSlotTypeCommandOutput
+  | UpdateTestSetCommandOutput;
 
 /**
  * @public
@@ -356,7 +421,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -411,7 +476,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -465,7 +530,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -473,7 +538,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type LexModelsV2ClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type LexModelsV2ClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -492,7 +557,7 @@ export interface LexModelsV2ClientConfig extends LexModelsV2ClientConfigType {}
 /**
  * @public
  */
-type LexModelsV2ClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type LexModelsV2ClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

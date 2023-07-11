@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CodePipelineClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodePipelineClient";
 import { DeleteCustomActionTypeInput } from "../models/models_0";
 import { de_DeleteCustomActionTypeCommand, se_DeleteCustomActionTypeCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -34,13 +38,13 @@ export interface DeleteCustomActionTypeCommandOutput extends __MetadataBearer {}
  * @public
  * <p>Marks a custom action as deleted. <code>PollForJobs</code> for the custom action
  *             fails after the action is marked for deletion. Used for custom actions only.</p>
- *         <important>
+ *          <important>
  *             <p>To re-create a custom action after it has been deleted you must use a string in
  *                 the version field that has never been used before. This string can be an incremented
  *                 version number, for example. To restore a deleted custom action, use a JSON file
  *                 that is identical to the deleted action, including the original string in the
  *                 version field.</p>
- *         </important>
+ *          </important>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -48,7 +52,7 @@ export interface DeleteCustomActionTypeCommandOutput extends __MetadataBearer {}
  * // const { CodePipelineClient, DeleteCustomActionTypeCommand } = require("@aws-sdk/client-codepipeline"); // CommonJS import
  * const client = new CodePipelineClient(config);
  * const input = { // DeleteCustomActionTypeInput
- *   category: "STRING_VALUE", // required
+ *   category: "Source" || "Build" || "Deploy" || "Test" || "Invoke" || "Approval", // required
  *   provider: "STRING_VALUE", // required
  *   version: "STRING_VALUE", // required
  * };

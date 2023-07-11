@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
-import { BatchGetSecurityControlsRequest, BatchGetSecurityControlsResponse } from "../models/models_1";
+import { BatchGetSecurityControlsRequest, BatchGetSecurityControlsResponse } from "../models/models_2";
 import { de_BatchGetSecurityControlsCommand, se_BatchGetSecurityControlsCommand } from "../protocols/Aws_restJson1";
 import { SecurityHubClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../SecurityHubClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -93,6 +97,44 @@ export interface BatchGetSecurityControlsCommandOutput extends BatchGetSecurityC
  *
  * @throws {@link SecurityHubServiceException}
  * <p>Base exception class for all service exceptions from SecurityHub service.</p>
+ *
+ * @example To get security control details
+ * ```javascript
+ * // The following example gets details for the specified controls in the current AWS account and AWS Region.
+ * const input = {
+ *   "SecurityControlIds": [
+ *     "ACM.1",
+ *     "APIGateway.1"
+ *   ]
+ * };
+ * const command = new BatchGetSecurityControlsCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "SecurityControls": [
+ *     {
+ *       "Description": "This AWS control checks whether ACM Certificates in your account are marked for expiration within a specified time period. Certificates provided by ACM are automatically renewed. ACM does not automatically renew certificates that you import.",
+ *       "RemediationUrl": "https://docs.aws.amazon.com/console/securityhub/ACM.1/remediation",
+ *       "SecurityControlArn": "arn:aws:securityhub:us-west-2:123456789012:security-control/ACM.1",
+ *       "SecurityControlId": "ACM.1",
+ *       "SecurityControlStatus": "ENABLED",
+ *       "SeverityRating": "MEDIUM",
+ *       "Title": "Imported and ACM-issued certificates should be renewed after a specified time period"
+ *     },
+ *     {
+ *       "Description": "This control checks whether all stages of Amazon API Gateway REST and WebSocket APIs have logging enabled. The control fails if logging is not enabled for all methods of a stage or if loggingLevel is neither ERROR nor INFO.",
+ *       "RemediationUrl": "https://docs.aws.amazon.com/console/securityhub/APIGateway.1/remediation",
+ *       "SecurityControlArn": "arn:aws:securityhub:us-west-2:123456789012:security-control/APIGateway.1",
+ *       "SecurityControlId": "APIGateway.1",
+ *       "SecurityControlStatus": "ENABLED",
+ *       "SeverityRating": "MEDIUM",
+ *       "Title": "API Gateway REST and WebSocket API execution logging should be enabled"
+ *     }
+ *   ]
+ * }
+ * *\/
+ * // example id: to-get-security-control-details--1683234478355
+ * ```
  *
  */
 export class BatchGetSecurityControlsCommand extends $Command<

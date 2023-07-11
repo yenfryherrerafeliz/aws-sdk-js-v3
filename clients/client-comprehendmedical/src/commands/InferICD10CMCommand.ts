@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   ComprehendMedicalClientResolvedConfig,
@@ -21,6 +21,10 @@ import {
 import { InferICD10CMRequest, InferICD10CMResponse } from "../models/models_0";
 import { de_InferICD10CMCommand, se_InferICD10CMCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -77,7 +81,7 @@ export interface InferICD10CMCommandOutput extends InferICD10CMResponse, __Metad
  * //             },
  * //           ],
  * //           Category: "DX_NAME" || "TIME_EXPRESSION",
- * //           RelationshipType: "OVERLAP" || "SYSTEM_ORGAN_SITE",
+ * //           RelationshipType: "OVERLAP" || "SYSTEM_ORGAN_SITE" || "QUALITY",
  * //         },
  * //       ],
  * //       Traits: [
@@ -119,7 +123,7 @@ export interface InferICD10CMCommandOutput extends InferICD10CMResponse, __Metad
  *       and then retry the request.</p>
  *
  * @throws {@link ServiceUnavailableException} (server fault)
- *  <p> The Comprehend Medical; service is temporarily unavailable. Please wait and then retry your request.
+ *  <p> The Amazon Comprehend Medical service is temporarily unavailable. Please wait and then retry your request.
  *     </p>
  *
  * @throws {@link TextSizeLimitExceededException} (client fault)

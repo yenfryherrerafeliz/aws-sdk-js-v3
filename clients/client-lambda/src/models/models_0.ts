@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@smithy/smithy-client";
 import { Readable } from "stream";
 
 import { LambdaServiceException as __BaseException } from "./LambdaServiceException";
@@ -1051,15 +1051,15 @@ export interface CreateEventSourceMappingRequest {
   ParallelizationFactor?: number;
 
   /**
-   * <p>The position in a stream from which to start reading. Required for Amazon Kinesis, Amazon
-   *       DynamoDB, and Amazon MSK Streams sources. <code>AT_TIMESTAMP</code> is supported only for
-   *       Amazon Kinesis streams and Amazon DocumentDB.</p>
+   * <p>The position in a stream from which to start reading. Required for Amazon Kinesis and
+   *       Amazon DynamoDB Stream event sources. <code>AT_TIMESTAMP</code> is supported only for
+   *       Amazon Kinesis streams, Amazon DocumentDB, Amazon MSK, and self-managed Apache Kafka.</p>
    */
   StartingPosition?: EventSourcePosition | string;
 
   /**
    * <p>With <code>StartingPosition</code> set to <code>AT_TIMESTAMP</code>, the time from which to start
-   *       reading.</p>
+   *       reading. <code>StartingPositionTimestamp</code> cannot be in the future.</p>
    */
   StartingPositionTimestamp?: Date;
 
@@ -1145,14 +1145,15 @@ export interface EventSourceMappingConfiguration {
   UUID?: string;
 
   /**
-   * <p>The position in a stream from which to start reading. Required for Amazon Kinesis, Amazon DynamoDB, and Amazon MSK stream sources. <code>AT_TIMESTAMP</code> is supported only for Amazon Kinesis
-   *       streams and Amazon DocumentDB.</p>
+   * <p>The position in a stream from which to start reading. Required for Amazon Kinesis and
+   *       Amazon DynamoDB Stream event sources. <code>AT_TIMESTAMP</code> is supported only for
+   *       Amazon Kinesis streams, Amazon DocumentDB, Amazon MSK, and self-managed Apache Kafka.</p>
    */
   StartingPosition?: EventSourcePosition | string;
 
   /**
    * <p>With <code>StartingPosition</code> set to <code>AT_TIMESTAMP</code>, the time from which to start
-   *       reading.</p>
+   *       reading. <code>StartingPositionTimestamp</code> cannot be in the future.</p>
    */
   StartingPositionTimestamp?: Date;
 
@@ -1245,7 +1246,7 @@ export interface EventSourceMappingConfiguration {
    * <p>(Kinesis and DynamoDB Streams only) Discard records older than the specified age. The default value is -1,
    * which sets the maximum age to infinite. When the value is set to infinite, Lambda never discards old records.</p>
    *          <note>
-   *             <p>The minimum value that can be set is 60 seconds.</p>
+   *             <p>The minimum valid value for maximum record age is 60s. Although values less than 60 and greater than -1 fall within the parameter's absolute range, they are not allowed</p>
    *          </note>
    */
   MaximumRecordAgeInSeconds?: number;
@@ -1527,6 +1528,7 @@ export const Runtime = {
   python39: "python3.9",
   ruby25: "ruby2.5",
   ruby27: "ruby2.7",
+  ruby32: "ruby3.2",
 } as const;
 
 /**
@@ -1550,11 +1552,8 @@ export type SnapStartApplyOn = (typeof SnapStartApplyOn)[keyof typeof SnapStartA
 
 /**
  * @public
- * <p>The function's Lambda SnapStart setting. Set <code>ApplyOn</code> to <code>PublishedVersions</code> to create a
+ * <p>The function's <a href="https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html">Lambda SnapStart</a> setting. Set <code>ApplyOn</code> to <code>PublishedVersions</code> to create a
  *       snapshot of the initialized execution environment when you publish a function version.</p>
- *          <p>SnapStart is supported with the <code>java11</code> runtime. For more information, see
- *         <a href="https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html">Improving startup performance with Lambda
- *         SnapStart</a>.</p>
  */
 export interface SnapStart {
   /**
@@ -1705,7 +1704,12 @@ export interface CreateFunctionRequest {
   Environment?: Environment;
 
   /**
-   * <p>The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt your function's <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-encryption">environment variables</a>. When <a href="https://docs.aws.amazon.com/lambda/latest/dg/snapstart-security.html">Lambda SnapStart</a> is activated, this key is also used to encrypt your function's snapshot. If you don't provide a customer managed key, Lambda uses a default service key.</p>
+   * <p>The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt your function's
+   * <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-encryption">environment variables</a>. When
+   * <a href="https://docs.aws.amazon.com/lambda/latest/dg/snapstart-security.html">Lambda SnapStart</a> is activated, Lambda also uses
+   * this key is to encrypt your function's snapshot. If you deploy your function using a container image, Lambda also uses this key to
+   * encrypt your function when it's deployed. Note that this is not the same key that's used to protect your container image in the Amazon Elastic Container Registry (Amazon ECR).
+   * If you don't provide a customer managed key, Lambda uses a default service key.</p>
    */
   KMSKeyArn?: string;
 
@@ -3304,6 +3308,7 @@ export interface GetLayerVersionResponse {
 
   /**
    * <p>The layer's compatible runtimes.</p>
+   *          <p>The following list includes deprecated runtimes. For more information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-support-policy">Runtime deprecation policy</a>.</p>
    */
   CompatibleRuntimes?: (Runtime | string)[];
 
@@ -4140,6 +4145,37 @@ export class KMSNotFoundException extends __BaseException {
       ...opts,
     });
     Object.setPrototypeOf(this, KMSNotFoundException.prototype);
+    this.Type = opts.Type;
+    this.Message = opts.Message;
+  }
+}
+
+/**
+ * @public
+ * <p>Lambda has detected your function being invoked in a recursive loop with other Amazon Web Services resources and stopped your function's invocation.</p>
+ */
+export class RecursiveInvocationException extends __BaseException {
+  readonly name: "RecursiveInvocationException" = "RecursiveInvocationException";
+  readonly $fault: "client" = "client";
+  /**
+   * <p>The exception type.</p>
+   */
+  Type?: string;
+
+  /**
+   * <p>The exception message.</p>
+   */
+  Message?: string;
+  /**
+   * @internal
+   */
+  constructor(opts: __ExceptionOptionType<RecursiveInvocationException, __BaseException>) {
+    super({
+      name: "RecursiveInvocationException",
+      $fault: "client",
+      ...opts,
+    });
+    Object.setPrototypeOf(this, RecursiveInvocationException.prototype);
     this.Type = opts.Type;
     this.Message = opts.Message;
   }
@@ -5003,6 +5039,7 @@ export interface ListFunctionUrlConfigsResponse {
 export interface ListLayersRequest {
   /**
    * <p>A runtime identifier. For example, <code>go1.x</code>.</p>
+   *          <p>The following list includes deprecated runtimes. For more information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-support-policy">Runtime deprecation policy</a>.</p>
    */
   CompatibleRuntime?: Runtime | string;
 
@@ -5051,6 +5088,7 @@ export interface LayerVersionsListItem {
 
   /**
    * <p>The layer's compatible runtimes.</p>
+   *          <p>The following list includes deprecated runtimes. For more information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-support-policy">Runtime deprecation policy</a>.</p>
    */
   CompatibleRuntimes?: (Runtime | string)[];
 
@@ -5109,6 +5147,7 @@ export interface ListLayersResponse {
 export interface ListLayerVersionsRequest {
   /**
    * <p>A runtime identifier. For example, <code>go1.x</code>.</p>
+   *          <p>The following list includes deprecated runtimes. For more information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-support-policy">Runtime deprecation policy</a>.</p>
    */
   CompatibleRuntime?: Runtime | string;
 
@@ -5371,6 +5410,7 @@ export interface PublishLayerVersionRequest {
   /**
    * <p>A list of compatible <a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">function
    *         runtimes</a>. Used for filtering with <a>ListLayers</a> and <a>ListLayerVersions</a>.</p>
+   *          <p>The following list includes deprecated runtimes. For more information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-support-policy">Runtime deprecation policy</a>.</p>
    */
   CompatibleRuntimes?: (Runtime | string)[];
 
@@ -5435,6 +5475,7 @@ export interface PublishLayerVersionResponse {
 
   /**
    * <p>The layer's compatible runtimes.</p>
+   *          <p>The following list includes deprecated runtimes. For more information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-support-policy">Runtime deprecation policy</a>.</p>
    */
   CompatibleRuntimes?: (Runtime | string)[];
 
@@ -6333,7 +6374,12 @@ export interface UpdateFunctionConfigurationRequest {
   DeadLetterConfig?: DeadLetterConfig;
 
   /**
-   * <p>The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt your function's <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-encryption">environment variables</a>. When <a href="https://docs.aws.amazon.com/lambda/latest/dg/snapstart-security.html">Lambda SnapStart</a> is activated, this key is also used to encrypt your function's snapshot. If you don't provide a customer managed key, Lambda uses a default service key.</p>
+   * <p>The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt your function's
+   * <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-encryption">environment variables</a>. When
+   * <a href="https://docs.aws.amazon.com/lambda/latest/dg/snapstart-security.html">Lambda SnapStart</a> is activated, Lambda also uses
+   * this key is to encrypt your function's snapshot. If you deploy your function using a container image, Lambda also uses this key to
+   * encrypt your function when it's deployed. Note that this is not the same key that's used to protect your container image in the Amazon Elastic Container Registry (Amazon ECR).
+   * If you don't provide a customer managed key, Lambda uses a default service key.</p>
    */
   KMSKeyArn?: string;
 

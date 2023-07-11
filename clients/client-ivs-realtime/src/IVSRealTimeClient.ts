@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,7 +47,7 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CreateParticipantTokenCommandInput,
@@ -59,8 +59,16 @@ import {
   DisconnectParticipantCommandInput,
   DisconnectParticipantCommandOutput,
 } from "./commands/DisconnectParticipantCommand";
+import { GetParticipantCommandInput, GetParticipantCommandOutput } from "./commands/GetParticipantCommand";
 import { GetStageCommandInput, GetStageCommandOutput } from "./commands/GetStageCommand";
+import { GetStageSessionCommandInput, GetStageSessionCommandOutput } from "./commands/GetStageSessionCommand";
+import {
+  ListParticipantEventsCommandInput,
+  ListParticipantEventsCommandOutput,
+} from "./commands/ListParticipantEventsCommand";
+import { ListParticipantsCommandInput, ListParticipantsCommandOutput } from "./commands/ListParticipantsCommand";
 import { ListStagesCommandInput, ListStagesCommandOutput } from "./commands/ListStagesCommand";
+import { ListStageSessionsCommandInput, ListStageSessionsCommandOutput } from "./commands/ListStageSessionsCommand";
 import {
   ListTagsForResourceCommandInput,
   ListTagsForResourceCommandOutput,
@@ -76,6 +84,8 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
@@ -84,7 +94,12 @@ export type ServiceInputTypes =
   | CreateStageCommandInput
   | DeleteStageCommandInput
   | DisconnectParticipantCommandInput
+  | GetParticipantCommandInput
   | GetStageCommandInput
+  | GetStageSessionCommandInput
+  | ListParticipantEventsCommandInput
+  | ListParticipantsCommandInput
+  | ListStageSessionsCommandInput
   | ListStagesCommandInput
   | ListTagsForResourceCommandInput
   | TagResourceCommandInput
@@ -99,7 +114,12 @@ export type ServiceOutputTypes =
   | CreateStageCommandOutput
   | DeleteStageCommandOutput
   | DisconnectParticipantCommandOutput
+  | GetParticipantCommandOutput
   | GetStageCommandOutput
+  | GetStageSessionCommandOutput
+  | ListParticipantEventsCommandOutput
+  | ListParticipantsCommandOutput
+  | ListStageSessionsCommandOutput
   | ListStagesCommandOutput
   | ListTagsForResourceCommandOutput
   | TagResourceCommandOutput
@@ -116,7 +136,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -171,7 +191,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -225,7 +245,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -233,7 +253,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type IVSRealTimeClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type IVSRealTimeClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -252,7 +272,7 @@ export interface IVSRealTimeClientConfig extends IVSRealTimeClientConfigType {}
 /**
  * @public
  */
-type IVSRealTimeClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type IVSRealTimeClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
@@ -277,7 +297,24 @@ export interface IVSRealTimeClientResolvedConfig extends IVSRealTimeClientResolv
  * 	  API and an AWS EventBridge event stream for responses. JSON is used for both requests and responses,
  * 	  including errors.
  *     </p>
- *          <p>Terminology: The IVS stage API sometimes is referred to as the IVS RealTime API.</p>
+ *          <p>Terminology:</p>
+ *          <ul>
+ *             <li>
+ *                <p>The IVS stage API sometimes is referred to as the IVS <i>RealTime</i>
+ *           API.</p>
+ *             </li>
+ *             <li>
+ *                <p>A <i>participant token</i> is an authorization token used to publish/subscribe
+ *           to a stage.</p>
+ *             </li>
+ *             <li>
+ *                <p>A <i>participant object</i> represents participants
+ *           (people) in the stage and contains information about them. When a token is created, it
+ *           includes a participant ID; when a participant uses that token to join a stage, the
+ *           participant is associated with that participant ID There is a 1:1 mapping between
+ *           participant tokens and participants.</p>
+ *             </li>
+ *          </ul>
  *          <p>
  *             <b>Resources</b>
  *          </p>
@@ -325,11 +362,35 @@ export interface IVSRealTimeClientResolvedConfig extends IVSRealTimeClientResolv
  *             </li>
  *             <li>
  *                <p>
+ *                   <a>GetParticipant</a> — Gets information about the specified
+ *           participant token.</p>
+ *             </li>
+ *             <li>
+ *                <p>
  *                   <a>GetStage</a> — Gets information for the specified stage.</p>
  *             </li>
  *             <li>
  *                <p>
+ *                   <a>GetStageSession</a> — Gets information for the specified stage
+ *           session.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>ListParticipantEvents</a> — Lists events for a specified
+ *           participant that occurred during a specified stage session.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>ListParticipants</a> — Lists all participants in a specified stage
+ *           session.</p>
+ *             </li>
+ *             <li>
+ *                <p>
  *                   <a>ListStages</a> — Gets summary information about all stages in your account, in the AWS region where the API request is processed.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>ListStageSessions</a> — Gets all sessions for a specified stage.</p>
  *             </li>
  *             <li>
  *                <p>

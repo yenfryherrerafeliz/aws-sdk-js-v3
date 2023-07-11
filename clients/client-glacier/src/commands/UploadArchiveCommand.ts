@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { GlacierClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GlacierClient";
 import { ArchiveCreationOutput, UploadArchiveInput, UploadArchiveInputFilterSensitiveLog } from "../models/models_0";
@@ -19,9 +19,8 @@ import { de_UploadArchiveCommand, se_UploadArchiveCommand } from "../protocols/A
 
 /**
  * @public
- *
- * The input for {@link UploadArchiveCommand}.
  */
+export { __MetadataBearer, $Command };
 export type UploadArchiveCommandInputType = Omit<UploadArchiveInput, "body"> & {
   /**
    * For *`UploadArchiveInput["body"]`*, see {@link UploadArchiveInput.body}.
@@ -29,7 +28,9 @@ export type UploadArchiveCommandInputType = Omit<UploadArchiveInput, "body"> & {
   body?: UploadArchiveInput["body"] | string | Uint8Array | Buffer;
 };
 /**
- * This interface extends from `UploadArchiveInput` interface. There are more parameters than `body` defined in {@link UploadArchiveInput}
+ * @public
+ *
+ * The input for {@link UploadArchiveCommand}.
  */
 export interface UploadArchiveCommandInput extends UploadArchiveCommandInputType {}
 /**

@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -14,12 +15,12 @@ import {
   resolvedPath as __resolvedPath,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CreateProfileCommandInput, CreateProfileCommandOutput } from "../commands/CreateProfileCommand";
 import { CreateTrustAnchorCommandInput, CreateTrustAnchorCommandOutput } from "../commands/CreateTrustAnchorCommand";
@@ -45,6 +46,14 @@ import {
   ListTagsForResourceCommandOutput,
 } from "../commands/ListTagsForResourceCommand";
 import { ListTrustAnchorsCommandInput, ListTrustAnchorsCommandOutput } from "../commands/ListTrustAnchorsCommand";
+import {
+  PutNotificationSettingsCommandInput,
+  PutNotificationSettingsCommandOutput,
+} from "../commands/PutNotificationSettingsCommand";
+import {
+  ResetNotificationSettingsCommandInput,
+  ResetNotificationSettingsCommandOutput,
+} from "../commands/ResetNotificationSettingsCommand";
 import { TagResourceCommandInput, TagResourceCommandOutput } from "../commands/TagResourceCommand";
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "../commands/UntagResourceCommand";
 import { UpdateCrlCommandInput, UpdateCrlCommandOutput } from "../commands/UpdateCrlCommand";
@@ -55,6 +64,8 @@ import {
   CredentialSummary,
   CrlDetail,
   InstanceProperty,
+  NotificationSetting,
+  NotificationSettingKey,
   ProfileDetail,
   ResourceNotFoundException,
   Source,
@@ -121,6 +132,7 @@ export const se_CreateTrustAnchorCommand = async (
     take(input, {
       enabled: [],
       name: [],
+      notificationSettings: (_) => _json(_),
       source: (_) => _json(_),
       tags: (_) => _json(_),
     })
@@ -629,6 +641,68 @@ export const se_ListTrustAnchorsCommand = async (
     headers,
     path: resolvedPath,
     query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1PutNotificationSettingsCommand
+ */
+export const se_PutNotificationSettingsCommand = async (
+  input: PutNotificationSettingsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/put-notifications-settings";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      notificationSettings: (_) => _json(_),
+      trustAnchorId: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PATCH",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ResetNotificationSettingsCommand
+ */
+export const se_ResetNotificationSettingsCommand = async (
+  input: ResetNotificationSettingsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/reset-notifications-settings";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      notificationSettingKeys: (_) => _json(_),
+      trustAnchorId: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PATCH",
+    headers,
+    path: resolvedPath,
     body,
   });
 };
@@ -1852,6 +1926,112 @@ const de_ListTrustAnchorsCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1PutNotificationSettingsCommand
+ */
+export const de_PutNotificationSettingsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<PutNotificationSettingsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_PutNotificationSettingsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    trustAnchor: (_) => de_TrustAnchorDetail(_, context),
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1PutNotificationSettingsCommandError
+ */
+const de_PutNotificationSettingsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<PutNotificationSettingsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.rolesanywhere#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.rolesanywhere#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.rolesanywhere#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1ResetNotificationSettingsCommand
+ */
+export const de_ResetNotificationSettingsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ResetNotificationSettingsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ResetNotificationSettingsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    trustAnchor: (_) => de_TrustAnchorDetail(_, context),
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ResetNotificationSettingsCommandError
+ */
+const de_ResetNotificationSettingsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ResetNotificationSettingsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.rolesanywhere#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.rolesanywhere#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ValidationException":
+    case "com.amazonaws.rolesanywhere#ValidationException":
+      throw await de_ValidationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1TagResourceCommand
  */
 export const de_TagResourceCommand = async (
@@ -2191,6 +2371,14 @@ const de_ValidationExceptionRes = async (parsedOutput: any, context: __SerdeCont
 
 // se_ManagedPolicyList omitted.
 
+// se_NotificationSetting omitted.
+
+// se_NotificationSettingKey omitted.
+
+// se_NotificationSettingKeys omitted.
+
+// se_NotificationSettings omitted.
+
 // se_RoleArnList omitted.
 
 // se_Source omitted.
@@ -2283,6 +2471,10 @@ const de_InstanceProperty = (output: any, context: __SerdeContext): InstanceProp
 // de_InstancePropertyMap omitted.
 
 // de_ManagedPolicyList omitted.
+
+// de_NotificationSettingDetail omitted.
+
+// de_NotificationSettingDetails omitted.
 
 /**
  * deserializeAws_restJson1ProfileDetail
@@ -2378,6 +2570,7 @@ const de_TrustAnchorDetail = (output: any, context: __SerdeContext): TrustAnchor
     createdAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     enabled: __expectBoolean,
     name: __expectString,
+    notificationSettings: _json,
     source: _json,
     trustAnchorArn: __expectString,
     trustAnchorId: __expectString,
@@ -2404,14 +2597,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

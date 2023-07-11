@@ -130,42 +130,6 @@ class SdkThemeContext extends DefaultThemeRenderContext {
           document.querySelector('.container-main').id = 'jump-to-content'
           
           document.querySelector('.tsd-navigation.secondary')['ariaLabel'] = "Secondary"
-
-          if (document.querySelectorAll('img[alt~="NPM"]').length > 0) {
-            const versionEl = document.querySelector('img[alt="NPM version"]')
-            const downloadsEl = document.querySelector('img[alt="NPM downloads"]')
-  
-            const sdkName = versionEl.src.match(/\\@aws-sdk\\/client-[^\\/]+/)[0]
-
-            // fetch sdk version
-            fetch("https://registry.npmjs.org/" + encodeURIComponent(sdkName) + "/latest")
-              .then(res => {
-                return res.json()
-              })
-              .then(({ version }) => {
-                versionEl.alt = "npm@latest v" + version
-              })
-              .catch(err => {
-                console.error(err)
-              })
-
-            // fetch sdk downloads for the last month
-            fetch("https://api.npmjs.org/downloads/point/last-month/" + encodeURIComponent(sdkName))
-              .then(res => {
-                return res.json()
-              })
-              .then(({ downloads }) => {
-                function formatDownloads(num) {
-                  if (num < 1000) return num.toString()
-                  if (num < 1000000) return (num.toPrecision(2) / 1000).toString() + 'k'
-                  if (num < 1000000000) return (num.toPrecision(2) / 1000000).toString() + 'M'
-                }
-                downloadsEl.alt = 'downloads ' + formatDownloads(downloads) + '/month'
-              })
-              .catch(err => {
-                console.error(err)
-              })
-          }
         })
       })();
       `;
@@ -284,12 +248,10 @@ class SdkThemeContext extends DefaultThemeRenderContext {
         <>
           <style>{style}</style>
           <div class="documentation-developer-preview">
-            <h2>New API Documentation - Developer Preview Available</h2>
+            <h2>This API Documentation is now deprecated</h2>
             <p>
-              We are excited to announce the{" "}
-              <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/preview/">developer preview</a> of our new
-              API documentation for AWS SDK for JavaScript v3. Please follow instructions on the landing page to leave
-              us your feedback.
+              We are excited to announce our{" "}
+              <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/">new API Documentation</a>.
             </p>
           </div>
           {oldHeader(props)}

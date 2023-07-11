@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { KMSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KMSClient";
 import { DeleteImportedKeyMaterialRequest } from "../models/models_0";
 import { de_DeleteImportedKeyMaterialCommand, se_DeleteImportedKeyMaterialCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,14 +36,13 @@ export interface DeleteImportedKeyMaterialCommandOutput extends __MetadataBearer
 
 /**
  * @public
- * <p>Deletes key material that you previously imported. This operation makes the specified KMS
- *       key unusable. For more information about importing key material into KMS, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html">Importing Key Material</a>
- *       in the <i>Key Management Service Developer Guide</i>. </p>
+ * <p>Deletes key material that was previously imported. This operation makes the specified KMS
+ *       key temporarily unusable. To restore the usability of the KMS key, reimport the same key
+ *       material. For more information about importing key material into KMS, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html">Importing Key Material</a>
+ *       in the <i>Key Management Service Developer Guide</i>.</p>
  *          <p>When the specified KMS key is in the <code>PendingDeletion</code> state, this operation
  *       does not change the KMS key's state. Otherwise, it changes the KMS key's state to
  *         <code>PendingImport</code>.</p>
- *          <p>After you delete key material, you can use <a>ImportKeyMaterial</a> to reimport
- *       the same key material into the KMS key.</p>
  *          <p>The KMS key that you use for this operation must be in a compatible key state. For
  * details, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html">Key states of KMS keys</a> in the <i>Key Management Service Developer Guide</i>.</p>
  *          <p>
@@ -108,7 +111,9 @@ export interface DeleteImportedKeyMaterialCommandOutput extends __MetadataBearer
  *                   </i>.</p>
  *             </li>
  *             <li>
- *                <p>For cryptographic operations on KMS keys in custom key stores, this exception represents a general failure with many possible causes. To identify the cause, see the error message that accompanies the exception.</p>
+ *                <p>For cryptographic operations on KMS keys in custom key stores, this exception
+ *           represents a general failure with many possible causes. To identify the cause, see the
+ *           error message that accompanies the exception.</p>
  *             </li>
  *          </ul>
  *

@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-cloudtrail
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-cloudtrail/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-cloudtrail)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-cloudtrail.svg)](https://www.npmjs.com/package/@aws-sdk/client-cloudtrail)
-
 ## Description
 
 AWS SDK for JavaScript CloudTrail Client for Node.js, Browser and React Native.
@@ -512,6 +509,14 @@ RestoreEventDataStore
 </details>
 <details>
 <summary>
+StartEventDataStoreIngestion
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudtrail/classes/starteventdatastoreingestioncommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudtrail/interfaces/starteventdatastoreingestioncommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudtrail/interfaces/starteventdatastoreingestioncommandoutput.html)
+
+</details>
+<details>
+<summary>
 StartImport
 </summary>
 
@@ -532,6 +537,14 @@ StartQuery
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudtrail/classes/startquerycommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudtrail/interfaces/startquerycommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudtrail/interfaces/startquerycommandoutput.html)
+
+</details>
+<details>
+<summary>
+StopEventDataStoreIngestion
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudtrail/classes/stopeventdatastoreingestioncommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudtrail/interfaces/stopeventdatastoreingestioncommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudtrail/interfaces/stopeventdatastoreingestioncommandoutput.html)
 
 </details>
 <details>

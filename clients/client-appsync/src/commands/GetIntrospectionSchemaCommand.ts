@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,17 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
 import { AppSyncClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppSyncClient";
 import { GetIntrospectionSchemaRequest, GetIntrospectionSchemaResponse } from "../models/models_0";
 import { de_GetIntrospectionSchemaCommand, se_GetIntrospectionSchemaCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -25,10 +30,19 @@ import { de_GetIntrospectionSchemaCommand, se_GetIntrospectionSchemaCommand } fr
 export interface GetIntrospectionSchemaCommandInput extends GetIntrospectionSchemaRequest {}
 /**
  * @public
+ */
+export type GetIntrospectionSchemaCommandOutputType = Omit<GetIntrospectionSchemaResponse, "schema"> & {
+  schema?: Uint8ArrayBlobAdapter;
+};
+
+/**
+ * @public
  *
  * The output of {@link GetIntrospectionSchemaCommand}.
  */
-export interface GetIntrospectionSchemaCommandOutput extends GetIntrospectionSchemaResponse, __MetadataBearer {}
+export interface GetIntrospectionSchemaCommandOutput
+  extends GetIntrospectionSchemaCommandOutputType,
+    __MetadataBearer {}
 
 /**
  * @public

@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
 import { getAwsAuthPlugin } from "@aws-sdk/middleware-signing";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,7 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CognitoIdentityProviderClientResolvedConfig,
@@ -22,6 +22,10 @@ import {
 import { TagResourceRequest, TagResourceResponse } from "../models/models_1";
 import { de_TagResourceCommand, se_TagResourceCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -40,16 +44,16 @@ export interface TagResourceCommandOutput extends TagResourceResponse, __Metadat
  * <p>Assigns a set of tags to an Amazon Cognito user pool. A tag is a label that you can use to
  *             categorize and manage user pools in different ways, such as by purpose, owner,
  *             environment, or other criteria.</p>
- *         <p>Each tag consists of a key and value, both of which you define. A key is a general
+ *          <p>Each tag consists of a key and value, both of which you define. A key is a general
  *             category for more specific values. For example, if you have two versions of a user pool,
  *             one for testing and another for production, you might assign an <code>Environment</code>
  *             tag key to both user pools. The value of this key might be <code>Test</code> for one
  *             user pool, and <code>Production</code> for the other.</p>
- *         <p>Tags are useful for cost tracking and access control. You can activate your tags so
+ *          <p>Tags are useful for cost tracking and access control. You can activate your tags so
  *             that they appear on the Billing and Cost Management console, where you can track the
  *             costs associated with your user pools. In an Identity and Access Management policy, you can constrain
  *             permissions for user pools based on specific tags or tag values.</p>
- *         <p>You can use this action up to 5 times per second, per account. A user pool can have as
+ *          <p>You can use this action up to 5 times per second, per account. A user pool can have as
  *             many as 50 tags.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.

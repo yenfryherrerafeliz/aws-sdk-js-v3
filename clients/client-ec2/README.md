@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-ec2
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-ec2/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-ec2)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-ec2.svg)](https://www.npmjs.com/package/@aws-sdk/client-ec2)
-
 ## Description
 
 AWS SDK for JavaScript EC2 Client for Node.js, Browser and React Native.
@@ -794,6 +791,14 @@ CreateImage
 </details>
 <details>
 <summary>
+CreateInstanceConnectEndpoint
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/classes/createinstanceconnectendpointcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/createinstanceconnectendpointcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/createinstanceconnectendpointcommandoutput.html)
+
+</details>
+<details>
+<summary>
 CreateInstanceEventWindow
 </summary>
 
@@ -1398,6 +1403,14 @@ DeleteFpgaImage
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/classes/deletefpgaimagecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/deletefpgaimagecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/deletefpgaimagecommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteInstanceConnectEndpoint
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/classes/deleteinstanceconnectendpointcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/deleteinstanceconnectendpointcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/deleteinstanceconnectendpointcommandoutput.html)
 
 </details>
 <details>
@@ -2310,6 +2323,14 @@ DescribeInstanceAttribute
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/classes/describeinstanceattributecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/describeinstanceattributecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/describeinstanceattributecommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeInstanceConnectEndpoints
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/classes/describeinstanceconnectendpointscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/describeinstanceconnectendpointscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/describeinstanceconnectendpointscommandoutput.html)
 
 </details>
 <details>

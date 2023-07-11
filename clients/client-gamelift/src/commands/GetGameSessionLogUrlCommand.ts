@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { GameLiftClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GameLiftClient";
 import { GetGameSessionLogUrlInput, GetGameSessionLogUrlOutput } from "../models/models_0";
 import { de_GetGameSessionLogUrlCommand, se_GetGameSessionLogUrlCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,9 +36,9 @@ export interface GetGameSessionLogUrlCommandOutput extends GetGameSessionLogUrlO
 
 /**
  * @public
- * <p>Retrieves the location of stored game session logs for a specified game session. When
- *             a game session is terminated, Amazon GameLift automatically stores the logs in Amazon S3 and
- *             retains them for 14 days. Use this URL to download the logs.</p>
+ * <p>Retrieves the location of stored game session logs for a specified game session on
+ *             Amazon GameLift managed fleets. When a game session is terminated, Amazon GameLift automatically stores
+ *             the logs in Amazon S3 and retains them for 14 days. Use this URL to download the logs.</p>
  *          <note>
  *             <p>See the <a href="https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html#limits_gamelift">Amazon Web Services Service
  *                     Limits</a> page for maximum log file sizes. Log files that exceed this limit

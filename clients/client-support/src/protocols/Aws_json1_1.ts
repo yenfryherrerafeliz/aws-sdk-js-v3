@@ -1,20 +1,21 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectString as __expectString,
   limitedParseDouble as __limitedParseDouble,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   AddAttachmentsToSetCommandInput,
@@ -31,11 +32,19 @@ import {
   DescribeCommunicationsCommandInput,
   DescribeCommunicationsCommandOutput,
 } from "../commands/DescribeCommunicationsCommand";
+import {
+  DescribeCreateCaseOptionsCommandInput,
+  DescribeCreateCaseOptionsCommandOutput,
+} from "../commands/DescribeCreateCaseOptionsCommand";
 import { DescribeServicesCommandInput, DescribeServicesCommandOutput } from "../commands/DescribeServicesCommand";
 import {
   DescribeSeverityLevelsCommandInput,
   DescribeSeverityLevelsCommandOutput,
 } from "../commands/DescribeSeverityLevelsCommand";
+import {
+  DescribeSupportedLanguagesCommandInput,
+  DescribeSupportedLanguagesCommandOutput,
+} from "../commands/DescribeSupportedLanguagesCommand";
 import {
   DescribeTrustedAdvisorCheckRefreshStatusesCommandInput,
   DescribeTrustedAdvisorCheckRefreshStatusesCommandOutput,
@@ -74,8 +83,10 @@ import {
   DescribeAttachmentResponse,
   DescribeCasesRequest,
   DescribeCommunicationsRequest,
+  DescribeCreateCaseOptionsRequest,
   DescribeServicesRequest,
   DescribeSeverityLevelsRequest,
+  DescribeSupportedLanguagesRequest,
   DescribeTrustedAdvisorCheckRefreshStatusesRequest,
   DescribeTrustedAdvisorCheckResultRequest,
   DescribeTrustedAdvisorCheckResultResponse,
@@ -86,6 +97,7 @@ import {
   InternalServerError,
   RefreshTrustedAdvisorCheckRequest,
   ResolveCaseRequest,
+  ThrottlingException,
   TrustedAdvisorCategorySpecificSummary,
   TrustedAdvisorCheckDescription,
   TrustedAdvisorCheckResult,
@@ -174,6 +186,19 @@ export const se_DescribeCommunicationsCommand = async (
 };
 
 /**
+ * serializeAws_json1_1DescribeCreateCaseOptionsCommand
+ */
+export const se_DescribeCreateCaseOptionsCommand = async (
+  input: DescribeCreateCaseOptionsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("DescribeCreateCaseOptions");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
  * serializeAws_json1_1DescribeServicesCommand
  */
 export const se_DescribeServicesCommand = async (
@@ -194,6 +219,19 @@ export const se_DescribeSeverityLevelsCommand = async (
   context: __SerdeContext
 ): Promise<__HttpRequest> => {
   const headers: __HeaderBag = sharedHeaders("DescribeSeverityLevels");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1DescribeSupportedLanguagesCommand
+ */
+export const se_DescribeSupportedLanguagesCommand = async (
+  input: DescribeSupportedLanguagesCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("DescribeSupportedLanguages");
   let body: any;
   body = JSON.stringify(_json(input));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -596,6 +634,55 @@ const de_DescribeCommunicationsCommandError = async (
 };
 
 /**
+ * deserializeAws_json1_1DescribeCreateCaseOptionsCommand
+ */
+export const de_DescribeCreateCaseOptionsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeCreateCaseOptionsCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DescribeCreateCaseOptionsCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: DescribeCreateCaseOptionsCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1DescribeCreateCaseOptionsCommandError
+ */
+const de_DescribeCreateCaseOptionsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeCreateCaseOptionsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerError":
+    case "com.amazonaws.support#InternalServerError":
+      throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.support#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_json1_1DescribeServicesCommand
  */
 export const de_DescribeServicesCommand = async (
@@ -688,6 +775,55 @@ const de_DescribeSeverityLevelsCommandError = async (
 };
 
 /**
+ * deserializeAws_json1_1DescribeSupportedLanguagesCommand
+ */
+export const de_DescribeSupportedLanguagesCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeSupportedLanguagesCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DescribeSupportedLanguagesCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: DescribeSupportedLanguagesCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1DescribeSupportedLanguagesCommandError
+ */
+const de_DescribeSupportedLanguagesCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeSupportedLanguagesCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerError":
+    case "com.amazonaws.support#InternalServerError":
+      throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.support#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_json1_1DescribeTrustedAdvisorCheckRefreshStatusesCommand
  */
 export const de_DescribeTrustedAdvisorCheckRefreshStatusesCommand = async (
@@ -723,6 +859,9 @@ const de_DescribeTrustedAdvisorCheckRefreshStatusesCommandError = async (
     case "InternalServerError":
     case "com.amazonaws.support#InternalServerError":
       throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.support#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -769,6 +908,9 @@ const de_DescribeTrustedAdvisorCheckResultCommandError = async (
     case "InternalServerError":
     case "com.amazonaws.support#InternalServerError":
       throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.support#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -815,6 +957,9 @@ const de_DescribeTrustedAdvisorChecksCommandError = async (
     case "InternalServerError":
     case "com.amazonaws.support#InternalServerError":
       throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.support#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -861,6 +1006,9 @@ const de_DescribeTrustedAdvisorCheckSummariesCommandError = async (
     case "InternalServerError":
     case "com.amazonaws.support#InternalServerError":
       throw await de_InternalServerErrorRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.support#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -1105,6 +1253,19 @@ const de_InternalServerErrorRes = async (parsedOutput: any, context: __SerdeCont
 };
 
 /**
+ * deserializeAws_json1_1ThrottlingExceptionRes
+ */
+const de_ThrottlingExceptionRes = async (parsedOutput: any, context: __SerdeContext): Promise<ThrottlingException> => {
+  const body = parsedOutput.body;
+  const deserialized: any = _json(body);
+  const exception = new ThrottlingException({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...deserialized,
+  });
+  return __decorateServiceException(exception, body);
+};
+
+/**
  * serializeAws_json1_1AddAttachmentsToSetRequest
  */
 const se_AddAttachmentsToSetRequest = (input: AddAttachmentsToSetRequest, context: __SerdeContext): any => {
@@ -1149,9 +1310,13 @@ const se_Attachments = (input: Attachment[], context: __SerdeContext): any => {
 
 // se_DescribeCommunicationsRequest omitted.
 
+// se_DescribeCreateCaseOptionsRequest omitted.
+
 // se_DescribeServicesRequest omitted.
 
 // se_DescribeSeverityLevelsRequest omitted.
+
+// se_DescribeSupportedLanguagesRequest omitted.
 
 /**
  * serializeAws_json1_1DescribeTrustedAdvisorCheckRefreshStatusesRequest
@@ -1240,7 +1405,15 @@ const de_Attachment = (output: any, context: __SerdeContext): Attachment => {
 
 // de_CommunicationList omitted.
 
+// de_CommunicationTypeOptions omitted.
+
+// de_CommunicationTypeOptionsList omitted.
+
 // de_CreateCaseResponse omitted.
+
+// de_DateInterval omitted.
+
+// de_DatesWithoutSupportList omitted.
 
 // de_DescribeAttachmentLimitExceeded omitted.
 
@@ -1257,9 +1430,13 @@ const de_DescribeAttachmentResponse = (output: any, context: __SerdeContext): De
 
 // de_DescribeCommunicationsResponse omitted.
 
+// de_DescribeCreateCaseOptionsResponse omitted.
+
 // de_DescribeServicesResponse omitted.
 
 // de_DescribeSeverityLevelsResponse omitted.
+
+// de_DescribeSupportedLanguagesResponse omitted.
 
 // de_DescribeTrustedAdvisorCheckRefreshStatusesResponse omitted.
 
@@ -1327,6 +1504,16 @@ const de_StringList = (output: any, context: __SerdeContext): string[] => {
   });
   return retVal;
 };
+
+// de_SupportedHour omitted.
+
+// de_SupportedHoursList omitted.
+
+// de_SupportedLanguage omitted.
+
+// de_SupportedLanguagesList omitted.
+
+// de_ThrottlingException omitted.
 
 /**
  * deserializeAws_json1_1TrustedAdvisorCategorySpecificSummary
@@ -1456,14 +1643,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

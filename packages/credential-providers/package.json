@@ -1,6 +1,6 @@
 {
   "name": "@aws-sdk/credential-providers",
-  "version": "3.328.0",
+  "version": "3.369.0",
   "description": "A collection of credential providers, without requiring service clients like STS, Cognito",
   "main": "./dist-cjs/index.js",
   "module": "./dist-es/index.js",
@@ -15,6 +15,7 @@
     "build:types": "tsc -p tsconfig.types.json",
     "build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
     "clean": "rimraf ./dist-* && rimraf *.tsbuildinfo",
+    "extract:docs": "api-extractor run --local",
     "test": "jest"
   },
   "keywords": [
@@ -32,14 +33,15 @@
     "@aws-sdk/client-sts": "*",
     "@aws-sdk/credential-provider-cognito-identity": "*",
     "@aws-sdk/credential-provider-env": "*",
-    "@aws-sdk/credential-provider-imds": "*",
     "@aws-sdk/credential-provider-ini": "*",
     "@aws-sdk/credential-provider-node": "*",
     "@aws-sdk/credential-provider-process": "*",
     "@aws-sdk/credential-provider-sso": "*",
     "@aws-sdk/credential-provider-web-identity": "*",
-    "@aws-sdk/property-provider": "*",
     "@aws-sdk/types": "*",
+    "@smithy/credential-provider-imds": "^1.0.1",
+    "@smithy/property-provider": "^1.0.1",
+    "@smithy/types": "^1.1.0",
     "tslib": "^2.5.0"
   },
   "devDependencies": {

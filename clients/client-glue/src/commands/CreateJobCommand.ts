@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,13 +11,17 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { GlueClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GlueClient";
 import { CreateJobResponse } from "../models/models_0";
 import { CreateJobRequest, CreateJobRequestFilterSensitiveLog } from "../models/models_2";
 import { de_CreateJobCommand, se_CreateJobCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -52,6 +56,7 @@ export interface CreateJobCommandOutput extends CreateJobResponse, __MetadataBea
  *     Name: "STRING_VALUE",
  *     ScriptLocation: "STRING_VALUE",
  *     PythonVersion: "STRING_VALUE",
+ *     Runtime: "STRING_VALUE",
  *   },
  *   DefaultArguments: { // GenericMap
  *     "<keys>": "STRING_VALUE",
@@ -77,7 +82,7 @@ export interface CreateJobCommandOutput extends CreateJobResponse, __MetadataBea
  *   },
  *   GlueVersion: "STRING_VALUE",
  *   NumberOfWorkers: Number("int"),
- *   WorkerType: "Standard" || "G.1X" || "G.2X" || "G.025X",
+ *   WorkerType: "Standard" || "G.1X" || "G.2X" || "G.025X" || "G.4X" || "G.8X" || "Z.2X",
  *   CodeGenConfigurationNodes: { // CodeGenConfigurationNodes
  *     "<keys>": { // CodeGenConfigurationNode
  *       AthenaConnectorSource: { // AthenaConnectorSource
@@ -497,7 +502,7 @@ export interface CreateJobCommandOutput extends CreateJobResponse, __MetadataBea
  *           StreamName: "STRING_VALUE",
  *           Classification: "STRING_VALUE",
  *           Delimiter: "STRING_VALUE",
- *           StartingPosition: "latest" || "trim_horizon" || "earliest",
+ *           StartingPosition: "latest" || "trim_horizon" || "earliest" || "timestamp",
  *           MaxFetchTimeInMs: Number("long"),
  *           MaxFetchRecordsPerShard: Number("long"),
  *           MaxRecordPerRead: Number("long"),
@@ -513,6 +518,7 @@ export interface CreateJobCommandOutput extends CreateJobResponse, __MetadataBea
  *           RoleSessionName: "STRING_VALUE",
  *           AddRecordTimestamp: "STRING_VALUE",
  *           EmitConsumerLagMetrics: "STRING_VALUE",
+ *           StartingTimestamp: new Date("TIMESTAMP"),
  *         },
  *         DataPreviewOptions: { // StreamingDataPreviewOptions
  *           PollingTime: Number("long"),
@@ -540,6 +546,7 @@ export interface CreateJobCommandOutput extends CreateJobResponse, __MetadataBea
  *           IncludeHeaders: true || false,
  *           AddRecordTimestamp: "STRING_VALUE",
  *           EmitConsumerLagMetrics: "STRING_VALUE",
+ *           StartingTimestamp: new Date("TIMESTAMP"),
  *         },
  *         WindowSize: Number("int"),
  *         DetectSchema: true || false,
@@ -559,7 +566,7 @@ export interface CreateJobCommandOutput extends CreateJobResponse, __MetadataBea
  *           StreamName: "STRING_VALUE",
  *           Classification: "STRING_VALUE",
  *           Delimiter: "STRING_VALUE",
- *           StartingPosition: "latest" || "trim_horizon" || "earliest",
+ *           StartingPosition: "latest" || "trim_horizon" || "earliest" || "timestamp",
  *           MaxFetchTimeInMs: Number("long"),
  *           MaxFetchRecordsPerShard: Number("long"),
  *           MaxRecordPerRead: Number("long"),
@@ -575,6 +582,7 @@ export interface CreateJobCommandOutput extends CreateJobResponse, __MetadataBea
  *           RoleSessionName: "STRING_VALUE",
  *           AddRecordTimestamp: "STRING_VALUE",
  *           EmitConsumerLagMetrics: "STRING_VALUE",
+ *           StartingTimestamp: new Date("TIMESTAMP"),
  *         },
  *         DataPreviewOptions: {
  *           PollingTime: Number("long"),
@@ -606,6 +614,7 @@ export interface CreateJobCommandOutput extends CreateJobResponse, __MetadataBea
  *           IncludeHeaders: true || false,
  *           AddRecordTimestamp: "STRING_VALUE",
  *           EmitConsumerLagMetrics: "STRING_VALUE",
+ *           StartingTimestamp: new Date("TIMESTAMP"),
  *         },
  *         DataPreviewOptions: {
  *           PollingTime: Number("long"),
@@ -758,6 +767,7 @@ export interface CreateJobCommandOutput extends CreateJobResponse, __MetadataBea
  *         FunctionName: "STRING_VALUE", // required
  *         Path: "STRING_VALUE", // required
  *         Version: "STRING_VALUE",
+ *         OutputSchemas: "<GlueSchemas>",
  *       },
  *       EvaluateDataQuality: { // EvaluateDataQuality
  *         Name: "STRING_VALUE", // required
@@ -890,6 +900,129 @@ export interface CreateJobCommandOutput extends CreateJobResponse, __MetadataBea
  *           UpdateBehavior: "UPDATE_IN_DATABASE" || "LOG",
  *           Table: "STRING_VALUE",
  *           Database: "STRING_VALUE",
+ *         },
+ *       },
+ *       AmazonRedshiftSource: { // AmazonRedshiftSource
+ *         Name: "STRING_VALUE",
+ *         Data: { // AmazonRedshiftNodeData
+ *           AccessType: "STRING_VALUE",
+ *           SourceType: "STRING_VALUE",
+ *           Connection: { // Option
+ *             Value: "STRING_VALUE",
+ *             Label: "STRING_VALUE",
+ *             Description: "STRING_VALUE",
+ *           },
+ *           Schema: {
+ *             Value: "STRING_VALUE",
+ *             Label: "STRING_VALUE",
+ *             Description: "STRING_VALUE",
+ *           },
+ *           Table: {
+ *             Value: "STRING_VALUE",
+ *             Label: "STRING_VALUE",
+ *             Description: "STRING_VALUE",
+ *           },
+ *           CatalogDatabase: {
+ *             Value: "STRING_VALUE",
+ *             Label: "STRING_VALUE",
+ *             Description: "STRING_VALUE",
+ *           },
+ *           CatalogTable: {
+ *             Value: "STRING_VALUE",
+ *             Label: "STRING_VALUE",
+ *             Description: "STRING_VALUE",
+ *           },
+ *           CatalogRedshiftSchema: "STRING_VALUE",
+ *           CatalogRedshiftTable: "STRING_VALUE",
+ *           TempDir: "STRING_VALUE",
+ *           IamRole: "<Option>",
+ *           AdvancedOptions: [ // AmazonRedshiftAdvancedOptions
+ *             { // AmazonRedshiftAdvancedOption
+ *               Key: "STRING_VALUE",
+ *               Value: "STRING_VALUE",
+ *             },
+ *           ],
+ *           SampleQuery: "STRING_VALUE",
+ *           PreAction: "STRING_VALUE",
+ *           PostAction: "STRING_VALUE",
+ *           Action: "STRING_VALUE",
+ *           TablePrefix: "STRING_VALUE",
+ *           Upsert: true || false,
+ *           MergeAction: "STRING_VALUE",
+ *           MergeWhenMatched: "STRING_VALUE",
+ *           MergeWhenNotMatched: "STRING_VALUE",
+ *           MergeClause: "STRING_VALUE",
+ *           CrawlerConnection: "STRING_VALUE",
+ *           TableSchema: [ // OptionList
+ *             "<Option>",
+ *           ],
+ *           StagingTable: "STRING_VALUE",
+ *           SelectedColumns: [
+ *             "<Option>",
+ *           ],
+ *         },
+ *       },
+ *       AmazonRedshiftTarget: { // AmazonRedshiftTarget
+ *         Name: "STRING_VALUE",
+ *         Data: {
+ *           AccessType: "STRING_VALUE",
+ *           SourceType: "STRING_VALUE",
+ *           Connection: "<Option>",
+ *           Schema: "<Option>",
+ *           Table: "<Option>",
+ *           CatalogDatabase: "<Option>",
+ *           CatalogTable: "<Option>",
+ *           CatalogRedshiftSchema: "STRING_VALUE",
+ *           CatalogRedshiftTable: "STRING_VALUE",
+ *           TempDir: "STRING_VALUE",
+ *           IamRole: "<Option>",
+ *           AdvancedOptions: [
+ *             {
+ *               Key: "STRING_VALUE",
+ *               Value: "STRING_VALUE",
+ *             },
+ *           ],
+ *           SampleQuery: "STRING_VALUE",
+ *           PreAction: "STRING_VALUE",
+ *           PostAction: "STRING_VALUE",
+ *           Action: "STRING_VALUE",
+ *           TablePrefix: "STRING_VALUE",
+ *           Upsert: true || false,
+ *           MergeAction: "STRING_VALUE",
+ *           MergeWhenMatched: "STRING_VALUE",
+ *           MergeWhenNotMatched: "STRING_VALUE",
+ *           MergeClause: "STRING_VALUE",
+ *           CrawlerConnection: "STRING_VALUE",
+ *           TableSchema: [
+ *             "<Option>",
+ *           ],
+ *           StagingTable: "STRING_VALUE",
+ *           SelectedColumns: [
+ *             "<Option>",
+ *           ],
+ *         },
+ *         Inputs: "<OneInput>",
+ *       },
+ *       EvaluateDataQualityMultiFrame: { // EvaluateDataQualityMultiFrame
+ *         Name: "STRING_VALUE", // required
+ *         Inputs: [ // required
+ *           "STRING_VALUE",
+ *         ],
+ *         AdditionalDataSources: { // DQDLAliases
+ *           "<keys>": "STRING_VALUE",
+ *         },
+ *         Ruleset: "STRING_VALUE", // required
+ *         PublishingOptions: {
+ *           EvaluationContext: "STRING_VALUE",
+ *           ResultsS3Prefix: "STRING_VALUE",
+ *           CloudWatchMetricsEnabled: true || false,
+ *           ResultsPublishingEnabled: true || false,
+ *         },
+ *         AdditionalOptions: { // DQAdditionalOptions
+ *           "<keys>": "STRING_VALUE",
+ *         },
+ *         StopJobOnFailureOptions: {
+ *           StopJobOnFailureTiming: "Immediate" || "AfterDataLoad",
  *         },
  *       },
  *     },

@@ -2,15 +2,11 @@
 
 # @aws-sdk/client-comprehendmedical
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-comprehendmedical/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-comprehendmedical)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-comprehendmedical.svg)](https://www.npmjs.com/package/@aws-sdk/client-comprehendmedical)
-
 ## Description
 
 AWS SDK for JavaScript ComprehendMedical Client for Node.js, Browser and React Native.
 
-<p> Comprehend Medical; extracts structured information from unstructured clinical text. Use these actions
-to gain insight in your documents. </p>
+<p>Amazon Comprehend Medical extracts structured information from unstructured clinical text. Use these actions to gain insight in your documents. Amazon Comprehend Medical only detects entities in English language texts. Amazon Comprehend Medical places limits on the sizes of files allowed for different API operations. To learn more, see <a href="https://docs.aws.amazon.com/comprehend-medical/latest/dev/comprehendmedical-quotas.html">Guidelines and quotas</a> in the <i>Amazon Comprehend Medical Developer Guide</i>.</p>
 
 ## Installing
 

@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -17,12 +18,12 @@ import {
   resolvedPath as __resolvedPath,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   AcceptInboundConnectionCommandInput,
@@ -195,6 +196,8 @@ import {
   CognitoOptionsStatus,
   ColdStorageOptions,
   ConflictException,
+  ConnectionProperties,
+  CrossClusterSearchConnectionProperties,
   DependencyFailureException,
   DescribePackagesFilter,
   DisabledOperationException,
@@ -469,6 +472,7 @@ export const se_CreateOutboundConnectionCommand = async (
     take(input, {
       ConnectionAlias: [],
       ConnectionMode: [],
+      ConnectionProperties: (_) => _json(_),
       LocalDomainInfo: (_) => _json(_),
       RemoteDomainInfo: (_) => _json(_),
     })
@@ -5370,6 +5374,10 @@ const se_AutoTuneOptionsInput = (input: AutoTuneOptionsInput, context: __SerdeCo
 
 // se_ColdStorageOptions omitted.
 
+// se_ConnectionProperties omitted.
+
+// se_CrossClusterSearchConnectionProperties omitted.
+
 // se_DescribePackagesFilter omitted.
 
 // se_DescribePackagesFilterList omitted.
@@ -5655,6 +5663,8 @@ const de_CognitoOptionsStatus = (output: any, context: __SerdeContext): CognitoO
 // de_CompatibleVersionsMap omitted.
 
 // de_ConnectionProperties omitted.
+
+// de_CrossClusterSearchConnectionProperties omitted.
 
 /**
  * deserializeAws_restJson1DomainConfig
@@ -6214,14 +6224,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

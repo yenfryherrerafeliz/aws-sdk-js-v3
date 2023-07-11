@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -11,17 +12,18 @@ import {
   expectString as __expectString,
   expectUnion as __expectUnion,
   limitedParseDouble as __limitedParseDouble,
+  limitedParseFloat32 as __limitedParseFloat32,
   parseEpochTimestamp as __parseEpochTimestamp,
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AddInstanceFleetCommandInput, AddInstanceFleetCommandOutput } from "../commands/AddInstanceFleetCommand";
 import { AddInstanceGroupsCommandInput, AddInstanceGroupsCommandOutput } from "../commands/AddInstanceGroupsCommand";
@@ -105,6 +107,10 @@ import {
   ListStudioSessionMappingsCommandInput,
   ListStudioSessionMappingsCommandOutput,
 } from "../commands/ListStudioSessionMappingsCommand";
+import {
+  ListSupportedInstanceTypesCommandInput,
+  ListSupportedInstanceTypesCommandOutput,
+} from "../commands/ListSupportedInstanceTypesCommand";
 import { ModifyClusterCommandInput, ModifyClusterCommandOutput } from "../commands/ModifyClusterCommand";
 import {
   ModifyInstanceFleetCommandInput,
@@ -271,6 +277,8 @@ import {
   ListStudioSessionMappingsOutput,
   ListStudiosInput,
   ListStudiosOutput,
+  ListSupportedInstanceTypesInput,
+  ListSupportedInstanceTypesOutput,
   ManagedScalingPolicy,
   MetricDimension,
   ModifyClusterInput,
@@ -278,9 +286,11 @@ import {
   ModifyInstanceGroupsInput,
   NotebookExecution,
   NotebookExecutionSummary,
+  NotebookS3LocationFromInput,
   OnDemandCapacityReservationOptions,
   OnDemandProvisioningSpecification,
   OnDemandResizingSpecification,
+  OutputNotebookS3LocationFromInput,
   PlacementGroupConfig,
   PlacementType,
   PortRange,
@@ -321,6 +331,7 @@ import {
   StopNotebookExecutionInput,
   Studio,
   StudioSummary,
+  SupportedInstanceType,
   SupportedProductConfig,
   Tag,
   TerminateJobFlowsInput,
@@ -766,6 +777,19 @@ export const se_ListStudioSessionMappingsCommand = async (
   context: __SerdeContext
 ): Promise<__HttpRequest> => {
   const headers: __HeaderBag = sharedHeaders("ListStudioSessionMappings");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1ListSupportedInstanceTypesCommand
+ */
+export const se_ListSupportedInstanceTypesCommand = async (
+  input: ListSupportedInstanceTypesCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("ListSupportedInstanceTypes");
   let body: any;
   body = JSON.stringify(_json(input));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -2649,6 +2673,55 @@ const de_ListStudioSessionMappingsCommandError = async (
 };
 
 /**
+ * deserializeAws_json1_1ListSupportedInstanceTypesCommand
+ */
+export const de_ListSupportedInstanceTypesCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListSupportedInstanceTypesCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_ListSupportedInstanceTypesCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_ListSupportedInstanceTypesOutput(data, context);
+  const response: ListSupportedInstanceTypesCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1ListSupportedInstanceTypesCommandError
+ */
+const de_ListSupportedInstanceTypesCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListSupportedInstanceTypesCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.emr#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "InvalidRequestException":
+    case "com.amazonaws.emr#InvalidRequestException":
+      throw await de_InvalidRequestExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_json1_1ModifyClusterCommand
  */
 export const de_ModifyClusterCommand = async (
@@ -3679,6 +3752,8 @@ const se_DescribeJobFlowsInput = (input: DescribeJobFlowsInput, context: __Serde
 
 // se_EC2InstanceIdsToTerminateList omitted.
 
+// se_EnvironmentVariablesMap omitted.
+
 // se_ExecutionEngineConfig omitted.
 
 // se_GetAutoTerminationPolicyInput omitted.
@@ -3870,6 +3945,7 @@ const se_ListClustersInput = (input: ListClustersInput, context: __SerdeContext)
 const se_ListNotebookExecutionsInput = (input: ListNotebookExecutionsInput, context: __SerdeContext): any => {
   return take(input, {
     EditorId: [],
+    ExecutionEngineId: [],
     From: (_) => Math.round(_.getTime() / 1000),
     Marker: [],
     Status: [],
@@ -3886,6 +3962,8 @@ const se_ListNotebookExecutionsInput = (input: ListNotebookExecutionsInput, cont
 // se_ListStudioSessionMappingsInput omitted.
 
 // se_ListStudiosInput omitted.
+
+// se_ListSupportedInstanceTypesInput omitted.
 
 // se_ManagedScalingPolicy omitted.
 
@@ -3909,11 +3987,15 @@ const se_ModifyInstanceGroupsInput = (input: ModifyInstanceGroupsInput, context:
 
 // se_NewSupportedProductsList omitted.
 
+// se_NotebookS3LocationFromInput omitted.
+
 // se_OnDemandCapacityReservationOptions omitted.
 
 // se_OnDemandProvisioningSpecification omitted.
 
 // se_OnDemandResizingSpecification omitted.
+
+// se_OutputNotebookS3LocationFromInput omitted.
 
 // se_PlacementGroupConfig omitted.
 
@@ -4383,6 +4465,8 @@ const de_DescribeStudioOutput = (output: any, context: __SerdeContext): Describe
 // de_Ec2InstanceAttributes omitted.
 
 // de_EC2InstanceIdsList omitted.
+
+// de_EnvironmentVariablesMap omitted.
 
 // de_ErrorData omitted.
 
@@ -4860,6 +4944,19 @@ const de_ListStudiosOutput = (output: any, context: __SerdeContext): ListStudios
   }) as any;
 };
 
+/**
+ * deserializeAws_json1_1ListSupportedInstanceTypesOutput
+ */
+const de_ListSupportedInstanceTypesOutput = (
+  output: any,
+  context: __SerdeContext
+): ListSupportedInstanceTypesOutput => {
+  return take(output, {
+    Marker: __expectString,
+    SupportedInstanceTypes: (_: any) => de_SupportedInstanceTypesList(_, context),
+  }) as any;
+};
+
 // de_ManagedScalingPolicy omitted.
 
 // de_MetricDimension omitted.
@@ -4876,12 +4973,16 @@ const de_NotebookExecution = (output: any, context: __SerdeContext): NotebookExe
     Arn: __expectString,
     EditorId: __expectString,
     EndTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    EnvironmentVariables: _json,
     ExecutionEngine: _json,
     LastStateChangeReason: __expectString,
     NotebookExecutionId: __expectString,
     NotebookExecutionName: __expectString,
     NotebookInstanceSecurityGroupId: __expectString,
     NotebookParams: __expectString,
+    NotebookS3Location: _json,
+    OutputNotebookFormat: __expectString,
+    OutputNotebookS3Location: _json,
     OutputNotebookURI: __expectString,
     StartTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     Status: __expectString,
@@ -4896,8 +4997,10 @@ const de_NotebookExecutionSummary = (output: any, context: __SerdeContext): Note
   return take(output, {
     EditorId: __expectString,
     EndTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    ExecutionEngineId: __expectString,
     NotebookExecutionId: __expectString,
     NotebookExecutionName: __expectString,
+    NotebookS3Location: _json,
     StartTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     Status: __expectString,
   }) as any;
@@ -4915,6 +5018,8 @@ const de_NotebookExecutionSummaryList = (output: any, context: __SerdeContext): 
   return retVal;
 };
 
+// de_NotebookS3LocationForOutput omitted.
+
 // de_OnDemandCapacityReservationOptions omitted.
 
 // de_OnDemandProvisioningSpecification omitted.
@@ -4924,6 +5029,8 @@ const de_NotebookExecutionSummaryList = (output: any, context: __SerdeContext): 
 // de_OSRelease omitted.
 
 // de_OSReleaseList omitted.
+
+// de_OutputNotebookS3LocationForOutput omitted.
 
 // de_PlacementGroupConfig omitted.
 
@@ -5240,6 +5347,37 @@ const de_StudioSummaryList = (output: any, context: __SerdeContext): StudioSumma
 
 // de_SubnetIdList omitted.
 
+/**
+ * deserializeAws_json1_1SupportedInstanceType
+ */
+const de_SupportedInstanceType = (output: any, context: __SerdeContext): SupportedInstanceType => {
+  return take(output, {
+    Architecture: __expectString,
+    EbsOptimizedAvailable: __expectBoolean,
+    EbsOptimizedByDefault: __expectBoolean,
+    EbsStorageOnly: __expectBoolean,
+    InstanceFamilyId: __expectString,
+    Is64BitsOnly: __expectBoolean,
+    MemoryGB: __limitedParseFloat32,
+    NumberOfDisks: __expectInt32,
+    StorageGB: __expectInt32,
+    Type: __expectString,
+    VCPU: __expectInt32,
+  }) as any;
+};
+
+/**
+ * deserializeAws_json1_1SupportedInstanceTypesList
+ */
+const de_SupportedInstanceTypesList = (output: any, context: __SerdeContext): SupportedInstanceType[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_SupportedInstanceType(entry, context);
+    });
+  return retVal;
+};
+
 // de_SupportedProductsList omitted.
 
 // de_Tag omitted.
@@ -5261,14 +5399,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

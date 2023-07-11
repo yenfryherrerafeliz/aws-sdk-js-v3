@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,7 +47,7 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CancelIngestionCommandInput, CancelIngestionCommandOutput } from "./commands/CancelIngestionCommand";
 import {
@@ -175,6 +175,14 @@ import {
   DescribeAnalysisPermissionsCommandInput,
   DescribeAnalysisPermissionsCommandOutput,
 } from "./commands/DescribeAnalysisPermissionsCommand";
+import {
+  DescribeAssetBundleExportJobCommandInput,
+  DescribeAssetBundleExportJobCommandOutput,
+} from "./commands/DescribeAssetBundleExportJobCommand";
+import {
+  DescribeAssetBundleImportJobCommandInput,
+  DescribeAssetBundleImportJobCommandOutput,
+} from "./commands/DescribeAssetBundleImportJobCommand";
 import { DescribeDashboardCommandInput, DescribeDashboardCommandOutput } from "./commands/DescribeDashboardCommand";
 import {
   DescribeDashboardDefinitionCommandInput,
@@ -277,6 +285,14 @@ import {
 } from "./commands/GetDashboardEmbedUrlCommand";
 import { GetSessionEmbedUrlCommandInput, GetSessionEmbedUrlCommandOutput } from "./commands/GetSessionEmbedUrlCommand";
 import { ListAnalysesCommandInput, ListAnalysesCommandOutput } from "./commands/ListAnalysesCommand";
+import {
+  ListAssetBundleExportJobsCommandInput,
+  ListAssetBundleExportJobsCommandOutput,
+} from "./commands/ListAssetBundleExportJobsCommand";
+import {
+  ListAssetBundleImportJobsCommandInput,
+  ListAssetBundleImportJobsCommandOutput,
+} from "./commands/ListAssetBundleImportJobsCommand";
 import { ListDashboardsCommandInput, ListDashboardsCommandOutput } from "./commands/ListDashboardsCommand";
 import {
   ListDashboardVersionsCommandInput,
@@ -341,6 +357,14 @@ import { SearchDataSetsCommandInput, SearchDataSetsCommandOutput } from "./comma
 import { SearchDataSourcesCommandInput, SearchDataSourcesCommandOutput } from "./commands/SearchDataSourcesCommand";
 import { SearchFoldersCommandInput, SearchFoldersCommandOutput } from "./commands/SearchFoldersCommand";
 import { SearchGroupsCommandInput, SearchGroupsCommandOutput } from "./commands/SearchGroupsCommand";
+import {
+  StartAssetBundleExportJobCommandInput,
+  StartAssetBundleExportJobCommandOutput,
+} from "./commands/StartAssetBundleExportJobCommand";
+import {
+  StartAssetBundleImportJobCommandInput,
+  StartAssetBundleImportJobCommandOutput,
+} from "./commands/StartAssetBundleImportJobCommand";
 import { TagResourceCommandInput, TagResourceCommandOutput } from "./commands/TagResourceCommand";
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "./commands/UntagResourceCommand";
 import {
@@ -434,6 +458,8 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
@@ -489,6 +515,8 @@ export type ServiceInputTypes =
   | DescribeAnalysisCommandInput
   | DescribeAnalysisDefinitionCommandInput
   | DescribeAnalysisPermissionsCommandInput
+  | DescribeAssetBundleExportJobCommandInput
+  | DescribeAssetBundleImportJobCommandInput
   | DescribeDashboardCommandInput
   | DescribeDashboardDefinitionCommandInput
   | DescribeDashboardPermissionsCommandInput
@@ -525,6 +553,8 @@ export type ServiceInputTypes =
   | GetDashboardEmbedUrlCommandInput
   | GetSessionEmbedUrlCommandInput
   | ListAnalysesCommandInput
+  | ListAssetBundleExportJobsCommandInput
+  | ListAssetBundleImportJobsCommandInput
   | ListDashboardVersionsCommandInput
   | ListDashboardsCommandInput
   | ListDataSetsCommandInput
@@ -559,6 +589,8 @@ export type ServiceInputTypes =
   | SearchDataSourcesCommandInput
   | SearchFoldersCommandInput
   | SearchGroupsCommandInput
+  | StartAssetBundleExportJobCommandInput
+  | StartAssetBundleImportJobCommandInput
   | TagResourceCommandInput
   | UntagResourceCommandInput
   | UpdateAccountCustomizationCommandInput
@@ -646,6 +678,8 @@ export type ServiceOutputTypes =
   | DescribeAnalysisCommandOutput
   | DescribeAnalysisDefinitionCommandOutput
   | DescribeAnalysisPermissionsCommandOutput
+  | DescribeAssetBundleExportJobCommandOutput
+  | DescribeAssetBundleImportJobCommandOutput
   | DescribeDashboardCommandOutput
   | DescribeDashboardDefinitionCommandOutput
   | DescribeDashboardPermissionsCommandOutput
@@ -682,6 +716,8 @@ export type ServiceOutputTypes =
   | GetDashboardEmbedUrlCommandOutput
   | GetSessionEmbedUrlCommandOutput
   | ListAnalysesCommandOutput
+  | ListAssetBundleExportJobsCommandOutput
+  | ListAssetBundleImportJobsCommandOutput
   | ListDashboardVersionsCommandOutput
   | ListDashboardsCommandOutput
   | ListDataSetsCommandOutput
@@ -716,6 +752,8 @@ export type ServiceOutputTypes =
   | SearchDataSourcesCommandOutput
   | SearchFoldersCommandOutput
   | SearchGroupsCommandOutput
+  | StartAssetBundleExportJobCommandOutput
+  | StartAssetBundleImportJobCommandOutput
   | TagResourceCommandOutput
   | UntagResourceCommandOutput
   | UpdateAccountCustomizationCommandOutput
@@ -758,7 +796,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -813,7 +851,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -867,7 +905,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -875,7 +913,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type QuickSightClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type QuickSightClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -894,7 +932,7 @@ export interface QuickSightClientConfig extends QuickSightClientConfigType {}
 /**
  * @public
  */
-type QuickSightClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type QuickSightClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

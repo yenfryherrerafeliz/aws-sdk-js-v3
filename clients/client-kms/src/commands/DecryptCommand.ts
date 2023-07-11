@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { KMSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KMSClient";
 import { DecryptRequest, DecryptResponse, DecryptResponseFilterSensitiveLog } from "../models/models_0";
 import { de_DecryptCommand, se_DecryptCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -92,7 +96,7 @@ export interface DecryptCommandOutput extends DecryptResponse, __MetadataBearer 
  *       the <a href="https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk">Amazon Web Services Nitro Enclaves SDK</a> or any Amazon Web Services SDK. Use the <code>Recipient</code> parameter to provide the
  *       attestation document for the enclave. Instead of the plaintext data, the response includes the
  *       plaintext data encrypted with the public key from the attestation document
- *       (<code>CiphertextForRecipient</code>).For information about the interaction between KMS and Amazon Web Services Nitro Enclaves, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html">How Amazon Web Services Nitro Enclaves uses KMS</a> in the <i>Key Management Service Developer Guide</i>..</p>
+ *         (<code>CiphertextForRecipient</code>).For information about the interaction between KMS and Amazon Web Services Nitro Enclaves, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html">How Amazon Web Services Nitro Enclaves uses KMS</a> in the <i>Key Management Service Developer Guide</i>..</p>
  *          <p>The KMS key that you use for this operation must be in a compatible key state. For
  * details, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html">Key states of KMS keys</a> in the <i>Key Management Service Developer Guide</i>.</p>
  *          <p>
@@ -146,6 +150,7 @@ export interface DecryptCommandOutput extends DecryptResponse, __MetadataBearer 
  *     KeyEncryptionAlgorithm: "RSAES_OAEP_SHA_256",
  *     AttestationDocument: "BLOB_VALUE",
  *   },
+ *   DryRun: true || false,
  * };
  * const command = new DecryptCommand(input);
  * const response = await client.send(command);
@@ -153,6 +158,7 @@ export interface DecryptCommandOutput extends DecryptResponse, __MetadataBearer 
  * //   KeyId: "STRING_VALUE",
  * //   Plaintext: "BLOB_VALUE",
  * //   EncryptionAlgorithm: "SYMMETRIC_DEFAULT" || "RSAES_OAEP_SHA_1" || "RSAES_OAEP_SHA_256" || "SM2PKE",
+ * //   CiphertextForRecipient: "BLOB_VALUE",
  * // };
  *
  * ```
@@ -169,6 +175,11 @@ export interface DecryptCommandOutput extends DecryptResponse, __MetadataBearer 
  *
  * @throws {@link DisabledException} (client fault)
  *  <p>The request was rejected because the specified KMS key is not enabled.</p>
+ *
+ * @throws {@link DryRunOperationException} (client fault)
+ *  <p>
+ *       The request was rejected because the DryRun parameter was specified.
+ *     </p>
  *
  * @throws {@link IncorrectKeyException} (client fault)
  *  <p>The request was rejected because the specified KMS key cannot decrypt the data. The
@@ -230,7 +241,9 @@ export interface DecryptCommandOutput extends DecryptResponse, __MetadataBearer 
  *                   </i>.</p>
  *             </li>
  *             <li>
- *                <p>For cryptographic operations on KMS keys in custom key stores, this exception represents a general failure with many possible causes. To identify the cause, see the error message that accompanies the exception.</p>
+ *                <p>For cryptographic operations on KMS keys in custom key stores, this exception
+ *           represents a general failure with many possible causes. To identify the cause, see the
+ *           error message that accompanies the exception.</p>
  *             </li>
  *          </ul>
  *
@@ -258,49 +271,6 @@ export interface DecryptCommandOutput extends DecryptResponse, __MetadataBearer 
  * }
  * *\/
  * // example id: to-decrypt-data-1
- * ```
- *
- * @example To decrypt data with an asymmetric encryption KMS key
- * ```javascript
- * // The following example decrypts data that was encrypted with an asymmetric encryption KMS key. When the KMS encryption key is asymmetric, you must specify the KMS key ID and the encryption algorithm that was used to encrypt the data.
- * const input = {
- *   "CiphertextBlob": "<binary data>",
- *   "EncryptionAlgorithm": "RSAES_OAEP_SHA_256",
- *   "KeyId": "0987dcba-09fe-87dc-65ba-ab0987654321"
- * };
- * const command = new DecryptCommand(input);
- * const response = await client.send(command);
- * /* response ==
- * {
- *   "EncryptionAlgorithm": "RSAES_OAEP_SHA_256",
- *   "KeyId": "arn:aws:kms:us-west-2:111122223333:key/0987dcba-09fe-87dc-65ba-ab0987654321",
- *   "Plaintext": "<binary data>"
- * }
- * *\/
- * // example id: to-decrypt-data-2
- * ```
- *
- * @example To decrypt data for a Nitro enclave
- * ```javascript
- * // The following Decrypt example includes the Recipient parameter with a signed attestation document from an AWS Nitro enclave. Instead of returning the decrypted data in plaintext (Plaintext), the operation returns the decrypted data encrypted by the public key from the attestation document (CiphertextForRecipient).
- * const input = {
- *   "CiphertextBlob": "<binary data>",
- *   "KeyId": "arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
- *   "Recipient": {
- *     "AttestationDocument": "<attestation document>",
- *     "KeyEncryptionAlgorithm": "RSAES_OAEP_SHA_256"
- *   }
- * };
- * const command = new DecryptCommand(input);
- * const response = await client.send(command);
- * /* response ==
- * {
- *   "CiphertextForRecipient": "<binary data>",
- *   "KeyId": "arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
- *   "Plaintext": ""
- * }
- * *\/
- * // example id: to-decrypt-data-for-a-nitro-enclave-2
  * ```
  *
  * @example To decrypt data with an asymmetric encryption KMS key

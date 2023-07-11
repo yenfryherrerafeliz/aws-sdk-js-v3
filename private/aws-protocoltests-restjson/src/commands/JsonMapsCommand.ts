@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { JsonMapsInputOutput } from "../models/models_0";
 import { de_JsonMapsCommand, se_JsonMapsCommand } from "../protocols/Aws_restJson1";
 import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RestJsonProtocolClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -80,6 +84,47 @@ export interface JsonMapsCommandOutput extends JsonMapsInputOutput, __MetadataBe
  * };
  * const command = new JsonMapsCommand(input);
  * const response = await client.send(command);
+ * // { // JsonMapsInputOutput
+ * //   denseStructMap: { // DenseStructMap
+ * //     "<keys>": { // GreetingStruct
+ * //       hi: "STRING_VALUE",
+ * //     },
+ * //   },
+ * //   sparseStructMap: { // SparseStructMap
+ * //     "<keys>": {
+ * //       hi: "STRING_VALUE",
+ * //     },
+ * //   },
+ * //   denseNumberMap: { // DenseNumberMap
+ * //     "<keys>": Number("int"),
+ * //   },
+ * //   denseBooleanMap: { // DenseBooleanMap
+ * //     "<keys>": true || false,
+ * //   },
+ * //   denseStringMap: { // DenseStringMap
+ * //     "<keys>": "STRING_VALUE",
+ * //   },
+ * //   sparseNumberMap: { // SparseNumberMap
+ * //     "<keys>": Number("int"),
+ * //   },
+ * //   sparseBooleanMap: { // SparseBooleanMap
+ * //     "<keys>": true || false,
+ * //   },
+ * //   sparseStringMap: { // SparseStringMap
+ * //     "<keys>": "STRING_VALUE",
+ * //   },
+ * //   denseSetMap: { // DenseSetMap
+ * //     "<keys>": [ // StringSet
+ * //       "STRING_VALUE",
+ * //     ],
+ * //   },
+ * //   sparseSetMap: { // SparseSetMap
+ * //     "<keys>": [
+ * //       "STRING_VALUE",
+ * //     ],
+ * //   },
+ * // };
+ *
  * ```
  *
  * @param JsonMapsCommandInput - {@link JsonMapsCommandInput}
@@ -88,6 +133,8 @@ export interface JsonMapsCommandOutput extends JsonMapsInputOutput, __MetadataBe
  * @see {@link JsonMapsCommandOutput} for command's `response` shape.
  * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
  *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
  *
  */
 export class JsonMapsCommand extends $Command<

@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectNonNull as __expectNonNull,
   expectObject as __expectObject,
@@ -11,12 +12,12 @@ import {
   resolvedPath as __resolvedPath,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { BatchGetRecordCommandInput, BatchGetRecordCommandOutput } from "../commands/BatchGetRecordCommand";
 import { DeleteRecordCommandInput, DeleteRecordCommandOutput } from "../commands/DeleteRecordCommand";
@@ -30,6 +31,7 @@ import {
   ResourceNotFound,
   ServiceUnavailable,
   TargetStore,
+  TtlDuration,
   ValidationError,
 } from "../models/models_0";
 import { SageMakerFeatureStoreRuntimeServiceException as __BaseException } from "../models/SageMakerFeatureStoreRuntimeServiceException";
@@ -49,6 +51,7 @@ export const se_BatchGetRecordCommand = async (
   let body: any;
   body = JSON.stringify(
     take(input, {
+      ExpirationTimeResponse: [],
       Identifiers: (_) => _json(_),
     })
   );
@@ -135,6 +138,7 @@ export const se_GetRecordCommand = async (
       () => input.FeatureNames !== void 0,
       () => (input.FeatureNames! || []).map((_entry) => _entry as any),
     ],
+    ExpirationTimeResponse: [, input.ExpirationTimeResponse!],
   });
   let body: any;
   return new __HttpRequest({
@@ -175,6 +179,7 @@ export const se_PutRecordCommand = async (
     take(input, {
       Record: (_) => _json(_),
       TargetStores: (_) => _json(_),
+      TtlDuration: (_) => _json(_),
     })
   );
   return new __HttpRequest({
@@ -313,6 +318,7 @@ export const de_GetRecordCommand = async (
   });
   const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
   const doc = take(data, {
+    ExpiresAt: __expectString,
     Record: _json,
   });
   Object.assign(contents, doc);
@@ -509,6 +515,8 @@ const de_ValidationErrorRes = async (parsedOutput: any, context: __SerdeContext)
 
 // se_TargetStores omitted.
 
+// se_TtlDuration omitted.
+
 // de_BatchGetRecordError omitted.
 
 // de_BatchGetRecordErrors omitted.
@@ -536,14 +544,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

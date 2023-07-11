@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { DescribeEndpointInput, DescribeEndpointOutput } from "../models/models_2";
 import { de_DescribeEndpointCommand, se_DescribeEndpointCommand } from "../protocols/Aws_json1_1";
 import { SageMakerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../SageMakerClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -72,10 +76,12 @@ export interface DescribeEndpointCommandOutput extends DescribeEndpointOutput, _
  * //       CurrentServerlessConfig: { // ProductionVariantServerlessConfig
  * //         MemorySizeInMB: Number("int"), // required
  * //         MaxConcurrency: Number("int"), // required
+ * //         ProvisionedConcurrency: Number("int"),
  * //       },
  * //       DesiredServerlessConfig: {
  * //         MemorySizeInMB: Number("int"), // required
  * //         MaxConcurrency: Number("int"), // required
+ * //         ProvisionedConcurrency: Number("int"),
  * //       },
  * //     },
  * //   ],
@@ -86,7 +92,7 @@ export interface DescribeEndpointCommandOutput extends DescribeEndpointOutput, _
  * //     DestinationS3Uri: "STRING_VALUE", // required
  * //     KmsKeyId: "STRING_VALUE", // required
  * //   },
- * //   EndpointStatus: "OutOfService" || "Creating" || "Updating" || "SystemUpdating" || "RollingBack" || "InService" || "Deleting" || "Failed", // required
+ * //   EndpointStatus: "OutOfService" || "Creating" || "Updating" || "SystemUpdating" || "RollingBack" || "InService" || "Deleting" || "Failed" || "UpdateRollbackFailed", // required
  * //   FailureReason: "STRING_VALUE",
  * //   CreationTime: new Date("TIMESTAMP"), // required
  * //   LastModifiedTime: new Date("TIMESTAMP"), // required
@@ -113,6 +119,18 @@ export interface DescribeEndpointCommandOutput extends DescribeEndpointOutput, _
  * //           AlarmName: "STRING_VALUE",
  * //         },
  * //       ],
+ * //     },
+ * //     RollingUpdatePolicy: { // RollingUpdatePolicy
+ * //       MaximumBatchSize: {
+ * //         Type: "INSTANCE_COUNT" || "CAPACITY_PERCENT", // required
+ * //         Value: Number("int"), // required
+ * //       },
+ * //       WaitIntervalInSeconds: Number("int"), // required
+ * //       MaximumExecutionTimeoutInSeconds: Number("int"),
+ * //       RollbackMaximumBatchSize: {
+ * //         Type: "INSTANCE_COUNT" || "CAPACITY_PERCENT", // required
+ * //         Value: Number("int"), // required
+ * //       },
  * //     },
  * //   },
  * //   AsyncInferenceConfig: { // AsyncInferenceConfig
@@ -160,10 +178,12 @@ export interface DescribeEndpointCommandOutput extends DescribeEndpointOutput, _
  * //         CurrentServerlessConfig: {
  * //           MemorySizeInMB: Number("int"), // required
  * //           MaxConcurrency: Number("int"), // required
+ * //           ProvisionedConcurrency: Number("int"),
  * //         },
  * //         DesiredServerlessConfig: {
  * //           MemorySizeInMB: Number("int"), // required
  * //           MaxConcurrency: Number("int"), // required
+ * //           ProvisionedConcurrency: Number("int"),
  * //         },
  * //       },
  * //     ],
@@ -194,6 +214,7 @@ export interface DescribeEndpointCommandOutput extends DescribeEndpointOutput, _
  * //         CurrentServerlessConfig: {
  * //           MemorySizeInMB: Number("int"), // required
  * //           MaxConcurrency: Number("int"), // required
+ * //           ProvisionedConcurrency: Number("int"),
  * //         },
  * //         DesiredServerlessConfig: "<ProductionVariantServerlessConfig>",
  * //       },

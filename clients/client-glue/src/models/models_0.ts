@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { GlueServiceException as __BaseException } from "./GlueServiceException";
 
@@ -82,6 +82,19 @@ export interface Action {
    */
   CrawlerName?: string;
 }
+
+/**
+ * @public
+ * @enum
+ */
+export const AdditionalOptionKeys = {
+  CacheOption: "performanceTuning.caching",
+} as const;
+
+/**
+ * @public
+ */
+export type AdditionalOptionKeys = (typeof AdditionalOptionKeys)[keyof typeof AdditionalOptionKeys];
 
 /**
  * @public
@@ -177,6 +190,216 @@ export class AlreadyExistsException extends __BaseException {
     Object.setPrototypeOf(this, AlreadyExistsException.prototype);
     this.Message = opts.Message;
   }
+}
+
+/**
+ * @public
+ * <p>Specifies an optional value when connecting to the Redshift cluster.</p>
+ */
+export interface AmazonRedshiftAdvancedOption {
+  /**
+   * <p>The key for the additional connection option.</p>
+   */
+  Key?: string;
+
+  /**
+   * <p>The value for the additional connection option.</p>
+   */
+  Value?: string;
+}
+
+/**
+ * @public
+ * <p>Specifies an option value.</p>
+ */
+export interface Option {
+  /**
+   * <p>Specifies the value of the option.</p>
+   */
+  Value?: string;
+
+  /**
+   * <p>Specifies the label of the option.</p>
+   */
+  Label?: string;
+
+  /**
+   * <p>Specifies the description of the option.</p>
+   */
+  Description?: string;
+}
+
+/**
+ * @public
+ * <p>Specifies an Amazon Redshift node.</p>
+ */
+export interface AmazonRedshiftNodeData {
+  /**
+   * <p>The access type for the Redshift connection. Can be a direct connection or catalog connections.</p>
+   */
+  AccessType?: string;
+
+  /**
+   * <p>The source type to specify whether a specific table is the source or a custom query.</p>
+   */
+  SourceType?: string;
+
+  /**
+   * <p>The Glue connection to the Redshift cluster.</p>
+   */
+  Connection?: Option;
+
+  /**
+   * <p>The Redshift schema name when working with a direct connection.</p>
+   */
+  Schema?: Option;
+
+  /**
+   * <p>The Redshift table name when working with a direct connection.</p>
+   */
+  Table?: Option;
+
+  /**
+   * <p>The name of the Glue Data Catalog database when working with a data catalog.</p>
+   */
+  CatalogDatabase?: Option;
+
+  /**
+   * <p>The Glue Data Catalog table name when working with a data catalog.</p>
+   */
+  CatalogTable?: Option;
+
+  /**
+   * <p>The Redshift schema name when working with a data catalog.</p>
+   */
+  CatalogRedshiftSchema?: string;
+
+  /**
+   * <p>The database table to read from.</p>
+   */
+  CatalogRedshiftTable?: string;
+
+  /**
+   * <p>The Amazon S3 path where temporary data can be staged when copying out of the database.</p>
+   */
+  TempDir?: string;
+
+  /**
+   * <p>Optional. The role name use when connection to S3. The IAM role ill default to the role on the job when left blank.</p>
+   */
+  IamRole?: Option;
+
+  /**
+   * <p>Optional values when connecting to the Redshift cluster.</p>
+   */
+  AdvancedOptions?: AmazonRedshiftAdvancedOption[];
+
+  /**
+   * <p>The SQL used to fetch the data from a Redshift sources when the SourceType is 'query'.</p>
+   */
+  SampleQuery?: string;
+
+  /**
+   * <p>The SQL used before a MERGE or APPEND with upsert is run.</p>
+   */
+  PreAction?: string;
+
+  /**
+   * <p>The SQL used before a MERGE or APPEND with upsert is run.</p>
+   */
+  PostAction?: string;
+
+  /**
+   * <p>Specifies how writing to a Redshift cluser will occur.</p>
+   */
+  Action?: string;
+
+  /**
+   * <p>Specifies the prefix to a table.</p>
+   */
+  TablePrefix?: string;
+
+  /**
+   * <p>The action used on Redshift sinks when doing an APPEND.</p>
+   */
+  Upsert?: boolean;
+
+  /**
+   * <p>The action used when to detemine how a MERGE in a Redshift sink will be handled.</p>
+   */
+  MergeAction?: string;
+
+  /**
+   * <p>The action used when to detemine how a MERGE in a Redshift sink will be handled when an existing record matches a new record.</p>
+   */
+  MergeWhenMatched?: string;
+
+  /**
+   * <p>The action used when to detemine how a MERGE in a Redshift sink will be handled when an existing record doesn't match a new record.</p>
+   */
+  MergeWhenNotMatched?: string;
+
+  /**
+   * <p>The SQL used in a custom merge to deal with matching records.</p>
+   */
+  MergeClause?: string;
+
+  /**
+   * <p>Specifies the name of the connection that is associated with the catalog table used.</p>
+   */
+  CrawlerConnection?: string;
+
+  /**
+   * <p>The array of schema output for a given node.</p>
+   */
+  TableSchema?: Option[];
+
+  /**
+   * <p>The name of the temporary staging table that is used when doing a MERGE or APPEND with upsert.</p>
+   */
+  StagingTable?: string;
+
+  /**
+   * <p>The list of column names used to determine a matching record when doing a MERGE or APPEND with upsert.</p>
+   */
+  SelectedColumns?: Option[];
+}
+
+/**
+ * @public
+ * <p>Specifies an Amazon Redshift source.</p>
+ */
+export interface AmazonRedshiftSource {
+  /**
+   * <p>The name of the Amazon Redshift source.</p>
+   */
+  Name?: string;
+
+  /**
+   * <p>Specifies the data of the Amazon Reshift source node.</p>
+   */
+  Data?: AmazonRedshiftNodeData;
+}
+
+/**
+ * @public
+ * <p>Specifies an Amazon Redshift target.</p>
+ */
+export interface AmazonRedshiftTarget {
+  /**
+   * <p>The name of the Amazon Redshift target.</p>
+   */
+  Name?: string;
+
+  /**
+   * <p>Specifies the data of the Amazon Reshift target node.</p>
+   */
+  Data?: AmazonRedshiftNodeData;
+
+  /**
+   * <p>The nodes that are inputs to the data target.</p>
+   */
+  Inputs?: string[];
 }
 
 /**
@@ -1437,6 +1660,33 @@ export interface DynamoDBTarget {
 
 /**
  * @public
+ * <p>Specifies an Apache Iceberg data source where Iceberg tables are stored in Amazon S3.</p>
+ */
+export interface IcebergTarget {
+  /**
+   * <p>One or more Amazon S3 paths that contains Iceberg metadata folders as <code>s3://bucket/prefix</code>.</p>
+   */
+  Paths?: string[];
+
+  /**
+   * <p>The name of the connection to use to connect to the Iceberg target.</p>
+   */
+  ConnectionName?: string;
+
+  /**
+   * <p>A list of glob patterns used to exclude from the crawl.
+   *       For more information, see <a href="https://docs.aws.amazon.com/glue/latest/dg/add-crawler.html">Catalog Tables with a Crawler</a>.</p>
+   */
+  Exclusions?: string[];
+
+  /**
+   * <p>The maximum depth of Amazon S3 paths that the crawler can traverse to discover the Iceberg metadata folder in your Amazon S3 path. Used to limit the crawler run time.</p>
+   */
+  MaximumTraversalDepth?: number;
+}
+
+/**
+ * @public
  * @enum
  */
 export const JdbcMetadataEntry = {
@@ -1570,6 +1820,11 @@ export interface CrawlerTargets {
    * <p>Specifies Delta data store targets.</p>
    */
   DeltaTargets?: DeltaTarget[];
+
+  /**
+   * <p>Specifies Apache Iceberg data store targets.</p>
+   */
+  IcebergTargets?: IcebergTarget[];
 }
 
 /**
@@ -1850,6 +2105,11 @@ export interface DataQualityRuleResult {
    * <p>A pass or fail status for the rule.</p>
    */
   Result?: DataQualityRuleResultStatus | string;
+
+  /**
+   * <p>A map of metrics associated with the evaluation of the rule.</p>
+   */
+  EvaluatedMetrics?: Record<string, number>;
 }
 
 /**
@@ -1947,7 +2207,10 @@ export const WorkerType = {
   G_025X: "G.025X",
   G_1X: "G.1X",
   G_2X: "G.2X",
+  G_4X: "G.4X",
+  G_8X: "G.8X",
   Standard: "Standard",
+  Z_2X: "Z.2X",
 } as const;
 
 /**
@@ -2341,6 +2604,12 @@ export interface KafkaStreamingSourceOptions {
    * <p>When this option is set to 'true', for each batch, it will emit the metrics for the duration between the oldest record received by the topic and the time it arrives in Glue to CloudWatch. The metric's name is "glue.driver.streaming.maxConsumerLagInMs". The default value is 'false'. This option is supported in Glue version 4.0 or later.</p>
    */
   EmitConsumerLagMetrics?: string;
+
+  /**
+   * <p>The timestamp of the record in the Kafka topic to start reading data from. The possible values are a timestamp string in UTC format of the pattern <code>yyyy-mm-ddTHH:MM:SSZ</code> (where Z represents a UTC timezone offset with a +/-. For example: "2023-04-04T08:00:00+08:00"). </p>
+   *          <p>Only one of <code>StartingTimestamp</code> or <code>StartingOffsets</code> must be set.</p>
+   */
+  StartingTimestamp?: Date;
 }
 
 /**
@@ -2391,6 +2660,7 @@ export interface CatalogKafkaSource {
 export const StartingPosition = {
   EARLIEST: "earliest",
   LATEST: "latest",
+  TIMESTAMP: "timestamp",
   TRIM_HORIZON: "trim_horizon",
 } as const;
 
@@ -2425,7 +2695,8 @@ export interface KinesisStreamingSourceOptions {
   Delimiter?: string;
 
   /**
-   * <p>The starting position in the Kinesis data stream to read data from. The possible values are <code>"latest"</code>, <code>"trim_horizon"</code>, or <code>"earliest"</code>. The default value is <code>"latest"</code>.</p>
+   * <p>The starting position in the Kinesis data stream to read data from. The possible values are <code>"latest"</code>, <code>"trim_horizon"</code>, <code>"earliest"</code>, or a timestamp string in UTC format in the pattern <code>yyyy-mm-ddTHH:MM:SSZ</code> (where <code>Z</code> represents a UTC timezone offset with a +/-. For example: "2023-04-04T08:00:00-04:00"). The default value is <code>"latest"</code>.</p>
+   *          <p>Note: Using a value that is a timestamp string in UTC format for "startingPosition" is supported only for Glue version 4.0 or later.</p>
    */
   StartingPosition?: StartingPosition | string;
 
@@ -2503,6 +2774,11 @@ export interface KinesisStreamingSourceOptions {
    * <p>When this option is set to 'true', for each batch, it will emit the metrics for the duration between the oldest record received by the stream and the time it arrives in Glue  to CloudWatch. The metric's name is "glue.driver.streaming.maxConsumerLagInMs". The default value is 'false'. This option is supported in Glue version 4.0 or later.</p>
    */
   EmitConsumerLagMetrics?: string;
+
+  /**
+   * <p>The timestamp of the record in the Kinesis data stream to start reading data from. The possible values are a timestamp string in UTC format of the pattern <code>yyyy-mm-ddTHH:MM:SSZ</code> (where Z represents a UTC timezone offset with a +/-. For example: "2023-04-04T08:00:00+08:00"). </p>
+   */
+  StartingTimestamp?: Date;
 }
 
 /**
@@ -2960,6 +3236,11 @@ export interface DynamicTransform {
    * <p>This field is not used and will be deprecated in future release.</p>
    */
   Version?: string;
+
+  /**
+   * <p>Specifies the data schema for the dynamic transform.</p>
+   */
+  OutputSchemas?: GlueSchema[];
 }
 
 /**
@@ -3077,6 +3358,47 @@ export interface EvaluateDataQuality {
    * <p>Options to configure how your results are published.</p>
    */
   PublishingOptions?: DQResultsPublishingOptions;
+
+  /**
+   * <p>Options to configure how your job will stop if your data quality evaluation fails.</p>
+   */
+  StopJobOnFailureOptions?: DQStopJobOnFailureOptions;
+}
+
+/**
+ * @public
+ * <p>Specifies your data quality evaluation criteria.</p>
+ */
+export interface EvaluateDataQualityMultiFrame {
+  /**
+   * <p>The name of the data quality evaluation.</p>
+   */
+  Name: string | undefined;
+
+  /**
+   * <p>The inputs of your data quality evaluation. The first input in this list is the primary data source.</p>
+   */
+  Inputs: string[] | undefined;
+
+  /**
+   * <p>The aliases of all data sources except primary.</p>
+   */
+  AdditionalDataSources?: Record<string, string>;
+
+  /**
+   * <p>The ruleset for your data quality evaluation.</p>
+   */
+  Ruleset: string | undefined;
+
+  /**
+   * <p>Options to configure how your results are published.</p>
+   */
+  PublishingOptions?: DQResultsPublishingOptions;
+
+  /**
+   * <p>Options to configure runtime behavior of the transform.</p>
+   */
+  AdditionalOptions?: Record<string, string>;
 
   /**
    * <p>Options to configure how your job will stop if your data quality evaluation fails.</p>
@@ -5138,7 +5460,8 @@ export interface JobCommand {
   /**
    * <p>The name of the job command. For an Apache Spark ETL job, this must be
    *       <code>glueetl</code>. For a Python shell job, it must be <code>pythonshell</code>.
-   *       For an Apache Spark streaming ETL job, this must be <code>gluestreaming</code>.</p>
+   *       For an Apache Spark streaming ETL job, this must be <code>gluestreaming</code>. For a Ray job,
+   *       this must be <code>glueray</code>.</p>
    */
   Name?: string;
 
@@ -5152,6 +5475,14 @@ export interface JobCommand {
    * <p>The Python version being used to run a Python shell job. Allowed values are 2 or 3.</p>
    */
   PythonVersion?: string;
+
+  /**
+   * <p>In Ray jobs, Runtime is used to specify the versions of Ray, Python and additional
+   *       libraries available in your environment. This field is not used in other job types. For
+   *       supported runtime environment values, see <a href="https://docs.aws.amazon.com/glue/latest/dg/author-job-ray-runtimes.html">Working with Ray jobs</a>
+   *       in the Glue Developer Guide.</p>
+   */
+  Runtime?: string;
 }
 
 /**
@@ -5872,11 +6203,19 @@ export interface JobRun {
   JobRunState?: JobRunState | string;
 
   /**
-   * <p>The job arguments associated with this run. For this job run, they replace the default arguments set in the job definition itself.</p>
+   * <p>The job arguments associated with this run. For this job run, they replace the default
+   *       arguments set in the job definition itself.</p>
    *          <p>You can specify arguments here that your own job-execution script
    *       consumes, as well as arguments that Glue itself consumes.</p>
-   *          <p>For information about how to specify and consume your own job arguments, see the <a href="https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html">Calling Glue APIs in Python</a> topic in the developer guide.</p>
-   *          <p>For information about the key-value pairs that Glue consumes to set up your job, see the <a href="https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html">Special Parameters Used by Glue</a> topic in the developer guide.</p>
+   *          <p>Job arguments may be logged. Do not pass plaintext secrets as arguments. Retrieve secrets
+   *       from a Glue Connection, Secrets Manager or other secret management
+   *       mechanism if you intend to keep them within the Job. </p>
+   *          <p>For information about how to specify and consume your own Job arguments, see the <a href="https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html">Calling Glue APIs in Python</a> topic in the developer guide.</p>
+   *          <p>For information about the arguments you can provide to this field when configuring Spark jobs,
+   *      see the <a href="https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html">Special Parameters Used by Glue</a> topic in the developer guide.</p>
+   *          <p>For information about the arguments you can provide to this field when configuring Ray
+   *       jobs, see <a href="https://docs.aws.amazon.com/glue/latest/dg/author-job-ray-job-parameters.html">Using
+   *       job parameters in Ray jobs</a> in the developer guide.</p>
    */
   Arguments?: Record<string, string>;
 
@@ -5915,39 +6254,51 @@ export interface JobRun {
   Timeout?: number;
 
   /**
-   * <p>The number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure
-   *       of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory.
-   *       For more information, see the <a href="https://aws.amazon.com/glue/pricing/">Glue
-   *         pricing page</a>.</p>
-   *          <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p>
+   * <p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of
+   *       Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is
+   *       a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB
+   *       of memory. For more information, see the <a href="https://aws.amazon.com/glue/pricing/">
+   *         Glue pricing page</a>.</p>
+   *          <p>For Glue version 2.0+ jobs, you cannot specify a <code>Maximum capacity</code>.
+   *       Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p>
+   *          <p>Do not set <code>MaxCapacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p>
    *          <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are
-   *       running a Python shell job or an Apache Spark ETL job:</p>
+   *       running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL
+   *       job:</p>
    *          <ul>
    *             <li>
    *                <p>When you specify a Python shell job (<code>JobCommand.Name</code>="pythonshell"), you can
-   *         allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p>
+   *           allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p>
    *             </li>
    *             <li>
-   *                <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>="glueetl"), you can allocate a minimum of 2 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p>
+   *                <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>="glueetl") or Apache
+   *         Spark streaming ETL job (<code>JobCommand.Name</code>="gluestreaming"), you can allocate from 2 to 100 DPUs.
+   *         The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p>
    *             </li>
    *          </ul>
    */
   MaxCapacity?: number;
 
   /**
-   * <p>The type of predefined worker that is allocated when a job runs. Accepts a value of Standard, G.1X, G.2X, or G.025X.</p>
+   * <p>The type of predefined worker that is allocated when a job runs. Accepts a value of
+   *       Standard, G.1X, G.2X, or G.025X for Spark jobs. Accepts the value Z.2X for Ray jobs.</p>
    *          <ul>
    *             <li>
    *                <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p>
    *             </li>
    *             <li>
-   *                <p>For the <code>G.1X</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 64GB disk, and 1 executor per worker.</p>
+   *                <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p>
    *             </li>
    *             <li>
-   *                <p>For the <code>G.2X</code> worker type, each worker provides 8 vCPU, 32 GB of memory and a 128GB disk, and 1 executor per worker.</p>
+   *                <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of memory, 128 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p>
    *             </li>
    *             <li>
    *                <p>For the <code>G.025X</code> worker type, each worker maps to 0.25 DPU (2 vCPU, 4 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for low volume streaming jobs. This worker type is only available for Glue version 3.0 streaming jobs.</p>
+   *             </li>
+   *             <li>
+   *                <p>For the <code>Z.2X</code> worker type, each worker maps to 2 M-DPU (8vCPU, 64 GB of m
+   *           emory, 128 GB disk), and provides up to 8 Ray workers (one per vCPU) based on the
+   *           autoscaler.</p>
    *             </li>
    *          </ul>
    */
@@ -5980,8 +6331,15 @@ export interface JobRun {
   NotificationProperty?: NotificationProperty;
 
   /**
-   * <p>Glue version determines the versions of Apache Spark and Python that Glue supports. The Python version indicates the version supported for jobs of type Spark. </p>
-   *          <p>For more information about the available Glue versions and corresponding Spark and Python versions, see <a href="https://docs.aws.amazon.com/glue/latest/dg/add-job.html">Glue version</a> in the developer guide.</p>
+   * <p>In Spark jobs, <code>GlueVersion</code> determines the versions of Apache Spark and Python
+   *       that Glue available in a job. The Python version indicates the version
+   *       supported for jobs of type Spark. </p>
+   *          <p>Ray jobs should set <code>GlueVersion</code> to <code>4.0</code> or greater. However,
+   *     the versions of Ray, Python and additional libraries available in your Ray job are determined
+   *     by the <code>Runtime</code> parameter of the Job command.</p>
+   *          <p>For more information about the available Glue versions and corresponding
+   *       Spark and Python versions, see <a href="https://docs.aws.amazon.com/glue/latest/dg/add-job.html">Glue version</a> in the developer
+   *       guide.</p>
    *          <p>Jobs that are created without specifying a Glue version default to Glue 0.9.</p>
    */
   GlueVersion?: string;
@@ -7178,6 +7536,11 @@ export interface CreateCustomEntityTypeRequest {
    *          <p>If no context words are passed only a regular expression is checked.</p>
    */
   ContextWords?: string[];
+
+  /**
+   * <p>A list of tags applied to the custom entity type.</p>
+   */
+  Tags?: Record<string, string>;
 }
 
 /**
@@ -7318,6 +7681,11 @@ export interface DatabaseIdentifier {
    * <p>The name of the catalog database.</p>
    */
   DatabaseName?: string;
+
+  /**
+   * <p>Region of the target database.</p>
+   */
+  Region?: string;
 }
 
 /**
@@ -7435,6 +7803,11 @@ export interface DataQualityTargetTable {
    * <p>The name of the database where the Glue table exists.</p>
    */
   DatabaseName: string | undefined;
+
+  /**
+   * <p>The catalog id where the Glue table exists.</p>
+   */
+  CatalogId?: string;
 }
 
 /**
@@ -7858,239 +8231,3 @@ export interface MLUserDataEncryption {
    */
   KmsKeyId?: string;
 }
-
-/**
- * @public
- * <p>The encryption-at-rest settings of the transform that apply to accessing user data. Machine learning transforms can access user data encrypted in Amazon S3 using KMS.</p>
- *          <p>Additionally, imported labels and trained transforms can now be encrypted using a customer provided KMS key.</p>
- */
-export interface TransformEncryption {
-  /**
-   * <p>An <code>MLUserDataEncryption</code> object containing the encryption mode and customer-provided KMS key ID.</p>
-   */
-  MlUserDataEncryption?: MLUserDataEncryption;
-
-  /**
-   * <p>The name of the security configuration.</p>
-   */
-  TaskRunSecurityConfigurationName?: string;
-}
-
-/**
- * @public
- */
-export interface CreateMLTransformRequest {
-  /**
-   * <p>The unique name that you give the transform when you create it.</p>
-   */
-  Name: string | undefined;
-
-  /**
-   * <p>A description of the machine learning transform that is being defined. The default is an
-   *       empty string.</p>
-   */
-  Description?: string;
-
-  /**
-   * <p>A list of Glue table definitions used by the transform.</p>
-   */
-  InputRecordTables: GlueTable[] | undefined;
-
-  /**
-   * <p>The algorithmic parameters that are specific to the transform type used. Conditionally
-   *       dependent on the transform type.</p>
-   */
-  Parameters: TransformParameters | undefined;
-
-  /**
-   * <p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions. The required permissions include both Glue service role permissions to Glue resources, and Amazon S3 permissions required by the transform. </p>
-   *          <ul>
-   *             <li>
-   *                <p>This role needs Glue service role permissions to allow access to resources in Glue. See <a href="https://docs.aws.amazon.com/glue/latest/dg/attach-policy-iam-user.html">Attach a Policy to IAM Users That Access Glue</a>.</p>
-   *             </li>
-   *             <li>
-   *                <p>This role needs permission to your Amazon Simple Storage Service (Amazon S3) sources, targets, temporary directory, scripts, and any libraries used by the task run for this transform.</p>
-   *             </li>
-   *          </ul>
-   */
-  Role: string | undefined;
-
-  /**
-   * <p>This value determines which version of Glue this machine learning transform is compatible with. Glue 1.0 is recommended for most customers. If the value is not set, the Glue compatibility defaults to Glue 0.9.  For more information, see <a href="https://docs.aws.amazon.com/glue/latest/dg/release-notes.html#release-notes-versions">Glue Versions</a> in the developer guide.</p>
-   */
-  GlueVersion?: string;
-
-  /**
-   * <p>The number of Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of
-   *       processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more
-   *       information, see the <a href="https://aws.amazon.com/glue/pricing/">Glue pricing
-   *         page</a>. </p>
-   *          <p>
-   *             <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p>
-   *          <ul>
-   *             <li>
-   *                <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p>
-   *             </li>
-   *             <li>
-   *                <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p>
-   *             </li>
-   *             <li>
-   *                <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p>
-   *             </li>
-   *          </ul>
-   *          <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>
-   *          <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>
-   */
-  MaxCapacity?: number;
-
-  /**
-   * <p>The type of predefined worker that is allocated when this task runs. Accepts a value of Standard, G.1X, or G.2X.</p>
-   *          <ul>
-   *             <li>
-   *                <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p>
-   *             </li>
-   *             <li>
-   *                <p>For the <code>G.1X</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 64GB disk, and 1 executor per worker.</p>
-   *             </li>
-   *             <li>
-   *                <p>For the <code>G.2X</code> worker type, each worker provides 8 vCPU, 32 GB of memory and a 128GB disk, and 1 executor per worker.</p>
-   *             </li>
-   *          </ul>
-   *          <p>
-   *             <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p>
-   *          <ul>
-   *             <li>
-   *                <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p>
-   *             </li>
-   *             <li>
-   *                <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p>
-   *             </li>
-   *             <li>
-   *                <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p>
-   *             </li>
-   *          </ul>
-   */
-  WorkerType?: WorkerType | string;
-
-  /**
-   * <p>The number of workers of a defined <code>workerType</code> that are allocated when this task runs.</p>
-   *          <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p>
-   */
-  NumberOfWorkers?: number;
-
-  /**
-   * <p>The timeout of the task run for this transform in minutes. This is the maximum time that a task run for this transform can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>
-   */
-  Timeout?: number;
-
-  /**
-   * <p>The maximum number of times to retry a task for this transform after a task run fails.</p>
-   */
-  MaxRetries?: number;
-
-  /**
-   * <p>The tags to use with this machine learning transform. You may use tags to limit access to the machine learning transform. For more information about tags in Glue, see <a href="https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html">Amazon Web Services Tags in Glue</a> in the developer guide.</p>
-   */
-  Tags?: Record<string, string>;
-
-  /**
-   * <p>The encryption-at-rest settings of the transform that apply to accessing user data. Machine learning transforms can access user data encrypted in Amazon S3 using KMS.</p>
-   */
-  TransformEncryption?: TransformEncryption;
-}
-
-/**
- * @public
- */
-export interface CreateMLTransformResponse {
-  /**
-   * <p>A unique identifier that is generated for the transform.</p>
-   */
-  TransformId?: string;
-}
-
-/**
- * @public
- */
-export interface CreatePartitionRequest {
-  /**
-   * <p>The Amazon Web Services account ID of the catalog in which the partition is to be created.</p>
-   */
-  CatalogId?: string;
-
-  /**
-   * <p>The name of the metadata database in which the partition is
-   *       to be created.</p>
-   */
-  DatabaseName: string | undefined;
-
-  /**
-   * <p>The name of the metadata table in which the partition is to be created.</p>
-   */
-  TableName: string | undefined;
-
-  /**
-   * <p>A <code>PartitionInput</code> structure defining the partition
-   *       to be created.</p>
-   */
-  PartitionInput: PartitionInput | undefined;
-}
-
-/**
- * @public
- */
-export interface CreatePartitionResponse {}
-
-/**
- * @public
- * <p>A structure for a partition index.</p>
- */
-export interface PartitionIndex {
-  /**
-   * <p>The keys for the partition index.</p>
-   */
-  Keys: string[] | undefined;
-
-  /**
-   * <p>The name of the partition index.</p>
-   */
-  IndexName: string | undefined;
-}
-
-/**
- * @public
- */
-export interface CreatePartitionIndexRequest {
-  /**
-   * <p>The catalog ID where the table resides.</p>
-   */
-  CatalogId?: string;
-
-  /**
-   * <p>Specifies the name of a database in which you want to create a partition index.</p>
-   */
-  DatabaseName: string | undefined;
-
-  /**
-   * <p>Specifies the name of a table in which you want to create a partition index.</p>
-   */
-  TableName: string | undefined;
-
-  /**
-   * <p>Specifies a <code>PartitionIndex</code> structure to create a partition index in an existing table.</p>
-   */
-  PartitionIndex: PartitionIndex | undefined;
-}
-
-/**
- * @public
- */
-export interface CreatePartitionIndexResponse {}

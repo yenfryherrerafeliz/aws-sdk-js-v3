@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EMRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EMRClient";
 import { AddInstanceFleetInput, AddInstanceFleetOutput } from "../models/models_0";
 import { de_AddInstanceFleetCommand, se_AddInstanceFleetCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -34,7 +38,7 @@ export interface AddInstanceFleetCommandOutput extends AddInstanceFleetOutput, _
  * @public
  * <p>Adds an instance fleet to a running cluster.</p>
  *          <note>
- *             <p>The instance fleet configuration is available only in Amazon EMR versions
+ *             <p>The instance fleet configuration is available only in Amazon EMR releases
  *             4.8.0 and later, excluding 5.0.x.</p>
  *          </note>
  * @example
@@ -95,7 +99,7 @@ export interface AddInstanceFleetCommandOutput extends AddInstanceFleetOutput, _
  *         TimeoutDurationMinutes: Number("int"), // required
  *         TimeoutAction: "SWITCH_TO_ON_DEMAND" || "TERMINATE_CLUSTER", // required
  *         BlockDurationMinutes: Number("int"),
- *         AllocationStrategy: "capacity-optimized",
+ *         AllocationStrategy: "capacity-optimized" || "price-capacity-optimized" || "lowest-price" || "diversified",
  *       },
  *       OnDemandSpecification: { // OnDemandProvisioningSpecification
  *         AllocationStrategy: "lowest-price", // required

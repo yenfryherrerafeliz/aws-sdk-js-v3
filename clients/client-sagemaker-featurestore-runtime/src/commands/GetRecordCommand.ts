@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { GetRecordRequest, GetRecordResponse } from "../models/models_0";
 import { de_GetRecordCommand, se_GetRecordCommand } from "../protocols/Aws_restJson1";
@@ -21,6 +21,10 @@ import {
   ServiceOutputTypes,
 } from "../SageMakerFeatureStoreRuntimeClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -51,6 +55,7 @@ export interface GetRecordCommandOutput extends GetRecordResponse, __MetadataBea
  *   FeatureNames: [ // FeatureNames
  *     "STRING_VALUE",
  *   ],
+ *   ExpirationTimeResponse: "Enabled" || "Disabled",
  * };
  * const command = new GetRecordCommand(input);
  * const response = await client.send(command);
@@ -61,6 +66,7 @@ export interface GetRecordCommandOutput extends GetRecordResponse, __MetadataBea
  * //       ValueAsString: "STRING_VALUE", // required
  * //     },
  * //   ],
+ * //   ExpiresAt: "STRING_VALUE",
  * // };
  *
  * ```

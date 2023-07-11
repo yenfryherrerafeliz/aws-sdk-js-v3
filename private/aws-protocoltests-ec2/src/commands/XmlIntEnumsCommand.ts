@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EC2ProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2ProtocolClient";
 import { XmlIntEnumsOutput } from "../models/models_0";
 import { de_XmlIntEnumsCommand, se_XmlIntEnumsCommand } from "../protocols/Aws_ec2";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -41,6 +45,21 @@ export interface XmlIntEnumsCommandOutput extends XmlIntEnumsOutput, __MetadataB
  * const input = {};
  * const command = new XmlIntEnumsCommand(input);
  * const response = await client.send(command);
+ * // { // XmlIntEnumsOutput
+ * //   intEnum1: 1 || 2 || 3,
+ * //   intEnum2: 1 || 2 || 3,
+ * //   intEnum3: 1 || 2 || 3,
+ * //   intEnumList: [ // IntegerEnumList
+ * //     1 || 2 || 3,
+ * //   ],
+ * //   intEnumSet: [ // IntegerEnumSet
+ * //     1 || 2 || 3,
+ * //   ],
+ * //   intEnumMap: { // IntegerEnumMap
+ * //     "<keys>": 1 || 2 || 3,
+ * //   },
+ * // };
+ *
  * ```
  *
  * @param XmlIntEnumsCommandInput - {@link XmlIntEnumsCommandInput}
@@ -49,6 +68,8 @@ export interface XmlIntEnumsCommandOutput extends XmlIntEnumsOutput, __MetadataB
  * @see {@link XmlIntEnumsCommandOutput} for command's `response` shape.
  * @see {@link EC2ProtocolClientResolvedConfig | config} for EC2ProtocolClient's `config` shape.
  *
+ * @throws {@link EC2ProtocolServiceException}
+ * <p>Base exception class for all service exceptions from EC2Protocol service.</p>
  *
  */
 export class XmlIntEnumsCommand extends $Command<

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { TrustAnchorDetailResponse, UpdateTrustAnchorRequest } from "../models/models_0";
 import { de_UpdateTrustAnchorCommand, se_UpdateTrustAnchorCommand } from "../protocols/Aws_restJson1";
 import { RolesAnywhereClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RolesAnywhereClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,7 +36,12 @@ export interface UpdateTrustAnchorCommandOutput extends TrustAnchorDetailRespons
 
 /**
  * @public
- * <p>Updates the trust anchor.You establish trust between IAM Roles Anywhere and your certificate authority (CA) by configuring a trust anchor. A Trust Anchor is defined either as a reference to a AWS Certificate Manager Private Certificate Authority (ACM PCA), or by uploading a Certificate Authority (CA) certificate. Your AWS workloads can authenticate with the trust anchor using certificates issued by the trusted Certificate Authority (CA) in exchange for temporary AWS credentials.</p>
+ * <p>Updates a trust anchor. You establish trust between IAM Roles Anywhere
+ *          and your certificate authority (CA) by configuring a trust anchor. You can define a trust
+ *          anchor as a reference to an Private Certificate Authority (Private CA) or by uploading a
+ *          CA certificate. Your Amazon Web Services workloads can authenticate with the trust anchor
+ *          using certificates issued by the CA in exchange for temporary Amazon Web Services
+ *          credentials.</p>
  *          <p>
  *             <b>Required permissions: </b>
  *             <code>rolesanywhere:UpdateTrustAnchor</code>.
@@ -71,6 +80,15 @@ export interface UpdateTrustAnchorCommandOutput extends TrustAnchorDetailRespons
  * //     enabled: true || false,
  * //     createdAt: new Date("TIMESTAMP"),
  * //     updatedAt: new Date("TIMESTAMP"),
+ * //     notificationSettings: [ // NotificationSettingDetails
+ * //       { // NotificationSettingDetail
+ * //         enabled: true || false, // required
+ * //         event: "STRING_VALUE", // required
+ * //         threshold: Number("int"),
+ * //         channel: "STRING_VALUE",
+ * //         configuredBy: "STRING_VALUE",
+ * //       },
+ * //     ],
  * //   },
  * // };
  *

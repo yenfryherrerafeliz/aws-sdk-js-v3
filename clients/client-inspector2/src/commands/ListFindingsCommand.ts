@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { Inspector2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../Inspector2Client";
 import { ListFindingsRequest, ListFindingsResponse } from "../models/models_0";
 import { de_ListFindingsCommand, se_ListFindingsCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -160,6 +164,15 @@ export interface ListFindingsCommandOutput extends ListFindingsResponse, __Metad
  *     ],
  *     lambdaFunctionExecutionRoleArn: "<StringFilterList>",
  *     exploitAvailable: "<StringFilterList>",
+ *     codeVulnerabilityDetectorName: "<StringFilterList>",
+ *     codeVulnerabilityDetectorTags: "<StringFilterList>",
+ *     codeVulnerabilityFilePath: "<StringFilterList>",
+ *     epssScore: [
+ *       {
+ *         upperInclusive: Number("double"),
+ *         lowerInclusive: Number("double"),
+ *       },
+ *     ],
  *   },
  *   sortCriteria: { // SortCriteria
  *     field: "STRING_VALUE", // required
@@ -325,6 +338,30 @@ export interface ListFindingsCommandOutput extends ListFindingsResponse, __Metad
  * //       exploitAvailable: "STRING_VALUE",
  * //       exploitabilityDetails: { // ExploitabilityDetails
  * //         lastKnownExploitAt: new Date("TIMESTAMP"),
+ * //       },
+ * //       codeVulnerabilityDetails: { // CodeVulnerabilityDetails
+ * //         filePath: { // CodeFilePath
+ * //           fileName: "STRING_VALUE", // required
+ * //           filePath: "STRING_VALUE", // required
+ * //           startLine: Number("int"), // required
+ * //           endLine: Number("int"), // required
+ * //         },
+ * //         detectorTags: [ // DetectorTagList
+ * //           "STRING_VALUE",
+ * //         ],
+ * //         referenceUrls: [ // ReferenceUrls
+ * //           "STRING_VALUE",
+ * //         ],
+ * //         ruleId: "STRING_VALUE",
+ * //         sourceLambdaLayerArn: "STRING_VALUE",
+ * //         detectorId: "STRING_VALUE", // required
+ * //         detectorName: "STRING_VALUE", // required
+ * //         cwes: [ // CweList // required
+ * //           "STRING_VALUE",
+ * //         ],
+ * //       },
+ * //       epss: { // EpssDetails
+ * //         score: Number("double"),
  * //       },
  * //     },
  * //   ],

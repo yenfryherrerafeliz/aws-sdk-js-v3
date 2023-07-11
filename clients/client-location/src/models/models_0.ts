@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@smithy/smithy-client";
 
 import { LocationServiceException as __BaseException } from "./LocationServiceException";
 
@@ -72,59 +72,100 @@ export class ConflictException extends __BaseException {
 export interface ApiKeyRestrictions {
   /**
    * <p>A list of allowed actions that an API key resource grants permissions to
-   *             perform</p>
+   *             perform. You must have at least one action for each type of resource. For example,
+   *             if you have a place resource, you must include at least one place action.</p>
+   *          <p>The following are valid values for the actions.</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <b>Map actions</b>
+   *                </p>
+   *                <ul>
+   *                   <li>
+   *                      <p>
+   *                         <code>geo:GetMap*</code> - Allows all actions needed for map rendering.</p>
+   *                   </li>
+   *                </ul>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <b>Place actions</b>
+   *                </p>
+   *                <ul>
+   *                   <li>
+   *                      <p>
+   *                         <code>geo:SearchPlaceIndexForText</code> - Allows geocoding.</p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>geo:SearchPlaceIndexForPosition</code> - Allows reverse
+   *                             geocoding.</p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>geo:SearchPlaceIndexForSuggestions</code> - Allows generating
+   *                             suggestions from text.</p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>GetPlace</code> - Allows finding a place by place ID.</p>
+   *                   </li>
+   *                </ul>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <b>Route actions</b>
+   *                </p>
+   *                <ul>
+   *                   <li>
+   *                      <p>
+   *                         <code>geo:CalculateRoute</code> - Allows point to point routing.</p>
+   *                   </li>
+   *                   <li>
+   *                      <p>
+   *                         <code>geo:CalculateRouteMatrix</code> - Allows calculating a matrix of
+   *                             routes.</p>
+   *                   </li>
+   *                </ul>
+   *             </li>
+   *          </ul>
    *          <note>
-   *             <p>Currently, the only valid action is <code>geo:GetMap*</code> as an input to the
-   *                 list. For example, <code>["geo:GetMap*"]</code> is valid but
-   *                     <code>["geo:GetMapTile"]</code> is not.</p>
+   *             <p>You must use these strings exactly. For example, to provide access to map
+   *                 rendering, the only valid action is <code>geo:GetMap*</code> as an input to
+   *                 the list. <code>["geo:GetMap*"]</code> is valid but
+   *                     <code>["geo:GetMapTile"]</code> is not. Similarly, you cannot use
+   *                 <code>["geo:SearchPlaceIndexFor*"]</code> - you must list each of the Place
+   *                 actions separately.</p>
    *          </note>
    */
   AllowActions: string[] | undefined;
 
   /**
-   * <p>A list of allowed resource ARNs that a API key bearer can perform actions on</p>
-   *          <p>For more information about ARN format, see <a href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
-   *                 (ARNs)</a>.</p>
-   *          <note>
-   *             <p>In this preview, you can allow only map resources.</p>
-   *          </note>
-   *          <p>Requirements:</p>
+   * <p>A list of allowed resource ARNs that a API key bearer can perform actions on.</p>
    *          <ul>
    *             <li>
-   *                <p>Must be prefixed with <code>arn</code>.</p>
+   *                <p>The ARN must be the correct ARN for a map, place, or route ARN. You may
+   *                     include wildcards in the resource-id to match multiple resources of the
+   *                     same type.</p>
    *             </li>
    *             <li>
-   *                <p>
-   *                   <code>partition</code> and <code>service</code> must not be empty and should
-   *                     begin with only alphanumeric characters (A–Z, a–z, 0–9) and contain only
-   *                     alphanumeric numbers, hyphens (-) and periods (.).</p>
+   *                <p>The resources must be in the same <code>partition</code>,
+   *                     <code>region</code>, and <code>account-id</code> as the key that is being
+   *                     created.</p>
    *             </li>
    *             <li>
-   *                <p>
-   *                   <code>region</code> and <code>account-id</code> can be empty or should begin
-   *                     with only alphanumeric characters (A–Z, a–z, 0–9) and contain only alphanumeric
-   *                     numbers, hyphens (-) and periods (.).</p>
+   *                <p>Other than wildcards, you must include the full ARN, including the
+   *                     <code>arn</code>, <code>partition</code>, <code>service</code>,
+   *                     <code>region</code>, <code>account-id</code> and <code>resource-id</code>,
+   *                     delimited by colons (:).</p>
    *             </li>
    *             <li>
-   *                <p>
-   *                   <code>resource-id</code> can begin with any character except for forward slash
-   *                     (/) and contain any characters after, including forward slashes to form a
-   *                     path.</p>
-   *                <p>
-   *                   <code>resource-id</code> can also include wildcard characters, denoted by an
-   *                     asterisk (*).</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>arn</code>, <code>partition</code>, <code>service</code>,
-   *                         <code>region</code>, <code>account-id</code> and <code>resource-id</code>
-   *                     must be delimited by a colon (:).</p>
-   *             </li>
-   *             <li>
-   *                <p>No spaces allowed. For example,
-   *                             <code>arn:aws:geo:region:<i>account-id</i>:map/ExampleMap*</code>.</p>
+   *                <p>No spaces allowed, even with wildcards. For example,
+   *                     <code>arn:aws:geo:region:<i>account-id</i>:map/ExampleMap*</code>.</p>
    *             </li>
    *          </ul>
+   *          <p>For more information about ARN format, see <a href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
+   *             (ARNs)</a>.</p>
    */
   AllowResources: string[] | undefined;
 
@@ -1076,6 +1117,15 @@ export interface BatchPutGeofenceRequestEntry {
    *          </note>
    */
   Geometry: GeofenceGeometry | undefined;
+
+  /**
+   * <p>Associates one of more properties with the geofence. A property is a key-value
+   *             pair stored with the geofence and added to any geofence event triggered with that
+   *             geofence.</p>
+   *          <p>Format: <code>"key" : "value"</code>
+   *          </p>
+   */
+  GeofenceProperties?: Record<string, string>;
 }
 
 /**
@@ -1162,7 +1212,7 @@ export interface BatchUpdateDevicePositionRequest {
   TrackerName: string | undefined;
 
   /**
-   * <p>Contains the position update details for each device.</p>
+   * <p>Contains the position update details for each device, up to 10 devices.</p>
    */
   Updates: DevicePositionUpdate[] | undefined;
 }
@@ -1535,6 +1585,12 @@ export interface CalculateRouteRequest {
    *          <p>Requirements: <code>TravelMode</code> must be specified as <code>Truck</code>.</p>
    */
   TruckModeOptions?: CalculateRouteTruckModeOptions;
+
+  /**
+   * <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize
+   *             the request.</p>
+   */
+  Key?: string;
 }
 
 /**
@@ -1942,6 +1998,12 @@ export interface CalculateRouteMatrixRequest {
    *          <p>Requirements: <code>TravelMode</code> must be specified as <code>Truck</code>.</p>
    */
   TruckModeOptions?: CalculateRouteTruckModeOptions;
+
+  /**
+   * <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize
+   *             the request.</p>
+   */
+  Key?: string;
 }
 
 /**
@@ -2276,14 +2338,14 @@ export interface MapConfiguration {
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>VectorEsriStreets</code> – The Esri World Streets map style, which
+   *                   <code>VectorEsriStreets</code> – The Esri Street Map style, which
    *                     provides a detailed vector basemap for the world symbolized with a classic Esri
    *                     street map style. The vector tile layer is similar in content and style to the
    *                     World Street Map raster map.</p>
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>VectorEsriNavigation</code> – The Esri World Navigation map style, which
+   *                   <code>VectorEsriNavigation</code> – The Esri Navigation map style, which
    *                     provides a detailed basemap for the world symbolized with a custom navigation
    *                     map style that's designed for use during the day in mobile devices.</p>
    *             </li>
@@ -2389,6 +2451,20 @@ export interface MapConfiguration {
    *          </ul>
    */
   Style: string | undefined;
+
+  /**
+   * <p>Specifies the political view for the style. Leave unset to not use a political
+   *             view, or, for styles that support specific political views, you can choose a view,
+   *             such as <code>IND</code> for the Indian view.</p>
+   *          <p>Default is unset.</p>
+   *          <note>
+   *             <p>Not all map resources or styles support political view styles. See
+   *                 <a href="https://docs.aws.amazon.com/location/latest/developerguide/map-concepts.html#political-views">Political
+   *                     views</a>
+   *                 for more information.</p>
+   *          </note>
+   */
+  PoliticalView?: string;
 }
 
 /**
@@ -2934,6 +3010,17 @@ export interface CreateTrackerRequest {
    *          <p>This field is optional. If not specified, the default value is <code>TimeBased</code>.</p>
    */
   PositionFiltering?: PositionFiltering | string;
+
+  /**
+   * <p>Whether to enable position <code>UPDATE</code> events from this tracker to be sent to
+   *             EventBridge.</p>
+   *          <note>
+   *             <p>You do not need enable this feature to get <code>ENTER</code> and
+   *                 <code>EXIT</code> events for geofences with this tracker. Those events are
+   *                 always sent to EventBridge.</p>
+   *          </note>
+   */
+  EventBridgeEnabled?: boolean;
 }
 
 /**
@@ -3456,6 +3543,12 @@ export interface DescribeTrackerResponse {
    * <p>The position filtering method of the tracker resource.</p>
    */
   PositionFiltering?: PositionFiltering | string;
+
+  /**
+   * <p>Whether <code>UPDATE</code> events from this tracker in EventBridge are
+   *             enabled. If set to <code>true</code> these events will be sent to EventBridge.</p>
+   */
+  EventBridgeEnabled?: boolean;
 }
 
 /**
@@ -3672,6 +3765,15 @@ export interface GetGeofenceResponse {
    *          </p>
    */
   UpdateTime: Date | undefined;
+
+  /**
+   * <p>User defined properties of the geofence. A property is a key-value
+   *             pair stored with the geofence and added to any geofence event triggered with that
+   *             geofence.</p>
+   *          <p>Format: <code>"key" : "value"</code>
+   *          </p>
+   */
+  GeofenceProperties?: Record<string, string>;
 }
 
 /**
@@ -3837,6 +3939,15 @@ export interface ListGeofenceResponseEntry {
    *          </p>
    */
   UpdateTime: Date | undefined;
+
+  /**
+   * <p>User defined properties of the geofence. A property is a key-value
+   *             pair stored with the geofence and added to any geofence event triggered with that
+   *             geofence.</p>
+   *          <p>Format: <code>"key" : "value"</code>
+   *          </p>
+   */
+  GeofenceProperties?: Record<string, string>;
 }
 
 /**
@@ -3878,6 +3989,15 @@ export interface PutGeofenceRequest {
    *          </note>
    */
   Geometry: GeofenceGeometry | undefined;
+
+  /**
+   * <p>Associates one of more properties with the geofence. A property is a key-value
+   *             pair stored with the geofence and added to any geofence event triggered with that
+   *             geofence.</p>
+   *          <p>Format: <code>"key" : "value"</code>
+   *          </p>
+   */
+  GeofenceProperties?: Record<string, string>;
 }
 
 /**
@@ -4168,7 +4288,16 @@ export interface GetMapGlyphsRequest {
    *                     <code>Amazon Ember Medium,Noto Sans Medium</code> |
    *                     <code>Amazon Ember Regular Italic,Noto Sans Italic</code> |
    *                     <code>Amazon Ember Condensed RC Regular,Noto Sans Regular</code> |
-   *                     <code>Amazon Ember Condensed RC Bold,Noto Sans Bold</code>
+   *                     <code>Amazon Ember Condensed RC Bold,Noto Sans Bold</code> |
+   *                     <code>Amazon Ember Regular,Noto Sans Regular,Noto Sans Arabic Regular</code> |
+   *                     <code>Amazon Ember Condensed RC Bold,Noto Sans Bold,Noto Sans Arabic
+   *                         Condensed Bold</code> |
+   *                     <code>Amazon Ember Bold,Noto Sans Bold,Noto Sans Arabic Bold</code> |
+   *                     <code>Amazon Ember Regular Italic,Noto Sans Italic,Noto Sans Arabic
+   *                         Regular</code> |
+   *                     <code>Amazon Ember Condensed RC Regular,Noto Sans Regular,Noto Sans Arabic
+   *                         Condensed Regular</code> |
+   *                     <code>Amazon Ember Medium,Noto Sans Medium,Noto Sans Arabic Medium</code>
    *                </p>
    *             </li>
    *          </ul>
@@ -4400,6 +4529,12 @@ export interface GetPlaceRequest {
    *             that the provider does support.</p>
    */
   Language?: string;
+
+  /**
+   * <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize
+   *             the request.</p>
+   */
+  Key?: string;
 }
 
 /**
@@ -4523,13 +4658,16 @@ export interface Place {
 
   /**
    * <p>The time zone in which the <code>Place</code> is located. Returned only when using
-   *             HERE as the selected partner.</p>
+   *             HERE or Grab as the selected partner.</p>
    */
   TimeZone?: TimeZone;
 
   /**
    * <p>For addresses with a <code>UnitNumber</code>, the type of unit. For example,
    *                 <code>Apartment</code>.</p>
+   *          <note>
+   *             <p>Returned only for a place index that uses Esri as a data provider.</p>
+   *          </note>
    */
   UnitType?: string;
 
@@ -4537,11 +4675,25 @@ export interface Place {
    * <p>For addresses with multiple units, the unit identifier. Can include numbers and
    *             letters, for example <code>3B</code> or <code>Unit 123</code>.</p>
    *          <note>
-   *             <p>Returned only for a place index that uses Esri as a data provider. Is not returned
-   *                 for <code>SearchPlaceIndexForPosition</code>.</p>
+   *             <p>Returned only for a place index that uses Esri or Grab as a data provider. Is
+   *                 not returned for <code>SearchPlaceIndexForPosition</code>.</p>
    *          </note>
    */
   UnitNumber?: string;
+
+  /**
+   * <p>The Amazon Location categories that describe this Place.</p>
+   *          <p>For more information about using categories, including a list of Amazon Location
+   *             categories, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/category-filtering.html">Categories and filtering</a>, in the <i>Amazon Location Service Developer
+   *                 Guide</i>.</p>
+   */
+  Categories?: string[];
+
+  /**
+   * <p>Categories from the data provider that describe the Place that are not mapped
+   *             to any Amazon Location categories.</p>
+   */
+  SupplementalCategories?: string[];
 }
 
 /**
@@ -5026,6 +5178,25 @@ export interface ListTrackersResponse {
 
 /**
  * @public
+ * <p>Specifies the political view for the style.</p>
+ */
+export interface MapConfigurationUpdate {
+  /**
+   * <p>Specifies the political view for the style. Set to an empty string to not use a
+   *             political view, or, for styles that support specific political views, you can choose a
+   *             view, such as <code>IND</code> for the Indian view.</p>
+   *          <note>
+   *             <p>Not all map resources or styles support political view styles. See
+   *                 <a href="https://docs.aws.amazon.com/location/latest/developerguide/map-concepts.html#political-views">Political
+   *                     views</a>
+   *                 for more information.</p>
+   *          </note>
+   */
+  PoliticalView?: string;
+}
+
+/**
+ * @public
  */
 export interface UpdateMapRequest {
   /**
@@ -5045,6 +5216,12 @@ export interface UpdateMapRequest {
    * <p>Updates the description for the map resource.</p>
    */
   Description?: string;
+
+  /**
+   * <p>Updates the parts of the map configuration that can be updated, including the
+   *             political view.</p>
+   */
+  ConfigurationUpdate?: MapConfigurationUpdate;
 }
 
 /**
@@ -5118,6 +5295,12 @@ export interface SearchPlaceIndexForPositionRequest {
    *             that the provider does support.</p>
    */
   Language?: string;
+
+  /**
+   * <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize
+   *             the request.</p>
+   */
+  Key?: string;
 }
 
 /**
@@ -5300,6 +5483,22 @@ export interface SearchPlaceIndexForSuggestionsRequest {
    *             that the provider does support.</p>
    */
   Language?: string;
+
+  /**
+   * <p>A list of one or more Amazon Location categories to filter the returned places. If you
+   *             include more than one category, the results will include results that match
+   *             <i>any</i> of the categories listed.</p>
+   *          <p>For more information about using categories, including a list of Amazon Location
+   *             categories, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/category-filtering.html">Categories and filtering</a>, in the <i>Amazon Location Service Developer
+   *                     Guide</i>.</p>
+   */
+  FilterCategories?: string[];
+
+  /**
+   * <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize
+   *             the request.</p>
+   */
+  Key?: string;
 }
 
 /**
@@ -5314,8 +5513,11 @@ export interface SearchForSuggestionsResult {
   Text: string | undefined;
 
   /**
-   * <p>The unique identifier of the place. You can use this with the <code>GetPlace</code>
-   *             operation to find the place again later.</p>
+   * <p>The unique identifier of the Place. You can use this with the <code>GetPlace</code>
+   *             operation to find the place again later, or to get full information for the Place.</p>
+   *          <p>The <code>GetPlace</code> request must use the same <code>PlaceIndex</code>
+   *             resource as the <code>SearchPlaceIndexForSuggestions</code> that generated the Place
+   *             ID.</p>
    *          <note>
    *             <p>For <code>SearchPlaceIndexForSuggestions</code> operations, the
    *                     <code>PlaceId</code> is returned by place indexes that use Esri, Grab, or HERE
@@ -5323,6 +5525,20 @@ export interface SearchForSuggestionsResult {
    *          </note>
    */
   PlaceId?: string;
+
+  /**
+   * <p>The Amazon Location categories that describe the Place.</p>
+   *          <p>For more information about using categories, including a list of Amazon Location
+   *             categories, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/category-filtering.html">Categories and filtering</a>, in the <i>Amazon Location Service Developer
+   *                     Guide</i>.</p>
+   */
+  Categories?: string[];
+
+  /**
+   * <p>Categories from the data provider that describe the Place that are not mapped
+   *             to any Amazon Location categories.</p>
+   */
+  SupplementalCategories?: string[];
 }
 
 /**
@@ -5387,6 +5603,11 @@ export interface SearchPlaceIndexForSuggestionsSummary {
    *             language tag, for example, <code>en</code> for English.</p>
    */
   Language?: string;
+
+  /**
+   * <p>The optional category filter specified in the request.</p>
+   */
+  FilterCategories?: string[];
 }
 
 /**
@@ -5493,6 +5714,22 @@ export interface SearchPlaceIndexForTextRequest {
    *             that the provider does support.</p>
    */
   Language?: string;
+
+  /**
+   * <p>A list of one or more Amazon Location categories to filter the returned places. If you
+   *             include more than one category, the results will include results that match
+   *             <i>any</i> of the categories listed.</p>
+   *          <p>For more information about using categories, including a list of Amazon Location
+   *             categories, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/category-filtering.html">Categories and filtering</a>, in the <i>Amazon Location Service Developer
+   *                     Guide</i>.</p>
+   */
+  FilterCategories?: string[];
+
+  /**
+   * <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize
+   *             the request.</p>
+   */
+  Key?: string;
 }
 
 /**
@@ -5606,6 +5843,11 @@ export interface SearchPlaceIndexForTextSummary {
    *             language tag, for example, <code>en</code> for English.</p>
    */
   Language?: string;
+
+  /**
+   * <p>The optional category filter specified in the request.</p>
+   */
+  FilterCategories?: string[];
 }
 
 /**
@@ -5801,6 +6043,17 @@ export interface UpdateTrackerRequest {
    *          </ul>
    */
   PositionFiltering?: PositionFiltering | string;
+
+  /**
+   * <p>Whether to enable position <code>UPDATE</code> events from this tracker to be sent to
+   *             EventBridge.</p>
+   *          <note>
+   *             <p>You do not need enable this feature to get <code>ENTER</code> and
+   *                 <code>EXIT</code> events for geofences with this tracker. Those events are
+   *                 always sent to EventBridge.</p>
+   *          </note>
+   */
+  EventBridgeEnabled?: boolean;
 }
 
 /**
@@ -5908,6 +6161,7 @@ export const GeofenceGeometryFilterSensitiveLog = (obj: GeofenceGeometry): any =
 export const BatchPutGeofenceRequestEntryFilterSensitiveLog = (obj: BatchPutGeofenceRequestEntry): any => ({
   ...obj,
   ...(obj.Geometry && { Geometry: GeofenceGeometryFilterSensitiveLog(obj.Geometry) }),
+  ...(obj.GeofenceProperties && { GeofenceProperties: SENSITIVE_STRING }),
 });
 
 /**
@@ -5934,6 +6188,7 @@ export const CalculateRouteRequestFilterSensitiveLog = (obj: CalculateRouteReque
   ...(obj.DeparturePosition && { DeparturePosition: SENSITIVE_STRING }),
   ...(obj.DestinationPosition && { DestinationPosition: SENSITIVE_STRING }),
   ...(obj.WaypointPositions && { WaypointPositions: SENSITIVE_STRING }),
+  ...(obj.Key && { Key: SENSITIVE_STRING }),
 });
 
 /**
@@ -5988,6 +6243,7 @@ export const CalculateRouteMatrixRequestFilterSensitiveLog = (obj: CalculateRout
   ...obj,
   ...(obj.DeparturePositions && { DeparturePositions: SENSITIVE_STRING }),
   ...(obj.DestinationPositions && { DestinationPositions: SENSITIVE_STRING }),
+  ...(obj.Key && { Key: SENSITIVE_STRING }),
 });
 
 /**
@@ -6005,6 +6261,7 @@ export const CalculateRouteMatrixResponseFilterSensitiveLog = (obj: CalculateRou
 export const GetGeofenceResponseFilterSensitiveLog = (obj: GetGeofenceResponse): any => ({
   ...obj,
   ...(obj.Geometry && { Geometry: GeofenceGeometryFilterSensitiveLog(obj.Geometry) }),
+  ...(obj.GeofenceProperties && { GeofenceProperties: SENSITIVE_STRING }),
 });
 
 /**
@@ -6013,6 +6270,7 @@ export const GetGeofenceResponseFilterSensitiveLog = (obj: GetGeofenceResponse):
 export const ListGeofenceResponseEntryFilterSensitiveLog = (obj: ListGeofenceResponseEntry): any => ({
   ...obj,
   ...(obj.Geometry && { Geometry: GeofenceGeometryFilterSensitiveLog(obj.Geometry) }),
+  ...(obj.GeofenceProperties && { GeofenceProperties: SENSITIVE_STRING }),
 });
 
 /**
@@ -6029,6 +6287,7 @@ export const ListGeofencesResponseFilterSensitiveLog = (obj: ListGeofencesRespon
 export const PutGeofenceRequestFilterSensitiveLog = (obj: PutGeofenceRequest): any => ({
   ...obj,
   ...(obj.Geometry && { Geometry: GeofenceGeometryFilterSensitiveLog(obj.Geometry) }),
+  ...(obj.GeofenceProperties && { GeofenceProperties: SENSITIVE_STRING }),
 });
 
 /**
@@ -6085,6 +6344,14 @@ export const GetMapTileRequestFilterSensitiveLog = (obj: GetMapTileRequest): any
 /**
  * @internal
  */
+export const GetPlaceRequestFilterSensitiveLog = (obj: GetPlaceRequest): any => ({
+  ...obj,
+  ...(obj.Key && { Key: SENSITIVE_STRING }),
+});
+
+/**
+ * @internal
+ */
 export const PlaceGeometryFilterSensitiveLog = (obj: PlaceGeometry): any => ({
   ...obj,
   ...(obj.Point && { Point: SENSITIVE_STRING }),
@@ -6129,6 +6396,7 @@ export const ListDevicePositionsResponseFilterSensitiveLog = (obj: ListDevicePos
 export const SearchPlaceIndexForPositionRequestFilterSensitiveLog = (obj: SearchPlaceIndexForPositionRequest): any => ({
   ...obj,
   ...(obj.Position && { Position: SENSITIVE_STRING }),
+  ...(obj.Key && { Key: SENSITIVE_STRING }),
 });
 
 /**
@@ -6168,6 +6436,7 @@ export const SearchPlaceIndexForSuggestionsRequestFilterSensitiveLog = (
   ...(obj.Text && { Text: SENSITIVE_STRING }),
   ...(obj.BiasPosition && { BiasPosition: SENSITIVE_STRING }),
   ...(obj.FilterBBox && { FilterBBox: SENSITIVE_STRING }),
+  ...(obj.Key && { Key: SENSITIVE_STRING }),
 });
 
 /**
@@ -6200,6 +6469,7 @@ export const SearchPlaceIndexForTextRequestFilterSensitiveLog = (obj: SearchPlac
   ...(obj.Text && { Text: SENSITIVE_STRING }),
   ...(obj.BiasPosition && { BiasPosition: SENSITIVE_STRING }),
   ...(obj.FilterBBox && { FilterBBox: SENSITIVE_STRING }),
+  ...(obj.Key && { Key: SENSITIVE_STRING }),
 });
 
 /**

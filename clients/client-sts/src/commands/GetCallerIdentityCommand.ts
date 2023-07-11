@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
 import { getAwsAuthPlugin } from "@aws-sdk/middleware-signing";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,12 +12,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { GetCallerIdentityRequest, GetCallerIdentityResponse } from "../models/models_0";
 import { de_GetCallerIdentityCommand, se_GetCallerIdentityCommand } from "../protocols/Aws_query";
 import { ServiceInputTypes, ServiceOutputTypes, STSClientResolvedConfig } from "../STSClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -33,14 +37,12 @@ export interface GetCallerIdentityCommandOutput extends GetCallerIdentityRespons
 
 /**
  * @public
- * <p>Returns details about the IAM user or role whose credentials are used to call the
- *          operation.</p>
+ * <p>Returns details about the IAM user or role whose credentials are used to call the operation.</p>
  *          <note>
- *             <p>No permissions are required to perform this operation. If an administrator adds a
- *             policy to your IAM user or role that explicitly denies access to the
+ *             <p>No permissions are required to perform this operation. If an administrator
+ *            attaches a policy to your identity that explicitly denies access to the
  *                <code>sts:GetCallerIdentity</code> action, you can still perform this operation.
- *             Permissions are not required because the same information is returned when an IAM user
- *             or role is denied access. To view an example response, see <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_general.html#troubleshoot_general_access-denied-delete-mfa">I Am Not Authorized to Perform: iam:DeleteVirtualMFADevice</a> in the
+ *             Permissions are not required because the same information is returned when access is denied. To view an example response, see <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_general.html#troubleshoot_general_access-denied-delete-mfa">I Am Not Authorized to Perform: iam:DeleteVirtualMFADevice</a> in the
  *                <i>IAM User Guide</i>.</p>
  *          </note>
  * @example

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { UpdateRuleGroupRequest, UpdateRuleGroupResponse } from "../models/models_0";
 import { de_UpdateRuleGroupCommand, se_UpdateRuleGroupCommand } from "../protocols/Aws_json1_1";
 import { ServiceInputTypes, ServiceOutputTypes, WAFV2ClientResolvedConfig } from "../WAFV2Client";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -120,6 +124,9 @@ export interface UpdateRuleGroupCommandOutput extends UpdateRuleGroupResponse, _
  *               MatchScope: "ALL" || "KEY" || "VALUE", // required
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *             },
+ *             HeaderOrder: { // HeaderOrder
+ *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
+ *             },
  *           },
  *           TextTransformations: [ // TextTransformations // required
  *             { // TextTransformation
@@ -181,6 +188,9 @@ export interface UpdateRuleGroupCommandOutput extends UpdateRuleGroupResponse, _
  *               MatchScope: "ALL" || "KEY" || "VALUE", // required
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *             },
+ *             HeaderOrder: {
+ *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
+ *             },
  *           },
  *           TextTransformations: [ // required
  *             {
@@ -238,6 +248,9 @@ export interface UpdateRuleGroupCommandOutput extends UpdateRuleGroupResponse, _
  *               MatchScope: "ALL" || "KEY" || "VALUE", // required
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *             },
+ *             HeaderOrder: {
+ *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
+ *             },
  *           },
  *           TextTransformations: [ // required
  *             {
@@ -288,6 +301,9 @@ export interface UpdateRuleGroupCommandOutput extends UpdateRuleGroupResponse, _
  *                 ExcludedCookies: "<CookieNames>",
  *               },
  *               MatchScope: "ALL" || "KEY" || "VALUE", // required
+ *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
+ *             },
+ *             HeaderOrder: {
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *             },
  *           },
@@ -429,6 +445,9 @@ export interface UpdateRuleGroupCommandOutput extends UpdateRuleGroupResponse, _
  *               MatchScope: "ALL" || "KEY" || "VALUE", // required
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *             },
+ *             HeaderOrder: {
+ *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
+ *             },
  *           },
  *           TextTransformations: [ // required
  *             {
@@ -439,7 +458,7 @@ export interface UpdateRuleGroupCommandOutput extends UpdateRuleGroupResponse, _
  *         },
  *         RateBasedStatement: { // RateBasedStatement
  *           Limit: Number("long"), // required
- *           AggregateKeyType: "IP" || "FORWARDED_IP", // required
+ *           AggregateKeyType: "IP" || "FORWARDED_IP" || "CUSTOM_KEYS" || "CONSTANT", // required
  *           ScopeDownStatement: {
  *             ByteMatchStatement: {
  *               SearchString: "BLOB_VALUE", // required
@@ -522,12 +541,37 @@ export interface UpdateRuleGroupCommandOutput extends UpdateRuleGroupResponse, _
  *             },
  *             RateBasedStatement: {
  *               Limit: Number("long"), // required
- *               AggregateKeyType: "IP" || "FORWARDED_IP", // required
+ *               AggregateKeyType: "IP" || "FORWARDED_IP" || "CUSTOM_KEYS" || "CONSTANT", // required
  *               ScopeDownStatement: "<Statement>",
  *               ForwardedIPConfig: {
  *                 HeaderName: "STRING_VALUE", // required
  *                 FallbackBehavior: "MATCH" || "NO_MATCH", // required
  *               },
+ *               CustomKeys: [ // RateBasedStatementCustomKeys
+ *                 { // RateBasedStatementCustomKey
+ *                   Header: { // RateLimitHeader
+ *                     Name: "STRING_VALUE", // required
+ *                     TextTransformations: "<TextTransformations>", // required
+ *                   },
+ *                   Cookie: { // RateLimitCookie
+ *                     Name: "STRING_VALUE", // required
+ *                     TextTransformations: "<TextTransformations>", // required
+ *                   },
+ *                   QueryArgument: { // RateLimitQueryArgument
+ *                     Name: "STRING_VALUE", // required
+ *                     TextTransformations: "<TextTransformations>", // required
+ *                   },
+ *                   QueryString: { // RateLimitQueryString
+ *                     TextTransformations: "<TextTransformations>", // required
+ *                   },
+ *                   HTTPMethod: {},
+ *                   ForwardedIP: {},
+ *                   IP: {},
+ *                   LabelNamespace: { // RateLimitLabelNamespace
+ *                     Namespace: "STRING_VALUE", // required
+ *                   },
+ *                 },
+ *               ],
  *             },
  *             AndStatement: { // AndStatement
  *               Statements: [ // Statements // required
@@ -612,6 +656,70 @@ export interface UpdateRuleGroupCommandOutput extends UpdateRuleGroupResponse, _
  *                         ],
  *                       },
  *                     },
+ *                     EnableRegexInPath: true || false,
+ *                   },
+ *                   AWSManagedRulesACFPRuleSet: { // AWSManagedRulesACFPRuleSet
+ *                     CreationPath: "STRING_VALUE", // required
+ *                     RegistrationPagePath: "STRING_VALUE", // required
+ *                     RequestInspection: { // RequestInspectionACFP
+ *                       PayloadType: "JSON" || "FORM_ENCODED", // required
+ *                       UsernameField: {
+ *                         Identifier: "STRING_VALUE", // required
+ *                       },
+ *                       PasswordField: {
+ *                         Identifier: "STRING_VALUE", // required
+ *                       },
+ *                       EmailField: { // EmailField
+ *                         Identifier: "STRING_VALUE", // required
+ *                       },
+ *                       PhoneNumberFields: [ // PhoneNumberFields
+ *                         { // PhoneNumberField
+ *                           Identifier: "STRING_VALUE", // required
+ *                         },
+ *                       ],
+ *                       AddressFields: [ // AddressFields
+ *                         { // AddressField
+ *                           Identifier: "STRING_VALUE", // required
+ *                         },
+ *                       ],
+ *                     },
+ *                     ResponseInspection: {
+ *                       StatusCode: {
+ *                         SuccessCodes: [ // required
+ *                           Number("int"),
+ *                         ],
+ *                         FailureCodes: [ // required
+ *                           Number("int"),
+ *                         ],
+ *                       },
+ *                       Header: {
+ *                         Name: "STRING_VALUE", // required
+ *                         SuccessValues: [ // required
+ *                           "STRING_VALUE",
+ *                         ],
+ *                         FailureValues: [ // required
+ *                           "STRING_VALUE",
+ *                         ],
+ *                       },
+ *                       BodyContains: {
+ *                         SuccessStrings: [ // required
+ *                           "STRING_VALUE",
+ *                         ],
+ *                         FailureStrings: [ // required
+ *                           "STRING_VALUE",
+ *                         ],
+ *                       },
+ *                       Json: {
+ *                         Identifier: "STRING_VALUE", // required
+ *                         SuccessValues: [ // required
+ *                           "STRING_VALUE",
+ *                         ],
+ *                         FailureValues: [ // required
+ *                           "STRING_VALUE",
+ *                         ],
+ *                       },
+ *                     },
+ *                     EnableRegexInPath: true || false,
  *                   },
  *                 },
  *               ],
@@ -656,6 +764,31 @@ export interface UpdateRuleGroupCommandOutput extends UpdateRuleGroupResponse, _
  *             HeaderName: "STRING_VALUE", // required
  *             FallbackBehavior: "MATCH" || "NO_MATCH", // required
  *           },
+ *           CustomKeys: [
+ *             {
+ *               Header: {
+ *                 Name: "STRING_VALUE", // required
+ *                 TextTransformations: "<TextTransformations>", // required
+ *               },
+ *               Cookie: {
+ *                 Name: "STRING_VALUE", // required
+ *                 TextTransformations: "<TextTransformations>", // required
+ *               },
+ *               QueryArgument: {
+ *                 Name: "STRING_VALUE", // required
+ *                 TextTransformations: "<TextTransformations>", // required
+ *               },
+ *               QueryString: {
+ *                 TextTransformations: "<TextTransformations>", // required
+ *               },
+ *               HTTPMethod: {},
+ *               ForwardedIP: {},
+ *               IP: {},
+ *               LabelNamespace: {
+ *                 Namespace: "STRING_VALUE", // required
+ *               },
+ *             },
+ *           ],
  *         },
  *         AndStatement: {
  *           Statements: [ // required
@@ -732,6 +865,66 @@ export interface UpdateRuleGroupCommandOutput extends UpdateRuleGroupResponse, _
  *                     ],
  *                   },
  *                 },
+ *                 EnableRegexInPath: true || false,
+ *               },
+ *               AWSManagedRulesACFPRuleSet: {
+ *                 CreationPath: "STRING_VALUE", // required
+ *                 RegistrationPagePath: "STRING_VALUE", // required
+ *                 RequestInspection: {
+ *                   PayloadType: "JSON" || "FORM_ENCODED", // required
+ *                   UsernameField: "<UsernameField>",
+ *                   PasswordField: "<PasswordField>",
+ *                   EmailField: {
+ *                     Identifier: "STRING_VALUE", // required
+ *                   },
+ *                   PhoneNumberFields: [
+ *                     {
+ *                       Identifier: "STRING_VALUE", // required
+ *                     },
+ *                   ],
+ *                   AddressFields: [
+ *                     {
+ *                       Identifier: "STRING_VALUE", // required
+ *                     },
+ *                   ],
+ *                 },
+ *                 ResponseInspection: {
+ *                   StatusCode: {
+ *                     SuccessCodes: [ // required
+ *                       Number("int"),
+ *                     ],
+ *                     FailureCodes: [ // required
+ *                       Number("int"),
+ *                     ],
+ *                   },
+ *                   Header: {
+ *                     Name: "STRING_VALUE", // required
+ *                     SuccessValues: [ // required
+ *                       "STRING_VALUE",
+ *                     ],
+ *                     FailureValues: [ // required
+ *                       "STRING_VALUE",
+ *                     ],
+ *                   },
+ *                   BodyContains: {
+ *                     SuccessStrings: [ // required
+ *                       "STRING_VALUE",
+ *                     ],
+ *                     FailureStrings: [ // required
+ *                       "STRING_VALUE",
+ *                     ],
+ *                   },
+ *                   Json: {
+ *                     Identifier: "STRING_VALUE", // required
+ *                     SuccessValues: [ // required
+ *                       "STRING_VALUE",
+ *                     ],
+ *                     FailureValues: [ // required
+ *                       "STRING_VALUE",
+ *                     ],
+ *                   },
+ *                 },
+ *                 EnableRegexInPath: true || false,
  *               },
  *             },
  *           ],

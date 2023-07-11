@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EMRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EMRClient";
 import { ListInstancesInput, ListInstancesOutput } from "../models/models_0";
 import { de_ListInstancesCommand, se_ListInstancesCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,9 +36,10 @@ export interface ListInstancesCommandOutput extends ListInstancesOutput, __Metad
 
 /**
  * @public
- * <p>Provides information for all active EC2 instances and EC2 instances terminated in the
- *          last 30 days, up to a maximum of 2,000. EC2 instances in any of the following states are
- *          considered active: AWAITING_FULFILLMENT, PROVISIONING, BOOTSTRAPPING, RUNNING.</p>
+ * <p>Provides information for all active Amazon EC2 instances and Amazon EC2
+ *          instances terminated in the last 30 days, up to a maximum of 2,000. Amazon EC2
+ *          instances in any of the following states are considered active: AWAITING_FULFILLMENT,
+ *          PROVISIONING, BOOTSTRAPPING, RUNNING.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

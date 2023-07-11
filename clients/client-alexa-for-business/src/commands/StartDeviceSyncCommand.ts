@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AlexaForBusinessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AlexaForBusinessClient";
 import { StartDeviceSyncRequest, StartDeviceSyncResponse } from "../models/models_0";
 import { de_StartDeviceSyncCommand, se_StartDeviceSyncCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,6 +36,8 @@ export interface StartDeviceSyncCommandOutput extends StartDeviceSyncResponse, _
 
 /**
  * @public
+ * @deprecated
+ *
  * <p>Resets a device and its account to the known default settings. This clears all
  *          information and settings set by previous users in the following ways:</p>
  *          <ul>
@@ -64,7 +70,7 @@ export interface StartDeviceSyncCommandOutput extends StartDeviceSyncResponse, _
  *   RoomArn: "STRING_VALUE",
  *   DeviceArn: "STRING_VALUE",
  *   Features: [ // Features // required
- *     "STRING_VALUE",
+ *     "BLUETOOTH" || "VOLUME" || "NOTIFICATIONS" || "LISTS" || "SKILLS" || "NETWORK_PROFILE" || "SETTINGS" || "ALL",
  *   ],
  * };
  * const command = new StartDeviceSyncCommand(input);

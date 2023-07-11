@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { DescribeSigningJobRequest, DescribeSigningJobResponse } from "../models/models_0";
 import { de_DescribeSigningJobCommand, se_DescribeSigningJobCommand } from "../protocols/Aws_restJson1";
 import { ServiceInputTypes, ServiceOutputTypes, SignerClientResolvedConfig } from "../SignerClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,8 +36,8 @@ export interface DescribeSigningJobCommandOutput extends DescribeSigningJobRespo
 
 /**
  * @public
- * <p>Returns information about a specific code signing job. You specify the job by using
- * 			the <code>jobId</code> value that is returned by the <a>StartSigningJob</a>
+ * <p>Returns information about a specific code signing job. You specify the job by using the
+ * 				<code>jobId</code> value that is returned by the <a>StartSigningJob</a>
  * 			operation. </p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -64,10 +68,10 @@ export interface DescribeSigningJobCommandOutput extends DescribeSigningJobRespo
  * //   profileVersion: "STRING_VALUE",
  * //   overrides: { // SigningPlatformOverrides
  * //     signingConfiguration: { // SigningConfigurationOverrides
- * //       encryptionAlgorithm: "STRING_VALUE",
- * //       hashAlgorithm: "STRING_VALUE",
+ * //       encryptionAlgorithm: "RSA" || "ECDSA",
+ * //       hashAlgorithm: "SHA1" || "SHA256",
  * //     },
- * //     signingImageFormat: "STRING_VALUE",
+ * //     signingImageFormat: "JSON" || "JSONEmbedded" || "JSONDetached",
  * //   },
  * //   signingParameters: { // SigningParameters
  * //     "<keys>": "STRING_VALUE",
@@ -76,7 +80,7 @@ export interface DescribeSigningJobCommandOutput extends DescribeSigningJobRespo
  * //   completedAt: new Date("TIMESTAMP"),
  * //   signatureExpiresAt: new Date("TIMESTAMP"),
  * //   requestedBy: "STRING_VALUE",
- * //   status: "STRING_VALUE",
+ * //   status: "InProgress" || "Failed" || "Succeeded",
  * //   statusReason: "STRING_VALUE",
  * //   revocationRecord: { // SigningJobRevocationRecord
  * //     reason: "STRING_VALUE",

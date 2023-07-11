@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { IvsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IvsClient";
 import { GetChannelRequest, GetChannelResponse } from "../models/models_0";
 import { de_GetChannelCommand, se_GetChannelCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -49,7 +53,7 @@ export interface GetChannelCommandOutput extends GetChannelResponse, __MetadataB
  * //     arn: "STRING_VALUE",
  * //     name: "STRING_VALUE",
  * //     latencyMode: "STRING_VALUE",
- * //     type: "BASIC" || "STANDARD",
+ * //     type: "BASIC" || "STANDARD" || "ADVANCED_SD" || "ADVANCED_HD",
  * //     recordingConfigurationArn: "STRING_VALUE",
  * //     ingestEndpoint: "STRING_VALUE",
  * //     playbackUrl: "STRING_VALUE",
@@ -58,6 +62,7 @@ export interface GetChannelCommandOutput extends GetChannelResponse, __MetadataB
  * //       "<keys>": "STRING_VALUE",
  * //     },
  * //     insecureIngest: true || false,
+ * //     preset: "HIGHER_BANDWIDTH_DELIVERY" || "CONSTRAINED_BANDWIDTH_DELIVERY",
  * //   },
  * // };
  *

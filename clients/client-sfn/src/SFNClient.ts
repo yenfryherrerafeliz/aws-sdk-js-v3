@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,15 +47,31 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CreateActivityCommandInput, CreateActivityCommandOutput } from "./commands/CreateActivityCommand";
+import {
+  CreateStateMachineAliasCommandInput,
+  CreateStateMachineAliasCommandOutput,
+} from "./commands/CreateStateMachineAliasCommand";
 import { CreateStateMachineCommandInput, CreateStateMachineCommandOutput } from "./commands/CreateStateMachineCommand";
 import { DeleteActivityCommandInput, DeleteActivityCommandOutput } from "./commands/DeleteActivityCommand";
+import {
+  DeleteStateMachineAliasCommandInput,
+  DeleteStateMachineAliasCommandOutput,
+} from "./commands/DeleteStateMachineAliasCommand";
 import { DeleteStateMachineCommandInput, DeleteStateMachineCommandOutput } from "./commands/DeleteStateMachineCommand";
+import {
+  DeleteStateMachineVersionCommandInput,
+  DeleteStateMachineVersionCommandOutput,
+} from "./commands/DeleteStateMachineVersionCommand";
 import { DescribeActivityCommandInput, DescribeActivityCommandOutput } from "./commands/DescribeActivityCommand";
 import { DescribeExecutionCommandInput, DescribeExecutionCommandOutput } from "./commands/DescribeExecutionCommand";
 import { DescribeMapRunCommandInput, DescribeMapRunCommandOutput } from "./commands/DescribeMapRunCommand";
+import {
+  DescribeStateMachineAliasCommandInput,
+  DescribeStateMachineAliasCommandOutput,
+} from "./commands/DescribeStateMachineAliasCommand";
 import {
   DescribeStateMachineCommandInput,
   DescribeStateMachineCommandOutput,
@@ -72,11 +88,23 @@ import {
 import { ListActivitiesCommandInput, ListActivitiesCommandOutput } from "./commands/ListActivitiesCommand";
 import { ListExecutionsCommandInput, ListExecutionsCommandOutput } from "./commands/ListExecutionsCommand";
 import { ListMapRunsCommandInput, ListMapRunsCommandOutput } from "./commands/ListMapRunsCommand";
+import {
+  ListStateMachineAliasesCommandInput,
+  ListStateMachineAliasesCommandOutput,
+} from "./commands/ListStateMachineAliasesCommand";
 import { ListStateMachinesCommandInput, ListStateMachinesCommandOutput } from "./commands/ListStateMachinesCommand";
+import {
+  ListStateMachineVersionsCommandInput,
+  ListStateMachineVersionsCommandOutput,
+} from "./commands/ListStateMachineVersionsCommand";
 import {
   ListTagsForResourceCommandInput,
   ListTagsForResourceCommandOutput,
 } from "./commands/ListTagsForResourceCommand";
+import {
+  PublishStateMachineVersionCommandInput,
+  PublishStateMachineVersionCommandOutput,
+} from "./commands/PublishStateMachineVersionCommand";
 import { SendTaskFailureCommandInput, SendTaskFailureCommandOutput } from "./commands/SendTaskFailureCommand";
 import { SendTaskHeartbeatCommandInput, SendTaskHeartbeatCommandOutput } from "./commands/SendTaskHeartbeatCommand";
 import { SendTaskSuccessCommandInput, SendTaskSuccessCommandOutput } from "./commands/SendTaskSuccessCommand";
@@ -86,6 +114,10 @@ import { StopExecutionCommandInput, StopExecutionCommandOutput } from "./command
 import { TagResourceCommandInput, TagResourceCommandOutput } from "./commands/TagResourceCommand";
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "./commands/UntagResourceCommand";
 import { UpdateMapRunCommandInput, UpdateMapRunCommandOutput } from "./commands/UpdateMapRunCommand";
+import {
+  UpdateStateMachineAliasCommandInput,
+  UpdateStateMachineAliasCommandOutput,
+} from "./commands/UpdateStateMachineAliasCommand";
 import { UpdateStateMachineCommandInput, UpdateStateMachineCommandOutput } from "./commands/UpdateStateMachineCommand";
 import {
   ClientInputEndpointParameters,
@@ -95,17 +127,23 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
 export type ServiceInputTypes =
   | CreateActivityCommandInput
+  | CreateStateMachineAliasCommandInput
   | CreateStateMachineCommandInput
   | DeleteActivityCommandInput
+  | DeleteStateMachineAliasCommandInput
   | DeleteStateMachineCommandInput
+  | DeleteStateMachineVersionCommandInput
   | DescribeActivityCommandInput
   | DescribeExecutionCommandInput
   | DescribeMapRunCommandInput
+  | DescribeStateMachineAliasCommandInput
   | DescribeStateMachineCommandInput
   | DescribeStateMachineForExecutionCommandInput
   | GetActivityTaskCommandInput
@@ -113,8 +151,11 @@ export type ServiceInputTypes =
   | ListActivitiesCommandInput
   | ListExecutionsCommandInput
   | ListMapRunsCommandInput
+  | ListStateMachineAliasesCommandInput
+  | ListStateMachineVersionsCommandInput
   | ListStateMachinesCommandInput
   | ListTagsForResourceCommandInput
+  | PublishStateMachineVersionCommandInput
   | SendTaskFailureCommandInput
   | SendTaskHeartbeatCommandInput
   | SendTaskSuccessCommandInput
@@ -124,6 +165,7 @@ export type ServiceInputTypes =
   | TagResourceCommandInput
   | UntagResourceCommandInput
   | UpdateMapRunCommandInput
+  | UpdateStateMachineAliasCommandInput
   | UpdateStateMachineCommandInput;
 
 /**
@@ -131,12 +173,16 @@ export type ServiceInputTypes =
  */
 export type ServiceOutputTypes =
   | CreateActivityCommandOutput
+  | CreateStateMachineAliasCommandOutput
   | CreateStateMachineCommandOutput
   | DeleteActivityCommandOutput
+  | DeleteStateMachineAliasCommandOutput
   | DeleteStateMachineCommandOutput
+  | DeleteStateMachineVersionCommandOutput
   | DescribeActivityCommandOutput
   | DescribeExecutionCommandOutput
   | DescribeMapRunCommandOutput
+  | DescribeStateMachineAliasCommandOutput
   | DescribeStateMachineCommandOutput
   | DescribeStateMachineForExecutionCommandOutput
   | GetActivityTaskCommandOutput
@@ -144,8 +190,11 @@ export type ServiceOutputTypes =
   | ListActivitiesCommandOutput
   | ListExecutionsCommandOutput
   | ListMapRunsCommandOutput
+  | ListStateMachineAliasesCommandOutput
+  | ListStateMachineVersionsCommandOutput
   | ListStateMachinesCommandOutput
   | ListTagsForResourceCommandOutput
+  | PublishStateMachineVersionCommandOutput
   | SendTaskFailureCommandOutput
   | SendTaskHeartbeatCommandOutput
   | SendTaskSuccessCommandOutput
@@ -155,6 +204,7 @@ export type ServiceOutputTypes =
   | TagResourceCommandOutput
   | UntagResourceCommandOutput
   | UpdateMapRunCommandOutput
+  | UpdateStateMachineAliasCommandOutput
   | UpdateStateMachineCommandOutput;
 
 /**
@@ -167,7 +217,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -222,7 +272,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -276,7 +326,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -284,7 +334,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type SFNClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type SFNClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -303,7 +353,7 @@ export interface SFNClientConfig extends SFNClientConfigType {}
 /**
  * @public
  */
-type SFNClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type SFNClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

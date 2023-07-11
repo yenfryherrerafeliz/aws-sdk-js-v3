@@ -1,6 +1,6 @@
 // smithy-typescript generated code
-import { createAggregatedClient } from "@aws-sdk/smithy-client";
-import { HttpHandlerOptions as __HttpHandlerOptions } from "@aws-sdk/types";
+import { createAggregatedClient } from "@smithy/smithy-client";
+import { HttpHandlerOptions as __HttpHandlerOptions } from "@smithy/types";
 
 import { CloudTrailClient, CloudTrailClientConfig } from "./CloudTrailClient";
 import { AddTagsCommand, AddTagsCommandInput, AddTagsCommandOutput } from "./commands/AddTagsCommand";
@@ -135,6 +135,11 @@ import {
   RestoreEventDataStoreCommandInput,
   RestoreEventDataStoreCommandOutput,
 } from "./commands/RestoreEventDataStoreCommand";
+import {
+  StartEventDataStoreIngestionCommand,
+  StartEventDataStoreIngestionCommandInput,
+  StartEventDataStoreIngestionCommandOutput,
+} from "./commands/StartEventDataStoreIngestionCommand";
 import { StartImportCommand, StartImportCommandInput, StartImportCommandOutput } from "./commands/StartImportCommand";
 import {
   StartLoggingCommand,
@@ -142,6 +147,11 @@ import {
   StartLoggingCommandOutput,
 } from "./commands/StartLoggingCommand";
 import { StartQueryCommand, StartQueryCommandInput, StartQueryCommandOutput } from "./commands/StartQueryCommand";
+import {
+  StopEventDataStoreIngestionCommand,
+  StopEventDataStoreIngestionCommandInput,
+  StopEventDataStoreIngestionCommandOutput,
+} from "./commands/StopEventDataStoreIngestionCommand";
 import { StopImportCommand, StopImportCommandInput, StopImportCommandOutput } from "./commands/StopImportCommand";
 import { StopLoggingCommand, StopLoggingCommandInput, StopLoggingCommandOutput } from "./commands/StopLoggingCommand";
 import {
@@ -193,9 +203,11 @@ const commands = {
   RegisterOrganizationDelegatedAdminCommand,
   RemoveTagsCommand,
   RestoreEventDataStoreCommand,
+  StartEventDataStoreIngestionCommand,
   StartImportCommand,
   StartLoggingCommand,
   StartQueryCommand,
+  StopEventDataStoreIngestionCommand,
   StopImportCommand,
   StopLoggingCommand,
   UpdateChannelCommand,
@@ -703,6 +715,23 @@ export interface CloudTrail {
   ): void;
 
   /**
+   * @see {@link StartEventDataStoreIngestionCommand}
+   */
+  startEventDataStoreIngestion(
+    args: StartEventDataStoreIngestionCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<StartEventDataStoreIngestionCommandOutput>;
+  startEventDataStoreIngestion(
+    args: StartEventDataStoreIngestionCommandInput,
+    cb: (err: any, data?: StartEventDataStoreIngestionCommandOutput) => void
+  ): void;
+  startEventDataStoreIngestion(
+    args: StartEventDataStoreIngestionCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: StartEventDataStoreIngestionCommandOutput) => void
+  ): void;
+
+  /**
    * @see {@link StartImportCommand}
    */
   startImport(args: StartImportCommandInput, options?: __HttpHandlerOptions): Promise<StartImportCommandOutput>;
@@ -733,6 +762,23 @@ export interface CloudTrail {
     args: StartQueryCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: StartQueryCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link StopEventDataStoreIngestionCommand}
+   */
+  stopEventDataStoreIngestion(
+    args: StopEventDataStoreIngestionCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<StopEventDataStoreIngestionCommandOutput>;
+  stopEventDataStoreIngestion(
+    args: StopEventDataStoreIngestionCommandInput,
+    cb: (err: any, data?: StopEventDataStoreIngestionCommandOutput) => void
+  ): void;
+  stopEventDataStoreIngestion(
+    args: StopEventDataStoreIngestionCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: StopEventDataStoreIngestionCommandOutput) => void
   ): void;
 
   /**
@@ -814,7 +860,7 @@ export interface CloudTrail {
  *                Amazon Web Services SDKs, including how to download and install them, see <a href="http://aws.amazon.com/tools/">Tools to Build on Amazon Web Services</a>.</p>
  *          </note>
  *          <p>See the <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html">CloudTrail
- *             User Guide</a> for information about the data that is included with each Amazon Web Services API call listed in the log files.</p>
+ *          User Guide</a> for information about the data that is included with each Amazon Web Services API call listed in the log files.</p>
  */
 export class CloudTrail extends CloudTrailClient implements CloudTrail {}
 createAggregatedClient(commands, CloudTrail);

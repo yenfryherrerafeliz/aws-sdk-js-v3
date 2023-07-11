@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CodePipelineClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodePipelineClient";
 import { PollForThirdPartyJobsInput, PollForThirdPartyJobsOutput } from "../models/models_0";
 import { de_PollForThirdPartyJobsCommand, se_PollForThirdPartyJobsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -34,11 +38,11 @@ export interface PollForThirdPartyJobsCommandOutput extends PollForThirdPartyJob
  * @public
  * <p>Determines whether there are any third party jobs for a job worker to act on. Used
  *             for partner actions only.</p>
- *         <important>
- *             <p>When this API is called, AWS CodePipeline returns temporary credentials for the
- *                 S3 bucket used to store artifacts for the pipeline, if the action requires access to
- *                 that S3 bucket for input or output artifacts.</p>
- *         </important>
+ *          <important>
+ *             <p>When this API is called, CodePipeline returns temporary credentials for
+ *                 the S3 bucket used to store artifacts for the pipeline, if the action requires
+ *                 access to that S3 bucket for input or output artifacts.</p>
+ *          </important>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -47,8 +51,8 @@ export interface PollForThirdPartyJobsCommandOutput extends PollForThirdPartyJob
  * const client = new CodePipelineClient(config);
  * const input = { // PollForThirdPartyJobsInput
  *   actionTypeId: { // ActionTypeId
- *     category: "STRING_VALUE", // required
- *     owner: "STRING_VALUE", // required
+ *     category: "Source" || "Build" || "Deploy" || "Test" || "Invoke" || "Approval", // required
+ *     owner: "AWS" || "ThirdParty" || "Custom", // required
  *     provider: "STRING_VALUE", // required
  *     version: "STRING_VALUE", // required
  *   },

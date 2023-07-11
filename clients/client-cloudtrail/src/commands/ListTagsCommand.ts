@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudTrailClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudTrailClient";
 import { ListTagsRequest, ListTagsResponse } from "../models/models_0";
 import { de_ListTagsCommand, se_ListTagsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,7 +36,7 @@ export interface ListTagsCommandOutput extends ListTagsResponse, __MetadataBeare
 
 /**
  * @public
- * <p>Lists the tags for the trail, event data store, or channel in the current region.</p>
+ * <p>Lists the tags for the specified trails, event data stores, or channels in the current Region.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -70,6 +74,10 @@ export interface ListTagsCommandOutput extends ListTagsResponse, __MetadataBeare
  * @see {@link ListTagsCommandOutput} for command's `response` shape.
  * @see {@link CloudTrailClientResolvedConfig | config} for CloudTrailClient's `config` shape.
  *
+ * @throws {@link ChannelARNInvalidException} (client fault)
+ *  <p>This exception is thrown when the specified value of <code>ChannelARN</code> is not
+ *          valid.</p>
+ *
  * @throws {@link CloudTrailARNInvalidException} (client fault)
  *  <p>This exception is thrown when an operation is called with a trail ARN that is not valid.
  *          The following is the format of a trail ARN.</p>
@@ -78,11 +86,15 @@ export interface ListTagsCommandOutput extends ListTagsResponse, __MetadataBeare
  *          </p>
  *          <p>This exception is also thrown when you call <code>AddTags</code> or <code>RemoveTags</code> on a trail, event data store, or channel with a resource ARN that is not valid.</p>
  *          <p>The following is the format of an event data store ARN:
- *          <code>arn:aws:cloudtrail:us-east-2:12345678910:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
+ *          <code>arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
  *          </p>
  *          <p>The following is the format of a channel ARN:
  *          <code>arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890</code>
  *          </p>
+ *
+ * @throws {@link EventDataStoreARNInvalidException} (client fault)
+ *  <p>The specified event data store ARN is not valid or does not map to an event data store
+ *          in your account.</p>
  *
  * @throws {@link EventDataStoreNotFoundException} (client fault)
  *  <p>The specified event data store was not found.</p>

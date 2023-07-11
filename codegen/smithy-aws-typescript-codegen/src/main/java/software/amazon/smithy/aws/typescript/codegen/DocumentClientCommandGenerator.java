@@ -34,6 +34,7 @@ import software.amazon.smithy.model.shapes.Shape;
 import software.amazon.smithy.model.shapes.StructureShape;
 import software.amazon.smithy.model.traits.IdempotencyTokenTrait;
 import software.amazon.smithy.typescript.codegen.ApplicationProtocol;
+import software.amazon.smithy.typescript.codegen.TypeScriptDependency;
 import software.amazon.smithy.typescript.codegen.TypeScriptSettings;
 import software.amazon.smithy.typescript.codegen.TypeScriptWriter;
 import software.amazon.smithy.utils.SmithyInternalApi;
@@ -99,6 +100,7 @@ final class DocumentClientCommandGenerator implements Runnable {
         String servicePath = Paths.get(".", DocumentClientUtils.CLIENT_NAME).toString();
         String configType = DocumentClientUtils.CLIENT_CONFIG_NAME;
 
+
         // Add required imports.
         writer.addImport(configType, configType, servicePath);
         writer.addImport(
@@ -106,6 +108,10 @@ final class DocumentClientCommandGenerator implements Runnable {
             "DynamoDBDocumentClientCommand",
             "./baseCommand/DynamoDBDocumentClientCommand"
         );
+        writer.addImport("Command", "$Command", TypeScriptDependency.AWS_SMITHY_CLIENT);
+
+        writer.writeDocs("@public");
+        writer.write("export { DynamoDBDocumentClientCommand, $$Command };");
 
         generateInputAndOutputTypes();
 
@@ -117,7 +123,9 @@ final class DocumentClientCommandGenerator implements Runnable {
         });
 
         String name = DocumentClientUtils.getModifiedName(symbol.getName());
-        writer.writeDocs(DocumentClientUtils.getCommandDocs(symbol.getName()));
+        writer.writeDocs(DocumentClientUtils.getCommandDocs(symbol.getName())
+            + "\n\n@public"
+        );
         writer.openBlock(
             "export class $L extends DynamoDBDocumentClientCommand<" + ioTypes + ", $L> {",
             "}",
@@ -175,8 +183,8 @@ final class DocumentClientCommandGenerator implements Runnable {
         String servicePath = Paths.get(".", DocumentClientUtils.CLIENT_NAME).toString();
         writer.addImport(serviceInputTypes, serviceInputTypes, servicePath);
         writer.addImport(serviceOutputTypes, serviceOutputTypes, servicePath);
-        writer.addImport(handler, handler, "@aws-sdk/types");
-        writer.addImport(middlewareStack, middlewareStack, "@aws-sdk/types");
+        writer.addImport(handler, handler, TypeScriptDependency.SMITHY_TYPES);
+        writer.addImport(middlewareStack, middlewareStack, TypeScriptDependency.SMITHY_TYPES);
 
         writer.write("resolveMiddleware(")
                 .indent()
@@ -289,6 +297,7 @@ final class DocumentClientCommandGenerator implements Runnable {
             Optional<StructureShape> optionalShape,
             List<MemberShape> membersWithAttr
     ) {
+        writer.writeDocs("@public");
         if (optionalShape.isPresent()) {
             writer.addImport(originalTypeName, "__" + originalTypeName, "@aws-sdk/client-dynamodb");
             if (membersWithAttr.isEmpty()) {

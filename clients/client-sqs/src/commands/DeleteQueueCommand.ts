@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { DeleteQueueRequest } from "../models/models_0";
 import { de_DeleteQueueCommand, se_DeleteQueueCommand } from "../protocols/Aws_query";
 import { ServiceInputTypes, ServiceOutputTypes, SQSClientResolvedConfig } from "../SQSClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,20 +36,25 @@ export interface DeleteQueueCommandOutput extends __MetadataBearer {}
 
 /**
  * @public
- * <p>Deletes the queue specified by the <code>QueueUrl</code>, regardless of the queue's contents.</p>
+ * <p>Deletes the queue specified by the <code>QueueUrl</code>, regardless of the queue's
+ *             contents.</p>
  *          <important>
- *             <p>Be careful with the <code>DeleteQueue</code> action: When you delete a queue, any messages in the queue are no longer available.
- *       </p>
+ *             <p>Be careful with the <code>DeleteQueue</code> action: When you delete a queue, any
+ *                 messages in the queue are no longer available. </p>
  *          </important>
- *          <p>When you delete a queue, the deletion process takes up to 60 seconds. Requests you send involving that queue during the 60 seconds might succeed. For example, a
- *           <code>
+ *          <p>When you delete a queue, the deletion process takes up to 60 seconds. Requests you
+ *             send involving that queue during the 60 seconds might succeed. For example, a
+ *                     <code>
  *                <a>SendMessage</a>
- *             </code> request might succeed, but after 60 seconds the queue and the message you sent no longer exist.</p>
- *          <p>When you delete a queue, you must wait at least 60 seconds before creating a queue with the same name.</p>
+ *             </code> request might succeed, but after 60
+ *             seconds the queue and the message you sent no longer exist.</p>
+ *          <p>When you delete a queue, you must wait at least 60 seconds before creating a queue
+ *             with the same name.</p>
  *          <note>
  *             <p>Cross-account permissions don't apply to this action. For more information,
  * see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name">Grant
- * cross-account permissions to a role and a user name</a> in the <i>Amazon SQS Developer Guide</i>.</p>
+ * cross-account permissions to a role and a username</a> in the <i>Amazon SQS Developer Guide</i>.</p>
+ *             <p>The delete operation uses the HTTP <code>GET</code> verb.</p>
  *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.

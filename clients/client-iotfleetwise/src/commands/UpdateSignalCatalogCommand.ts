@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { IoTFleetWiseClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTFleetWiseClient";
 import { UpdateSignalCatalogRequest, UpdateSignalCatalogResponse } from "../models/models_0";
 import { de_UpdateSignalCatalogCommand, se_UpdateSignalCatalogCommand } from "../protocols/Aws_json1_0";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -47,6 +51,8 @@ export interface UpdateSignalCatalogCommandOutput extends UpdateSignalCatalogRes
  *       branch: { // Branch
  *         fullyQualifiedName: "STRING_VALUE", // required
  *         description: "STRING_VALUE",
+ *         deprecationMessage: "STRING_VALUE",
+ *         comment: "STRING_VALUE",
  *       },
  *       sensor: { // Sensor
  *         fullyQualifiedName: "STRING_VALUE", // required
@@ -58,6 +64,8 @@ export interface UpdateSignalCatalogCommandOutput extends UpdateSignalCatalogRes
  *         ],
  *         min: Number("double"),
  *         max: Number("double"),
+ *         deprecationMessage: "STRING_VALUE",
+ *         comment: "STRING_VALUE",
  *       },
  *       actuator: { // Actuator
  *         fullyQualifiedName: "STRING_VALUE", // required
@@ -70,6 +78,8 @@ export interface UpdateSignalCatalogCommandOutput extends UpdateSignalCatalogRes
  *         min: Number("double"),
  *         max: Number("double"),
  *         assignedValue: "STRING_VALUE",
+ *         deprecationMessage: "STRING_VALUE",
+ *         comment: "STRING_VALUE",
  *       },
  *       attribute: { // Attribute
  *         fullyQualifiedName: "STRING_VALUE", // required
@@ -83,6 +93,8 @@ export interface UpdateSignalCatalogCommandOutput extends UpdateSignalCatalogRes
  *         max: Number("double"),
  *         assignedValue: "STRING_VALUE",
  *         defaultValue: "STRING_VALUE",
+ *         deprecationMessage: "STRING_VALUE",
+ *         comment: "STRING_VALUE",
  *       },
  *     },
  *   ],
@@ -91,6 +103,8 @@ export interface UpdateSignalCatalogCommandOutput extends UpdateSignalCatalogRes
  *       branch: {
  *         fullyQualifiedName: "STRING_VALUE", // required
  *         description: "STRING_VALUE",
+ *         deprecationMessage: "STRING_VALUE",
+ *         comment: "STRING_VALUE",
  *       },
  *       sensor: {
  *         fullyQualifiedName: "STRING_VALUE", // required
@@ -102,6 +116,8 @@ export interface UpdateSignalCatalogCommandOutput extends UpdateSignalCatalogRes
  *         ],
  *         min: Number("double"),
  *         max: Number("double"),
+ *         deprecationMessage: "STRING_VALUE",
+ *         comment: "STRING_VALUE",
  *       },
  *       actuator: {
  *         fullyQualifiedName: "STRING_VALUE", // required
@@ -114,6 +130,8 @@ export interface UpdateSignalCatalogCommandOutput extends UpdateSignalCatalogRes
  *         min: Number("double"),
  *         max: Number("double"),
  *         assignedValue: "STRING_VALUE",
+ *         deprecationMessage: "STRING_VALUE",
+ *         comment: "STRING_VALUE",
  *       },
  *       attribute: {
  *         fullyQualifiedName: "STRING_VALUE", // required
@@ -125,6 +143,8 @@ export interface UpdateSignalCatalogCommandOutput extends UpdateSignalCatalogRes
  *         max: Number("double"),
  *         assignedValue: "STRING_VALUE",
  *         defaultValue: "STRING_VALUE",
+ *         deprecationMessage: "STRING_VALUE",
+ *         comment: "STRING_VALUE",
  *       },
  *     },
  *   ],

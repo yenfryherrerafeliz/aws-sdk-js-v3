@@ -1,8 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { BlobTypes } from "@aws-sdk/types";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   EventStreamSerdeContext as __EventStreamSerdeContext,
   FinalizeHandlerArguments,
@@ -12,7 +13,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { LambdaClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LambdaClient";
 import {
@@ -25,10 +26,21 @@ import { de_InvokeWithResponseStreamCommand, se_InvokeWithResponseStreamCommand 
 
 /**
  * @public
+ */
+export { __MetadataBearer, $Command };
+/**
+ * @public
+ */
+export type InvokeWithResponseStreamCommandInputType = Omit<InvokeWithResponseStreamRequest, "Payload"> & {
+  Payload?: BlobTypes;
+};
+
+/**
+ * @public
  *
  * The input for {@link InvokeWithResponseStreamCommand}.
  */
-export interface InvokeWithResponseStreamCommandInput extends InvokeWithResponseStreamRequest {}
+export interface InvokeWithResponseStreamCommandInput extends InvokeWithResponseStreamCommandInputType {}
 /**
  * @public
  *
@@ -144,6 +156,9 @@ export interface InvokeWithResponseStreamCommandOutput extends InvokeWithRespons
  * @throws {@link KMSNotFoundException} (server fault)
  *  <p>Lambda couldn't decrypt the environment variables because the KMS key was not
  *       found. Check the function's KMS key settings.</p>
+ *
+ * @throws {@link RecursiveInvocationException} (client fault)
+ *  <p>Lambda has detected your function being invoked in a recursive loop with other Amazon Web Services resources and stopped your function's invocation.</p>
  *
  * @throws {@link RequestTooLargeException} (client fault)
  *  <p>The request payload exceeded the <code>Invoke</code> request body JSON input quota. For more information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html">Lambda

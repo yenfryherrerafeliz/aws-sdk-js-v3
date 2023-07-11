@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-mq
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-mq/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-mq)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-mq.svg)](https://www.npmjs.com/package/@aws-sdk/client-mq)
-
 ## Description
 
 AWS SDK for JavaScript Mq Client for Node.js, Browser and React Native.
@@ -348,6 +345,14 @@ ListUsers
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mq/classes/listuserscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mq/interfaces/listuserscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mq/interfaces/listuserscommandoutput.html)
+
+</details>
+<details>
+<summary>
+Promote
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mq/classes/promotecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mq/interfaces/promotecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mq/interfaces/promotecommandoutput.html)
 
 </details>
 <details>

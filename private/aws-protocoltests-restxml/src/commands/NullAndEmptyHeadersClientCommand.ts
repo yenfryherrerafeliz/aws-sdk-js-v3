@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { NullAndEmptyHeadersIO } from "../models/models_0";
 import { de_NullAndEmptyHeadersClientCommand, se_NullAndEmptyHeadersClientCommand } from "../protocols/Aws_restXml";
 import { RestXmlProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RestXmlProtocolClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -47,6 +51,14 @@ export interface NullAndEmptyHeadersClientCommandOutput extends NullAndEmptyHead
  * };
  * const command = new NullAndEmptyHeadersClientCommand(input);
  * const response = await client.send(command);
+ * // { // NullAndEmptyHeadersIO
+ * //   a: "STRING_VALUE",
+ * //   b: "STRING_VALUE",
+ * //   c: [ // StringList
+ * //     "STRING_VALUE",
+ * //   ],
+ * // };
+ *
  * ```
  *
  * @param NullAndEmptyHeadersClientCommandInput - {@link NullAndEmptyHeadersClientCommandInput}
@@ -55,6 +67,8 @@ export interface NullAndEmptyHeadersClientCommandOutput extends NullAndEmptyHead
  * @see {@link NullAndEmptyHeadersClientCommandOutput} for command's `response` shape.
  * @see {@link RestXmlProtocolClientResolvedConfig | config} for RestXmlProtocolClient's `config` shape.
  *
+ * @throws {@link RestXmlProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestXmlProtocol service.</p>
  *
  */
 export class NullAndEmptyHeadersClientCommand extends $Command<

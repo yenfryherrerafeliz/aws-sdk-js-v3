@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -13,7 +13,7 @@ import {
   SdkStreamSerdeContext as __SdkStreamSerdeContext,
   SerdeContext as __SerdeContext,
   WithSdkStreamMixin as __WithSdkStreamMixin,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { StreamingTraitsInputOutput, StreamingTraitsInputOutputFilterSensitiveLog } from "../models/models_0";
 import { de_StreamingTraitsCommand, se_StreamingTraitsCommand } from "../protocols/Aws_restJson1";
@@ -21,9 +21,8 @@ import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputT
 
 /**
  * @public
- *
- * The input for {@link StreamingTraitsCommand}.
  */
+export { __MetadataBearer, $Command };
 export type StreamingTraitsCommandInputType = Omit<StreamingTraitsInputOutput, "blob"> & {
   /**
    * For *`StreamingTraitsInputOutput["blob"]`*, see {@link StreamingTraitsInputOutput.blob}.
@@ -31,7 +30,9 @@ export type StreamingTraitsCommandInputType = Omit<StreamingTraitsInputOutput, "
   blob?: StreamingTraitsInputOutput["blob"] | string | Uint8Array | Buffer;
 };
 /**
- * This interface extends from `StreamingTraitsInputOutput` interface. There are more parameters than `blob` defined in {@link StreamingTraitsInputOutput}
+ * @public
+ *
+ * The input for {@link StreamingTraitsCommand}.
  */
 export interface StreamingTraitsCommandInput extends StreamingTraitsCommandInputType {}
 /**
@@ -61,6 +62,11 @@ export interface StreamingTraitsCommandOutput
  * };
  * const command = new StreamingTraitsCommand(input);
  * const response = await client.send(command);
+ * // { // StreamingTraitsInputOutput
+ * //   foo: "STRING_VALUE",
+ * //   blob: "STREAMING_BLOB_VALUE",
+ * // };
+ *
  * ```
  *
  * @param StreamingTraitsCommandInput - {@link StreamingTraitsCommandInput}
@@ -69,6 +75,8 @@ export interface StreamingTraitsCommandOutput
  * @see {@link StreamingTraitsCommandOutput} for command's `response` shape.
  * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
  *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
  *
  */
 export class StreamingTraitsCommand extends $Command<

@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,7 +47,7 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   AddProfilePermissionCommandInput,
@@ -58,6 +58,10 @@ import {
   CancelSigningProfileCommandOutput,
 } from "./commands/CancelSigningProfileCommand";
 import { DescribeSigningJobCommandInput, DescribeSigningJobCommandOutput } from "./commands/DescribeSigningJobCommand";
+import {
+  GetRevocationStatusCommandInput,
+  GetRevocationStatusCommandOutput,
+} from "./commands/GetRevocationStatusCommand";
 import { GetSigningPlatformCommandInput, GetSigningPlatformCommandOutput } from "./commands/GetSigningPlatformCommand";
 import { GetSigningProfileCommandInput, GetSigningProfileCommandOutput } from "./commands/GetSigningProfileCommand";
 import {
@@ -87,6 +91,7 @@ import {
   RevokeSigningProfileCommandInput,
   RevokeSigningProfileCommandOutput,
 } from "./commands/RevokeSigningProfileCommand";
+import { SignPayloadCommandInput, SignPayloadCommandOutput } from "./commands/SignPayloadCommand";
 import { StartSigningJobCommandInput, StartSigningJobCommandOutput } from "./commands/StartSigningJobCommand";
 import { TagResourceCommandInput, TagResourceCommandOutput } from "./commands/TagResourceCommand";
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "./commands/UntagResourceCommand";
@@ -98,6 +103,8 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
@@ -105,6 +112,7 @@ export type ServiceInputTypes =
   | AddProfilePermissionCommandInput
   | CancelSigningProfileCommandInput
   | DescribeSigningJobCommandInput
+  | GetRevocationStatusCommandInput
   | GetSigningPlatformCommandInput
   | GetSigningProfileCommandInput
   | ListProfilePermissionsCommandInput
@@ -116,6 +124,7 @@ export type ServiceInputTypes =
   | RemoveProfilePermissionCommandInput
   | RevokeSignatureCommandInput
   | RevokeSigningProfileCommandInput
+  | SignPayloadCommandInput
   | StartSigningJobCommandInput
   | TagResourceCommandInput
   | UntagResourceCommandInput;
@@ -127,6 +136,7 @@ export type ServiceOutputTypes =
   | AddProfilePermissionCommandOutput
   | CancelSigningProfileCommandOutput
   | DescribeSigningJobCommandOutput
+  | GetRevocationStatusCommandOutput
   | GetSigningPlatformCommandOutput
   | GetSigningProfileCommandOutput
   | ListProfilePermissionsCommandOutput
@@ -138,6 +148,7 @@ export type ServiceOutputTypes =
   | RemoveProfilePermissionCommandOutput
   | RevokeSignatureCommandOutput
   | RevokeSigningProfileCommandOutput
+  | SignPayloadCommandOutput
   | StartSigningJobCommandOutput
   | TagResourceCommandOutput
   | UntagResourceCommandOutput;
@@ -152,7 +163,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -207,7 +218,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -261,7 +272,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -269,7 +280,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type SignerClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type SignerClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -288,7 +299,7 @@ export interface SignerClientConfig extends SignerClientConfigType {}
 /**
  * @public
  */
-type SignerClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type SignerClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
@@ -309,20 +320,18 @@ export interface SignerClientResolvedConfig extends SignerClientResolvedConfigTy
  * <p>AWS Signer is a fully managed code signing service to help you ensure the trust and
  * 			integrity of your code. </p>
  * 		       <p>AWS Signer supports the following applications:</p>
- *
- * 		       <p>With <i>code signing for AWS Lambda</i>, you can sign AWS Lambda
- * 			deployment packages. Integrated support is provided for Amazon S3, Amazon CloudWatch,
- * 			and AWS CloudTrail. In order to sign code, you create a signing profile and then use
- * 			Signer to sign Lambda zip files in S3. </p>
- *
- * 		       <p>With <i>code signing for IoT</i>, you can sign code for any IoT device that is
- * 			supported by AWS. IoT code signing is available for <a href="http://docs.aws.amazon.com/freertos/latest/userguide/">Amazon FreeRTOS</a> and <a href="http://docs.aws.amazon.com/iot/latest/developerguide/">AWS IoT Device Management</a>, and is
- * 			integrated with <a href="http://docs.aws.amazon.com/acm/latest/userguide/">AWS Certificate Manager (ACM)</a>. In order to sign
- * 			code, you import a third-party code signing certificate using ACM, and use that to
- * 			sign updates in Amazon FreeRTOS and AWS IoT Device Management. </p>
- * 		       <p>For more information about AWS Signer, see the <a href="http://docs.aws.amazon.com/signer/latest/developerguide/Welcome.html">AWS Signer Developer Guide</a>.</p>
- *
- * 		       <p></p>
+ * 		       <p>With code signing for AWS Lambda, you can sign <a href="http://docs.aws.amazon.com/lambda/latest/dg/">AWS
+ * 				Lambda</a> deployment packages. Integrated support is provided for <a href="http://docs.aws.amazon.com/AmazonS3/latest/gsg/">Amazon S3</a>, <a href="http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/">Amazon
+ * 				CloudWatch</a>, and <a href="http://docs.aws.amazon.com/awscloudtrail/latest/userguide/">AWS CloudTrail</a>. In order
+ * 			to sign code, you create a signing profile and then use Signer to sign Lambda zip files
+ * 			in S3. </p>
+ * 		       <p>With code signing for IoT, you can sign code for any IoT device that is supported by AWS.
+ * 			IoT code signing is available for <a href="http://docs.aws.amazon.com/freertos/latest/userguide/">Amazon FreeRTOS</a> and <a href="http://docs.aws.amazon.com/iot/latest/developerguide/">AWS IoT Device Management</a>, and is integrated with <a href="http://docs.aws.amazon.com/acm/latest/userguide/">AWS Certificate Manager (ACM)</a>. In order to sign code, you import a third-party code signing
+ * 			certificate using ACM, and use that to sign updates in Amazon FreeRTOS and AWS IoT Device Management. </p>
+ * 		       <p>With code signing for
+ * 			containers …(TBD)</p>
+ * 		       <p>For more information about AWS Signer, see the <a href="https://docs.aws.amazon.com/signer/latest/developerguide/Welcome.html">AWS Signer Developer
+ * 			Guide</a>.</p>
  */
 export class SignerClient extends __Client<
   __HttpHandlerOptions,

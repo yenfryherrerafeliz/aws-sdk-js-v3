@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ModifyDBInstanceMessage, ModifyDBInstanceResult } from "../models/models_1";
 import { de_ModifyDBInstanceCommand, se_ModifyDBInstanceCommand } from "../protocols/Aws_query";
 import { RDSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RDSClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -73,12 +77,19 @@ export interface ModifyDBInstanceCommandOutput extends ModifyDBInstanceResult, _
  *   TdeCredentialPassword: "STRING_VALUE",
  *   CACertificateIdentifier: "STRING_VALUE",
  *   Domain: "STRING_VALUE",
+ *   DomainFqdn: "STRING_VALUE",
+ *   DomainOu: "STRING_VALUE",
+ *   DomainAuthSecretArn: "STRING_VALUE",
+ *   DomainDnsIps: [ // StringList
+ *     "STRING_VALUE",
+ *   ],
  *   CopyTagsToSnapshot: true || false,
  *   MonitoringInterval: Number("int"),
  *   DBPortNumber: Number("int"),
  *   PubliclyAccessible: true || false,
  *   MonitoringRoleArn: "STRING_VALUE",
  *   DomainIAMRoleName: "STRING_VALUE",
+ *   DisableDomain: true || false,
  *   PromotionTier: Number("int"),
  *   EnableIAMDatabaseAuthentication: true || false,
  *   EnablePerformanceInsights: true || false,
@@ -112,6 +123,7 @@ export interface ModifyDBInstanceCommandOutput extends ModifyDBInstanceResult, _
  *   ManageMasterUserPassword: true || false,
  *   RotateMasterUserPassword: true || false,
  *   MasterUserSecretKmsKeyId: "STRING_VALUE",
+ *   Engine: "STRING_VALUE",
  * };
  * const command = new ModifyDBInstanceCommand(input);
  * const response = await client.send(command);
@@ -207,6 +219,7 @@ export interface ModifyDBInstanceCommandOutput extends ModifyDBInstanceResult, _
  * //       AutomationMode: "full" || "all-paused",
  * //       ResumeFullAutomationModeTime: new Date("TIMESTAMP"),
  * //       StorageThroughput: Number("int"),
+ * //       Engine: "STRING_VALUE",
  * //     },
  * //     LatestRestorableTime: new Date("TIMESTAMP"),
  * //     MultiAZ: true || false,
@@ -254,6 +267,11 @@ export interface ModifyDBInstanceCommandOutput extends ModifyDBInstanceResult, _
  * //         Status: "STRING_VALUE",
  * //         FQDN: "STRING_VALUE",
  * //         IAMRoleName: "STRING_VALUE",
+ * //         OU: "STRING_VALUE",
+ * //         AuthSecretArn: "STRING_VALUE",
+ * //         DnsIps: [
+ * //           "STRING_VALUE",
+ * //         ],
  * //       },
  * //     ],
  * //     CopyTagsToSnapshot: true || false,
@@ -408,8 +426,7 @@ export interface ModifyDBInstanceCommandOutput extends ModifyDBInstanceResult, _
  *             available across all DB instances.</p>
  *
  * @throws {@link StorageTypeNotSupportedFault} (client fault)
- *  <p>Storage of the <code>StorageType</code> specified can't be associated
- *             with the DB instance.</p>
+ *  <p>The specified <code>StorageType</code> can't be associated with the DB instance.</p>
  *
  * @throws {@link RDSServiceException}
  * <p>Base exception class for all service exceptions from RDS service.</p>

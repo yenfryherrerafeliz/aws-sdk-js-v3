@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -12,13 +13,13 @@ import {
   parseEpochTimestamp as __parseEpochTimestamp,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AddTagsCommandInput, AddTagsCommandOutput } from "../commands/AddTagsCommand";
 import { CancelQueryCommandInput, CancelQueryCommandOutput } from "../commands/CancelQueryCommand";
@@ -83,9 +84,17 @@ import {
   RestoreEventDataStoreCommandInput,
   RestoreEventDataStoreCommandOutput,
 } from "../commands/RestoreEventDataStoreCommand";
+import {
+  StartEventDataStoreIngestionCommandInput,
+  StartEventDataStoreIngestionCommandOutput,
+} from "../commands/StartEventDataStoreIngestionCommand";
 import { StartImportCommandInput, StartImportCommandOutput } from "../commands/StartImportCommand";
 import { StartLoggingCommandInput, StartLoggingCommandOutput } from "../commands/StartLoggingCommand";
 import { StartQueryCommandInput, StartQueryCommandOutput } from "../commands/StartQueryCommand";
+import {
+  StopEventDataStoreIngestionCommandInput,
+  StopEventDataStoreIngestionCommandOutput,
+} from "../commands/StopEventDataStoreIngestionCommand";
 import { StopImportCommandInput, StopImportCommandOutput } from "../commands/StopImportCommand";
 import { StopLoggingCommandInput, StopLoggingCommandOutput } from "../commands/StopLoggingCommand";
 import { UpdateChannelCommandInput, UpdateChannelCommandOutput } from "../commands/UpdateChannelCommand";
@@ -236,10 +245,12 @@ import {
   RestoreEventDataStoreResponse,
   S3BucketDoesNotExistException,
   S3ImportSource,
+  StartEventDataStoreIngestionRequest,
   StartImportRequest,
   StartImportResponse,
   StartLoggingRequest,
   StartQueryRequest,
+  StopEventDataStoreIngestionRequest,
   StopImportRequest,
   StopImportResponse,
   StopLoggingRequest,
@@ -724,6 +735,19 @@ export const se_RestoreEventDataStoreCommand = async (
 };
 
 /**
+ * serializeAws_json1_1StartEventDataStoreIngestionCommand
+ */
+export const se_StartEventDataStoreIngestionCommand = async (
+  input: StartEventDataStoreIngestionCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("StartEventDataStoreIngestion");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
  * serializeAws_json1_1StartImportCommand
  */
 export const se_StartImportCommand = async (
@@ -757,6 +781,19 @@ export const se_StartQueryCommand = async (
   context: __SerdeContext
 ): Promise<__HttpRequest> => {
   const headers: __HeaderBag = sharedHeaders("StartQuery");
+  let body: any;
+  body = JSON.stringify(_json(input));
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_json1_1StopEventDataStoreIngestionCommand
+ */
+export const se_StopEventDataStoreIngestionCommand = async (
+  input: StopEventDataStoreIngestionCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = sharedHeaders("StopEventDataStoreIngestion");
   let body: any;
   body = JSON.stringify(_json(input));
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -860,6 +897,9 @@ const de_AddTagsCommandError = async (
   };
   const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "ChannelARNInvalidException":
+    case "com.amazonaws.cloudtrail#ChannelARNInvalidException":
+      throw await de_ChannelARNInvalidExceptionRes(parsedOutput, context);
     case "ChannelNotFoundException":
     case "com.amazonaws.cloudtrail#ChannelNotFoundException":
       throw await de_ChannelNotFoundExceptionRes(parsedOutput, context);
@@ -869,6 +909,9 @@ const de_AddTagsCommandError = async (
     case "ConflictException":
     case "com.amazonaws.cloudtrail#ConflictException":
       throw await de_ConflictExceptionRes(parsedOutput, context);
+    case "EventDataStoreARNInvalidException":
+    case "com.amazonaws.cloudtrail#EventDataStoreARNInvalidException":
+      throw await de_EventDataStoreARNInvalidExceptionRes(parsedOutput, context);
     case "EventDataStoreNotFoundException":
     case "com.amazonaws.cloudtrail#EventDataStoreNotFoundException":
       throw await de_EventDataStoreNotFoundExceptionRes(parsedOutput, context);
@@ -2696,9 +2739,15 @@ const de_ListTagsCommandError = async (
   };
   const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "ChannelARNInvalidException":
+    case "com.amazonaws.cloudtrail#ChannelARNInvalidException":
+      throw await de_ChannelARNInvalidExceptionRes(parsedOutput, context);
     case "CloudTrailARNInvalidException":
     case "com.amazonaws.cloudtrail#CloudTrailARNInvalidException":
       throw await de_CloudTrailARNInvalidExceptionRes(parsedOutput, context);
+    case "EventDataStoreARNInvalidException":
+    case "com.amazonaws.cloudtrail#EventDataStoreARNInvalidException":
+      throw await de_EventDataStoreARNInvalidExceptionRes(parsedOutput, context);
     case "EventDataStoreNotFoundException":
     case "com.amazonaws.cloudtrail#EventDataStoreNotFoundException":
       throw await de_EventDataStoreNotFoundExceptionRes(parsedOutput, context);
@@ -2885,6 +2934,9 @@ const de_PutEventSelectorsCommandError = async (
     case "CloudTrailARNInvalidException":
     case "com.amazonaws.cloudtrail#CloudTrailARNInvalidException":
       throw await de_CloudTrailARNInvalidExceptionRes(parsedOutput, context);
+    case "ConflictException":
+    case "com.amazonaws.cloudtrail#ConflictException":
+      throw await de_ConflictExceptionRes(parsedOutput, context);
     case "InsufficientDependencyServiceAccessPermissionException":
     case "com.amazonaws.cloudtrail#InsufficientDependencyServiceAccessPermissionException":
       throw await de_InsufficientDependencyServiceAccessPermissionExceptionRes(parsedOutput, context);
@@ -3180,12 +3232,18 @@ const de_RemoveTagsCommandError = async (
   };
   const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "ChannelARNInvalidException":
+    case "com.amazonaws.cloudtrail#ChannelARNInvalidException":
+      throw await de_ChannelARNInvalidExceptionRes(parsedOutput, context);
     case "ChannelNotFoundException":
     case "com.amazonaws.cloudtrail#ChannelNotFoundException":
       throw await de_ChannelNotFoundExceptionRes(parsedOutput, context);
     case "CloudTrailARNInvalidException":
     case "com.amazonaws.cloudtrail#CloudTrailARNInvalidException":
       throw await de_CloudTrailARNInvalidExceptionRes(parsedOutput, context);
+    case "EventDataStoreARNInvalidException":
+    case "com.amazonaws.cloudtrail#EventDataStoreARNInvalidException":
+      throw await de_EventDataStoreARNInvalidExceptionRes(parsedOutput, context);
     case "EventDataStoreNotFoundException":
     case "com.amazonaws.cloudtrail#EventDataStoreNotFoundException":
       throw await de_EventDataStoreNotFoundExceptionRes(parsedOutput, context);
@@ -3295,6 +3353,79 @@ const de_RestoreEventDataStoreCommandError = async (
     case "OrganizationsNotInUseException":
     case "com.amazonaws.cloudtrail#OrganizationsNotInUseException":
       throw await de_OrganizationsNotInUseExceptionRes(parsedOutput, context);
+    case "UnsupportedOperationException":
+    case "com.amazonaws.cloudtrail#UnsupportedOperationException":
+      throw await de_UnsupportedOperationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_json1_1StartEventDataStoreIngestionCommand
+ */
+export const de_StartEventDataStoreIngestionCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StartEventDataStoreIngestionCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_StartEventDataStoreIngestionCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: StartEventDataStoreIngestionCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1StartEventDataStoreIngestionCommandError
+ */
+const de_StartEventDataStoreIngestionCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StartEventDataStoreIngestionCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "EventDataStoreARNInvalidException":
+    case "com.amazonaws.cloudtrail#EventDataStoreARNInvalidException":
+      throw await de_EventDataStoreARNInvalidExceptionRes(parsedOutput, context);
+    case "EventDataStoreNotFoundException":
+    case "com.amazonaws.cloudtrail#EventDataStoreNotFoundException":
+      throw await de_EventDataStoreNotFoundExceptionRes(parsedOutput, context);
+    case "InsufficientDependencyServiceAccessPermissionException":
+    case "com.amazonaws.cloudtrail#InsufficientDependencyServiceAccessPermissionException":
+      throw await de_InsufficientDependencyServiceAccessPermissionExceptionRes(parsedOutput, context);
+    case "InvalidEventDataStoreCategoryException":
+    case "com.amazonaws.cloudtrail#InvalidEventDataStoreCategoryException":
+      throw await de_InvalidEventDataStoreCategoryExceptionRes(parsedOutput, context);
+    case "InvalidEventDataStoreStatusException":
+    case "com.amazonaws.cloudtrail#InvalidEventDataStoreStatusException":
+      throw await de_InvalidEventDataStoreStatusExceptionRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.cloudtrail#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "NoManagementAccountSLRExistsException":
+    case "com.amazonaws.cloudtrail#NoManagementAccountSLRExistsException":
+      throw await de_NoManagementAccountSLRExistsExceptionRes(parsedOutput, context);
+    case "NotOrganizationMasterAccountException":
+    case "com.amazonaws.cloudtrail#NotOrganizationMasterAccountException":
+      throw await de_NotOrganizationMasterAccountExceptionRes(parsedOutput, context);
+    case "OperationNotPermittedException":
+    case "com.amazonaws.cloudtrail#OperationNotPermittedException":
+      throw await de_OperationNotPermittedExceptionRes(parsedOutput, context);
     case "UnsupportedOperationException":
     case "com.amazonaws.cloudtrail#UnsupportedOperationException":
       throw await de_UnsupportedOperationExceptionRes(parsedOutput, context);
@@ -3532,6 +3663,79 @@ const de_StartQueryCommandError = async (
     case "S3BucketDoesNotExistException":
     case "com.amazonaws.cloudtrail#S3BucketDoesNotExistException":
       throw await de_S3BucketDoesNotExistExceptionRes(parsedOutput, context);
+    case "UnsupportedOperationException":
+    case "com.amazonaws.cloudtrail#UnsupportedOperationException":
+      throw await de_UnsupportedOperationExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_json1_1StopEventDataStoreIngestionCommand
+ */
+export const de_StopEventDataStoreIngestionCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StopEventDataStoreIngestionCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_StopEventDataStoreIngestionCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = _json(data);
+  const response: StopEventDataStoreIngestionCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_json1_1StopEventDataStoreIngestionCommandError
+ */
+const de_StopEventDataStoreIngestionCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StopEventDataStoreIngestionCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "EventDataStoreARNInvalidException":
+    case "com.amazonaws.cloudtrail#EventDataStoreARNInvalidException":
+      throw await de_EventDataStoreARNInvalidExceptionRes(parsedOutput, context);
+    case "EventDataStoreNotFoundException":
+    case "com.amazonaws.cloudtrail#EventDataStoreNotFoundException":
+      throw await de_EventDataStoreNotFoundExceptionRes(parsedOutput, context);
+    case "InsufficientDependencyServiceAccessPermissionException":
+    case "com.amazonaws.cloudtrail#InsufficientDependencyServiceAccessPermissionException":
+      throw await de_InsufficientDependencyServiceAccessPermissionExceptionRes(parsedOutput, context);
+    case "InvalidEventDataStoreCategoryException":
+    case "com.amazonaws.cloudtrail#InvalidEventDataStoreCategoryException":
+      throw await de_InvalidEventDataStoreCategoryExceptionRes(parsedOutput, context);
+    case "InvalidEventDataStoreStatusException":
+    case "com.amazonaws.cloudtrail#InvalidEventDataStoreStatusException":
+      throw await de_InvalidEventDataStoreStatusExceptionRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.cloudtrail#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "NoManagementAccountSLRExistsException":
+    case "com.amazonaws.cloudtrail#NoManagementAccountSLRExistsException":
+      throw await de_NoManagementAccountSLRExistsExceptionRes(parsedOutput, context);
+    case "NotOrganizationMasterAccountException":
+    case "com.amazonaws.cloudtrail#NotOrganizationMasterAccountException":
+      throw await de_NotOrganizationMasterAccountExceptionRes(parsedOutput, context);
+    case "OperationNotPermittedException":
+    case "com.amazonaws.cloudtrail#OperationNotPermittedException":
+      throw await de_OperationNotPermittedExceptionRes(parsedOutput, context);
     case "UnsupportedOperationException":
     case "com.amazonaws.cloudtrail#UnsupportedOperationException":
       throw await de_UnsupportedOperationExceptionRes(parsedOutput, context);
@@ -3785,6 +3989,9 @@ const de_UpdateEventDataStoreCommandError = async (
     case "EventDataStoreARNInvalidException":
     case "com.amazonaws.cloudtrail#EventDataStoreARNInvalidException":
       throw await de_EventDataStoreARNInvalidExceptionRes(parsedOutput, context);
+    case "EventDataStoreAlreadyExistsException":
+    case "com.amazonaws.cloudtrail#EventDataStoreAlreadyExistsException":
+      throw await de_EventDataStoreAlreadyExistsExceptionRes(parsedOutput, context);
     case "EventDataStoreHasOngoingImportException":
     case "com.amazonaws.cloudtrail#EventDataStoreHasOngoingImportException":
       throw await de_EventDataStoreHasOngoingImportExceptionRes(parsedOutput, context);
@@ -5377,6 +5584,8 @@ const se_LookupEventsRequest = (input: LookupEventsRequest, context: __SerdeCont
 
 // se_PutResourcePolicyRequest omitted.
 
+// se_QueryParameters omitted.
+
 // se_RegisterOrganizationDelegatedAdminRequest omitted.
 
 // se_RemoveTagsRequest omitted.
@@ -5386,6 +5595,8 @@ const se_LookupEventsRequest = (input: LookupEventsRequest, context: __SerdeCont
 // se_RestoreEventDataStoreRequest omitted.
 
 // se_S3ImportSource omitted.
+
+// se_StartEventDataStoreIngestionRequest omitted.
 
 /**
  * serializeAws_json1_1StartImportRequest
@@ -5403,6 +5614,8 @@ const se_StartImportRequest = (input: StartImportRequest, context: __SerdeContex
 // se_StartLoggingRequest omitted.
 
 // se_StartQueryRequest omitted.
+
+// se_StopEventDataStoreIngestionRequest omitted.
 
 // se_StopImportRequest omitted.
 
@@ -6045,6 +6258,8 @@ const de_RestoreEventDataStoreResponse = (output: any, context: __SerdeContext):
 
 // de_SourceConfig omitted.
 
+// de_StartEventDataStoreIngestionResponse omitted.
+
 /**
  * deserializeAws_json1_1StartImportResponse
  */
@@ -6064,6 +6279,8 @@ const de_StartImportResponse = (output: any, context: __SerdeContext): StartImpo
 // de_StartLoggingResponse omitted.
 
 // de_StartQueryResponse omitted.
+
+// de_StopEventDataStoreIngestionResponse omitted.
 
 /**
  * deserializeAws_json1_1StopImportResponse
@@ -6136,14 +6353,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

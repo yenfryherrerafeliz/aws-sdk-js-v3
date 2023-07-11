@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AppflowClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppflowClient";
 import { DescribeFlowRequest, DescribeFlowResponse } from "../models/models_0";
 import { de_DescribeFlowCommand, se_DescribeFlowCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -116,6 +120,10 @@ export interface DescribeFlowCommandOutput extends DescribeFlowResponse, __Metad
  * //         entityName: "STRING_VALUE", // required
  * //         customProperties: { // CustomProperties
  * //           "<keys>": "STRING_VALUE",
+ * //         },
+ * //         dataTransferApi: { // DataTransferApi
+ * //           Name: "STRING_VALUE",
+ * //           Type: "SYNC" || "ASYNC" || "AUTOMATIC",
  * //         },
  * //       },
  * //       Pardot: { // PardotSourceProperties
@@ -264,7 +272,7 @@ export interface DescribeFlowCommandOutput extends DescribeFlowResponse, __Metad
  * //   lastRunExecutionDetails: { // ExecutionDetails
  * //     mostRecentExecutionMessage: "STRING_VALUE",
  * //     mostRecentExecutionTime: new Date("TIMESTAMP"),
- * //     mostRecentExecutionStatus: "InProgress" || "Successful" || "Error",
+ * //     mostRecentExecutionStatus: "InProgress" || "Successful" || "Error" || "CancelStarted" || "Canceled",
  * //   },
  * //   triggerConfig: { // TriggerConfig
  * //     triggerType: "Scheduled" || "Event" || "OnDemand", // required
@@ -333,12 +341,12 @@ export interface DescribeFlowCommandOutput extends DescribeFlowResponse, __Metad
  * //       tableRegistrationOutput: { // RegistrationOutput
  * //         message: "STRING_VALUE",
  * //         result: "STRING_VALUE",
- * //         status: "InProgress" || "Successful" || "Error",
+ * //         status: "InProgress" || "Successful" || "Error" || "CancelStarted" || "Canceled",
  * //       },
  * //       partitionRegistrationOutput: {
  * //         message: "STRING_VALUE",
  * //         result: "STRING_VALUE",
- * //         status: "InProgress" || "Successful" || "Error",
+ * //         status: "InProgress" || "Successful" || "Error" || "CancelStarted" || "Canceled",
  * //       },
  * //     },
  * //   ],

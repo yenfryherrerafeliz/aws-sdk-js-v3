@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { SignalResourceInput } from "../models/models_0";
 import { de_SignalResourceCommand, se_SignalResourceCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,12 +36,11 @@ export interface SignalResourceCommandOutput extends __MetadataBearer {}
 
 /**
  * @public
- * <p>Sends a signal to the specified resource with a success or failure status. You can use
- *          the <code>SignalResource</code> operation in conjunction with a creation policy or update
- *          policy. CloudFormation doesn't proceed with a stack creation or update until
- *          resources receive the required number of signals or the timeout period is exceeded. The
- *             <code>SignalResource</code> operation is useful in cases where you want to send signals
- *          from anywhere other than an Amazon EC2 instance.</p>
+ * <p>Sends a signal to the specified resource with a success or failure status. You can use the
+ *     <code>SignalResource</code> operation in conjunction with a creation policy or update policy. CloudFormation
+ *    doesn't proceed with a stack creation or update until resources receive the required number of signals or the timeout
+ *    period is exceeded. The <code>SignalResource</code> operation is useful in cases where you want to send signals from
+ *    anywhere other than an Amazon EC2 instance.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

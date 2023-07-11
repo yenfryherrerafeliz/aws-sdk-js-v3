@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,17 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
 import { IoTWirelessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTWirelessClient";
 import { GetResourcePositionRequest, GetResourcePositionResponse } from "../models/models_0";
 import { de_GetResourcePositionCommand, se_GetResourcePositionCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -25,15 +30,22 @@ import { de_GetResourcePositionCommand, se_GetResourcePositionCommand } from "..
 export interface GetResourcePositionCommandInput extends GetResourcePositionRequest {}
 /**
  * @public
- *
- * The output of {@link GetResourcePositionCommand}.
  */
-export interface GetResourcePositionCommandOutput extends GetResourcePositionResponse, __MetadataBearer {}
+export type GetResourcePositionCommandOutputType = Omit<GetResourcePositionResponse, "GeoJsonPayload"> & {
+  GeoJsonPayload?: Uint8ArrayBlobAdapter;
+};
 
 /**
  * @public
- * <p>Get the position information for a given wireless device or a wireless gateway resource.
- *             The position information uses the <a href="https://gisgeography.com/wgs84-world-geodetic-system/"> World Geodetic System
+ *
+ * The output of {@link GetResourcePositionCommand}.
+ */
+export interface GetResourcePositionCommandOutput extends GetResourcePositionCommandOutputType, __MetadataBearer {}
+
+/**
+ * @public
+ * <p>Get the position information for a given wireless device or a wireless gateway
+ *             resource. The position information uses the <a href="https://gisgeography.com/wgs84-world-geodetic-system/"> World Geodetic System
  *                 (WGS84)</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.

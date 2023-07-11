@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { ApplicationAutoScalingServiceException as __BaseException } from "./ApplicationAutoScalingServiceException";
 
@@ -82,6 +82,7 @@ export const ScalableDimension = {
   NeptuneClusterReadReplicaCount: "neptune:cluster:ReadReplicaCount",
   RDSClusterReadReplicaCount: "rds:cluster:ReadReplicaCount",
   SageMakerVariantDesiredInstanceCount: "sagemaker:variant:DesiredInstanceCount",
+  SageMakerVariantDesiredProvisionedConcurrency: "sagemaker:variant:DesiredProvisionedConcurrency",
 } as const;
 
 /**
@@ -196,6 +197,10 @@ export interface DeleteScalingPolicyRequest {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId: string | undefined;
@@ -282,6 +287,10 @@ export interface DeleteScalingPolicyRequest {
    *             <li>
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
    *             </li>
    *          </ul>
    */
@@ -445,6 +454,10 @@ export interface DeleteScheduledActionRequest {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId: string | undefined;
@@ -532,6 +545,10 @@ export interface DeleteScheduledActionRequest {
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
    *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
+   *             </li>
    *          </ul>
    */
   ScalableDimension: ScalableDimension | string | undefined;
@@ -617,6 +634,10 @@ export interface DeregisterScalableTargetRequest {
    *             </li>
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
+   *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
    *             </li>
    *          </ul>
    */
@@ -706,6 +727,10 @@ export interface DeregisterScalableTargetRequest {
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
    *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
+   *             </li>
    *          </ul>
    */
   ScalableDimension: ScalableDimension | string | undefined;
@@ -791,6 +816,10 @@ export interface DescribeScalableTargetsRequest {
    *             </li>
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
+   *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
    *             </li>
    *          </ul>
    */
@@ -879,6 +908,10 @@ export interface DescribeScalableTargetsRequest {
    *             <li>
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
    *             </li>
    *          </ul>
    */
@@ -1006,6 +1039,10 @@ export interface ScalableTarget {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId: string | undefined;
@@ -1093,6 +1130,10 @@ export interface ScalableTarget {
    *             <li>
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
    *             </li>
    *          </ul>
    */
@@ -1245,6 +1286,10 @@ export interface DescribeScalingActivitiesRequest {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId?: string;
@@ -1332,6 +1377,10 @@ export interface DescribeScalingActivitiesRequest {
    *             <li>
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
    *             </li>
    *          </ul>
    */
@@ -1508,6 +1557,10 @@ export interface ScalingActivity {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId: string | undefined;
@@ -1594,6 +1647,10 @@ export interface ScalingActivity {
    *             <li>
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
    *             </li>
    *          </ul>
    */
@@ -1738,6 +1795,10 @@ export interface DescribeScalingPoliciesRequest {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId?: string;
@@ -1825,6 +1886,10 @@ export interface DescribeScalingPoliciesRequest {
    *             <li>
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
    *             </li>
    *          </ul>
    */
@@ -1938,7 +2003,7 @@ export interface StepAdjustment {
   /**
    * <p>The amount by which to scale, based on the specified adjustment type. A positive value
    *          adds to the current capacity while a negative number removes from the current capacity. For
-   *          exact capacity, you must specify a positive value.</p>
+   *          exact capacity, you must specify a non-negative value.</p>
    */
   ScalingAdjustment: number | undefined;
 }
@@ -1946,6 +2011,7 @@ export interface StepAdjustment {
 /**
  * @public
  * <p>Represents a step scaling policy configuration to use with Application Auto Scaling.</p>
+ *          <p>For more information, see <a href="https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-step-scaling-policies.html">Step scaling policies</a> in the <i>Application Auto Scaling User Guide</i>.</p>
  */
 export interface StepScalingPolicyConfiguration {
   /**
@@ -1978,68 +2044,8 @@ export interface StepScalingPolicyConfiguration {
   MinAdjustmentMagnitude?: number;
 
   /**
-   * <p>The amount of time, in seconds, to wait for a previous scaling activity to take effect. </p>
-   *          <p>With scale-out policies, the intention is to continuously (but not excessively) scale out.
-   *       After Application Auto Scaling successfully scales out using a step scaling policy, it starts to calculate the
-   *       cooldown time. The scaling policy won't increase the desired capacity again unless either a
-   *       larger scale out is triggered or the cooldown period ends. While the cooldown period is in
-   *       effect, capacity added by the initiating scale-out activity is calculated as part of the
-   *       desired capacity for the next scale-out activity. For example, when an alarm triggers a step
-   *       scaling policy to increase the capacity by 2, the scaling activity completes successfully, and
-   *       a cooldown period starts. If the alarm triggers again during the cooldown period but at a more
-   *       aggressive step adjustment of 3, the previous increase of 2 is considered part of the current
-   *       capacity. Therefore, only 1 is added to the capacity.</p>
-   *          <p>With scale-in policies, the intention is to scale in conservatively to protect your
-   *       application’s availability, so scale-in activities are blocked until the cooldown period has
-   *       expired. However, if another alarm triggers a scale-out activity during the cooldown period
-   *       after a scale-in activity, Application Auto Scaling scales out the target immediately. In this case, the
-   *       cooldown period for the scale-in activity stops and doesn't complete.</p>
-   *          <p>Application Auto Scaling provides a default value of 600 for Amazon ElastiCache replication groups
-   *           and a default value of 300 for the following scalable targets:</p>
-   *          <ul>
-   *             <li>
-   *                <p>AppStream 2.0 fleets</p>
-   *             </li>
-   *             <li>
-   *                <p>Aurora DB clusters</p>
-   *             </li>
-   *             <li>
-   *                <p>ECS services</p>
-   *             </li>
-   *             <li>
-   *                <p>EMR clusters</p>
-   *             </li>
-   *             <li>
-   *                <p> Neptune clusters</p>
-   *             </li>
-   *             <li>
-   *                <p>SageMaker endpoint variants</p>
-   *             </li>
-   *             <li>
-   *                <p>Spot Fleets</p>
-   *             </li>
-   *             <li>
-   *                <p>Custom resources</p>
-   *             </li>
-   *          </ul>
-   *          <p>For all other scalable targets, the default value is 0:</p>
-   *          <ul>
-   *             <li>
-   *                <p>Amazon Comprehend document classification and entity recognizer endpoints</p>
-   *             </li>
-   *             <li>
-   *                <p>DynamoDB tables and global secondary indexes</p>
-   *             </li>
-   *             <li>
-   *                <p>Amazon Keyspaces tables</p>
-   *             </li>
-   *             <li>
-   *                <p>Lambda provisioned concurrency</p>
-   *             </li>
-   *             <li>
-   *                <p>Amazon MSK broker storage</p>
-   *             </li>
-   *          </ul>
+   * <p>The amount of time, in seconds, to wait for a previous scaling activity to take effect. If
+   *       not specified, the default value is 300. For more information, see <a href="https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-step-scaling-policies.html#step-scaling-cooldown">Cooldown period</a> in the <i>Application Auto Scaling User Guide</i>.</p>
    */
   Cooldown?: number;
 
@@ -2149,7 +2155,7 @@ export interface TargetTrackingMetricStat {
  *          statistics to create a new time series. A time series is a series of data points, each of
  *          which is associated with a timestamp.</p>
  *          <p>For more information and examples, see <a href="https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-target-tracking-metric-math.html">Create a target tracking scaling policy for Application Auto Scaling using metric math</a> in the
- *          <i>Application Auto Scaling User Guide</i>.</p>
+ *             <i>Application Auto Scaling User Guide</i>.</p>
  */
 export interface TargetTrackingMetricDataQuery {
   /**
@@ -2295,6 +2301,8 @@ export const MetricType = {
   EC2SpotFleetRequestAverageNetworkOut: "EC2SpotFleetRequestAverageNetworkOut",
   ECSServiceAverageCPUUtilization: "ECSServiceAverageCPUUtilization",
   ECSServiceAverageMemoryUtilization: "ECSServiceAverageMemoryUtilization",
+  ElastiCacheDatabaseCapacityUsageCountedForEvictPercentage:
+    "ElastiCacheDatabaseCapacityUsageCountedForEvictPercentage",
   ElastiCacheDatabaseMemoryUsageCountedForEvictPercentage: "ElastiCacheDatabaseMemoryUsageCountedForEvictPercentage",
   ElastiCachePrimaryEngineCPUUtilization: "ElastiCachePrimaryEngineCPUUtilization",
   ElastiCacheReplicaEngineCPUUtilization: "ElastiCacheReplicaEngineCPUUtilization",
@@ -2304,6 +2312,7 @@ export const MetricType = {
   RDSReaderAverageCPUUtilization: "RDSReaderAverageCPUUtilization",
   RDSReaderAverageDatabaseConnections: "RDSReaderAverageDatabaseConnections",
   SageMakerVariantInvocationsPerInstance: "SageMakerVariantInvocationsPerInstance",
+  SageMakerVariantProvisionedConcurrencyUtilization: "SageMakerVariantProvisionedConcurrencyUtilization",
 } as const;
 
 /**
@@ -2356,6 +2365,8 @@ export interface PredefinedMetricSpecification {
 /**
  * @public
  * <p>Represents a target tracking scaling policy configuration to use with Application Auto Scaling.</p>
+ *          <p>For more information, see <a href="https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-target-tracking.html">Target tracking scaling policies</a> in the <i>Application Auto Scaling User
+ *             Guide</i>.</p>
  */
 export interface TargetTrackingScalingPolicyConfiguration {
   /**
@@ -2385,118 +2396,14 @@ export interface TargetTrackingScalingPolicyConfiguration {
   CustomizedMetricSpecification?: CustomizedMetricSpecification;
 
   /**
-   * <p>The amount of time, in seconds, to wait for a previous scale-out activity to take
-   *       effect.</p>
-   *          <p>With the <i>scale-out cooldown period</i>, the intention is to continuously
-   *       (but not excessively) scale out. After Application Auto Scaling successfully scales out using a target
-   *       tracking scaling policy, it starts to calculate the cooldown time. The scaling policy won't
-   *       increase the desired capacity again unless either a larger scale out is triggered or the
-   *       cooldown period ends. While the cooldown period is in effect, the capacity added by the
-   *       initiating scale-out activity is calculated as part of the desired capacity for the next
-   *       scale-out activity.</p>
-   *          <p>Application Auto Scaling provides a default value of 600 for Amazon ElastiCache replication groups
-   *           and a default value of 300 for the following scalable targets:</p>
-   *          <ul>
-   *             <li>
-   *                <p>AppStream 2.0 fleets</p>
-   *             </li>
-   *             <li>
-   *                <p>Aurora DB clusters</p>
-   *             </li>
-   *             <li>
-   *                <p>ECS services</p>
-   *             </li>
-   *             <li>
-   *                <p>EMR clusters</p>
-   *             </li>
-   *             <li>
-   *                <p> Neptune clusters</p>
-   *             </li>
-   *             <li>
-   *                <p>SageMaker endpoint variants</p>
-   *             </li>
-   *             <li>
-   *                <p>Spot Fleets</p>
-   *             </li>
-   *             <li>
-   *                <p>Custom resources</p>
-   *             </li>
-   *          </ul>
-   *          <p>For all other scalable targets, the default value is 0:</p>
-   *          <ul>
-   *             <li>
-   *                <p>Amazon Comprehend document classification and entity recognizer endpoints</p>
-   *             </li>
-   *             <li>
-   *                <p>DynamoDB tables and global secondary indexes</p>
-   *             </li>
-   *             <li>
-   *                <p>Amazon Keyspaces tables</p>
-   *             </li>
-   *             <li>
-   *                <p>Lambda provisioned concurrency</p>
-   *             </li>
-   *             <li>
-   *                <p>Amazon MSK broker storage</p>
-   *             </li>
-   *          </ul>
+   * <p>The amount of time, in seconds, to wait for a previous scale-out activity to take effect.
+   *       For more information and for default values, see <a href="https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-target-tracking.html#target-tracking-cooldown">Define cooldown periods</a> in the <i>Application Auto Scaling User Guide</i>.</p>
    */
   ScaleOutCooldown?: number;
 
   /**
    * <p>The amount of time, in seconds, after a scale-in activity completes before another
-   *       scale-in activity can start.</p>
-   *          <p>With the <i>scale-in cooldown period</i>, the intention is to scale in
-   *       conservatively to protect your application’s availability, so scale-in activities are blocked
-   *       until the cooldown period has expired. However, if another alarm triggers a scale-out activity
-   *       during the scale-in cooldown period, Application Auto Scaling scales out the target immediately. In this case,
-   *       the scale-in cooldown period stops and doesn't complete.</p>
-   *          <p>Application Auto Scaling provides a default value of 600 for Amazon ElastiCache replication groups
-   *           and a default value of 300 for the following scalable targets:</p>
-   *          <ul>
-   *             <li>
-   *                <p>AppStream 2.0 fleets</p>
-   *             </li>
-   *             <li>
-   *                <p>Aurora DB clusters</p>
-   *             </li>
-   *             <li>
-   *                <p>ECS services</p>
-   *             </li>
-   *             <li>
-   *                <p>EMR clusters</p>
-   *             </li>
-   *             <li>
-   *                <p> Neptune clusters</p>
-   *             </li>
-   *             <li>
-   *                <p>SageMaker endpoint variants</p>
-   *             </li>
-   *             <li>
-   *                <p>Spot Fleets</p>
-   *             </li>
-   *             <li>
-   *                <p>Custom resources</p>
-   *             </li>
-   *          </ul>
-   *          <p>For all other scalable targets, the default value is 0:</p>
-   *          <ul>
-   *             <li>
-   *                <p>Amazon Comprehend document classification and entity recognizer endpoints</p>
-   *             </li>
-   *             <li>
-   *                <p>DynamoDB tables and global secondary indexes</p>
-   *             </li>
-   *             <li>
-   *                <p>Amazon Keyspaces tables</p>
-   *             </li>
-   *             <li>
-   *                <p>Lambda provisioned concurrency</p>
-   *             </li>
-   *             <li>
-   *                <p>Amazon MSK broker storage</p>
-   *             </li>
-   *          </ul>
+   *       scale-in activity can start. For more information and for default values, see <a href="https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-target-tracking.html#target-tracking-cooldown">Define cooldown periods</a> in the <i>Application Auto Scaling User Guide</i>.</p>
    */
   ScaleInCooldown?: number;
 
@@ -2601,6 +2508,10 @@ export interface ScalingPolicy {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId: string | undefined;
@@ -2687,6 +2598,10 @@ export interface ScalingPolicy {
    *             <li>
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
    *             </li>
    *          </ul>
    */
@@ -2846,6 +2761,10 @@ export interface DescribeScheduledActionsRequest {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId?: string;
@@ -2933,6 +2852,10 @@ export interface DescribeScheduledActionsRequest {
    *             <li>
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
    *             </li>
    *          </ul>
    */
@@ -3099,6 +3022,10 @@ export interface ScheduledAction {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId: string | undefined;
@@ -3186,6 +3113,10 @@ export interface ScheduledAction {
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
    *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
+   *             </li>
    *          </ul>
    */
   ScalableDimension?: ScalableDimension | string;
@@ -3237,7 +3168,7 @@ export interface ListTagsForResourceRequest {
   /**
    * <p>Specify the ARN of the scalable target.</p>
    *          <p>For example:
-   *          <code>arn:aws:application-autoscaling:us-east-1:123456789012:scalable-target/1234abcd56ab78cd901ef1234567890ab123</code>
+   *             <code>arn:aws:application-autoscaling:us-east-1:123456789012:scalable-target/1234abcd56ab78cd901ef1234567890ab123</code>
    *          </p>
    *          <p>To get the ARN for a scalable target, use <a>DescribeScalableTargets</a>.</p>
    */
@@ -3386,6 +3317,10 @@ export interface PutScalingPolicyRequest {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId: string | undefined;
@@ -3472,6 +3407,10 @@ export interface PutScalingPolicyRequest {
    *             <li>
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
    *             </li>
    *          </ul>
    */
@@ -3638,6 +3577,10 @@ export interface PutScheduledActionRequest {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId: string | undefined;
@@ -3724,6 +3667,10 @@ export interface PutScheduledActionRequest {
    *             <li>
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
    *             </li>
    *          </ul>
    */
@@ -3829,6 +3776,10 @@ export interface RegisterScalableTargetRequest {
    *             <li>
    *                <p>Neptune cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:mycluster</code>.</p>
    *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint - The resource type is <code>variant</code> and the unique identifier is the resource ID.
+   *                Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p>
+   *             </li>
    *          </ul>
    */
   ResourceId: string | undefined;
@@ -3917,6 +3868,10 @@ export interface RegisterScalableTargetRequest {
    *                <p>
    *                   <code>neptune:cluster:ReadReplicaCount</code> - The count of read replicas in an Amazon Neptune DB cluster.</p>
    *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>sagemaker:variant:DesiredProvisionedConcurrency</code> - The provisioned concurrency for a SageMaker Serverless endpoint.</p>
+   *             </li>
    *          </ul>
    */
   ScalableDimension: ScalableDimension | string | undefined;
@@ -3944,6 +3899,9 @@ export interface RegisterScalableTargetRequest {
    *             </li>
    *             <li>
    *                <p>SageMaker endpoint variants</p>
+   *             </li>
+   *             <li>
+   *                <p>SageMaker Serverless endpoint provisioned concurrency</p>
    *             </li>
    *             <li>
    *                <p>Spot Fleets</p>
@@ -4018,7 +3976,7 @@ export interface RegisterScalableTargetRequest {
    *          required. You cannot have more than one tag on a scalable target with the same tag
    *          key.</p>
    *          <p>Use tags to control access to a scalable target. For more information, see <a href="https://docs.aws.amazon.com/autoscaling/application/userguide/resource-tagging-support.html">Tagging support
-   *          for Application Auto Scaling</a> in the <i>Application Auto Scaling User Guide</i>.</p>
+   *             for Application Auto Scaling</a> in the <i>Application Auto Scaling User Guide</i>.</p>
    */
   Tags?: Record<string, string>;
 }
@@ -4040,21 +3998,21 @@ export interface TagResourceRequest {
   /**
    * <p>Identifies the Application Auto Scaling scalable target that you want to apply tags to.</p>
    *          <p>For example:
-   *          <code>arn:aws:application-autoscaling:us-east-1:123456789012:scalable-target/1234abcd56ab78cd901ef1234567890ab123</code>
+   *             <code>arn:aws:application-autoscaling:us-east-1:123456789012:scalable-target/1234abcd56ab78cd901ef1234567890ab123</code>
    *          </p>
    *          <p>To get the ARN for a scalable target, use <a>DescribeScalableTargets</a>.</p>
    */
   ResourceARN: string | undefined;
 
   /**
-   * <p>The tags assigned to the resource. A tag is a label that you assign to an AWS
+   * <p>The tags assigned to the resource. A tag is a label that you assign to an Amazon Web Services
    *          resource.</p>
    *          <p>Each tag consists of a tag key and a tag value.</p>
    *          <p>You cannot have more than one tag on an Application Auto Scaling scalable target with the same tag key.
    *          If you specify an existing tag key with a different tag value, Application Auto Scaling replaces the
    *          current tag value with the specified one.</p>
    *          <p>For information about the rules that apply to tag keys and tag values, see <a href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/allocation-tag-restrictions.html">User-defined tag
-   *          restrictions</a> in the <i>Amazon Web Services Billing and Cost Management User
+   *             restrictions</a> in the <i>Amazon Web Services Billing and Cost Management User
    *             Guide</i>.</p>
    */
   Tags: Record<string, string> | undefined;
@@ -4099,7 +4057,7 @@ export interface UntagResourceRequest {
   /**
    * <p>Identifies the Application Auto Scaling scalable target from which to remove tags.</p>
    *          <p>For example:
-   *          <code>arn:aws:application-autoscaling:us-east-1:123456789012:scalable-target/1234abcd56ab78cd901ef1234567890ab123</code>
+   *             <code>arn:aws:application-autoscaling:us-east-1:123456789012:scalable-target/1234abcd56ab78cd901ef1234567890ab123</code>
    *          </p>
    *          <p>To get the ARN for a scalable target, use <a>DescribeScalableTargets</a>.</p>
    */

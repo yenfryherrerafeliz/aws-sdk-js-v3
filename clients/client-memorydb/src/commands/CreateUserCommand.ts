@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { MemoryDBClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MemoryDBClient";
 import { CreateUserRequest, CreateUserResponse } from "../models/models_0";
 import { de_CreateUserCommand, se_CreateUserCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -42,7 +46,7 @@ export interface CreateUserCommandOutput extends CreateUserResponse, __MetadataB
  * const input = { // CreateUserRequest
  *   UserName: "STRING_VALUE", // required
  *   AuthenticationMode: { // AuthenticationMode
- *     Type: "password",
+ *     Type: "password" || "iam",
  *     Passwords: [ // PasswordListInput
  *       "STRING_VALUE",
  *     ],
@@ -67,7 +71,7 @@ export interface CreateUserCommandOutput extends CreateUserResponse, __MetadataB
  * //     ],
  * //     MinimumEngineVersion: "STRING_VALUE",
  * //     Authentication: { // Authentication
- * //       Type: "password" || "no-password",
+ * //       Type: "password" || "no-password" || "iam",
  * //       PasswordCount: Number("int"),
  * //     },
  * //     ARN: "STRING_VALUE",

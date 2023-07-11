@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectInt32 as __expectInt32,
   expectLong as __expectLong,
@@ -13,14 +14,15 @@ import {
   map,
   parseRfc3339DateTimeWithOffset as __parseRfc3339DateTimeWithOffset,
   resolvedPath as __resolvedPath,
+  serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import { CreateMonitorCommandInput, CreateMonitorCommandOutput } from "../commands/CreateMonitorCommand";
@@ -43,6 +45,7 @@ import {
   BadRequestException,
   ConflictException,
   HealthEvent,
+  HealthEventsConfig,
   ImpactedLocation,
   InternalServerErrorException,
   InternalServerException,
@@ -75,6 +78,7 @@ export const se_CreateMonitorCommand = async (
   body = JSON.stringify(
     take(input, {
       ClientToken: [true, (_) => _ ?? generateIdempotencyToken()],
+      HealthEventsConfig: (_) => se_HealthEventsConfig(_, context),
       InternetMeasurementsLogDelivery: (_) => _json(_),
       MaxCityNetworksToMonitor: [],
       MonitorName: [],
@@ -333,6 +337,7 @@ export const se_UpdateMonitorCommand = async (
   body = JSON.stringify(
     take(input, {
       ClientToken: [true, (_) => _ ?? generateIdempotencyToken()],
+      HealthEventsConfig: (_) => se_HealthEventsConfig(_, context),
       InternetMeasurementsLogDelivery: (_) => _json(_),
       MaxCityNetworksToMonitor: [],
       ResourcesToAdd: (_) => _json(_),
@@ -486,6 +491,7 @@ export const de_GetHealthEventCommand = async (
     EndedAt: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     EventArn: __expectString,
     EventId: __expectString,
+    HealthScoreThreshold: __limitedParseDouble,
     ImpactType: __expectString,
     ImpactedLocations: (_) => de_ImpactedLocationsList(_, context),
     LastUpdatedAt: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
@@ -548,6 +554,7 @@ export const de_GetMonitorCommand = async (
   const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
   const doc = take(data, {
     CreatedAt: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
+    HealthEventsConfig: (_) => de_HealthEventsConfig(_, context),
     InternetMeasurementsLogDelivery: _json,
     MaxCityNetworksToMonitor: __expectInt32,
     ModifiedAt: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
@@ -1151,6 +1158,16 @@ const de_ValidationExceptionRes = async (parsedOutput: any, context: __SerdeCont
   return __decorateServiceException(exception, parsedOutput.body);
 };
 
+/**
+ * serializeAws_restJson1HealthEventsConfig
+ */
+const se_HealthEventsConfig = (input: HealthEventsConfig, context: __SerdeContext): any => {
+  return take(input, {
+    AvailabilityScoreThreshold: __serializeFloat,
+    PerformanceScoreThreshold: __serializeFloat,
+  });
+};
+
 // se_InternetMeasurementsLogDelivery omitted.
 
 // se_S3Config omitted.
@@ -1179,6 +1196,7 @@ const de_HealthEvent = (output: any, context: __SerdeContext): HealthEvent => {
     EndedAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     EventArn: __expectString,
     EventId: __expectString,
+    HealthScoreThreshold: __limitedParseDouble,
     ImpactType: __expectString,
     ImpactedLocations: (_: any) => de_ImpactedLocationsList(_, context),
     LastUpdatedAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
@@ -1198,6 +1216,16 @@ const de_HealthEventList = (output: any, context: __SerdeContext): HealthEvent[]
       return de_HealthEvent(entry, context);
     });
   return retVal;
+};
+
+/**
+ * deserializeAws_restJson1HealthEventsConfig
+ */
+const de_HealthEventsConfig = (output: any, context: __SerdeContext): HealthEventsConfig => {
+  return take(output, {
+    AvailabilityScoreThreshold: __limitedParseDouble,
+    PerformanceScoreThreshold: __limitedParseDouble,
+  }) as any;
 };
 
 /**
@@ -1292,14 +1320,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

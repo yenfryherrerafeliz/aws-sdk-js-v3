@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { UpdateBrokerRequest, UpdateBrokerResponse } from "../models/models_0";
 import { MqClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MqClient";
 import { de_UpdateBrokerCommand, se_UpdateBrokerCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -40,7 +44,7 @@ export interface UpdateBrokerCommandOutput extends UpdateBrokerResponse, __Metad
  * // const { MqClient, UpdateBrokerCommand } = require("@aws-sdk/client-mq"); // CommonJS import
  * const client = new MqClient(config);
  * const input = { // UpdateBrokerRequest
- *   AuthenticationStrategy: "STRING_VALUE",
+ *   AuthenticationStrategy: "SIMPLE" || "LDAP",
  *   AutoMinorVersionUpgrade: true || false,
  *   BrokerId: "STRING_VALUE", // required
  *   Configuration: { // ConfigurationId
@@ -69,18 +73,19 @@ export interface UpdateBrokerCommandOutput extends UpdateBrokerResponse, __Metad
  *     General: true || false,
  *   },
  *   MaintenanceWindowStartTime: { // WeeklyStartTime
- *     DayOfWeek: "STRING_VALUE", // required
+ *     DayOfWeek: "MONDAY" || "TUESDAY" || "WEDNESDAY" || "THURSDAY" || "FRIDAY" || "SATURDAY" || "SUNDAY", // required
  *     TimeOfDay: "STRING_VALUE", // required
  *     TimeZone: "STRING_VALUE",
  *   },
  *   SecurityGroups: [
  *     "STRING_VALUE",
  *   ],
+ *   DataReplicationMode: "NONE" || "CRDR",
  * };
  * const command = new UpdateBrokerCommand(input);
  * const response = await client.send(command);
  * // { // UpdateBrokerResponse
- * //   AuthenticationStrategy: "STRING_VALUE",
+ * //   AuthenticationStrategy: "SIMPLE" || "LDAP",
  * //   AutoMinorVersionUpgrade: true || false,
  * //   BrokerId: "STRING_VALUE",
  * //   Configuration: { // ConfigurationId
@@ -108,13 +113,29 @@ export interface UpdateBrokerCommandOutput extends UpdateBrokerResponse, __Metad
  * //     General: true || false,
  * //   },
  * //   MaintenanceWindowStartTime: { // WeeklyStartTime
- * //     DayOfWeek: "STRING_VALUE", // required
+ * //     DayOfWeek: "MONDAY" || "TUESDAY" || "WEDNESDAY" || "THURSDAY" || "FRIDAY" || "SATURDAY" || "SUNDAY", // required
  * //     TimeOfDay: "STRING_VALUE", // required
  * //     TimeZone: "STRING_VALUE",
  * //   },
  * //   SecurityGroups: [
  * //     "STRING_VALUE",
  * //   ],
+ * //   DataReplicationMetadata: { // DataReplicationMetadataOutput
+ * //     DataReplicationCounterpart: { // DataReplicationCounterpart
+ * //       BrokerId: "STRING_VALUE", // required
+ * //       Region: "STRING_VALUE", // required
+ * //     },
+ * //     DataReplicationRole: "STRING_VALUE", // required
+ * //   },
+ * //   DataReplicationMode: "NONE" || "CRDR",
+ * //   PendingDataReplicationMetadata: {
+ * //     DataReplicationCounterpart: {
+ * //       BrokerId: "STRING_VALUE", // required
+ * //       Region: "STRING_VALUE", // required
+ * //     },
+ * //     DataReplicationRole: "STRING_VALUE", // required
+ * //   },
+ * //   PendingDataReplicationMode: "NONE" || "CRDR",
  * // };
  *
  * ```

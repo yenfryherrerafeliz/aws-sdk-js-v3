@@ -1,7 +1,70 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { CloudWatchLogsServiceException as __BaseException } from "./CloudWatchLogsServiceException";
+
+/**
+ * @public
+ * @enum
+ */
+export const PolicyType = {
+  DATA_PROTECTION_POLICY: "DATA_PROTECTION_POLICY",
+} as const;
+
+/**
+ * @public
+ */
+export type PolicyType = (typeof PolicyType)[keyof typeof PolicyType];
+
+/**
+ * @public
+ * @enum
+ */
+export const Scope = {
+  ALL: "ALL",
+} as const;
+
+/**
+ * @public
+ */
+export type Scope = (typeof Scope)[keyof typeof Scope];
+
+/**
+ * @public
+ * <p>A structure that contains information about one CloudWatch Logs account policy.</p>
+ */
+export interface AccountPolicy {
+  /**
+   * <p>The name of the account policy.</p>
+   */
+  policyName?: string;
+
+  /**
+   * <p>The policy document for this account policy.</p>
+   *          <p>The JSON specified in <code>policyDocument</code> can be up to 30,720 characters.</p>
+   */
+  policyDocument?: string;
+
+  /**
+   * <p>The date and time that this policy was most recently updated.</p>
+   */
+  lastUpdatedTime?: number;
+
+  /**
+   * <p>The type of policy for this account policy.</p>
+   */
+  policyType?: PolicyType | string;
+
+  /**
+   * <p>The scope of the account policy.</p>
+   */
+  scope?: Scope | string;
+
+  /**
+   * <p>The Amazon Web Services account ID that the policy applies to.</p>
+   */
+  accountId?: string;
+}
 
 /**
  * @public
@@ -9,8 +72,11 @@ import { CloudWatchLogsServiceException as __BaseException } from "./CloudWatchL
 export interface AssociateKmsKeyRequest {
   /**
    * <p>The name of the log group.</p>
+   *          <p>In your <code>AssociateKmsKey</code> operation,
+   *       you must specify either the <code>resourceIdentifier</code> parameter or the <code>logGroup</code> parameter,
+   *       but you can't specify both.</p>
    */
-  logGroupName: string | undefined;
+  logGroupName?: string;
 
   /**
    * <p>The Amazon Resource Name (ARN) of the KMS key to use when encrypting log
@@ -18,6 +84,35 @@ export interface AssociateKmsKeyRequest {
    *         Keys</a>.</p>
    */
   kmsKeyId: string | undefined;
+
+  /**
+   * <p>Specifies the target for this operation. You must specify one of the following:</p>
+   *          <ul>
+   *             <li>
+   *                <p>Specify the following ARN to have future <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetQueryResults.html">GetQueryResults</a>
+   *         operations in this account encrypt the results
+   *         with the specified KMS key. Replace
+   *         <i>REGION</i> and <i>ACCOUNT_ID</i> with your Region and account ID.</p>
+   *                <p>
+   *                   <code>arn:aws:logs:<i>REGION</i>:<i>ACCOUNT_ID</i>:query-result:*</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>Specify the ARN of a log group to have CloudWatch Logs use the KMS key
+   *         to encrypt log events that are ingested and stored by that log group. The log group ARN must be in
+   *         the following format. Replace
+   *         <i>REGION</i> and <i>ACCOUNT_ID</i> with your Region and account ID.</p>
+   *                <p>
+   *                   <code>arn:aws:logs:<i>REGION</i>:<i>ACCOUNT_ID</i>:log-group:<i>LOG_GROUP_NAME</i>
+   *                   </code>
+   *                </p>
+   *             </li>
+   *          </ul>
+   *          <p>In your <code>AssociateKmsKey</code> operation,
+   *         you must specify either the <code>resourceIdentifier</code> parameter or the <code>logGroup</code> parameter,
+   *         but you can't specify both.</p>
+   */
+  resourceIdentifier?: string;
 }
 
 /**
@@ -319,6 +414,21 @@ export type DataProtectionStatus = (typeof DataProtectionStatus)[keyof typeof Da
 /**
  * @public
  */
+export interface DeleteAccountPolicyRequest {
+  /**
+   * <p>The name of the policy to delete.</p>
+   */
+  policyName: string | undefined;
+
+  /**
+   * <p>The type of policy to delete. Currently, the only valid value is <code>DATA_PROTECTION_POLICY</code>.</p>
+   */
+  policyType: PolicyType | string | undefined;
+}
+
+/**
+ * @public
+ */
 export interface DeleteDataProtectionPolicyRequest {
   /**
    * <p>The name or ARN of the log group that you want to delete the data protection policy for.</p>
@@ -431,6 +541,43 @@ export interface DeleteSubscriptionFilterRequest {
    * <p>The name of the subscription filter.</p>
    */
   filterName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DescribeAccountPoliciesRequest {
+  /**
+   * <p>Use this parameter to limit the returned policies to only the policies that match the policy type that you
+   *       specify. Currently, the only valid value is <code>DATA_PROTECTION_POLICY</code>.</p>
+   */
+  policyType: PolicyType | string | undefined;
+
+  /**
+   * <p>Use this parameter to limit the returned policies to only the policy with the name that you specify.</p>
+   */
+  policyName?: string;
+
+  /**
+   * <p>If you are using an account that is set up as a monitoring account for CloudWatch unified cross-account
+   *       observability, you can use this to specify the account ID of a source account. If you do,
+   *       the operation returns the account policy for the specified account. Currently, you can specify only
+   *     one account ID in this parameter.</p>
+   *          <p>If you
+   *     omit this parameter, only the policy in the current account is returned.</p>
+   */
+  accountIdentifiers?: string[];
+}
+
+/**
+ * @public
+ */
+export interface DescribeAccountPoliciesResponse {
+  /**
+   * <p>An array of structures that contain information about the CloudWatch Logs account policies that match
+   *     the specified filters.</p>
+   */
+  accountPolicies?: AccountPolicy[];
 }
 
 /**
@@ -681,6 +828,9 @@ export interface DescribeLogGroupsRequest {
    * that match the string based on a case-sensitive substring search. For example, if you specify <code>Foo</code>, log groups
    * named <code>FooBar</code>, <code>aws/Foo</code>, and <code>GroupFoo</code> would match, but <code>foo</code>,
    * <code>F/o/o</code> and <code>Froo</code> would not match.</p>
+   *          <p>If you specify <code>logGroupNamePattern</code> in your request, then only
+   *         <code>arn</code>, <code>creationTime</code>, and <code>logGroupName</code>
+   *         are included in the response. </p>
    *          <note>
    *             <p>
    *                <code>logGroupNamePattern</code> and <code>logGroupNamePrefix</code> are mutually exclusive.
@@ -709,14 +859,22 @@ export interface DescribeLogGroupsRequest {
    *
    *       contains a null value, the operation returns all log groups in the monitoring account
    *       and all log groups in all source accounts that are linked to the monitoring account. </p>
-   *          <note>
-   *             <p> If you specify <code>includeLinkedAccounts</code> in your request, then
-   *         <code>metricFilterCount</code>, <code>retentionInDays</code>, and <code>storedBytes</code>
-   *         are not included in the response. </p>
-   *          </note>
    */
   includeLinkedAccounts?: boolean;
 }
+
+/**
+ * @public
+ * @enum
+ */
+export const InheritedProperty = {
+  ACCOUNT_DATA_PROTECTION: "ACCOUNT_DATA_PROTECTION",
+} as const;
+
+/**
+ * @public
+ */
+export type InheritedProperty = (typeof InheritedProperty)[keyof typeof InheritedProperty];
 
 /**
  * @public
@@ -736,7 +894,7 @@ export interface LogGroup {
 
   /**
    * <p>The number of days to retain the log events in the specified log group.
-   *       Possible values are: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 2192, 2557, 2922, 3288, and 3653.</p>
+   *       Possible values are: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1096, 1827, 2192, 2557, 2922, 3288, and 3653.</p>
    *          <p>To set a log group so that its log events do not expire, use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DeleteRetentionPolicy.html">DeleteRetentionPolicy</a>. </p>
    */
   retentionInDays?: number;
@@ -767,6 +925,12 @@ export interface LogGroup {
    *       <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDataProtectionPolicy.html">PutDataProtectionPolicy</a>.</p>
    */
   dataProtectionStatus?: DataProtectionStatus | string;
+
+  /**
+   * <p>Displays all the properties that this log group has inherited from account-level
+   *     settings.</p>
+   */
+  inheritedProperties?: (InheritedProperty | string)[];
 }
 
 /**
@@ -1447,8 +1611,40 @@ export interface DescribeSubscriptionFiltersResponse {
 export interface DisassociateKmsKeyRequest {
   /**
    * <p>The name of the log group.</p>
+   *          <p>In your <code>DisassociateKmsKey</code> operation,
+   *       you must specify either the <code>resourceIdentifier</code> parameter or the <code>logGroup</code> parameter,
+   *       but you can't specify both.</p>
    */
-  logGroupName: string | undefined;
+  logGroupName?: string;
+
+  /**
+   * <p>Specifies the target for this operation. You must specify one of the following:</p>
+   *          <ul>
+   *             <li>
+   *                <p>Specify the ARN of a log group to stop having CloudWatch Logs use the KMS key
+   *         to encrypt log events that are ingested and stored by that log group. After you run this operation, CloudWatch Logs
+   *         encrypts ingested log events with the default CloudWatch Logs method. The log group ARN must be in
+   *         the following format. Replace
+   *         <i>REGION</i> and <i>ACCOUNT_ID</i> with your Region and account ID.</p>
+   *                <p>
+   *                   <code>arn:aws:logs:<i>REGION</i>:<i>ACCOUNT_ID</i>:log-group:<i>LOG_GROUP_NAME</i>
+   *                   </code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>Specify the following ARN to stop using this key to encrypt the results of future <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html">StartQuery</a>
+   *         operations in this account. Replace
+   *         <i>REGION</i> and <i>ACCOUNT_ID</i> with your Region and account ID.</p>
+   *                <p>
+   *                   <code>arn:aws:logs:<i>REGION</i>:<i>ACCOUNT_ID</i>:query-result:*</code>
+   *                </p>
+   *             </li>
+   *          </ul>
+   *          <p>In your <code>DisssociateKmsKey</code> operation,
+   *       you must specify either the <code>resourceIdentifier</code> parameter or the <code>logGroup</code> parameter,
+   *       but you can't specify both.</p>
+   */
+  resourceIdentifier?: string;
 }
 
 /**
@@ -1786,9 +1982,9 @@ export interface GetLogGroupFieldsRequest {
   logGroupName?: string;
 
   /**
-   * <p>The time to set as the center of the query. If you specify <code>time</code>, the 15
-   *       minutes before this time are queries. If you omit <code>time</code>, the 8 minutes before and
-   *       8 minutes after this time are searched.</p>
+   * <p>The time to set as the center of the query. If you specify <code>time</code>, the 8 minutes before and
+   *       8 minutes after this time are searched. If you omit <code>time</code>, the most recent 15 minutes
+   *       up to the current time are searched.</p>
    *          <p>The <code>time</code> value is specified as epoch time, which is the number of seconds
    *       since <code>January 1, 1970, 00:00:00 UTC</code>.</p>
    */
@@ -1931,9 +2127,9 @@ export interface GetQueryResultsResponse {
   results?: ResultField[][];
 
   /**
-   * <p>Includes the number of log events scanned by the query, the number of log events that matched the
-   *     query criteria, and the total number of bytes in the log events that were scanned. These values
-   *     reflect the full raw results of the query.</p>
+   * <p>Includes the number of log events scanned by the query, the number of log events that
+   *       matched the query criteria, and the total number of bytes in the scanned log events. These
+   *       values reflect the full raw results of the query.</p>
    */
   statistics?: QueryStatistics;
 
@@ -1941,10 +2137,18 @@ export interface GetQueryResultsResponse {
    * <p>The status of the most recent running of the query. Possible values are <code>Cancelled</code>,
    *       <code>Complete</code>, <code>Failed</code>, <code>Running</code>, <code>Scheduled</code>,
    *       <code>Timeout</code>, and <code>Unknown</code>.</p>
-   *          <p>Queries time out after 15 minutes of runtime. To avoid having your queries time out,
+   *          <p>Queries time out after 60 minutes of runtime. To avoid having your queries time out,
    *       reduce the time range being searched or partition your query into a number of queries.</p>
    */
   status?: QueryStatus | string;
+
+  /**
+   * <p>If you associated an KMS key with the CloudWatch Logs Insights
+   *       query results in this account, this field displays the ARN of the key that's used to encrypt
+   *       the query results when <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html">StartQuery</a> stores
+   *       them.</p>
+   */
+  encryptionKey?: string;
 }
 
 /**
@@ -1960,7 +2164,7 @@ export interface InputLogEvent {
   timestamp: number | undefined;
 
   /**
-   * <p>The raw event message.</p>
+   * <p>The raw event message. Each log event can be no larger than 256 KB.</p>
    */
   message: string | undefined;
 }
@@ -2048,6 +2252,77 @@ export interface ListTagsLogGroupResponse {
 /**
  * @public
  */
+export interface PutAccountPolicyRequest {
+  /**
+   * <p>A name for the policy. This must be unique within the account.</p>
+   */
+  policyName: string | undefined;
+
+  /**
+   * <p>Specify the data protection policy, in JSON.</p>
+   *          <p>This policy must include two JSON blocks:</p>
+   *          <ul>
+   *             <li>
+   *                <p>The first block must include both a <code>DataIdentifer</code> array and an
+   *         <code>Operation</code> property with an <code>Audit</code> action. The <code>DataIdentifer</code> array lists the types of sensitive data that
+   *         you want to mask. For more information about the available options, see
+   *         <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data-types.html">Types of data that you can mask</a>.</p>
+   *                <p>The <code>Operation</code> property with an <code>Audit</code> action is required to find the
+   *           sensitive data terms. This <code>Audit</code> action must contain a <code>FindingsDestination</code>
+   *           object. You can optionally use that <code>FindingsDestination</code> object to list one or more
+   *           destinations to send audit findings to. If you specify destinations such as log groups,
+   *           Kinesis Data Firehose streams, and S3 buckets, they must already exist.</p>
+   *             </li>
+   *             <li>
+   *                <p>The second block must include both a <code>DataIdentifer</code> array and an
+   *         <code>Operation</code> property with an <code>Deidentify</code> action. The
+   *         <code>DataIdentifer</code> array must exactly match the <code>DataIdentifer</code> array
+   *         in the first block of the policy.</p>
+   *                <p>The <code>Operation</code> property with the <code>Deidentify</code> action is what actually masks the
+   *           data, and it must
+   *           contain the <code>
+   *             "MaskConfig": \{\}</code> object. The <code>
+   *               "MaskConfig": \{\}</code> object must be empty.</p>
+   *             </li>
+   *          </ul>
+   *          <p>For an example data protection policy, see the <b>Examples</b> section on this page.</p>
+   *          <important>
+   *             <p>The contents of the two <code>DataIdentifer</code> arrays must match exactly.</p>
+   *          </important>
+   *          <p>In addition to the two JSON blocks, the <code>policyDocument</code> can also include <code>Name</code>,
+   *     <code>Description</code>, and <code>Version</code> fields. The <code>Name</code> is different than the
+   *       operation's <code>policyName</code> parameter, and is used as a dimension when
+   *     CloudWatch Logs reports audit findings metrics to CloudWatch.</p>
+   *          <p>The JSON specified in <code>policyDocument</code> can be up to 30,720 characters.</p>
+   */
+  policyDocument: string | undefined;
+
+  /**
+   * <p>Currently the only valid value for this parameter is <code>DATA_PROTECTION_POLICY</code>.</p>
+   */
+  policyType: PolicyType | string | undefined;
+
+  /**
+   * <p>Currently the only valid value for this parameter is <code>ALL</code>, which specifies that the data
+   *       protection policy applies to all log groups in the account. If you omit this parameter, the default
+   *     of <code>ALL</code> is used.</p>
+   */
+  scope?: Scope | string;
+}
+
+/**
+ * @public
+ */
+export interface PutAccountPolicyResponse {
+  /**
+   * <p>The account policy that you created.</p>
+   */
+  accountPolicy?: AccountPolicy;
+}
+
+/**
+ * @public
+ */
 export interface PutDataProtectionPolicyRequest {
   /**
    * <p>Specify either the log group name or log group ARN.</p>
@@ -2083,8 +2358,12 @@ export interface PutDataProtectionPolicyRequest {
    *          </ul>
    *          <p>For an example data protection policy, see the <b>Examples</b> section on this page.</p>
    *          <important>
-   *             <p>The contents of two <code>DataIdentifer</code> arrays must match exactly.</p>
+   *             <p>The contents of the two <code>DataIdentifer</code> arrays must match exactly.</p>
    *          </important>
+   *          <p>In addition to the two JSON blocks, the <code>policyDocument</code> can also include <code>Name</code>,
+   *       <code>Description</code>, and <code>Version</code> fields. The <code>Name</code> is used as a dimension when
+   *       CloudWatch Logs reports audit findings metrics to CloudWatch.</p>
+   *          <p>The JSON specified in <code>policyDocument</code> can be up to 30,720 characters.</p>
    */
   policyDocument: string | undefined;
 }
@@ -2165,7 +2444,7 @@ export interface PutDestinationPolicyRequest {
 
   /**
    * <p>Specify true if you are updating an existing destination policy to grant permission to
-   *     an organization ID instead of granting permission to individual AWS accounts. Before
+   *       an organization ID instead of granting permission to individual Amazon Web Services accounts. Before
    *     you update a destination policy this way, you must first update the subscription
    *     filters in the accounts that send logs to this destination. If you do not, the subscription
    *     filters might stop working. By specifying <code>true</code>
@@ -2421,7 +2700,7 @@ export interface PutRetentionPolicyRequest {
 
   /**
    * <p>The number of days to retain the log events in the specified log group.
-   *       Possible values are: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 2192, 2557, 2922, 3288, and 3653.</p>
+   *       Possible values are: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1096, 1827, 2192, 2557, 2922, 3288, and 3653.</p>
    *          <p>To set a log group so that its log events do not expire, use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DeleteRetentionPolicy.html">DeleteRetentionPolicy</a>. </p>
    */
   retentionInDays: number | undefined;
@@ -2559,10 +2838,9 @@ export interface StartQueryRequest {
   /**
    * <p>The log group on which to perform the query.</p>
    *          <note>
-   *             <p>A <code>StartQuery</code> operation must include exactly one
-   *           of the following parameters:
-   *           <code>logGroupName</code>, <code>logGroupNames</code> or <code>logGroupIdentifiers</code>.
-   *         </p>
+   *             <p>A <code>StartQuery</code> operation must include exactly one of the following
+   *         parameters: <code>logGroupName</code>, <code>logGroupNames</code>, or
+   *           <code>logGroupIdentifiers</code>. </p>
    *          </note>
    */
   logGroupName?: string;
@@ -2570,10 +2848,9 @@ export interface StartQueryRequest {
   /**
    * <p>The list of log groups to be queried. You can include up to 50 log groups.</p>
    *          <note>
-   *             <p>A <code>StartQuery</code> operation must include exactly one
-   *         of the following parameters:
-   *         <code>logGroupName</code>, <code>logGroupNames</code> or <code>logGroupIdentifiers</code>.
-   *       </p>
+   *             <p>A <code>StartQuery</code> operation must include exactly one of the following
+   *         parameters: <code>logGroupName</code>, <code>logGroupNames</code>, or
+   *           <code>logGroupIdentifiers</code>. </p>
    *          </note>
    */
   logGroupNames?: string[];
@@ -2584,10 +2861,8 @@ export interface StartQueryRequest {
    *       in a source account and you're using a monitoring account, you must specify the ARN of the log
    *       group here. The query definition must also be defined in the monitoring account.</p>
    *          <p>If you specify an ARN, the ARN can't end with an asterisk (*).</p>
-   *          <p>A <code>StartQuery</code> operation must include exactly one
-   *       of the following parameters:
-   *       <code>logGroupName</code>, <code>logGroupNames</code> or <code>logGroupIdentifiers</code>.
-   *     </p>
+   *          <p>A <code>StartQuery</code> operation must include exactly one of the following parameters:
+   *         <code>logGroupName</code>, <code>logGroupNames</code>, or <code>logGroupIdentifiers</code>. </p>
    */
   logGroupIdentifiers?: string[];
 

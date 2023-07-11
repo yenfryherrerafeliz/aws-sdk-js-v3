@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AuditManagerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AuditManagerClient";
 import {
@@ -23,6 +23,10 @@ import {
   se_BatchImportEvidenceToAssessmentControlCommand,
 } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -41,15 +45,19 @@ export interface BatchImportEvidenceToAssessmentControlCommandOutput
 
 /**
  * @public
- * <p>Uploads one or more pieces of evidence to a control in an Audit Manager assessment.
- *          You can upload manual evidence from any Amazon Simple Storage Service (Amazon S3) bucket by
- *          specifying the S3 URI of the evidence. </p>
- *          <p>You must upload manual evidence to your S3 bucket before you can upload it to your
- *          assessment. For instructions, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html">CreateBucket</a> and <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html">PutObject</a> in
- *          the <i>Amazon Simple Storage Service API Reference.</i>
- *          </p>
+ * <p>Adds one or more pieces of evidence to a control in an Audit Manager assessment. </p>
+ *          <p>You can import manual evidence from any S3 bucket by specifying the S3 URI of the
+ *          object. You can also upload a file from your browser, or enter plain text in response to a
+ *          risk assessment question. </p>
  *          <p>The following restrictions apply to this action:</p>
  *          <ul>
+ *             <li>
+ *                <p>
+ *                   <code>manualEvidence</code> can be only one of the following:
+ *                   <code>evidenceFileName</code>, <code>s3ResourcePath</code>, or
+ *                   <code>textResponse</code>
+ *                </p>
+ *             </li>
  *             <li>
  *                <p>Maximum size of an individual evidence file: 100 MB</p>
  *             </li>
@@ -76,6 +84,8 @@ export interface BatchImportEvidenceToAssessmentControlCommandOutput
  *   manualEvidence: [ // ManualEvidenceList // required
  *     { // ManualEvidence
  *       s3ResourcePath: "STRING_VALUE",
+ *       textResponse: "STRING_VALUE",
+ *       evidenceFileName: "STRING_VALUE",
  *     },
  *   ],
  * };
@@ -86,6 +96,8 @@ export interface BatchImportEvidenceToAssessmentControlCommandOutput
  * //     { // BatchImportEvidenceToAssessmentControlError
  * //       manualEvidence: { // ManualEvidence
  * //         s3ResourcePath: "STRING_VALUE",
+ * //         textResponse: "STRING_VALUE",
+ * //         evidenceFileName: "STRING_VALUE",
  * //       },
  * //       errorCode: "STRING_VALUE",
  * //       errorMessage: "STRING_VALUE",
@@ -111,6 +123,9 @@ export interface BatchImportEvidenceToAssessmentControlCommandOutput
  *
  * @throws {@link ResourceNotFoundException} (client fault)
  *  <p> The resource that's specified in the request can't be found. </p>
+ *
+ * @throws {@link ThrottlingException} (client fault)
+ *  <p>The request was denied due to request throttling.</p>
  *
  * @throws {@link ValidationException} (client fault)
  *  <p> The request has invalid or missing parameters. </p>

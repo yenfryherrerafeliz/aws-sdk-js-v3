@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EMRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EMRClient";
 import { RunJobFlowInput, RunJobFlowOutput } from "../models/models_0";
 import { de_RunJobFlowCommand, se_RunJobFlowCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -50,7 +54,7 @@ export interface RunJobFlowCommandOutput extends RunJobFlowOutput, __MetadataBea
  *          Hadoop.</p>
  *          <p>For long-running clusters, we recommend that you periodically store your results.</p>
  *          <note>
- *             <p>The instance fleets configuration is available only in Amazon EMR versions
+ *             <p>The instance fleets configuration is available only in Amazon EMR releases
  *             4.8.0 and later, excluding 5.0.x versions. The RunJobFlow request can contain
  *             InstanceFleets parameters or InstanceGroups parameters, but not both.</p>
  *          </note>
@@ -186,7 +190,7 @@ export interface RunJobFlowCommandOutput extends RunJobFlowOutput, __MetadataBea
  *             TimeoutDurationMinutes: Number("int"), // required
  *             TimeoutAction: "SWITCH_TO_ON_DEMAND" || "TERMINATE_CLUSTER", // required
  *             BlockDurationMinutes: Number("int"),
- *             AllocationStrategy: "capacity-optimized",
+ *             AllocationStrategy: "capacity-optimized" || "price-capacity-optimized" || "lowest-price" || "diversified",
  *           },
  *           OnDemandSpecification: { // OnDemandProvisioningSpecification
  *             AllocationStrategy: "lowest-price", // required

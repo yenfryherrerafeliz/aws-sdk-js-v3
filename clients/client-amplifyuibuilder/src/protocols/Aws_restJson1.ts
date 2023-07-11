@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -17,12 +18,12 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import { CreateComponentCommandInput, CreateComponentCommandOutput } from "../commands/CreateComponentCommand";
@@ -38,21 +39,34 @@ import {
 import { ExportComponentsCommandInput, ExportComponentsCommandOutput } from "../commands/ExportComponentsCommand";
 import { ExportFormsCommandInput, ExportFormsCommandOutput } from "../commands/ExportFormsCommand";
 import { ExportThemesCommandInput, ExportThemesCommandOutput } from "../commands/ExportThemesCommand";
+import { GetCodegenJobCommandInput, GetCodegenJobCommandOutput } from "../commands/GetCodegenJobCommand";
 import { GetComponentCommandInput, GetComponentCommandOutput } from "../commands/GetComponentCommand";
 import { GetFormCommandInput, GetFormCommandOutput } from "../commands/GetFormCommand";
 import { GetMetadataCommandInput, GetMetadataCommandOutput } from "../commands/GetMetadataCommand";
 import { GetThemeCommandInput, GetThemeCommandOutput } from "../commands/GetThemeCommand";
+import { ListCodegenJobsCommandInput, ListCodegenJobsCommandOutput } from "../commands/ListCodegenJobsCommand";
 import { ListComponentsCommandInput, ListComponentsCommandOutput } from "../commands/ListComponentsCommand";
 import { ListFormsCommandInput, ListFormsCommandOutput } from "../commands/ListFormsCommand";
 import { ListThemesCommandInput, ListThemesCommandOutput } from "../commands/ListThemesCommand";
 import { PutMetadataFlagCommandInput, PutMetadataFlagCommandOutput } from "../commands/PutMetadataFlagCommand";
 import { RefreshTokenCommandInput, RefreshTokenCommandOutput } from "../commands/RefreshTokenCommand";
+import { StartCodegenJobCommandInput, StartCodegenJobCommandOutput } from "../commands/StartCodegenJobCommand";
 import { UpdateComponentCommandInput, UpdateComponentCommandOutput } from "../commands/UpdateComponentCommand";
 import { UpdateFormCommandInput, UpdateFormCommandOutput } from "../commands/UpdateFormCommand";
 import { UpdateThemeCommandInput, UpdateThemeCommandOutput } from "../commands/UpdateThemeCommand";
 import { AmplifyUIBuilderServiceException as __BaseException } from "../models/AmplifyUIBuilderServiceException";
 import {
   ActionParameters,
+  CodegenFeatureFlags,
+  CodegenGenericDataEnum,
+  CodegenGenericDataField,
+  CodegenGenericDataModel,
+  CodegenGenericDataNonModel,
+  CodegenGenericDataRelationshipType,
+  CodegenJob,
+  CodegenJobGenericDataSchema,
+  CodegenJobRenderConfig,
+  CodegenJobSummary,
   Component,
   ComponentBindingPropertiesValue,
   ComponentBindingPropertiesValueProperties,
@@ -88,15 +102,18 @@ import {
   MutationActionSetStateParameter,
   Predicate,
   PutMetadataFlagBody,
+  ReactStartCodegenJobData,
   RefreshTokenRequestBody,
   ResourceConflictException,
   ResourceNotFoundException,
   SectionalElement,
   ServiceQuotaExceededException,
   SortProperty,
+  StartCodegenJobData,
   Theme,
   ThemeValue,
   ThemeValues,
+  ThrottlingException,
   UnauthorizedException,
   UpdateComponentData,
   UpdateFormData,
@@ -489,6 +506,40 @@ export const se_ExportThemesCommand = async (
 };
 
 /**
+ * serializeAws_restJson1GetCodegenJobCommand
+ */
+export const se_GetCodegenJobCommand = async (
+  input: GetCodegenJobCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/app/{appId}/environment/{environmentName}/codegen-jobs/{id}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "appId", () => input.appId!, "{appId}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "environmentName",
+    () => input.environmentName!,
+    "{environmentName}",
+    false
+  );
+  resolvedPath = __resolvedPath(resolvedPath, input, "id", () => input.id!, "{id}", false);
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1GetComponentCommand
  */
 export const se_GetComponentCommand = async (
@@ -619,6 +670,44 @@ export const se_GetThemeCommand = async (
     method: "GET",
     headers,
     path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ListCodegenJobsCommand
+ */
+export const se_ListCodegenJobsCommand = async (
+  input: ListCodegenJobsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/app/{appId}/environment/{environmentName}/codegen-jobs";
+  resolvedPath = __resolvedPath(resolvedPath, input, "appId", () => input.appId!, "{appId}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "environmentName",
+    () => input.environmentName!,
+    "{environmentName}",
+    false
+  );
+  const query: any = map({
+    nextToken: [, input.nextToken!],
+    maxResults: [() => input.maxResults !== void 0, () => input.maxResults!.toString()],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
     body,
   });
 };
@@ -809,6 +898,52 @@ export const se_RefreshTokenCommand = async (
     method: "POST",
     headers,
     path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1StartCodegenJobCommand
+ */
+export const se_StartCodegenJobCommand = async (
+  input: StartCodegenJobCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/app/{appId}/environment/{environmentName}/codegen-jobs";
+  resolvedPath = __resolvedPath(resolvedPath, input, "appId", () => input.appId!, "{appId}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "environmentName",
+    () => input.environmentName!,
+    "{environmentName}",
+    false
+  );
+  const query: any = map({
+    clientToken: [, input.clientToken ?? generateIdempotencyToken()],
+  });
+  let body: any;
+  if (input.codegenJobToCreate !== undefined) {
+    body = _json(input.codegenJobToCreate);
+  }
+  if (body === undefined) {
+    body = {};
+  }
+  body = JSON.stringify(body);
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    query,
     body,
   });
 };
@@ -1463,6 +1598,59 @@ const de_ExportThemesCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1GetCodegenJobCommand
+ */
+export const de_GetCodegenJobCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetCodegenJobCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetCodegenJobCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> | undefined = __expectObject(await parseBody(output.body, context));
+  contents.job = de_CodegenJob(data, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetCodegenJobCommandError
+ */
+const de_GetCodegenJobCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetCodegenJobCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.amplifyuibuilder#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.amplifyuibuilder#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.amplifyuibuilder#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.amplifyuibuilder#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1GetComponentCommand
  */
 export const de_GetComponentCommand = async (
@@ -1652,6 +1840,60 @@ const de_GetThemeCommandError = async (
     case "ResourceNotFoundException":
     case "com.amazonaws.amplifyuibuilder#ResourceNotFoundException":
       throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1ListCodegenJobsCommand
+ */
+export const de_ListCodegenJobsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListCodegenJobsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListCodegenJobsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    entities: (_) => de_CodegenJobSummaryList(_, context),
+    nextToken: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListCodegenJobsCommandError
+ */
+const de_ListCodegenJobsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListCodegenJobsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.amplifyuibuilder#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.amplifyuibuilder#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.amplifyuibuilder#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -1899,6 +2141,56 @@ const de_RefreshTokenCommandError = async (
     case "InvalidParameterException":
     case "com.amazonaws.amplifyuibuilder#InvalidParameterException":
       throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1StartCodegenJobCommand
+ */
+export const de_StartCodegenJobCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StartCodegenJobCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_StartCodegenJobCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> | undefined = __expectObject(await parseBody(output.body, context));
+  contents.entity = de_CodegenJob(data, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1StartCodegenJobCommandError
+ */
+const de_StartCodegenJobCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<StartCodegenJobCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServerException":
+    case "com.amazonaws.amplifyuibuilder#InternalServerException":
+      throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.amplifyuibuilder#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.amplifyuibuilder#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -2161,6 +2453,23 @@ const de_ServiceQuotaExceededExceptionRes = async (
 };
 
 /**
+ * deserializeAws_restJson1ThrottlingExceptionRes
+ */
+const de_ThrottlingExceptionRes = async (parsedOutput: any, context: __SerdeContext): Promise<ThrottlingException> => {
+  const contents: any = map({});
+  const data: any = parsedOutput.body;
+  const doc = take(data, {
+    message: __expectString,
+  });
+  Object.assign(contents, doc);
+  const exception = new ThrottlingException({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...contents,
+  });
+  return __decorateServiceException(exception, parsedOutput.body);
+};
+
+/**
  * deserializeAws_restJson1UnauthorizedExceptionRes
  */
 const de_UnauthorizedExceptionRes = async (
@@ -2196,6 +2505,38 @@ const se_ActionParameters = (input: ActionParameters, context: __SerdeContext): 
     url: (_) => se_ComponentProperty(_, context),
   });
 };
+
+// se_AssociatedFieldsList omitted.
+
+// se_CodegenFeatureFlags omitted.
+
+// se_CodegenGenericDataEnum omitted.
+
+// se_CodegenGenericDataEnums omitted.
+
+// se_CodegenGenericDataEnumValuesList omitted.
+
+// se_CodegenGenericDataField omitted.
+
+// se_CodegenGenericDataFields omitted.
+
+// se_CodegenGenericDataModel omitted.
+
+// se_CodegenGenericDataModels omitted.
+
+// se_CodegenGenericDataNonModel omitted.
+
+// se_CodegenGenericDataNonModelFields omitted.
+
+// se_CodegenGenericDataNonModels omitted.
+
+// se_CodegenGenericDataRelationshipType omitted.
+
+// se_CodegenJobGenericDataSchema omitted.
+
+// se_CodegenJobRenderConfig omitted.
+
+// se_CodegenPrimaryKeysList omitted.
 
 /**
  * serializeAws_restJson1ComponentBindingProperties
@@ -2588,7 +2929,11 @@ const se_PredicateList = (input: Predicate[], context: __SerdeContext): any => {
 
 // se_PutMetadataFlagBody omitted.
 
+// se_ReactStartCodegenJobData omitted.
+
 // se_RefreshTokenRequestBody omitted.
+
+// se_RelatedModelFieldsList omitted.
 
 // se_SectionalElement omitted.
 
@@ -2597,6 +2942,8 @@ const se_PredicateList = (input: Predicate[], context: __SerdeContext): any => {
 // se_SortProperty omitted.
 
 // se_SortPropertyList omitted.
+
+// se_StartCodegenJobData omitted.
 
 // se_StrValues omitted.
 
@@ -2731,6 +3078,86 @@ const de_ActionParameters = (output: any, context: __SerdeContext): ActionParame
     url: (_: any) => de_ComponentProperty(_, context),
   }) as any;
 };
+
+// de_AssociatedFieldsList omitted.
+
+// de_CodegenFeatureFlags omitted.
+
+// de_CodegenGenericDataEnum omitted.
+
+// de_CodegenGenericDataEnums omitted.
+
+// de_CodegenGenericDataEnumValuesList omitted.
+
+// de_CodegenGenericDataField omitted.
+
+// de_CodegenGenericDataFields omitted.
+
+// de_CodegenGenericDataModel omitted.
+
+// de_CodegenGenericDataModels omitted.
+
+// de_CodegenGenericDataNonModel omitted.
+
+// de_CodegenGenericDataNonModelFields omitted.
+
+// de_CodegenGenericDataNonModels omitted.
+
+// de_CodegenGenericDataRelationshipType omitted.
+
+/**
+ * deserializeAws_restJson1CodegenJob
+ */
+const de_CodegenJob = (output: any, context: __SerdeContext): CodegenJob => {
+  return take(output, {
+    appId: __expectString,
+    asset: _json,
+    autoGenerateForms: __expectBoolean,
+    createdAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
+    environmentName: __expectString,
+    features: _json,
+    genericDataSchema: _json,
+    id: __expectString,
+    modifiedAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
+    renderConfig: (_: any) => _json(__expectUnion(_)),
+    status: __expectString,
+    statusMessage: __expectString,
+    tags: _json,
+  }) as any;
+};
+
+// de_CodegenJobAsset omitted.
+
+// de_CodegenJobGenericDataSchema omitted.
+
+// de_CodegenJobRenderConfig omitted.
+
+/**
+ * deserializeAws_restJson1CodegenJobSummary
+ */
+const de_CodegenJobSummary = (output: any, context: __SerdeContext): CodegenJobSummary => {
+  return take(output, {
+    appId: __expectString,
+    createdAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
+    environmentName: __expectString,
+    id: __expectString,
+    modifiedAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1CodegenJobSummaryList
+ */
+const de_CodegenJobSummaryList = (output: any, context: __SerdeContext): CodegenJobSummary[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_CodegenJobSummary(entry, context);
+    });
+  return retVal;
+};
+
+// de_CodegenPrimaryKeysList omitted.
 
 /**
  * deserializeAws_restJson1Component
@@ -3159,6 +3586,10 @@ const de_PredicateList = (output: any, context: __SerdeContext): Predicate[] => 
   return retVal;
 };
 
+// de_ReactStartCodegenJobData omitted.
+
+// de_RelatedModelFieldsList omitted.
+
 // de_SectionalElement omitted.
 
 // de_SectionalElementMap omitted.
@@ -3277,14 +3708,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

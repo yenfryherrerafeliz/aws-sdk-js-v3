@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { MediaConvertServiceException as __BaseException } from "./MediaConvertServiceException";
 import {
@@ -16,7 +16,7 @@ import {
   ContainerType,
   EsamSettings,
   ExtendedDataServices,
-  F4vSettings,
+  F4vMoovPlacement,
   Hdr10Metadata,
   HopDestination,
   Id3Insertion,
@@ -34,6 +34,17 @@ import {
   QueueTransition,
   Rectangle,
 } from "./models_0";
+
+/**
+ * @public
+ * Settings for F4v container
+ */
+export interface F4vSettings {
+  /**
+   * If set to PROGRESSIVE_DOWNLOAD, the MOOV atom is relocated to the beginning of the archive as required for progressive downloading. Otherwise it is placed normally at the end.
+   */
+  MoovPlacement?: F4vMoovPlacement | string;
+}
 
 /**
  * @public
@@ -1114,6 +1125,7 @@ export const MxfProfile = {
   OP1A: "OP1A",
   XAVC: "XAVC",
   XDCAM: "XDCAM",
+  XDCAM_RDD9: "XDCAM_RDD9",
 } as const;
 
 /**
@@ -1162,7 +1174,7 @@ export interface MxfSettings {
   AfdSignaling?: MxfAfdSignaling | string;
 
   /**
-   * Specify the MXF profile, also called shim, for this output. When you choose Auto, MediaConvert chooses a profile based on the video codec and resolution. For a list of codecs supported with each MXF profile, see https://docs.aws.amazon.com/mediaconvert/latest/ug/codecs-supported-with-each-mxf-profile.html. For more information about the automatic selection behavior, see https://docs.aws.amazon.com/mediaconvert/latest/ug/default-automatic-selection-of-mxf-profiles.html.
+   * Specify the MXF profile, also called shim, for this output. To automatically select a profile according to your output video codec and resolution, leave blank. For a list of codecs supported with each MXF profile, see https://docs.aws.amazon.com/mediaconvert/latest/ug/codecs-supported-with-each-mxf-profile.html. For more information about the automatic selection behavior, see https://docs.aws.amazon.com/mediaconvert/latest/ug/default-automatic-selection-of-mxf-profiles.html.
    */
   Profile?: MxfProfile | string;
 
@@ -2866,6 +2878,11 @@ export interface H265Settings {
    * Enables Alternate Transfer Function SEI message for outputs using Hybrid Log Gamma (HLG) Electro-Optical Transfer Function (EOTF).
    */
   AlternateTransferFunctionSei?: H265AlternateTransferFunctionSei | string;
+
+  /**
+   * The Bandwidth reduction filter increases the video quality of your output relative to its bitrate. Use to lower the bitrate of your constant quality QVBR output, with little or no perceptual decrease in quality. Or, use to increase the video quality of outputs with other rate control modes relative to the bitrate that you specify. Bandwidth reduction increases further when your input is low quality or noisy. Outputs that use this feature incur pro-tier pricing. When you include Bandwidth reduction filter, you cannot include the Noise reducer preprocessor.
+   */
+  BandwidthReductionFilter?: BandwidthReductionFilter;
 
   /**
    * Specify the average bitrate in bits per second. Required for VBR and CBR. For MS Smooth outputs, bitrates must be unique when rounded down to the nearest multiple of 1000.
@@ -4698,7 +4715,7 @@ export interface VideoCodecSettings {
   AvcIntraSettings?: AvcIntraSettings;
 
   /**
-   * Specifies the video codec. This must be equal to one of the enum values defined by the object VideoCodec. To passthrough the video stream of your input JPEG2000, VC-3, AVC-INTRA or Apple ProRes  video without any video encoding: Choose Passthrough. If you have multiple input videos, note that they must have identical encoding attributes. When you choose Passthrough, your output container must be MXF or QuickTime MOV.
+   * Specifies the video codec. This must be equal to one of the enum values defined by the object VideoCodec. To passthrough the video stream of your input JPEG2000, VC-3, AVC-INTRA or Apple ProRes video without any video encoding: Choose Passthrough. If you have multiple input videos, note that they must have identical encoding attributes. When you choose Passthrough, your output container must be MXF or QuickTime MOV.
    */
   Codec?: VideoCodec | string;
 
@@ -5381,7 +5398,7 @@ export interface VideoPreprocessor {
   DolbyVision?: DolbyVision;
 
   /**
-   * Enable HDR10+ analyis and metadata injection. Compatible with HEVC only.
+   * Enable HDR10+ analysis and metadata injection. Compatible with HEVC only.
    */
   Hdr10Plus?: Hdr10Plus;
 
@@ -5447,7 +5464,7 @@ export interface VideoDescription {
   FixedAfd?: number;
 
   /**
-   * Use the Height (Height) setting to define the video resolution height for this output. Specify in pixels. If you don't provide a value here, the service will use the input height.
+   * Use Height to define the video resolution height, in pixels, for this output. To use the same resolution as your input: Leave both Width and Height blank. To evenly scale from your input resolution: Leave Height blank and enter a value for Width. For example, if your input is 1920x1080 and you set Width to 1280, your output will be 1280x720.
    */
   Height?: number;
 
@@ -5482,7 +5499,7 @@ export interface VideoDescription {
   VideoPreprocessors?: VideoPreprocessor;
 
   /**
-   * Use Width (Width) to define the video resolution width, in pixels, for this output. If you don't provide a value here, the service will use the input width.
+   * Use Width to define the video resolution width, in pixels, for this output. To use the same resolution as your input: Leave both Width and Height blank. To evenly scale from your input resolution: Leave Width blank and enter a value for Height. For example, if your input is 1920x1080 and you set Height to 720, your output will be 1280x720.
    */
   Width?: number;
 }
@@ -6769,8 +6786,3 @@ export interface DeleteQueueRequest {
    */
   Name: string | undefined;
 }
-
-/**
- * @public
- */
-export interface DeleteQueueResponse {}

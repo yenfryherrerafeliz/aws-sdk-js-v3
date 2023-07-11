@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EBSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EBSClient";
 import {
@@ -23,9 +23,8 @@ import { de_PutSnapshotBlockCommand, se_PutSnapshotBlockCommand } from "../proto
 
 /**
  * @public
- *
- * The input for {@link PutSnapshotBlockCommand}.
  */
+export { __MetadataBearer, $Command };
 export type PutSnapshotBlockCommandInputType = Omit<PutSnapshotBlockRequest, "BlockData"> & {
   /**
    * For *`PutSnapshotBlockRequest["BlockData"]`*, see {@link PutSnapshotBlockRequest.BlockData}.
@@ -33,7 +32,9 @@ export type PutSnapshotBlockCommandInputType = Omit<PutSnapshotBlockRequest, "Bl
   BlockData: PutSnapshotBlockRequest["BlockData"] | string | Uint8Array | Buffer;
 };
 /**
- * This interface extends from `PutSnapshotBlockRequest` interface. There are more parameters than `BlockData` defined in {@link PutSnapshotBlockRequest}
+ * @public
+ *
+ * The input for {@link PutSnapshotBlockCommand}.
  */
 export interface PutSnapshotBlockCommandInput extends PutSnapshotBlockCommandInputType {}
 /**

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { MediaTailorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaTailorClient";
 import { CreateChannelRequest, CreateChannelResponse } from "../models/models_0";
 import { de_CreateChannelCommand, se_CreateChannelCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -55,6 +59,9 @@ export interface CreateChannelCommandOutput extends CreateChannelResponse, __Met
  *       },
  *       HlsPlaylistSettings: { // HlsPlaylistSettings
  *         ManifestWindowSeconds: Number("int"),
+ *         AdMarkupType: [ // adMarkupTypes
+ *           "DATERANGE" || "SCTE35_ENHANCED",
+ *         ],
  *       },
  *       ManifestName: "STRING_VALUE", // required
  *       SourceGroup: "STRING_VALUE", // required
@@ -88,6 +95,9 @@ export interface CreateChannelCommandOutput extends CreateChannelResponse, __Met
  * //       },
  * //       HlsPlaylistSettings: { // HlsPlaylistSettings
  * //         ManifestWindowSeconds: Number("int"),
+ * //         AdMarkupType: [ // adMarkupTypes
+ * //           "DATERANGE" || "SCTE35_ENHANCED",
+ * //         ],
  * //       },
  * //       ManifestName: "STRING_VALUE", // required
  * //       PlaybackUrl: "STRING_VALUE", // required

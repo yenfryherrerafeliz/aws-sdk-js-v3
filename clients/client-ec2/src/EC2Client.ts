@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,7 +47,7 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   AcceptAddressTransferCommandInput,
@@ -266,6 +266,10 @@ import { CreateFleetCommandInput, CreateFleetCommandOutput } from "./commands/Cr
 import { CreateFlowLogsCommandInput, CreateFlowLogsCommandOutput } from "./commands/CreateFlowLogsCommand";
 import { CreateFpgaImageCommandInput, CreateFpgaImageCommandOutput } from "./commands/CreateFpgaImageCommand";
 import { CreateImageCommandInput, CreateImageCommandOutput } from "./commands/CreateImageCommand";
+import {
+  CreateInstanceConnectEndpointCommandInput,
+  CreateInstanceConnectEndpointCommandOutput,
+} from "./commands/CreateInstanceConnectEndpointCommand";
 import {
   CreateInstanceEventWindowCommandInput,
   CreateInstanceEventWindowCommandOutput,
@@ -504,6 +508,10 @@ import {
 import { DeleteFleetsCommandInput, DeleteFleetsCommandOutput } from "./commands/DeleteFleetsCommand";
 import { DeleteFlowLogsCommandInput, DeleteFlowLogsCommandOutput } from "./commands/DeleteFlowLogsCommand";
 import { DeleteFpgaImageCommandInput, DeleteFpgaImageCommandOutput } from "./commands/DeleteFpgaImageCommand";
+import {
+  DeleteInstanceConnectEndpointCommandInput,
+  DeleteInstanceConnectEndpointCommandOutput,
+} from "./commands/DeleteInstanceConnectEndpointCommand";
 import {
   DeleteInstanceEventWindowCommandInput,
   DeleteInstanceEventWindowCommandOutput,
@@ -885,6 +893,10 @@ import {
   DescribeInstanceAttributeCommandInput,
   DescribeInstanceAttributeCommandOutput,
 } from "./commands/DescribeInstanceAttributeCommand";
+import {
+  DescribeInstanceConnectEndpointsCommandInput,
+  DescribeInstanceConnectEndpointsCommandOutput,
+} from "./commands/DescribeInstanceConnectEndpointsCommand";
 import {
   DescribeInstanceCreditSpecificationsCommandInput,
   DescribeInstanceCreditSpecificationsCommandOutput,
@@ -2055,6 +2067,8 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
@@ -2129,6 +2143,7 @@ export type ServiceInputTypes =
   | CreateFlowLogsCommandInput
   | CreateFpgaImageCommandInput
   | CreateImageCommandInput
+  | CreateInstanceConnectEndpointCommandInput
   | CreateInstanceEventWindowCommandInput
   | CreateInstanceExportTaskCommandInput
   | CreateInternetGatewayCommandInput
@@ -2205,6 +2220,7 @@ export type ServiceInputTypes =
   | DeleteFleetsCommandInput
   | DeleteFlowLogsCommandInput
   | DeleteFpgaImageCommandInput
+  | DeleteInstanceConnectEndpointCommandInput
   | DeleteInstanceEventWindowCommandInput
   | DeleteInternetGatewayCommandInput
   | DeleteIpamCommandInput
@@ -2319,6 +2335,7 @@ export type ServiceInputTypes =
   | DescribeImportImageTasksCommandInput
   | DescribeImportSnapshotTasksCommandInput
   | DescribeInstanceAttributeCommandInput
+  | DescribeInstanceConnectEndpointsCommandInput
   | DescribeInstanceCreditSpecificationsCommandInput
   | DescribeInstanceEventNotificationAttributesCommandInput
   | DescribeInstanceEventWindowsCommandInput
@@ -2725,6 +2742,7 @@ export type ServiceOutputTypes =
   | CreateFlowLogsCommandOutput
   | CreateFpgaImageCommandOutput
   | CreateImageCommandOutput
+  | CreateInstanceConnectEndpointCommandOutput
   | CreateInstanceEventWindowCommandOutput
   | CreateInstanceExportTaskCommandOutput
   | CreateInternetGatewayCommandOutput
@@ -2801,6 +2819,7 @@ export type ServiceOutputTypes =
   | DeleteFleetsCommandOutput
   | DeleteFlowLogsCommandOutput
   | DeleteFpgaImageCommandOutput
+  | DeleteInstanceConnectEndpointCommandOutput
   | DeleteInstanceEventWindowCommandOutput
   | DeleteInternetGatewayCommandOutput
   | DeleteIpamCommandOutput
@@ -2915,6 +2934,7 @@ export type ServiceOutputTypes =
   | DescribeImportImageTasksCommandOutput
   | DescribeImportSnapshotTasksCommandOutput
   | DescribeInstanceAttributeCommandOutput
+  | DescribeInstanceConnectEndpointsCommandOutput
   | DescribeInstanceCreditSpecificationsCommandOutput
   | DescribeInstanceEventNotificationAttributesCommandOutput
   | DescribeInstanceEventWindowsCommandOutput
@@ -3257,7 +3277,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -3312,7 +3332,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -3366,7 +3386,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -3374,7 +3394,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type EC2ClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type EC2ClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -3393,7 +3413,7 @@ export interface EC2ClientConfig extends EC2ClientConfigType {}
 /**
  * @public
  */
-type EC2ClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type EC2ClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

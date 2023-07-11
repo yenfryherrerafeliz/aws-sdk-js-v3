@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-appflow
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-appflow/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-appflow)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-appflow.svg)](https://www.npmjs.com/package/@aws-sdk/client-appflow)
-
 ## Description
 
 AWS SDK for JavaScript Appflow Client for Node.js, Browser and React Native.
@@ -366,6 +363,14 @@ RegisterConnector
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-appflow/classes/registerconnectorcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-appflow/interfaces/registerconnectorcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-appflow/interfaces/registerconnectorcommandoutput.html)
+
+</details>
+<details>
+<summary>
+ResetConnectorMetadataCache
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-appflow/classes/resetconnectormetadatacachecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-appflow/interfaces/resetconnectormetadatacachecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-appflow/interfaces/resetconnectormetadatacachecommandoutput.html)
 
 </details>
 <details>

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   ChimeSDKMessagingClientResolvedConfig,
@@ -30,6 +30,10 @@ import {
 
 /**
  * @public
+ */
+export { __MetadataBearer, $Command };
+/**
+ * @public
  *
  * The input for {@link GetChannelMembershipPreferencesCommand}.
  */
@@ -46,8 +50,8 @@ export interface GetChannelMembershipPreferencesCommandOutput
 /**
  * @public
  * <p>Gets the membership preferences of an <code>AppInstanceUser</code> or <code>AppInstanceBot</code>
- *          for the specified channel. A user or a bot must be a member of the channel and own the membership to be able
- *          to retrieve membership preferences. Users or bots in the <code>AppInstanceAdmin</code> and channel moderator roles can't
+ *          for the specified channel. A user or a bot must be a member of the channel and own the membership in order to retrieve membership preferences.
+ *          Users or bots in the <code>AppInstanceAdmin</code> and channel moderator roles can't
  *          retrieve preferences for other users or bots. Banned users or bots can't retrieve membership preferences for the
  *          channel from which they are banned.</p>
  *          <note>

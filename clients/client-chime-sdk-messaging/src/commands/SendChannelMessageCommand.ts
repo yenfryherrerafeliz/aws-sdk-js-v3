@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   ChimeSDKMessagingClientResolvedConfig,
@@ -25,6 +25,10 @@ import {
 } from "../models/models_0";
 import { de_SendChannelMessageCommand, se_SendChannelMessageCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -45,8 +49,10 @@ export interface SendChannelMessageCommandOutput extends SendChannelMessageRespo
  *             <p>The <code>x-amz-chime-bearer</code> request header is mandatory. Use the
  *             ARN of the <code>AppInstanceUser</code> or <code>AppInstanceBot</code> that makes the API call as the value in
  *             the header.</p>
- *             <p>Also, <code>STANDARD</code> messages can contain 4KB of data and the 1KB of metadata.
- *                <code>CONTROL</code> messages can contain 30 bytes of data and no metadata.</p>
+ *             <p>Also, <code>STANDARD</code> messages can be up to 4KB in size and contain metadata. Metadata is arbitrary,
+ *             and you can use it in a variety of ways, such as containing a link to an attachment.</p>
+ *             <p>
+ *                <code>CONTROL</code> messages are limited to 30 bytes and do not contain metadata.</p>
  *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -76,6 +82,11 @@ export interface SendChannelMessageCommandOutput extends SendChannelMessageRespo
  *   },
  *   SubChannelId: "STRING_VALUE",
  *   ContentType: "STRING_VALUE",
+ *   Target: [ // TargetList
+ *     { // Target
+ *       MemberArn: "STRING_VALUE",
+ *     },
+ *   ],
  * };
  * const command = new SendChannelMessageCommand(input);
  * const response = await client.send(command);

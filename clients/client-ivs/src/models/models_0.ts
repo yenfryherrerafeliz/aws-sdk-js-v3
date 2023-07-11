@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@smithy/smithy-client";
 
 import { IvsServiceException as __BaseException } from "./IvsServiceException";
 
@@ -56,7 +56,23 @@ export type ChannelLatencyMode = (typeof ChannelLatencyMode)[keyof typeof Channe
  * @public
  * @enum
  */
+export const TranscodePreset = {
+  ConstrainedBandwidthTranscodePreset: "CONSTRAINED_BANDWIDTH_DELIVERY",
+  HigherBandwidthTranscodePreset: "HIGHER_BANDWIDTH_DELIVERY",
+} as const;
+
+/**
+ * @public
+ */
+export type TranscodePreset = (typeof TranscodePreset)[keyof typeof TranscodePreset];
+
+/**
+ * @public
+ * @enum
+ */
 export const ChannelType = {
+  AdvancedHDChannelType: "ADVANCED_HD",
+  AdvancedSDChannelType: "ADVANCED_SD",
   BasicChannelType: "BASIC",
   StandardChannelType: "STANDARD",
 } as const;
@@ -91,9 +107,20 @@ export interface Channel {
 
   /**
    * <p>Channel type, which determines the allowable resolution and bitrate. <i>If you
-   *         exceed the allowable resolution or bitrate, the stream probably will disconnect
-   *         immediately.</i> Default: <code>STANDARD</code>. Valid values:</p>
+   *         exceed the allowable input resolution or bitrate, the stream probably will disconnect
+   *         immediately.</i> Some types generate multiple qualities (renditions) from the
+   *       original input; this automatically gives viewers the best experience for their devices and
+   *       network conditions. Some types provide transcoded video; transcoding allows higher playback
+   *       quality across a range of download speeds. Default: <code>STANDARD</code>. Valid
+   *       values:</p>
    *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>BASIC</code>: Video is transmuxed: Amazon IVS delivers the original input
+   *           quality to viewers. The viewer’s video-quality choice is limited to the original input.
+   *           Input resolution can be up to 1080p and bitrate can be up to 1.5 Mbps for 480p and up to
+   *           3.5 Mbps for resolutions between 480p and 1080p. Original audio is passed through.</p>
+   *             </li>
    *             <li>
    *                <p>
    *                   <code>STANDARD</code>: Video is transcoded: multiple qualities are generated from the
@@ -101,14 +128,42 @@ export interface Channel {
    *           network conditions. Transcoding allows higher playback quality across a range of download
    *           speeds. Resolution can be up to 1080p and bitrate can be up to 8.5 Mbps. Audio is
    *           transcoded only for renditions 360p and below; above that, audio is passed through. This
-   *           is the default.</p>
+   *           is the default when you create a channel.</p>
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>BASIC</code>: Video is transmuxed: Amazon IVS delivers the original input to
-   *           viewers. The viewer’s video-quality choice is limited to the original input. Resolution
-   *           can be up to 1080p and bitrate can be up to 1.5 Mbps for 480p and up to 3.5 Mbps for
-   *           resolutions between 480p and 1080p.</p>
+   *                   <code>ADVANCED_SD</code>: Video is transcoded; multiple qualities are generated from
+   *           the original input, to automatically give viewers the best experience for their devices
+   *           and network conditions. Input resolution can be up to 1080p and bitrate can be up to 8.5
+   *           Mbps; output is capped at SD quality (480p). You can select an optional transcode preset
+   *           (see below). Audio for all renditions is transcoded, and an audio-only rendition is
+   *           available.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>ADVANCED_HD</code>: Video is transcoded; multiple qualities are generated from
+   *           the original input, to automatically give viewers the best experience for their devices
+   *           and network conditions. Input resolution can be up to 1080p and bitrate can be up to 8.5
+   *           Mbps; output is capped at HD quality (720p). You can select an optional transcode preset
+   *           (see below). Audio for all renditions is transcoded, and an audio-only rendition is
+   *           available.</p>
+   *             </li>
+   *          </ul>
+   *          <p>Optional <i>transcode presets</i> (available for the <code>ADVANCED</code>
+   *       types) allow you to trade off available download bandwidth and video quality, to optimize the
+   *       viewing experience. There are two presets:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <i>Constrained bandwidth delivery</i> uses a lower bitrate for each
+   *           quality level. Use it if you have low download bandwidth and/or simple video content
+   *           (e.g., talking heads)</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <i>Higher bandwidth delivery</i> uses a higher bitrate for each quality
+   *           level. Use it if you have high download bandwidth and/or complex video content (e.g.,
+   *           flashes and quick scene changes).</p>
    *             </li>
    *          </ul>
    */
@@ -149,6 +204,15 @@ export interface Channel {
    * <p>Whether the channel allows insecure RTMP ingest. Default: <code>false</code>.</p>
    */
   insecureIngest?: boolean;
+
+  /**
+   * <p>Optional transcode preset for the channel. This is selectable only for
+   *         <code>ADVANCED_HD</code> and <code>ADVANCED_SD</code> channel types. For those channel
+   *       types, the default <code>preset</code> is <code>HIGHER_BANDWIDTH_DELIVERY</code>. For other
+   *       channel types (<code>BASIC</code> and <code>STANDARD</code>), <code>preset</code> is the empty
+   *       string (<code>""</code>).</p>
+   */
+  preset?: TranscodePreset | string;
 }
 
 /**
@@ -243,6 +307,102 @@ export interface BatchGetStreamKeyResponse {
 
 /**
  * @public
+ * <p>A viewer session to revoke in the call to <a>BatchStartViewerSessionRevocation</a>.</p>
+ */
+export interface BatchStartViewerSessionRevocationViewerSession {
+  /**
+   * <p>The ARN of the channel associated with the viewer session to revoke.</p>
+   */
+  channelArn: string | undefined;
+
+  /**
+   * <p>The ID of the viewer associated with the viewer session to revoke. Do not use this field
+   *       for personally identifying, confidential, or sensitive information.</p>
+   */
+  viewerId: string | undefined;
+
+  /**
+   * <p>An optional filter on which versions of the viewer session to revoke. All versions less
+   *       than or equal to the specified version will be revoked. Default: 0.</p>
+   */
+  viewerSessionVersionsLessThanOrEqualTo?: number;
+}
+
+/**
+ * @public
+ */
+export interface BatchStartViewerSessionRevocationRequest {
+  /**
+   * <p>Array of viewer sessions, one per channel-ARN and viewer-ID pair.</p>
+   */
+  viewerSessions: BatchStartViewerSessionRevocationViewerSession[] | undefined;
+}
+
+/**
+ * @public
+ * <p>Error for a request in the batch for BatchStartViewerSessionRevocation. Each error is
+ *       related to a specific channel-ARN and viewer-ID pair.</p>
+ */
+export interface BatchStartViewerSessionRevocationError {
+  /**
+   * <p>Channel ARN.</p>
+   */
+  channelArn: string | undefined;
+
+  /**
+   * <p>The ID of the viewer session to revoke.</p>
+   */
+  viewerId: string | undefined;
+
+  /**
+   * <p>Error code.</p>
+   */
+  code?: string;
+
+  /**
+   * <p>Error message, determined by the application.</p>
+   */
+  message?: string;
+}
+
+/**
+ * @public
+ */
+export interface BatchStartViewerSessionRevocationResponse {
+  /**
+   * <p>Each error object is related to a specific <code>channelArn</code> and
+   *         <code>viewerId</code> pair in the request.</p>
+   */
+  errors?: BatchStartViewerSessionRevocationError[];
+}
+
+/**
+ * @public
+ * <p/>
+ */
+export class ValidationException extends __BaseException {
+  readonly name: "ValidationException" = "ValidationException";
+  readonly $fault: "client" = "client";
+  /**
+   * <p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>
+   */
+  exceptionMessage?: string;
+  /**
+   * @internal
+   */
+  constructor(opts: __ExceptionOptionType<ValidationException, __BaseException>) {
+    super({
+      name: "ValidationException",
+      $fault: "client",
+      ...opts,
+    });
+    Object.setPrototypeOf(this, ValidationException.prototype);
+    this.exceptionMessage = opts.exceptionMessage;
+  }
+}
+
+/**
+ * @public
  */
 export interface CreateChannelRequest {
   /**
@@ -260,9 +420,20 @@ export interface CreateChannelRequest {
 
   /**
    * <p>Channel type, which determines the allowable resolution and bitrate. <i>If you
-   *         exceed the allowable resolution or bitrate, the stream probably will disconnect
-   *         immediately.</i> Default: <code>STANDARD</code>. Valid values:</p>
+   *         exceed the allowable input resolution or bitrate, the stream probably will disconnect
+   *         immediately.</i> Some types generate multiple qualities (renditions) from the
+   *       original input; this automatically gives viewers the best experience for their devices and
+   *       network conditions. Some types provide transcoded video; transcoding allows higher playback
+   *       quality across a range of download speeds. Default: <code>STANDARD</code>. Valid
+   *       values:</p>
    *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>BASIC</code>: Video is transmuxed: Amazon IVS delivers the original input
+   *           quality to viewers. The viewer’s video-quality choice is limited to the original input.
+   *           Input resolution can be up to 1080p and bitrate can be up to 1.5 Mbps for 480p and up to
+   *           3.5 Mbps for resolutions between 480p and 1080p. Original audio is passed through.</p>
+   *             </li>
    *             <li>
    *                <p>
    *                   <code>STANDARD</code>: Video is transcoded: multiple qualities are generated from the
@@ -270,14 +441,42 @@ export interface CreateChannelRequest {
    *           network conditions. Transcoding allows higher playback quality across a range of download
    *           speeds. Resolution can be up to 1080p and bitrate can be up to 8.5 Mbps. Audio is
    *           transcoded only for renditions 360p and below; above that, audio is passed through. This
-   *           is the default.</p>
+   *           is the default when you create a channel.</p>
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>BASIC</code>: Video is transmuxed: Amazon IVS delivers the original input to
-   *           viewers. The viewer’s video-quality choice is limited to the original input. Resolution
-   *           can be up to 1080p and bitrate can be up to 1.5 Mbps for 480p and up to 3.5 Mbps for
-   *           resolutions between 480p and 1080p.</p>
+   *                   <code>ADVANCED_SD</code>: Video is transcoded; multiple qualities are generated from
+   *           the original input, to automatically give viewers the best experience for their devices
+   *           and network conditions. Input resolution can be up to 1080p and bitrate can be up to 8.5
+   *           Mbps; output is capped at SD quality (480p). You can select an optional transcode preset
+   *           (see below). Audio for all renditions is transcoded, and an audio-only rendition is
+   *           available.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>ADVANCED_HD</code>: Video is transcoded; multiple qualities are generated from
+   *           the original input, to automatically give viewers the best experience for their devices
+   *           and network conditions. Input resolution can be up to 1080p and bitrate can be up to 8.5
+   *           Mbps; output is capped at HD quality (720p). You can select an optional transcode preset
+   *           (see below). Audio for all renditions is transcoded, and an audio-only rendition is
+   *           available.</p>
+   *             </li>
+   *          </ul>
+   *          <p>Optional <i>transcode presets</i> (available for the <code>ADVANCED</code>
+   *       types) allow you to trade off available download bandwidth and video quality, to optimize the
+   *       viewing experience. There are two presets:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <i>Constrained bandwidth delivery</i> uses a lower bitrate for each
+   *           quality level. Use it if you have low download bandwidth and/or simple video content
+   *           (e.g., talking heads)</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <i>Higher bandwidth delivery</i> uses a higher bitrate for each quality
+   *           level. Use it if you have high download bandwidth and/or complex video content (e.g.,
+   *           flashes and quick scene changes).</p>
    *             </li>
    *          </ul>
    */
@@ -295,10 +494,10 @@ export interface CreateChannelRequest {
   recordingConfigurationArn?: string;
 
   /**
-   * <p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services Resources</a> for
-   *       more information, including restrictions that apply to tags and "Tag naming limits and
-   *       requirements"; Amazon IVS has no service-specific constraints beyond what is documented
-   *       there.</p>
+   * <p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services
+   *         Resources</a> for more information, including restrictions that apply to tags and "Tag
+   *       naming limits and requirements"; Amazon IVS has no service-specific constraints beyond what is
+   *       documented there.</p>
    */
   tags?: Record<string, string>;
 
@@ -306,6 +505,15 @@ export interface CreateChannelRequest {
    * <p>Whether the channel allows insecure RTMP ingest. Default: <code>false</code>.</p>
    */
   insecureIngest?: boolean;
+
+  /**
+   * <p>Optional transcode preset for the channel. This is selectable only for
+   *         <code>ADVANCED_HD</code> and <code>ADVANCED_SD</code> channel types. For those channel
+   *       types, the default <code>preset</code> is <code>HIGHER_BANDWIDTH_DELIVERY</code>. For other
+   *       channel types (<code>BASIC</code> and <code>STANDARD</code>), <code>preset</code> is the empty
+   *       string (<code>""</code>).</p>
+   */
+  preset?: TranscodePreset | string;
 }
 
 /**
@@ -394,31 +602,6 @@ export class ServiceQuotaExceededException extends __BaseException {
       ...opts,
     });
     Object.setPrototypeOf(this, ServiceQuotaExceededException.prototype);
-    this.exceptionMessage = opts.exceptionMessage;
-  }
-}
-
-/**
- * @public
- * <p/>
- */
-export class ValidationException extends __BaseException {
-  readonly name: "ValidationException" = "ValidationException";
-  readonly $fault: "client" = "client";
-  /**
-   * <p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>
-   */
-  exceptionMessage?: string;
-  /**
-   * @internal
-   */
-  constructor(opts: __ExceptionOptionType<ValidationException, __BaseException>) {
-    super({
-      name: "ValidationException",
-      $fault: "client",
-      ...opts,
-    });
-    Object.setPrototypeOf(this, ValidationException.prototype);
     this.exceptionMessage = opts.exceptionMessage;
   }
 }
@@ -527,10 +710,10 @@ export interface CreateRecordingConfigurationRequest {
   destinationConfiguration: DestinationConfiguration | undefined;
 
   /**
-   * <p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services Resources</a> for
-   *       more information, including restrictions that apply to tags and "Tag naming limits and
-   *       requirements"; Amazon IVS has no service-specific constraints beyond what is documented
-   *       there.</p>
+   * <p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services
+   *         Resources</a> for more information, including restrictions that apply to tags and "Tag
+   *       naming limits and requirements"; Amazon IVS has no service-specific constraints beyond what is
+   *       documented there.</p>
    */
   tags?: Record<string, string>;
 
@@ -655,10 +838,10 @@ export interface CreateStreamKeyRequest {
   channelArn: string | undefined;
 
   /**
-   * <p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services Resources</a> for
-   *       more information, including restrictions that apply to tags and "Tag naming limits and
-   *       requirements"; Amazon IVS has no service-specific constraints beyond what is documented
-   *       there.</p>
+   * <p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services
+   *         Resources</a> for more information, including restrictions that apply to tags and "Tag
+   *       naming limits and requirements"; Amazon IVS has no service-specific constraints beyond what is
+   *       documented there.</p>
    */
   tags?: Record<string, string>;
 }
@@ -1155,10 +1338,10 @@ export interface ImportPlaybackKeyPairRequest {
   name?: string;
 
   /**
-   * <p>Any tags provided with the request are added to the playback key pair tags. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services Resources</a> for
-   *       more information, including restrictions that apply to tags and "Tag naming limits and
-   *       requirements"; Amazon IVS has no service-specific constraints beyond what is documented
-   *       there.</p>
+   * <p>Any tags provided with the request are added to the playback key pair tags. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services
+   *         Resources</a> for more information, including restrictions that apply to tags and "Tag
+   *       naming limits and requirements"; Amazon IVS has no service-specific constraints beyond what is
+   *       documented there.</p>
    */
   tags?: Record<string, string>;
 }
@@ -1246,6 +1429,79 @@ export interface ChannelSummary {
    * <p>Whether the channel allows insecure RTMP ingest. Default: <code>false</code>.</p>
    */
   insecureIngest?: boolean;
+
+  /**
+   * <p>Channel type, which determines the allowable resolution and bitrate. <i>If you
+   *         exceed the allowable input resolution or bitrate, the stream probably will disconnect
+   *         immediately.</i> Some types generate multiple qualities (renditions) from the
+   *       original input; this automatically gives viewers the best experience for their devices and
+   *       network conditions. Some types provide transcoded video; transcoding allows higher playback
+   *       quality across a range of download speeds. Default: <code>STANDARD</code>. Valid
+   *       values:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>BASIC</code>: Video is transmuxed: Amazon IVS delivers the original input
+   *           quality to viewers. The viewer’s video-quality choice is limited to the original input.
+   *           Input resolution can be up to 1080p and bitrate can be up to 1.5 Mbps for 480p and up to
+   *           3.5 Mbps for resolutions between 480p and 1080p. Original audio is passed through.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>STANDARD</code>: Video is transcoded: multiple qualities are generated from the
+   *           original input, to automatically give viewers the best experience for their devices and
+   *           network conditions. Transcoding allows higher playback quality across a range of download
+   *           speeds. Resolution can be up to 1080p and bitrate can be up to 8.5 Mbps. Audio is
+   *           transcoded only for renditions 360p and below; above that, audio is passed through. This
+   *           is the default when you create a channel.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>ADVANCED_SD</code>: Video is transcoded; multiple qualities are generated from
+   *           the original input, to automatically give viewers the best experience for their devices
+   *           and network conditions. Input resolution can be up to 1080p and bitrate can be up to 8.5
+   *           Mbps; output is capped at SD quality (480p). You can select an optional transcode preset
+   *           (see below). Audio for all renditions is transcoded, and an audio-only rendition is
+   *           available.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>ADVANCED_HD</code>: Video is transcoded; multiple qualities are generated from
+   *           the original input, to automatically give viewers the best experience for their devices
+   *           and network conditions. Input resolution can be up to 1080p and bitrate can be up to 8.5
+   *           Mbps; output is capped at HD quality (720p). You can select an optional transcode preset
+   *           (see below). Audio for all renditions is transcoded, and an audio-only rendition is
+   *           available.</p>
+   *             </li>
+   *          </ul>
+   *          <p>Optional <i>transcode presets</i> (available for the <code>ADVANCED</code>
+   *       types) allow you to trade off available download bandwidth and video quality, to optimize the
+   *       viewing experience. There are two presets:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <i>Constrained bandwidth delivery</i> uses a lower bitrate for each
+   *           quality level. Use it if you have low download bandwidth and/or simple video content
+   *           (e.g., talking heads)</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <i>Higher bandwidth delivery</i> uses a higher bitrate for each quality
+   *           level. Use it if you have high download bandwidth and/or complex video content (e.g.,
+   *           flashes and quick scene changes).</p>
+   *             </li>
+   *          </ul>
+   */
+  type?: ChannelType | string;
+
+  /**
+   * <p>Optional transcode preset for the channel. This is selectable only for
+   *         <code>ADVANCED_HD</code> and <code>ADVANCED_SD</code> channel types. For those channel
+   *       types, the default <code>preset</code> is <code>HIGHER_BANDWIDTH_DELIVERY</code>. For other
+   *       channel types (<code>BASIC</code> and <code>STANDARD</code>), <code>preset</code> is the empty
+   *       string (<code>""</code>).</p>
+   */
+  preset?: TranscodePreset | string;
 }
 
 /**
@@ -1498,8 +1754,9 @@ export interface StreamSummary {
   streamId?: string;
 
   /**
-   * <p>The stream’s state. Do not rely on the <code>OFFLINE</code> state, as the API may not return it;
-   *       instead, a "NotBroadcasting" error will indicate that the stream is not live.</p>
+   * <p>The stream’s state. Do not rely on the <code>OFFLINE</code> state, as the API may not
+   *       return it; instead, a "NotBroadcasting" error will indicate that the stream is not
+   *       live.</p>
    */
   state?: StreamState | string;
 
@@ -1619,7 +1876,8 @@ export interface ListTagsForResourceRequest {
  */
 export interface ListTagsForResourceResponse {
   /**
-   * <p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>.</p>
+   * <p>Tags attached to the resource. Array of maps, each of the form <code>string:string
+   *         (key:value)</code>.</p>
    */
   tags: Record<string, string> | undefined;
 }
@@ -1664,6 +1922,33 @@ export class ThrottlingException extends __BaseException {
     this.exceptionMessage = opts.exceptionMessage;
   }
 }
+
+/**
+ * @public
+ */
+export interface StartViewerSessionRevocationRequest {
+  /**
+   * <p>The ARN of the channel associated with the viewer session to revoke.</p>
+   */
+  channelArn: string | undefined;
+
+  /**
+   * <p>The ID of the viewer associated with the viewer session to revoke. Do not use this field
+   *       for personally identifying, confidential, or sensitive information.</p>
+   */
+  viewerId: string | undefined;
+
+  /**
+   * <p>An optional filter on which versions of the viewer session to revoke. All versions less
+   *       than or equal to the specified version will be revoked. Default: 0.</p>
+   */
+  viewerSessionVersionsLessThanOrEqualTo?: number;
+}
+
+/**
+ * @public
+ */
+export interface StartViewerSessionRevocationResponse {}
 
 /**
  * @public
@@ -1716,10 +2001,10 @@ export interface TagResourceRequest {
   resourceArn: string | undefined;
 
   /**
-   * <p>Array of tags to be added or updated. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services Resources</a> for
-   *       more information, including restrictions that apply to tags and "Tag naming limits and
-   *       requirements"; Amazon IVS has no service-specific constraints beyond what is documented
-   *       there.</p>
+   * <p>Array of tags to be added or updated. Array of maps, each of the form <code>string:string
+   *         (key:value)</code>. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services Resources</a> for more information, including restrictions
+   *       that apply to tags and "Tag naming limits and requirements"; Amazon IVS has no
+   *       service-specific constraints beyond what is documented there.</p>
    */
   tags: Record<string, string> | undefined;
 }
@@ -1739,10 +2024,10 @@ export interface UntagResourceRequest {
   resourceArn: string | undefined;
 
   /**
-   * <p>Array of tags to be removed. Array of maps, each of the form s<code>tring:string (key:value)</code>. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services Resources</a> for
-   *       more information, including restrictions that apply to tags and "Tag naming limits and
-   *       requirements"; Amazon IVS has no service-specific constraints beyond what is documented
-   *       there.</p>
+   * <p>Array of tags to be removed. Array of maps, each of the form s<code>tring:string
+   *         (key:value)</code>. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services Resources</a> for more information, including restrictions
+   *       that apply to tags and "Tag naming limits and requirements"; Amazon IVS has no
+   *       service-specific constraints beyond what is documented there.</p>
    */
   tagKeys: string[] | undefined;
 }
@@ -1776,9 +2061,20 @@ export interface UpdateChannelRequest {
 
   /**
    * <p>Channel type, which determines the allowable resolution and bitrate. <i>If you
-   *         exceed the allowable resolution or bitrate, the stream probably will disconnect
-   *         immediately</i>. Valid values:</p>
+   *         exceed the allowable input resolution or bitrate, the stream probably will disconnect
+   *         immediately.</i> Some types generate multiple qualities (renditions) from the
+   *       original input; this automatically gives viewers the best experience for their devices and
+   *       network conditions. Some types provide transcoded video; transcoding allows higher playback
+   *       quality across a range of download speeds. Default: <code>STANDARD</code>. Valid
+   *       values:</p>
    *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>BASIC</code>: Video is transmuxed: Amazon IVS delivers the original input
+   *           quality to viewers. The viewer’s video-quality choice is limited to the original input.
+   *           Input resolution can be up to 1080p and bitrate can be up to 1.5 Mbps for 480p and up to
+   *           3.5 Mbps for resolutions between 480p and 1080p. Original audio is passed through.</p>
+   *             </li>
    *             <li>
    *                <p>
    *                   <code>STANDARD</code>: Video is transcoded: multiple qualities are generated from the
@@ -1786,14 +2082,42 @@ export interface UpdateChannelRequest {
    *           network conditions. Transcoding allows higher playback quality across a range of download
    *           speeds. Resolution can be up to 1080p and bitrate can be up to 8.5 Mbps. Audio is
    *           transcoded only for renditions 360p and below; above that, audio is passed through. This
-   *           is the default.</p>
+   *           is the default when you create a channel.</p>
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>BASIC</code>: Video is transmuxed: Amazon IVS delivers the original input to
-   *           viewers. The viewer’s video-quality choice is limited to the original input. Resolution
-   *           can be up to 1080p and bitrate can be up to 1.5 Mbps for 480p and up to 3.5 Mbps for
-   *           resolutions between 480p and 1080p.</p>
+   *                   <code>ADVANCED_SD</code>: Video is transcoded; multiple qualities are generated from
+   *           the original input, to automatically give viewers the best experience for their devices
+   *           and network conditions. Input resolution can be up to 1080p and bitrate can be up to 8.5
+   *           Mbps; output is capped at SD quality (480p). You can select an optional transcode preset
+   *           (see below). Audio for all renditions is transcoded, and an audio-only rendition is
+   *           available.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>ADVANCED_HD</code>: Video is transcoded; multiple qualities are generated from
+   *           the original input, to automatically give viewers the best experience for their devices
+   *           and network conditions. Input resolution can be up to 1080p and bitrate can be up to 8.5
+   *           Mbps; output is capped at HD quality (720p). You can select an optional transcode preset
+   *           (see below). Audio for all renditions is transcoded, and an audio-only rendition is
+   *           available.</p>
+   *             </li>
+   *          </ul>
+   *          <p>Optional <i>transcode presets</i> (available for the <code>ADVANCED</code>
+   *       types) allow you to trade off available download bandwidth and video quality, to optimize the
+   *       viewing experience. There are two presets:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <i>Constrained bandwidth delivery</i> uses a lower bitrate for each
+   *           quality level. Use it if you have low download bandwidth and/or simple video content
+   *           (e.g., talking heads)</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <i>Higher bandwidth delivery</i> uses a higher bitrate for each quality
+   *           level. Use it if you have high download bandwidth and/or complex video content (e.g.,
+   *           flashes and quick scene changes).</p>
    *             </li>
    *          </ul>
    */
@@ -1814,6 +2138,15 @@ export interface UpdateChannelRequest {
    * <p>Whether the channel allows insecure RTMP ingest. Default: <code>false</code>.</p>
    */
   insecureIngest?: boolean;
+
+  /**
+   * <p>Optional transcode preset for the channel. This is selectable only for
+   *         <code>ADVANCED_HD</code> and <code>ADVANCED_SD</code> channel types. For those channel
+   *       types, the default <code>preset</code> is <code>HIGHER_BANDWIDTH_DELIVERY</code>. For other
+   *       channel types (<code>BASIC</code> and <code>STANDARD</code>), <code>preset</code> is the empty
+   *       string (<code>""</code>).</p>
+   */
+  preset?: TranscodePreset | string;
 }
 
 /**

@@ -1,6 +1,7 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
+  collectBody,
   expectNonNull as __expectNonNull,
   expectString as __expectString,
   extendedEncodeURIComponent as __extendedEncodeURIComponent,
@@ -13,13 +14,13 @@ import {
   strictParseInt32 as __strictParseInt32,
   strictParseLong as __strictParseLong,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { XMLParser } from "fast-xml-parser";
 import { v4 as generateIdempotencyToken } from "uuid";
 
@@ -240,6 +241,10 @@ import { CreateFleetCommandInput, CreateFleetCommandOutput } from "../commands/C
 import { CreateFlowLogsCommandInput, CreateFlowLogsCommandOutput } from "../commands/CreateFlowLogsCommand";
 import { CreateFpgaImageCommandInput, CreateFpgaImageCommandOutput } from "../commands/CreateFpgaImageCommand";
 import { CreateImageCommandInput, CreateImageCommandOutput } from "../commands/CreateImageCommand";
+import {
+  CreateInstanceConnectEndpointCommandInput,
+  CreateInstanceConnectEndpointCommandOutput,
+} from "../commands/CreateInstanceConnectEndpointCommand";
 import {
   CreateInstanceEventWindowCommandInput,
   CreateInstanceEventWindowCommandOutput,
@@ -478,6 +483,10 @@ import {
 import { DeleteFleetsCommandInput, DeleteFleetsCommandOutput } from "../commands/DeleteFleetsCommand";
 import { DeleteFlowLogsCommandInput, DeleteFlowLogsCommandOutput } from "../commands/DeleteFlowLogsCommand";
 import { DeleteFpgaImageCommandInput, DeleteFpgaImageCommandOutput } from "../commands/DeleteFpgaImageCommand";
+import {
+  DeleteInstanceConnectEndpointCommandInput,
+  DeleteInstanceConnectEndpointCommandOutput,
+} from "../commands/DeleteInstanceConnectEndpointCommand";
 import {
   DeleteInstanceEventWindowCommandInput,
   DeleteInstanceEventWindowCommandOutput,
@@ -859,6 +868,10 @@ import {
   DescribeInstanceAttributeCommandInput,
   DescribeInstanceAttributeCommandOutput,
 } from "../commands/DescribeInstanceAttributeCommand";
+import {
+  DescribeInstanceConnectEndpointsCommandInput,
+  DescribeInstanceConnectEndpointsCommandOutput,
+} from "../commands/DescribeInstanceConnectEndpointsCommand";
 import {
   DescribeInstanceCreditSpecificationsCommandInput,
   DescribeInstanceCreditSpecificationsCommandOutput,
@@ -2311,6 +2324,8 @@ import {
   CreateFpgaImageResult,
   CreateImageRequest,
   CreateImageResult,
+  CreateInstanceConnectEndpointRequest,
+  CreateInstanceConnectEndpointResult,
   CreateInstanceEventWindowRequest,
   CreateInstanceEventWindowResult,
   CreateInstanceExportTaskRequest,
@@ -2355,9 +2370,6 @@ import {
   CreateNetworkInterfaceResult,
   CreatePlacementGroupRequest,
   CreatePlacementGroupResult,
-  CreatePublicIpv4PoolRequest,
-  CreatePublicIpv4PoolResult,
-  CreateReplaceRootVolumeTaskRequest,
   CreditSpecification,
   CreditSpecificationRequest,
   CustomerGateway,
@@ -2365,6 +2377,7 @@ import {
   DhcpConfiguration,
   DhcpOptions,
   EbsBlockDevice,
+  Ec2InstanceConnectEndpoint,
   EgressOnlyInternetGateway,
   ElasticGpuSpecification,
   ElasticGpuSpecificationResponse,
@@ -2500,6 +2513,9 @@ import {
   CloudWatchLogOptions,
   CloudWatchLogOptionsSpecification,
   ConnectionNotification,
+  CreatePublicIpv4PoolRequest,
+  CreatePublicIpv4PoolResult,
+  CreateReplaceRootVolumeTaskRequest,
   CreateReplaceRootVolumeTaskResult,
   CreateReservedInstancesListingRequest,
   CreateReservedInstancesListingResult,
@@ -2608,6 +2624,8 @@ import {
   DeleteFlowLogsResult,
   DeleteFpgaImageRequest,
   DeleteFpgaImageResult,
+  DeleteInstanceConnectEndpointRequest,
+  DeleteInstanceConnectEndpointResult,
   DeleteInstanceEventWindowRequest,
   DeleteInstanceEventWindowResult,
   DeleteInternetGatewayRequest,
@@ -2656,11 +2674,6 @@ import {
   DeletePublicIpv4PoolResult,
   DeleteQueuedReservedInstancesError,
   DeleteQueuedReservedInstancesRequest,
-  DeleteQueuedReservedInstancesResult,
-  DeleteRouteRequest,
-  DeleteRouteTableRequest,
-  DeleteSecurityGroupRequest,
-  DeleteSnapshotRequest,
   DnsEntry,
   DnsOptions,
   DnsOptionsSpecification,
@@ -2700,7 +2713,6 @@ import {
   SpotDatafeedSubscription,
   SpotInstanceStateFault,
   SubnetCidrReservation,
-  SuccessfulQueuedPurchaseDeletion,
   TrafficMirrorFilter,
   TrafficMirrorFilterRule,
   TrafficMirrorNetworkService,
@@ -2767,6 +2779,11 @@ import {
   ConnectionLogResponseOptions,
   ConversionTask,
   CpuOptions,
+  DeleteQueuedReservedInstancesResult,
+  DeleteRouteRequest,
+  DeleteRouteTableRequest,
+  DeleteSecurityGroupRequest,
+  DeleteSnapshotRequest,
   DeleteSpotDatafeedSubscriptionRequest,
   DeleteSubnetCidrReservationRequest,
   DeleteSubnetCidrReservationResult,
@@ -2929,6 +2946,8 @@ import {
   DescribeImportSnapshotTasksRequest,
   DescribeImportSnapshotTasksResult,
   DescribeInstanceAttributeRequest,
+  DescribeInstanceConnectEndpointsRequest,
+  DescribeInstanceConnectEndpointsResult,
   DescribeInstanceCreditSpecificationsRequest,
   DescribeInstanceCreditSpecificationsResult,
   DescribeInstanceEventNotificationAttributesRequest,
@@ -2981,8 +3000,6 @@ import {
   InstanceBlockDeviceMapping,
   InstanceCapacity,
   InstanceCreditSpecification,
-  InstanceMaintenanceOptions,
-  InstanceMetadataOptionsResponse,
   InstanceTagNotificationAttribute,
   IpamPoolCidr,
   IpamPoolCidrFailureReason,
@@ -2996,6 +3013,7 @@ import {
   SnapshotTaskDetail,
   SpotOptions,
   Subscription,
+  SuccessfulQueuedPurchaseDeletion,
   TargetCapacitySpecification,
   TargetNetwork,
   TransitGatewayMulticastDeregisteredGroupMembers,
@@ -3161,12 +3179,6 @@ import {
   DescribeVerifiedAccessGroupsRequest,
   DescribeVerifiedAccessGroupsResult,
   DescribeVerifiedAccessInstanceLoggingConfigurationsRequest,
-  DescribeVerifiedAccessInstanceLoggingConfigurationsResult,
-  DescribeVerifiedAccessInstancesRequest,
-  DescribeVerifiedAccessInstancesResult,
-  DescribeVerifiedAccessTrustProvidersRequest,
-  DescribeVerifiedAccessTrustProvidersResult,
-  DescribeVolumeAttributeRequest,
   DiskInfo,
   EbsInfo,
   EbsOptimizedInfo,
@@ -3183,6 +3195,8 @@ import {
   Instance,
   InstanceIpv4Prefix,
   InstanceIpv6Prefix,
+  InstanceMaintenanceOptions,
+  InstanceMetadataOptionsResponse,
   InstanceNetworkInterface,
   InstanceNetworkInterfaceAssociation,
   InstanceNetworkInterfaceAttachment,
@@ -3264,11 +3278,9 @@ import {
   TransitGatewayAttachmentAssociation,
   UsageClassType,
   VCpuInfo,
-  VerifiedAccessInstanceLoggingConfiguration,
   VerifiedAccessLogCloudWatchLogsDestination,
   VerifiedAccessLogDeliveryStatus,
   VerifiedAccessLogKinesisDataFirehoseDestination,
-  VerifiedAccessLogs,
   VerifiedAccessLogS3Destination,
 } from "../models/models_4";
 import {
@@ -3281,6 +3293,12 @@ import {
   CoipAddressUsage,
   DataQuery,
   DataResponse,
+  DescribeVerifiedAccessInstanceLoggingConfigurationsResult,
+  DescribeVerifiedAccessInstancesRequest,
+  DescribeVerifiedAccessInstancesResult,
+  DescribeVerifiedAccessTrustProvidersRequest,
+  DescribeVerifiedAccessTrustProvidersResult,
+  DescribeVolumeAttributeRequest,
   DescribeVolumeAttributeResult,
   DescribeVolumesModificationsRequest,
   DescribeVolumesModificationsResult,
@@ -3375,8 +3393,6 @@ import {
   DisassociateTrunkInterfaceResult,
   DisassociateVpcCidrBlockRequest,
   DisassociateVpcCidrBlockResult,
-  DiskImage,
-  DiskImageDetail,
   EnableAddressTransferRequest,
   EnableAddressTransferResult,
   EnableAwsNetworkPerformanceMetricSubscriptionRequest,
@@ -3508,11 +3524,6 @@ import {
   ImportClientVpnClientCertificateRevocationListRequest,
   ImportClientVpnClientCertificateRevocationListResult,
   ImportImageLicenseConfigurationRequest,
-  ImportImageRequest,
-  ImportImageResult,
-  ImportInstanceLaunchSpecification,
-  ImportInstanceRequest,
-  ImportInstanceResult,
   InstanceEventWindowDisassociationRequest,
   InstanceFamilyCreditSpecification,
   InstanceRequirementsWithMetadataRequest,
@@ -3546,8 +3557,8 @@ import {
   TransitGatewayRouteTableAssociation,
   TransitGatewayRouteTablePropagation,
   UserBucket,
-  UserData,
-  VolumeDetail,
+  VerifiedAccessInstanceLoggingConfiguration,
+  VerifiedAccessLogs,
   VolumeModification,
   VolumeStatusAction,
   VolumeStatusAttachmentStatus,
@@ -3565,12 +3576,19 @@ import {
   CidrAuthorizationContext,
   CpuOptionsRequest,
   CreateVolumePermissionModifications,
+  DiskImage,
+  DiskImageDetail,
   DnsServersOptionsModifyStructure,
   EbsInstanceBlockDeviceSpecification,
   ElasticInferenceAccelerator,
   EnclaveOptionsRequest,
   HibernationOptionsRequest,
   ImageRecycleBinInfo,
+  ImportImageRequest,
+  ImportImageResult,
+  ImportInstanceLaunchSpecification,
+  ImportInstanceRequest,
+  ImportInstanceResult,
   ImportKeyPairRequest,
   ImportKeyPairResult,
   ImportSnapshotRequest,
@@ -3816,7 +3834,6 @@ import {
   RevokeSecurityGroupIngressResult,
   RunInstancesRequest,
   RunScheduledInstancesRequest,
-  RunScheduledInstancesResult,
   ScheduledInstancesBlockDeviceMapping,
   ScheduledInstancesEbs,
   ScheduledInstancesIamInstanceProfile,
@@ -3826,12 +3843,6 @@ import {
   ScheduledInstancesNetworkInterface,
   ScheduledInstancesPlacement,
   ScheduledInstancesPrivateIpAddressConfig,
-  SearchLocalGatewayRoutesRequest,
-  SearchLocalGatewayRoutesResult,
-  SearchTransitGatewayMulticastGroupsRequest,
-  SearchTransitGatewayMulticastGroupsResult,
-  SearchTransitGatewayRoutesRequest,
-  SearchTransitGatewayRoutesResult,
   SecurityGroupRuleRequest,
   SecurityGroupRuleUpdate,
   SnapshotDiskContainer,
@@ -3840,18 +3851,26 @@ import {
   SuccessfulInstanceCreditSpecificationItem,
   TrafficMirrorFilterRuleField,
   TrafficMirrorSessionField,
-  TransitGatewayMulticastGroup,
   TransitGatewayMulticastRegisteredGroupMembers,
   TransitGatewayMulticastRegisteredGroupSources,
   UnsuccessfulInstanceCreditSpecificationItem,
   UnsuccessfulInstanceCreditSpecificationItemError,
+  UserData,
   VerifiedAccessLogCloudWatchLogsDestinationOptions,
   VerifiedAccessLogKinesisDataFirehoseDestinationOptions,
   VerifiedAccessLogOptions,
   VerifiedAccessLogS3DestinationOptions,
+  VolumeDetail,
 } from "../models/models_6";
 import {
   InstanceStateChange,
+  RunScheduledInstancesResult,
+  SearchLocalGatewayRoutesRequest,
+  SearchLocalGatewayRoutesResult,
+  SearchTransitGatewayMulticastGroupsRequest,
+  SearchTransitGatewayMulticastGroupsResult,
+  SearchTransitGatewayRoutesRequest,
+  SearchTransitGatewayRoutesResult,
   SecurityGroupRuleDescription,
   SendDiagnosticInterruptRequest,
   StartInstancesRequest,
@@ -3869,6 +3888,7 @@ import {
   TerminateConnectionStatus,
   TerminateInstancesRequest,
   TerminateInstancesResult,
+  TransitGatewayMulticastGroup,
   UnassignIpv6AddressesRequest,
   UnassignIpv6AddressesResult,
   UnassignPrivateIpAddressesRequest,
@@ -5069,6 +5089,23 @@ export const se_CreateImageCommand = async (
   body = buildFormUrlencodedString({
     ...se_CreateImageRequest(input, context),
     Action: "CreateImage",
+    Version: "2016-11-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_ec2CreateInstanceConnectEndpointCommand
+ */
+export const se_CreateInstanceConnectEndpointCommand = async (
+  input: CreateInstanceConnectEndpointCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_CreateInstanceConnectEndpointRequest(input, context),
+    Action: "CreateInstanceConnectEndpoint",
     Version: "2016-11-15",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -6361,6 +6398,23 @@ export const se_DeleteFpgaImageCommand = async (
   body = buildFormUrlencodedString({
     ...se_DeleteFpgaImageRequest(input, context),
     Action: "DeleteFpgaImage",
+    Version: "2016-11-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_ec2DeleteInstanceConnectEndpointCommand
+ */
+export const se_DeleteInstanceConnectEndpointCommand = async (
+  input: DeleteInstanceConnectEndpointCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_DeleteInstanceConnectEndpointRequest(input, context),
+    Action: "DeleteInstanceConnectEndpoint",
     Version: "2016-11-15",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -8299,6 +8353,23 @@ export const se_DescribeInstanceAttributeCommand = async (
   body = buildFormUrlencodedString({
     ...se_DescribeInstanceAttributeRequest(input, context),
     Action: "DescribeInstanceAttribute",
+    Version: "2016-11-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_ec2DescribeInstanceConnectEndpointsCommand
+ */
+export const se_DescribeInstanceConnectEndpointsCommand = async (
+  input: DescribeInstanceConnectEndpointsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_DescribeInstanceConnectEndpointsRequest(input, context),
+    Action: "DescribeInstanceConnectEndpoints",
     Version: "2016-11-15",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -16720,6 +16791,46 @@ const de_CreateImageCommandError = async (
 };
 
 /**
+ * deserializeAws_ec2CreateInstanceConnectEndpointCommand
+ */
+export const de_CreateInstanceConnectEndpointCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateInstanceConnectEndpointCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_CreateInstanceConnectEndpointCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_CreateInstanceConnectEndpointResult(data, context);
+  const response: CreateInstanceConnectEndpointCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_ec2CreateInstanceConnectEndpointCommandError
+ */
+const de_CreateInstanceConnectEndpointCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateInstanceConnectEndpointCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadEc2ErrorCode(output, parsedOutput.body);
+  const parsedBody = parsedOutput.body;
+  return throwDefaultError({
+    output,
+    parsedBody: parsedBody.Errors.Error,
+    errorCode,
+  });
+};
+
+/**
  * deserializeAws_ec2CreateInstanceEventWindowCommand
  */
 export const de_CreateInstanceEventWindowCommand = async (
@@ -19731,6 +19842,46 @@ const de_DeleteFpgaImageCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<DeleteFpgaImageCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadEc2ErrorCode(output, parsedOutput.body);
+  const parsedBody = parsedOutput.body;
+  return throwDefaultError({
+    output,
+    parsedBody: parsedBody.Errors.Error,
+    errorCode,
+  });
+};
+
+/**
+ * deserializeAws_ec2DeleteInstanceConnectEndpointCommand
+ */
+export const de_DeleteInstanceConnectEndpointCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteInstanceConnectEndpointCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DeleteInstanceConnectEndpointCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_DeleteInstanceConnectEndpointResult(data, context);
+  const response: DeleteInstanceConnectEndpointCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_ec2DeleteInstanceConnectEndpointCommandError
+ */
+const de_DeleteInstanceConnectEndpointCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteInstanceConnectEndpointCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -24234,6 +24385,46 @@ const de_DescribeInstanceAttributeCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<DescribeInstanceAttributeCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadEc2ErrorCode(output, parsedOutput.body);
+  const parsedBody = parsedOutput.body;
+  return throwDefaultError({
+    output,
+    parsedBody: parsedBody.Errors.Error,
+    errorCode,
+  });
+};
+
+/**
+ * deserializeAws_ec2DescribeInstanceConnectEndpointsCommand
+ */
+export const de_DescribeInstanceConnectEndpointsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeInstanceConnectEndpointsCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DescribeInstanceConnectEndpointsCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_DescribeInstanceConnectEndpointsResult(data, context);
+  const response: DescribeInstanceConnectEndpointsCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_ec2DescribeInstanceConnectEndpointsCommandError
+ */
+const de_DescribeInstanceConnectEndpointsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeInstanceConnectEndpointsCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -37895,6 +38086,16 @@ const se_AllocateHostsRequest = (input: AllocateHostsRequest, context: __SerdeCo
   if (input.HostMaintenance != null) {
     entries["HostMaintenance"] = input.HostMaintenance;
   }
+  if (input.AssetIds != null) {
+    const memberEntries = se_AssetIdList(input.AssetIds, context);
+    if (input.AssetIds?.length === 0) {
+      entries.AssetId = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `AssetId.${key.substring(key.indexOf(".") + 1)}`;
+      entries[loc] = value;
+    });
+  }
   return entries;
 };
 
@@ -38045,6 +38246,22 @@ const se_ArnList = (input: string[], context: __SerdeContext): any => {
       continue;
     }
     entries[`Item.${counter}`] = entry;
+    counter++;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_ec2AssetIdList
+ */
+const se_AssetIdList = (input: string[], context: __SerdeContext): any => {
+  const entries: any = {};
+  let counter = 1;
+  for (const entry of input) {
+    if (entry === null) {
+      continue;
+    }
+    entries[`Member.${counter}`] = entry;
     counter++;
   }
   return entries;
@@ -40456,6 +40673,52 @@ const se_CreateImageRequest = (input: CreateImageRequest, context: __SerdeContex
   }
   if (input.NoReboot != null) {
     entries["NoReboot"] = input.NoReboot;
+  }
+  if (input.TagSpecifications != null) {
+    const memberEntries = se_TagSpecificationList(input.TagSpecifications, context);
+    if (input.TagSpecifications?.length === 0) {
+      entries.TagSpecification = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `TagSpecification.${key.substring(key.indexOf(".") + 1)}`;
+      entries[loc] = value;
+    });
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_ec2CreateInstanceConnectEndpointRequest
+ */
+const se_CreateInstanceConnectEndpointRequest = (
+  input: CreateInstanceConnectEndpointRequest,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.DryRun != null) {
+    entries["DryRun"] = input.DryRun;
+  }
+  if (input.SubnetId != null) {
+    entries["SubnetId"] = input.SubnetId;
+  }
+  if (input.SecurityGroupIds != null) {
+    const memberEntries = se_SecurityGroupIdStringListRequest(input.SecurityGroupIds, context);
+    if (input.SecurityGroupIds?.length === 0) {
+      entries.SecurityGroupId = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `SecurityGroupId.${key.substring(key.indexOf(".") + 1)}`;
+      entries[loc] = value;
+    });
+  }
+  if (input.PreserveClientIp != null) {
+    entries["PreserveClientIp"] = input.PreserveClientIp;
+  }
+  if (input.ClientToken === undefined) {
+    input.ClientToken = generateIdempotencyToken();
+  }
+  if (input.ClientToken != null) {
+    entries["ClientToken"] = input.ClientToken;
   }
   if (input.TagSpecifications != null) {
     const memberEntries = se_TagSpecificationList(input.TagSpecifications, context);
@@ -43554,6 +43817,23 @@ const se_DeleteFpgaImageRequest = (input: DeleteFpgaImageRequest, context: __Ser
 };
 
 /**
+ * serializeAws_ec2DeleteInstanceConnectEndpointRequest
+ */
+const se_DeleteInstanceConnectEndpointRequest = (
+  input: DeleteInstanceConnectEndpointRequest,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.DryRun != null) {
+    entries["DryRun"] = input.DryRun;
+  }
+  if (input.InstanceConnectEndpointId != null) {
+    entries["InstanceConnectEndpointId"] = input.InstanceConnectEndpointId;
+  }
+  return entries;
+};
+
+/**
  * serializeAws_ec2DeleteInstanceEventWindowRequest
  */
 const se_DeleteInstanceEventWindowRequest = (input: DeleteInstanceEventWindowRequest, context: __SerdeContext): any => {
@@ -46275,6 +46555,46 @@ const se_DescribeInstanceAttributeRequest = (input: DescribeInstanceAttributeReq
   }
   if (input.InstanceId != null) {
     entries["InstanceId"] = input.InstanceId;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_ec2DescribeInstanceConnectEndpointsRequest
+ */
+const se_DescribeInstanceConnectEndpointsRequest = (
+  input: DescribeInstanceConnectEndpointsRequest,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.DryRun != null) {
+    entries["DryRun"] = input.DryRun;
+  }
+  if (input.MaxResults != null) {
+    entries["MaxResults"] = input.MaxResults;
+  }
+  if (input.NextToken != null) {
+    entries["NextToken"] = input.NextToken;
+  }
+  if (input.Filters != null) {
+    const memberEntries = se_FilterList(input.Filters, context);
+    if (input.Filters?.length === 0) {
+      entries.Filter = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `Filter.${key.substring(key.indexOf(".") + 1)}`;
+      entries[loc] = value;
+    });
+  }
+  if (input.InstanceConnectEndpointIds != null) {
+    const memberEntries = se_ValueStringList(input.InstanceConnectEndpointIds, context);
+    if (input.InstanceConnectEndpointIds?.length === 0) {
+      entries.InstanceConnectEndpointId = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `InstanceConnectEndpointId.${key.substring(key.indexOf(".") + 1)}`;
+      entries[loc] = value;
+    });
   }
   return entries;
 };
@@ -62632,6 +62952,22 @@ const se_SecurityGroupIdStringList = (input: string[], context: __SerdeContext):
 };
 
 /**
+ * serializeAws_ec2SecurityGroupIdStringListRequest
+ */
+const se_SecurityGroupIdStringListRequest = (input: string[], context: __SerdeContext): any => {
+  const entries: any = {};
+  let counter = 1;
+  for (const entry of input) {
+    if (entry === null) {
+      continue;
+    }
+    entries[`SecurityGroupId.${counter}`] = entry;
+    counter++;
+  }
+  return entries;
+};
+
+/**
  * serializeAws_ec2SecurityGroupRuleDescription
  */
 const se_SecurityGroupRuleDescription = (input: SecurityGroupRuleDescription, context: __SerdeContext): any => {
@@ -64547,6 +64883,12 @@ const se_VerifiedAccessLogOptions = (input: VerifiedAccessLogOptions, context: _
       const loc = `KinesisDataFirehose.${key}`;
       entries[loc] = value;
     });
+  }
+  if (input.LogVersion != null) {
+    entries["LogVersion"] = input.LogVersion;
+  }
+  if (input.IncludeTrustContext != null) {
+    entries["IncludeTrustContext"] = input.IncludeTrustContext;
   }
   return entries;
 };
@@ -68574,6 +68916,23 @@ const de_CreateImageResult = (output: any, context: __SerdeContext): CreateImage
 };
 
 /**
+ * deserializeAws_ec2CreateInstanceConnectEndpointResult
+ */
+const de_CreateInstanceConnectEndpointResult = (
+  output: any,
+  context: __SerdeContext
+): CreateInstanceConnectEndpointResult => {
+  const contents: any = {};
+  if (output["instanceConnectEndpoint"] !== undefined) {
+    contents.InstanceConnectEndpoint = de_Ec2InstanceConnectEndpoint(output["instanceConnectEndpoint"], context);
+  }
+  if (output["clientToken"] !== undefined) {
+    contents.ClientToken = __expectString(output["clientToken"]);
+  }
+  return contents;
+};
+
+/**
  * deserializeAws_ec2CreateInstanceEventWindowResult
  */
 const de_CreateInstanceEventWindowResult = (output: any, context: __SerdeContext): CreateInstanceEventWindowResult => {
@@ -69705,6 +70064,20 @@ const de_DeleteFpgaImageResult = (output: any, context: __SerdeContext): DeleteF
   const contents: any = {};
   if (output["return"] !== undefined) {
     contents.Return = __parseBoolean(output["return"]);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_ec2DeleteInstanceConnectEndpointResult
+ */
+const de_DeleteInstanceConnectEndpointResult = (
+  output: any,
+  context: __SerdeContext
+): DeleteInstanceConnectEndpointResult => {
+  const contents: any = {};
+  if (output["instanceConnectEndpoint"] !== undefined) {
+    contents.InstanceConnectEndpoint = de_Ec2InstanceConnectEndpoint(output["instanceConnectEndpoint"], context);
   }
   return contents;
 };
@@ -71513,6 +71886,31 @@ const de_DescribeImportSnapshotTasksResult = (
   } else if (output["importSnapshotTaskSet"] !== undefined && output["importSnapshotTaskSet"]["item"] !== undefined) {
     contents.ImportSnapshotTasks = de_ImportSnapshotTaskList(
       __getArrayIfSingleItem(output["importSnapshotTaskSet"]["item"]),
+      context
+    );
+  }
+  if (output["nextToken"] !== undefined) {
+    contents.NextToken = __expectString(output["nextToken"]);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_ec2DescribeInstanceConnectEndpointsResult
+ */
+const de_DescribeInstanceConnectEndpointsResult = (
+  output: any,
+  context: __SerdeContext
+): DescribeInstanceConnectEndpointsResult => {
+  const contents: any = {};
+  if (output.instanceConnectEndpointSet === "") {
+    contents.InstanceConnectEndpoints = [];
+  } else if (
+    output["instanceConnectEndpointSet"] !== undefined &&
+    output["instanceConnectEndpointSet"]["item"] !== undefined
+  ) {
+    contents.InstanceConnectEndpoints = de_InstanceConnectEndpointSet(
+      __getArrayIfSingleItem(output["instanceConnectEndpointSet"]["item"]),
       context
     );
   }
@@ -74484,6 +74882,71 @@ const de_EbsOptimizedInfo = (output: any, context: __SerdeContext): EbsOptimized
 };
 
 /**
+ * deserializeAws_ec2Ec2InstanceConnectEndpoint
+ */
+const de_Ec2InstanceConnectEndpoint = (output: any, context: __SerdeContext): Ec2InstanceConnectEndpoint => {
+  const contents: any = {};
+  if (output["ownerId"] !== undefined) {
+    contents.OwnerId = __expectString(output["ownerId"]);
+  }
+  if (output["instanceConnectEndpointId"] !== undefined) {
+    contents.InstanceConnectEndpointId = __expectString(output["instanceConnectEndpointId"]);
+  }
+  if (output["instanceConnectEndpointArn"] !== undefined) {
+    contents.InstanceConnectEndpointArn = __expectString(output["instanceConnectEndpointArn"]);
+  }
+  if (output["state"] !== undefined) {
+    contents.State = __expectString(output["state"]);
+  }
+  if (output["stateMessage"] !== undefined) {
+    contents.StateMessage = __expectString(output["stateMessage"]);
+  }
+  if (output["dnsName"] !== undefined) {
+    contents.DnsName = __expectString(output["dnsName"]);
+  }
+  if (output["fipsDnsName"] !== undefined) {
+    contents.FipsDnsName = __expectString(output["fipsDnsName"]);
+  }
+  if (output.networkInterfaceIdSet === "") {
+    contents.NetworkInterfaceIds = [];
+  } else if (output["networkInterfaceIdSet"] !== undefined && output["networkInterfaceIdSet"]["item"] !== undefined) {
+    contents.NetworkInterfaceIds = de_NetworkInterfaceIdSet(
+      __getArrayIfSingleItem(output["networkInterfaceIdSet"]["item"]),
+      context
+    );
+  }
+  if (output["vpcId"] !== undefined) {
+    contents.VpcId = __expectString(output["vpcId"]);
+  }
+  if (output["availabilityZone"] !== undefined) {
+    contents.AvailabilityZone = __expectString(output["availabilityZone"]);
+  }
+  if (output["createdAt"] !== undefined) {
+    contents.CreatedAt = __expectNonNull(__parseRfc3339DateTimeWithOffset(output["createdAt"]));
+  }
+  if (output["subnetId"] !== undefined) {
+    contents.SubnetId = __expectString(output["subnetId"]);
+  }
+  if (output["preserveClientIp"] !== undefined) {
+    contents.PreserveClientIp = __parseBoolean(output["preserveClientIp"]);
+  }
+  if (output.securityGroupIdSet === "") {
+    contents.SecurityGroupIds = [];
+  } else if (output["securityGroupIdSet"] !== undefined && output["securityGroupIdSet"]["item"] !== undefined) {
+    contents.SecurityGroupIds = de_SecurityGroupIdSet(
+      __getArrayIfSingleItem(output["securityGroupIdSet"]["item"]),
+      context
+    );
+  }
+  if (output.tagSet === "") {
+    contents.Tags = [];
+  } else if (output["tagSet"] !== undefined && output["tagSet"]["item"] !== undefined) {
+    contents.Tags = de_TagList(__getArrayIfSingleItem(output["tagSet"]["item"]), context);
+  }
+  return contents;
+};
+
+/**
  * deserializeAws_ec2EfaInfo
  */
 const de_EfaInfo = (output: any, context: __SerdeContext): EfaInfo => {
@@ -77369,6 +77832,9 @@ const de_Host = (output: any, context: __SerdeContext): Host => {
   if (output["hostMaintenance"] !== undefined) {
     contents.HostMaintenance = __expectString(output["hostMaintenance"]);
   }
+  if (output["assetId"] !== undefined) {
+    contents.AssetId = __expectString(output["assetId"]);
+  }
   return contents;
 };
 
@@ -78639,6 +79105,17 @@ const de_InstanceCapacity = (output: any, context: __SerdeContext): InstanceCapa
 };
 
 /**
+ * deserializeAws_ec2InstanceConnectEndpointSet
+ */
+const de_InstanceConnectEndpointSet = (output: any, context: __SerdeContext): Ec2InstanceConnectEndpoint[] => {
+  return (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_Ec2InstanceConnectEndpoint(entry, context);
+    });
+};
+
+/**
  * deserializeAws_ec2InstanceCount
  */
 const de_InstanceCount = (output: any, context: __SerdeContext): InstanceCount => {
@@ -79748,6 +80225,9 @@ const de_InstanceTypeInfo = (output: any, context: __SerdeContext): InstanceType
       __getArrayIfSingleItem(output["supportedBootModes"]["item"]),
       context
     );
+  }
+  if (output["nitroEnclavesSupport"] !== undefined) {
+    contents.NitroEnclavesSupport = __expectString(output["nitroEnclavesSupport"]);
   }
   return contents;
 };
@@ -84026,6 +84506,17 @@ const de_NetworkInterfaceCount = (output: any, context: __SerdeContext): Network
 };
 
 /**
+ * deserializeAws_ec2NetworkInterfaceIdSet
+ */
+const de_NetworkInterfaceIdSet = (output: any, context: __SerdeContext): string[] => {
+  return (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return __expectString(entry) as any;
+    });
+};
+
+/**
  * deserializeAws_ec2NetworkInterfaceIpv6Address
  */
 const de_NetworkInterfaceIpv6Address = (output: any, context: __SerdeContext): NetworkInterfaceIpv6Address => {
@@ -87246,6 +87737,17 @@ const de_SecurityGroupIdentifier = (output: any, context: __SerdeContext): Secur
  * deserializeAws_ec2SecurityGroupIdList
  */
 const de_SecurityGroupIdList = (output: any, context: __SerdeContext): string[] => {
+  return (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return __expectString(entry) as any;
+    });
+};
+
+/**
+ * deserializeAws_ec2SecurityGroupIdSet
+ */
+const de_SecurityGroupIdSet = (output: any, context: __SerdeContext): string[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -91770,6 +92272,12 @@ const de_VerifiedAccessLogs = (output: any, context: __SerdeContext): VerifiedAc
       context
     );
   }
+  if (output["logVersion"] !== undefined) {
+    contents.LogVersion = __expectString(output["logVersion"]);
+  }
+  if (output["includeTrustContext"] !== undefined) {
+    contents.IncludeTrustContext = __parseBoolean(output["includeTrustContext"]);
+  }
   return contents;
 };
 
@@ -93013,14 +93521,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   cfId: output.headers["x-amz-cf-id"],
 });
 
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
-
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>
   collectBody(streamBody, context).then((body) => context.utf8Encoder(body));
@@ -93064,7 +93564,7 @@ const parseBody = (streamBody: any, context: __SerdeContext): any =>
         ignoreDeclaration: true,
         parseTagValue: false,
         trimValues: false,
-        tagValueProcessor: (_, val) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
+        tagValueProcessor: (_: any, val: any) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
       });
       parser.addEntity("#xD", "\r");
       parser.addEntity("#10", "\n");

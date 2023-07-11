@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { RequestCancelWorkflowExecutionInput } from "../models/models_0";
 import {
@@ -20,6 +20,10 @@ import {
 } from "../protocols/Aws_json1_0";
 import { ServiceInputTypes, ServiceOutputTypes, SWFClientResolvedConfig } from "../SWFClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -39,13 +43,11 @@ export interface RequestCancelWorkflowExecutionCommandOutput extends __MetadataB
  *       workflow execution identified by the given domain, workflowId, and runId. This logically
  *       requests the cancellation of the workflow execution as a whole. It is up to the decider to
  *       take appropriate actions when it receives an execution history with this event.</p>
- *
  *          <note>
  *             <p>If the runId isn't specified, the <code>WorkflowExecutionCancelRequested</code> event
  *         is recorded in the history of the current open workflow execution with the specified
  *         workflowId in the domain.</p>
  *          </note>
- *
  *          <note>
  *             <p>Because this action allows the workflow to properly clean up and gracefully close, it
  *         should be used instead of <a>TerminateWorkflowExecution</a> when

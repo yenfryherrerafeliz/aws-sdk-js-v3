@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { SENSITIVE_STRING } from "@smithy/smithy-client";
 
 import {
   _InstanceType,
@@ -28,7 +28,6 @@ import {
   RouteTableAssociationState,
   Tag,
   TagSpecification,
-  TransitGatewayAttachmentResourceType,
   TransitGatewayMulticastDomainAssociations,
   TransitGatewayPeeringAttachment,
   TransitGatewayVpcAttachment,
@@ -47,6 +46,7 @@ import {
   ClientLoginBannerOptions,
   ConnectionLogOptions,
   CreditSpecificationRequest,
+  DiskImageFormat,
   ElasticGpuSpecification,
   FleetExcessCapacityTerminationPolicy,
   FleetLaunchTemplateConfigRequest,
@@ -64,6 +64,7 @@ import {
   ManagedPrefixList,
   MarketType,
   Placement,
+  PlatformValues,
   RequestIpamResourceTag,
   RuleAction,
   SelfServicePortal,
@@ -101,6 +102,7 @@ import {
   VerifiedAccessEndpointProtocol,
   VerifiedAccessGroup,
   VpnConnection,
+  VpnConnectionFilterSensitiveLog,
   VpnEcmpSupportValue,
   VpnTunnelLogOptionsSpecification,
 } from "./models_2";
@@ -110,27 +112,30 @@ import {
   BootModeValues,
   ConversionTask,
   ConversionTaskFilterSensitiveLog,
-  Filter,
   FpgaImageAttribute,
   FpgaImageAttributeName,
-  HttpTokensState,
   ImdsSupportValues,
+  ImportImageLicenseConfigurationResponse,
   InstanceAttributeName,
-  InstanceAutoRecoveryState,
-  InstanceMetadataEndpointState,
-  InstanceMetadataOptionsResponse,
-  InstanceMetadataProtocolState,
-  InstanceMetadataTagsState,
   InstanceTagNotificationAttribute,
   IpamPoolCidr,
   LaunchPermission,
   PermissionGroup,
+  SnapshotDetail,
+  SnapshotDetailFilterSensitiveLog,
   SnapshotTaskDetail,
+  SnapshotTaskDetailFilterSensitiveLog,
   TpmSupportValues,
 } from "./models_3";
 import {
   CreateVolumePermission,
   ExcessCapacityTerminationPolicy,
+  HttpTokensState,
+  InstanceAutoRecoveryState,
+  InstanceMetadataEndpointState,
+  InstanceMetadataOptionsResponse,
+  InstanceMetadataProtocolState,
+  InstanceMetadataTagsState,
   InstanceNetworkInterfaceSpecification,
   InstanceStatusEvent,
   LaunchTemplateConfig,
@@ -145,20 +150,404 @@ import {
   SpotInstanceRequest,
   SpotInstanceRequestFilterSensitiveLog,
   SpotPlacement,
-  VerifiedAccessInstanceLoggingConfiguration,
 } from "./models_4";
 import {
   ClientData,
-  DiskImageDetail,
-  DiskImageDetailFilterSensitiveLog,
+  ImageDiskContainer,
+  ImageDiskContainerFilterSensitiveLog,
+  ImportImageLicenseConfigurationRequest,
   InstanceFamilyCreditSpecification,
   IpamResourceCidr,
   Purchase,
   UnlimitedSupportedInstanceFamily,
   UserBucket,
-  VolumeDetail,
+  VerifiedAccessInstanceLoggingConfiguration,
   VolumeModification,
 } from "./models_5";
+
+/**
+ * @public
+ */
+export interface ImportImageRequest {
+  /**
+   * <p>The architecture of the virtual machine.</p>
+   *          <p>Valid values: <code>i386</code> | <code>x86_64</code>
+   *          </p>
+   */
+  Architecture?: string;
+
+  /**
+   * <p>The client-specific data.</p>
+   */
+  ClientData?: ClientData;
+
+  /**
+   * <p>The token to enable idempotency for VM import requests.</p>
+   */
+  ClientToken?: string;
+
+  /**
+   * <p>A description string for the import image task.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>Information about the disk containers.</p>
+   */
+  DiskContainers?: ImageDiskContainer[];
+
+  /**
+   * <p>Checks whether you have the required permissions for the action, without actually making the request,
+   *    and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
+   *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+
+  /**
+   * <p>Specifies whether the destination AMI of the imported image should be encrypted. The default KMS key for EBS is used
+   *    unless you specify a non-default KMS key using <code>KmsKeyId</code>. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">Amazon EBS Encryption</a> in the
+   *     <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
+   */
+  Encrypted?: boolean;
+
+  /**
+   * <p>The target hypervisor platform.</p>
+   *          <p>Valid values: <code>xen</code>
+   *          </p>
+   */
+  Hypervisor?: string;
+
+  /**
+   * <p>An identifier for the symmetric KMS key to use when creating the
+   *    encrypted AMI. This parameter is only required if you want to use a non-default KMS key; if this
+   *    parameter is not specified, the default KMS key for EBS is used. If a <code>KmsKeyId</code> is
+   *    specified, the <code>Encrypted</code> flag must also be set. </p>
+   *          <p>The KMS key identifier may be provided in any of the following formats: </p>
+   *          <ul>
+   *             <li>
+   *                <p>Key ID</p>
+   *             </li>
+   *             <li>
+   *                <p>Key alias. The alias ARN contains the <code>arn:aws:kms</code> namespace, followed by the Region of the key, the Amazon Web Services account ID of the key owner, the <code>alias</code> namespace, and then the key alias. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:alias/<i>ExampleAlias</i>.</p>
+   *             </li>
+   *             <li>
+   *                <p>ARN using key ID. The ID ARN contains the <code>arn:aws:kms</code> namespace, followed by the Region of the key, the Amazon Web Services account ID of the key owner, the <code>key</code> namespace, and then the key ID. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:key/<i>abcd1234-a123-456a-a12b-a123b4cd56ef</i>.</p>
+   *             </li>
+   *             <li>
+   *                <p>ARN using key alias. The alias ARN contains the <code>arn:aws:kms</code> namespace, followed by the Region of the key, the Amazon Web Services account ID of the key owner, the <code>alias</code> namespace, and then the key alias. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:alias/<i>ExampleAlias</i>. </p>
+   *             </li>
+   *          </ul>
+   *          <p>Amazon Web Services parses <code>KmsKeyId</code> asynchronously, meaning that the action you call may appear to complete even
+   *    though you provided an invalid identifier. This action will eventually report failure. </p>
+   *          <p>The specified KMS key must exist in the Region that the AMI is being copied to.</p>
+   *          <p>Amazon EBS does not support asymmetric KMS keys.</p>
+   */
+  KmsKeyId?: string;
+
+  /**
+   * <p>The license type to be used for the Amazon Machine Image (AMI) after importing.</p>
+   *          <p>Specify <code>AWS</code> to replace the source-system license with an Amazon Web Services
+   *    license or <code>BYOL</code> to retain the source-system license. Leaving this parameter
+   *    undefined is the same as choosing <code>AWS</code> when importing a Windows Server operating
+   *    system, and the same as choosing <code>BYOL</code> when importing a Windows client operating
+   *    system (such as Windows 10) or a Linux operating system.</p>
+   *          <p>To use <code>BYOL</code>, you must have existing licenses with rights to use these licenses in a third party
+   *    cloud, such as Amazon Web Services. For more information, see <a href="https://docs.aws.amazon.com/vm-import/latest/userguide/vmimport-image-import.html#prerequisites-image">Prerequisites</a> in the
+   *    VM Import/Export User Guide.</p>
+   */
+  LicenseType?: string;
+
+  /**
+   * <p>The operating system of the virtual machine.</p>
+   *          <p>Valid values: <code>Windows</code> | <code>Linux</code>
+   *          </p>
+   */
+  Platform?: string;
+
+  /**
+   * <p>The name of the role to use when not using the default role, 'vmimport'.</p>
+   */
+  RoleName?: string;
+
+  /**
+   * <p>The ARNs of the license configurations.</p>
+   */
+  LicenseSpecifications?: ImportImageLicenseConfigurationRequest[];
+
+  /**
+   * <p>The tags to apply to the import image task during creation.</p>
+   */
+  TagSpecifications?: TagSpecification[];
+
+  /**
+   * <p>The usage operation value. For more information, see <a href="https://docs.aws.amazon.com/vm-import/latest/userguide/vmie_prereqs.html#prerequisites">Licensing options</a> in the <i>VM Import/Export User Guide</i>.</p>
+   */
+  UsageOperation?: string;
+
+  /**
+   * <p>The boot mode of the virtual machine.</p>
+   */
+  BootMode?: BootModeValues | string;
+}
+
+/**
+ * @public
+ */
+export interface ImportImageResult {
+  /**
+   * <p>The architecture of the virtual machine.</p>
+   */
+  Architecture?: string;
+
+  /**
+   * <p>A description of the import task.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>Indicates whether the AMI is encrypted.</p>
+   */
+  Encrypted?: boolean;
+
+  /**
+   * <p>The target hypervisor of the import task.</p>
+   */
+  Hypervisor?: string;
+
+  /**
+   * <p>The ID of the Amazon Machine Image (AMI) created by the import task.</p>
+   */
+  ImageId?: string;
+
+  /**
+   * <p>The task ID of the import image task.</p>
+   */
+  ImportTaskId?: string;
+
+  /**
+   * <p>The identifier for the symmetric KMS key that was used to create the encrypted AMI.</p>
+   */
+  KmsKeyId?: string;
+
+  /**
+   * <p>The license type of the virtual machine.</p>
+   */
+  LicenseType?: string;
+
+  /**
+   * <p>The operating system of the virtual machine.</p>
+   */
+  Platform?: string;
+
+  /**
+   * <p>The progress of the task.</p>
+   */
+  Progress?: string;
+
+  /**
+   * <p>Information about the snapshots.</p>
+   */
+  SnapshotDetails?: SnapshotDetail[];
+
+  /**
+   * <p>A brief status of the task.</p>
+   */
+  Status?: string;
+
+  /**
+   * <p>A detailed status message of the import task.</p>
+   */
+  StatusMessage?: string;
+
+  /**
+   * <p>The ARNs of the license configurations.</p>
+   */
+  LicenseSpecifications?: ImportImageLicenseConfigurationResponse[];
+
+  /**
+   * <p>Any tags assigned to the import image task.</p>
+   */
+  Tags?: Tag[];
+
+  /**
+   * <p>The usage operation value.</p>
+   */
+  UsageOperation?: string;
+}
+
+/**
+ * @public
+ * <p>Describes a disk image.</p>
+ */
+export interface DiskImageDetail {
+  /**
+   * <p>The size of the disk image, in GiB.</p>
+   */
+  Bytes: number | undefined;
+
+  /**
+   * <p>The disk image format.</p>
+   */
+  Format: DiskImageFormat | string | undefined;
+
+  /**
+   * <p>A presigned URL for the import manifest stored in Amazon S3 and presented here as an Amazon S3 presigned URL.
+   *    For information about creating a presigned URL for an Amazon S3 object, read the "Query String Request Authentication
+   *    Alternative" section of the <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html">Authenticating REST Requests</a> topic in the <i>Amazon Simple Storage Service Developer
+   *     Guide</i>.</p>
+   *          <p>For information about the import manifest referenced by this API action, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html">VM Import Manifest</a>.</p>
+   */
+  ImportManifestUrl: string | undefined;
+}
+
+/**
+ * @public
+ * <p>Describes an EBS volume.</p>
+ */
+export interface VolumeDetail {
+  /**
+   * <p>The size of the volume, in GiB.</p>
+   */
+  Size: number | undefined;
+}
+
+/**
+ * @public
+ * <p>Describes a disk image.</p>
+ */
+export interface DiskImage {
+  /**
+   * <p>A description of the disk image.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>Information about the disk image.</p>
+   */
+  Image?: DiskImageDetail;
+
+  /**
+   * <p>Information about the volume.</p>
+   */
+  Volume?: VolumeDetail;
+}
+
+/**
+ * @public
+ * <p>Describes the user data for an instance.</p>
+ */
+export interface UserData {
+  /**
+   * <p>The user data. If you are using an Amazon Web Services SDK or command line tool, Base64-encoding is performed for you, and you
+   *    can load the text from a file. Otherwise, you must provide Base64-encoded text.</p>
+   */
+  Data?: string;
+}
+
+/**
+ * @public
+ * <p>Describes the launch specification for VM import.</p>
+ */
+export interface ImportInstanceLaunchSpecification {
+  /**
+   * <p>Reserved.</p>
+   */
+  AdditionalInfo?: string;
+
+  /**
+   * <p>The architecture of the instance.</p>
+   */
+  Architecture?: ArchitectureValues | string;
+
+  /**
+   * <p>The security group IDs.</p>
+   */
+  GroupIds?: string[];
+
+  /**
+   * <p>The security group names.</p>
+   */
+  GroupNames?: string[];
+
+  /**
+   * <p>Indicates whether an instance stops or terminates when you initiate shutdown from the instance (using the
+   *    operating system command for system shutdown).</p>
+   */
+  InstanceInitiatedShutdownBehavior?: ShutdownBehavior | string;
+
+  /**
+   * <p>The instance type. For more information about the instance types that you can import, see <a href="https://docs.aws.amazon.com/vm-import/latest/userguide/vmie_prereqs.html#vmimport-instance-types">Instance Types</a> in the
+   *    VM Import/Export User Guide.</p>
+   */
+  InstanceType?: _InstanceType | string;
+
+  /**
+   * <p>Indicates whether monitoring is enabled.</p>
+   */
+  Monitoring?: boolean;
+
+  /**
+   * <p>The placement information for the instance.</p>
+   */
+  Placement?: Placement;
+
+  /**
+   * <p>[EC2-VPC] An available IP address from the IP address range of the subnet.</p>
+   */
+  PrivateIpAddress?: string;
+
+  /**
+   * <p>[EC2-VPC] The ID of the subnet in which to launch the instance.</p>
+   */
+  SubnetId?: string;
+
+  /**
+   * <p>The Base64-encoded user data to make available to the instance.</p>
+   */
+  UserData?: UserData;
+}
+
+/**
+ * @public
+ */
+export interface ImportInstanceRequest {
+  /**
+   * <p>A description for the instance being imported.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>The disk image.</p>
+   */
+  DiskImages?: DiskImage[];
+
+  /**
+   * <p>Checks whether you have the required permissions for the action, without actually making the request,
+   *    and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
+   *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+
+  /**
+   * <p>The launch specification.</p>
+   */
+  LaunchSpecification?: ImportInstanceLaunchSpecification;
+
+  /**
+   * <p>The instance operating system.</p>
+   */
+  Platform: PlatformValues | string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface ImportInstanceResult {
+  /**
+   * <p>Information about the conversion task.</p>
+   */
+  ConversionTask?: ConversionTask;
+}
 
 /**
  * @public
@@ -2022,10 +2411,11 @@ export interface ModifyInstancePlacementRequest {
   /**
    * <p>The tenancy for the instance.</p>
    *          <note>
-   *             <p>For T3 instances, you can't change the tenancy from <code>dedicated</code> to
-   *                     <code>host</code>, or from <code>host</code> to <code>dedicated</code>.
-   *                 Attempting to make one of these unsupported tenancy changes results in the
-   *                     <code>InvalidTenancy</code> error code.</p>
+   *             <p>For T3 instances, you must launch the instance on a Dedicated Host to use a
+   *                 tenancy of <code>host</code>. You can't change the tenancy from
+   *                 <code>host</code> to <code>dedicated</code> or <code>default</code>.
+   *                 Attempting to make one of these unsupported tenancy changes results in an
+   *                 <code>InvalidRequest</code> error code.</p>
    *          </note>
    */
   Tenancy?: HostTenancy | string;
@@ -2037,7 +2427,8 @@ export interface ModifyInstancePlacementRequest {
   PartitionNumber?: number;
 
   /**
-   * <p>The ARN of the host resource group in which to place the instance.</p>
+   * <p>The ARN of the host resource group in which to place the instance. The instance must
+   *             have a tenancy of <code>host</code> to specify this parameter.</p>
    */
   HostResourceGroupArn?: string;
 
@@ -3738,7 +4129,7 @@ export interface VerifiedAccessLogS3DestinationOptions {
 
 /**
  * @public
- * <p>Describes the destinations for Verified Access logs.</p>
+ * <p>Options for Verified Access logs.</p>
  */
 export interface VerifiedAccessLogOptions {
   /**
@@ -3755,6 +4146,22 @@ export interface VerifiedAccessLogOptions {
    * <p>Sends Verified Access logs to Kinesis.</p>
    */
   KinesisDataFirehose?: VerifiedAccessLogKinesisDataFirehoseDestinationOptions;
+
+  /**
+   * <p>
+   * 		   The logging version to use.
+   * 	   </p>
+   *          <p>Valid values: <code>ocsf-0.1</code> | <code>ocsf-1.0.0-rc.2</code>
+   *          </p>
+   */
+  LogVersion?: string;
+
+  /**
+   * <p>
+   * 		   Include trust data sent by trust providers into the logs.
+   * 	   </p>
+   */
+  IncludeTrustContext?: boolean;
 }
 
 /**
@@ -5530,7 +5937,7 @@ export interface RegisterInstanceEventNotificationAttributesRequest {
   /**
    * <p>Information about the tag keys to register.</p>
    */
-  InstanceTagAttribute?: RegisterInstanceTagAttributeRequest;
+  InstanceTagAttribute: RegisterInstanceTagAttributeRequest | undefined;
 }
 
 /**
@@ -5814,12 +6221,12 @@ export interface RejectVpcPeeringConnectionResult {
  */
 export interface ReleaseAddressRequest {
   /**
-   * <p>[EC2-VPC] The allocation ID. Required for EC2-VPC.</p>
+   * <p>The allocation ID. This parameter is required.</p>
    */
   AllocationId?: string;
 
   /**
-   * <p>[EC2-Classic] The Elastic IP address. Required for EC2-Classic.</p>
+   * <p>Deprecated.</p>
    */
   PublicIp?: string;
 
@@ -7272,7 +7679,8 @@ export interface CpuOptionsRequest {
 
   /**
    * <p>Indicates whether to enable the instance for AMD SEV-SNP. AMD SEV-SNP is supported
-   *             with M6a, R6a, and C6a instance types only.</p>
+   *             with M6a, R6a, and C6a instance types only. For more information, see
+   *             <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/sev-snp.html">AMD SEV-SNP</a>.</p>
    */
   AmdSevSnp?: AmdSevSnpSpecification | string;
 }
@@ -7318,14 +7726,13 @@ export interface EnclaveOptionsRequest {
 /**
  * @public
  * <p>Indicates whether your instance is configured for hibernation. This parameter is valid
- *             only if the instance meets the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html#hibernating-prerequisites">hibernation
+ *             only if the instance meets the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html">hibernation
  *                 prerequisites</a>. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html">Hibernate your instance</a> in the
  *                 <i>Amazon EC2 User Guide</i>.</p>
  */
 export interface HibernationOptionsRequest {
   /**
-   * <p>If you set this parameter to <code>true</code>, your instance is enabled for
-   *             hibernation.</p>
+   * <p>Set to <code>true</code> to enable your instance for hibernation.</p>
    *          <p>Default: <code>false</code>
    *          </p>
    */
@@ -7565,6 +7972,10 @@ export interface RunInstancesRequest {
   /**
    * <p>The instance type. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html">Instance types</a> in the
    *                 <i>Amazon EC2 User Guide</i>.</p>
+   *          <p>When you change your EBS-backed instance type, instance restart or replacement behavior depends on the
+   *     		instance type compatibility between the old and new types. An instance that's backed by an instance store volume
+   *     		is always replaced. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-resize.html">Change the instance type</a> in the
+   *     		<i>Amazon EC2 User Guide</i>.</p>
    *          <p>Default: <code>m1.small</code>
    *          </p>
    */
@@ -7856,9 +8267,10 @@ export interface RunInstancesRequest {
   CapacityReservationSpecification?: CapacityReservationSpecification;
 
   /**
-   * <p>Indicates whether an instance is enabled for hibernation. For more information, see
-   *                 <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html">Hibernate
-   *                 your instance</a> in the <i>Amazon EC2 User Guide</i>.</p>
+   * <p>Indicates whether an instance is enabled for hibernation. This parameter is valid only
+   *             if the instance meets the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html">hibernation
+   *                 prerequisites</a>. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html">Hibernate your instance</a> in the
+   *                 <i>Amazon EC2 User Guide</i>.</p>
    *          <p>You can't enable hibernation and Amazon Web Services Nitro Enclaves on the same
    *             instance.</p>
    */
@@ -7876,7 +8288,7 @@ export interface RunInstancesRequest {
 
   /**
    * <p>Indicates whether the instance is enabled for Amazon Web Services Nitro Enclaves. For
-   *             more information, see <a href="https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html"> What is Amazon Web Services Nitro
+   *             more information, see <a href="https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html">What is Amazon Web Services Nitro
    *                 Enclaves?</a> in the <i>Amazon Web Services Nitro Enclaves User
    *                 Guide</i>.</p>
    *          <p>You can't enable Amazon Web Services Nitro Enclaves and hibernation on the same
@@ -8240,343 +8652,98 @@ export interface RunScheduledInstancesRequest {
 }
 
 /**
- * @public
- * <p>Contains the output of RunScheduledInstances.</p>
+ * @internal
  */
-export interface RunScheduledInstancesResult {
-  /**
-   * <p>The IDs of the newly launched instances.</p>
-   */
-  InstanceIdSet?: string[];
-}
+export const ImportImageRequestFilterSensitiveLog = (obj: ImportImageRequest): any => ({
+  ...obj,
+  ...(obj.DiskContainers && {
+    DiskContainers: obj.DiskContainers.map((item) => ImageDiskContainerFilterSensitiveLog(item)),
+  }),
+});
 
 /**
- * @public
+ * @internal
  */
-export interface SearchLocalGatewayRoutesRequest {
-  /**
-   * <p>The ID of the local gateway route table.</p>
-   */
-  LocalGatewayRouteTableId: string | undefined;
-
-  /**
-   * <p>One or more filters.</p>
-   *          <ul>
-   *             <li>
-   *                <p>
-   *                   <code>prefix-list-id</code> - The ID of the prefix list.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>route-search.exact-match</code> - The exact match of the specified filter.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>route-search.longest-prefix-match</code> - The longest prefix that matches the route.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>route-search.subnet-of-match</code> - The routes with a subnet that match the specified CIDR filter.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>route-search.supernet-of-match</code> - The routes with a CIDR that encompass the CIDR filter.
-   *                For example, if you have 10.0.1.0/29 and 10.0.1.0/31 routes in your route table and you specify <code>supernet-of-match</code>
-   *                as 10.0.1.0/30, then the result returns 10.0.1.0/29.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>state</code> - The state of the route.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>type</code> - The route type.</p>
-   *             </li>
-   *          </ul>
-   */
-  Filters?: Filter[];
-
-  /**
-   * <p>The maximum number of results to return with a single call.
-   * 	To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>
-   */
-  MaxResults?: number;
-
-  /**
-   * <p>The token for the next page of results.</p>
-   */
-  NextToken?: string;
-
-  /**
-   * <p>Checks whether you have the required permissions for the action, without actually making the request,
-   *    and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
-   *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-   */
-  DryRun?: boolean;
-}
+export const ImportImageResultFilterSensitiveLog = (obj: ImportImageResult): any => ({
+  ...obj,
+  ...(obj.SnapshotDetails && {
+    SnapshotDetails: obj.SnapshotDetails.map((item) => SnapshotDetailFilterSensitiveLog(item)),
+  }),
+});
 
 /**
- * @public
+ * @internal
  */
-export interface SearchLocalGatewayRoutesResult {
-  /**
-   * <p>Information about the routes.</p>
-   */
-  Routes?: LocalGatewayRoute[];
-
-  /**
-   * <p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>
-   */
-  NextToken?: string;
-}
+export const DiskImageDetailFilterSensitiveLog = (obj: DiskImageDetail): any => ({
+  ...obj,
+  ...(obj.ImportManifestUrl && { ImportManifestUrl: SENSITIVE_STRING }),
+});
 
 /**
- * @public
+ * @internal
  */
-export interface SearchTransitGatewayMulticastGroupsRequest {
-  /**
-   * <p>The ID of the transit gateway multicast domain.</p>
-   */
-  TransitGatewayMulticastDomainId: string | undefined;
-
-  /**
-   * <p>One or more filters. The possible values are:</p>
-   *          <ul>
-   *             <li>
-   *                <p>
-   *                   <code>group-ip-address</code> - The IP address of the  transit gateway multicast group.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>is-group-member</code> - The resource is a group member. Valid values are <code>true</code> | <code>false</code>.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>is-group-source</code> - The resource is a group source. Valid values are <code>true</code> | <code>false</code>.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>member-type</code> - The member type. Valid values are <code>igmp</code> | <code>static</code>.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>resource-id</code> - The ID of the resource.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>resource-type</code> - The type of resource. Valid values are <code>vpc</code> | <code>vpn</code> | <code>direct-connect-gateway</code> | <code>tgw-peering</code>.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>source-type</code> - The source type. Valid values are <code>igmp</code> | <code>static</code>.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>subnet-id</code> - The ID of the subnet.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>transit-gateway-attachment-id</code> - The id of the transit gateway attachment.</p>
-   *             </li>
-   *          </ul>
-   */
-  Filters?: Filter[];
-
-  /**
-   * <p>The maximum number of results to return with a single call.
-   * 	To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>
-   */
-  MaxResults?: number;
-
-  /**
-   * <p>The token for the next page of results.</p>
-   */
-  NextToken?: string;
-
-  /**
-   * <p>Checks whether you have the required permissions for the action, without actually making the request,
-   *    and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
-   *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-   */
-  DryRun?: boolean;
-}
+export const DiskImageFilterSensitiveLog = (obj: DiskImage): any => ({
+  ...obj,
+  ...(obj.Image && { Image: DiskImageDetailFilterSensitiveLog(obj.Image) }),
+});
 
 /**
- * @public
- * @enum
+ * @internal
  */
-export const MembershipType = {
-  igmp: "igmp",
-  static: "static",
-} as const;
+export const UserDataFilterSensitiveLog = (obj: UserData): any => ({
+  ...obj,
+});
 
 /**
- * @public
+ * @internal
  */
-export type MembershipType = (typeof MembershipType)[keyof typeof MembershipType];
+export const ImportInstanceLaunchSpecificationFilterSensitiveLog = (obj: ImportInstanceLaunchSpecification): any => ({
+  ...obj,
+  ...(obj.UserData && { UserData: SENSITIVE_STRING }),
+});
 
 /**
- * @public
- * <p>Describes the  transit gateway multicast group resources.</p>
+ * @internal
  */
-export interface TransitGatewayMulticastGroup {
-  /**
-   * <p>The IP address assigned to the  transit gateway multicast group.</p>
-   */
-  GroupIpAddress?: string;
-
-  /**
-   * <p>The ID of the transit gateway attachment.</p>
-   */
-  TransitGatewayAttachmentId?: string;
-
-  /**
-   * <p>The ID of the subnet.</p>
-   */
-  SubnetId?: string;
-
-  /**
-   * <p>The ID of the resource.</p>
-   */
-  ResourceId?: string;
-
-  /**
-   * <p>The type of resource, for example a VPC attachment.</p>
-   */
-  ResourceType?: TransitGatewayAttachmentResourceType | string;
-
-  /**
-   * <p> The ID of the Amazon Web Services account that owns the transit gateway multicast domain group resource.</p>
-   */
-  ResourceOwnerId?: string;
-
-  /**
-   * <p>The ID of the transit gateway attachment.</p>
-   */
-  NetworkInterfaceId?: string;
-
-  /**
-   * <p>Indicates that the resource is a  transit gateway multicast group member.</p>
-   */
-  GroupMember?: boolean;
-
-  /**
-   * <p>Indicates that the resource is a  transit gateway multicast group member.</p>
-   */
-  GroupSource?: boolean;
-
-  /**
-   * <p>The member type (for example, <code>static</code>).</p>
-   */
-  MemberType?: MembershipType | string;
-
-  /**
-   * <p>The source type.</p>
-   */
-  SourceType?: MembershipType | string;
-}
+export const ImportInstanceRequestFilterSensitiveLog = (obj: ImportInstanceRequest): any => ({
+  ...obj,
+  ...(obj.DiskImages && { DiskImages: obj.DiskImages.map((item) => DiskImageFilterSensitiveLog(item)) }),
+  ...(obj.LaunchSpecification && {
+    LaunchSpecification: ImportInstanceLaunchSpecificationFilterSensitiveLog(obj.LaunchSpecification),
+  }),
+});
 
 /**
- * @public
+ * @internal
  */
-export interface SearchTransitGatewayMulticastGroupsResult {
-  /**
-   * <p>Information about the  transit gateway multicast group.</p>
-   */
-  MulticastGroups?: TransitGatewayMulticastGroup[];
-
-  /**
-   * <p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>
-   */
-  NextToken?: string;
-}
+export const ImportInstanceResultFilterSensitiveLog = (obj: ImportInstanceResult): any => ({
+  ...obj,
+  ...(obj.ConversionTask && { ConversionTask: ConversionTaskFilterSensitiveLog(obj.ConversionTask) }),
+});
 
 /**
- * @public
+ * @internal
  */
-export interface SearchTransitGatewayRoutesRequest {
-  /**
-   * <p>The ID of the transit gateway route table.</p>
-   */
-  TransitGatewayRouteTableId: string | undefined;
-
-  /**
-   * <p>One or more filters. The possible values are:</p>
-   *          <ul>
-   *             <li>
-   *                <p>
-   *                   <code>attachment.transit-gateway-attachment-id</code>- The id of the transit gateway attachment.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>attachment.resource-id</code> - The resource id of the transit gateway attachment.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>attachment.resource-type</code> - The attachment resource type. Valid values
-   *                     are <code>vpc</code> | <code>vpn</code> | <code>direct-connect-gateway</code> |
-   *                         <code>peering</code> | <code>connect</code>.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>prefix-list-id</code> - The ID of the prefix list.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>route-search.exact-match</code> - The exact match of the specified filter.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>route-search.longest-prefix-match</code> - The longest prefix that matches the route.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>route-search.subnet-of-match</code> - The routes with a subnet that match the specified CIDR filter.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>route-search.supernet-of-match</code> - The routes with a CIDR that encompass the CIDR filter. For example, if you have 10.0.1.0/29 and 10.0.1.0/31 routes in your route table and you specify supernet-of-match as 10.0.1.0/30, then the result returns 10.0.1.0/29.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>state</code> - The state of the route (<code>active</code> | <code>blackhole</code>).</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>type</code> - The type of route (<code>propagated</code> |
-   *                   <code>static</code>).</p>
-   *             </li>
-   *          </ul>
-   */
-  Filters: Filter[] | undefined;
-
-  /**
-   * <p>The maximum number of routes to return.</p>
-   */
-  MaxResults?: number;
-
-  /**
-   * <p>Checks whether you have the required permissions for the action, without actually making the request,
-   *    and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
-   *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-   */
-  DryRun?: boolean;
-}
+export const SnapshotDiskContainerFilterSensitiveLog = (obj: SnapshotDiskContainer): any => ({
+  ...obj,
+  ...(obj.Url && { Url: SENSITIVE_STRING }),
+});
 
 /**
- * @public
+ * @internal
  */
-export interface SearchTransitGatewayRoutesResult {
-  /**
-   * <p>Information about the routes.</p>
-   */
-  Routes?: TransitGatewayRoute[];
+export const ImportSnapshotRequestFilterSensitiveLog = (obj: ImportSnapshotRequest): any => ({
+  ...obj,
+  ...(obj.DiskContainer && { DiskContainer: SnapshotDiskContainerFilterSensitiveLog(obj.DiskContainer) }),
+});
 
-  /**
-   * <p>Indicates whether there are additional routes available.</p>
-   */
-  AdditionalRoutesAvailable?: boolean;
-}
+/**
+ * @internal
+ */
+export const ImportSnapshotResultFilterSensitiveLog = (obj: ImportSnapshotResult): any => ({
+  ...obj,
+  ...(obj.SnapshotTaskDetail && { SnapshotTaskDetail: SnapshotTaskDetailFilterSensitiveLog(obj.SnapshotTaskDetail) }),
+});
 
 /**
  * @internal
@@ -8626,6 +8793,56 @@ export const ModifyVerifiedAccessTrustProviderResultFilterSensitiveLog = (
   ...(obj.VerifiedAccessTrustProvider && {
     VerifiedAccessTrustProvider: VerifiedAccessTrustProviderFilterSensitiveLog(obj.VerifiedAccessTrustProvider),
   }),
+});
+
+/**
+ * @internal
+ */
+export const ModifyVpnConnectionResultFilterSensitiveLog = (obj: ModifyVpnConnectionResult): any => ({
+  ...obj,
+  ...(obj.VpnConnection && { VpnConnection: VpnConnectionFilterSensitiveLog(obj.VpnConnection) }),
+});
+
+/**
+ * @internal
+ */
+export const ModifyVpnConnectionOptionsResultFilterSensitiveLog = (obj: ModifyVpnConnectionOptionsResult): any => ({
+  ...obj,
+  ...(obj.VpnConnection && { VpnConnection: VpnConnectionFilterSensitiveLog(obj.VpnConnection) }),
+});
+
+/**
+ * @internal
+ */
+export const ModifyVpnTunnelCertificateResultFilterSensitiveLog = (obj: ModifyVpnTunnelCertificateResult): any => ({
+  ...obj,
+  ...(obj.VpnConnection && { VpnConnection: VpnConnectionFilterSensitiveLog(obj.VpnConnection) }),
+});
+
+/**
+ * @internal
+ */
+export const ModifyVpnTunnelOptionsSpecificationFilterSensitiveLog = (
+  obj: ModifyVpnTunnelOptionsSpecification
+): any => ({
+  ...obj,
+  ...(obj.PreSharedKey && { PreSharedKey: SENSITIVE_STRING }),
+});
+
+/**
+ * @internal
+ */
+export const ModifyVpnTunnelOptionsRequestFilterSensitiveLog = (obj: ModifyVpnTunnelOptionsRequest): any => ({
+  ...obj,
+  ...(obj.TunnelOptions && { TunnelOptions: SENSITIVE_STRING }),
+});
+
+/**
+ * @internal
+ */
+export const ModifyVpnTunnelOptionsResultFilterSensitiveLog = (obj: ModifyVpnTunnelOptionsResult): any => ({
+  ...obj,
+  ...(obj.VpnConnection && { VpnConnection: VpnConnectionFilterSensitiveLog(obj.VpnConnection) }),
 });
 
 /**

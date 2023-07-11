@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { M2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../M2Client";
 import { ListApplicationsRequest, ListApplicationsResponse } from "../models/models_0";
 import { de_ListApplicationsCommand, se_ListApplicationsCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -33,8 +37,8 @@ export interface ListApplicationsCommandOutput extends ListApplicationsResponse,
 /**
  * @public
  * <p>Lists the applications associated with a specific Amazon Web Services account. You can provide the
- *          unique identifier of a specific runtime environment in a query parameter to see all applications
- *          associated with that environment.</p>
+ *          unique identifier of a specific runtime environment in a query parameter to see all
+ *          applications associated with that environment.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -66,6 +70,7 @@ export interface ListApplicationsCommandOutput extends ListApplicationsResponse,
  * //       lastStartTime: new Date("TIMESTAMP"),
  * //       versionStatus: "STRING_VALUE",
  * //       deploymentStatus: "STRING_VALUE",
+ * //       roleArn: "STRING_VALUE",
  * //     },
  * //   ],
  * //   nextToken: "STRING_VALUE",

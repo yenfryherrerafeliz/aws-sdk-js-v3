@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { LightsailClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LightsailClient";
 import { GetCertificatesRequest, GetCertificatesResult } from "../models/models_0";
 import { de_GetCertificatesCommand, se_GetCertificatesCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -34,7 +38,7 @@ export interface GetCertificatesCommandOutput extends GetCertificatesResult, __M
  * @public
  * <p>Returns information about one or more Amazon Lightsail SSL/TLS certificates.</p>
  *          <note>
- *             <p>To get a summary of a certificate, ommit <code>includeCertificateDetails</code> from
+ *             <p>To get a summary of a certificate, omit <code>includeCertificateDetails</code> from
  *         your request. The response will include only the certificate Amazon Resource Name (ARN),
  *         certificate name, domain name, and tags.</p>
  *          </note>
@@ -50,6 +54,7 @@ export interface GetCertificatesCommandOutput extends GetCertificatesResult, __M
  *   ],
  *   includeCertificateDetails: true || false,
  *   certificateName: "STRING_VALUE",
+ *   pageToken: "STRING_VALUE",
  * };
  * const command = new GetCertificatesCommand(input);
  * const response = await client.send(command);
@@ -130,6 +135,7 @@ export interface GetCertificatesCommandOutput extends GetCertificatesResult, __M
  * //       ],
  * //     },
  * //   ],
+ * //   nextPageToken: "STRING_VALUE",
  * // };
  *
  * ```

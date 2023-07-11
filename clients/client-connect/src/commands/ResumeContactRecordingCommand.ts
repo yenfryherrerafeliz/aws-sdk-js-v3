@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
 import { ResumeContactRecordingRequest, ResumeContactRecordingResponse } from "../models/models_1";
 import { de_ResumeContactRecordingCommand, se_ResumeContactRecordingCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -33,8 +37,8 @@ export interface ResumeContactRecordingCommandOutput extends ResumeContactRecord
 /**
  * @public
  * <p>When a contact is being recorded, and the recording has been suspended using
- *    SuspendContactRecording, this API resumes recording the call.</p>
- *          <p>Only voice recordings are supported at this time.</p>
+ *    SuspendContactRecording, this API resumes recording the call or screen.</p>
+ *          <p>Voice and screen recordings are supported.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

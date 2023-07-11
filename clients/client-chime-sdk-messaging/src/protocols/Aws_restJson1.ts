@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectNonNull as __expectNonNull,
@@ -14,12 +15,12 @@ import {
   resolvedPath as __resolvedPath,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import {
@@ -202,6 +203,7 @@ import {
   ServiceUnavailableException,
   StreamingConfiguration,
   Tag,
+  Target,
   ThrottledClientException,
   UnauthorizedClientException,
 } from "../models/models_0";
@@ -1643,6 +1645,7 @@ export const se_SendChannelMessageCommand = async (
       Persistence: [],
       PushNotification: (_) => _json(_),
       SubChannelId: [],
+      Target: (_) => _json(_),
       Type: [],
     })
   );
@@ -5348,6 +5351,10 @@ const de_UnauthorizedClientExceptionRes = async (
 
 // se_TagList omitted.
 
+// se_Target omitted.
+
+// se_TargetList omitted.
+
 /**
  * deserializeAws_restJson1AppInstanceUserMembershipSummary
  */
@@ -5493,6 +5500,7 @@ const de_ChannelMessage = (output: any, context: __SerdeContext): ChannelMessage
     Sender: _json,
     Status: _json,
     SubChannelId: __expectString,
+    Target: _json,
     Type: __expectString,
   }) as any;
 };
@@ -5515,6 +5523,7 @@ const de_ChannelMessageSummary = (output: any, context: __SerdeContext): Channel
     Redacted: __expectBoolean,
     Sender: _json,
     Status: _json,
+    Target: _json,
     Type: __expectString,
   }) as any;
 };
@@ -5638,6 +5647,10 @@ const de_ChannelSummaryList = (output: any, context: __SerdeContext): ChannelSum
 
 // de_TagList omitted.
 
+// de_Target omitted.
+
+// de_TargetList omitted.
+
 const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   httpStatusCode: output.statusCode,
   requestId:
@@ -5645,14 +5658,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

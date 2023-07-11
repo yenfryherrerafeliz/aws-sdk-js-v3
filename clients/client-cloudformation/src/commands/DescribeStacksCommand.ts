@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { DescribeStacksInput, DescribeStacksOutput } from "../models/models_0";
 import { de_DescribeStacksCommand, se_DescribeStacksCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,8 +36,8 @@ export interface DescribeStacksCommandOutput extends DescribeStacksOutput, __Met
 
 /**
  * @public
- * <p>Returns the description for the specified stack; if no stack name was specified, then it
- *          returns the description for all the stacks created.</p>
+ * <p>Returns the description for the specified stack; if no stack name was specified, then it returns the description
+ *    for all the stacks created.</p>
  *          <note>
  *             <p>If the stack doesn't exist, an <code>ValidationError</code> is returned.</p>
  *          </note>

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { DescribeStackInstanceInput, DescribeStackInstanceOutput } from "../models/models_0";
 import { de_DescribeStackInstanceCommand, se_DescribeStackInstanceCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,8 +36,9 @@ export interface DescribeStackInstanceCommandOutput extends DescribeStackInstanc
 
 /**
  * @public
- * <p>Returns the stack instance that's associated with the specified stack set, Amazon Web Services account, and Region.</p>
- *          <p>For a list of stack instances that are associated with a specific stack set, use <a>ListStackInstances</a>.</p>
+ * <p>Returns the stack instance that's associated with the specified StackSet, Amazon Web Services account, and
+ *     Amazon Web Services Region.</p>
+ *          <p>For a list of stack instances that are associated with a specific StackSet, use <a>ListStackInstances</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -64,7 +69,7 @@ export interface DescribeStackInstanceCommandOutput extends DescribeStackInstanc
  * //     ],
  * //     Status: "CURRENT" || "OUTDATED" || "INOPERABLE",
  * //     StackInstanceStatus: { // StackInstanceComprehensiveStatus
- * //       DetailedStatus: "PENDING" || "RUNNING" || "SUCCEEDED" || "FAILED" || "CANCELLED" || "INOPERABLE",
+ * //       DetailedStatus: "PENDING" || "RUNNING" || "SUCCEEDED" || "FAILED" || "CANCELLED" || "INOPERABLE" || "SKIPPED_SUSPENDED_ACCOUNT",
  * //     },
  * //     StatusReason: "STRING_VALUE",
  * //     OrganizationalUnitId: "STRING_VALUE",

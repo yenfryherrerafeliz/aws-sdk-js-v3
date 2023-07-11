@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { IoTFleetWiseClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTFleetWiseClient";
 import { GetCampaignRequest, GetCampaignResponse } from "../models/models_0";
 import { de_GetCampaignCommand, se_GetCampaignCommand } from "../protocols/Aws_json1_0";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -81,6 +85,20 @@ export interface GetCampaignCommandOutput extends GetCampaignResponse, __Metadat
  * //   ],
  * //   creationTime: new Date("TIMESTAMP"),
  * //   lastModificationTime: new Date("TIMESTAMP"),
+ * //   dataDestinationConfigs: [ // DataDestinationConfigs
+ * //     { // DataDestinationConfig Union: only one key present
+ * //       s3Config: { // S3Config
+ * //         bucketArn: "STRING_VALUE", // required
+ * //         dataFormat: "STRING_VALUE",
+ * //         storageCompressionFormat: "STRING_VALUE",
+ * //         prefix: "STRING_VALUE",
+ * //       },
+ * //       timestreamConfig: { // TimestreamConfig
+ * //         timestreamTableArn: "STRING_VALUE", // required
+ * //         executionRoleArn: "STRING_VALUE", // required
+ * //       },
+ * //     },
+ * //   ],
  * // };
  *
  * ```

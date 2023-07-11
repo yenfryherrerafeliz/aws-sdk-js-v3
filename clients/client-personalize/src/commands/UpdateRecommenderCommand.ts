@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { UpdateRecommenderRequest, UpdateRecommenderResponse } from "../models/models_0";
 import { PersonalizeClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../PersonalizeClient";
 import { de_UpdateRecommenderCommand, se_UpdateRecommenderCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,7 +36,14 @@ export interface UpdateRecommenderCommandOutput extends UpdateRecommenderRespons
 
 /**
  * @public
- * <p>Updates the recommender to modify the recommender configuration.</p>
+ * <p>Updates the recommender to modify the recommender configuration.
+ *       If you update the recommender to modify the columns used in training, Amazon Personalize automatically starts a full retraining of
+ *       the models backing your recommender. While the update completes, you can still get recommendations from the recommender. The recommender
+ *       uses the previous configuration until the update completes.
+ *       To track the status of this update,
+ *       use the <code>latestRecommenderUpdate</code> returned in the <a href="https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeRecommender.html">DescribeRecommender</a>
+ *       operation.
+ *     </p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -46,6 +57,13 @@ export interface UpdateRecommenderCommandOutput extends UpdateRecommenderRespons
  *       "<keys>": "STRING_VALUE",
  *     },
  *     minRecommendationRequestsPerSecond: Number("int"),
+ *     trainingDataConfig: { // TrainingDataConfig
+ *       excludedDatasetColumns: { // ExcludedDatasetColumns
+ *         "<keys>": [ // ColumnNamesList
+ *           "STRING_VALUE",
+ *         ],
+ *       },
+ *     },
  *   },
  * };
  * const command = new UpdateRecommenderCommand(input);

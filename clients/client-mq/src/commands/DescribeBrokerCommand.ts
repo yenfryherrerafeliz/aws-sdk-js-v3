@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { DescribeBrokerRequest, DescribeBrokerResponse } from "../models/models_0";
 import { MqClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MqClient";
 import { de_DescribeBrokerCommand, se_DescribeBrokerCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -51,7 +55,7 @@ export interface DescribeBrokerCommandOutput extends DescribeBrokerResponse, __M
  * //       ActionRequiredInfo: "STRING_VALUE",
  * //     },
  * //   ],
- * //   AuthenticationStrategy: "STRING_VALUE",
+ * //   AuthenticationStrategy: "SIMPLE" || "LDAP",
  * //   AutoMinorVersionUpgrade: true || false,
  * //   BrokerArn: "STRING_VALUE",
  * //   BrokerId: "STRING_VALUE",
@@ -65,7 +69,7 @@ export interface DescribeBrokerCommandOutput extends DescribeBrokerResponse, __M
  * //     },
  * //   ],
  * //   BrokerName: "STRING_VALUE",
- * //   BrokerState: "STRING_VALUE",
+ * //   BrokerState: "CREATION_IN_PROGRESS" || "CREATION_FAILED" || "DELETION_IN_PROGRESS" || "RUNNING" || "REBOOT_IN_PROGRESS" || "CRITICAL_ACTION_REQUIRED" || "REPLICA",
  * //   Configurations: { // Configurations
  * //     Current: { // ConfigurationId
  * //       Id: "STRING_VALUE", // required
@@ -83,12 +87,12 @@ export interface DescribeBrokerCommandOutput extends DescribeBrokerResponse, __M
  * //     },
  * //   },
  * //   Created: new Date("TIMESTAMP"),
- * //   DeploymentMode: "STRING_VALUE",
+ * //   DeploymentMode: "SINGLE_INSTANCE" || "ACTIVE_STANDBY_MULTI_AZ" || "CLUSTER_MULTI_AZ",
  * //   EncryptionOptions: { // EncryptionOptions
  * //     KmsKeyId: "STRING_VALUE",
  * //     UseAwsOwnedKey: true || false, // required
  * //   },
- * //   EngineType: "STRING_VALUE",
+ * //   EngineType: "ACTIVEMQ" || "RABBITMQ",
  * //   EngineVersion: "STRING_VALUE",
  * //   HostInstanceType: "STRING_VALUE",
  * //   LdapServerMetadata: { // LdapServerMetadataOutput
@@ -116,11 +120,11 @@ export interface DescribeBrokerCommandOutput extends DescribeBrokerResponse, __M
  * //     },
  * //   },
  * //   MaintenanceWindowStartTime: { // WeeklyStartTime
- * //     DayOfWeek: "STRING_VALUE", // required
+ * //     DayOfWeek: "MONDAY" || "TUESDAY" || "WEDNESDAY" || "THURSDAY" || "FRIDAY" || "SATURDAY" || "SUNDAY", // required
  * //     TimeOfDay: "STRING_VALUE", // required
  * //     TimeZone: "STRING_VALUE",
  * //   },
- * //   PendingAuthenticationStrategy: "STRING_VALUE",
+ * //   PendingAuthenticationStrategy: "SIMPLE" || "LDAP",
  * //   PendingEngineVersion: "STRING_VALUE",
  * //   PendingHostInstanceType: "STRING_VALUE",
  * //   PendingLdapServerMetadata: {
@@ -140,17 +144,33 @@ export interface DescribeBrokerCommandOutput extends DescribeBrokerResponse, __M
  * //   PendingSecurityGroups: "<__listOf__string>",
  * //   PubliclyAccessible: true || false,
  * //   SecurityGroups: "<__listOf__string>",
- * //   StorageType: "STRING_VALUE",
+ * //   StorageType: "EBS" || "EFS",
  * //   SubnetIds: "<__listOf__string>",
  * //   Tags: { // __mapOf__string
  * //     "<keys>": "STRING_VALUE",
  * //   },
  * //   Users: [ // __listOfUserSummary
  * //     { // UserSummary
- * //       PendingChange: "STRING_VALUE",
+ * //       PendingChange: "CREATE" || "UPDATE" || "DELETE",
  * //       Username: "STRING_VALUE", // required
  * //     },
  * //   ],
+ * //   DataReplicationMetadata: { // DataReplicationMetadataOutput
+ * //     DataReplicationCounterpart: { // DataReplicationCounterpart
+ * //       BrokerId: "STRING_VALUE", // required
+ * //       Region: "STRING_VALUE", // required
+ * //     },
+ * //     DataReplicationRole: "STRING_VALUE", // required
+ * //   },
+ * //   DataReplicationMode: "NONE" || "CRDR",
+ * //   PendingDataReplicationMetadata: {
+ * //     DataReplicationCounterpart: {
+ * //       BrokerId: "STRING_VALUE", // required
+ * //       Region: "STRING_VALUE", // required
+ * //     },
+ * //     DataReplicationRole: "STRING_VALUE", // required
+ * //   },
+ * //   PendingDataReplicationMode: "NONE" || "CRDR",
  * // };
  *
  * ```

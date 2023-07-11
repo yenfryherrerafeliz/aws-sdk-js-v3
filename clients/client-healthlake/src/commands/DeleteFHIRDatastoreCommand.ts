@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { HealthLakeClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../HealthLakeClient";
 import { DeleteFHIRDatastoreRequest, DeleteFHIRDatastoreResponse } from "../models/models_0";
 import { de_DeleteFHIRDatastoreCommand, se_DeleteFHIRDatastoreCommand } from "../protocols/Aws_json1_0";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -40,14 +44,14 @@ export interface DeleteFHIRDatastoreCommandOutput extends DeleteFHIRDatastoreRes
  * // const { HealthLakeClient, DeleteFHIRDatastoreCommand } = require("@aws-sdk/client-healthlake"); // CommonJS import
  * const client = new HealthLakeClient(config);
  * const input = { // DeleteFHIRDatastoreRequest
- *   DatastoreId: "STRING_VALUE",
+ *   DatastoreId: "STRING_VALUE", // required
  * };
  * const command = new DeleteFHIRDatastoreCommand(input);
  * const response = await client.send(command);
  * // { // DeleteFHIRDatastoreResponse
  * //   DatastoreId: "STRING_VALUE", // required
  * //   DatastoreArn: "STRING_VALUE", // required
- * //   DatastoreStatus: "STRING_VALUE", // required
+ * //   DatastoreStatus: "CREATING" || "ACTIVE" || "DELETING" || "DELETED", // required
  * //   DatastoreEndpoint: "STRING_VALUE", // required
  * // };
  *

@@ -1,6 +1,6 @@
 // smithy-typescript generated code
-import { createAggregatedClient } from "@aws-sdk/smithy-client";
-import { HttpHandlerOptions as __HttpHandlerOptions } from "@aws-sdk/types";
+import { createAggregatedClient } from "@smithy/smithy-client";
+import { HttpHandlerOptions as __HttpHandlerOptions } from "@smithy/types";
 
 import { ApplicationAutoScalingClient, ApplicationAutoScalingClientConfig } from "./ApplicationAutoScalingClient";
 import {
@@ -334,6 +334,9 @@ export interface ApplicationAutoScaling {
  *                <p>Amazon SageMaker endpoint variants</p>
  *             </li>
  *             <li>
+ *                <p>Amazon SageMaker Serverless endpoint provisioned concurrency</p>
+ *             </li>
+ *             <li>
  *                <p>Spot Fleets (Amazon EC2)</p>
  *             </li>
  *             <li>
@@ -341,7 +344,7 @@ export interface ApplicationAutoScaling {
  *             </li>
  *          </ul>
  *          <p>To learn more about Application Auto Scaling, see the <a href="https://docs.aws.amazon.com/autoscaling/application/userguide/what-is-application-auto-scaling.html">Application Auto Scaling User
- *       Guide</a>.</p>
+ *         Guide</a>.</p>
  *          <p>
  *             <b>API Summary</b>
  *          </p>

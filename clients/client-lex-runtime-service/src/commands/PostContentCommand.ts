@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -14,7 +14,7 @@ import {
   SdkStreamSerdeContext as __SdkStreamSerdeContext,
   SerdeContext as __SerdeContext,
   WithSdkStreamMixin as __WithSdkStreamMixin,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   LexRuntimeServiceClientResolvedConfig,
@@ -31,9 +31,8 @@ import { de_PostContentCommand, se_PostContentCommand } from "../protocols/Aws_r
 
 /**
  * @public
- *
- * The input for {@link PostContentCommand}.
  */
+export { __MetadataBearer, $Command };
 export type PostContentCommandInputType = Omit<PostContentRequest, "inputStream"> & {
   /**
    * For *`PostContentRequest["inputStream"]`*, see {@link PostContentRequest.inputStream}.
@@ -41,7 +40,9 @@ export type PostContentCommandInputType = Omit<PostContentRequest, "inputStream"
   inputStream: PostContentRequest["inputStream"] | string | Uint8Array | Buffer;
 };
 /**
- * This interface extends from `PostContentRequest` interface. There are more parameters than `inputStream` defined in {@link PostContentRequest}
+ * @public
+ *
+ * The input for {@link PostContentCommand}.
  */
 export interface PostContentCommandInput extends PostContentCommandInputType {}
 /**

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { FSxClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FSxClient";
 import {
@@ -23,6 +23,10 @@ import {
   se_DescribeDataRepositoryAssociationsCommand,
 } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -43,8 +47,8 @@ export interface DescribeDataRepositoryAssociationsCommandOutput
  * <p>Returns the description of specific Amazon FSx for Lustre or Amazon File Cache
  *             data repository associations, if one or more <code>AssociationIds</code> values
  *             are provided in the request, or if filters are used in the request. Data repository
- *             associations are supported on Amazon File Cache resources and all Amazon FSx for
- *             Lustre file systems excluding <code>Scratch_1</code> deployment types.</p>
+ *             associations are supported on Amazon File Cache resources and all FSx for Lustre
+ *             2.12 and newer file systems, excluding <code>scratch_1</code> deployment type.</p>
  *          <p>You can use filters to narrow the response to include just data repository
  *             associations for specific file systems (use the <code>file-system-id</code> filter with
  *             the ID of the file system) or caches (use the <code>file-cache-id</code> filter with

@@ -1,6 +1,6 @@
 // smithy-typescript generated code
-import { createAggregatedClient } from "@aws-sdk/smithy-client";
-import { HttpHandlerOptions as __HttpHandlerOptions } from "@aws-sdk/types";
+import { createAggregatedClient } from "@smithy/smithy-client";
+import { HttpHandlerOptions as __HttpHandlerOptions } from "@smithy/types";
 
 import {
   AssociateWebACLCommand,
@@ -64,6 +64,16 @@ import {
   DeleteWebACLCommandInput,
   DeleteWebACLCommandOutput,
 } from "./commands/DeleteWebACLCommand";
+import {
+  DescribeAllManagedProductsCommand,
+  DescribeAllManagedProductsCommandInput,
+  DescribeAllManagedProductsCommandOutput,
+} from "./commands/DescribeAllManagedProductsCommand";
+import {
+  DescribeManagedProductsByVendorCommand,
+  DescribeManagedProductsByVendorCommandInput,
+  DescribeManagedProductsByVendorCommandOutput,
+} from "./commands/DescribeManagedProductsByVendorCommand";
 import {
   DescribeManagedRuleGroupCommand,
   DescribeManagedRuleGroupCommandInput,
@@ -238,6 +248,8 @@ const commands = {
   DeleteRegexPatternSetCommand,
   DeleteRuleGroupCommand,
   DeleteWebACLCommand,
+  DescribeAllManagedProductsCommand,
+  DescribeManagedProductsByVendorCommand,
   DescribeManagedRuleGroupCommand,
   DisassociateWebACLCommand,
   GenerateMobileSdkReleaseUrlCommand,
@@ -469,6 +481,40 @@ export interface WAFV2 {
     args: DeleteWebACLCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: DeleteWebACLCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link DescribeAllManagedProductsCommand}
+   */
+  describeAllManagedProducts(
+    args: DescribeAllManagedProductsCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<DescribeAllManagedProductsCommandOutput>;
+  describeAllManagedProducts(
+    args: DescribeAllManagedProductsCommandInput,
+    cb: (err: any, data?: DescribeAllManagedProductsCommandOutput) => void
+  ): void;
+  describeAllManagedProducts(
+    args: DescribeAllManagedProductsCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: DescribeAllManagedProductsCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link DescribeManagedProductsByVendorCommand}
+   */
+  describeManagedProductsByVendor(
+    args: DescribeManagedProductsByVendorCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<DescribeManagedProductsByVendorCommandOutput>;
+  describeManagedProductsByVendor(
+    args: DescribeManagedProductsByVendorCommandInput,
+    cb: (err: any, data?: DescribeManagedProductsByVendorCommandOutput) => void
+  ): void;
+  describeManagedProductsByVendor(
+    args: DescribeManagedProductsByVendorCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: DescribeManagedProductsByVendorCommandOutput) => void
   ): void;
 
   /**

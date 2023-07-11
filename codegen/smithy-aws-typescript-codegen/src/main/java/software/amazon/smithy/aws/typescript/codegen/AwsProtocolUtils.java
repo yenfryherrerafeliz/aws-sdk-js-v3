@@ -38,6 +38,7 @@ import software.amazon.smithy.model.traits.XmlNamespaceTrait;
 import software.amazon.smithy.protocoltests.traits.HttpMalformedRequestTestCase;
 import software.amazon.smithy.protocoltests.traits.HttpMessageTestCase;
 import software.amazon.smithy.typescript.codegen.HttpProtocolTestGenerator;
+import software.amazon.smithy.typescript.codegen.TypeScriptDependency;
 import software.amazon.smithy.typescript.codegen.TypeScriptSettings;
 import software.amazon.smithy.typescript.codegen.TypeScriptWriter;
 import software.amazon.smithy.typescript.codegen.integration.HttpProtocolGeneratorUtils;
@@ -108,7 +109,7 @@ final class AwsProtocolUtils {
         TypeScriptWriter writer = context.getWriter();
 
         // Include a JSON body parser used to deserialize documents from HTTP responses.
-        writer.addImport("SerdeContext", "__SerdeContext", "@aws-sdk/types");
+        writer.addImport("SerdeContext", "__SerdeContext", TypeScriptDependency.SMITHY_TYPES);
         writer.openBlock("const parseBody = (streamBody: any, context: __SerdeContext): "
                 + "any => collectBodyString(streamBody, context).then(encoded => {", "});", () -> {
                     writer.openBlock("if (encoded.length) {", "}", () -> {
@@ -122,7 +123,7 @@ final class AwsProtocolUtils {
 
     static void generateJsonParseBodyWithQueryHeader(GenerationContext context) {
         TypeScriptWriter writer = context.getWriter();
-        writer.addImport("HeaderBag", "__HeaderBag", "@aws-sdk/types");
+        writer.addImport("HeaderBag", "__HeaderBag", TypeScriptDependency.SMITHY_TYPES);
         writer.write(IoUtils.readUtf8Resource(
                 AwsProtocolUtils.class, "populate-body-with-query-compatibility-code-stub.ts"));
     }
@@ -137,7 +138,7 @@ final class AwsProtocolUtils {
         TypeScriptWriter writer = context.getWriter();
 
         // Include a JSON body parser used to deserialize documents from HTTP responses.
-        writer.addImport("SerdeContext", "__SerdeContext", "@aws-sdk/types");
+        writer.addImport("SerdeContext", "__SerdeContext", TypeScriptDependency.SMITHY_TYPES);
         writer.openBlock("const parseErrorBody = async (errorBody: any, context: __SerdeContext) => {",
             "}", () -> {
                 writer.write("const value = await parseBody(errorBody, context);");
@@ -158,8 +159,8 @@ final class AwsProtocolUtils {
         TypeScriptWriter writer = context.getWriter();
 
         // Include an XML body parser used to deserialize documents from HTTP responses.
-        writer.addImport("SerdeContext", "__SerdeContext", "@aws-sdk/types");
-        writer.addImport("getValueFromTextNode", "__getValueFromTextNode", "@aws-sdk/smithy-client");
+        writer.addImport("SerdeContext", "__SerdeContext", TypeScriptDependency.SMITHY_TYPES);
+        writer.addImport("getValueFromTextNode", "__getValueFromTextNode", TypeScriptDependency.AWS_SMITHY_CLIENT);
         writer.addDependency(AwsDependency.XML_PARSER);
         writer.addImport("XMLParser", null, "fast-xml-parser");
         writer.openBlock("const parseBody = (streamBody: any, context: __SerdeContext): "
@@ -169,7 +170,7 @@ final class AwsProtocolUtils {
                         // Parser would be moved to runtime config in https://github.com/aws/aws-sdk-js-v3/issues/3979
                         writer.write("const parser = new XMLParser({ attributeNamePrefix: '', htmlEntities: true, "
                             + "ignoreAttributes: false, ignoreDeclaration: true, parseTagValue: false, "
-                            + "trimValues: false, tagValueProcessor: (_, val) => "
+                            + "trimValues: false, tagValueProcessor: (_: any, val: any) => "
                             + "(val.trim() === '' && val.includes('\\n')) ? '': undefined });");
                         writer.write("parser.addEntity('#xD', '\\r');");
                         writer.write("parser.addEntity('#10', '\\n');");
@@ -198,7 +199,7 @@ final class AwsProtocolUtils {
         TypeScriptWriter writer = context.getWriter();
 
         // Include a JSON body parser used to deserialize documents from HTTP responses.
-        writer.addImport("SerdeContext", "__SerdeContext", "@aws-sdk/types");
+        writer.addImport("SerdeContext", "__SerdeContext", TypeScriptDependency.SMITHY_TYPES);
         writer.openBlock("const parseErrorBody = async (errorBody: any, context: __SerdeContext) => {",
             "}", () -> {
                 writer.write("const value = await parseBody(errorBody, context);");
@@ -222,7 +223,8 @@ final class AwsProtocolUtils {
         TypeScriptWriter writer = context.getWriter();
 
         // Write a single function to handle combining a map in to a valid query string.
-        writer.addImport("extendedEncodeURIComponent", "__extendedEncodeURIComponent", "@aws-sdk/smithy-client");
+        writer.addImport("extendedEncodeURIComponent", "__extendedEncodeURIComponent",
+            TypeScriptDependency.AWS_SMITHY_CLIENT);
         writer.openBlock("const buildFormUrlencodedString = (formEntries: Record<string, string>): "
                 + "string => Object.entries(formEntries).map(", ").join(\"&\");",
                 () -> writer.write("([key, value]) => __extendedEncodeURIComponent(key) + '=' + "
@@ -359,6 +361,13 @@ final class AwsProtocolUtils {
         // https://github.com/awslabs/smithy-typescript/issues/470
         if (testCase.getId().equals("RestJsonTestPayloadStructure")
             || testCase.getId().equals("RestJsonHttpWithHeadersButNoPayload")) {
+            return true;
+        }
+
+        // TODO: Remove when requestCompression has been implemented.
+        if (testCase.getId().startsWith("SDKAppliedContentEncoding_")
+            || testCase.getId().startsWith("SDKAppendsGzipAndIgnoresHttpProvidedEncoding_")
+            || testCase.getId().startsWith("SDKAppendedGzipAfterProvidedEncoding_")) {
             return true;
         }
 

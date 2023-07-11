@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudTrailClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudTrailClient";
 import { UpdateEventDataStoreRequest, UpdateEventDataStoreResponse } from "../models/models_0";
 import { de_UpdateEventDataStoreCommand, se_UpdateEventDataStoreCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -39,10 +43,10 @@ export interface UpdateEventDataStoreCommandOutput extends UpdateEventDataStoreR
  *          2557. By default, <code>TerminationProtection</code> is enabled.</p>
  *          <p>For event data stores for CloudTrail events, <code>AdvancedEventSelectors</code>
  *          includes or excludes management and data events in your event data store. For more
- *          information about <code>AdvancedEventSelectors</code>, see <a>PutEventSelectorsRequest$AdvancedEventSelectors</a>. </p>
+ *          information about <code>AdvancedEventSelectors</code>, see
+ *          <a href="https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_AdvancedEventSelector.html">AdvancedEventSelectors</a>.</p>
  *          <p> For event data stores for Config configuration items, Audit Manager evidence, or non-Amazon Web Services events,
- *             <code>AdvancedEventSelectors</code> includes events of that type in your event data
- *          store.</p>
+ *             <code>AdvancedEventSelectors</code> includes events of that type in your event data store.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -89,7 +93,7 @@ export interface UpdateEventDataStoreCommandOutput extends UpdateEventDataStoreR
  * // { // UpdateEventDataStoreResponse
  * //   EventDataStoreArn: "STRING_VALUE",
  * //   Name: "STRING_VALUE",
- * //   Status: "CREATED" || "ENABLED" || "PENDING_DELETION",
+ * //   Status: "CREATED" || "ENABLED" || "PENDING_DELETION" || "STARTING_INGESTION" || "STOPPING_INGESTION" || "STOPPED_INGESTION",
  * //   AdvancedEventSelectors: [ // AdvancedEventSelectors
  * //     { // AdvancedEventSelector
  * //       Name: "STRING_VALUE",
@@ -136,6 +140,9 @@ export interface UpdateEventDataStoreCommandOutput extends UpdateEventDataStoreR
  * @throws {@link CloudTrailAccessNotEnabledException} (client fault)
  *  <p>This exception is thrown when trusted access has not been enabled between CloudTrail and Organizations. For more information, see <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html">Enabling Trusted Access with Other Amazon Web Services Services</a> and <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-an-organizational-trail-prepare.html">Prepare For Creating a Trail For Your Organization</a>. </p>
  *
+ * @throws {@link EventDataStoreAlreadyExistsException} (client fault)
+ *  <p>An event data store with that name already exists.</p>
+ *
  * @throws {@link EventDataStoreARNInvalidException} (client fault)
  *  <p>The specified event data store ARN is not valid or does not map to an event data store
  *          in your account.</p>
@@ -151,7 +158,7 @@ export interface UpdateEventDataStoreCommandOutput extends UpdateEventDataStoreR
  *  <p>The event data store is inactive.</p>
  *
  * @throws {@link InsufficientDependencyServiceAccessPermissionException} (client fault)
- *  <p>This exception is thrown when the IAM user or role that is used to create
+ *  <p>This exception is thrown when the IAM identity that is used to create
  *          the organization resource lacks one or more required permissions for creating an
  *          organization resource in a required service.</p>
  *
@@ -201,8 +208,8 @@ export interface UpdateEventDataStoreCommandOutput extends UpdateEventDataStoreR
  *
  * @throws {@link KmsKeyNotFoundException} (client fault)
  *  <p>This exception is thrown when the KMS key does not exist, when the S3
- *          bucket and the KMS key are not in the same region, or when the KMS key associated with the Amazon SNS topic either does not exist or is
- *          not in the same region.</p>
+ *          bucket and the KMS key are not in the same Region, or when the KMS key associated with the Amazon SNS topic either does not exist or is
+ *          not in the same Region.</p>
  *
  * @throws {@link NoManagementAccountSLRExistsException} (client fault)
  *  <p> This exception is thrown when the management account does not have a service-linked

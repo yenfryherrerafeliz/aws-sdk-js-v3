@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
 import { GetMetricDataV2Request, GetMetricDataV2Response } from "../models/models_1";
 import { de_GetMetricDataV2Command, se_GetMetricDataV2Command } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -37,12 +41,11 @@ export interface GetMetricDataV2CommandOutput extends GetMetricDataV2Response, _
  *             <code>GetMetricDataV2</code> offers more features than <a href="https://docs.aws.amazon.com/connect/latest/APIReference/API_GetMetricData.html">GetMetricData</a>, the previous
  *    version of this API. It has new metrics, offers filtering at a metric level, and offers the
  *    ability to filter and group data by channels, queues, routing profiles, agents, and agent
- *    hierarchy levels. It can retrieve historical data for the last 14 days, in 24-hour
+ *    hierarchy levels. It can retrieve historical data for the last 35 days, in 24-hour
  *    intervals.</p>
  *          <p>For a description of the historical metrics that are supported by
  *     <code>GetMetricDataV2</code> and <code>GetMetricData</code>, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/historical-metrics-definitions.html">Historical metrics
- *     definitions</a> in the <i>Amazon Connect Administrator's Guide</i>. </p>
- *          <p>This API is not available in the Amazon Web Services GovCloud (US) Regions.</p>
+ *     definitions</a> in the <i>Amazon Connect Administrator's Guide</i>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

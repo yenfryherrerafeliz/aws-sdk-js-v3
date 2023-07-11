@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ChimeSDKIdentityClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ChimeSDKIdentityClient";
 import {
@@ -21,6 +21,10 @@ import {
 } from "../models/models_0";
 import { de_CreateAppInstanceBotCommand, se_CreateAppInstanceBotCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -57,7 +61,11 @@ export interface CreateAppInstanceBotCommandOutput extends CreateAppInstanceBotR
  *   ],
  *   Configuration: { // Configuration
  *     Lex: { // LexConfiguration
- *       RespondsTo: "STANDARD_MESSAGES", // required
+ *       RespondsTo: "STANDARD_MESSAGES",
+ *       InvokedBy: { // InvokedBy
+ *         StandardMessages: "AUTO" || "ALL" || "MENTIONS" || "NONE", // required
+ *         TargetedMessages: "ALL" || "NONE", // required
+ *       },
  *       LexBotAliasArn: "STRING_VALUE", // required
  *       LocaleId: "STRING_VALUE", // required
  *       WelcomeIntent: "STRING_VALUE",

@@ -2,9 +2,6 @@
 
 # @aws-sdk/aws-protocoltests-json-10
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/aws-protocoltests-json-10/latest.svg)](https://www.npmjs.com/package/@aws-sdk/aws-protocoltests-json-10)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/aws-protocoltests-json-10.svg)](https://www.npmjs.com/package/@aws-sdk/aws-protocoltests-json-10)
-
 ## Description
 
 AWS SDK for JavaScript JSONRPC10 Client for Node.js, Browser and React Native.
@@ -286,6 +283,14 @@ NoInputAndOutput
 </details>
 <details>
 <summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandoutput.html)
+
+</details>
+<details>
+<summary>
 QueryIdempotencyTokenAutoFill
 </summary>
 
@@ -510,6 +515,14 @@ PutAndGetInlineDocuments
 </details>
 <details>
 <summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandoutput.html)
+
+</details>
+<details>
+<summary>
 SimpleScalarProperties
 </summary>
 
@@ -578,6 +591,14 @@ NoInputAndOutput
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/classes/noinputandoutputcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/noinputandoutputcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/noinputandoutputcommandoutput.html)
+
+</details>
+<details>
+<summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandoutput.html)
 
 </details>
 <details>
@@ -706,6 +727,14 @@ NoInputAndOutput
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/classes/noinputandoutputcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/noinputandoutputcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/noinputandoutputcommandoutput.html)
+
+</details>
+<details>
+<summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandoutput.html)
 
 </details>
 <details>
@@ -1470,6 +1499,14 @@ PostUnionWithJsonName
 </details>
 <details>
 <summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandoutput.html)
+
+</details>
+<details>
+<summary>
 QueryIdempotencyTokenAutoFill
 </summary>
 
@@ -1974,6 +2011,14 @@ OmitsNullSerializesEmptyString
 </details>
 <details>
 <summary>
+PutWithContentEncoding
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/classes/putwithcontentencodingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/putwithcontentencodingcommandoutput.html)
+
+</details>
+<details>
+<summary>
 QueryIdempotencyTokenAutoFill
 </summary>
 
@@ -2178,6 +2223,14 @@ Predict
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/classes/predictcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/predictcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/predictcommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteObjectTagging
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/classes/deleteobjecttaggingcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/deleteobjecttaggingcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-json-rpc-10/interfaces/deleteobjecttaggingcommandoutput.html)
 
 </details>
 <details>

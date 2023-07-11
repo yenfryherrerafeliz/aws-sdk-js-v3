@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { GlueClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GlueClient";
 import { BatchGetWorkflowsRequest, BatchGetWorkflowsResponse } from "../models/models_0";
 import { de_BatchGetWorkflowsCommand, se_BatchGetWorkflowsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -151,7 +155,7 @@ export interface BatchGetWorkflowsCommandOutput extends BatchGetWorkflowsRespons
  * //                     ExecutionTime: Number("int"),
  * //                     Timeout: Number("int"),
  * //                     MaxCapacity: Number("double"),
- * //                     WorkerType: "Standard" || "G.1X" || "G.2X" || "G.025X",
+ * //                     WorkerType: "Standard" || "G.1X" || "G.2X" || "G.025X" || "G.4X" || "G.8X" || "Z.2X",
  * //                     NumberOfWorkers: Number("int"),
  * //                     SecurityConfiguration: "STRING_VALUE",
  * //                     LogGroupName: "STRING_VALUE",
@@ -261,7 +265,7 @@ export interface BatchGetWorkflowsCommandOutput extends BatchGetWorkflowsRespons
  * //                   ExecutionTime: Number("int"),
  * //                   Timeout: Number("int"),
  * //                   MaxCapacity: Number("double"),
- * //                   WorkerType: "Standard" || "G.1X" || "G.2X" || "G.025X",
+ * //                   WorkerType: "Standard" || "G.1X" || "G.2X" || "G.025X" || "G.4X" || "G.8X" || "Z.2X",
  * //                   NumberOfWorkers: Number("int"),
  * //                   SecurityConfiguration: "STRING_VALUE",
  * //                   LogGroupName: "STRING_VALUE",

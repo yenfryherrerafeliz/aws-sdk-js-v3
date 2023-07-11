@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
 import { RestoreAddressToClassicRequest, RestoreAddressToClassicResult } from "../models/models_6";
 import { de_RestoreAddressToClassicCommand, se_RestoreAddressToClassicCommand } from "../protocols/Aws_ec2";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,10 +36,10 @@ export interface RestoreAddressToClassicCommandOutput extends RestoreAddressToCl
 
 /**
  * @public
- * <p>Restores an Elastic IP address that was previously moved to the EC2-VPC platform back to the EC2-Classic platform. You cannot move an Elastic IP address that was originally allocated for use in EC2-VPC. The Elastic IP address must not be associated with an instance or network interface.</p>
- *          <note>
- *             <p>We are retiring EC2-Classic. We recommend that you migrate from EC2-Classic to a VPC. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-migrate.html">Migrate from EC2-Classic to a VPC</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
+ * <note>
+ *             <p>This action is deprecated.</p>
  *          </note>
+ *          <p>Restores an Elastic IP address that was previously moved to the EC2-VPC platform back to the EC2-Classic platform. You cannot move an Elastic IP address that was originally allocated for use in EC2-VPC. The Elastic IP address must not be associated with an instance or network interface.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -63,23 +67,6 @@ export interface RestoreAddressToClassicCommandOutput extends RestoreAddressToCl
  *
  * @throws {@link EC2ServiceException}
  * <p>Base exception class for all service exceptions from EC2 service.</p>
- *
- * @example To restore an address to EC2-Classic
- * ```javascript
- * // This example restores the specified Elastic IP address to the EC2-Classic platform.
- * const input = {
- *   "PublicIp": "198.51.100.0"
- * };
- * const command = new RestoreAddressToClassicCommand(input);
- * const response = await client.send(command);
- * /* response ==
- * {
- *   "PublicIp": "198.51.100.0",
- *   "Status": "MoveInProgress"
- * }
- * *\/
- * // example id: ec2-restore-address-to-classic-1
- * ```
  *
  */
 export class RestoreAddressToClassicCommand extends $Command<

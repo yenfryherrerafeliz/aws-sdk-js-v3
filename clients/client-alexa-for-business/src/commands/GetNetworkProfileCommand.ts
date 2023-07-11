@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AlexaForBusinessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AlexaForBusinessClient";
 import {
@@ -21,6 +21,10 @@ import {
 } from "../models/models_0";
 import { de_GetNetworkProfileCommand, se_GetNetworkProfileCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,6 +40,8 @@ export interface GetNetworkProfileCommandOutput extends GetNetworkProfileRespons
 
 /**
  * @public
+ * @deprecated
+ *
  * <p>Gets the network profile details by the network profile ARN.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -54,8 +60,8 @@ export interface GetNetworkProfileCommandOutput extends GetNetworkProfileRespons
  * //     NetworkProfileName: "STRING_VALUE",
  * //     Description: "STRING_VALUE",
  * //     Ssid: "STRING_VALUE",
- * //     SecurityType: "STRING_VALUE",
- * //     EapMethod: "STRING_VALUE",
+ * //     SecurityType: "OPEN" || "WEP" || "WPA_PSK" || "WPA2_PSK" || "WPA2_ENTERPRISE",
+ * //     EapMethod: "EAP_TLS",
  * //     CurrentPassword: "STRING_VALUE",
  * //     NextPassword: "STRING_VALUE",
  * //     CertificateAuthorityArn: "STRING_VALUE",

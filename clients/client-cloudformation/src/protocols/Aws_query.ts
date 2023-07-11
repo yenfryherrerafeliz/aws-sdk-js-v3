@@ -1,6 +1,7 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectNonNull as __expectNonNull,
   expectString as __expectString,
@@ -11,16 +12,20 @@ import {
   parseRfc3339DateTimeWithOffset as __parseRfc3339DateTimeWithOffset,
   strictParseInt32 as __strictParseInt32,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { XMLParser } from "fast-xml-parser";
 import { v4 as generateIdempotencyToken } from "uuid";
 
+import {
+  ActivateOrganizationsAccessCommandInput,
+  ActivateOrganizationsAccessCommandOutput,
+} from "../commands/ActivateOrganizationsAccessCommand";
 import { ActivateTypeCommandInput, ActivateTypeCommandOutput } from "../commands/ActivateTypeCommand";
 import {
   BatchDescribeTypeConfigurationsCommandInput,
@@ -38,6 +43,10 @@ import {
   CreateStackInstancesCommandOutput,
 } from "../commands/CreateStackInstancesCommand";
 import { CreateStackSetCommandInput, CreateStackSetCommandOutput } from "../commands/CreateStackSetCommand";
+import {
+  DeactivateOrganizationsAccessCommandInput,
+  DeactivateOrganizationsAccessCommandOutput,
+} from "../commands/DeactivateOrganizationsAccessCommand";
 import { DeactivateTypeCommandInput, DeactivateTypeCommandOutput } from "../commands/DeactivateTypeCommand";
 import { DeleteChangeSetCommandInput, DeleteChangeSetCommandOutput } from "../commands/DeleteChangeSetCommand";
 import { DeleteStackCommandInput, DeleteStackCommandOutput } from "../commands/DeleteStackCommand";
@@ -56,6 +65,10 @@ import {
   DescribeChangeSetHooksCommandInput,
   DescribeChangeSetHooksCommandOutput,
 } from "../commands/DescribeChangeSetHooksCommand";
+import {
+  DescribeOrganizationsAccessCommandInput,
+  DescribeOrganizationsAccessCommandOutput,
+} from "../commands/DescribeOrganizationsAccessCommand";
 import { DescribePublisherCommandInput, DescribePublisherCommandOutput } from "../commands/DescribePublisherCommand";
 import {
   DescribeStackDriftDetectionStatusCommandInput,
@@ -172,6 +185,8 @@ import { CloudFormationServiceException as __BaseException } from "../models/Clo
 import {
   AccountGateResult,
   AccountLimit,
+  ActivateOrganizationsAccessInput,
+  ActivateOrganizationsAccessOutput,
   ActivateTypeInput,
   ActivateTypeOutput,
   AlreadyExistsException,
@@ -199,6 +214,8 @@ import {
   CreateStackOutput,
   CreateStackSetInput,
   CreateStackSetOutput,
+  DeactivateOrganizationsAccessInput,
+  DeactivateOrganizationsAccessOutput,
   DeactivateTypeInput,
   DeactivateTypeOutput,
   DeleteChangeSetInput,
@@ -217,6 +234,8 @@ import {
   DescribeChangeSetHooksOutput,
   DescribeChangeSetInput,
   DescribeChangeSetOutput,
+  DescribeOrganizationsAccessInput,
+  DescribeOrganizationsAccessOutput,
   DescribePublisherInput,
   DescribePublisherOutput,
   DescribeStackDriftDetectionStatusInput,
@@ -387,6 +406,23 @@ import {
 } from "../models/models_0";
 
 /**
+ * serializeAws_queryActivateOrganizationsAccessCommand
+ */
+export const se_ActivateOrganizationsAccessCommand = async (
+  input: ActivateOrganizationsAccessCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_ActivateOrganizationsAccessInput(input, context),
+    Action: "ActivateOrganizationsAccess",
+    Version: "2010-05-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
  * serializeAws_queryActivateTypeCommand
  */
 export const se_ActivateTypeCommand = async (
@@ -517,6 +553,23 @@ export const se_CreateStackSetCommand = async (
   body = buildFormUrlencodedString({
     ...se_CreateStackSetInput(input, context),
     Action: "CreateStackSet",
+    Version: "2010-05-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_queryDeactivateOrganizationsAccessCommand
+ */
+export const se_DeactivateOrganizationsAccessCommand = async (
+  input: DeactivateOrganizationsAccessCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_DeactivateOrganizationsAccessInput(input, context),
+    Action: "DeactivateOrganizationsAccess",
     Version: "2010-05-15",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -670,6 +723,23 @@ export const se_DescribeChangeSetHooksCommand = async (
   body = buildFormUrlencodedString({
     ...se_DescribeChangeSetHooksInput(input, context),
     Action: "DescribeChangeSetHooks",
+    Version: "2010-05-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_queryDescribeOrganizationsAccessCommand
+ */
+export const se_DescribeOrganizationsAccessCommand = async (
+  input: DescribeOrganizationsAccessCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_DescribeOrganizationsAccessInput(input, context),
+    Action: "DescribeOrganizationsAccess",
     Version: "2010-05-15",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -1509,6 +1579,55 @@ export const se_ValidateTemplateCommand = async (
 };
 
 /**
+ * deserializeAws_queryActivateOrganizationsAccessCommand
+ */
+export const de_ActivateOrganizationsAccessCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ActivateOrganizationsAccessCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_ActivateOrganizationsAccessCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_ActivateOrganizationsAccessOutput(data.ActivateOrganizationsAccessResult, context);
+  const response: ActivateOrganizationsAccessCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryActivateOrganizationsAccessCommandError
+ */
+const de_ActivateOrganizationsAccessCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ActivateOrganizationsAccessCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InvalidOperationException":
+    case "com.amazonaws.cloudformation#InvalidOperationException":
+      throw await de_InvalidOperationExceptionRes(parsedOutput, context);
+    case "OperationNotFoundException":
+    case "com.amazonaws.cloudformation#OperationNotFoundException":
+      throw await de_OperationNotFoundExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_queryActivateTypeCommand
  */
 export const de_ActivateTypeCommand = async (
@@ -1905,6 +2024,55 @@ const de_CreateStackSetCommandError = async (
     case "NameAlreadyExistsException":
     case "com.amazonaws.cloudformation#NameAlreadyExistsException":
       throw await de_NameAlreadyExistsExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_queryDeactivateOrganizationsAccessCommand
+ */
+export const de_DeactivateOrganizationsAccessCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeactivateOrganizationsAccessCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DeactivateOrganizationsAccessCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_DeactivateOrganizationsAccessOutput(data.DeactivateOrganizationsAccessResult, context);
+  const response: DeactivateOrganizationsAccessCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryDeactivateOrganizationsAccessCommandError
+ */
+const de_DeactivateOrganizationsAccessCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeactivateOrganizationsAccessCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InvalidOperationException":
+    case "com.amazonaws.cloudformation#InvalidOperationException":
+      throw await de_InvalidOperationExceptionRes(parsedOutput, context);
+    case "OperationNotFoundException":
+    case "com.amazonaws.cloudformation#OperationNotFoundException":
+      throw await de_OperationNotFoundExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -2331,6 +2499,55 @@ const de_DescribeChangeSetHooksCommandError = async (
     case "ChangeSetNotFound":
     case "com.amazonaws.cloudformation#ChangeSetNotFoundException":
       throw await de_ChangeSetNotFoundExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_queryDescribeOrganizationsAccessCommand
+ */
+export const de_DescribeOrganizationsAccessCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeOrganizationsAccessCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DescribeOrganizationsAccessCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_DescribeOrganizationsAccessOutput(data.DescribeOrganizationsAccessResult, context);
+  const response: DescribeOrganizationsAccessCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryDescribeOrganizationsAccessCommandError
+ */
+const de_DescribeOrganizationsAccessCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeOrganizationsAccessCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InvalidOperationException":
+    case "com.amazonaws.cloudformation#InvalidOperationException":
+      throw await de_InvalidOperationExceptionRes(parsedOutput, context);
+    case "OperationNotFoundException":
+    case "com.amazonaws.cloudformation#OperationNotFoundException":
+      throw await de_OperationNotFoundExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -4937,6 +5154,14 @@ const se_AccountList = (input: string[], context: __SerdeContext): any => {
 };
 
 /**
+ * serializeAws_queryActivateOrganizationsAccessInput
+ */
+const se_ActivateOrganizationsAccessInput = (input: ActivateOrganizationsAccessInput, context: __SerdeContext): any => {
+  const entries: any = {};
+  return entries;
+};
+
+/**
  * serializeAws_queryActivateTypeInput
  */
 const se_ActivateTypeInput = (input: ActivateTypeInput, context: __SerdeContext): any => {
@@ -5171,6 +5396,9 @@ const se_CreateChangeSetInput = (input: CreateChangeSetInput, context: __SerdeCo
   }
   if (input.IncludeNestedStacks != null) {
     entries["IncludeNestedStacks"] = input.IncludeNestedStacks;
+  }
+  if (input.OnStackFailure != null) {
+    entries["OnStackFailure"] = input.OnStackFailure;
   }
   return entries;
 };
@@ -5423,6 +5651,17 @@ const se_CreateStackSetInput = (input: CreateStackSetInput, context: __SerdeCont
 };
 
 /**
+ * serializeAws_queryDeactivateOrganizationsAccessInput
+ */
+const se_DeactivateOrganizationsAccessInput = (
+  input: DeactivateOrganizationsAccessInput,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  return entries;
+};
+
+/**
  * serializeAws_queryDeactivateTypeInput
  */
 const se_DeactivateTypeInput = (input: DeactivateTypeInput, context: __SerdeContext): any => {
@@ -5649,6 +5888,17 @@ const se_DescribeChangeSetInput = (input: DescribeChangeSetInput, context: __Ser
   }
   if (input.NextToken != null) {
     entries["NextToken"] = input.NextToken;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_queryDescribeOrganizationsAccessInput
+ */
+const se_DescribeOrganizationsAccessInput = (input: DescribeOrganizationsAccessInput, context: __SerdeContext): any => {
+  const entries: any = {};
+  if (input.CallAs != null) {
+    entries["CallAs"] = input.CallAs;
   }
   return entries;
 };
@@ -7451,6 +7701,17 @@ const de_AccountList = (output: any, context: __SerdeContext): string[] => {
 };
 
 /**
+ * deserializeAws_queryActivateOrganizationsAccessOutput
+ */
+const de_ActivateOrganizationsAccessOutput = (
+  output: any,
+  context: __SerdeContext
+): ActivateOrganizationsAccessOutput => {
+  const contents: any = {};
+  return contents;
+};
+
+/**
  * deserializeAws_queryActivateTypeOutput
  */
 const de_ActivateTypeOutput = (output: any, context: __SerdeContext): ActivateTypeOutput => {
@@ -7826,6 +8087,17 @@ const de_CreateStackSetOutput = (output: any, context: __SerdeContext): CreateSt
 };
 
 /**
+ * deserializeAws_queryDeactivateOrganizationsAccessOutput
+ */
+const de_DeactivateOrganizationsAccessOutput = (
+  output: any,
+  context: __SerdeContext
+): DeactivateOrganizationsAccessOutput => {
+  const contents: any = {};
+  return contents;
+};
+
+/**
  * deserializeAws_queryDeactivateTypeOutput
  */
 const de_DeactivateTypeOutput = (output: any, context: __SerdeContext): DeactivateTypeOutput => {
@@ -8016,6 +8288,23 @@ const de_DescribeChangeSetOutput = (output: any, context: __SerdeContext): Descr
   }
   if (output["RootChangeSetId"] !== undefined) {
     contents.RootChangeSetId = __expectString(output["RootChangeSetId"]);
+  }
+  if (output["OnStackFailure"] !== undefined) {
+    contents.OnStackFailure = __expectString(output["OnStackFailure"]);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryDescribeOrganizationsAccessOutput
+ */
+const de_DescribeOrganizationsAccessOutput = (
+  output: any,
+  context: __SerdeContext
+): DescribeOrganizationsAccessOutput => {
+  const contents: any = {};
+  if (output["Status"] !== undefined) {
+    contents.Status = __expectString(output["Status"]);
   }
   return contents;
 };
@@ -10784,14 +11073,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   cfId: output.headers["x-amz-cf-id"],
 });
 
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
-
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>
   collectBody(streamBody, context).then((body) => context.utf8Encoder(body));
@@ -10835,7 +11116,7 @@ const parseBody = (streamBody: any, context: __SerdeContext): any =>
         ignoreDeclaration: true,
         parseTagValue: false,
         trimValues: false,
-        tagValueProcessor: (_, val) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
+        tagValueProcessor: (_: any, val: any) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
       });
       parser.addEntity("#xD", "\r");
       parser.addEntity("#10", "\n");

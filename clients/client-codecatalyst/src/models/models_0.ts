@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@smithy/smithy-client";
 
 import { CodeCatalystServiceException as __BaseException } from "./CodeCatalystServiceException";
 
@@ -1118,6 +1118,83 @@ export interface ListDevEnvironmentsResponse {
    * <p>Information about the Dev Environments in a project.</p>
    */
   items: DevEnvironmentSummary[] | undefined;
+
+  /**
+   * <p>A token returned from a call to this API to indicate the next batch of results to return, if any.</p>
+   */
+  nextToken?: string;
+}
+
+/**
+ * @public
+ */
+export interface ListDevEnvironmentSessionsRequest {
+  /**
+   * <p>The name of the space.</p>
+   */
+  spaceName: string | undefined;
+
+  /**
+   * <p>The name of the project in the space.</p>
+   */
+  projectName: string | undefined;
+
+  /**
+   * <p>The system-generated unique ID of the Dev Environment.</p>
+   */
+  devEnvironmentId: string | undefined;
+
+  /**
+   * <p>A token returned from a call to this API to indicate the next batch of results to return, if any.</p>
+   */
+  nextToken?: string;
+
+  /**
+   * <p>The maximum number of results to show in a single call to this API. If the number of results is larger than the number you specified, the response will include a <code>NextToken</code> element, which you can use to obtain additional results.</p>
+   */
+  maxResults?: number;
+}
+
+/**
+ * @public
+ * <p>Information about active sessions for a Dev Environment.</p>
+ */
+export interface DevEnvironmentSessionSummary {
+  /**
+   * <p>The name of the space.</p>
+   */
+  spaceName: string | undefined;
+
+  /**
+   * <p>The name of the project in the space.</p>
+   */
+  projectName: string | undefined;
+
+  /**
+   * <p>The system-generated unique ID of the Dev Environment.</p>
+   */
+  devEnvironmentId: string | undefined;
+
+  /**
+   * <p>The date and time the session started, in coordinated universal time (UTC) timestamp format as specified in <a href="https://www.rfc-editor.org/rfc/rfc3339#section-5.6">RFC 3339</a>
+   *          </p>
+   */
+  startedTime: Date | undefined;
+
+  /**
+   * <p>The system-generated unique ID of the Dev Environment session.</p>
+   */
+  id: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface ListDevEnvironmentSessionsResponse {
+  /**
+   * <p>Information about each session retrieved in the list.</p>
+   */
+  items: DevEnvironmentSessionSummary[] | undefined;
 
   /**
    * <p>A token returned from a call to this API to indicate the next batch of results to return, if any.</p>

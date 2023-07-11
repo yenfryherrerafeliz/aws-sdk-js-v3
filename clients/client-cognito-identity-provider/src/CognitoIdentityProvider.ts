@@ -1,6 +1,6 @@
 // smithy-typescript generated code
-import { createAggregatedClient } from "@aws-sdk/smithy-client";
-import { HttpHandlerOptions as __HttpHandlerOptions } from "@aws-sdk/types";
+import { createAggregatedClient } from "@smithy/smithy-client";
+import { HttpHandlerOptions as __HttpHandlerOptions } from "@smithy/types";
 
 import { CognitoIdentityProviderClient, CognitoIdentityProviderClientConfig } from "./CognitoIdentityProviderClient";
 import {
@@ -2123,8 +2123,8 @@ export interface CognitoIdentityProvider {
  * <p>Using the Amazon Cognito user pools API, you can create a user pool to manage directories and
  *             users. You can authenticate a user to obtain tokens related to user identity and access
  *             policies.</p>
- *         <p>This API reference provides information about user pools in Amazon Cognito user pools.</p>
- *         <p>For more information, see the <a href="https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html">Amazon Cognito
+ *          <p>This API reference provides information about user pools in Amazon Cognito user pools.</p>
+ *          <p>For more information, see the <a href="https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html">Amazon Cognito
  *                 Documentation</a>.</p>
  */
 export class CognitoIdentityProvider extends CognitoIdentityProviderClient implements CognitoIdentityProvider {}

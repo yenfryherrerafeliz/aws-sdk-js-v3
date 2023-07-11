@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectInt32 as __expectInt32,
   expectNonNull as __expectNonNull,
@@ -16,12 +17,12 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import {
@@ -109,7 +110,6 @@ import {
   EsamSettings,
   EsamSignalProcessingNotification,
   ExtendedDataServices,
-  F4vSettings,
   FileGroupSettings,
   FileSourceSettings,
   ForceIncludeRenditionSize,
@@ -190,6 +190,7 @@ import {
   DvbNitSettings,
   DvbSdtSettings,
   DvbTdtSettings,
+  F4vSettings,
   ForbiddenException,
   FrameCaptureSettings,
   H264QvbrSettings,
@@ -4158,6 +4159,7 @@ const se_H265Settings = (input: H265Settings, context: __SerdeContext): any => {
   return take(input, {
     adaptiveQuantization: [, , `AdaptiveQuantization`],
     alternateTransferFunctionSei: [, , `AlternateTransferFunctionSei`],
+    bandwidthReductionFilter: [, (_) => se_BandwidthReductionFilter(_, context), `BandwidthReductionFilter`],
     bitrate: [, , `Bitrate`],
     codecLevel: [, , `CodecLevel`],
     codecProfile: [, , `CodecProfile`],
@@ -4298,6 +4300,7 @@ const se_HlsGroupSettings = (input: HlsGroupSettings, context: __SerdeContext): 
     outputSelection: [, , `OutputSelection`],
     programDateTime: [, , `ProgramDateTime`],
     programDateTimePeriod: [, , `ProgramDateTimePeriod`],
+    progressiveWriteHlsManifest: [, , `ProgressiveWriteHlsManifest`],
     segmentControl: [, , `SegmentControl`],
     segmentLength: [, , `SegmentLength`],
     segmentLengthControl: [, , `SegmentLengthControl`],
@@ -6997,6 +7000,7 @@ const de_H265Settings = (output: any, context: __SerdeContext): H265Settings => 
   return take(output, {
     AdaptiveQuantization: [, __expectString, `adaptiveQuantization`],
     AlternateTransferFunctionSei: [, __expectString, `alternateTransferFunctionSei`],
+    BandwidthReductionFilter: [, (_: any) => de_BandwidthReductionFilter(_, context), `bandwidthReductionFilter`],
     Bitrate: [, __expectInt32, `bitrate`],
     CodecLevel: [, __expectString, `codecLevel`],
     CodecProfile: [, __expectString, `codecProfile`],
@@ -7141,6 +7145,7 @@ const de_HlsGroupSettings = (output: any, context: __SerdeContext): HlsGroupSett
     OutputSelection: [, __expectString, `outputSelection`],
     ProgramDateTime: [, __expectString, `programDateTime`],
     ProgramDateTimePeriod: [, __expectInt32, `programDateTimePeriod`],
+    ProgressiveWriteHlsManifest: [, __expectString, `progressiveWriteHlsManifest`],
     SegmentControl: [, __expectString, `segmentControl`],
     SegmentLength: [, __expectInt32, `segmentLength`],
     SegmentLengthControl: [, __expectString, `segmentLengthControl`],
@@ -8592,14 +8597,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

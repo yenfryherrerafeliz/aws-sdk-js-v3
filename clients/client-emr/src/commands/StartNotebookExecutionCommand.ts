@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EMRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EMRClient";
 import { StartNotebookExecutionInput, StartNotebookExecutionOutput } from "../models/models_0";
 import { de_StartNotebookExecutionCommand, se_StartNotebookExecutionCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -40,14 +44,15 @@ export interface StartNotebookExecutionCommandOutput extends StartNotebookExecut
  * // const { EMRClient, StartNotebookExecutionCommand } = require("@aws-sdk/client-emr"); // CommonJS import
  * const client = new EMRClient(config);
  * const input = { // StartNotebookExecutionInput
- *   EditorId: "STRING_VALUE", // required
- *   RelativePath: "STRING_VALUE", // required
+ *   EditorId: "STRING_VALUE",
+ *   RelativePath: "STRING_VALUE",
  *   NotebookExecutionName: "STRING_VALUE",
  *   NotebookParams: "STRING_VALUE",
  *   ExecutionEngine: { // ExecutionEngineConfig
  *     Id: "STRING_VALUE", // required
  *     Type: "EMR",
  *     MasterInstanceSecurityGroupId: "STRING_VALUE",
+ *     ExecutionRoleArn: "STRING_VALUE",
  *   },
  *   ServiceRole: "STRING_VALUE", // required
  *   NotebookInstanceSecurityGroupId: "STRING_VALUE",
@@ -57,6 +62,18 @@ export interface StartNotebookExecutionCommandOutput extends StartNotebookExecut
  *       Value: "STRING_VALUE",
  *     },
  *   ],
+ *   NotebookS3Location: { // NotebookS3LocationFromInput
+ *     Bucket: "STRING_VALUE",
+ *     Key: "STRING_VALUE",
+ *   },
+ *   OutputNotebookS3Location: { // OutputNotebookS3LocationFromInput
+ *     Bucket: "STRING_VALUE",
+ *     Key: "STRING_VALUE",
+ *   },
+ *   OutputNotebookFormat: "HTML",
+ *   EnvironmentVariables: { // EnvironmentVariablesMap
+ *     "<keys>": "STRING_VALUE",
+ *   },
  * };
  * const command = new StartNotebookExecutionCommand(input);
  * const response = await client.send(command);

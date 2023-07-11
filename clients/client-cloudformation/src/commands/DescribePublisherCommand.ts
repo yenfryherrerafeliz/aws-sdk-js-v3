@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { DescribePublisherInput, DescribePublisherOutput } from "../models/models_0";
 import { de_DescribePublisherCommand, se_DescribePublisherCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -33,9 +37,8 @@ export interface DescribePublisherCommandOutput extends DescribePublisherOutput,
 /**
  * @public
  * <p>Returns information about a CloudFormation extension publisher.</p>
- *          <p>If you don't supply a <code>PublisherId</code>, and you have registered as an extension
- *          publisher, <code>DescribePublisher</code> returns information about your own publisher
- *          account.</p>
+ *          <p>If you don't supply a <code>PublisherId</code>, and you have registered as an extension publisher,
+ *     <code>DescribePublisher</code> returns information about your own publisher account.</p>
  *          <p>For more information about registering as a publisher, see:</p>
  *          <ul>
  *             <li>
@@ -46,7 +49,8 @@ export interface DescribePublisherCommandOutput extends DescribePublisherOutput,
  *             <li>
  *                <p>
  *                   <a href="https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/publish-extension.html">Publishing
- *                   extensions to make them available for public use</a> in the <i>CloudFormation CLI User Guide</i>
+ *       extensions to make them available for public use</a> in the <i>CloudFormation CLI User
+ *       Guide</i>
  *                </p>
  *             </li>
  *          </ul>

@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,7 +47,7 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ArchiveApplicationCommandInput, ArchiveApplicationCommandOutput } from "./commands/ArchiveApplicationCommand";
 import { ArchiveWaveCommandInput, ArchiveWaveCommandOutput } from "./commands/ArchiveWaveCommand";
@@ -138,6 +138,10 @@ import { ListExportsCommandInput, ListExportsCommandOutput } from "./commands/Li
 import { ListImportErrorsCommandInput, ListImportErrorsCommandOutput } from "./commands/ListImportErrorsCommand";
 import { ListImportsCommandInput, ListImportsCommandOutput } from "./commands/ListImportsCommand";
 import {
+  ListManagedAccountsCommandInput,
+  ListManagedAccountsCommandOutput,
+} from "./commands/ListManagedAccountsCommand";
+import {
   ListSourceServerActionsCommandInput,
   ListSourceServerActionsCommandOutput,
 } from "./commands/ListSourceServerActionsCommand";
@@ -151,6 +155,7 @@ import {
 } from "./commands/ListTemplateActionsCommand";
 import { ListWavesCommandInput, ListWavesCommandOutput } from "./commands/ListWavesCommand";
 import { MarkAsArchivedCommandInput, MarkAsArchivedCommandOutput } from "./commands/MarkAsArchivedCommand";
+import { PauseReplicationCommandInput, PauseReplicationCommandOutput } from "./commands/PauseReplicationCommand";
 import {
   PutSourceServerActionCommandInput,
   PutSourceServerActionCommandOutput,
@@ -164,6 +169,7 @@ import {
   RemoveTemplateActionCommandInput,
   RemoveTemplateActionCommandOutput,
 } from "./commands/RemoveTemplateActionCommand";
+import { ResumeReplicationCommandInput, ResumeReplicationCommandOutput } from "./commands/ResumeReplicationCommand";
 import {
   RetryDataReplicationCommandInput,
   RetryDataReplicationCommandOutput,
@@ -173,6 +179,7 @@ import { StartExportCommandInput, StartExportCommandOutput } from "./commands/St
 import { StartImportCommandInput, StartImportCommandOutput } from "./commands/StartImportCommand";
 import { StartReplicationCommandInput, StartReplicationCommandOutput } from "./commands/StartReplicationCommand";
 import { StartTestCommandInput, StartTestCommandOutput } from "./commands/StartTestCommand";
+import { StopReplicationCommandInput, StopReplicationCommandOutput } from "./commands/StopReplicationCommand";
 import { TagResourceCommandInput, TagResourceCommandOutput } from "./commands/TagResourceCommand";
 import {
   TerminateTargetInstancesCommandInput,
@@ -214,6 +221,8 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
@@ -252,21 +261,25 @@ export type ServiceInputTypes =
   | ListExportsCommandInput
   | ListImportErrorsCommandInput
   | ListImportsCommandInput
+  | ListManagedAccountsCommandInput
   | ListSourceServerActionsCommandInput
   | ListTagsForResourceCommandInput
   | ListTemplateActionsCommandInput
   | ListWavesCommandInput
   | MarkAsArchivedCommandInput
+  | PauseReplicationCommandInput
   | PutSourceServerActionCommandInput
   | PutTemplateActionCommandInput
   | RemoveSourceServerActionCommandInput
   | RemoveTemplateActionCommandInput
+  | ResumeReplicationCommandInput
   | RetryDataReplicationCommandInput
   | StartCutoverCommandInput
   | StartExportCommandInput
   | StartImportCommandInput
   | StartReplicationCommandInput
   | StartTestCommandInput
+  | StopReplicationCommandInput
   | TagResourceCommandInput
   | TerminateTargetInstancesCommandInput
   | UnarchiveApplicationCommandInput
@@ -318,21 +331,25 @@ export type ServiceOutputTypes =
   | ListExportsCommandOutput
   | ListImportErrorsCommandOutput
   | ListImportsCommandOutput
+  | ListManagedAccountsCommandOutput
   | ListSourceServerActionsCommandOutput
   | ListTagsForResourceCommandOutput
   | ListTemplateActionsCommandOutput
   | ListWavesCommandOutput
   | MarkAsArchivedCommandOutput
+  | PauseReplicationCommandOutput
   | PutSourceServerActionCommandOutput
   | PutTemplateActionCommandOutput
   | RemoveSourceServerActionCommandOutput
   | RemoveTemplateActionCommandOutput
+  | ResumeReplicationCommandOutput
   | RetryDataReplicationCommandOutput
   | StartCutoverCommandOutput
   | StartExportCommandOutput
   | StartImportCommandOutput
   | StartReplicationCommandOutput
   | StartTestCommandOutput
+  | StopReplicationCommandOutput
   | TagResourceCommandOutput
   | TerminateTargetInstancesCommandOutput
   | UnarchiveApplicationCommandOutput
@@ -356,7 +373,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -411,7 +428,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -465,7 +482,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -473,7 +490,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type MgnClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type MgnClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -492,7 +509,7 @@ export interface MgnClientConfig extends MgnClientConfigType {}
 /**
  * @public
  */
-type MgnClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type MgnClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

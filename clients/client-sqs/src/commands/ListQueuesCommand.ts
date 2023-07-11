@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ListQueuesRequest, ListQueuesResult } from "../models/models_0";
 import { de_ListQueuesCommand, se_ListQueuesCommand } from "../protocols/Aws_query";
 import { ServiceInputTypes, ServiceOutputTypes, SQSClientResolvedConfig } from "../SQSClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,19 +36,21 @@ export interface ListQueuesCommandOutput extends ListQueuesResult, __MetadataBea
 
 /**
  * @public
- * <p>Returns a list of your queues in the current region. The response includes a maximum of 1,000 results. If you specify a value for the optional
- *           <code>QueueNamePrefix</code> parameter, only queues with a name that begins with the specified value are returned.</p>
- *          <p> The <code>listQueues</code> methods supports
- *           pagination. Set parameter <code>MaxResults</code> in the request to specify the maximum number of
- *           results to be returned in the response. If you do not set <code>MaxResults</code>,
- *           the response includes a maximum of 1,000 results. If you set <code>MaxResults</code> and there are additional results to
- *           display, the response includes a value for <code>NextToken</code>. Use
- *           <code>NextToken</code> as a parameter in your next request to
- *           <code>listQueues</code> to receive the next page of results.  </p>
+ * <p>Returns a list of your queues in the current region. The response includes a maximum
+ *             of 1,000 results. If you specify a value for the optional <code>QueueNamePrefix</code>
+ *             parameter, only queues with a name that begins with the specified value are
+ *             returned.</p>
+ *          <p> The <code>listQueues</code> methods supports pagination. Set parameter
+ *                 <code>MaxResults</code> in the request to specify the maximum number of results to
+ *             be returned in the response. If you do not set <code>MaxResults</code>, the response
+ *             includes a maximum of 1,000 results. If you set <code>MaxResults</code> and there are
+ *             additional results to display, the response includes a value for <code>NextToken</code>.
+ *             Use <code>NextToken</code> as a parameter in your next request to
+ *                 <code>listQueues</code> to receive the next page of results. </p>
  *          <note>
  *             <p>Cross-account permissions don't apply to this action. For more information,
  * see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name">Grant
- * cross-account permissions to a role and a user name</a> in the <i>Amazon SQS Developer Guide</i>.</p>
+ * cross-account permissions to a role and a username</a> in the <i>Amazon SQS Developer Guide</i>.</p>
  *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,8 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
 import { GetSolNetworkPackageDescriptorInput, GetSolNetworkPackageDescriptorOutput } from "../models/models_0";
 import {
@@ -22,17 +23,28 @@ import { ServiceInputTypes, ServiceOutputTypes, TnbClientResolvedConfig } from "
 
 /**
  * @public
+ */
+export { __MetadataBearer, $Command };
+/**
+ * @public
  *
  * The input for {@link GetSolNetworkPackageDescriptorCommand}.
  */
 export interface GetSolNetworkPackageDescriptorCommandInput extends GetSolNetworkPackageDescriptorInput {}
 /**
  * @public
+ */
+export type GetSolNetworkPackageDescriptorCommandOutputType = Omit<GetSolNetworkPackageDescriptorOutput, "nsd"> & {
+  nsd?: Uint8ArrayBlobAdapter;
+};
+
+/**
+ * @public
  *
  * The output of {@link GetSolNetworkPackageDescriptorCommand}.
  */
 export interface GetSolNetworkPackageDescriptorCommandOutput
-  extends GetSolNetworkPackageDescriptorOutput,
+  extends GetSolNetworkPackageDescriptorCommandOutputType,
     __MetadataBearer {}
 
 /**

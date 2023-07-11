@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EMRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EMRClient";
 import { DescribeNotebookExecutionInput, DescribeNotebookExecutionOutput } from "../models/models_0";
 import { de_DescribeNotebookExecutionCommand, se_DescribeNotebookExecutionCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -52,6 +56,7 @@ export interface DescribeNotebookExecutionCommandOutput extends DescribeNotebook
  * //       Id: "STRING_VALUE", // required
  * //       Type: "EMR",
  * //       MasterInstanceSecurityGroupId: "STRING_VALUE",
+ * //       ExecutionRoleArn: "STRING_VALUE",
  * //     },
  * //     NotebookExecutionName: "STRING_VALUE",
  * //     NotebookParams: "STRING_VALUE",
@@ -68,6 +73,18 @@ export interface DescribeNotebookExecutionCommandOutput extends DescribeNotebook
  * //         Value: "STRING_VALUE",
  * //       },
  * //     ],
+ * //     NotebookS3Location: { // NotebookS3LocationForOutput
+ * //       Bucket: "STRING_VALUE",
+ * //       Key: "STRING_VALUE",
+ * //     },
+ * //     OutputNotebookS3Location: { // OutputNotebookS3LocationForOutput
+ * //       Bucket: "STRING_VALUE",
+ * //       Key: "STRING_VALUE",
+ * //     },
+ * //     OutputNotebookFormat: "HTML",
+ * //     EnvironmentVariables: { // EnvironmentVariablesMap
+ * //       "<keys>": "STRING_VALUE",
+ * //     },
  * //   },
  * // };
  *

@@ -1,6 +1,7 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectNonNull as __expectNonNull,
   expectString as __expectString,
@@ -14,13 +15,13 @@ import {
   strictParseInt32 as __strictParseInt32,
   strictParseLong as __strictParseLong,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { XMLParser } from "fast-xml-parser";
 
 import { AddRoleToDBClusterCommandInput, AddRoleToDBClusterCommandOutput } from "../commands/AddRoleToDBClusterCommand";
@@ -953,6 +954,7 @@ import {
   StopDBInstanceAutomatedBackupsReplicationResult,
   StopDBInstanceMessage,
   StopDBInstanceResult,
+  StorageTypeNotAvailableFault,
   SubnetAlreadyInUse,
   SwitchoverBlueGreenDeploymentRequest,
   SwitchoverBlueGreenDeploymentResponse,
@@ -8317,6 +8319,9 @@ const de_ModifyDBClusterCommandError = async (
     case "StorageQuotaExceeded":
     case "com.amazonaws.rds#StorageQuotaExceededFault":
       throw await de_StorageQuotaExceededFaultRes(parsedOutput, context);
+    case "StorageTypeNotAvailableFault":
+    case "com.amazonaws.rds#StorageTypeNotAvailableFault":
+      throw await de_StorageTypeNotAvailableFaultRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -9872,6 +9877,9 @@ const de_RestoreDBClusterFromS3CommandError = async (
     case "StorageQuotaExceeded":
     case "com.amazonaws.rds#StorageQuotaExceededFault":
       throw await de_StorageQuotaExceededFaultRes(parsedOutput, context);
+    case "StorageTypeNotSupported":
+    case "com.amazonaws.rds#StorageTypeNotSupportedFault":
+      throw await de_StorageTypeNotSupportedFaultRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -12996,6 +13004,22 @@ const de_StorageQuotaExceededFaultRes = async (
 };
 
 /**
+ * deserializeAws_queryStorageTypeNotAvailableFaultRes
+ */
+const de_StorageTypeNotAvailableFaultRes = async (
+  parsedOutput: any,
+  context: __SerdeContext
+): Promise<StorageTypeNotAvailableFault> => {
+  const body = parsedOutput.body;
+  const deserialized: any = de_StorageTypeNotAvailableFault(body.Error, context);
+  const exception = new StorageTypeNotAvailableFault({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...deserialized,
+  });
+  return __decorateServiceException(exception, body);
+};
+
+/**
  * deserializeAws_queryStorageTypeNotSupportedFaultRes
  */
 const de_StorageTypeNotSupportedFaultRes = async (
@@ -13968,6 +13992,25 @@ const se_CreateDBInstanceMessage = (input: CreateDBInstanceMessage, context: __S
   if (input.Domain != null) {
     entries["Domain"] = input.Domain;
   }
+  if (input.DomainFqdn != null) {
+    entries["DomainFqdn"] = input.DomainFqdn;
+  }
+  if (input.DomainOu != null) {
+    entries["DomainOu"] = input.DomainOu;
+  }
+  if (input.DomainAuthSecretArn != null) {
+    entries["DomainAuthSecretArn"] = input.DomainAuthSecretArn;
+  }
+  if (input.DomainDnsIps != null) {
+    const memberEntries = se_StringList(input.DomainDnsIps, context);
+    if (input.DomainDnsIps?.length === 0) {
+      entries.DomainDnsIps = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `DomainDnsIps.${key}`;
+      entries[loc] = value;
+    });
+  }
   if (input.CopyTagsToSnapshot != null) {
     entries["CopyTagsToSnapshot"] = input.CopyTagsToSnapshot;
   }
@@ -14176,6 +14219,25 @@ const se_CreateDBInstanceReadReplicaMessage = (
   }
   if (input.DomainIAMRoleName != null) {
     entries["DomainIAMRoleName"] = input.DomainIAMRoleName;
+  }
+  if (input.DomainFqdn != null) {
+    entries["DomainFqdn"] = input.DomainFqdn;
+  }
+  if (input.DomainOu != null) {
+    entries["DomainOu"] = input.DomainOu;
+  }
+  if (input.DomainAuthSecretArn != null) {
+    entries["DomainAuthSecretArn"] = input.DomainAuthSecretArn;
+  }
+  if (input.DomainDnsIps != null) {
+    const memberEntries = se_StringList(input.DomainDnsIps, context);
+    if (input.DomainDnsIps?.length === 0) {
+      entries.DomainDnsIps = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `DomainDnsIps.${key}`;
+      entries[loc] = value;
+    });
   }
   if (input.ReplicaMode != null) {
     entries["ReplicaMode"] = input.ReplicaMode;
@@ -16616,6 +16678,25 @@ const se_ModifyDBInstanceMessage = (input: ModifyDBInstanceMessage, context: __S
   if (input.Domain != null) {
     entries["Domain"] = input.Domain;
   }
+  if (input.DomainFqdn != null) {
+    entries["DomainFqdn"] = input.DomainFqdn;
+  }
+  if (input.DomainOu != null) {
+    entries["DomainOu"] = input.DomainOu;
+  }
+  if (input.DomainAuthSecretArn != null) {
+    entries["DomainAuthSecretArn"] = input.DomainAuthSecretArn;
+  }
+  if (input.DomainDnsIps != null) {
+    const memberEntries = se_StringList(input.DomainDnsIps, context);
+    if (input.DomainDnsIps?.length === 0) {
+      entries.DomainDnsIps = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `DomainDnsIps.${key}`;
+      entries[loc] = value;
+    });
+  }
   if (input.CopyTagsToSnapshot != null) {
     entries["CopyTagsToSnapshot"] = input.CopyTagsToSnapshot;
   }
@@ -16633,6 +16714,9 @@ const se_ModifyDBInstanceMessage = (input: ModifyDBInstanceMessage, context: __S
   }
   if (input.DomainIAMRoleName != null) {
     entries["DomainIAMRoleName"] = input.DomainIAMRoleName;
+  }
+  if (input.DisableDomain != null) {
+    entries["DisableDomain"] = input.DisableDomain;
   }
   if (input.PromotionTier != null) {
     entries["PromotionTier"] = input.PromotionTier;
@@ -16707,6 +16791,9 @@ const se_ModifyDBInstanceMessage = (input: ModifyDBInstanceMessage, context: __S
   }
   if (input.MasterUserSecretKmsKeyId != null) {
     entries["MasterUserSecretKmsKeyId"] = input.MasterUserSecretKmsKeyId;
+  }
+  if (input.Engine != null) {
+    entries["Engine"] = input.Engine;
   }
   return entries;
 };
@@ -17623,6 +17710,9 @@ const se_RestoreDBClusterFromS3Message = (input: RestoreDBClusterFromS3Message, 
   if (input.MasterUserSecretKmsKeyId != null) {
     entries["MasterUserSecretKmsKeyId"] = input.MasterUserSecretKmsKeyId;
   }
+  if (input.StorageType != null) {
+    entries["StorageType"] = input.StorageType;
+  }
   return entries;
 };
 
@@ -17959,6 +18049,25 @@ const se_RestoreDBInstanceFromDBSnapshotMessage = (
   }
   if (input.Domain != null) {
     entries["Domain"] = input.Domain;
+  }
+  if (input.DomainFqdn != null) {
+    entries["DomainFqdn"] = input.DomainFqdn;
+  }
+  if (input.DomainOu != null) {
+    entries["DomainOu"] = input.DomainOu;
+  }
+  if (input.DomainAuthSecretArn != null) {
+    entries["DomainAuthSecretArn"] = input.DomainAuthSecretArn;
+  }
+  if (input.DomainDnsIps != null) {
+    const memberEntries = se_StringList(input.DomainDnsIps, context);
+    if (input.DomainDnsIps?.length === 0) {
+      entries.DomainDnsIps = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `DomainDnsIps.${key}`;
+      entries[loc] = value;
+    });
   }
   if (input.CopyTagsToSnapshot != null) {
     entries["CopyTagsToSnapshot"] = input.CopyTagsToSnapshot;
@@ -18302,6 +18411,25 @@ const se_RestoreDBInstanceToPointInTimeMessage = (
   }
   if (input.DomainIAMRoleName != null) {
     entries["DomainIAMRoleName"] = input.DomainIAMRoleName;
+  }
+  if (input.DomainFqdn != null) {
+    entries["DomainFqdn"] = input.DomainFqdn;
+  }
+  if (input.DomainOu != null) {
+    entries["DomainOu"] = input.DomainOu;
+  }
+  if (input.DomainAuthSecretArn != null) {
+    entries["DomainAuthSecretArn"] = input.DomainAuthSecretArn;
+  }
+  if (input.DomainDnsIps != null) {
+    const memberEntries = se_StringList(input.DomainDnsIps, context);
+    if (input.DomainDnsIps?.length === 0) {
+      entries.DomainDnsIps = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `DomainDnsIps.${key}`;
+      entries[loc] = value;
+    });
   }
   if (input.EnableIAMDatabaseAuthentication != null) {
     entries["EnableIAMDatabaseAuthentication"] = input.EnableIAMDatabaseAuthentication;
@@ -19231,6 +19359,9 @@ const de_ClusterPendingModifiedValues = (output: any, context: __SerdeContext): 
   if (output["Iops"] !== undefined) {
     contents.Iops = __strictParseInt32(output["Iops"]) as number;
   }
+  if (output["StorageType"] !== undefined) {
+    contents.StorageType = __expectString(output["StorageType"]);
+  }
   return contents;
 };
 
@@ -19865,6 +19996,11 @@ const de_DBCluster = (output: any, context: __SerdeContext): DBCluster => {
   if (output["MasterUserSecret"] !== undefined) {
     contents.MasterUserSecret = de_MasterUserSecret(output["MasterUserSecret"], context);
   }
+  if (output["IOOptimizedNextAllowedModificationTime"] !== undefined) {
+    contents.IOOptimizedNextAllowedModificationTime = __expectNonNull(
+      __parseRfc3339DateTimeWithOffset(output["IOOptimizedNextAllowedModificationTime"])
+    );
+  }
   return contents;
 };
 
@@ -20434,6 +20570,9 @@ const de_DBClusterSnapshot = (output: any, context: __SerdeContext): DBClusterSn
   }
   if (output["DBSystemId"] !== undefined) {
     contents.DBSystemId = __expectString(output["DBSystemId"]);
+  }
+  if (output["StorageType"] !== undefined) {
+    contents.StorageType = __expectString(output["StorageType"]);
   }
   return contents;
 };
@@ -22760,6 +22899,17 @@ const de_DomainMembership = (output: any, context: __SerdeContext): DomainMember
   if (output["IAMRoleName"] !== undefined) {
     contents.IAMRoleName = __expectString(output["IAMRoleName"]);
   }
+  if (output["OU"] !== undefined) {
+    contents.OU = __expectString(output["OU"]);
+  }
+  if (output["AuthSecretArn"] !== undefined) {
+    contents.AuthSecretArn = __expectString(output["AuthSecretArn"]);
+  }
+  if (output.DnsIps === "") {
+    contents.DnsIps = [];
+  } else if (output["DnsIps"] !== undefined && output["DnsIps"]["member"] !== undefined) {
+    contents.DnsIps = de_StringList(__getArrayIfSingleItem(output["DnsIps"]["member"]), context);
+  }
   return contents;
 };
 
@@ -25004,6 +25154,9 @@ const de_PendingModifiedValues = (output: any, context: __SerdeContext): Pending
   if (output["StorageThroughput"] !== undefined) {
     contents.StorageThroughput = __strictParseInt32(output["StorageThroughput"]) as number;
   }
+  if (output["Engine"] !== undefined) {
+    contents.Engine = __expectString(output["Engine"]);
+  }
   return contents;
 };
 
@@ -25948,6 +26101,17 @@ const de_StorageQuotaExceededFault = (output: any, context: __SerdeContext): Sto
 };
 
 /**
+ * deserializeAws_queryStorageTypeNotAvailableFault
+ */
+const de_StorageTypeNotAvailableFault = (output: any, context: __SerdeContext): StorageTypeNotAvailableFault => {
+  const contents: any = {};
+  if (output["message"] !== undefined) {
+    contents.message = __expectString(output["message"]);
+  }
+  return contents;
+};
+
+/**
  * deserializeAws_queryStorageTypeNotSupportedFault
  */
 const de_StorageTypeNotSupportedFault = (output: any, context: __SerdeContext): StorageTypeNotSupportedFault => {
@@ -26426,14 +26590,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   cfId: output.headers["x-amz-cf-id"],
 });
 
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
-
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>
   collectBody(streamBody, context).then((body) => context.utf8Encoder(body));
@@ -26477,7 +26633,7 @@ const parseBody = (streamBody: any, context: __SerdeContext): any =>
         ignoreDeclaration: true,
         parseTagValue: false,
         trimValues: false,
-        tagValueProcessor: (_, val) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
+        tagValueProcessor: (_: any, val: any) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
       });
       parser.addEntity("#xD", "\r");
       parser.addEntity("#10", "\n");

@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
 import { getFlexibleChecksumsPlugin } from "@aws-sdk/middleware-flexible-checksums";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,12 +12,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { RestoreObjectOutput, RestoreObjectRequest, RestoreObjectRequestFilterSensitiveLog } from "../models/models_1";
 import { de_RestoreObjectCommand, se_RestoreObjectCommand } from "../protocols/Aws_restXml";
 import { S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../S3Client";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -134,10 +138,10 @@ export interface RestoreObjectCommandOutput extends RestoreObjectOutput, __Metad
  *             </dd>
  *             <dt>Restoring objects</dt>
  *             <dd>
- *                <p>Objects that you archive to the S3 Glacier Flexible Retrieval or
+ *                <p>Objects that you archive to the S3 Glacier Flexible Retrieval Flexible Retrieval or
  *                   S3 Glacier Deep Archive storage class, and S3 Intelligent-Tiering Archive or
  *                   S3 Intelligent-Tiering Deep Archive tiers, are not accessible in real time. For objects in the
- *                   S3 Glacier Flexible Retrieval or S3 Glacier Deep Archive storage
+ *                   S3 Glacier Flexible Retrieval Flexible Retrieval or S3 Glacier Deep Archive storage
  *                   classes, you must first initiate a restore request, and then wait until a temporary copy of
  *                   the object is available. If you want a permanent copy of the object, create a copy of it in
  *                   the Amazon S3 Standard storage class in your S3 bucket. To access an archived object, you must
@@ -153,7 +157,7 @@ export interface RestoreObjectCommandOutput extends RestoreObjectOutput, __Metad
  *                   <li>
  *                      <p>
  *                         <code>Expedited</code> - Expedited retrievals allow you to quickly access your
- *                         data stored in the S3 Glacier Flexible Retrieval storage class or
+ *                         data stored in the S3 Glacier Flexible Retrieval Flexible Retrieval storage class or
  *                         S3 Intelligent-Tiering Archive tier when occasional urgent requests for restoring archives
  *                         are required. For all but the largest archived objects (250 MB+), data accessed using
  *                         Expedited retrievals is typically made available within 1–5 minutes. Provisioned
@@ -167,7 +171,7 @@ export interface RestoreObjectCommandOutput extends RestoreObjectOutput, __Metad
  *                         <code>Standard</code> - Standard retrievals allow you to access any of your
  *                         archived objects within several hours. This is the default option for retrieval
  *                         requests that do not specify the retrieval option. Standard retrievals typically
- *                         finish within 3–5 hours for objects stored in the S3 Glacier Flexible
+ *                         finish within 3–5 hours for objects stored in the S3 Glacier Flexible Retrieval Flexible
  *                         Retrieval storage class or S3 Intelligent-Tiering Archive tier. They typically finish within
  *                         12 hours for objects stored in the S3 Glacier Deep Archive storage class or
  *                         S3 Intelligent-Tiering Deep Archive tier. Standard retrievals are free for objects stored in
@@ -178,7 +182,7 @@ export interface RestoreObjectCommandOutput extends RestoreObjectOutput, __Metad
  *                         <code>Bulk</code> - Bulk retrievals free for objects stored in the S3 Glacier
  *                         Flexible Retrieval and S3 Intelligent-Tiering storage classes, enabling you to
  *                         retrieve large amounts, even petabytes, of data at no cost. Bulk retrievals typically
- *                         finish within 5–12 hours for objects stored in the S3 Glacier
+ *                         finish within 5–12 hours for objects stored in the S3 Glacier Flexible Retrieval
  *                         Flexible Retrieval storage class or S3 Intelligent-Tiering Archive tier. Bulk retrievals are
  *                         also the lowest-cost retrieval option when restoring objects from
  *                         S3 Glacier Deep Archive. They typically finish within 48 hours for objects
@@ -348,7 +352,7 @@ export interface RestoreObjectCommandOutput extends RestoreObjectOutput, __Metad
  *         BucketName: "STRING_VALUE", // required
  *         Prefix: "STRING_VALUE", // required
  *         Encryption: { // Encryption
- *           EncryptionType: "AES256" || "aws:kms", // required
+ *           EncryptionType: "AES256" || "aws:kms" || "aws:kms:dsse", // required
  *           KMSKeyId: "STRING_VALUE",
  *           KMSContext: "STRING_VALUE",
  *         },

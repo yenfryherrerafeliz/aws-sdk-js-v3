@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ListAnswersInput, ListAnswersOutput } from "../models/models_0";
 import { de_ListAnswersCommand, se_ListAnswersCommand } from "../protocols/Aws_restJson1";
 import { ServiceInputTypes, ServiceOutputTypes, WellArchitectedClientResolvedConfig } from "../WellArchitectedClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -46,6 +50,7 @@ export interface ListAnswersCommandOutput extends ListAnswersOutput, __MetadataB
  *   MilestoneNumber: Number("int"),
  *   NextToken: "STRING_VALUE",
  *   MaxResults: Number("int"),
+ *   QuestionPriority: "PRIORITIZED" || "NONE",
  * };
  * const command = new ListAnswersCommand(input);
  * const response = await client.send(command);
@@ -98,6 +103,7 @@ export interface ListAnswersCommandOutput extends ListAnswersOutput, __MetadataB
  * //       IsApplicable: true || false,
  * //       Risk: "UNANSWERED" || "HIGH" || "MEDIUM" || "NONE" || "NOT_APPLICABLE",
  * //       Reason: "OUT_OF_SCOPE" || "BUSINESS_PRIORITIES" || "ARCHITECTURE_CONSTRAINTS" || "OTHER" || "NONE",
+ * //       QuestionType: "PRIORITIZED" || "NON_PRIORITIZED",
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",

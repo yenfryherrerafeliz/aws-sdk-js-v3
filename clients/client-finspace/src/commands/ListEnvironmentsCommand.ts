@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { FinspaceClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceClient";
 import { ListEnvironmentsRequest, ListEnvironmentsResponse } from "../models/models_0";
 import { de_ListEnvironmentsCommand, se_ListEnvironmentsCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -51,14 +55,14 @@ export interface ListEnvironmentsCommandOutput extends ListEnvironmentsResponse,
  * //       name: "STRING_VALUE",
  * //       environmentId: "STRING_VALUE",
  * //       awsAccountId: "STRING_VALUE",
- * //       status: "STRING_VALUE",
+ * //       status: "CREATE_REQUESTED" || "CREATING" || "CREATED" || "DELETE_REQUESTED" || "DELETING" || "DELETED" || "FAILED_CREATION" || "RETRY_DELETION" || "FAILED_DELETION" || "UPDATE_NETWORK_REQUESTED" || "UPDATING_NETWORK" || "FAILED_UPDATING_NETWORK" || "SUSPENDED",
  * //       environmentUrl: "STRING_VALUE",
  * //       description: "STRING_VALUE",
  * //       environmentArn: "STRING_VALUE",
  * //       sageMakerStudioDomainUrl: "STRING_VALUE",
  * //       kmsKeyId: "STRING_VALUE",
  * //       dedicatedServiceAccountId: "STRING_VALUE",
- * //       federationMode: "STRING_VALUE",
+ * //       federationMode: "FEDERATED" || "LOCAL",
  * //       federationParameters: { // FederationParameters
  * //         samlMetadataDocument: "STRING_VALUE",
  * //         samlMetadataURL: "STRING_VALUE",

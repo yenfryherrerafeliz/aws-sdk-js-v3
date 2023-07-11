@@ -7,9 +7,9 @@ import { Agent as hsAgent, request as hsRequest, RequestOptions } from "https";
 import { NODEJS_TIMEOUT_ERROR_CODES } from "./constants";
 import { getTransformedHeaders } from "./get-transformed-headers";
 import { setConnectionTimeout } from "./set-connection-timeout";
+import { setSocketKeepAlive } from "./set-socket-keep-alive";
 import { setSocketTimeout } from "./set-socket-timeout";
 import { writeRequestBody } from "./write-request-body";
-import { setSocketKeepAlive } from "./set-socket-keep-alive";
 
 /**
  * Represents the http options that can be passed to a node http client.
@@ -93,7 +93,17 @@ export class NodeHttpHandler implements HttpHandler {
     if (!this.config) {
       this.config = await this.configProvider;
     }
-    return new Promise((resolve, reject) => {
+    return new Promise((_resolve, _reject) => {
+      let writeRequestBodyPromise: Promise<void> | undefined = undefined;
+      const resolve = async (arg: { response: HttpResponse }) => {
+        await writeRequestBodyPromise;
+        _resolve(arg);
+      };
+      const reject = async (arg: unknown) => {
+        await writeRequestBodyPromise;
+        _reject(arg);
+      };
+
       if (!this.config) {
         throw new Error("Node HTTP request handler config is not resolved");
       }
@@ -109,20 +119,36 @@ export class NodeHttpHandler implements HttpHandler {
       // determine which http(s) client to use
       const isSSL = request.protocol === "https:";
       const queryString = buildQueryString(request.query || {});
+      let auth = undefined;
+      if (request.username != null || request.password != null) {
+        const username = request.username ?? "";
+        const password = request.password ?? "";
+        auth = `${username}:${password}`;
+      }
+      let path = request.path;
+      if (queryString) {
+        path += `?${queryString}`;
+      }
+      if (request.fragment) {
+        path += `#${request.fragment}`;
+      }
       const nodeHttpsOptions: RequestOptions = {
         headers: request.headers,
         host: request.hostname,
         method: request.method,
-        path: queryString ? `${request.path}?${queryString}` : request.path,
+        path,
         port: request.port,
         agent: isSSL ? this.config.httpsAgent : this.config.httpAgent,
+        auth,
       };
 
       // create the http request
       const requestFunc = isSSL ? hsRequest : hRequest;
+
       const req = requestFunc(nodeHttpsOptions, (res) => {
         const httpResponse = new HttpResponse({
           statusCode: res.statusCode || -1,
+          reason: res.statusMessage,
           headers: getTransformedHeaders(res.headers),
           body: res,
         });
@@ -163,7 +189,7 @@ export class NodeHttpHandler implements HttpHandler {
         });
       }
 
-      writeRequestBody(req, request);
+      writeRequestBodyPromise = writeRequestBody(req, request, this.config.requestTimeout).catch(_reject);
     });
   }
 }

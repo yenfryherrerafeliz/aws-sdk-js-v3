@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { DeleteChangeSetInput, DeleteChangeSetOutput } from "../models/models_0";
 import { de_DeleteChangeSetCommand, se_DeleteChangeSetCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,14 +36,11 @@ export interface DeleteChangeSetCommandOutput extends DeleteChangeSetOutput, __M
 
 /**
  * @public
- * <p>Deletes the specified change set. Deleting change sets ensures that no one executes the
- *          wrong change set.</p>
- *          <p>If the call successfully completes, CloudFormation successfully deleted the change
- *          set.</p>
- *          <p>If <code>IncludeNestedStacks</code> specifies <code>True</code> during the creation of
- *          the nested change set, then <code>DeleteChangeSet</code> will delete all change sets that
- *          belong to the stacks hierarchy and will also delete all change sets for nested stacks with
- *          the status of <code>REVIEW_IN_PROGRESS</code>.</p>
+ * <p>Deletes the specified change set. Deleting change sets ensures that no one executes the wrong change set.</p>
+ *          <p>If the call successfully completes, CloudFormation successfully deleted the change set.</p>
+ *          <p>If <code>IncludeNestedStacks</code> specifies <code>True</code> during the creation of the nested change set,
+ *    then <code>DeleteChangeSet</code> will delete all change sets that belong to the stacks hierarchy and will also
+ *    delete all change sets for nested stacks with the status of <code>REVIEW_IN_PROGRESS</code>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -63,9 +64,8 @@ export interface DeleteChangeSetCommandOutput extends DeleteChangeSetOutput, __M
  * @see {@link CloudFormationClientResolvedConfig | config} for CloudFormationClient's `config` shape.
  *
  * @throws {@link InvalidChangeSetStatusException} (client fault)
- *  <p>The specified change set can't be used to update the stack. For example, the change set
- *          status might be <code>CREATE_IN_PROGRESS</code>, or the stack status might be
- *             <code>UPDATE_IN_PROGRESS</code>.</p>
+ *  <p>The specified change set can't be used to update the stack. For example, the change set status might be
+ *     <code>CREATE_IN_PROGRESS</code>, or the stack status might be <code>UPDATE_IN_PROGRESS</code>.</p>
  *
  * @throws {@link CloudFormationServiceException}
  * <p>Base exception class for all service exceptions from CloudFormation service.</p>

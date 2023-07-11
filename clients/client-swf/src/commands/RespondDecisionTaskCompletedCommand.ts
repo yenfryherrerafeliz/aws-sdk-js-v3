@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { RespondDecisionTaskCompletedInput } from "../models/models_0";
 import {
@@ -20,6 +20,10 @@ import {
 } from "../protocols/Aws_json1_0";
 import { ServiceInputTypes, ServiceOutputTypes, SWFClientResolvedConfig } from "../SWFClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -38,15 +42,12 @@ export interface RespondDecisionTaskCompletedCommandOutput extends __MetadataBea
  * <p>Used by deciders to tell the service that the <a>DecisionTask</a> identified
  *       by the <code>taskToken</code> has successfully completed. The <code>decisions</code> argument
  *       specifies the list of decisions made while processing the task.</p>
- *
  *          <p>A <code>DecisionTaskCompleted</code> event is added to the workflow history. The
  *         <code>executionContext</code> specified is attached to the event in the workflow execution
  *       history.</p>
- *
  *          <p>
  *             <b>Access Control</b>
  *          </p>
- *
  *          <p>If an IAM policy grants permission to use <code>RespondDecisionTaskCompleted</code>, it
  *       can express permissions for the list of decisions in the <code>decisions</code> parameter.
  *       Each of the decisions has one or more parameters, much like a regular API call. To allow for

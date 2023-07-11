@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { GetTemplateInput, GetTemplateOutput } from "../models/models_0";
 import { de_GetTemplateCommand, se_GetTemplateCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,10 +36,9 @@ export interface GetTemplateCommandOutput extends GetTemplateOutput, __MetadataB
 
 /**
  * @public
- * <p>Returns the template body for a specified stack. You can get the template for running or
- *          deleted stacks.</p>
- *          <p>For deleted stacks, <code>GetTemplate</code> returns the template for up to 90 days
- *          after the stack has been deleted.</p>
+ * <p>Returns the template body for a specified stack. You can get the template for running or deleted stacks.</p>
+ *          <p>For deleted stacks, <code>GetTemplate</code> returns the template for up to 90 days after the stack has been
+ *    deleted.</p>
  *          <note>
  *             <p>If the template doesn't exist, a <code>ValidationError</code> is returned.</p>
  *          </note>
@@ -68,8 +71,8 @@ export interface GetTemplateCommandOutput extends GetTemplateOutput, __MetadataB
  * @see {@link CloudFormationClientResolvedConfig | config} for CloudFormationClient's `config` shape.
  *
  * @throws {@link ChangeSetNotFoundException} (client fault)
- *  <p>The specified change set name or ID doesn't exit. To view valid change sets for a stack,
- *          use the <code>ListChangeSets</code> operation.</p>
+ *  <p>The specified change set name or ID doesn't exit. To view valid change sets for a stack, use the
+ *     <code>ListChangeSets</code> operation.</p>
  *
  * @throws {@link CloudFormationServiceException}
  * <p>Base exception class for all service exceptions from CloudFormation service.</p>

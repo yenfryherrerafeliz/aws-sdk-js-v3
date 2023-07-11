@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { PostUnionWithJsonNameInput, PostUnionWithJsonNameOutput } from "../models/models_0";
 import { de_PostUnionWithJsonNameCommand, se_PostUnionWithJsonNameCommand } from "../protocols/Aws_restJson1";
 import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RestJsonProtocolClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -47,6 +51,14 @@ export interface PostUnionWithJsonNameCommandOutput extends PostUnionWithJsonNam
  * };
  * const command = new PostUnionWithJsonNameCommand(input);
  * const response = await client.send(command);
+ * // { // PostUnionWithJsonNameOutput
+ * //   value: { // UnionWithJsonName Union: only one key present
+ * //     foo: "STRING_VALUE",
+ * //     bar: "STRING_VALUE",
+ * //     baz: "STRING_VALUE",
+ * //   },
+ * // };
+ *
  * ```
  *
  * @param PostUnionWithJsonNameCommandInput - {@link PostUnionWithJsonNameCommandInput}
@@ -55,6 +67,8 @@ export interface PostUnionWithJsonNameCommandOutput extends PostUnionWithJsonNam
  * @see {@link PostUnionWithJsonNameCommandOutput} for command's `response` shape.
  * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
  *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
  *
  */
 export class PostUnionWithJsonNameCommand extends $Command<

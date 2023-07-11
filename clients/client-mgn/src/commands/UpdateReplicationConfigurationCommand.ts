@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { MgnClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MgnClient";
 import {
@@ -25,6 +25,10 @@ import {
   se_UpdateReplicationConfigurationCommand,
 } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -75,6 +79,8 @@ export interface UpdateReplicationConfigurationCommandOutput extends Replication
  *   stagingAreaTags: { // TagsMap
  *     "<keys>": "STRING_VALUE",
  *   },
+ *   useFipsEndpoint: true || false,
+ *   accountID: "STRING_VALUE",
  * };
  * const command = new UpdateReplicationConfigurationCommand(input);
  * const response = await client.send(command);
@@ -106,6 +112,7 @@ export interface UpdateReplicationConfigurationCommandOutput extends Replication
  * //   stagingAreaTags: { // TagsMap
  * //     "<keys>": "STRING_VALUE",
  * //   },
+ * //   useFipsEndpoint: true || false,
  * // };
  *
  * ```

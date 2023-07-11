@@ -1,6 +1,7 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectNonNull as __expectNonNull,
   expectString as __expectString,
@@ -13,13 +14,13 @@ import {
   strictParseInt32 as __strictParseInt32,
   strictParseLong as __strictParseLong,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { XMLParser } from "fast-xml-parser";
 
 import {
@@ -79,6 +80,10 @@ import {
   CreateClusterSubnetGroupCommandOutput,
 } from "../commands/CreateClusterSubnetGroupCommand";
 import {
+  CreateCustomDomainAssociationCommandInput,
+  CreateCustomDomainAssociationCommandOutput,
+} from "../commands/CreateCustomDomainAssociationCommand";
+import {
   CreateEndpointAccessCommandInput,
   CreateEndpointAccessCommandOutput,
 } from "../commands/CreateEndpointAccessCommand";
@@ -133,6 +138,10 @@ import {
   DeleteClusterSubnetGroupCommandInput,
   DeleteClusterSubnetGroupCommandOutput,
 } from "../commands/DeleteClusterSubnetGroupCommand";
+import {
+  DeleteCustomDomainAssociationCommandInput,
+  DeleteCustomDomainAssociationCommandOutput,
+} from "../commands/DeleteCustomDomainAssociationCommand";
 import {
   DeleteEndpointAccessCommandInput,
   DeleteEndpointAccessCommandOutput,
@@ -205,6 +214,10 @@ import {
   DescribeClusterVersionsCommandInput,
   DescribeClusterVersionsCommandOutput,
 } from "../commands/DescribeClusterVersionsCommand";
+import {
+  DescribeCustomDomainAssociationsCommandInput,
+  DescribeCustomDomainAssociationsCommandOutput,
+} from "../commands/DescribeCustomDomainAssociationsCommand";
 import { DescribeDataSharesCommandInput, DescribeDataSharesCommandOutput } from "../commands/DescribeDataSharesCommand";
 import {
   DescribeDataSharesForConsumerCommandInput,
@@ -356,6 +369,10 @@ import {
   ModifyClusterSubnetGroupCommandOutput,
 } from "../commands/ModifyClusterSubnetGroupCommand";
 import {
+  ModifyCustomDomainAssociationCommandInput,
+  ModifyCustomDomainAssociationCommandOutput,
+} from "../commands/ModifyCustomDomainAssociationCommand";
+import {
   ModifyEndpointAccessCommandInput,
   ModifyEndpointAccessCommandOutput,
 } from "../commands/ModifyEndpointAccessCommand";
@@ -427,6 +444,7 @@ import {
   AccountWithRestoreAccess,
   AquaConfiguration,
   AssociateDataShareConsumerMessage,
+  Association,
   AttributeValueTarget,
   AuthenticationProfile,
   AuthenticationProfileAlreadyExistsFault,
@@ -450,6 +468,7 @@ import {
   BatchModifyClusterSnapshotsOutputMessage,
   BucketNotFoundFault,
   CancelResizeMessage,
+  CertificateAssociation,
   Cluster,
   ClusterAlreadyExistsFault,
   ClusterAssociatedToSchedule,
@@ -505,6 +524,8 @@ import {
   CreateClusterSnapshotResult,
   CreateClusterSubnetGroupMessage,
   CreateClusterSubnetGroupResult,
+  CreateCustomDomainAssociationMessage,
+  CreateCustomDomainAssociationResult,
   CreateEndpointAccessMessage,
   CreateEventSubscriptionMessage,
   CreateEventSubscriptionResult,
@@ -518,6 +539,9 @@ import {
   CreateSnapshotScheduleMessage,
   CreateTagsMessage,
   CreateUsageLimitMessage,
+  CustomCnameAssociationFault,
+  CustomDomainAssociationNotFoundFault,
+  CustomDomainAssociationsMessage,
   CustomerStorageMessage,
   DataShare,
   DataShareAssociation,
@@ -534,6 +558,7 @@ import {
   DeleteClusterSnapshotMessage,
   DeleteClusterSnapshotResult,
   DeleteClusterSubnetGroupMessage,
+  DeleteCustomDomainAssociationMessage,
   DeleteEndpointAccessMessage,
   DeleteEventSubscriptionMessage,
   DeleteHsmClientCertificateMessage,
@@ -557,6 +582,7 @@ import {
   DescribeClusterSubnetGroupsMessage,
   DescribeClusterTracksMessage,
   DescribeClusterVersionsMessage,
+  DescribeCustomDomainAssociationsMessage,
   DescribeDataSharesForConsumerMessage,
   DescribeDataSharesForConsumerResult,
   DescribeDataSharesForProducerMessage,
@@ -568,9 +594,6 @@ import {
   DescribeEndpointAccessMessage,
   DescribeEndpointAuthorizationMessage,
   DescribeEventCategoriesMessage,
-  DescribeEventsMessage,
-  DescribeEventSubscriptionsMessage,
-  DescribeHsmClientCertificatesMessage,
   EC2SecurityGroup,
   ElasticIpStatus,
   Endpoint,
@@ -584,17 +607,12 @@ import {
   EndpointNotFoundFault,
   EndpointsPerAuthorizationLimitExceededFault,
   EndpointsPerClusterLimitExceededFault,
-  Event,
   EventCategoriesMap,
-  EventCategoriesMessage,
   EventInfoMap,
-  EventsMessage,
   EventSubscription,
   EventSubscriptionQuotaExceededFault,
-  EventSubscriptionsMessage,
   HsmClientCertificate,
   HsmClientCertificateAlreadyExistsFault,
-  HsmClientCertificateMessage,
   HsmClientCertificateNotFoundFault,
   HsmClientCertificateQuotaExceededFault,
   HsmConfiguration,
@@ -701,6 +719,9 @@ import {
   VpcSecurityGroupMembership,
 } from "../models/models_0";
 import {
+  DescribeEventsMessage,
+  DescribeEventSubscriptionsMessage,
+  DescribeHsmClientCertificatesMessage,
   DescribeHsmConfigurationsMessage,
   DescribeLoggingStatusMessage,
   DescribeNodeConfigurationOptionsMessage,
@@ -727,12 +748,17 @@ import {
   EnableSnapshotCopyMessage,
   EnableSnapshotCopyResult,
   EndpointAuthorizationNotFoundFault,
+  Event,
+  EventCategoriesMessage,
+  EventsMessage,
+  EventSubscriptionsMessage,
   GetClusterCredentialsMessage,
   GetClusterCredentialsWithIAMMessage,
   GetReservedNodeExchangeConfigurationOptionsInputMessage,
   GetReservedNodeExchangeConfigurationOptionsOutputMessage,
   GetReservedNodeExchangeOfferingsInputMessage,
   GetReservedNodeExchangeOfferingsOutputMessage,
+  HsmClientCertificateMessage,
   HsmConfigurationMessage,
   IncompatibleOrderableOptions,
   InProgressTableRestoreQuotaExceededFault,
@@ -760,6 +786,8 @@ import {
   ModifyClusterSnapshotScheduleMessage,
   ModifyClusterSubnetGroupMessage,
   ModifyClusterSubnetGroupResult,
+  ModifyCustomDomainAssociationMessage,
+  ModifyCustomDomainAssociationResult,
   ModifyEndpointAccessMessage,
   ModifyEventSubscriptionMessage,
   ModifyEventSubscriptionResult,
@@ -1111,6 +1139,23 @@ export const se_CreateClusterSubnetGroupCommand = async (
 };
 
 /**
+ * serializeAws_queryCreateCustomDomainAssociationCommand
+ */
+export const se_CreateCustomDomainAssociationCommand = async (
+  input: CreateCustomDomainAssociationCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_CreateCustomDomainAssociationMessage(input, context),
+    Action: "CreateCustomDomainAssociation",
+    Version: "2012-12-01",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
  * serializeAws_queryCreateEndpointAccessCommand
  */
 export const se_CreateEndpointAccessCommand = async (
@@ -1377,6 +1422,23 @@ export const se_DeleteClusterSubnetGroupCommand = async (
   body = buildFormUrlencodedString({
     ...se_DeleteClusterSubnetGroupMessage(input, context),
     Action: "DeleteClusterSubnetGroup",
+    Version: "2012-12-01",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_queryDeleteCustomDomainAssociationCommand
+ */
+export const se_DeleteCustomDomainAssociationCommand = async (
+  input: DeleteCustomDomainAssociationCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_DeleteCustomDomainAssociationMessage(input, context),
+    Action: "DeleteCustomDomainAssociation",
     Version: "2012-12-01",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -1734,6 +1796,23 @@ export const se_DescribeClusterVersionsCommand = async (
   body = buildFormUrlencodedString({
     ...se_DescribeClusterVersionsMessage(input, context),
     Action: "DescribeClusterVersions",
+    Version: "2012-12-01",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_queryDescribeCustomDomainAssociationsCommand
+ */
+export const se_DescribeCustomDomainAssociationsCommand = async (
+  input: DescribeCustomDomainAssociationsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_DescribeCustomDomainAssociationsMessage(input, context),
+    Action: "DescribeCustomDomainAssociations",
     Version: "2012-12-01",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -2497,6 +2576,23 @@ export const se_ModifyClusterSubnetGroupCommand = async (
   body = buildFormUrlencodedString({
     ...se_ModifyClusterSubnetGroupMessage(input, context),
     Action: "ModifyClusterSubnetGroup",
+    Version: "2012-12-01",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_queryModifyCustomDomainAssociationCommand
+ */
+export const se_ModifyCustomDomainAssociationCommand = async (
+  input: ModifyCustomDomainAssociationCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_ModifyCustomDomainAssociationMessage(input, context),
+    Action: "ModifyCustomDomainAssociation",
     Version: "2012-12-01",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -3844,6 +3940,58 @@ const de_CreateClusterSubnetGroupCommandError = async (
 };
 
 /**
+ * deserializeAws_queryCreateCustomDomainAssociationCommand
+ */
+export const de_CreateCustomDomainAssociationCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateCustomDomainAssociationCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_CreateCustomDomainAssociationCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_CreateCustomDomainAssociationResult(data.CreateCustomDomainAssociationResult, context);
+  const response: CreateCustomDomainAssociationCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryCreateCustomDomainAssociationCommandError
+ */
+const de_CreateCustomDomainAssociationCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateCustomDomainAssociationCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "ClusterNotFound":
+    case "com.amazonaws.redshift#ClusterNotFoundFault":
+      throw await de_ClusterNotFoundFaultRes(parsedOutput, context);
+    case "CustomCnameAssociationFault":
+    case "com.amazonaws.redshift#CustomCnameAssociationFault":
+      throw await de_CustomCnameAssociationFaultRes(parsedOutput, context);
+    case "UnsupportedOperation":
+    case "com.amazonaws.redshift#UnsupportedOperationFault":
+      throw await de_UnsupportedOperationFaultRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_queryCreateEndpointAccessCommand
  */
 export const de_CreateEndpointAccessCommand = async (
@@ -4734,6 +4882,55 @@ const de_DeleteClusterSubnetGroupCommandError = async (
     case "InvalidClusterSubnetStateFault":
     case "com.amazonaws.redshift#InvalidClusterSubnetStateFault":
       throw await de_InvalidClusterSubnetStateFaultRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_queryDeleteCustomDomainAssociationCommand
+ */
+export const de_DeleteCustomDomainAssociationCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteCustomDomainAssociationCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DeleteCustomDomainAssociationCommandError(output, context);
+  }
+  await collectBody(output.body, context);
+  const response: DeleteCustomDomainAssociationCommandOutput = {
+    $metadata: deserializeMetadata(output),
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryDeleteCustomDomainAssociationCommandError
+ */
+const de_DeleteCustomDomainAssociationCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteCustomDomainAssociationCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "ClusterNotFound":
+    case "com.amazonaws.redshift#ClusterNotFoundFault":
+      throw await de_ClusterNotFoundFaultRes(parsedOutput, context);
+    case "CustomCnameAssociationFault":
+    case "com.amazonaws.redshift#CustomCnameAssociationFault":
+      throw await de_CustomCnameAssociationFaultRes(parsedOutput, context);
+    case "UnsupportedOperation":
+    case "com.amazonaws.redshift#UnsupportedOperationFault":
+      throw await de_UnsupportedOperationFaultRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -5744,6 +5941,55 @@ const de_DescribeClusterVersionsCommandError = async (
     parsedBody: parsedBody.Error,
     errorCode,
   });
+};
+
+/**
+ * deserializeAws_queryDescribeCustomDomainAssociationsCommand
+ */
+export const de_DescribeCustomDomainAssociationsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeCustomDomainAssociationsCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DescribeCustomDomainAssociationsCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_CustomDomainAssociationsMessage(data.DescribeCustomDomainAssociationsResult, context);
+  const response: DescribeCustomDomainAssociationsCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryDescribeCustomDomainAssociationsCommandError
+ */
+const de_DescribeCustomDomainAssociationsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DescribeCustomDomainAssociationsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "CustomDomainAssociationNotFoundFault":
+    case "com.amazonaws.redshift#CustomDomainAssociationNotFoundFault":
+      throw await de_CustomDomainAssociationNotFoundFaultRes(parsedOutput, context);
+    case "UnsupportedOperation":
+    case "com.amazonaws.redshift#UnsupportedOperationFault":
+      throw await de_UnsupportedOperationFaultRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
 };
 
 /**
@@ -7640,6 +7886,9 @@ const de_ModifyClusterCommandError = async (
     case "ClusterSecurityGroupNotFound":
     case "com.amazonaws.redshift#ClusterSecurityGroupNotFoundFault":
       throw await de_ClusterSecurityGroupNotFoundFaultRes(parsedOutput, context);
+    case "CustomCnameAssociationFault":
+    case "com.amazonaws.redshift#CustomCnameAssociationFault":
+      throw await de_CustomCnameAssociationFaultRes(parsedOutput, context);
     case "DependentServiceRequestThrottlingFault":
     case "com.amazonaws.redshift#DependentServiceRequestThrottlingFault":
       throw await de_DependentServiceRequestThrottlingFaultRes(parsedOutput, context);
@@ -7682,6 +7931,9 @@ const de_ModifyClusterCommandError = async (
     case "UnauthorizedOperation":
     case "com.amazonaws.redshift#UnauthorizedOperation":
       throw await de_UnauthorizedOperationRes(parsedOutput, context);
+    case "UnsupportedOperation":
+    case "com.amazonaws.redshift#UnsupportedOperationFault":
+      throw await de_UnsupportedOperationFaultRes(parsedOutput, context);
     case "UnsupportedOptionFault":
     case "com.amazonaws.redshift#UnsupportedOptionFault":
       throw await de_UnsupportedOptionFaultRes(parsedOutput, context);
@@ -8046,6 +8298,58 @@ const de_ModifyClusterSubnetGroupCommandError = async (
     case "UnauthorizedOperation":
     case "com.amazonaws.redshift#UnauthorizedOperation":
       throw await de_UnauthorizedOperationRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_queryModifyCustomDomainAssociationCommand
+ */
+export const de_ModifyCustomDomainAssociationCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ModifyCustomDomainAssociationCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_ModifyCustomDomainAssociationCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_ModifyCustomDomainAssociationResult(data.ModifyCustomDomainAssociationResult, context);
+  const response: ModifyCustomDomainAssociationCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryModifyCustomDomainAssociationCommandError
+ */
+const de_ModifyCustomDomainAssociationCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ModifyCustomDomainAssociationCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "ClusterNotFound":
+    case "com.amazonaws.redshift#ClusterNotFoundFault":
+      throw await de_ClusterNotFoundFaultRes(parsedOutput, context);
+    case "CustomCnameAssociationFault":
+    case "com.amazonaws.redshift#CustomCnameAssociationFault":
+      throw await de_CustomCnameAssociationFaultRes(parsedOutput, context);
+    case "UnsupportedOperation":
+    case "com.amazonaws.redshift#UnsupportedOperationFault":
+      throw await de_UnsupportedOperationFaultRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -9728,6 +10032,38 @@ const de_CopyToRegionDisabledFaultRes = async (
   const body = parsedOutput.body;
   const deserialized: any = de_CopyToRegionDisabledFault(body.Error, context);
   const exception = new CopyToRegionDisabledFault({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...deserialized,
+  });
+  return __decorateServiceException(exception, body);
+};
+
+/**
+ * deserializeAws_queryCustomCnameAssociationFaultRes
+ */
+const de_CustomCnameAssociationFaultRes = async (
+  parsedOutput: any,
+  context: __SerdeContext
+): Promise<CustomCnameAssociationFault> => {
+  const body = parsedOutput.body;
+  const deserialized: any = de_CustomCnameAssociationFault(body.Error, context);
+  const exception = new CustomCnameAssociationFault({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...deserialized,
+  });
+  return __decorateServiceException(exception, body);
+};
+
+/**
+ * deserializeAws_queryCustomDomainAssociationNotFoundFaultRes
+ */
+const de_CustomDomainAssociationNotFoundFaultRes = async (
+  parsedOutput: any,
+  context: __SerdeContext
+): Promise<CustomDomainAssociationNotFoundFault> => {
+  const body = parsedOutput.body;
+  const deserialized: any = de_CustomDomainAssociationNotFoundFault(body.Error, context);
+  const exception = new CustomDomainAssociationNotFoundFault({
     $metadata: deserializeMetadata(parsedOutput),
     ...deserialized,
   });
@@ -11771,6 +12107,26 @@ const se_CreateClusterSubnetGroupMessage = (input: CreateClusterSubnetGroupMessa
 };
 
 /**
+ * serializeAws_queryCreateCustomDomainAssociationMessage
+ */
+const se_CreateCustomDomainAssociationMessage = (
+  input: CreateCustomDomainAssociationMessage,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.CustomDomainName != null) {
+    entries["CustomDomainName"] = input.CustomDomainName;
+  }
+  if (input.CustomDomainCertificateArn != null) {
+    entries["CustomDomainCertificateArn"] = input.CustomDomainCertificateArn;
+  }
+  if (input.ClusterIdentifier != null) {
+    entries["ClusterIdentifier"] = input.ClusterIdentifier;
+  }
+  return entries;
+};
+
+/**
  * serializeAws_queryCreateEndpointAccessMessage
  */
 const se_CreateEndpointAccessMessage = (input: CreateEndpointAccessMessage, context: __SerdeContext): any => {
@@ -12202,6 +12558,20 @@ const se_DeleteClusterSubnetGroupMessage = (input: DeleteClusterSubnetGroupMessa
   const entries: any = {};
   if (input.ClusterSubnetGroupName != null) {
     entries["ClusterSubnetGroupName"] = input.ClusterSubnetGroupName;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_queryDeleteCustomDomainAssociationMessage
+ */
+const se_DeleteCustomDomainAssociationMessage = (
+  input: DeleteCustomDomainAssociationMessage,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.ClusterIdentifier != null) {
+    entries["ClusterIdentifier"] = input.ClusterIdentifier;
   }
   return entries;
 };
@@ -12642,6 +13012,29 @@ const se_DescribeClusterVersionsMessage = (input: DescribeClusterVersionsMessage
   }
   if (input.ClusterParameterGroupFamily != null) {
     entries["ClusterParameterGroupFamily"] = input.ClusterParameterGroupFamily;
+  }
+  if (input.MaxRecords != null) {
+    entries["MaxRecords"] = input.MaxRecords;
+  }
+  if (input.Marker != null) {
+    entries["Marker"] = input.Marker;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_queryDescribeCustomDomainAssociationsMessage
+ */
+const se_DescribeCustomDomainAssociationsMessage = (
+  input: DescribeCustomDomainAssociationsMessage,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.CustomDomainName != null) {
+    entries["CustomDomainName"] = input.CustomDomainName;
+  }
+  if (input.CustomDomainCertificateArn != null) {
+    entries["CustomDomainCertificateArn"] = input.CustomDomainCertificateArn;
   }
   if (input.MaxRecords != null) {
     entries["MaxRecords"] = input.MaxRecords;
@@ -13480,6 +13873,9 @@ const se_GetClusterCredentialsMessage = (input: GetClusterCredentialsMessage, co
       entries[loc] = value;
     });
   }
+  if (input.CustomDomainName != null) {
+    entries["CustomDomainName"] = input.CustomDomainName;
+  }
   return entries;
 };
 
@@ -13499,6 +13895,9 @@ const se_GetClusterCredentialsWithIAMMessage = (
   }
   if (input.DurationSeconds != null) {
     entries["DurationSeconds"] = input.DurationSeconds;
+  }
+  if (input.CustomDomainName != null) {
+    entries["CustomDomainName"] = input.CustomDomainName;
   }
   return entries;
 };
@@ -13864,6 +14263,26 @@ const se_ModifyClusterSubnetGroupMessage = (input: ModifyClusterSubnetGroupMessa
       const loc = `SubnetIds.${key}`;
       entries[loc] = value;
     });
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_queryModifyCustomDomainAssociationMessage
+ */
+const se_ModifyCustomDomainAssociationMessage = (
+  input: ModifyCustomDomainAssociationMessage,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.CustomDomainName != null) {
+    entries["CustomDomainName"] = input.CustomDomainName;
+  }
+  if (input.CustomDomainCertificateArn != null) {
+    entries["CustomDomainCertificateArn"] = input.CustomDomainCertificateArn;
+  }
+  if (input.ClusterIdentifier != null) {
+    entries["ClusterIdentifier"] = input.ClusterIdentifier;
   }
   return entries;
 };
@@ -14946,6 +15365,44 @@ const de_AssociatedClusterList = (output: any, context: __SerdeContext): Cluster
 };
 
 /**
+ * deserializeAws_queryAssociation
+ */
+const de_Association = (output: any, context: __SerdeContext): Association => {
+  const contents: any = {};
+  if (output["CustomDomainCertificateArn"] !== undefined) {
+    contents.CustomDomainCertificateArn = __expectString(output["CustomDomainCertificateArn"]);
+  }
+  if (output["CustomDomainCertificateExpiryDate"] !== undefined) {
+    contents.CustomDomainCertificateExpiryDate = __expectNonNull(
+      __parseRfc3339DateTimeWithOffset(output["CustomDomainCertificateExpiryDate"])
+    );
+  }
+  if (output.CertificateAssociations === "") {
+    contents.CertificateAssociations = [];
+  } else if (
+    output["CertificateAssociations"] !== undefined &&
+    output["CertificateAssociations"]["CertificateAssociation"] !== undefined
+  ) {
+    contents.CertificateAssociations = de_CertificateAssociationList(
+      __getArrayIfSingleItem(output["CertificateAssociations"]["CertificateAssociation"]),
+      context
+    );
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryAssociationList
+ */
+const de_AssociationList = (output: any, context: __SerdeContext): Association[] => {
+  return (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_Association(entry, context);
+    });
+};
+
+/**
  * deserializeAws_queryAttributeList
  */
 const de_AttributeList = (output: any, context: __SerdeContext): AccountAttribute[] => {
@@ -15246,6 +15703,31 @@ const de_BucketNotFoundFault = (output: any, context: __SerdeContext): BucketNot
 };
 
 /**
+ * deserializeAws_queryCertificateAssociation
+ */
+const de_CertificateAssociation = (output: any, context: __SerdeContext): CertificateAssociation => {
+  const contents: any = {};
+  if (output["CustomDomainName"] !== undefined) {
+    contents.CustomDomainName = __expectString(output["CustomDomainName"]);
+  }
+  if (output["ClusterIdentifier"] !== undefined) {
+    contents.ClusterIdentifier = __expectString(output["ClusterIdentifier"]);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryCertificateAssociationList
+ */
+const de_CertificateAssociationList = (output: any, context: __SerdeContext): CertificateAssociation[] => {
+  return (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_CertificateAssociation(entry, context);
+    });
+};
+
+/**
  * deserializeAws_queryCluster
  */
 const de_Cluster = (output: any, context: __SerdeContext): Cluster => {
@@ -15454,6 +15936,17 @@ const de_Cluster = (output: any, context: __SerdeContext): Cluster => {
   }
   if (output["ReservedNodeExchangeStatus"] !== undefined) {
     contents.ReservedNodeExchangeStatus = de_ReservedNodeExchangeStatus(output["ReservedNodeExchangeStatus"], context);
+  }
+  if (output["CustomDomainName"] !== undefined) {
+    contents.CustomDomainName = __expectString(output["CustomDomainName"]);
+  }
+  if (output["CustomDomainCertificateArn"] !== undefined) {
+    contents.CustomDomainCertificateArn = __expectString(output["CustomDomainCertificateArn"]);
+  }
+  if (output["CustomDomainCertificateExpiryDate"] !== undefined) {
+    contents.CustomDomainCertificateExpiryDate = __expectNonNull(
+      __parseRfc3339DateTimeWithOffset(output["CustomDomainCertificateExpiryDate"])
+    );
   }
   return contents;
 };
@@ -16334,6 +16827,29 @@ const de_CreateClusterSubnetGroupResult = (output: any, context: __SerdeContext)
 };
 
 /**
+ * deserializeAws_queryCreateCustomDomainAssociationResult
+ */
+const de_CreateCustomDomainAssociationResult = (
+  output: any,
+  context: __SerdeContext
+): CreateCustomDomainAssociationResult => {
+  const contents: any = {};
+  if (output["CustomDomainName"] !== undefined) {
+    contents.CustomDomainName = __expectString(output["CustomDomainName"]);
+  }
+  if (output["CustomDomainCertificateArn"] !== undefined) {
+    contents.CustomDomainCertificateArn = __expectString(output["CustomDomainCertificateArn"]);
+  }
+  if (output["ClusterIdentifier"] !== undefined) {
+    contents.ClusterIdentifier = __expectString(output["ClusterIdentifier"]);
+  }
+  if (output["CustomDomainCertExpiryTime"] !== undefined) {
+    contents.CustomDomainCertExpiryTime = __expectString(output["CustomDomainCertExpiryTime"]);
+  }
+  return contents;
+};
+
+/**
  * deserializeAws_queryCreateEventSubscriptionResult
  */
 const de_CreateEventSubscriptionResult = (output: any, context: __SerdeContext): CreateEventSubscriptionResult => {
@@ -16376,6 +16892,47 @@ const de_CreateSnapshotCopyGrantResult = (output: any, context: __SerdeContext):
   const contents: any = {};
   if (output["SnapshotCopyGrant"] !== undefined) {
     contents.SnapshotCopyGrant = de_SnapshotCopyGrant(output["SnapshotCopyGrant"], context);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryCustomCnameAssociationFault
+ */
+const de_CustomCnameAssociationFault = (output: any, context: __SerdeContext): CustomCnameAssociationFault => {
+  const contents: any = {};
+  if (output["message"] !== undefined) {
+    contents.message = __expectString(output["message"]);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryCustomDomainAssociationNotFoundFault
+ */
+const de_CustomDomainAssociationNotFoundFault = (
+  output: any,
+  context: __SerdeContext
+): CustomDomainAssociationNotFoundFault => {
+  const contents: any = {};
+  if (output["message"] !== undefined) {
+    contents.message = __expectString(output["message"]);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryCustomDomainAssociationsMessage
+ */
+const de_CustomDomainAssociationsMessage = (output: any, context: __SerdeContext): CustomDomainAssociationsMessage => {
+  const contents: any = {};
+  if (output["Marker"] !== undefined) {
+    contents.Marker = __expectString(output["Marker"]);
+  }
+  if (output.Associations === "") {
+    contents.Associations = [];
+  } else if (output["Associations"] !== undefined && output["Associations"]["Association"] !== undefined) {
+    contents.Associations = de_AssociationList(__getArrayIfSingleItem(output["Associations"]["Association"]), context);
   }
   return contents;
 };
@@ -18268,6 +18825,29 @@ const de_ModifyClusterSubnetGroupResult = (output: any, context: __SerdeContext)
   const contents: any = {};
   if (output["ClusterSubnetGroup"] !== undefined) {
     contents.ClusterSubnetGroup = de_ClusterSubnetGroup(output["ClusterSubnetGroup"], context);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryModifyCustomDomainAssociationResult
+ */
+const de_ModifyCustomDomainAssociationResult = (
+  output: any,
+  context: __SerdeContext
+): ModifyCustomDomainAssociationResult => {
+  const contents: any = {};
+  if (output["CustomDomainName"] !== undefined) {
+    contents.CustomDomainName = __expectString(output["CustomDomainName"]);
+  }
+  if (output["CustomDomainCertificateArn"] !== undefined) {
+    contents.CustomDomainCertificateArn = __expectString(output["CustomDomainCertificateArn"]);
+  }
+  if (output["ClusterIdentifier"] !== undefined) {
+    contents.ClusterIdentifier = __expectString(output["ClusterIdentifier"]);
+  }
+  if (output["CustomDomainCertExpiryTime"] !== undefined) {
+    contents.CustomDomainCertExpiryTime = __expectString(output["CustomDomainCertExpiryTime"]);
   }
   return contents;
 };
@@ -20624,14 +21204,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   cfId: output.headers["x-amz-cf-id"],
 });
 
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
-
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>
   collectBody(streamBody, context).then((body) => context.utf8Encoder(body));
@@ -20675,7 +21247,7 @@ const parseBody = (streamBody: any, context: __SerdeContext): any =>
         ignoreDeclaration: true,
         parseTagValue: false,
         trimValues: false,
-        tagValueProcessor: (_, val) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
+        tagValueProcessor: (_: any, val: any) => (val.trim() === "" && val.includes("\n") ? "" : undefined),
       });
       parser.addEntity("#xD", "\r");
       parser.addEntity("#10", "\n");

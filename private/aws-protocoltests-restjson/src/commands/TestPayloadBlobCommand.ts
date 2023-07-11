@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { BlobTypes } from "@aws-sdk/types";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,7 +11,8 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
 import { TestPayloadBlobInputOutput } from "../models/models_0";
 import { de_TestPayloadBlobCommand, se_TestPayloadBlobCommand } from "../protocols/Aws_restJson1";
@@ -18,16 +20,34 @@ import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputT
 
 /**
  * @public
+ */
+export { __MetadataBearer, $Command };
+/**
+ * @public
+ */
+export type TestPayloadBlobCommandInputType = Omit<TestPayloadBlobInputOutput, "data"> & {
+  data?: BlobTypes;
+};
+
+/**
+ * @public
  *
  * The input for {@link TestPayloadBlobCommand}.
  */
-export interface TestPayloadBlobCommandInput extends TestPayloadBlobInputOutput {}
+export interface TestPayloadBlobCommandInput extends TestPayloadBlobCommandInputType {}
+/**
+ * @public
+ */
+export type TestPayloadBlobCommandOutputType = Omit<TestPayloadBlobInputOutput, "data"> & {
+  data?: Uint8ArrayBlobAdapter;
+};
+
 /**
  * @public
  *
  * The output of {@link TestPayloadBlobCommand}.
  */
-export interface TestPayloadBlobCommandOutput extends TestPayloadBlobInputOutput, __MetadataBearer {}
+export interface TestPayloadBlobCommandOutput extends TestPayloadBlobCommandOutputType, __MetadataBearer {}
 
 /**
  * @public
@@ -51,6 +71,11 @@ export interface TestPayloadBlobCommandOutput extends TestPayloadBlobInputOutput
  * };
  * const command = new TestPayloadBlobCommand(input);
  * const response = await client.send(command);
+ * // { // TestPayloadBlobInputOutput
+ * //   contentType: "STRING_VALUE",
+ * //   data: "BLOB_VALUE",
+ * // };
+ *
  * ```
  *
  * @param TestPayloadBlobCommandInput - {@link TestPayloadBlobCommandInput}
@@ -59,6 +84,8 @@ export interface TestPayloadBlobCommandOutput extends TestPayloadBlobInputOutput
  * @see {@link TestPayloadBlobCommandOutput} for command's `response` shape.
  * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
  *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
  *
  */
 export class TestPayloadBlobCommand extends $Command<

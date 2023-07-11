@@ -1,6 +1,6 @@
 // smithy-typescript generated code
-import { createAggregatedClient } from "@aws-sdk/smithy-client";
-import { HttpHandlerOptions as __HttpHandlerOptions } from "@aws-sdk/types";
+import { createAggregatedClient } from "@smithy/smithy-client";
+import { HttpHandlerOptions as __HttpHandlerOptions } from "@smithy/types";
 
 import {
   CreateParallelDataCommand,
@@ -74,6 +74,11 @@ import {
 } from "./commands/StopTextTranslationJobCommand";
 import { TagResourceCommand, TagResourceCommandInput, TagResourceCommandOutput } from "./commands/TagResourceCommand";
 import {
+  TranslateDocumentCommand,
+  TranslateDocumentCommandInput,
+  TranslateDocumentCommandOutput,
+} from "./commands/TranslateDocumentCommand";
+import {
   TranslateTextCommand,
   TranslateTextCommandInput,
   TranslateTextCommandOutput,
@@ -106,6 +111,7 @@ const commands = {
   StartTextTranslationJobCommand,
   StopTextTranslationJobCommand,
   TagResourceCommand,
+  TranslateDocumentCommand,
   TranslateTextCommand,
   UntagResourceCommand,
   UpdateParallelDataCommand,
@@ -347,6 +353,23 @@ export interface Translate {
     args: TagResourceCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: TagResourceCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link TranslateDocumentCommand}
+   */
+  translateDocument(
+    args: TranslateDocumentCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<TranslateDocumentCommandOutput>;
+  translateDocument(
+    args: TranslateDocumentCommandInput,
+    cb: (err: any, data?: TranslateDocumentCommandOutput) => void
+  ): void;
+  translateDocument(
+    args: TranslateDocumentCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: TranslateDocumentCommandOutput) => void
   ): void;
 
   /**

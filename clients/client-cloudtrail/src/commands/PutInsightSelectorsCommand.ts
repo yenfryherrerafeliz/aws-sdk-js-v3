@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudTrailClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudTrailClient";
 import { PutInsightSelectorsRequest, PutInsightSelectorsResponse } from "../models/models_0";
 import { de_PutInsightSelectorsCommand, se_PutInsightSelectorsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -37,6 +41,11 @@ export interface PutInsightSelectorsCommandOutput extends PutInsightSelectorsRes
  *          off Insights event logging, by passing an empty list of insight types. The valid Insights
  *          event types in this release are <code>ApiErrorRateInsight</code> and
  *             <code>ApiCallRateInsight</code>.</p>
+ *          <p>To log CloudTrail Insights events on API call volume, the trail
+ *          must log <code>write</code> management events. To log CloudTrail
+ *          Insights events on API error rate, the trail must log <code>read</code> or
+ *             <code>write</code> management events. You can call <code>GetEventSelectors</code> on a trail
+ *          to check whether the trail logs management events.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -78,7 +87,7 @@ export interface PutInsightSelectorsCommandOutput extends PutInsightSelectorsRes
  *          </p>
  *          <p>This exception is also thrown when you call <code>AddTags</code> or <code>RemoveTags</code> on a trail, event data store, or channel with a resource ARN that is not valid.</p>
  *          <p>The following is the format of an event data store ARN:
- *          <code>arn:aws:cloudtrail:us-east-2:12345678910:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
+ *          <code>arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
  *          </p>
  *          <p>The following is the format of a channel ARN:
  *          <code>arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890</code>
@@ -92,8 +101,8 @@ export interface PutInsightSelectorsCommandOutput extends PutInsightSelectorsRes
  *  <p>This exception is thrown when the policy on the S3 bucket is not sufficient.</p>
  *
  * @throws {@link InvalidHomeRegionException} (client fault)
- *  <p>This exception is thrown when an operation is called on a trail from a region other than
- *          the region in which the trail was created.</p>
+ *  <p>This exception is thrown when an operation is called on a trail from a Region other than
+ *          the Region in which the trail was created.</p>
  *
  * @throws {@link InvalidInsightSelectorsException} (client fault)
  *  <p>The formatting or syntax of the <code>InsightSelectors</code> JSON statement in your

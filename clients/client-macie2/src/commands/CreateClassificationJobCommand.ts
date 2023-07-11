@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { Macie2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../Macie2Client";
 import { CreateClassificationJobRequest, CreateClassificationJobResponse } from "../models/models_0";
 import { de_CreateClassificationJobCommand, se_CreateClassificationJobCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -53,7 +57,7 @@ export interface CreateClassificationJobCommandOutput extends CreateClassificati
  *   managedDataIdentifierIds: [
  *     "STRING_VALUE",
  *   ],
- *   managedDataIdentifierSelector: "ALL" || "EXCLUDE" || "INCLUDE" || "NONE",
+ *   managedDataIdentifierSelector: "ALL" || "EXCLUDE" || "INCLUDE" || "NONE" || "RECOMMENDED",
  *   name: "STRING_VALUE", // required
  *   s3JobDefinition: { // S3JobDefinition
  *     bucketCriteria: { // S3BucketCriteriaForJob

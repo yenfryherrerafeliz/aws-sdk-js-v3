@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
 import { getAwsAuthPlugin } from "@aws-sdk/middleware-signing";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,7 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CognitoIdentityProviderClientResolvedConfig,
@@ -27,6 +27,10 @@ import {
 } from "../models/models_0";
 import { de_AssociateSoftwareTokenCommand, se_AssociateSoftwareTokenCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -47,7 +51,7 @@ export interface AssociateSoftwareTokenCommandOutput extends AssociateSoftwareTo
  *             response. You can authorize an <code>AssociateSoftwareToken</code> request with either
  *             the user's access token, or a session string from a challenge response that you received
  *             from Amazon Cognito.</p>
- *         <note>
+ *          <note>
  *             <p>Amazon Cognito disassociates an existing software token when you verify the new token in a
  *                     <a href="https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_VerifySoftwareToken.html"> VerifySoftwareToken</a> API request. If you don't verify the software
  *                 token and your user pool doesn't require MFA, the user can then authenticate with
@@ -58,7 +62,7 @@ export interface AssociateSoftwareTokenCommandOutput extends AssociateSoftwareTo
  *             <p>After you set up software token MFA for your user, Amazon Cognito generates a
  *                     <code>SOFTWARE_TOKEN_MFA</code> challenge when they authenticate. Respond to
  *                 this challenge with your user's TOTP.</p>
- *         </note>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

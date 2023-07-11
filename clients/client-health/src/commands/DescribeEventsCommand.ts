@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { HealthClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../HealthClient";
 import { DescribeEventsRequest, DescribeEventsResponse } from "../models/models_0";
 import { de_DescribeEventsCommand, se_DescribeEventsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -103,7 +107,7 @@ export interface DescribeEventsCommandOutput extends DescribeEventsResponse, __M
  *       "STRING_VALUE",
  *     ],
  *     eventTypeCategories: [ // eventTypeCategoryList2
- *       "STRING_VALUE",
+ *       "issue" || "accountNotification" || "scheduledChange" || "investigation",
  *     ],
  *     tags: [ // tagFilter
  *       { // tagSet
@@ -111,7 +115,7 @@ export interface DescribeEventsCommandOutput extends DescribeEventsResponse, __M
  *       },
  *     ],
  *     eventStatusCodes: [ // eventStatusCodeList
- *       "STRING_VALUE",
+ *       "open" || "closed" || "upcoming",
  *     ],
  *   },
  *   nextToken: "STRING_VALUE",
@@ -126,14 +130,14 @@ export interface DescribeEventsCommandOutput extends DescribeEventsResponse, __M
  * //       arn: "STRING_VALUE",
  * //       service: "STRING_VALUE",
  * //       eventTypeCode: "STRING_VALUE",
- * //       eventTypeCategory: "STRING_VALUE",
+ * //       eventTypeCategory: "issue" || "accountNotification" || "scheduledChange" || "investigation",
  * //       region: "STRING_VALUE",
  * //       availabilityZone: "STRING_VALUE",
  * //       startTime: new Date("TIMESTAMP"),
  * //       endTime: new Date("TIMESTAMP"),
  * //       lastUpdatedTime: new Date("TIMESTAMP"),
- * //       statusCode: "STRING_VALUE",
- * //       eventScopeCode: "STRING_VALUE",
+ * //       statusCode: "open" || "closed" || "upcoming",
+ * //       eventScopeCode: "PUBLIC" || "ACCOUNT_SPECIFIC" || "NONE",
  * //     },
  * //   ],
  * //   nextToken: "STRING_VALUE",

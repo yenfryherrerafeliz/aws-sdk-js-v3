@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AlexaForBusinessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AlexaForBusinessClient";
 import { CreateProfileRequest, CreateProfileResponse } from "../models/models_0";
 import { de_CreateProfileCommand, se_CreateProfileCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,6 +36,8 @@ export interface CreateProfileCommandOutput extends CreateProfileResponse, __Met
 
 /**
  * @public
+ * @deprecated
+ *
  * <p>Creates a new room profile with the specified details.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -43,9 +49,9 @@ export interface CreateProfileCommandOutput extends CreateProfileResponse, __Met
  *   ProfileName: "STRING_VALUE", // required
  *   Timezone: "STRING_VALUE", // required
  *   Address: "STRING_VALUE", // required
- *   DistanceUnit: "STRING_VALUE", // required
- *   TemperatureUnit: "STRING_VALUE", // required
- *   WakeWord: "STRING_VALUE", // required
+ *   DistanceUnit: "METRIC" || "IMPERIAL", // required
+ *   TemperatureUnit: "FAHRENHEIT" || "CELSIUS", // required
+ *   WakeWord: "ALEXA" || "AMAZON" || "ECHO" || "COMPUTER", // required
  *   Locale: "STRING_VALUE",
  *   ClientRequestToken: "STRING_VALUE",
  *   SetupModeDisabled: true || false,
@@ -58,7 +64,7 @@ export interface CreateProfileCommandOutput extends CreateProfileResponse, __Met
  *       ReminderAtMinutes: [ // EndOfMeetingReminderMinutesList // required
  *         Number("int"),
  *       ],
- *       ReminderType: "STRING_VALUE", // required
+ *       ReminderType: "ANNOUNCEMENT_TIME_CHECK" || "ANNOUNCEMENT_VARIABLE_TIME_LEFT" || "CHIME" || "KNOCK", // required
  *       Enabled: true || false, // required
  *     },
  *     InstantBooking: { // CreateInstantBooking
@@ -68,6 +74,9 @@ export interface CreateProfileCommandOutput extends CreateProfileResponse, __Met
  *     RequireCheckIn: { // CreateRequireCheckIn
  *       ReleaseAfterMinutes: Number("int"), // required
  *       Enabled: true || false, // required
+ *     },
+ *     ProactiveJoin: { // CreateProactiveJoin
+ *       EnabledByMotion: true || false, // required
  *     },
  *   },
  *   Tags: [ // TagList

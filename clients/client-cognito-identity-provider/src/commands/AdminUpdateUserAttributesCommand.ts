@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
 import { getAwsAuthPlugin } from "@aws-sdk/middleware-signing";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,7 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CognitoIdentityProviderClientResolvedConfig,
@@ -26,6 +26,10 @@ import {
 } from "../models/models_0";
 import { de_AdminUpdateUserAttributesCommand, se_AdminUpdateUserAttributesCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -43,11 +47,10 @@ export interface AdminUpdateUserAttributesCommandOutput extends AdminUpdateUserA
  * @public
  * <p>Updates the specified user's attributes, including developer attributes, as an
  *             administrator. Works on any user.</p>
- *         <p>For custom attributes, you must prepend the <code>custom:</code> prefix to the
+ *          <p>For custom attributes, you must prepend the <code>custom:</code> prefix to the
  *             attribute name.</p>
- *         <p>In addition to updating user attributes, this API can also be used to mark phone and
+ *          <p>In addition to updating user attributes, this API can also be used to mark phone and
  *             email as verified.</p>
- *
  *          <note>
  *             <p>This action might generate an SMS text message. Starting June 1, 2021, US telecom carriers
  *                 require you to register an origination phone number before you can send SMS messages
@@ -65,8 +68,7 @@ export interface AdminUpdateUserAttributesCommandOutput extends AdminUpdateUserA
  *                 of the sandbox and into production. For more information, see <a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html"> SMS message settings for Amazon Cognito user pools</a> in the <i>Amazon Cognito
  *                     Developer Guide</i>.</p>
  *          </note>
- *
- *         <p>Calling this action requires developer credentials.</p>
+ *          <p>Calling this action requires developer credentials.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

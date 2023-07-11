@@ -1,16 +1,19 @@
 // smithy-typescript generated code
-import { SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { SENSITIVE_STRING } from "@smithy/smithy-client";
 
 import {
+  ActionStatus,
   AdditionalInferenceSpecificationDefinition,
   AppSecurityGroupManagement,
   BooleanOperator,
   DefaultSpaceSettings,
   EdgeOutputConfig,
   KernelGatewayImageConfig,
+  MetadataProperties,
   ModelApprovalStatus,
+  OutputParameter,
   Tag,
-  UserSettings,
+  UserContext,
 } from "./models_0";
 import {
   _InstanceType,
@@ -41,6 +44,7 @@ import {
   TrialComponentArtifact,
   TrialComponentParameterValue,
   TrialComponentStatus,
+  UserSettings,
   VendorGuidance,
   WorkforceVpcConfigRequest,
 } from "./models_1";
@@ -48,14 +52,681 @@ import {
   DesiredWeightAndCapacity,
   Device,
   DomainSettingsForUpdate,
+  Endpoint,
+  Experiment,
+  FeatureGroup,
+  FeatureMetadata,
   FeatureParameter,
   Filter,
-  GitConfigForUpdate,
   ResourceType,
+  SelectiveExecutionConfig,
+  TrialComponentMetricSummary,
+  TrialComponentSource,
   Workforce,
   Workteam,
 } from "./models_2";
-import { NestedFilters, ProfilerConfigForUpdate, ResourceConfigForUpdate, SearchSortOrder } from "./models_3";
+import {
+  GitConfigForUpdate,
+  HyperParameterTuningJobSearchEntity,
+  InferenceExperimentStopDesiredState,
+  ModelCard,
+  ModelCardFilterSensitiveLog,
+  ModelDashboardModel,
+  ModelPackage,
+  ModelPackageGroup,
+  ModelVariantAction,
+  NestedFilters,
+  OnlineStoreConfigUpdate,
+  Parameter,
+  Parent,
+  Pipeline,
+  PipelineExecution,
+  ProfilerConfigForUpdate,
+  Project,
+  ResourceConfigForUpdate,
+  SearchSortOrder,
+  TrainingJob,
+  Trial,
+  TrialComponentSourceDetail,
+} from "./models_3";
+
+/**
+ * @public
+ * <p>The properties of a trial component as returned by the <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html">Search</a>
+ *       API.</p>
+ */
+export interface TrialComponent {
+  /**
+   * <p>The name of the trial component.</p>
+   */
+  TrialComponentName?: string;
+
+  /**
+   * <p>The name of the component as displayed. If <code>DisplayName</code> isn't specified,
+   *         <code>TrialComponentName</code> is displayed.</p>
+   */
+  DisplayName?: string;
+
+  /**
+   * <p>The Amazon Resource Name (ARN) of the trial component.</p>
+   */
+  TrialComponentArn?: string;
+
+  /**
+   * <p>The Amazon Resource Name (ARN) and job type of the source of the component.</p>
+   */
+  Source?: TrialComponentSource;
+
+  /**
+   * <p>The status of the trial component.</p>
+   */
+  Status?: TrialComponentStatus;
+
+  /**
+   * <p>When the component started.</p>
+   */
+  StartTime?: Date;
+
+  /**
+   * <p>When the component ended.</p>
+   */
+  EndTime?: Date;
+
+  /**
+   * <p>When the component was created.</p>
+   */
+  CreationTime?: Date;
+
+  /**
+   * <p>Who created the trial component.</p>
+   */
+  CreatedBy?: UserContext;
+
+  /**
+   * <p>When the component was last modified.</p>
+   */
+  LastModifiedTime?: Date;
+
+  /**
+   * <p>Information about the user who created or modified an experiment, trial, trial
+   *       component, lineage group, project, or model card.</p>
+   */
+  LastModifiedBy?: UserContext;
+
+  /**
+   * <p>The hyperparameters of the component.</p>
+   */
+  Parameters?: Record<string, TrialComponentParameterValue>;
+
+  /**
+   * <p>The input artifacts of the component.</p>
+   */
+  InputArtifacts?: Record<string, TrialComponentArtifact>;
+
+  /**
+   * <p>The output artifacts of the component.</p>
+   */
+  OutputArtifacts?: Record<string, TrialComponentArtifact>;
+
+  /**
+   * <p>The metrics for the component.</p>
+   */
+  Metrics?: TrialComponentMetricSummary[];
+
+  /**
+   * <p>Metadata properties of the tracking entity, trial, or trial component.</p>
+   */
+  MetadataProperties?: MetadataProperties;
+
+  /**
+   * <p>Details of the source of the component.</p>
+   */
+  SourceDetail?: TrialComponentSourceDetail;
+
+  /**
+   * <p>The Amazon Resource Name (ARN) of the lineage group resource.</p>
+   */
+  LineageGroupArn?: string;
+
+  /**
+   * <p>The list of tags that are associated with the component. You can use <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html">Search</a> API to search on the tags.</p>
+   */
+  Tags?: Tag[];
+
+  /**
+   * <p>An array of the parents of the component. A parent is a trial the component is associated
+   *       with and the experiment the trial is part of. A component might not have any parents.</p>
+   */
+  Parents?: Parent[];
+
+  /**
+   * <p>The name of the experiment run.</p>
+   */
+  RunName?: string;
+}
+
+/**
+ * @public
+ * <p>A single resource returned as part of the <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html">Search</a> API response.</p>
+ */
+export interface SearchRecord {
+  /**
+   * <p>The properties of a training job.</p>
+   */
+  TrainingJob?: TrainingJob;
+
+  /**
+   * <p>The properties of an experiment.</p>
+   */
+  Experiment?: Experiment;
+
+  /**
+   * <p>The properties of a trial.</p>
+   */
+  Trial?: Trial;
+
+  /**
+   * <p>The properties of a trial component.</p>
+   */
+  TrialComponent?: TrialComponent;
+
+  /**
+   * <p>A hosted endpoint for real-time inference.</p>
+   */
+  Endpoint?: Endpoint;
+
+  /**
+   * <p>A versioned model that can be deployed for SageMaker inference.</p>
+   */
+  ModelPackage?: ModelPackage;
+
+  /**
+   * <p>A group of versioned models in the model registry.</p>
+   */
+  ModelPackageGroup?: ModelPackageGroup;
+
+  /**
+   * <p>A SageMaker Model Building Pipeline instance.</p>
+   */
+  Pipeline?: Pipeline;
+
+  /**
+   * <p>An execution of a pipeline.</p>
+   */
+  PipelineExecution?: PipelineExecution;
+
+  /**
+   * <p>Amazon SageMaker Feature Store stores features in a collection called Feature Group.
+   *          A Feature Group can be visualized as a table which has rows,
+   *          with a unique identifier for each row where each column in the table is a feature.
+   *          In principle, a Feature Group is composed of features and values per features.</p>
+   */
+  FeatureGroup?: FeatureGroup;
+
+  /**
+   * <p>The properties of a project.</p>
+   */
+  Project?: Project;
+
+  /**
+   * <p>The feature metadata used to search through the features.</p>
+   */
+  FeatureMetadata?: FeatureMetadata;
+
+  /**
+   * <p>The properties of a hyperparameter tuning job.</p>
+   */
+  HyperParameterTuningJob?: HyperParameterTuningJobSearchEntity;
+
+  /**
+   * <p>A model displayed in the Amazon SageMaker Model Dashboard.</p>
+   */
+  Model?: ModelDashboardModel;
+
+  /**
+   * <p>An Amazon SageMaker Model Card that documents details about a machine learning model.</p>
+   */
+  ModelCard?: ModelCard;
+}
+
+/**
+ * @public
+ */
+export interface SearchResponse {
+  /**
+   * <p>A list of <code>SearchRecord</code> objects.</p>
+   */
+  Results?: SearchRecord[];
+
+  /**
+   * <p>If the result of the previous <code>Search</code> request was truncated, the response
+   *       includes a NextToken. To retrieve the next set of results, use the token in the next
+   *       request.</p>
+   */
+  NextToken?: string;
+}
+
+/**
+ * @public
+ */
+export interface SendPipelineExecutionStepFailureRequest {
+  /**
+   * <p>The pipeline generated token from the Amazon SQS queue.</p>
+   */
+  CallbackToken: string | undefined;
+
+  /**
+   * <p>A message describing why the step failed.</p>
+   */
+  FailureReason?: string;
+
+  /**
+   * <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the
+   *          operation. An idempotent operation completes no more than one time.</p>
+   */
+  ClientRequestToken?: string;
+}
+
+/**
+ * @public
+ */
+export interface SendPipelineExecutionStepFailureResponse {
+  /**
+   * <p>The Amazon Resource Name (ARN) of the pipeline execution.</p>
+   */
+  PipelineExecutionArn?: string;
+}
+
+/**
+ * @public
+ */
+export interface SendPipelineExecutionStepSuccessRequest {
+  /**
+   * <p>The pipeline generated token from the Amazon SQS queue.</p>
+   */
+  CallbackToken: string | undefined;
+
+  /**
+   * <p>A list of the output parameters of the callback step.</p>
+   */
+  OutputParameters?: OutputParameter[];
+
+  /**
+   * <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the
+   *          operation. An idempotent operation completes no more than one time.</p>
+   */
+  ClientRequestToken?: string;
+}
+
+/**
+ * @public
+ */
+export interface SendPipelineExecutionStepSuccessResponse {
+  /**
+   * <p>The Amazon Resource Name (ARN) of the pipeline execution.</p>
+   */
+  PipelineExecutionArn?: string;
+}
+
+/**
+ * @public
+ */
+export interface StartEdgeDeploymentStageRequest {
+  /**
+   * <p>The name of the edge deployment plan to start.</p>
+   */
+  EdgeDeploymentPlanName: string | undefined;
+
+  /**
+   * <p>The name of the stage to start.</p>
+   */
+  StageName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StartInferenceExperimentRequest {
+  /**
+   * <p>The name of the inference experiment to start.</p>
+   */
+  Name: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StartInferenceExperimentResponse {
+  /**
+   * <p>The ARN of the started inference experiment to start.</p>
+   */
+  InferenceExperimentArn: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StartMonitoringScheduleRequest {
+  /**
+   * <p>The name of the schedule to start.</p>
+   */
+  MonitoringScheduleName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StartNotebookInstanceInput {
+  /**
+   * <p>The name of the notebook instance to start.</p>
+   */
+  NotebookInstanceName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StartPipelineExecutionRequest {
+  /**
+   * <p>The name or Amazon Resource Name (ARN) of the pipeline.</p>
+   */
+  PipelineName: string | undefined;
+
+  /**
+   * <p>The display name of the pipeline execution.</p>
+   */
+  PipelineExecutionDisplayName?: string;
+
+  /**
+   * <p>Contains a list of pipeline parameters. This list can be empty. </p>
+   */
+  PipelineParameters?: Parameter[];
+
+  /**
+   * <p>The description of the pipeline execution.</p>
+   */
+  PipelineExecutionDescription?: string;
+
+  /**
+   * <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the
+   *          operation. An idempotent operation completes no more than once.</p>
+   */
+  ClientRequestToken?: string;
+
+  /**
+   * <p>This configuration, if specified, overrides the parallelism configuration
+   *             of the parent pipeline for this specific run.</p>
+   */
+  ParallelismConfiguration?: ParallelismConfiguration;
+
+  /**
+   * <p>The selective execution configuration applied to the pipeline run.</p>
+   */
+  SelectiveExecutionConfig?: SelectiveExecutionConfig;
+}
+
+/**
+ * @public
+ */
+export interface StartPipelineExecutionResponse {
+  /**
+   * <p>The Amazon Resource Name (ARN) of the pipeline execution.</p>
+   */
+  PipelineExecutionArn?: string;
+}
+
+/**
+ * @public
+ */
+export interface StopAutoMLJobRequest {
+  /**
+   * <p>The name of the object you are requesting.</p>
+   */
+  AutoMLJobName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopCompilationJobRequest {
+  /**
+   * <p>The name of the model compilation job to stop.</p>
+   */
+  CompilationJobName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopEdgeDeploymentStageRequest {
+  /**
+   * <p>The name of the edge deployment plan to stop.</p>
+   */
+  EdgeDeploymentPlanName: string | undefined;
+
+  /**
+   * <p>The name of the stage to stop.</p>
+   */
+  StageName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopEdgePackagingJobRequest {
+  /**
+   * <p>The name of the edge packaging job.</p>
+   */
+  EdgePackagingJobName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopHyperParameterTuningJobRequest {
+  /**
+   * <p>The name of the tuning job to stop.</p>
+   */
+  HyperParameterTuningJobName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopInferenceExperimentRequest {
+  /**
+   * <p>The name of the inference experiment to stop.</p>
+   */
+  Name: string | undefined;
+
+  /**
+   * <p>
+   *            Array of key-value pairs, with names of variants mapped to actions. The possible actions are the following:
+   *        </p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>Promote</code> - Promote the shadow variant to a production variant</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>Remove</code> - Delete the variant</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>Retain</code> - Keep the variant as it is</p>
+   *             </li>
+   *          </ul>
+   */
+  ModelVariantActions: Record<string, ModelVariantAction | string> | undefined;
+
+  /**
+   * <p>
+   *            An array of <code>ModelVariantConfig</code> objects. There is one for each variant that you want to deploy
+   *            after the inference experiment stops. Each <code>ModelVariantConfig</code> describes the infrastructure
+   *            configuration for deploying the corresponding variant.
+   *        </p>
+   */
+  DesiredModelVariants?: ModelVariantConfig[];
+
+  /**
+   * <p>
+   *            The desired state of the experiment after stopping. The possible states are the following:
+   *        </p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>Completed</code>: The experiment completed successfully</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>Cancelled</code>: The experiment was canceled</p>
+   *             </li>
+   *          </ul>
+   */
+  DesiredState?: InferenceExperimentStopDesiredState | string;
+
+  /**
+   * <p>The reason for stopping the experiment.</p>
+   */
+  Reason?: string;
+}
+
+/**
+ * @public
+ */
+export interface StopInferenceExperimentResponse {
+  /**
+   * <p>The ARN of the stopped inference experiment.</p>
+   */
+  InferenceExperimentArn: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopInferenceRecommendationsJobRequest {
+  /**
+   * <p>The name of the job you want to stop.</p>
+   */
+  JobName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopLabelingJobRequest {
+  /**
+   * <p>The name of the labeling job to stop.</p>
+   */
+  LabelingJobName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopMonitoringScheduleRequest {
+  /**
+   * <p>The name of the schedule to stop.</p>
+   */
+  MonitoringScheduleName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopNotebookInstanceInput {
+  /**
+   * <p>The name of the notebook instance to terminate.</p>
+   */
+  NotebookInstanceName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopPipelineExecutionRequest {
+  /**
+   * <p>The Amazon Resource Name (ARN) of the pipeline execution.</p>
+   */
+  PipelineExecutionArn: string | undefined;
+
+  /**
+   * <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the
+   *          operation. An idempotent operation completes no more than once.</p>
+   */
+  ClientRequestToken?: string;
+}
+
+/**
+ * @public
+ */
+export interface StopPipelineExecutionResponse {
+  /**
+   * <p>The Amazon Resource Name (ARN) of the pipeline execution.</p>
+   */
+  PipelineExecutionArn?: string;
+}
+
+/**
+ * @public
+ */
+export interface StopProcessingJobRequest {
+  /**
+   * <p>The name of the processing job to stop.</p>
+   */
+  ProcessingJobName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopTrainingJobRequest {
+  /**
+   * <p>The name of the training job to stop.</p>
+   */
+  TrainingJobName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StopTransformJobRequest {
+  /**
+   * <p>The name of the batch transform job to stop.</p>
+   */
+  TransformJobName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface UpdateActionRequest {
+  /**
+   * <p>The name of the action to update.</p>
+   */
+  ActionName: string | undefined;
+
+  /**
+   * <p>The new description for the action.</p>
+   */
+  Description?: string;
+
+  /**
+   * <p>The new status for the action.</p>
+   */
+  Status?: ActionStatus | string;
+
+  /**
+   * <p>The new list of properties. Overwrites the current property list.</p>
+   */
+  Properties?: Record<string, string>;
+
+  /**
+   * <p>A list of properties to remove.</p>
+   */
+  PropertiesToRemove?: string[];
+}
 
 /**
  * @public
@@ -272,7 +943,8 @@ export interface UpdateDomainRequest {
    *             communication in <code>VPCOnly</code> mode. Required when
    *                 <code>CreateDomain.AppNetworkAccessType</code> is <code>VPCOnly</code> and
    *                 <code>DomainSettings.RStudioServerProDomainSettings.DomainExecutionRoleArn</code> is
-   *             provided.</p>
+   *             provided. If setting up the domain for use with RStudio, this value must be set to
+   *                 <code>Service</code>.</p>
    */
   AppSecurityGroupManagement?: AppSecurityGroupManagement | string;
 }
@@ -306,10 +978,10 @@ export type VariantPropertyType = (typeof VariantPropertyType)[keyof typeof Vari
  * @public
  * <p>Specifies a production variant property type for an Endpoint.</p>
  *          <p>If you are updating an endpoint with the <code>RetainAllVariantProperties</code>
- *             option of <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpoint.html">UpdateEndpointInput</a> set to
- *             <code>true</code>, the <code>VariantProperty</code> objects listed in the <code>ExcludeRetainedVariantProperties</code> parameter of <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpoint.html">UpdateEndpointInput</a>
- *                 override the
- *             existing variant properties of the endpoint.</p>
+ *             option of <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpoint.html">UpdateEndpointInput</a> set to <code>true</code>, the
+ *                 <code>VariantProperty</code> objects listed in the
+ *                 <code>ExcludeRetainedVariantProperties</code> parameter of <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpoint.html">UpdateEndpointInput</a> override the existing variant properties of the
+ *             endpoint.</p>
  */
 export interface VariantProperty {
   /**
@@ -318,13 +990,14 @@ export interface VariantProperty {
    *             <li>
    *                <p>
    *                   <code>DesiredInstanceCount</code>: Overrides the existing variant instance
-   *                     counts using the <code>InitialInstanceCount</code> values
-   *                     in the <code>ProductionVariants</code> of <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpointConfig.html">CreateEndpointConfig</a>.</p>
+   *                     counts using the <code>InitialInstanceCount</code> values in the
+   *                         <code>ProductionVariants</code> of <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpointConfig.html">CreateEndpointConfig</a>.</p>
    *             </li>
    *             <li>
    *                <p>
    *                   <code>DesiredWeight</code>: Overrides the existing variant weights using the
-   *                     <code>InitialVariantWeight</code> values in the <code>ProductionVariants</code> of <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpointConfig.html">CreateEndpointConfig</a>.</p>
+   *                         <code>InitialVariantWeight</code> values in the
+   *                         <code>ProductionVariants</code> of <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpointConfig.html">CreateEndpointConfig</a>.</p>
    *             </li>
    *             <li>
    *                <p>
@@ -360,12 +1033,12 @@ export interface UpdateEndpointInput {
   RetainAllVariantProperties?: boolean;
 
   /**
-   * <p>When you are updating endpoint resources with <code>RetainAllVariantProperties</code>, whose value is set to
-   *                 <code>true</code>, <code>ExcludeRetainedVariantProperties</code> specifies the list
-   *             of type <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VariantProperty.html">VariantProperty</a> to override with the values provided by
-   *                 <code>EndpointConfig</code>. If you don't specify a value for
-   *                 <code>ExcludeRetainedVariantProperties</code>, no variant properties are overridden.
-   *         </p>
+   * <p>When you are updating endpoint resources with <code>RetainAllVariantProperties</code>,
+   *             whose value is set to <code>true</code>, <code>ExcludeRetainedVariantProperties</code>
+   *             specifies the list of type <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VariantProperty.html">VariantProperty</a>
+   *             to override with the values provided by <code>EndpointConfig</code>. If you don't
+   *             specify a value for <code>ExcludeRetainedVariantProperties</code>, no variant properties
+   *             are overridden. </p>
    */
   ExcludeRetainedVariantProperties?: VariantProperty[];
 
@@ -463,6 +1136,11 @@ export interface UpdateFeatureGroupRequest {
    *          made a valid request for Feature Store to update the feature group.</p>
    */
   FeatureAdditions?: FeatureDefinition[];
+
+  /**
+   * <p>Updates the feature group online store configuration.</p>
+   */
+  OnlineStoreConfig?: OnlineStoreConfigUpdate;
 }
 
 /**
@@ -995,7 +1673,8 @@ export interface UpdateNotebookInstanceInput {
   /**
    * <p>A list of the Elastic Inference (EI) instance types to associate with this notebook
    *             instance. Currently only one EI instance type can be associated with a notebook
-   *             instance. For more information, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html">Using Elastic Inference in Amazon SageMaker</a>.</p>
+   *             instance. For more information, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html">Using Elastic Inference in
+   *             Amazon SageMaker</a>.</p>
    */
   AcceleratorTypes?: (NotebookInstanceAcceleratorType | string)[];
 
@@ -1609,6 +2288,23 @@ export interface SearchRequest {
    */
   MaxResults?: number;
 }
+
+/**
+ * @internal
+ */
+export const SearchRecordFilterSensitiveLog = (obj: SearchRecord): any => ({
+  ...obj,
+  ...(obj.TrialComponent && { TrialComponent: obj.TrialComponent }),
+  ...(obj.ModelCard && { ModelCard: ModelCardFilterSensitiveLog(obj.ModelCard) }),
+});
+
+/**
+ * @internal
+ */
+export const SearchResponseFilterSensitiveLog = (obj: SearchResponse): any => ({
+  ...obj,
+  ...(obj.Results && { Results: obj.Results.map((item) => SearchRecordFilterSensitiveLog(item)) }),
+});
 
 /**
  * @internal

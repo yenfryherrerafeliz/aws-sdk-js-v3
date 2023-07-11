@@ -5,7 +5,7 @@ describe(ConfiguredRetryStrategy.name, () => {
     const strategy = new ConfiguredRetryStrategy(5, (attempt) => attempt * 1000);
 
     const token = await strategy.acquireInitialRetryToken("");
-    token.getRetryCount = () => 4;
+    token.getRetryCount = () => 3;
 
     const retryToken = await strategy.refreshRetryTokenForRetry(token, {
       errorType: "TRANSIENT",

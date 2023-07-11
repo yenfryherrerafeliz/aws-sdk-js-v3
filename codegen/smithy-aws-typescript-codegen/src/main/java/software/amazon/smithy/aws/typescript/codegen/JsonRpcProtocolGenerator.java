@@ -22,6 +22,7 @@ import software.amazon.smithy.model.shapes.ServiceShape;
 import software.amazon.smithy.model.shapes.Shape;
 import software.amazon.smithy.model.shapes.StructureShape;
 import software.amazon.smithy.model.traits.TimestampFormatTrait.Format;
+import software.amazon.smithy.typescript.codegen.TypeScriptDependency;
 import software.amazon.smithy.typescript.codegen.TypeScriptWriter;
 import software.amazon.smithy.typescript.codegen.integration.DocumentMemberDeserVisitor;
 import software.amazon.smithy.typescript.codegen.integration.DocumentMemberSerVisitor;
@@ -67,14 +68,14 @@ abstract class JsonRpcProtocolGenerator extends HttpRpcProtocolGenerator {
     protected void generateDocumentBodyShapeSerializers(GenerationContext context, Set<Shape> shapes) {
         AwsProtocolUtils.generateDocumentBodyShapeSerde(context, shapes,
                 // AWS JSON does not support jsonName
-                new JsonShapeSerVisitor(context, (shape, name) -> name));
+                new JsonShapeSerVisitor(context, (shape, name) -> name, enableSerdeElision()));
     }
 
     @Override
     protected void generateDocumentBodyShapeDeserializers(GenerationContext context, Set<Shape> shapes) {
         AwsProtocolUtils.generateDocumentBodyShapeSerde(context, shapes,
                 // AWS JSON does not support jsonName
-                new JsonShapeDeserVisitor(context, (shape, name) -> name));
+                new JsonShapeDeserVisitor(context, (shape, name) -> name, enableSerdeElision()));
     }
 
     @Override
@@ -112,7 +113,7 @@ abstract class JsonRpcProtocolGenerator extends HttpRpcProtocolGenerator {
     protected void writeSharedRequestHeaders(GenerationContext context) {
         ServiceShape serviceShape = context.getService();
         TypeScriptWriter writer = context.getWriter();
-        writer.addImport("HeaderBag", "__HeaderBag", "@aws-sdk/types");
+        writer.addImport("HeaderBag", "__HeaderBag", TypeScriptDependency.SMITHY_TYPES);
         String targetHeader = serviceShape.getId().getName(serviceShape) + ".${operation}";
         writer.openBlock("function sharedHeaders(operation: string): __HeaderBag { return {", "}};",
                 () -> {

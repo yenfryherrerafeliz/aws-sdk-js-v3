@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { GetRateBasedStatementManagedKeysRequest, GetRateBasedStatementManagedKeysResponse } from "../models/models_0";
 import {
@@ -20,6 +20,10 @@ import {
 } from "../protocols/Aws_json1_1";
 import { ServiceInputTypes, ServiceOutputTypes, WAFV2ClientResolvedConfig } from "../WAFV2Client";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -37,8 +41,11 @@ export interface GetRateBasedStatementManagedKeysCommandOutput
 
 /**
  * @public
- * <p>Retrieves the keys that are currently blocked by a rate-based rule instance. The maximum
- *          number of managed keys that can be blocked for a single rate-based rule instance is 10,000.
+ * <p>Retrieves the IP addresses that are currently blocked by a rate-based rule instance. This
+ *        is only available for rate-based rules that aggregate solely on the IP address or on the forwarded IP
+ *        address. </p>
+ *          <p>The maximum
+ *          number of addresses that can be blocked for a single rate-based rule instance is 10,000.
  *          If more than 10,000 addresses exceed the rate limit, those with the highest rates are
  *          blocked.</p>
  *          <p>For a rate-based rule that you've defined inside a rule group, provide the name of the
@@ -122,6 +129,10 @@ export interface GetRateBasedStatementManagedKeysCommandOutput
  *        If you've just created a resource that you're using in this operation, you might
  *        just need to wait a few minutes. It can take from a few seconds to a number of minutes
  *        for changes to propagate. </p>
+ *
+ * @throws {@link WAFUnsupportedAggregateKeyTypeException} (client fault)
+ *  <p>The rule that you've named doesn't aggregate solely on the IP address or solely on the forwarded IP address. This call
+ *            is only available for rate-based rules with an <code>AggregateKeyType</code> setting of <code>IP</code> or <code>FORWARDED_IP</code>.</p>
  *
  * @throws {@link WAFV2ServiceException}
  * <p>Base exception class for all service exceptions from WAFV2 service.</p>

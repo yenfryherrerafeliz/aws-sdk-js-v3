@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectNonNull as __expectNonNull,
@@ -10,13 +11,13 @@ import {
   parseEpochTimestamp as __parseEpochTimestamp,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   BatchGetAggregateResourceConfigCommandInput,
@@ -453,6 +454,7 @@ import {
   EvaluationModeConfiguration,
   EvaluationResult,
   EvaluationResultIdentifier,
+  ExclusionByResourceTypes,
   ExecutionControls,
   ExternalEvaluation,
   FailedRemediationExceptionBatch,
@@ -514,9 +516,6 @@ import {
   ListStoredQueriesRequest,
   ListTagsForResourceRequest,
   MaxActiveResourcesExceededException,
-  MaxNumberOfConfigRulesExceededException,
-  MaxNumberOfConfigurationRecordersExceededException,
-  MaxNumberOfConformancePacksExceededException,
   MemberAccountStatus,
   NoAvailableConfigurationRecorderException,
   NoRunningConfigurationRecorderException,
@@ -545,6 +544,7 @@ import {
   OrganizationResourceDetailedStatusFilters,
   OversizedConfigurationItemException,
   RecordingGroup,
+  RecordingStrategy,
   RemediationConfiguration,
   RemediationException,
   RemediationExceptionResourceKey,
@@ -577,6 +577,9 @@ import {
   ValidationException,
 } from "../models/models_0";
 import {
+  MaxNumberOfConfigRulesExceededException,
+  MaxNumberOfConfigurationRecordersExceededException,
+  MaxNumberOfConformancePacksExceededException,
   MaxNumberOfDeliveryChannelsExceededException,
   MaxNumberOfOrganizationConfigRulesExceededException,
   MaxNumberOfOrganizationConformancePacksExceededException,
@@ -7568,6 +7571,8 @@ const se_Evaluations = (input: Evaluation[], context: __SerdeContext): any => {
 
 // se_ExcludedAccounts omitted.
 
+// se_ExclusionByResourceTypes omitted.
+
 // se_ExecutionControls omitted.
 
 /**
@@ -7729,6 +7734,8 @@ const se_PutRemediationExceptionsRequest = (input: PutRemediationExceptionsReque
 // se_PutStoredQueryRequest omitted.
 
 // se_RecordingGroup omitted.
+
+// se_RecordingStrategy omitted.
 
 // se_ReevaluateConfigRuleNames omitted.
 
@@ -8678,6 +8685,8 @@ const de_Evaluations = (output: any, context: __SerdeContext): Evaluation[] => {
 
 // de_ExcludedAccounts omitted.
 
+// de_ExclusionByResourceTypes omitted.
+
 // de_ExecutionControls omitted.
 
 // de_FailedDeleteRemediationExceptionsBatch omitted.
@@ -9273,6 +9282,8 @@ const de_PutRemediationExceptionsResponse = (
 
 // de_RecordingGroup omitted.
 
+// de_RecordingStrategy omitted.
+
 // de_RelatedEventList omitted.
 
 // de_Relationship omitted.
@@ -9498,14 +9509,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

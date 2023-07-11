@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { CreateStackInput, CreateStackOutput } from "../models/models_0";
 import { de_CreateStackCommand, se_CreateStackCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,8 +36,8 @@ export interface CreateStackCommandOutput extends CreateStackOutput, __MetadataB
 
 /**
  * @public
- * <p>Creates a stack as specified in the template. After the call completes successfully, the
- *          stack creation starts. You can check the status of the stack through the <a>DescribeStacks</a>operation.</p>
+ * <p>Creates a stack as specified in the template. After the call completes successfully, the stack creation starts.
+ *    You can check the status of the stack through the <a>DescribeStacks</a> operation.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -103,13 +107,12 @@ export interface CreateStackCommandOutput extends CreateStackOutput, __MetadataB
  *  <p>The resource with the name requested already exists.</p>
  *
  * @throws {@link InsufficientCapabilitiesException} (client fault)
- *  <p>The template contains resources with capabilities that weren't specified in the
- *          Capabilities parameter.</p>
+ *  <p>The template contains resources with capabilities that weren't specified in the Capabilities parameter.</p>
  *
  * @throws {@link LimitExceededException} (client fault)
  *  <p>The quota for the resource has already been reached.</p>
- *          <p>For information about resource and stack limitations, see <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html">CloudFormation
- *             quotas</a> in the <i>CloudFormation User Guide</i>.</p>
+ *          <p>For information about resource and stack limitations, see <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html">CloudFormation quotas</a> in the
+ *     <i>CloudFormation User Guide</i>.</p>
  *
  * @throws {@link TokenAlreadyExistsException} (client fault)
  *  <p>A client request token already exists.</p>

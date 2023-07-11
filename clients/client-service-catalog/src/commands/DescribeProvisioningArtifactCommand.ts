@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { DescribeProvisioningArtifactInput, DescribeProvisioningArtifactOutput } from "../models/models_0";
 import {
@@ -20,6 +20,10 @@ import {
 } from "../protocols/Aws_json1_1";
 import { ServiceCatalogClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ServiceCatalogClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -51,6 +55,7 @@ export interface DescribeProvisioningArtifactCommandOutput
  *   ProvisioningArtifactName: "STRING_VALUE",
  *   ProductName: "STRING_VALUE",
  *   Verbose: true || false,
+ *   IncludeProvisioningArtifactParameters: true || false,
  * };
  * const command = new DescribeProvisioningArtifactCommand(input);
  * const response = await client.send(command);
@@ -69,6 +74,26 @@ export interface DescribeProvisioningArtifactCommandOutput
  * //     "<keys>": "STRING_VALUE",
  * //   },
  * //   Status: "AVAILABLE" || "CREATING" || "FAILED",
+ * //   ProvisioningArtifactParameters: [ // ProvisioningArtifactParameters
+ * //     { // ProvisioningArtifactParameter
+ * //       ParameterKey: "STRING_VALUE",
+ * //       DefaultValue: "STRING_VALUE",
+ * //       ParameterType: "STRING_VALUE",
+ * //       IsNoEcho: true || false,
+ * //       Description: "STRING_VALUE",
+ * //       ParameterConstraints: { // ParameterConstraints
+ * //         AllowedValues: [ // AllowedValues
+ * //           "STRING_VALUE",
+ * //         ],
+ * //         AllowedPattern: "STRING_VALUE",
+ * //         ConstraintDescription: "STRING_VALUE",
+ * //         MaxLength: "STRING_VALUE",
+ * //         MinLength: "STRING_VALUE",
+ * //         MaxValue: "STRING_VALUE",
+ * //         MinValue: "STRING_VALUE",
+ * //       },
+ * //     },
+ * //   ],
  * // };
  *
  * ```

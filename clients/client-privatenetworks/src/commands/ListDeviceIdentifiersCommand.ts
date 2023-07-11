@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   ListDeviceIdentifiersRequest,
@@ -21,6 +21,10 @@ import {
 import { PrivateNetworksClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../PrivateNetworksClient";
 import { de_ListDeviceIdentifiersCommand, se_ListDeviceIdentifiersCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,9 +40,9 @@ export interface ListDeviceIdentifiersCommandOutput extends ListDeviceIdentifier
 
 /**
  * @public
- * <p>Lists device identifiers. Add filters to your request to return a more
- *             specific list of results. Use filters to match the Amazon Resource Name (ARN) of an order,
- *             the status of device identifiers, or the ARN of the traffic group.</p>
+ * <p>Lists device identifiers. Add filters to your request to return a more specific list
+ *             of results. Use filters to match the Amazon Resource Name (ARN) of an order, the status
+ *             of device identifiers, or the ARN of the traffic group.</p>
  *          <p>If you specify multiple filters, filters are joined with an OR, and the request
  * returns results that match all of the specified filters.</p>
  * @example

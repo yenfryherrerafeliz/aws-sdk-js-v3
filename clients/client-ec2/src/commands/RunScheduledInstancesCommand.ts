@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,16 +11,17 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
-import {
-  RunScheduledInstancesRequest,
-  RunScheduledInstancesRequestFilterSensitiveLog,
-  RunScheduledInstancesResult,
-} from "../models/models_6";
+import { RunScheduledInstancesRequest, RunScheduledInstancesRequestFilterSensitiveLog } from "../models/models_6";
+import { RunScheduledInstancesResult } from "../models/models_7";
 import { de_RunScheduledInstancesCommand, se_RunScheduledInstancesCommand } from "../protocols/Aws_ec2";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -138,76 +139,6 @@ export interface RunScheduledInstancesCommandOutput extends RunScheduledInstance
  *
  * @throws {@link EC2ServiceException}
  * <p>Base exception class for all service exceptions from EC2 service.</p>
- *
- * @example To launch a Scheduled Instance in a VPC
- * ```javascript
- * // This example launches the specified Scheduled Instance in a VPC.
- * const input = {
- *   "InstanceCount": 1,
- *   "LaunchSpecification": {
- *     "IamInstanceProfile": {
- *       "Name": "my-iam-role"
- *     },
- *     "ImageId": "ami-12345678",
- *     "InstanceType": "c4.large",
- *     "KeyName": "my-key-pair",
- *     "NetworkInterfaces": [
- *       {
- *         "AssociatePublicIpAddress": true,
- *         "DeviceIndex": 0,
- *         "Groups": [
- *           "sg-12345678"
- *         ],
- *         "SubnetId": "subnet-12345678"
- *       }
- *     ]
- *   },
- *   "ScheduledInstanceId": "sci-1234-1234-1234-1234-123456789012"
- * };
- * const command = new RunScheduledInstancesCommand(input);
- * const response = await client.send(command);
- * /* response ==
- * {
- *   "InstanceIdSet": [
- *     "i-1234567890abcdef0"
- *   ]
- * }
- * *\/
- * // example id: ec2-run-scheduled-instances-1
- * ```
- *
- * @example To launch a Scheduled Instance in EC2-Classic
- * ```javascript
- * // This example launches the specified Scheduled Instance in EC2-Classic.
- * const input = {
- *   "InstanceCount": 1,
- *   "LaunchSpecification": {
- *     "IamInstanceProfile": {
- *       "Name": "my-iam-role"
- *     },
- *     "ImageId": "ami-12345678",
- *     "InstanceType": "c4.large",
- *     "KeyName": "my-key-pair",
- *     "Placement": {
- *       "AvailabilityZone": "us-west-2b"
- *     },
- *     "SecurityGroupIds": [
- *       "sg-12345678"
- *     ]
- *   },
- *   "ScheduledInstanceId": "sci-1234-1234-1234-1234-123456789012"
- * };
- * const command = new RunScheduledInstancesCommand(input);
- * const response = await client.send(command);
- * /* response ==
- * {
- *   "InstanceIdSet": [
- *     "i-1234567890abcdef0"
- *   ]
- * }
- * *\/
- * // example id: ec2-run-scheduled-instances-2
- * ```
  *
  */
 export class RunScheduledInstancesCommand extends $Command<

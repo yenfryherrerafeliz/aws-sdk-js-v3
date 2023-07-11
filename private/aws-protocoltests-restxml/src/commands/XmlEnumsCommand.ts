@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { XmlEnumsInputOutput } from "../models/models_0";
 import { de_XmlEnumsCommand, se_XmlEnumsCommand } from "../protocols/Aws_restXml";
 import { RestXmlProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RestXmlProtocolClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -54,6 +58,21 @@ export interface XmlEnumsCommandOutput extends XmlEnumsInputOutput, __MetadataBe
  * };
  * const command = new XmlEnumsCommand(input);
  * const response = await client.send(command);
+ * // { // XmlEnumsInputOutput
+ * //   fooEnum1: "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   fooEnum2: "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   fooEnum3: "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   fooEnumList: [ // FooEnumList
+ * //     "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   ],
+ * //   fooEnumSet: [ // FooEnumSet
+ * //     "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   ],
+ * //   fooEnumMap: { // FooEnumMap
+ * //     "<keys>": "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   },
+ * // };
+ *
  * ```
  *
  * @param XmlEnumsCommandInput - {@link XmlEnumsCommandInput}
@@ -62,6 +81,8 @@ export interface XmlEnumsCommandOutput extends XmlEnumsInputOutput, __MetadataBe
  * @see {@link XmlEnumsCommandOutput} for command's `response` shape.
  * @see {@link RestXmlProtocolClientResolvedConfig | config} for RestXmlProtocolClient's `config` shape.
  *
+ * @throws {@link RestXmlProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestXmlProtocol service.</p>
  *
  */
 export class XmlEnumsCommand extends $Command<

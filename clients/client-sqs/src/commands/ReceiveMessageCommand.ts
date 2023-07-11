@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
 import { getReceiveMessagePlugin } from "@aws-sdk/middleware-sdk-sqs";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,12 +12,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ReceiveMessageRequest, ReceiveMessageResult } from "../models/models_0";
 import { de_ReceiveMessageCommand, se_ReceiveMessageCommand } from "../protocols/Aws_query";
 import { ServiceInputTypes, ServiceOutputTypes, SQSClientResolvedConfig } from "../SQSClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -33,13 +37,17 @@ export interface ReceiveMessageCommandOutput extends ReceiveMessageResult, __Met
 
 /**
  * @public
- * <p>Retrieves one or more messages (up to 10), from the specified queue. Using the <code>WaitTimeSeconds</code> parameter enables long-poll support.
- *          For more information, see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-long-polling.html">Amazon SQS Long Polling</a> in the <i>Amazon SQS Developer Guide</i>.
- *     </p>
- *          <p>Short poll is the default behavior where a weighted random set of machines is sampled on a <code>ReceiveMessage</code> call. Thus, only the messages on the sampled machines are returned.
- *           If the number of messages in the queue is small (fewer than 1,000), you most likely get fewer messages than you requested per <code>ReceiveMessage</code> call. If the number of messages in the queue is extremely small,
- *           you might not receive any messages in a particular <code>ReceiveMessage</code> response. If this happens, repeat the request.
- *     </p>
+ * <p>Retrieves one or more messages (up to 10), from the specified queue. Using the
+ *                 <code>WaitTimeSeconds</code> parameter enables long-poll support. For more
+ *             information, see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-long-polling.html">Amazon SQS
+ *                 Long Polling</a> in the <i>Amazon SQS Developer Guide</i>. </p>
+ *          <p>Short poll is the default behavior where a weighted random set of machines is sampled
+ *             on a <code>ReceiveMessage</code> call. Thus, only the messages on the sampled machines
+ *             are returned. If the number of messages in the queue is small (fewer than 1,000), you
+ *             most likely get fewer messages than you requested per <code>ReceiveMessage</code> call.
+ *             If the number of messages in the queue is extremely small, you might not receive any
+ *             messages in a particular <code>ReceiveMessage</code> response. If this happens, repeat
+ *             the request. </p>
  *          <p>For each message returned, the response includes the following:</p>
  *          <ul>
  *             <li>
@@ -49,7 +57,8 @@ export interface ReceiveMessageCommandOutput extends ReceiveMessageResult, __Met
  *                <p>An MD5 digest of the message body. For information about MD5, see <a href="https://www.ietf.org/rfc/rfc1321.txt">RFC1321</a>.</p>
  *             </li>
  *             <li>
- *                <p>The <code>MessageId</code> you received when you sent the message to the queue.</p>
+ *                <p>The <code>MessageId</code> you received when you sent the message to the
+ *                     queue.</p>
  *             </li>
  *             <li>
  *                <p>The receipt handle.</p>
@@ -61,11 +70,17 @@ export interface ReceiveMessageCommandOutput extends ReceiveMessageResult, __Met
  *                <p>An MD5 digest of the message attributes.</p>
  *             </li>
  *          </ul>
- *          <p>The receipt handle is the identifier you must provide when deleting the message. For more information, see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-message-identifiers.html">Queue
- *           and Message Identifiers</a> in the <i>Amazon SQS Developer Guide</i>.</p>
- *          <p>You can provide the <code>VisibilityTimeout</code> parameter in your request. The parameter is applied to the messages that Amazon SQS returns in the response. If you don't include the parameter, the overall visibility timeout for the queue
- *           is used for the returned messages. For more information, see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html">Visibility Timeout</a> in the <i>Amazon SQS Developer Guide</i>.</p>
- *          <p>A message that isn't deleted or a message whose visibility isn't extended before the visibility timeout expires counts as a failed receive. Depending on the configuration of the queue, the message might be sent to the dead-letter queue.</p>
+ *          <p>The receipt handle is the identifier you must provide when deleting the message. For
+ *             more information, see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-message-identifiers.html">Queue and Message Identifiers</a> in the <i>Amazon SQS Developer
+ *                 Guide</i>.</p>
+ *          <p>You can provide the <code>VisibilityTimeout</code> parameter in your request. The
+ *             parameter is applied to the messages that Amazon SQS returns in the response. If you don't
+ *             include the parameter, the overall visibility timeout for the queue is used for the
+ *             returned messages. For more information, see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html">Visibility Timeout</a> in the <i>Amazon SQS Developer
+ *             Guide</i>.</p>
+ *          <p>A message that isn't deleted or a message whose visibility isn't extended before the
+ *             visibility timeout expires counts as a failed receive. Depending on the configuration of
+ *             the queue, the message might be sent to the dead-letter queue.</p>
  *          <note>
  *             <p>In the future, new attributes might be added. If you write code that calls this action, we recommend that you structure your code so that it can handle new attributes gracefully.</p>
  *          </note>
@@ -128,7 +143,7 @@ export interface ReceiveMessageCommandOutput extends ReceiveMessageResult, __Met
  *
  * @throws {@link OverLimit} (client fault)
  *  <p>The specified action violates a limit. For example, <code>ReceiveMessage</code>
- *             returns this error if the maximum number of inflight messages is reached and
+ *             returns this error if the maximum number of in flight messages is reached and
  *                 <code>AddPermission</code> returns this error if the maximum number of permissions
  *             for the queue is reached.</p>
  *

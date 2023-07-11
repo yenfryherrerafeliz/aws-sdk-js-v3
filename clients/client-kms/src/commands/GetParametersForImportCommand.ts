@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { KMSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KMSClient";
 import {
@@ -21,6 +21,10 @@ import {
 } from "../models/models_0";
 import { de_GetParametersForImportCommand, se_GetParametersForImportCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,19 +40,59 @@ export interface GetParametersForImportCommandOutput extends GetParametersForImp
 
 /**
  * @public
- * <p>Returns the items you need to import key material into a symmetric encryption KMS key. For
- *       more information about importing key material into KMS, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html">Importing key material</a> in the
- *       <i>Key Management Service Developer Guide</i>.</p>
- *          <p>This operation returns a public key and an import token. Use the public key to encrypt the
- *       symmetric key material. Store the import token to send with a subsequent <a>ImportKeyMaterial</a> request.</p>
- *          <p>You must specify the key ID of the symmetric encryption KMS key into which you will import
- *       key material. The KMS key <code>Origin</code> must be <code>EXTERNAL</code>. You must also
- *       specify the wrapping algorithm and type of wrapping key (public key) that you will use to
- *       encrypt the key material. You cannot perform this operation on an asymmetric KMS key, an HMAC KMS key, or on any KMS key in a different Amazon Web Services account.</p>
- *          <p>To import key material, you must use the public key and import token from the same
- *       response. These items are valid for 24 hours. The expiration date and time appear in the
- *         <code>GetParametersForImport</code> response. You cannot use an expired token in an <a>ImportKeyMaterial</a> request. If your key and token expire, send another
- *         <code>GetParametersForImport</code> request.</p>
+ * <p>Returns the public key and an import token you need to import or reimport key material for
+ *       a KMS key. </p>
+ *          <p>By default, KMS keys are created with key material that KMS generates. This operation
+ *       supports <a href="https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html">Importing key
+ *         material</a>, an advanced feature that lets you generate and import the cryptographic
+ *       key material for a KMS key. For more information about importing key material into KMS, see
+ *         <a href="https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html">Importing key
+ *         material</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ *          <p>Before calling <code>GetParametersForImport</code>, use the <a>CreateKey</a>
+ *       operation with an <code>Origin</code> value of <code>EXTERNAL</code> to create a KMS key with
+ *       no key material. You can import key material for a symmetric encryption KMS key, HMAC KMS key,
+ *       asymmetric encryption KMS key, or asymmetric signing KMS key. You can also import key material
+ *       into a <a href="kms/latest/developerguide/multi-region-keys-overview.html">multi-Region key</a> of
+ *       any supported type. However, you can't import key material into a KMS key in a <a href="kms/latest/developerguide/custom-key-store-overview.html">custom key store</a>. You can also use
+ *         <code>GetParametersForImport</code> to get a public key and import token to <a href="kms/latest/developerguide/importing-keys.html#reimport-key-material">reimport the original key
+ *         material</a> into a KMS key whose key material expired or was deleted.</p>
+ *          <p>
+ *             <code>GetParametersForImport</code> returns the items that you need to import your key
+ *       material.</p>
+ *          <ul>
+ *             <li>
+ *                <p>The public key (or "wrapping key") of an RSA key pair that KMS generates.</p>
+ *                <p>You will use this public key to encrypt ("wrap") your key material while it's in
+ *           transit to KMS. </p>
+ *             </li>
+ *             <li>
+ *                <p>A import token that ensures that KMS can decrypt your key material and associate it
+ *           with the correct KMS key.</p>
+ *             </li>
+ *          </ul>
+ *          <p>The public key and its import token are permanently linked and must be used together. Each
+ *       public key and import token set is valid for 24 hours. The expiration date and time appear in
+ *       the <code>ParametersValidTo</code> field in the <code>GetParametersForImport</code> response.
+ *       You cannot use an expired public key or import token in an <a>ImportKeyMaterial</a>
+ *       request. If your key and token expire, send another <code>GetParametersForImport</code>
+ *       request.</p>
+ *          <p>
+ *             <code>GetParametersForImport</code> requires the following information:</p>
+ *          <ul>
+ *             <li>
+ *                <p>The key ID of the KMS key for which you are importing the key material.</p>
+ *             </li>
+ *             <li>
+ *                <p>The key spec of the public key ("wrapping key") that you will use to encrypt your key
+ *           material during import.</p>
+ *             </li>
+ *             <li>
+ *                <p>The wrapping algorithm that you will use with the public key to encrypt your key
+ *           material.</p>
+ *             </li>
+ *          </ul>
+ *          <p>You can use the same or a different public key spec and wrapping algorithm each time you
+ *       import or reimport the same key material. </p>
  *          <p>The KMS key that you use for this operation must be in a compatible key state. For
  * details, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html">Key states of KMS keys</a> in the <i>Key Management Service Developer Guide</i>.</p>
  *          <p>
@@ -78,8 +122,8 @@ export interface GetParametersForImportCommandOutput extends GetParametersForImp
  * const client = new KMSClient(config);
  * const input = { // GetParametersForImportRequest
  *   KeyId: "STRING_VALUE", // required
- *   WrappingAlgorithm: "RSAES_PKCS1_V1_5" || "RSAES_OAEP_SHA_1" || "RSAES_OAEP_SHA_256", // required
- *   WrappingKeySpec: "RSA_2048", // required
+ *   WrappingAlgorithm: "RSAES_PKCS1_V1_5" || "RSAES_OAEP_SHA_1" || "RSAES_OAEP_SHA_256" || "RSA_AES_KEY_WRAP_SHA_1" || "RSA_AES_KEY_WRAP_SHA_256", // required
+ *   WrappingKeySpec: "RSA_2048" || "RSA_3072" || "RSA_4096", // required
  * };
  * const command = new GetParametersForImportCommand(input);
  * const response = await client.send(command);
@@ -124,7 +168,9 @@ export interface GetParametersForImportCommandOutput extends GetParametersForImp
  *                   </i>.</p>
  *             </li>
  *             <li>
- *                <p>For cryptographic operations on KMS keys in custom key stores, this exception represents a general failure with many possible causes. To identify the cause, see the error message that accompanies the exception.</p>
+ *                <p>For cryptographic operations on KMS keys in custom key stores, this exception
+ *           represents a general failure with many possible causes. To identify the cause, see the
+ *           error message that accompanies the exception.</p>
  *             </li>
  *          </ul>
  *
@@ -139,9 +185,9 @@ export interface GetParametersForImportCommandOutput extends GetParametersForImp
  * @throws {@link KMSServiceException}
  * <p>Base exception class for all service exceptions from KMS service.</p>
  *
- * @example To retrieve the public key and import token for a KMS key
+ * @example To download the public key and import token for a symmetric encryption KMS key
  * ```javascript
- * // The following example retrieves the public key and import token for the specified KMS key.
+ * // The following example downloads a public key and import token to import symmetric encryption key material. It uses the default wrapping key spec and the RSAES_OAEP_SHA_256 wrapping algorithm.
  * const input = {
  *   "KeyId": "1234abcd-12ab-34cd-56ef-1234567890ab",
  *   "WrappingAlgorithm": "RSAES_OAEP_SHA_1",
@@ -153,11 +199,74 @@ export interface GetParametersForImportCommandOutput extends GetParametersForImp
  * {
  *   "ImportToken": "<binary data>",
  *   "KeyId": "arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
- *   "ParametersValidTo": "2016-12-01T14:52:17-08:00",
+ *   "ParametersValidTo": "2023-02-01T14:52:17-08:00",
  *   "PublicKey": "<binary data>"
  * }
  * *\/
- * // example id: to-retrieve-the-public-key-and-import-token-for-a-cmk-1480626483211
+ * // example id: to-download-the-public-key-and-import-token-1
+ * ```
+ *
+ * @example To download the public key and import token for an RSA asymmetric KMS key
+ * ```javascript
+ * // The following example downloads a public key and import token to import an RSA private key. It uses a required RSA_AES wrapping algorithm and the largest supported private key.
+ * const input = {
+ *   "KeyId": "arn:aws:kms:us-east-2:111122223333:key/8888abcd-12ab-34cd-56ef-1234567890ab",
+ *   "WrappingAlgorithm": "RSA_AES_KEY_WRAP_SHA_256",
+ *   "WrappingKeySpec": "RSA_4096"
+ * };
+ * const command = new GetParametersForImportCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "ImportToken": "<binary data>",
+ *   "KeyId": "arn:aws:kms:us-east-2:111122223333:key/8888abcd-12ab-34cd-56ef-1234567890ab",
+ *   "ParametersValidTo": "2023-03-08T13:02:02-07:00",
+ *   "PublicKey": "<binary data>"
+ * }
+ * *\/
+ * // example id: to-download-the-public-key-and-import-token-2
+ * ```
+ *
+ * @example To download the public key and import token for an elliptic curve (ECC) asymmetric KMS key
+ * ```javascript
+ * // The following example downloads a public key and import token to import an ECC_NIST_P521 (secp521r1) private key. You cannot directly wrap this ECC key under an RSA_2048 public key, although you can use an RSA_2048 public key with an RSA_AES wrapping algorithm to wrap any supported key material. This example requests an RSA_3072 public key for use with the RSAES_OAEP_SHA_256.
+ * const input = {
+ *   "KeyId": "arn:aws:kms:us-east-2:111122223333:key/9876abcd-12ab-34cd-56ef-1234567890ab",
+ *   "WrappingAlgorithm": "RSAES_OAEP_SHA_256",
+ *   "WrappingKeySpec": "RSA_3072"
+ * };
+ * const command = new GetParametersForImportCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "ImportToken": "<binary data>",
+ *   "KeyId": "arn:aws:kms:us-east-2:111122223333:key/9876abcd-12ab-34cd-56ef-1234567890ab",
+ *   "ParametersValidTo": "2023-09-12T03:15:01-20:00",
+ *   "PublicKey": "<binary data>"
+ * }
+ * *\/
+ * // example id: to-download-the-public-key-and-import-token-3
+ * ```
+ *
+ * @example To download the public key and import token for an HMAC KMS key
+ * ```javascript
+ * // The following example downloads a public key and import token to import an HMAC key. It uses the RSAES_OAEP_SHA_256 wrapping algorithm and an RSA_4096 private key.
+ * const input = {
+ *   "KeyId": "2468abcd-12ab-34cd-56ef-1234567890ab",
+ *   "WrappingAlgorithm": "RSAES_OAEP_SHA_256",
+ *   "WrappingKeySpec": "RSA_4096"
+ * };
+ * const command = new GetParametersForImportCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "ImportToken": "<binary data>",
+ *   "KeyId": "arn:aws:kms:us-east-2:111122223333:key/2468abcd-12ab-34cd-56ef-1234567890ab",
+ *   "ParametersValidTo": "2023-04-02T13:02:02-07:00",
+ *   "PublicKey": "<binary data>"
+ * }
+ * *\/
+ * // example id: to-download-the-public-key-and-import-token-4
  * ```
  *
  */

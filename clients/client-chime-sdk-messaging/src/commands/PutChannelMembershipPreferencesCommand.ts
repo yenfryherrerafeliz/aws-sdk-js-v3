@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   ChimeSDKMessagingClientResolvedConfig,
@@ -31,6 +31,10 @@ import {
 
 /**
  * @public
+ */
+export { __MetadataBearer, $Command };
+/**
+ * @public
  *
  * The input for {@link PutChannelMembershipPreferencesCommand}.
  */
@@ -46,10 +50,10 @@ export interface PutChannelMembershipPreferencesCommandOutput
 
 /**
  * @public
- * <p>Sets the membership preferences of an <code>AppInstanceUser</code> or <code>AppIntanceBot</code>
+ * <p>Sets the membership preferences of an <code>AppInstanceUser</code> or <code>AppInstanceBot</code>
  *          for the specified channel. The user or bot must be a member of the channel. Only the user or bot who owns the
  *          membership can set preferences. Users or bots in the <code>AppInstanceAdmin</code> and channel moderator roles can't set
- *          preferences for other users or users. Banned users or bots can't set membership preferences for the channel from
+ *          preferences for other users. Banned users or bots can't set membership preferences for the channel from
  *          which they are banned.</p>
  *          <note>
  *             <p>The x-amz-chime-bearer request header is mandatory. Use the ARN of an

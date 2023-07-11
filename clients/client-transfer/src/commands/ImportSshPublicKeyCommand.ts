@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ImportSshPublicKeyRequest, ImportSshPublicKeyResponse } from "../models/models_0";
 import { de_ImportSshPublicKeyCommand, se_ImportSshPublicKeyCommand } from "../protocols/Aws_json1_1";
 import { ServiceInputTypes, ServiceOutputTypes, TransferClientResolvedConfig } from "../TransferClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,7 +36,7 @@ export interface ImportSshPublicKeyCommandOutput extends ImportSshPublicKeyRespo
 
 /**
  * @public
- * <p>Adds a Secure Shell (SSH) public key to a user account identified by a
+ * <p>Adds a Secure Shell (SSH) public key to a Transfer Family user identified by a
  *         <code>UserName</code> value assigned to the specific file transfer protocol-enabled server,
  *       identified by <code>ServerId</code>.</p>
  *          <p>The response returns the <code>UserName</code> value, the <code>ServerId</code> value, and

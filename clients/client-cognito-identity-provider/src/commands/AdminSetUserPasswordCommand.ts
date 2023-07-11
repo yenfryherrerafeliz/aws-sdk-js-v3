@@ -1,9 +1,9 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
 import { getAwsAuthPlugin } from "@aws-sdk/middleware-signing";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -12,7 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   CognitoIdentityProviderClientResolvedConfig,
@@ -26,6 +26,10 @@ import {
 } from "../models/models_0";
 import { de_AdminSetUserPasswordCommand, se_AdminSetUserPasswordCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -43,13 +47,13 @@ export interface AdminSetUserPasswordCommandOutput extends AdminSetUserPasswordR
  * @public
  * <p>Sets the specified user's password in a user pool as an administrator. Works on any
  *             user. </p>
- *         <p>The password can be temporary or permanent. If it is temporary, the user status enters
+ *          <p>The password can be temporary or permanent. If it is temporary, the user status enters
  *             the <code>FORCE_CHANGE_PASSWORD</code> state. When the user next tries to sign in, the
  *             InitiateAuth/AdminInitiateAuth response will contain the
  *                 <code>NEW_PASSWORD_REQUIRED</code> challenge. If the user doesn't sign in before it
  *             expires, the user won't be able to sign in, and an administrator must reset their
  *             password. </p>
- *         <p>Once the user has set a new password, or the password is permanent, the user status is
+ *          <p>Once the user has set a new password, or the password is permanent, the user status is
  *             set to <code>Confirmed</code>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.

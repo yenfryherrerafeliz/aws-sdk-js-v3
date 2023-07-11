@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { WriteGetObjectResponseRequest, WriteGetObjectResponseRequestFilterSensitiveLog } from "../models/models_1";
 import { de_WriteGetObjectResponseCommand, se_WriteGetObjectResponseCommand } from "../protocols/Aws_restXml";
@@ -19,9 +19,8 @@ import { S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from ".
 
 /**
  * @public
- *
- * The input for {@link WriteGetObjectResponseCommand}.
  */
+export { __MetadataBearer, $Command };
 export type WriteGetObjectResponseCommandInputType = Omit<WriteGetObjectResponseRequest, "Body"> & {
   /**
    * For *`WriteGetObjectResponseRequest["Body"]`*, see {@link WriteGetObjectResponseRequest.Body}.
@@ -29,7 +28,9 @@ export type WriteGetObjectResponseCommandInputType = Omit<WriteGetObjectResponse
   Body?: WriteGetObjectResponseRequest["Body"] | string | Uint8Array | Buffer;
 };
 /**
- * This interface extends from `WriteGetObjectResponseRequest` interface. There are more parameters than `Body` defined in {@link WriteGetObjectResponseRequest}
+ * @public
+ *
+ * The input for {@link WriteGetObjectResponseCommand}.
  */
 export interface WriteGetObjectResponseCommandInput extends WriteGetObjectResponseCommandInputType {}
 /**
@@ -116,7 +117,7 @@ export interface WriteGetObjectResponseCommandOutput extends __MetadataBearer {}
  *   ReplicationStatus: "COMPLETE" || "PENDING" || "FAILED" || "REPLICA",
  *   RequestCharged: "requester",
  *   Restore: "STRING_VALUE",
- *   ServerSideEncryption: "AES256" || "aws:kms",
+ *   ServerSideEncryption: "AES256" || "aws:kms" || "aws:kms:dsse",
  *   SSECustomerAlgorithm: "STRING_VALUE",
  *   SSEKMSKeyId: "STRING_VALUE",
  *   SSECustomerKeyMD5: "STRING_VALUE",

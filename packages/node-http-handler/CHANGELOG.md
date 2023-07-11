@@ -3,6 +3,121 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.369.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.368.0...v3.369.0) (2023-07-11)
+
+**Note:** Version bump only for package @aws-sdk/node-http-handler
+
+
+
+
+
+# [3.360.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.359.0...v3.360.0) (2023-06-26)
+
+
+### Bug Fixes
+
+* **node-http-handler:** rejoin on error in writeRequestBody ([#4880](https://github.com/aws/aws-sdk-js-v3/issues/4880)) ([6c8730a](https://github.com/aws/aws-sdk-js-v3/commit/6c8730a9646e324cc2c01b6e86df974a9f39fc64))
+
+
+
+
+
+# [3.357.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.356.0...v3.357.0) (2023-06-21)
+
+**Note:** Version bump only for package @aws-sdk/node-http-handler
+
+
+
+
+
+# [3.350.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.349.0...v3.350.0) (2023-06-09)
+
+
+### Bug Fixes
+
+* **node-http-handler:** stop waiting for continue event on error ([#4805](https://github.com/aws/aws-sdk-js-v3/issues/4805)) ([20a210e](https://github.com/aws/aws-sdk-js-v3/commit/20a210e19462dde8e7b09eebc8eb7d85e330359b))
+
+
+
+
+
+# [3.348.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.347.1...v3.348.0) (2023-06-07)
+
+
+### Bug Fixes
+
+* **node-http-handler:** begin socket timeout countdown before socket event ([#4804](https://github.com/aws/aws-sdk-js-v3/issues/4804)) ([f5ce61a](https://github.com/aws/aws-sdk-js-v3/commit/f5ce61a985ee5da6461c4c6161a2a3c36f438483))
+
+
+
+
+
+# [3.347.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.346.0...v3.347.0) (2023-06-06)
+
+
+### Features
+
+* **protocol-http:** add reason to HttpResponse ([#4772](https://github.com/aws/aws-sdk-js-v3/issues/4772)) ([d29cb58](https://github.com/aws/aws-sdk-js-v3/commit/d29cb588373dff875ed82cda709ce0bf67c1de54))
+* **protocol-http:** add uri type and implementation ([#4771](https://github.com/aws/aws-sdk-js-v3/issues/4771)) ([5c7b40e](https://github.com/aws/aws-sdk-js-v3/commit/5c7b40e16e40fe55ba8428bd9cab5b7fd181d1e7))
+
+
+
+
+
+# [3.344.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.343.0...v3.344.0) (2023-06-01)
+
+
+### Bug Fixes
+
+* **node-http-handler:** clear open timeout on continue ([#4774](https://github.com/aws/aws-sdk-js-v3/issues/4774)) ([07c972a](https://github.com/aws/aws-sdk-js-v3/commit/07c972a04769f6a007957414c1ab26f5dd00dce2))
+
+
+
+
+
+# [3.342.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.341.0...v3.342.0) (2023-05-30)
+
+**Note:** Version bump only for package @aws-sdk/node-http-handler
+
+
+
+
+
+# [3.341.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.340.0...v3.341.0) (2023-05-26)
+
+**Note:** Version bump only for package @aws-sdk/node-http-handler
+
+
+
+
+
+# [3.338.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.337.0...v3.338.0) (2023-05-23)
+
+**Note:** Version bump only for package @aws-sdk/node-http-handler
+
+
+
+
+
+# [3.337.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.336.0...v3.337.0) (2023-05-22)
+
+
+### Bug Fixes
+
+* **node-http-handler:** open promise handle while waiting for http continue ([#4719](https://github.com/aws/aws-sdk-js-v3/issues/4719)) ([14810d3](https://github.com/aws/aws-sdk-js-v3/commit/14810d342af9b611b67894256869c4246ab59f87))
+
+
+
+
+
+# [3.329.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.328.0...v3.329.0) (2023-05-08)
+
+**Note:** Version bump only for package @aws-sdk/node-http-handler
+
+
+
+
+
 # [3.328.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.327.0...v3.328.0) (2023-05-05)
 
 

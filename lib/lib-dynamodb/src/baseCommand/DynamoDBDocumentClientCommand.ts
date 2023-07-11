@@ -1,4 +1,4 @@
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   DeserializeHandler,
   DeserializeHandlerArguments,
@@ -8,14 +8,19 @@ import {
   InitializeHandlerArguments,
   InitializeHandlerOutput,
   MiddlewareStack,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { KeyNode, marshallInput, unmarshallOutput } from "../commands/utils";
 import { DynamoDBDocumentClientResolvedConfig } from "../DynamoDBDocumentClient";
 
+// /** @public */
+// export { $Command, DynamoDBDocumentClientResolvedConfig };
+
 /**
  * Base class for Commands in lib-dynamodb used to pass middleware to
  * the underlying DynamoDBClient Commands.
+ *
+ * @public
  */
 export abstract class DynamoDBDocumentClientCommand<
   Input extends object,

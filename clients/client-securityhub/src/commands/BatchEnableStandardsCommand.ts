@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
-import { BatchEnableStandardsRequest, BatchEnableStandardsResponse } from "../models/models_1";
+import { BatchEnableStandardsRequest, BatchEnableStandardsResponse } from "../models/models_2";
 import { de_BatchEnableStandardsCommand, se_BatchEnableStandardsCommand } from "../protocols/Aws_restJson1";
 import { SecurityHubClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../SecurityHubClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -96,9 +100,9 @@ export interface BatchEnableStandardsCommandOutput extends BatchEnableStandardsR
  * @throws {@link SecurityHubServiceException}
  * <p>Base exception class for all service exceptions from SecurityHub service.</p>
  *
- * @example To import security findings from a third party provider to Security Hub
+ * @example To enable security standards
  * ```javascript
- * // The following example imports findings from a third party provider to Security Hub.
+ * // The following example enables the security standard specified by the StandardArn. You can use this operation to enable one or more Security Hub standards.
  * const input = {
  *   "StandardsSubscriptionRequests": [
  *     {
@@ -120,7 +124,7 @@ export interface BatchEnableStandardsCommandOutput extends BatchEnableStandardsR
  *   ]
  * }
  * *\/
- * // example id: to-import-security-findings-from-a-third-party-provider-to-security-hub-1675090935260
+ * // example id: to-enable-security-standards-1683233792239
  * ```
  *
  */

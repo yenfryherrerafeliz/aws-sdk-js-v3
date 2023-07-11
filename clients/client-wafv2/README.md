@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-wafv2
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-wafv2/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-wafv2)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-wafv2.svg)](https://www.npmjs.com/package/@aws-sdk/client-wafv2)
-
 ## Description
 
 AWS SDK for JavaScript WAFV2 Client for Node.js, Browser and React Native.
@@ -374,6 +371,22 @@ DeleteWebACL
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-wafv2/classes/deletewebaclcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-wafv2/interfaces/deletewebaclcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-wafv2/interfaces/deletewebaclcommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeAllManagedProducts
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-wafv2/classes/describeallmanagedproductscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-wafv2/interfaces/describeallmanagedproductscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-wafv2/interfaces/describeallmanagedproductscommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeManagedProductsByVendor
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-wafv2/classes/describemanagedproductsbyvendorcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-wafv2/interfaces/describemanagedproductsbyvendorcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-wafv2/interfaces/describemanagedproductsbyvendorcommandoutput.html)
 
 </details>
 <details>

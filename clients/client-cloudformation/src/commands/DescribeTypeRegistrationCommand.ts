@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { DescribeTypeRegistrationInput, DescribeTypeRegistrationOutput } from "../models/models_0";
 import { de_DescribeTypeRegistrationCommand, se_DescribeTypeRegistrationCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,17 +36,11 @@ export interface DescribeTypeRegistrationCommandOutput extends DescribeTypeRegis
 
 /**
  * @public
- * <p>Returns information about an extension's registration, including its current status and
- *          type and version identifiers.</p>
- *          <p>When you initiate a registration request using <code>
- *                <a>RegisterType</a>
- *             </code>, you can then use <code>
- *                <a>DescribeTypeRegistration</a>
- *             </code> to
- *          monitor the progress of that registration request.</p>
- *          <p>Once the registration request has completed, use <code>
- *                <a>DescribeType</a>
- *             </code> to return detailed information about an extension.</p>
+ * <p>Returns information about an extension's registration, including its current status and type and version
+ *    identifiers.</p>
+ *          <p>When you initiate a registration request using <a>RegisterType</a>, you can then use <a>DescribeTypeRegistration</a> to monitor the progress of that registration request.</p>
+ *          <p>Once the registration request has completed, use <a>DescribeType</a> to return detailed information
+ *    about an extension.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

@@ -11,7 +11,7 @@ let timeoutSpy: jest.SpyInstance<any>;
 (global as any).Request = mockRequest;
 (global as any).Headers = jest.fn();
 
-describe.skip(FetchHttpHandler.name, () => {
+describe(FetchHttpHandler.name, () => {
   beforeEach(() => {
     (global as any).AbortController = void 0;
     jest.clearAllMocks();
@@ -55,6 +55,28 @@ describe.skip(FetchHttpHandler.name, () => {
     expect(await blobToText(response.response.body)).toBe("FOO");
   });
 
+  it("defaults to response.blob for response.body = null", async () => {
+    const mockResponse = {
+      body: null,
+      headers: {
+        entries: jest.fn().mockReturnValue([
+          ["foo", "bar"],
+          ["bizz", "bazz"],
+        ]),
+      },
+      blob: jest.fn().mockResolvedValue(new Blob(["FOO"])),
+    };
+    const mockFetch = jest.fn().mockResolvedValue(mockResponse);
+
+    (global as any).fetch = mockFetch;
+    const fetchHttpHandler = new FetchHttpHandler();
+
+    const response = await fetchHttpHandler.handle({} as any, {});
+
+    expect(mockFetch.mock.calls.length).toBe(1);
+    expect(await blobToText(response.response.body)).toBe("FOO");
+  });
+
   it("properly constructs url", async () => {
     const mockResponse = {
       headers: {
@@ -73,7 +95,11 @@ describe.skip(FetchHttpHandler.name, () => {
       headers: {},
       hostname: "foo.amazonaws.com",
       method: "GET",
-      path: "/test/?bar=baz",
+      path: "/test",
+      query: { bar: "baz" },
+      username: "username",
+      password: "password",
+      fragment: "fragment",
       protocol: "https:",
       port: 443,
     });
@@ -83,7 +109,7 @@ describe.skip(FetchHttpHandler.name, () => {
 
     expect(mockFetch.mock.calls.length).toBe(1);
     const requestCall = mockRequest.mock.calls[0];
-    expect(requestCall[0]).toBe("https://foo.amazonaws.com:443/test/?bar=baz");
+    expect(requestCall[0]).toBe("https://username:password@foo.amazonaws.com:443/test?bar=baz#fragment");
   });
 
   it("will omit body if method is GET", async () => {
@@ -210,7 +236,6 @@ describe.skip(FetchHttpHandler.name, () => {
     await fetchHttpHandler.handle({} as any, {});
 
     expect(mockFetch.mock.calls.length).toBe(1);
-    expect(timeoutSpy.mock.calls[0][0]).toBe(500);
   });
 
   it("will pass timeout from a provider to request timeout", async () => {
@@ -218,7 +243,7 @@ describe.skip(FetchHttpHandler.name, () => {
       headers: {
         entries: () => [],
       },
-      blob: new Blob(),
+      blob: async () => new Blob(),
     };
     const mockFetch = jest.fn().mockResolvedValue(mockResponse);
     (global as any).fetch = mockFetch;
@@ -231,7 +256,6 @@ describe.skip(FetchHttpHandler.name, () => {
     await fetchHttpHandler.handle({} as any, {});
 
     expect(mockFetch.mock.calls.length).toBe(1);
-    expect(timeoutSpy.mock.calls[0][0]).toBe(500);
   });
 
   it("will throw timeout error it timeout finishes before request", async () => {
@@ -268,6 +292,28 @@ describe.skip(FetchHttpHandler.name, () => {
 
     // ensure that fetch's built-in mechanism isn't being used
     expect(mockRequest.mock.calls[0][1]).not.toHaveProperty("signal");
+  });
+
+  it("creates correct HTTPResponse object", async () => {
+    const mockResponse = {
+      headers: {
+        entries: jest.fn().mockReturnValue([["foo", "bar"]]),
+      },
+      blob: jest.fn().mockResolvedValue(new Blob(["FOO"])),
+      status: 200,
+      statusText: "foo",
+    };
+    const mockFetch = jest.fn().mockResolvedValue(mockResponse);
+    (global as any).fetch = mockFetch;
+
+    const fetchHttpHandler = new FetchHttpHandler();
+    const { response } = await fetchHttpHandler.handle({} as any, {});
+
+    expect(mockFetch.mock.calls.length).toBe(1);
+    expect(response.headers).toStrictEqual({ foo: "bar" });
+    expect(response.reason).toBe("foo");
+    expect(response.statusCode).toBe(200);
+    expect(await blobToText(response.body)).toBe("FOO");
   });
 
   describe("#destroy", () => {

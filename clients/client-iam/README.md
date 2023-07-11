@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-iam
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-iam/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-iam)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-iam.svg)](https://www.npmjs.com/package/@aws-sdk/client-iam)
-
 ## Description
 
 AWS SDK for JavaScript IAM Client for Node.js, Browser and React Native.
@@ -713,6 +710,14 @@ GetLoginProfile
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iam/classes/getloginprofilecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iam/interfaces/getloginprofilecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iam/interfaces/getloginprofilecommandoutput.html)
+
+</details>
+<details>
+<summary>
+GetMFADevice
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iam/classes/getmfadevicecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iam/interfaces/getmfadevicecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iam/interfaces/getmfadevicecommandoutput.html)
 
 </details>
 <details>

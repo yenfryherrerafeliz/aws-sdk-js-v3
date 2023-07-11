@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectLong as __expectLong,
   expectNonNull as __expectNonNull,
@@ -10,13 +11,13 @@ import {
   parseEpochTimestamp as __parseEpochTimestamp,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import {
@@ -94,6 +95,7 @@ import {
   MixedMeasureMapping,
   MultiMeasureAttributeMapping,
   MultiMeasureMappings,
+  PartitionKey,
   RejectedRecordsException,
   ReportConfiguration,
   ReportS3Configuration,
@@ -101,6 +103,7 @@ import {
   ResumeBatchLoadTaskRequest,
   RetentionProperties,
   S3Configuration,
+  Schema,
   ServiceQuotaExceededException,
   Table,
   Tag,
@@ -1719,6 +1722,10 @@ const se_CreateBatchLoadTaskRequest = (input: CreateBatchLoadTaskRequest, contex
 
 // se_MultiMeasureMappings omitted.
 
+// se_PartitionKey omitted.
+
+// se_PartitionKeyList omitted.
+
 // se__Record omitted.
 
 // se_Records omitted.
@@ -1732,6 +1739,8 @@ const se_CreateBatchLoadTaskRequest = (input: CreateBatchLoadTaskRequest, contex
 // se_RetentionProperties omitted.
 
 // se_S3Configuration omitted.
+
+// se_Schema omitted.
 
 // se_Tag omitted.
 
@@ -1948,6 +1957,10 @@ const de_ListTablesResponse = (output: any, context: __SerdeContext): ListTables
 
 // de_MultiMeasureMappings omitted.
 
+// de_PartitionKey omitted.
+
+// de_PartitionKeyList omitted.
+
 // de_RecordsIngested omitted.
 
 // de_RejectedRecord omitted.
@@ -1968,6 +1981,8 @@ const de_ListTablesResponse = (output: any, context: __SerdeContext): ListTables
 
 // de_S3Configuration omitted.
 
+// de_Schema omitted.
+
 // de_ServiceQuotaExceededException omitted.
 
 /**
@@ -1981,6 +1996,7 @@ const de_Table = (output: any, context: __SerdeContext): Table => {
     LastUpdatedTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     MagneticStoreWriteProperties: _json,
     RetentionProperties: _json,
+    Schema: _json,
     TableName: __expectString,
     TableStatus: __expectString,
   }) as any;
@@ -2037,14 +2053,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

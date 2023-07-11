@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectInt32 as __expectInt32,
   expectLong as __expectLong,
@@ -15,12 +16,12 @@ import {
   resolvedPath as __resolvedPath,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   ConfigureLogsForChannelCommandInput,
@@ -122,6 +123,7 @@ import {
   AccessConfiguration,
   AdBreak,
   AdMarkerPassthrough,
+  AdMarkupType,
   Alert,
   AvailMatchingCriteria,
   AvailSuppression,
@@ -136,6 +138,7 @@ import {
   HlsPlaylistSettings,
   HttpConfiguration,
   HttpPackageConfiguration,
+  KeyValuePair,
   LivePreRollConfiguration,
   LiveSource,
   LogType,
@@ -3588,7 +3591,11 @@ const de_BadRequestExceptionRes = async (parsedOutput: any, context: __SerdeCont
 
 // se_AdBreak omitted.
 
+// se_AdBreakMetadataList omitted.
+
 // se_AdMarkerPassthrough omitted.
+
+// se_adMarkupTypes omitted.
 
 // se_AvailMatchingCriteria omitted.
 
@@ -3615,6 +3622,8 @@ const de_BadRequestExceptionRes = async (parsedOutput: any, context: __SerdeCont
 // se_HttpPackageConfiguration omitted.
 
 // se_HttpPackageConfigurations omitted.
+
+// se_KeyValuePair omitted.
 
 // se_LivePreRollConfiguration omitted.
 
@@ -3792,7 +3801,11 @@ const de___listOfVodSource = (output: any, context: __SerdeContext): VodSource[]
 
 // de_AdBreak omitted.
 
+// de_AdBreakMetadataList omitted.
+
 // de_AdMarkerPassthrough omitted.
+
+// de_adMarkupTypes omitted.
 
 /**
  * deserializeAws_restJson1Alert
@@ -3853,6 +3866,8 @@ const de_Channel = (output: any, context: __SerdeContext): Channel => {
 // de_HttpPackageConfiguration omitted.
 
 // de_HttpPackageConfigurations omitted.
+
+// de_KeyValuePair omitted.
 
 // de_LivePreRollConfiguration omitted.
 
@@ -4029,14 +4044,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

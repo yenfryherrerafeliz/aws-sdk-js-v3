@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { Endpoint, EndpointParameters as __EndpointParameters, EndpointV2, Provider } from "@aws-sdk/types";
+import { Endpoint, EndpointParameters as __EndpointParameters, EndpointV2, Provider } from "@smithy/types";
 
 export interface ClientInputEndpointParameters {
   region?: string | Provider<string>;
@@ -24,7 +24,7 @@ export const resolveClientEndpointParameters = <T>(
 };
 
 export interface EndpointParameters extends __EndpointParameters {
-  Region: string;
+  Region?: string;
   UseDualStack?: boolean;
   UseFIPS?: boolean;
   Endpoint?: string;

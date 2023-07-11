@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { WAFV2ServiceException as __BaseException } from "./WAFV2ServiceException";
 
@@ -37,9 +37,38 @@ export interface ActionCondition {
 
 /**
  * @public
+ * <p>The name of a field in the request payload that contains part or all of your customer's primary physical address. </p>
+ *          <p>This data type is used in the <code>RequestInspectionACFP</code> data type. </p>
+ */
+export interface AddressField {
+  /**
+   * <p>The name of a single primary address field. </p>
+   *          <p>How you specify the address fields depends on the request inspection payload type.</p>
+   *          <ul>
+   *             <li>
+   *                <p>For JSON payloads, specify the field identifiers in JSON
+   *                pointer syntax. For information about the JSON Pointer
+   *                syntax, see the Internet Engineering Task Force (IETF)
+   *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
+   *                	Object Notation (JSON) Pointer</a>. </p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "primaryaddressline1": "THE_ADDRESS1", "primaryaddressline2": "THE_ADDRESS2", "primaryaddressline3": "THE_ADDRESS3" \} \}</code>,
+   *                  the address field idenfiers are <code>/form/primaryaddressline1</code>, <code>/form/primaryaddressline2</code>, and <code>/form/primaryaddressline3</code>.</p>
+   *             </li>
+   *             <li>
+   *                <p>For form encoded payload types, use the HTML form names.</p>
+   *                <p>For example, for an HTML form with input elements
+   *                    named <code>primaryaddressline1</code>, <code>primaryaddressline2</code>, and <code>primaryaddressline3</code>, the address fields identifiers are <code>primaryaddressline1</code>, <code>primaryaddressline2</code>, and <code>primaryaddressline3</code>. </p>
+   *             </li>
+   *          </ul>
+   */
+  Identifier: string | undefined;
+}
+
+/**
+ * @public
  * <p>Inspect all of the elements that WAF has parsed and extracted from the web request
  *          component that you've identified in your <a>FieldToMatch</a> specifications. </p>
- *          <p>This is used only in the <a>FieldToMatch</a> specification for some web request component types. </p>
+ *          <p>This is used in the <a>FieldToMatch</a> specification for some web request component types. </p>
  *          <p>JSON specification: <code>"All": \{\}</code>
  *          </p>
  */
@@ -102,7 +131,7 @@ export interface AllowAction {
 /**
  * @public
  * <p>Inspect all query arguments of the web request. </p>
- *          <p>This is used only in the <a>FieldToMatch</a> specification for some web request component types. </p>
+ *          <p>This is used in the <a>FieldToMatch</a> specification for some web request component types. </p>
  *          <p>JSON specification: <code>"AllQueryArguments": \{\}</code>
  *          </p>
  */
@@ -141,7 +170,7 @@ export interface Body {
    *          <ul>
    *             <li>
    *                <p>
-   *                   <code>CONTINUE</code> - Inspect the body normally, according to the rule inspection criteria. </p>
+   *                   <code>CONTINUE</code> - Inspect the available body contents normally, according to the rule inspection criteria. </p>
    *             </li>
    *             <li>
    *                <p>
@@ -229,7 +258,7 @@ export interface Cookies {
   MatchScope: MapMatchScope | string | undefined;
 
   /**
-   * <p>What WAF should do if the cookies of the request are larger than WAF can inspect.
+   * <p>What WAF should do if the cookies of the request are more numerous or larger than WAF can inspect.
    *     WAF does not support inspecting the entire contents of request cookies
    *       when they exceed 8 KB (8192 bytes) or 200 total cookies. The underlying host service forwards a maximum of 200 cookies
    *       and at most 8 KB of cookie contents to WAF. </p>
@@ -237,7 +266,41 @@ export interface Cookies {
    *          <ul>
    *             <li>
    *                <p>
-   *                   <code>CONTINUE</code> - Inspect the cookies normally, according to the rule inspection criteria. </p>
+   *                   <code>CONTINUE</code> - Inspect the available cookies normally, according to the rule inspection criteria. </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>MATCH</code> - Treat the web request as matching the rule statement. WAF
+   *                applies the rule action to the request.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>NO_MATCH</code> - Treat the web request as not matching the rule
+   *                statement.</p>
+   *             </li>
+   *          </ul>
+   */
+  OversizeHandling: OversizeHandling | string | undefined;
+}
+
+/**
+ * @public
+ * <p>Inspect a string containing the list of the request's header names, ordered as they appear in the web request
+ * that WAF receives for inspection.
+ *            WAF generates the string and then uses that as the field to match component in its inspection.
+ *     WAF separates the header names in the string using colons and no added spaces, for example <code>host:user-agent:accept:authorization:referer</code>.</p>
+ */
+export interface HeaderOrder {
+  /**
+   * <p>What WAF should do if the headers of the request are more numerous or larger than WAF can inspect.
+   *     WAF does not support inspecting the entire contents of request headers
+   *       when they exceed 8 KB (8192 bytes) or 200 total headers. The underlying host service forwards a maximum of 200 headers
+   *       and at most 8 KB of header contents to WAF. </p>
+   *          <p>The options for oversize handling are the following:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>CONTINUE</code> - Inspect the available headers normally, according to the rule inspection criteria. </p>
    *             </li>
    *             <li>
    *                <p>
@@ -309,7 +372,7 @@ export interface Headers {
   MatchScope: MapMatchScope | string | undefined;
 
   /**
-   * <p>What WAF should do if the headers of the request are larger than WAF can inspect.
+   * <p>What WAF should do if the headers of the request are more numerous or larger than WAF can inspect.
    *     WAF does not support inspecting the entire contents of request headers
    *       when they exceed 8 KB (8192 bytes) or 200 total headers. The underlying host service forwards a maximum of 200 headers
    *       and at most 8 KB of header contents to WAF. </p>
@@ -317,7 +380,7 @@ export interface Headers {
    *          <ul>
    *             <li>
    *                <p>
-   *                   <code>CONTINUE</code> - Inspect the headers normally, according to the rule inspection criteria. </p>
+   *                   <code>CONTINUE</code> - Inspect the available headers normally, according to the rule inspection criteria. </p>
    *             </li>
    *             <li>
    *                <p>
@@ -479,7 +542,7 @@ export interface JsonBody {
    *          <ul>
    *             <li>
    *                <p>
-   *                   <code>CONTINUE</code> - Inspect the body normally, according to the rule inspection criteria. </p>
+   *                   <code>CONTINUE</code> - Inspect the available body contents normally, according to the rule inspection criteria. </p>
    *             </li>
    *             <li>
    *                <p>
@@ -504,7 +567,7 @@ export interface JsonBody {
  * @public
  * <p>Inspect the HTTP method of the web request. The method indicates the type of operation
  *          that the request is asking the origin to perform. </p>
- *          <p>This is used only in the <a>FieldToMatch</a> specification for some web request component types. </p>
+ *          <p>This is used in the <a>FieldToMatch</a> specification for some web request component types. </p>
  *          <p>JSON specification: <code>"Method": \{\}</code>
  *          </p>
  */
@@ -514,7 +577,7 @@ export interface Method {}
  * @public
  * <p>Inspect the query string of the web request. This is the part of a URL that appears
  *          after a <code>?</code> character, if any.</p>
- *          <p>This is used only in the <a>FieldToMatch</a> specification for some web request component types. </p>
+ *          <p>This is used in the <a>FieldToMatch</a> specification for some web request component types. </p>
  *          <p>JSON specification: <code>"QueryString": \{\}</code>
  *          </p>
  */
@@ -557,7 +620,7 @@ export interface SingleQueryArgument {
  * @public
  * <p>Inspect the path component of the URI of the web request. This is the part of the web
  *          request that identifies a resource. For example, <code>/images/daily-ad.jpg</code>.</p>
- *          <p>This is used only in the <a>FieldToMatch</a> specification for some web request component types. </p>
+ *          <p>This is used in the <a>FieldToMatch</a> specification for some web request component types. </p>
  *          <p>JSON specification: <code>"UriPath": \{\}</code>
  *          </p>
  */
@@ -671,6 +734,14 @@ export interface FieldToMatch {
    *          underlying host service. </p>
    */
   Cookies?: Cookies;
+
+  /**
+   * <p>Inspect a string containing the list of the request's header names, ordered as they appear in the web request
+   * that WAF receives for inspection.
+   *            WAF generates the string and then uses that as the field to match component in its inspection.
+   *     WAF separates the header names in the string using colons and no added spaces, for example <code>host:user-agent:accept:authorization:referer</code>.</p>
+   */
+  HeaderOrder?: HeaderOrder;
 }
 
 /**
@@ -730,8 +801,8 @@ export type TextTransformationType = (typeof TextTransformationType)[keyof typeo
  */
 export interface TextTransformation {
   /**
-   * <p>Sets the relative processing order for multiple transformations that are defined for a
-   *          rule statement. WAF processes all transformations, from lowest priority to highest,
+   * <p>Sets the relative processing order for multiple transformations.
+   *          WAF processes all transformations, from lowest priority to highest,
    *          before inspecting the transformed content. The priorities don't need to be consecutive, but
    *          they must all be different. </p>
    */
@@ -922,6 +993,11 @@ export interface ByteMatchStatement {
    *                   <code>UriPath</code>: The value that you want WAF to search for in the URI path,
    *                for example, <code>/images/daily-ad.jpg</code>. </p>
    *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>HeaderOrder</code>: The comma-separated list of header names to match for. WAF creates a
+   *                  string that contains the ordered list of header names, from the headers in the web request, and then matches against that string. </p>
+   *             </li>
    *          </ul>
    *          <p>If <code>SearchString</code> includes alphabetic characters A-Z and a-z, note that the
    *          value is case sensitive.</p>
@@ -949,9 +1025,7 @@ export interface ByteMatchStatement {
   FieldToMatch: FieldToMatch | undefined;
 
   /**
-   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection.
-   *          If you specify one or more transformations in a rule statement, WAF performs all transformations on the
-   *          content of the request component identified by <code>FieldToMatch</code>, starting from the lowest priority setting, before inspecting the content for a match.</p>
+   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the component contents. </p>
    */
   TextTransformations: TextTransformation[] | undefined;
 
@@ -1511,13 +1585,58 @@ export interface ExcludedRule {
 
 /**
  * @public
- * <p>Details about your login page password field for request inspection, used in the
- *       <code>AWSManagedRulesATPRuleSet</code>
- *             <code>RequestInspection</code> configuration.</p>
+ * <p>The name of the field in the request payload that contains your customer's email. </p>
+ *          <p>This data type is used in the <code>RequestInspectionACFP</code> data type. </p>
+ */
+export interface EmailField {
+  /**
+   * <p>The name of the email field. </p>
+   *          <p>How you specify this depends on the request inspection payload type.</p>
+   *          <ul>
+   *             <li>
+   *                <p>For JSON payloads, specify the field name in JSON
+   *                pointer syntax. For information about the JSON Pointer
+   *                syntax, see the Internet Engineering Task Force (IETF)
+   *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
+   *                	Object Notation (JSON) Pointer</a>. </p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "email": "THE_EMAIL" \} \}</code>,
+   *                  the email field specification is <code>/form/email</code>.</p>
+   *             </li>
+   *             <li>
+   *                <p>For form encoded payload types, use the HTML form names.</p>
+   *                <p>For example, for an HTML form with the input element
+   *                    named <code>email1</code>, the email field specification is <code>email1</code>.</p>
+   *             </li>
+   *          </ul>
+   */
+  Identifier: string | undefined;
+}
+
+/**
+ * @public
+ * <p>The name of the field in the request payload that contains your customer's password. </p>
+ *          <p>This data type is used in the <code>RequestInspection</code> and <code>RequestInspectionACFP</code> data types. </p>
  */
 export interface PasswordField {
   /**
-   * <p>The name of the password field. For example <code>/form/password</code>.</p>
+   * <p>The name of the password field. </p>
+   *          <p>How you specify this depends on the request inspection payload type.</p>
+   *          <ul>
+   *             <li>
+   *                <p>For JSON payloads, specify the field name in JSON
+   *                pointer syntax. For information about the JSON Pointer
+   *                syntax, see the Internet Engineering Task Force (IETF)
+   *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
+   *                	Object Notation (JSON) Pointer</a>. </p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "password": "THE_PASSWORD" \} \}</code>,
+   *                  the password field specification is <code>/form/password</code>.</p>
+   *             </li>
+   *             <li>
+   *                <p>For form encoded payload types, use the HTML form names.</p>
+   *                <p>For example, for an HTML form with the input element
+   *                    named <code>password1</code>, the password field specification is <code>password1</code>.</p>
+   *             </li>
+   *          </ul>
    */
   Identifier: string | undefined;
 }
@@ -1538,15 +1657,375 @@ export type PayloadType = (typeof PayloadType)[keyof typeof PayloadType];
 
 /**
  * @public
- * <p>Details about your login page username field for request inspection, used in the
- *       <code>AWSManagedRulesATPRuleSet</code>
- *             <code>RequestInspection</code> configuration.</p>
+ * <p>The name of a field in the request payload that contains part or all of your customer's primary phone number. </p>
+ *          <p>This data type is used in the <code>RequestInspectionACFP</code> data type. </p>
+ */
+export interface PhoneNumberField {
+  /**
+   * <p>The name of a single primary phone number field. </p>
+   *          <p>How you specify the phone number fields depends on the request inspection payload type.</p>
+   *          <ul>
+   *             <li>
+   *                <p>For JSON payloads, specify the field identifiers in JSON
+   *                pointer syntax. For information about the JSON Pointer
+   *                syntax, see the Internet Engineering Task Force (IETF)
+   *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
+   *                	Object Notation (JSON) Pointer</a>. </p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "primaryphoneline1": "THE_PHONE1", "primaryphoneline2": "THE_PHONE2", "primaryphoneline3": "THE_PHONE3" \} \}</code>,
+   *                  the phone number field identifiers are <code>/form/primaryphoneline1</code>, <code>/form/primaryphoneline2</code>, and <code>/form/primaryphoneline3</code>.</p>
+   *             </li>
+   *             <li>
+   *                <p>For form encoded payload types, use the HTML form names.</p>
+   *                <p>For example, for an HTML form with input elements
+   *                    named <code>primaryphoneline1</code>, <code>primaryphoneline2</code>, and <code>primaryphoneline3</code>, the phone number field identifiers are <code>primaryphoneline1</code>, <code>primaryphoneline2</code>, and <code>primaryphoneline3</code>. </p>
+   *             </li>
+   *          </ul>
+   */
+  Identifier: string | undefined;
+}
+
+/**
+ * @public
+ * <p>The name of the field in the request payload that contains your customer's username. </p>
+ *          <p>This data type is used in the <code>RequestInspection</code> and <code>RequestInspectionACFP</code> data types. </p>
  */
 export interface UsernameField {
   /**
-   * <p>The name of the username field. For example <code>/form/username</code>.</p>
+   * <p>The name of the username field. </p>
+   *          <p>How you specify this depends on the request inspection payload type.</p>
+   *          <ul>
+   *             <li>
+   *                <p>For JSON payloads, specify the field name in JSON
+   *                pointer syntax. For information about the JSON Pointer
+   *                syntax, see the Internet Engineering Task Force (IETF)
+   *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
+   *                	Object Notation (JSON) Pointer</a>. </p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "username": "THE_USERNAME" \} \}</code>,
+   *                  the username field specification is <code>/form/username</code>. </p>
+   *             </li>
+   *             <li>
+   *                <p>For form encoded payload types, use the HTML form names.</p>
+   *                <p>For example, for an HTML form with the input element
+   *                    named <code>username1</code>, the username field specification is
+   *                    <code>username1</code>
+   *                </p>
+   *             </li>
+   *          </ul>
    */
   Identifier: string | undefined;
+}
+
+/**
+ * @public
+ * <p>The criteria for inspecting account creation requests, used by the ACFP rule group to validate and track account creation attempts.  </p>
+ *          <p>This is part of the <code>AWSManagedRulesACFPRuleSet</code> configuration in <code>ManagedRuleGroupConfig</code>.</p>
+ *          <p>In these settings, you specify how your application accepts account creation attempts
+ *            by providing the request payload type and the names of the fields
+ *            within the request body where the username, password, email, and primary address and phone number fields are provided. </p>
+ */
+export interface RequestInspectionACFP {
+  /**
+   * <p>The payload type for your account creation endpoint, either JSON or form encoded.</p>
+   */
+  PayloadType: PayloadType | string | undefined;
+
+  /**
+   * <p>The name of the field in the request payload that contains your customer's username. </p>
+   *          <p>How you specify this depends on the request inspection payload type.</p>
+   *          <ul>
+   *             <li>
+   *                <p>For JSON payloads, specify the field name in JSON
+   *                pointer syntax. For information about the JSON Pointer
+   *                syntax, see the Internet Engineering Task Force (IETF)
+   *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
+   *                	Object Notation (JSON) Pointer</a>. </p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "username": "THE_USERNAME" \} \}</code>,
+   *                  the username field specification is <code>/form/username</code>. </p>
+   *             </li>
+   *             <li>
+   *                <p>For form encoded payload types, use the HTML form names.</p>
+   *                <p>For example, for an HTML form with the input element
+   *                    named <code>username1</code>, the username field specification is
+   *                    <code>username1</code>
+   *                </p>
+   *             </li>
+   *          </ul>
+   */
+  UsernameField?: UsernameField;
+
+  /**
+   * <p>The name of the field in the request payload that contains your customer's password. </p>
+   *          <p>How you specify this depends on the request inspection payload type.</p>
+   *          <ul>
+   *             <li>
+   *                <p>For JSON payloads, specify the field name in JSON
+   *                pointer syntax. For information about the JSON Pointer
+   *                syntax, see the Internet Engineering Task Force (IETF)
+   *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
+   *                	Object Notation (JSON) Pointer</a>. </p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "password": "THE_PASSWORD" \} \}</code>,
+   *                  the password field specification is <code>/form/password</code>.</p>
+   *             </li>
+   *             <li>
+   *                <p>For form encoded payload types, use the HTML form names.</p>
+   *                <p>For example, for an HTML form with the input element
+   *                    named <code>password1</code>, the password field specification is <code>password1</code>.</p>
+   *             </li>
+   *          </ul>
+   */
+  PasswordField?: PasswordField;
+
+  /**
+   * <p>The name of the field in the request payload that contains your customer's email. </p>
+   *          <p>How you specify this depends on the request inspection payload type.</p>
+   *          <ul>
+   *             <li>
+   *                <p>For JSON payloads, specify the field name in JSON
+   *                pointer syntax. For information about the JSON Pointer
+   *                syntax, see the Internet Engineering Task Force (IETF)
+   *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
+   *                	Object Notation (JSON) Pointer</a>. </p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "email": "THE_EMAIL" \} \}</code>,
+   *                  the email field specification is <code>/form/email</code>.</p>
+   *             </li>
+   *             <li>
+   *                <p>For form encoded payload types, use the HTML form names.</p>
+   *                <p>For example, for an HTML form with the input element
+   *                    named <code>email1</code>, the email field specification is <code>email1</code>.</p>
+   *             </li>
+   *          </ul>
+   */
+  EmailField?: EmailField;
+
+  /**
+   * <p>The names of the fields in the request payload that contain your customer's primary phone number. </p>
+   *          <p>Order the phone number fields in the array exactly as they are ordered in the request payload. </p>
+   *          <p>How you specify the phone number fields depends on the request inspection payload type.</p>
+   *          <ul>
+   *             <li>
+   *                <p>For JSON payloads, specify the field identifiers in JSON
+   *                pointer syntax. For information about the JSON Pointer
+   *                syntax, see the Internet Engineering Task Force (IETF)
+   *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
+   *                	Object Notation (JSON) Pointer</a>. </p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "primaryphoneline1": "THE_PHONE1", "primaryphoneline2": "THE_PHONE2", "primaryphoneline3": "THE_PHONE3" \} \}</code>,
+   *                  the phone number field identifiers are <code>/form/primaryphoneline1</code>, <code>/form/primaryphoneline2</code>, and <code>/form/primaryphoneline3</code>.</p>
+   *             </li>
+   *             <li>
+   *                <p>For form encoded payload types, use the HTML form names.</p>
+   *                <p>For example, for an HTML form with input elements
+   *                    named <code>primaryphoneline1</code>, <code>primaryphoneline2</code>, and <code>primaryphoneline3</code>, the phone number field identifiers are <code>primaryphoneline1</code>, <code>primaryphoneline2</code>, and <code>primaryphoneline3</code>. </p>
+   *             </li>
+   *          </ul>
+   */
+  PhoneNumberFields?: PhoneNumberField[];
+
+  /**
+   * <p>The names of the fields in the request payload that contain your customer's primary physical address. </p>
+   *          <p>Order the address fields in the array exactly as they are ordered in the request payload. </p>
+   *          <p>How you specify the address fields depends on the request inspection payload type.</p>
+   *          <ul>
+   *             <li>
+   *                <p>For JSON payloads, specify the field identifiers in JSON
+   *                pointer syntax. For information about the JSON Pointer
+   *                syntax, see the Internet Engineering Task Force (IETF)
+   *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
+   *                	Object Notation (JSON) Pointer</a>. </p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "primaryaddressline1": "THE_ADDRESS1", "primaryaddressline2": "THE_ADDRESS2", "primaryaddressline3": "THE_ADDRESS3" \} \}</code>,
+   *                  the address field idenfiers are <code>/form/primaryaddressline1</code>, <code>/form/primaryaddressline2</code>, and <code>/form/primaryaddressline3</code>.</p>
+   *             </li>
+   *             <li>
+   *                <p>For form encoded payload types, use the HTML form names.</p>
+   *                <p>For example, for an HTML form with input elements
+   *                    named <code>primaryaddressline1</code>, <code>primaryaddressline2</code>, and <code>primaryaddressline3</code>, the address fields identifiers are <code>primaryaddressline1</code>, <code>primaryaddressline2</code>, and <code>primaryaddressline3</code>. </p>
+   *             </li>
+   *          </ul>
+   */
+  AddressFields?: AddressField[];
+}
+
+/**
+ * @public
+ * <p>Configures inspection of the response body. WAF can inspect the first 65,536 bytes (64 KB) of the response body.
+ *            This is part of the <code>ResponseInspection</code> configuration for <code>AWSManagedRulesATPRuleSet</code> and  <code>AWSManagedRulesACFPRuleSet</code>. </p>
+ *          <note>
+ *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
+ *          </note>
+ */
+export interface ResponseInspectionBodyContains {
+  /**
+   * <p>Strings in the body of the response that indicate a successful login or account creation attempt. To be counted as a success, the string can be anywhere in the body and must be an exact match, including case. Each string must be unique among the success and failure strings. </p>
+   *          <p>JSON examples: <code>"SuccessStrings": [ "Login successful" ]</code> and <code>"SuccessStrings": [ "Account creation successful", "Welcome to our site!" ]</code>
+   *          </p>
+   */
+  SuccessStrings: string[] | undefined;
+
+  /**
+   * <p>Strings in the body of the response that indicate a failed login or account creation attempt. To be counted as a failure, the string can be anywhere in the body and must be an exact match, including case. Each string must be unique among the success and failure strings. </p>
+   *          <p>JSON example: <code>"FailureStrings": [ "Request failed" ]</code>
+   *          </p>
+   */
+  FailureStrings: string[] | undefined;
+}
+
+/**
+ * @public
+ * <p>Configures inspection of the response header.
+ *            This is part of the <code>ResponseInspection</code> configuration for <code>AWSManagedRulesATPRuleSet</code> and  <code>AWSManagedRulesACFPRuleSet</code>. </p>
+ *          <note>
+ *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
+ *          </note>
+ */
+export interface ResponseInspectionHeader {
+  /**
+   * <p>The name of the header to match against. The name must be an exact match, including case.</p>
+   *          <p>JSON example: <code>"Name": [ "RequestResult" ]</code>
+   *          </p>
+   */
+  Name: string | undefined;
+
+  /**
+   * <p>Values in the response header with the specified name that indicate a successful login or account creation attempt. To be counted as a success, the value must be an exact match, including case. Each value must be unique among the success and failure values. </p>
+   *          <p>JSON examples: <code>"SuccessValues": [ "LoginPassed", "Successful login" ]</code> and <code>"SuccessValues": [ "AccountCreated", "Successful account creation" ]</code>
+   *          </p>
+   */
+  SuccessValues: string[] | undefined;
+
+  /**
+   * <p>Values in the response header with the specified name that indicate a failed login or account creation attempt. To be counted as a failure, the value must be an exact match, including case. Each value must be unique among the success and failure values. </p>
+   *          <p>JSON examples: <code>"FailureValues": [ "LoginFailed", "Failed login" ]</code> and <code>"FailureValues": [ "AccountCreationFailed" ]</code>
+   *          </p>
+   */
+  FailureValues: string[] | undefined;
+}
+
+/**
+ * @public
+ * <p>Configures inspection of the response JSON. WAF can inspect the first 65,536 bytes (64 KB) of the response JSON.
+ *            This is part of the <code>ResponseInspection</code> configuration for <code>AWSManagedRulesATPRuleSet</code> and  <code>AWSManagedRulesACFPRuleSet</code>. </p>
+ *          <note>
+ *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
+ *          </note>
+ */
+export interface ResponseInspectionJson {
+  /**
+   * <p>The identifier for the value to match against in the JSON. The identifier must be an exact match, including case.</p>
+   *          <p>JSON examples: <code>"Identifier": [ "/login/success" ]</code> and <code>"Identifier": [ "/sign-up/success" ]</code>
+   *          </p>
+   */
+  Identifier: string | undefined;
+
+  /**
+   * <p>Values for the specified identifier in the response JSON that indicate a successful login or account creation attempt. To be counted as a success, the value must be an exact match, including case. Each value must be unique among the success and failure values. </p>
+   *          <p>JSON example: <code>"SuccessValues": [ "True", "Succeeded" ]</code>
+   *          </p>
+   */
+  SuccessValues: string[] | undefined;
+
+  /**
+   * <p>Values for the specified identifier in the response JSON that indicate a failed login or account creation attempt. To be counted as a failure, the value must be an exact match, including case. Each value must be unique among the success and failure values. </p>
+   *          <p>JSON example: <code>"FailureValues": [ "False", "Failed" ]</code>
+   *          </p>
+   */
+  FailureValues: string[] | undefined;
+}
+
+/**
+ * @public
+ * <p>Configures inspection of the response status code.
+ *            This is part of the <code>ResponseInspection</code> configuration for <code>AWSManagedRulesATPRuleSet</code> and  <code>AWSManagedRulesACFPRuleSet</code>. </p>
+ *          <note>
+ *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
+ *          </note>
+ */
+export interface ResponseInspectionStatusCode {
+  /**
+   * <p>Status codes in the response that indicate a successful login or account creation attempt. To be counted as a success, the response status code must match one of these. Each code must be unique among the success and failure status codes. </p>
+   *          <p>JSON example: <code>"SuccessCodes": [ 200, 201 ]</code>
+   *          </p>
+   */
+  SuccessCodes: number[] | undefined;
+
+  /**
+   * <p>Status codes in the response that indicate a failed login or account creation attempt. To be counted as a failure, the response status code must match one of these. Each code must be unique among the success and failure status codes. </p>
+   *          <p>JSON example: <code>"FailureCodes": [ 400, 404 ]</code>
+   *          </p>
+   */
+  FailureCodes: number[] | undefined;
+}
+
+/**
+ * @public
+ * <p>The criteria for inspecting responses to login requests and account creation requests, used by the ATP and ACFP rule groups to track login and account creation success and failure rates. </p>
+ *          <note>
+ *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
+ *          </note>
+ *          <p>The rule groups evaluates the responses that your protected resources send back to client login and account creation attempts, keeping count of successful and failed attempts from each IP address and client session. Using this information, the rule group labels
+ *                and mitigates requests from client sessions and IP addresses with too much suspicious activity in a short amount of time. </p>
+ *          <p>This is part of the <code>AWSManagedRulesATPRuleSet</code> and <code>AWSManagedRulesACFPRuleSet</code> configurations in <code>ManagedRuleGroupConfig</code>.</p>
+ *          <p>Enable response inspection by configuring exactly one component of the response to inspect, for example, <code>Header</code> or <code>StatusCode</code>. You can't configure more than one component for inspection. If you don't configure any of the response inspection options, response inspection is disabled. </p>
+ */
+export interface ResponseInspection {
+  /**
+   * <p>Configures inspection of the response status code for success and failure indicators. </p>
+   */
+  StatusCode?: ResponseInspectionStatusCode;
+
+  /**
+   * <p>Configures inspection of the response header for success and failure indicators. </p>
+   */
+  Header?: ResponseInspectionHeader;
+
+  /**
+   * <p>Configures inspection of the response body for success and failure indicators. WAF can inspect the first 65,536 bytes (64 KB) of the response body. </p>
+   */
+  BodyContains?: ResponseInspectionBodyContains;
+
+  /**
+   * <p>Configures inspection of the response JSON for success and failure indicators. WAF can inspect the first 65,536 bytes (64 KB) of the response JSON. </p>
+   */
+  Json?: ResponseInspectionJson;
+}
+
+/**
+ * @public
+ * <p>Details for your use of the account creation fraud prevention managed rule group, <code>AWSManagedRulesACFPRuleSet</code>. This configuration is used in <code>ManagedRuleGroupConfig</code>. </p>
+ */
+export interface AWSManagedRulesACFPRuleSet {
+  /**
+   * <p>The path of the account creation endpoint for your application. This is the page on your website that accepts the completed registration form for a new user. This page must accept <code>POST</code> requests.</p>
+   *          <p>For example, for the URL <code>https://example.com/web/signup</code>, you would provide the path <code>/web/signup</code>.</p>
+   */
+  CreationPath: string | undefined;
+
+  /**
+   * <p>The path of the account registration endpoint for your application. This is the page on your website that presents the registration form to new users. </p>
+   *          <note>
+   *             <p>This page must accept <code>GET</code> text/html requests.</p>
+   *          </note>
+   *          <p>For example, for the URL <code>https://example.com/web/register</code>, you would provide the path <code>/web/register</code>.</p>
+   */
+  RegistrationPagePath: string | undefined;
+
+  /**
+   * <p>The criteria for inspecting account creation requests, used by the ACFP rule group to validate and track account creation attempts.  </p>
+   */
+  RequestInspection: RequestInspectionACFP | undefined;
+
+  /**
+   * <p>The criteria for inspecting responses to account creation requests, used by the ACFP rule group to track account creation success rates. </p>
+   *          <note>
+   *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
+   *          </note>
+   *          <p>The ACFP rule group evaluates the responses that your protected resources send back to client account creation attempts, keeping count of successful and failed attempts from each IP address and client session. Using this information, the rule group labels
+   *                and mitigates requests from client sessions and IP addresses that have had too many successful account creation attempts in a short amount of time. </p>
+   */
+  ResponseInspection?: ResponseInspection;
+
+  /**
+   * <p>Allow the use of regular expressions in the registration page path and the account creation path. </p>
+   */
+  EnableRegexInPath?: boolean;
 }
 
 /**
@@ -1564,8 +2043,8 @@ export interface RequestInspection {
   PayloadType: PayloadType | string | undefined;
 
   /**
-   * <p>Details about your login page username field. </p>
-   *          <p>How you specify this depends on the payload type.</p>
+   * <p>The name of the field in the request payload that contains your customer's username. </p>
+   *          <p>How you specify this depends on the request inspection payload type.</p>
    *          <ul>
    *             <li>
    *                <p>For JSON payloads, specify the field name in JSON
@@ -1573,26 +2052,23 @@ export interface RequestInspection {
    *                syntax, see the Internet Engineering Task Force (IETF)
    *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
    *                	Object Notation (JSON) Pointer</a>. </p>
-   *                <p>For example, for the JSON payload <code>\{ "login": \{ "username": "THE_USERNAME", "password": "THE_PASSWORD" \} \}</code>,
-   *                the username field specification is
-   *                <code>/login/username</code> and the password field
-   *                specification is <code>/login/password</code>.</p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "username": "THE_USERNAME" \} \}</code>,
+   *                  the username field specification is <code>/form/username</code>. </p>
    *             </li>
    *             <li>
    *                <p>For form encoded payload types, use the HTML form names.</p>
-   *                <p>For example, for an HTML form with input elements
-   *                    named <code>username1</code> and <code>password1</code>,
-   *                    the username field specification is
-   *                    <code>username1</code> and the password field
-   *                    specification is <code>password1</code>.</p>
+   *                <p>For example, for an HTML form with the input element
+   *                    named <code>username1</code>, the username field specification is
+   *                    <code>username1</code>
+   *                </p>
    *             </li>
    *          </ul>
    */
   UsernameField: UsernameField | undefined;
 
   /**
-   * <p>Details about your login page password field. </p>
-   *          <p>How you specify this depends on the payload type.</p>
+   * <p>The name of the field in the request payload that contains your customer's password. </p>
+   *          <p>How you specify this depends on the request inspection payload type.</p>
    *          <ul>
    *             <li>
    *                <p>For JSON payloads, specify the field name in JSON
@@ -1600,161 +2076,17 @@ export interface RequestInspection {
    *                syntax, see the Internet Engineering Task Force (IETF)
    *                documentation <a href="https://tools.ietf.org/html/rfc6901">JavaScript
    *                	Object Notation (JSON) Pointer</a>. </p>
-   *                <p>For example, for the JSON payload <code>\{ "login": \{ "username": "THE_USERNAME", "password": "THE_PASSWORD" \} \}</code>,
-   *                the username field specification is
-   *                <code>/login/username</code> and the password field
-   *                specification is <code>/login/password</code>.</p>
+   *                <p>For example, for the JSON payload <code>\{ "form": \{ "password": "THE_PASSWORD" \} \}</code>,
+   *                  the password field specification is <code>/form/password</code>.</p>
    *             </li>
    *             <li>
    *                <p>For form encoded payload types, use the HTML form names.</p>
-   *                <p>For example, for an HTML form with input elements
-   *                    named <code>username1</code> and <code>password1</code>,
-   *                    the username field specification is
-   *                    <code>username1</code> and the password field
-   *                    specification is <code>password1</code>.</p>
+   *                <p>For example, for an HTML form with the input element
+   *                    named <code>password1</code>, the password field specification is <code>password1</code>.</p>
    *             </li>
    *          </ul>
    */
   PasswordField: PasswordField | undefined;
-}
-
-/**
- * @public
- * <p>Configures inspection of the response body. WAF can inspect the first 65,536 bytes (64 KB) of the response body. This is part of the <code>ResponseInspection</code> configuration for <code>AWSManagedRulesATPRuleSet</code>. </p>
- *          <note>
- *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
- *          </note>
- */
-export interface ResponseInspectionBodyContains {
-  /**
-   * <p>Strings in the body of the response that indicate a successful login attempt. To be counted as a successful login, the string can be anywhere in the body and must be an exact match, including case. Each string must be unique among the success and failure strings. </p>
-   *          <p>JSON example: <code>"SuccessStrings": [ "Login successful", "Welcome to our site!" ]</code>
-   *          </p>
-   */
-  SuccessStrings: string[] | undefined;
-
-  /**
-   * <p>Strings in the body of the response that indicate a failed login attempt. To be counted as a failed login, the string can be anywhere in the body and must be an exact match, including case. Each string must be unique among the success and failure strings. </p>
-   *          <p>JSON example: <code>"FailureStrings": [ "Login failed" ]</code>
-   *          </p>
-   */
-  FailureStrings: string[] | undefined;
-}
-
-/**
- * @public
- * <p>Configures inspection of the response header. This is part of the <code>ResponseInspection</code> configuration for <code>AWSManagedRulesATPRuleSet</code>. </p>
- *          <note>
- *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
- *          </note>
- */
-export interface ResponseInspectionHeader {
-  /**
-   * <p>The name of the header to match against. The name must be an exact match, including case.</p>
-   *          <p>JSON example: <code>"Name": [ "LoginResult" ]</code>
-   *          </p>
-   */
-  Name: string | undefined;
-
-  /**
-   * <p>Values in the response header with the specified name that indicate a successful login attempt. To be counted as a successful login, the value must be an exact match, including case. Each value must be unique among the success and failure values. </p>
-   *          <p>JSON example: <code>"SuccessValues": [ "LoginPassed", "Successful login" ]</code>
-   *          </p>
-   */
-  SuccessValues: string[] | undefined;
-
-  /**
-   * <p>Values in the response header with the specified name that indicate a failed login attempt. To be counted as a failed login, the value must be an exact match, including case. Each value must be unique among the success and failure values. </p>
-   *          <p>JSON example: <code>"FailureValues": [ "LoginFailed", "Failed login" ]</code>
-   *          </p>
-   */
-  FailureValues: string[] | undefined;
-}
-
-/**
- * @public
- * <p>Configures inspection of the response JSON. WAF can inspect the first 65,536 bytes (64 KB) of the response JSON. This is part of the <code>ResponseInspection</code> configuration for <code>AWSManagedRulesATPRuleSet</code>. </p>
- *          <note>
- *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
- *          </note>
- */
-export interface ResponseInspectionJson {
-  /**
-   * <p>The identifier for the value to match against in the JSON. The identifier must be an exact match, including case.</p>
-   *          <p>JSON example: <code>"Identifier": [ "/login/success" ]</code>
-   *          </p>
-   */
-  Identifier: string | undefined;
-
-  /**
-   * <p>Values for the specified identifier in the response JSON that indicate a successful login attempt. To be counted as a successful login, the value must be an exact match, including case. Each value must be unique among the success and failure values. </p>
-   *          <p>JSON example: <code>"SuccessValues": [ "True", "Succeeded" ]</code>
-   *          </p>
-   */
-  SuccessValues: string[] | undefined;
-
-  /**
-   * <p>Values for the specified identifier in the response JSON that indicate a failed login attempt. To be counted as a failed login, the value must be an exact match, including case. Each value must be unique among the success and failure values. </p>
-   *          <p>JSON example: <code>"FailureValues": [ "False", "Failed" ]</code>
-   *          </p>
-   */
-  FailureValues: string[] | undefined;
-}
-
-/**
- * @public
- * <p>Configures inspection of the response status code. This is part of the <code>ResponseInspection</code> configuration for <code>AWSManagedRulesATPRuleSet</code>. </p>
- *          <note>
- *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
- *          </note>
- */
-export interface ResponseInspectionStatusCode {
-  /**
-   * <p>Status codes in the response that indicate a successful login attempt. To be counted as a successful login, the response status code must match one of these. Each code must be unique among the success and failure status codes. </p>
-   *          <p>JSON example: <code>"SuccessCodes": [ 200, 201 ]</code>
-   *          </p>
-   */
-  SuccessCodes: number[] | undefined;
-
-  /**
-   * <p>Status codes in the response that indicate a failed login attempt. To be counted as a failed login, the response status code must match one of these. Each code must be unique among the success and failure status codes. </p>
-   *          <p>JSON example: <code>"FailureCodes": [ 400, 404 ]</code>
-   *          </p>
-   */
-  FailureCodes: number[] | undefined;
-}
-
-/**
- * @public
- * <p>The criteria for inspecting responses to login requests, used by the ATP rule group to track login failure rates. </p>
- *          <p>The ATP rule group evaluates the responses that your protected resources send back to client login attempts, keeping count of successful and failed attempts from each IP address and client session. Using this information, the rule group labels
- *                and mitigates requests from client sessions and IP addresses that submit too many failed login attempts in a short amount of time. </p>
- *          <note>
- *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
- *          </note>
- *          <p>This is part of the <code>AWSManagedRulesATPRuleSet</code> configuration in <code>ManagedRuleGroupConfig</code>.</p>
- *          <p>Enable login response inspection by configuring exactly one component of the response to inspect. You can't configure more than one. If you don't configure any of the response inspection options, response inspection is disabled. </p>
- */
-export interface ResponseInspection {
-  /**
-   * <p>Configures inspection of the response status code. </p>
-   */
-  StatusCode?: ResponseInspectionStatusCode;
-
-  /**
-   * <p>Configures inspection of the response header. </p>
-   */
-  Header?: ResponseInspectionHeader;
-
-  /**
-   * <p>Configures inspection of the response body. WAF can inspect the first 65,536 bytes (64 KB) of the response body. </p>
-   */
-  BodyContains?: ResponseInspectionBodyContains;
-
-  /**
-   * <p>Configures inspection of the response JSON. WAF can inspect the first 65,536 bytes (64 KB) of the response JSON. </p>
-   */
-  Json?: ResponseInspectionJson;
 }
 
 /**
@@ -1777,13 +2109,18 @@ export interface AWSManagedRulesATPRuleSet {
 
   /**
    * <p>The criteria for inspecting responses to login requests, used by the ATP rule group to track login failure rates. </p>
-   *          <p>The ATP rule group evaluates the responses that your protected resources send back to client login attempts, keeping count of successful and failed attempts from each IP address and client session. Using this information, the rule group labels
-   *                and mitigates requests from client sessions and IP addresses that submit too many failed login attempts in a short amount of time. </p>
    *          <note>
    *             <p>Response inspection is available only in web ACLs that protect Amazon CloudFront distributions.</p>
    *          </note>
+   *          <p>The ATP rule group evaluates the responses that your protected resources send back to client login attempts, keeping count of successful and failed attempts for each IP address and client session. Using this information, the rule group labels
+   *                and mitigates requests from client sessions and IP addresses that have had too many failed login attempts in a short amount of time. </p>
    */
   ResponseInspection?: ResponseInspection;
+
+  /**
+   * <p>Allow the use of regular expressions in the login page path. </p>
+   */
+  EnableRegexInPath?: boolean;
 }
 
 /**
@@ -1817,9 +2154,19 @@ export interface AWSManagedRulesBotControlRuleSet {
 /**
  * @public
  * <p>Additional information that's used by a managed rule group. Many managed rule groups don't require this.</p>
- *          <p>Use the <code>AWSManagedRulesATPRuleSet</code> configuration object for the account takeover prevention managed rule group, to provide information such as the sign-in page of your application and the type of content to accept or reject from the client. </p>
- *          <p>Use the <code>AWSManagedRulesBotControlRuleSet</code> configuration object to configure the
+ *          <p>The rule groups used for intelligent threat mitigation require additional configuration: </p>
+ *          <ul>
+ *             <li>
+ *                <p>Use the <code>AWSManagedRulesACFPRuleSet</code> configuration object to configure the account creation fraud prevention managed rule group. The configuration includes the registration and sign-up pages of your application and the locations in the account creation request payload of data, such as the user email and phone number fields. </p>
+ *             </li>
+ *             <li>
+ *                <p>Use the <code>AWSManagedRulesATPRuleSet</code> configuration object to configure the account takeover prevention managed rule group. The configuration includes the sign-in page of your application and the locations in the login request payload of data such as the username and password. </p>
+ *             </li>
+ *             <li>
+ *                <p>Use the <code>AWSManagedRulesBotControlRuleSet</code> configuration object to configure the
  *        protection level that you want the Bot Control rule group to use. </p>
+ *             </li>
+ *          </ul>
  *          <p>For example specifications, see the examples section of <a>CreateWebACL</a>.</p>
  */
 export interface ManagedRuleGroupConfig {
@@ -1836,8 +2183,7 @@ export interface ManagedRuleGroupConfig {
    * @deprecated
    *
    * <note>
-   *             <p>Instead of this setting, provide your configuration under <code>AWSManagedRulesATPRuleSet</code>
-   *                <code>RequestInspection</code>. </p>
+   *             <p>Instead of this setting, provide your configuration under the request inspection configuration for <code>AWSManagedRulesATPRuleSet</code> or <code>AWSManagedRulesACFPRuleSet</code>. </p>
    *          </note>
    */
   PayloadType?: PayloadType | string;
@@ -1846,8 +2192,7 @@ export interface ManagedRuleGroupConfig {
    * @deprecated
    *
    * <note>
-   *             <p>Instead of this setting, provide your configuration under <code>AWSManagedRulesATPRuleSet</code>
-   *                <code>RequestInspection</code>. </p>
+   *             <p>Instead of this setting, provide your configuration under the request inspection configuration for <code>AWSManagedRulesATPRuleSet</code> or <code>AWSManagedRulesACFPRuleSet</code>. </p>
    *          </note>
    */
   UsernameField?: UsernameField;
@@ -1856,8 +2201,7 @@ export interface ManagedRuleGroupConfig {
    * @deprecated
    *
    * <note>
-   *             <p>Instead of this setting, provide your configuration under <code>AWSManagedRulesATPRuleSet</code>
-   *                <code>RequestInspection</code>. </p>
+   *             <p>Instead of this setting, provide your configuration under the request inspection configuration for <code>AWSManagedRulesATPRuleSet</code> or <code>AWSManagedRulesACFPRuleSet</code>. </p>
    *          </note>
    */
   PasswordField?: PasswordField;
@@ -1882,6 +2226,17 @@ export interface ManagedRuleGroupConfig {
    *                in the <i>WAF Developer Guide</i>.</p>
    */
   AWSManagedRulesATPRuleSet?: AWSManagedRulesATPRuleSet;
+
+  /**
+   * <p>Additional configuration for using the account creation fraud prevention (ACFP) managed rule group, <code>AWSManagedRulesACFPRuleSet</code>.
+   *        Use this to provide account creation request information to the rule group. For web ACLs that protect CloudFront distributions, use this to also provide
+   *            the information about how your distribution responds to account creation requests. </p>
+   *          <p>For information
+   *        about using the ACFP managed rule group, see <a href="https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-acfp.html">WAF Fraud Control account creation fraud prevention (ACFP) rule group</a>
+   *                and <a href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-acfp.html">WAF Fraud Control account creation fraud prevention (ACFP)</a>
+   *                in the <i>WAF Developer Guide</i>.</p>
+   */
+  AWSManagedRulesACFPRuleSet?: AWSManagedRulesACFPRuleSet;
 }
 
 /**
@@ -2090,6 +2445,8 @@ export interface RuleActionOverride {
  * @enum
  */
 export const RateBasedStatementAggregateKeyType = {
+  CONSTANT: "CONSTANT",
+  CUSTOM_KEYS: "CUSTOM_KEYS",
   FORWARDED_IP: "FORWARDED_IP",
   IP: "IP",
 } as const;
@@ -2099,6 +2456,179 @@ export const RateBasedStatementAggregateKeyType = {
  */
 export type RateBasedStatementAggregateKeyType =
   (typeof RateBasedStatementAggregateKeyType)[keyof typeof RateBasedStatementAggregateKeyType];
+
+/**
+ * @public
+ * <p>Specifies a cookie as an aggregate key for a rate-based rule. Each distinct value in the cookie contributes to the aggregation instance. If you use a single
+ *     cookie as your custom key, then each value fully defines an aggregation instance.  </p>
+ */
+export interface RateLimitCookie {
+  /**
+   * <p>The name of the cookie to use. </p>
+   */
+  Name: string | undefined;
+
+  /**
+   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the component contents. </p>
+   */
+  TextTransformations: TextTransformation[] | undefined;
+}
+
+/**
+ * @public
+ * <p>Specifies the first IP address in an HTTP header as an aggregate key for a rate-based rule. Each distinct forwarded IP address contributes to the aggregation instance.</p>
+ *          <p>This setting is used only in the <code>RateBasedStatementCustomKey</code> specification of a rate-based rule statement.
+ *        When you specify an IP or forwarded IP in the custom key settings, you must also specify at least one other key to use.
+ *        You can aggregate on only the forwarded IP address by specifying <code>FORWARDED_IP</code> in your rate-based statement's <code>AggregateKeyType</code>. </p>
+ *          <p>This data type supports using the forwarded IP address in the web request aggregation for a rate-based rule, in <code>RateBasedStatementCustomKey</code>. The JSON specification for using the forwarded IP address doesn't explicitly use this data type. </p>
+ *          <p>JSON specification: <code>"ForwardedIP": \{\}</code>
+ *          </p>
+ *          <p>When you use this specification, you must also configure the forwarded IP address in the rate-based statement's <code>ForwardedIPConfig</code>. </p>
+ */
+export interface RateLimitForwardedIP {}
+
+/**
+ * @public
+ * <p>Specifies a header as an aggregate key for a rate-based rule. Each distinct value in the header contributes to the aggregation instance. If you use a single
+ *       header as your custom key, then each value fully defines an aggregation instance.  </p>
+ */
+export interface RateLimitHeader {
+  /**
+   * <p>The name of the header to use. </p>
+   */
+  Name: string | undefined;
+
+  /**
+   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the component contents. </p>
+   */
+  TextTransformations: TextTransformation[] | undefined;
+}
+
+/**
+ * @public
+ * <p>Specifies the request's HTTP method as an aggregate key for a rate-based rule. Each distinct HTTP method contributes to the aggregation instance. If you use just the HTTP method
+ *     as your custom key, then each method fully defines an aggregation instance. </p>
+ *          <p>JSON specification: <code>"RateLimitHTTPMethod": \{\}</code>
+ *          </p>
+ */
+export interface RateLimitHTTPMethod {}
+
+/**
+ * @public
+ * <p>Specifies the IP address in the web request as an aggregate key for a rate-based rule. Each distinct IP address contributes to the aggregation instance. </p>
+ *          <p>This setting is used only in the <code>RateBasedStatementCustomKey</code> specification of a rate-based rule statement.
+ *        To use this in the custom key settings, you must specify at least one other key to use, along with the IP address.
+ *        To aggregate on only the IP address, in your rate-based statement's <code>AggregateKeyType</code>, specify <code>IP</code>.</p>
+ *          <p>JSON specification: <code>"RateLimitIP": \{\}</code>
+ *          </p>
+ */
+export interface RateLimitIP {}
+
+/**
+ * @public
+ * <p>Specifies a label namespace to use as an aggregate key for a rate-based rule. Each distinct fully qualified label name that has the specified label namespace contributes to the aggregation instance. If you use just one label namespace as your custom key, then each label name fully defines an aggregation instance.  </p>
+ *          <p>This uses only labels that have been added to the request by rules that are evaluated before this rate-based rule in the web ACL. </p>
+ *          <p>For information about label namespaces and names, see
+ *            <a href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-label-requirements.html">Label syntax and naming requirements</a> in the <i>WAF Developer Guide</i>.</p>
+ */
+export interface RateLimitLabelNamespace {
+  /**
+   * <p>The namespace to use for aggregation. </p>
+   */
+  Namespace: string | undefined;
+}
+
+/**
+ * @public
+ * <p>Specifies a query argument in the request as an aggregate key for a rate-based rule. Each distinct value for the named query argument contributes to the aggregation instance. If you
+ *       use a single query argument as your custom key, then each value fully defines an aggregation instance.  </p>
+ */
+export interface RateLimitQueryArgument {
+  /**
+   * <p>The name of the query argument to use. </p>
+   */
+  Name: string | undefined;
+
+  /**
+   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the component contents. </p>
+   */
+  TextTransformations: TextTransformation[] | undefined;
+}
+
+/**
+ * @public
+ * <p>Specifies the request's query string as an aggregate key for a rate-based rule. Each distinct string contributes to the aggregation instance. If you use just the
+ *     query string as your custom key, then each string fully defines an aggregation instance.  </p>
+ */
+export interface RateLimitQueryString {
+  /**
+   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the component contents. </p>
+   */
+  TextTransformations: TextTransformation[] | undefined;
+}
+
+/**
+ * @public
+ * <p>Specifies a single custom aggregate key for a rate-base rule. </p>
+ *          <note>
+ *             <p>Web requests that are missing any of the components specified in the aggregation keys
+ *                 are omitted from the rate-based rule evaluation and handling. </p>
+ *          </note>
+ */
+export interface RateBasedStatementCustomKey {
+  /**
+   * <p>Use the value of a header in the request as an aggregate key. Each distinct value in the header contributes to the aggregation instance. If you use a single
+   *       header as your custom key, then each value fully defines an aggregation instance. </p>
+   */
+  Header?: RateLimitHeader;
+
+  /**
+   * <p>Use the value of a cookie in the request as an aggregate key. Each distinct value in the cookie contributes to the aggregation instance. If you use a single
+   *     cookie as your custom key, then each value fully defines an aggregation instance. </p>
+   */
+  Cookie?: RateLimitCookie;
+
+  /**
+   * <p>Use the specified query argument as an aggregate key. Each distinct value for the named query argument contributes to the aggregation instance. If you
+   *       use a single query argument as your custom key, then each value fully defines an aggregation instance.  </p>
+   */
+  QueryArgument?: RateLimitQueryArgument;
+
+  /**
+   * <p>Use the request's query string as an aggregate key. Each distinct string contributes to the aggregation instance. If you use just the
+   *     query string as your custom key, then each string fully defines an aggregation instance.  </p>
+   */
+  QueryString?: RateLimitQueryString;
+
+  /**
+   * <p>Use the request's HTTP method as an aggregate key. Each distinct HTTP method contributes to the aggregation instance. If you use just the HTTP method
+   *     as your custom key, then each method fully defines an aggregation instance.  </p>
+   */
+  HTTPMethod?: RateLimitHTTPMethod;
+
+  /**
+   * <p>Use the first IP address in an HTTP header as an aggregate key. Each distinct forwarded IP address contributes to the aggregation instance.</p>
+   *          <p>When you specify an IP or forwarded IP in the custom key settings, you must also specify at least one other key to use.
+   *        You can aggregate on only the forwarded IP address by specifying <code>FORWARDED_IP</code> in your rate-based statement's <code>AggregateKeyType</code>. </p>
+   *          <p>With this option, you must specify the header to use in the rate-based rule's <code>ForwardedIPConfig</code> property. </p>
+   */
+  ForwardedIP?: RateLimitForwardedIP;
+
+  /**
+   * <p>Use the request's originating IP address as an aggregate key. Each distinct IP address contributes to the aggregation instance.</p>
+   *          <p>When you specify an IP or forwarded IP in the custom key settings, you must also specify at least one other key to use.
+   *        You can aggregate on only the IP address by specifying <code>IP</code> in your rate-based statement's <code>AggregateKeyType</code>. </p>
+   */
+  IP?: RateLimitIP;
+
+  /**
+   * <p>Use the specified label namespace as an aggregate key. Each distinct fully qualified label name that has the specified label namespace contributes to the aggregation instance. If you use just one label namespace as your custom key, then each label name fully defines an aggregation instance.  </p>
+   *          <p>This uses only labels that have been added to the request by rules that are evaluated before this rate-based rule in the web ACL. </p>
+   *          <p>For information about label namespaces and names, see
+   *            <a href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-label-requirements.html">Label syntax and naming requirements</a> in the <i>WAF Developer Guide</i>.</p>
+   */
+  LabelNamespace?: RateLimitLabelNamespace;
+}
 
 /**
  * @public
@@ -2116,9 +2646,7 @@ export interface RegexMatchStatement {
   FieldToMatch: FieldToMatch | undefined;
 
   /**
-   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection.
-   *          If you specify one or more transformations in a rule statement, WAF performs all transformations on the
-   *          content of the request component identified by <code>FieldToMatch</code>, starting from the lowest priority setting, before inspecting the content for a match.</p>
+   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the component contents. </p>
    */
   TextTransformations: TextTransformation[] | undefined;
 }
@@ -2141,9 +2669,7 @@ export interface RegexPatternSetReferenceStatement {
   FieldToMatch: FieldToMatch | undefined;
 
   /**
-   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection.
-   *          If you specify one or more transformations in a rule statement, WAF performs all transformations on the
-   *          content of the request component identified by <code>FieldToMatch</code>, starting from the lowest priority setting, before inspecting the content for a match.</p>
+   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the component contents. </p>
    */
   TextTransformations: TextTransformation[] | undefined;
 }
@@ -2216,9 +2742,7 @@ export interface SizeConstraintStatement {
   Size: number | undefined;
 
   /**
-   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection.
-   *          If you specify one or more transformations in a rule statement, WAF performs all transformations on the
-   *          content of the request component identified by <code>FieldToMatch</code>, starting from the lowest priority setting, before inspecting the content for a match.</p>
+   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the component contents. </p>
    */
   TextTransformations: TextTransformation[] | undefined;
 }
@@ -2248,9 +2772,7 @@ export interface SqliMatchStatement {
   FieldToMatch: FieldToMatch | undefined;
 
   /**
-   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection.
-   *          If you specify one or more transformations in a rule statement, WAF performs all transformations on the
-   *          content of the request component identified by <code>FieldToMatch</code>, starting from the lowest priority setting, before inspecting the content for a match.</p>
+   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the component contents. </p>
    */
   TextTransformations: TextTransformation[] | undefined;
 
@@ -2283,9 +2805,7 @@ export interface XssMatchStatement {
   FieldToMatch: FieldToMatch | undefined;
 
   /**
-   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection.
-   *          If you specify one or more transformations in a rule statement, WAF performs all transformations on the
-   *          content of the request component identified by <code>FieldToMatch</code>, starting from the lowest priority setting, before inspecting the content for a match.</p>
+   * <p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the component contents. </p>
    */
   TextTransformations: TextTransformation[] | undefined;
 }
@@ -2436,6 +2956,7 @@ export class WAFInvalidOperationException extends __BaseException {
  * @enum
  */
 export const ParameterExceptionField = {
+  ACP_RULE_SET_RESPONSE_INSPECTION: "ACP_RULE_SET_RESPONSE_INSPECTION",
   AND_STATEMENT: "AND_STATEMENT",
   ASSOCIABLE_RESOURCE: "ASSOCIABLE_RESOURCE",
   ASSOCIATED_RESOURCE_TYPE: "ASSOCIATED_RESOURCE_TYPE",
@@ -2445,6 +2966,7 @@ export const ParameterExceptionField = {
   CHALLENGE_CONFIG: "CHALLENGE_CONFIG",
   CHANGE_PROPAGATION_STATUS: "CHANGE_PROPAGATION_STATUS",
   COOKIE_MATCH_PATTERN: "COOKIE_MATCH_PATTERN",
+  CUSTOM_KEYS: "CUSTOM_KEYS",
   CUSTOM_REQUEST_HANDLING: "CUSTOM_REQUEST_HANDLING",
   CUSTOM_RESPONSE: "CUSTOM_RESPONSE",
   CUSTOM_RESPONSE_BODY: "CUSTOM_RESPONSE_BODY",
@@ -2491,6 +3013,7 @@ export const ParameterExceptionField = {
   RULE_ACTION: "RULE_ACTION",
   RULE_GROUP: "RULE_GROUP",
   RULE_GROUP_REFERENCE_STATEMENT: "RULE_GROUP_REFERENCE_STATEMENT",
+  SCOPE_DOWN: "SCOPE_DOWN",
   SCOPE_VALUE: "SCOPE_VALUE",
   SINGLE_HEADER: "SINGLE_HEADER",
   SINGLE_QUERY_ARGUMENT: "SINGLE_QUERY_ARGUMENT",
@@ -2763,15 +3286,19 @@ export interface Label {
  */
 export interface VisibilityConfig {
   /**
-   * <p>A boolean indicating whether WAF should store a sampling of the web requests that
+   * <p>Indicates whether WAF should store a sampling of the web requests that
    *          match the rules. You can view the sampled requests through the WAF console. </p>
    */
   SampledRequestsEnabled: boolean | undefined;
 
   /**
-   * <p>A boolean indicating whether the associated resource sends metrics to Amazon CloudWatch. For the
+   * <p>Indicates whether the associated resource sends metrics to Amazon CloudWatch. For the
    *          list of available metrics, see <a href="https://docs.aws.amazon.com/waf/latest/developerguide/monitoring-cloudwatch.html#waf-metrics">WAF
    *             Metrics</a> in the <i>WAF Developer Guide</i>.</p>
+   *          <p>For web ACLs, the metrics are for web requests that have the web ACL default action applied.
+   *         WAF applies the default action to web requests that pass the inspection of all rules
+   *         in the web ACL without being either allowed or blocked. For more information,
+   * see <a href="https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-default-action.html">The web ACL default action</a> in the <i>WAF Developer Guide</i>.</p>
    */
   CloudWatchMetricsEnabled: boolean | undefined;
 
@@ -3694,9 +4221,127 @@ export interface DeleteWebACLResponse {}
 /**
  * @public
  */
+export interface DescribeAllManagedProductsRequest {
+  /**
+   * <p>Specifies whether this is for an Amazon CloudFront distribution or for a regional application. A regional application can be an Application Load Balancer (ALB), an Amazon API Gateway REST API, an AppSync GraphQL API, an Amazon Cognito user pool, an App Runner service, or an Amazon Web Services Verified Access instance.  </p>
+   *          <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p>
+   *          <ul>
+   *             <li>
+   *                <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p>
+   *             </li>
+   *             <li>
+   *                <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p>
+   *             </li>
+   *          </ul>
+   */
+  Scope: Scope | string | undefined;
+}
+
+/**
+ * @public
+ * <p>The properties of a managed product, such as an Amazon Web Services Managed Rules rule group or an Amazon Web Services Marketplace managed rule group. </p>
+ */
+export interface ManagedProductDescriptor {
+  /**
+   * <p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify a rule group.</p>
+   */
+  VendorName?: string;
+
+  /**
+   * <p>The name of the managed rule group. For example, <code>AWSManagedRulesAnonymousIpList</code> or <code>AWSManagedRulesATPRuleSet</code>.</p>
+   */
+  ManagedRuleSetName?: string;
+
+  /**
+   * <p>A unique identifier for the rule group. This ID is returned in the responses to create and list commands. You provide it to operations like update and delete.</p>
+   */
+  ProductId?: string;
+
+  /**
+   * <p>For Amazon Web Services Marketplace managed rule groups only, the link to the rule group product page. </p>
+   */
+  ProductLink?: string;
+
+  /**
+   * <p>The display name for the managed rule group. For example, <code>Anonymous IP list</code> or <code>Account takeover prevention</code>.</p>
+   */
+  ProductTitle?: string;
+
+  /**
+   * <p>A short description of the managed rule group.</p>
+   */
+  ProductDescription?: string;
+
+  /**
+   * <p>The Amazon resource name (ARN) of the Amazon Simple Notification Service SNS topic that's used to provide notification of changes
+   *          to the managed rule group. You can subscribe to the SNS topic to receive notifications when
+   *          the managed rule group is modified, such as for new versions and for version expiration.
+   *          For more information, see the <a href="https://docs.aws.amazon.com/sns/latest/dg/welcome.html">Amazon Simple Notification Service Developer Guide</a>.</p>
+   */
+  SnsTopicArn?: string;
+
+  /**
+   * <p>Indicates whether the rule group is versioned. </p>
+   */
+  IsVersioningSupported?: boolean;
+
+  /**
+   * <p>Indicates whether the rule group provides an advanced set of protections, such as the the Amazon Web Services Managed Rules rule groups that
+   *            are used for WAF intelligent threat mitigation.  </p>
+   */
+  IsAdvancedManagedRuleSet?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface DescribeAllManagedProductsResponse {
+  /**
+   * <p>High-level information for the Amazon Web Services Managed Rules rule groups and Amazon Web Services Marketplace managed rule groups. </p>
+   */
+  ManagedProducts?: ManagedProductDescriptor[];
+}
+
+/**
+ * @public
+ */
+export interface DescribeManagedProductsByVendorRequest {
+  /**
+   * <p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify a rule group.</p>
+   */
+  VendorName: string | undefined;
+
+  /**
+   * <p>Specifies whether this is for an Amazon CloudFront distribution or for a regional application. A regional application can be an Application Load Balancer (ALB), an Amazon API Gateway REST API, an AppSync GraphQL API, an Amazon Cognito user pool, an App Runner service, or an Amazon Web Services Verified Access instance.  </p>
+   *          <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p>
+   *          <ul>
+   *             <li>
+   *                <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p>
+   *             </li>
+   *             <li>
+   *                <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p>
+   *             </li>
+   *          </ul>
+   */
+  Scope: Scope | string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DescribeManagedProductsByVendorResponse {
+  /**
+   * <p>High-level information for the managed rule groups owned by the specified vendor.  </p>
+   */
+  ManagedProducts?: ManagedProductDescriptor[];
+}
+
+/**
+ * @public
+ */
 export interface DescribeManagedRuleGroupRequest {
   /**
-   * <p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify the rule group.</p>
+   * <p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify a rule group.</p>
    */
   VendorName: string | undefined;
 
@@ -3777,7 +4422,7 @@ export interface DescribeManagedRuleGroupResponse {
   VersionName?: string;
 
   /**
-   * <p>The Amazon resource name (ARN) of the Amazon Simple Notification Service SNS topic that's used to record changes
+   * <p>The Amazon resource name (ARN) of the Amazon Simple Notification Service SNS topic that's used to provide notification of changes
    *          to the managed rule group. You can subscribe to the SNS topic to receive notifications when
    *          the managed rule group is modified, such as for new versions and for version expiration.
    *          For more information, see the <a href="https://docs.aws.amazon.com/sns/latest/dg/welcome.html">Amazon Simple Notification Service Developer Guide</a>.</p>
@@ -4237,13 +4882,17 @@ export interface LoggingConfiguration {
   LogDestinationConfigs: string[] | undefined;
 
   /**
-   * <p>The parts of the request that you want to keep out of the logs. For example, if you
+   * <p>The parts of the request that you want to keep out of the logs.</p>
+   *          <p>For example, if you
    *          redact the <code>SingleHeader</code> field, the <code>HEADER</code> field in the logs will
-   *          be <code>REDACTED</code>. </p>
+   *          be <code>REDACTED</code> for all rules that use the <code>SingleHeader</code>
+   *             <code>FieldToMatch</code> setting. </p>
+   *          <p>Redaction applies only to the component that's specified in the rule's <code>FieldToMatch</code> setting, so the <code>SingleHeader</code> redaction
+   *          doesn't apply to rules that use the <code>Headers</code>
+   *             <code>FieldToMatch</code>.</p>
    *          <note>
    *             <p>You can specify only the following fields for redaction: <code>UriPath</code>,
-   *                <code>QueryString</code>, <code>SingleHeader</code>, <code>Method</code>, and
-   *                <code>JsonBody</code>.</p>
+   *          <code>QueryString</code>, <code>SingleHeader</code>, and <code>Method</code>.</p>
    *          </note>
    */
   RedactedFields?: FieldToMatch[];
@@ -4550,7 +5199,10 @@ export interface GetRateBasedStatementManagedKeysRequest {
 
 /**
  * @public
- * <p>The set of IP addresses that are currently blocked for a <a>RateBasedStatement</a>.</p>
+ * <p>The set of IP addresses that are currently blocked for a <a>RateBasedStatement</a>. This is only available for rate-based rules
+ *           that aggregate on just the IP address, with the <code>AggregateKeyType</code> set to <code>IP</code> or <code>FORWARDED_IP</code>.</p>
+ *          <p>A rate-based rule applies its rule action to requests from IP addresses that are in the rule's managed keys list and that match the rule's scope-down statement. When a rule has no scope-down statement, it applies the action to all requests from the IP addresses that are in the list. The rule applies its rule action to rate limit the matching requests. The action is usually Block but it can be any valid rule action except for Allow. </p>
+ *          <p>The maximum number of IP addresses that can be rate limited by a single rate-based rule instance is 10,000. If more than 10,000 addresses exceed the rate limit, WAF limits those with the highest rates. </p>
  */
 export interface RateBasedStatementManagedKeysIPSet {
   /**
@@ -4577,6 +5229,29 @@ export interface GetRateBasedStatementManagedKeysResponse {
    * <p>The keys that are of Internet Protocol version 6 (IPv6). </p>
    */
   ManagedKeysIPV6?: RateBasedStatementManagedKeysIPSet;
+}
+
+/**
+ * @public
+ * <p>The rule that you've named doesn't aggregate solely on the IP address or solely on the forwarded IP address. This call
+ *            is only available for rate-based rules with an <code>AggregateKeyType</code> setting of <code>IP</code> or <code>FORWARDED_IP</code>.</p>
+ */
+export class WAFUnsupportedAggregateKeyTypeException extends __BaseException {
+  readonly name: "WAFUnsupportedAggregateKeyTypeException" = "WAFUnsupportedAggregateKeyTypeException";
+  readonly $fault: "client" = "client";
+  Message?: string;
+  /**
+   * @internal
+   */
+  constructor(opts: __ExceptionOptionType<WAFUnsupportedAggregateKeyTypeException, __BaseException>) {
+    super({
+      name: "WAFUnsupportedAggregateKeyTypeException",
+      $fault: "client",
+      ...opts,
+    });
+    Object.setPrototypeOf(this, WAFUnsupportedAggregateKeyTypeException.prototype);
+    this.Message = opts.Message;
+  }
 }
 
 /**
@@ -5181,11 +5856,11 @@ export interface ListAvailableManagedRuleGroupsRequest {
 
 /**
  * @public
- * <p>High-level information about a managed rule group, returned by <a>ListAvailableManagedRuleGroups</a>. This provides information like the name and vendor name, that you provide when you add a <a>ManagedRuleGroupStatement</a> to a web ACL. Managed rule groups include Amazon Web Services Managed Rules rule groups, which are free of charge to WAF customers, and Amazon Web Services Marketplace managed rule groups, which you can subscribe to through Amazon Web Services Marketplace. </p>
+ * <p>High-level information about a managed rule group, returned by <a>ListAvailableManagedRuleGroups</a>. This provides information like the name and vendor name, that you provide when you add a <a>ManagedRuleGroupStatement</a> to a web ACL. Managed rule groups include Amazon Web Services Managed Rules rule groups and Amazon Web Services Marketplace managed rule groups. To use any Amazon Web Services Marketplace managed rule group, first subscribe to the rule group through Amazon Web Services Marketplace. </p>
  */
 export interface ManagedRuleGroupSummary {
   /**
-   * <p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify the rule group.</p>
+   * <p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify a rule group.</p>
    */
   VendorName?: string;
 
@@ -5228,7 +5903,7 @@ export interface ListAvailableManagedRuleGroupsResponse {
  */
 export interface ListAvailableManagedRuleGroupVersionsRequest {
   /**
-   * <p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify the rule group.</p>
+   * <p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify a rule group.</p>
    */
   VendorName: string | undefined;
 
@@ -6409,20 +7084,72 @@ export interface Statement {
   RegexPatternSetReferenceStatement?: RegexPatternSetReferenceStatement;
 
   /**
-   * <p>A rate-based rule tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span. You can use this to put a temporary block on requests from an IP address that is sending excessive requests. </p>
-   *          <p>WAF tracks and manages web requests separately for each instance of a rate-based rule that you use. For example, if you provide the same rate-based rule settings in two web ACLs, each of the two rule statements represents a separate instance of the rate-based rule and gets its own tracking and management by WAF. If you define a rate-based rule inside a rule group, and then use that rule group in multiple places, each use creates a separate instance of the rate-based rule that gets its own tracking and management by WAF. </p>
-   *          <p>When the rule action triggers, WAF blocks additional requests from the IP address until the request rate falls below the limit.</p>
-   *          <p>You can optionally nest another statement inside the rate-based statement, to narrow the scope of the rule so that it only counts requests that match the nested statement. For example, based on recent requests that you have seen from an attacker, you might create a rate-based rule with a nested AND rule statement that contains the following nested statements:</p>
+   * <p>A rate-based rule counts incoming requests and rate limits requests when they are coming at too fast a rate. The rule categorizes requests according to your aggregation criteria, collects them into aggregation instances, and counts and rate limits the requests for each instance. </p>
+   *          <p>You can specify individual aggregation keys, like IP address or HTTP method. You can also specify aggregation key combinations, like IP address and HTTP method, or HTTP method, query argument, and cookie. </p>
+   *          <p>Each unique set of values for the aggregation keys that you specify is a separate aggregation instance, with the value from each key contributing to the aggregation instance definition. </p>
+   *          <p>For example, assume the rule evaluates web requests with the following IP address and HTTP method values: </p>
    *          <ul>
    *             <li>
-   *                <p>An IP match statement with an IP set that specifies the address 192.0.2.44.</p>
+   *                <p>IP address 10.1.1.1, HTTP method POST</p>
    *             </li>
    *             <li>
-   *                <p>A string match statement that searches in the User-Agent header for the string BadBot.</p>
+   *                <p>IP address 10.1.1.1, HTTP method GET</p>
+   *             </li>
+   *             <li>
+   *                <p>IP address 127.0.0.0, HTTP method POST</p>
+   *             </li>
+   *             <li>
+   *                <p>IP address 10.1.1.1, HTTP method GET</p>
    *             </li>
    *          </ul>
-   *          <p>In this rate-based rule, you also define a rate limit. For this example, the rate limit is 1,000. Requests that meet the criteria of both of the nested statements are counted. If the count exceeds 1,000 requests per five minutes, the rule action triggers. Requests that do not meet the criteria of both of the nested statements are not counted towards the rate limit and are not affected by this rule.</p>
+   *          <p>The rule would create different aggregation instances according to your aggregation criteria, for example: </p>
+   *          <ul>
+   *             <li>
+   *                <p>If the aggregation criteria is just the IP address, then each individual address is an aggregation instance, and WAF counts requests separately for each. The aggregation instances and request counts for our example would be the following: </p>
+   *                <ul>
+   *                   <li>
+   *                      <p>IP address 10.1.1.1: count 3</p>
+   *                   </li>
+   *                   <li>
+   *                      <p>IP address 127.0.0.0: count 1</p>
+   *                   </li>
+   *                </ul>
+   *             </li>
+   *             <li>
+   *                <p>If the aggregation criteria is HTTP method, then each individual HTTP method is an aggregation instance. The aggregation instances and request counts for our example would be the following: </p>
+   *                <ul>
+   *                   <li>
+   *                      <p>HTTP method POST: count 2</p>
+   *                   </li>
+   *                   <li>
+   *                      <p>HTTP method GET: count 2</p>
+   *                   </li>
+   *                </ul>
+   *             </li>
+   *             <li>
+   *                <p>If the aggregation criteria is IP address and HTTP method, then each IP address and each HTTP method would contribute to the combined aggregation instance. The aggregation instances and request counts for our example would be the following: </p>
+   *                <ul>
+   *                   <li>
+   *                      <p>IP address 10.1.1.1, HTTP method POST: count 1</p>
+   *                   </li>
+   *                   <li>
+   *                      <p>IP address 10.1.1.1, HTTP method GET: count 2</p>
+   *                   </li>
+   *                   <li>
+   *                      <p>IP address 127.0.0.0, HTTP method POST: count 1</p>
+   *                   </li>
+   *                </ul>
+   *             </li>
+   *          </ul>
+   *          <p>For any n-tuple of aggregation keys, each unique combination of values for the keys defines a separate aggregation instance, which WAF counts and rate-limits individually. </p>
+   *          <p>You can optionally nest another statement inside the rate-based statement, to narrow the scope of the rule so that it only counts and rate limits requests that match the nested statement. You can use this nested scope-down statement in conjunction with your aggregation key specifications or you can just count and rate limit all requests that match the scope-down statement, without additional aggregation. When you choose to just manage all requests that match a scope-down statement, the aggregation instance is singular for the rule. </p>
    *          <p>You cannot nest a <code>RateBasedStatement</code> inside another statement, for example inside a <code>NotStatement</code> or <code>OrStatement</code>. You can define a <code>RateBasedStatement</code> inside a web ACL and inside a rule group. </p>
+   *          <p>For additional information about the options, see <a href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-rate-based-rules.html">Rate limiting web requests using rate-based rules</a>
+   *     in the <i>WAF Developer Guide</i>. </p>
+   *          <p>If you only aggregate on the individual IP address or forwarded IP address, you can retrieve the list of IP addresses that WAF
+   *           is currently rate limiting for a rule through the API call <code>GetRateBasedStatementManagedKeys</code>. This option is not available
+   *       for other aggregation configurations.</p>
+   *          <p>WAF tracks and manages web requests separately for each instance of a rate-based rule that you use. For example, if you provide the same rate-based rule settings in two web ACLs, each of the two rule statements represents a separate instance of the rate-based rule and gets its own tracking and management by WAF. If you define a rate-based rule inside a rule group, and then use that rule group in multiple places, each use creates a separate instance of the rate-based rule that gets its own tracking and management by WAF. </p>
    */
   RateBasedStatement?: RateBasedStatement;
 
@@ -6445,7 +7172,7 @@ export interface Statement {
    * <p>A rule statement used to run the rules that are defined in a managed rule group. To use this, provide the vendor name and the name of the rule group in this statement. You can retrieve the required names by calling <a>ListAvailableManagedRuleGroups</a>.</p>
    *          <p>You cannot nest a <code>ManagedRuleGroupStatement</code>, for example for use inside a <code>NotStatement</code> or <code>OrStatement</code>. It can only be referenced as a top-level statement within a rule.</p>
    *          <note>
-   *             <p>You are charged additional fees when you use the WAF Bot Control managed rule group <code>AWSManagedRulesBotControlRuleSet</code> or the WAF Fraud Control account takeover prevention (ATP) managed rule group <code>AWSManagedRulesATPRuleSet</code>. For more information, see <a href="http://aws.amazon.com/waf/pricing/">WAF Pricing</a>.</p>
+   *             <p>You are charged additional fees when you use the WAF Bot Control managed rule group <code>AWSManagedRulesBotControlRuleSet</code>, the WAF Fraud Control account takeover prevention (ATP) managed rule group <code>AWSManagedRulesATPRuleSet</code>, or the WAF Fraud Control account creation fraud prevention (ACFP) managed rule group <code>AWSManagedRulesACFPRuleSet</code>. For more information, see <a href="http://aws.amazon.com/waf/pricing/">WAF Pricing</a>.</p>
    *          </note>
    */
   ManagedRuleGroupStatement?: ManagedRuleGroupStatement;
@@ -6467,12 +7194,12 @@ export interface Statement {
  * <p>A rule statement used to run the rules that are defined in a managed rule group. To use this, provide the vendor name and the name of the rule group in this statement. You can retrieve the required names by calling <a>ListAvailableManagedRuleGroups</a>.</p>
  *          <p>You cannot nest a <code>ManagedRuleGroupStatement</code>, for example for use inside a <code>NotStatement</code> or <code>OrStatement</code>. It can only be referenced as a top-level statement within a rule.</p>
  *          <note>
- *             <p>You are charged additional fees when you use the WAF Bot Control managed rule group <code>AWSManagedRulesBotControlRuleSet</code> or the WAF Fraud Control account takeover prevention (ATP) managed rule group <code>AWSManagedRulesATPRuleSet</code>. For more information, see <a href="http://aws.amazon.com/waf/pricing/">WAF Pricing</a>.</p>
+ *             <p>You are charged additional fees when you use the WAF Bot Control managed rule group <code>AWSManagedRulesBotControlRuleSet</code>, the WAF Fraud Control account takeover prevention (ATP) managed rule group <code>AWSManagedRulesATPRuleSet</code>, or the WAF Fraud Control account creation fraud prevention (ACFP) managed rule group <code>AWSManagedRulesACFPRuleSet</code>. For more information, see <a href="http://aws.amazon.com/waf/pricing/">WAF Pricing</a>.</p>
  *          </note>
  */
 export interface ManagedRuleGroupStatement {
   /**
-   * <p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify the rule group.</p>
+   * <p>The name of the managed rule group vendor. You use this, along with the rule group name, to identify a rule group.</p>
    */
   VendorName: string | undefined;
 
@@ -6508,9 +7235,19 @@ export interface ManagedRuleGroupStatement {
 
   /**
    * <p>Additional information that's used by a managed rule group. Many managed rule groups don't require this.</p>
-   *          <p>Use the <code>AWSManagedRulesATPRuleSet</code> configuration object for the account takeover prevention managed rule group, to provide information such as the sign-in page of your application and the type of content to accept or reject from the client. </p>
-   *          <p>Use the <code>AWSManagedRulesBotControlRuleSet</code> configuration object to configure the
+   *          <p>The rule groups used for intelligent threat mitigation require additional configuration: </p>
+   *          <ul>
+   *             <li>
+   *                <p>Use the <code>AWSManagedRulesACFPRuleSet</code> configuration object to configure the account creation fraud prevention managed rule group. The configuration includes the registration and sign-up pages of your application and the locations in the account creation request payload of data, such as the user email and phone number fields. </p>
+   *             </li>
+   *             <li>
+   *                <p>Use the <code>AWSManagedRulesATPRuleSet</code> configuration object to configure the account takeover prevention managed rule group. The configuration includes the sign-in page of your application and the locations in the login request payload of data such as the username and password. </p>
+   *             </li>
+   *             <li>
+   *                <p>Use the <code>AWSManagedRulesBotControlRuleSet</code> configuration object to configure the
    *        protection level that you want the Bot Control rule group to use. </p>
+   *             </li>
+   *          </ul>
    */
   ManagedRuleGroupConfigs?: ManagedRuleGroupConfig[];
 
@@ -6534,41 +7271,124 @@ export interface NotStatement {
 
 /**
  * @public
- * <p>A rate-based rule tracks the rate of requests for each originating IP address, and triggers the rule action when the rate exceeds a limit that you specify on the number of requests in any 5-minute time span. You can use this to put a temporary block on requests from an IP address that is sending excessive requests. </p>
- *          <p>WAF tracks and manages web requests separately for each instance of a rate-based rule that you use. For example, if you provide the same rate-based rule settings in two web ACLs, each of the two rule statements represents a separate instance of the rate-based rule and gets its own tracking and management by WAF. If you define a rate-based rule inside a rule group, and then use that rule group in multiple places, each use creates a separate instance of the rate-based rule that gets its own tracking and management by WAF. </p>
- *          <p>When the rule action triggers, WAF blocks additional requests from the IP address until the request rate falls below the limit.</p>
- *          <p>You can optionally nest another statement inside the rate-based statement, to narrow the scope of the rule so that it only counts requests that match the nested statement. For example, based on recent requests that you have seen from an attacker, you might create a rate-based rule with a nested AND rule statement that contains the following nested statements:</p>
+ * <p>A rate-based rule counts incoming requests and rate limits requests when they are coming at too fast a rate. The rule categorizes requests according to your aggregation criteria, collects them into aggregation instances, and counts and rate limits the requests for each instance. </p>
+ *          <p>You can specify individual aggregation keys, like IP address or HTTP method. You can also specify aggregation key combinations, like IP address and HTTP method, or HTTP method, query argument, and cookie. </p>
+ *          <p>Each unique set of values for the aggregation keys that you specify is a separate aggregation instance, with the value from each key contributing to the aggregation instance definition. </p>
+ *          <p>For example, assume the rule evaluates web requests with the following IP address and HTTP method values: </p>
  *          <ul>
  *             <li>
- *                <p>An IP match statement with an IP set that specifies the address 192.0.2.44.</p>
+ *                <p>IP address 10.1.1.1, HTTP method POST</p>
  *             </li>
  *             <li>
- *                <p>A string match statement that searches in the User-Agent header for the string BadBot.</p>
+ *                <p>IP address 10.1.1.1, HTTP method GET</p>
+ *             </li>
+ *             <li>
+ *                <p>IP address 127.0.0.0, HTTP method POST</p>
+ *             </li>
+ *             <li>
+ *                <p>IP address 10.1.1.1, HTTP method GET</p>
  *             </li>
  *          </ul>
- *          <p>In this rate-based rule, you also define a rate limit. For this example, the rate limit is 1,000. Requests that meet the criteria of both of the nested statements are counted. If the count exceeds 1,000 requests per five minutes, the rule action triggers. Requests that do not meet the criteria of both of the nested statements are not counted towards the rate limit and are not affected by this rule.</p>
+ *          <p>The rule would create different aggregation instances according to your aggregation criteria, for example: </p>
+ *          <ul>
+ *             <li>
+ *                <p>If the aggregation criteria is just the IP address, then each individual address is an aggregation instance, and WAF counts requests separately for each. The aggregation instances and request counts for our example would be the following: </p>
+ *                <ul>
+ *                   <li>
+ *                      <p>IP address 10.1.1.1: count 3</p>
+ *                   </li>
+ *                   <li>
+ *                      <p>IP address 127.0.0.0: count 1</p>
+ *                   </li>
+ *                </ul>
+ *             </li>
+ *             <li>
+ *                <p>If the aggregation criteria is HTTP method, then each individual HTTP method is an aggregation instance. The aggregation instances and request counts for our example would be the following: </p>
+ *                <ul>
+ *                   <li>
+ *                      <p>HTTP method POST: count 2</p>
+ *                   </li>
+ *                   <li>
+ *                      <p>HTTP method GET: count 2</p>
+ *                   </li>
+ *                </ul>
+ *             </li>
+ *             <li>
+ *                <p>If the aggregation criteria is IP address and HTTP method, then each IP address and each HTTP method would contribute to the combined aggregation instance. The aggregation instances and request counts for our example would be the following: </p>
+ *                <ul>
+ *                   <li>
+ *                      <p>IP address 10.1.1.1, HTTP method POST: count 1</p>
+ *                   </li>
+ *                   <li>
+ *                      <p>IP address 10.1.1.1, HTTP method GET: count 2</p>
+ *                   </li>
+ *                   <li>
+ *                      <p>IP address 127.0.0.0, HTTP method POST: count 1</p>
+ *                   </li>
+ *                </ul>
+ *             </li>
+ *          </ul>
+ *          <p>For any n-tuple of aggregation keys, each unique combination of values for the keys defines a separate aggregation instance, which WAF counts and rate-limits individually. </p>
+ *          <p>You can optionally nest another statement inside the rate-based statement, to narrow the scope of the rule so that it only counts and rate limits requests that match the nested statement. You can use this nested scope-down statement in conjunction with your aggregation key specifications or you can just count and rate limit all requests that match the scope-down statement, without additional aggregation. When you choose to just manage all requests that match a scope-down statement, the aggregation instance is singular for the rule. </p>
  *          <p>You cannot nest a <code>RateBasedStatement</code> inside another statement, for example inside a <code>NotStatement</code> or <code>OrStatement</code>. You can define a <code>RateBasedStatement</code> inside a web ACL and inside a rule group. </p>
+ *          <p>For additional information about the options, see <a href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-rate-based-rules.html">Rate limiting web requests using rate-based rules</a>
+ *     in the <i>WAF Developer Guide</i>. </p>
+ *          <p>If you only aggregate on the individual IP address or forwarded IP address, you can retrieve the list of IP addresses that WAF
+ *           is currently rate limiting for a rule through the API call <code>GetRateBasedStatementManagedKeys</code>. This option is not available
+ *       for other aggregation configurations.</p>
+ *          <p>WAF tracks and manages web requests separately for each instance of a rate-based rule that you use. For example, if you provide the same rate-based rule settings in two web ACLs, each of the two rule statements represents a separate instance of the rate-based rule and gets its own tracking and management by WAF. If you define a rate-based rule inside a rule group, and then use that rule group in multiple places, each use creates a separate instance of the rate-based rule that gets its own tracking and management by WAF. </p>
  */
 export interface RateBasedStatement {
   /**
-   * <p>The limit on requests per 5-minute period for a single originating IP address. If the
-   *          statement includes a <code>ScopeDownStatement</code>, this limit is applied only to the
+   * <p>The limit on requests per 5-minute period for a single aggregation instance for the rate-based rule.
+   *        If the rate-based statement includes a <code>ScopeDownStatement</code>, this limit is applied only to the
    *          requests that match the statement.</p>
+   *          <p>Examples: </p>
+   *          <ul>
+   *             <li>
+   *                <p>If you aggregate on just the IP address, this is the limit on requests from any single IP address. </p>
+   *             </li>
+   *             <li>
+   *                <p>If you aggregate on the HTTP method and the query argument name "city", then this is the limit on
+   *              requests for any single method, city pair. </p>
+   *             </li>
+   *          </ul>
    */
   Limit: number | undefined;
 
   /**
-   * <p>Setting that indicates how to aggregate the request counts. The options are the
-   *          following:</p>
+   * <p>Setting that indicates how to aggregate the request counts. </p>
+   *          <note>
+   *             <p>Web requests that are missing any of the components specified in the aggregation keys
+   *                 are omitted from the rate-based rule evaluation and handling. </p>
+   *          </note>
    *          <ul>
    *             <li>
-   *                <p>IP - Aggregate the request counts on the IP address from the web request
-   *                origin.</p>
+   *                <p>
+   *                   <code>CONSTANT</code> - Count and limit the requests that match the rate-based rule's scope-down
+   *              statement. With this option, the counted requests aren't further aggregated. The scope-down statement
+   *                  is the only specification used. When the count of all requests that satisfy the scope-down statement
+   *                  goes over the limit, WAF applies the rule action to all requests that satisfy the scope-down statement. </p>
+   *                <p>With this option, you must configure the <code>ScopeDownStatement</code> property. </p>
    *             </li>
    *             <li>
-   *                <p>FORWARDED_IP - Aggregate the request counts on the first IP address in an
-   *                HTTP header. If you use this, configure the <code>ForwardedIPConfig</code>, to
-   *                specify the header to use. </p>
+   *                <p>
+   *                   <code>CUSTOM_KEYS</code> - Aggregate the request counts using one or more web request components as the aggregate keys.</p>
+   *                <p>With this option, you must specify the aggregate keys in the <code>CustomKeys</code> property. </p>
+   *                <p>To aggregate on only the IP address or only the forwarded IP address, don't use custom keys. Instead, set the aggregate
+   *                  key type to <code>IP</code> or <code>FORWARDED_IP</code>.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>FORWARDED_IP</code> - Aggregate the request counts on the first IP address in an HTTP header. </p>
+   *                <p>With this option, you must specify the header to use in the <code>ForwardedIPConfig</code> property. </p>
+   *                <p>To aggregate on a combination of the forwarded IP address with other aggregate keys, use <code>CUSTOM_KEYS</code>. </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>IP</code> - Aggregate the request counts on the IP address from the web request
+   *                origin.</p>
+   *                <p>To aggregate on a combination of the IP address with other aggregate keys, use <code>CUSTOM_KEYS</code>. </p>
    *             </li>
    *          </ul>
    */
@@ -6576,8 +7396,9 @@ export interface RateBasedStatement {
 
   /**
    * <p>An optional nested statement that narrows the scope of the web requests that are
-   *          evaluated by the rate-based statement. Requests are only tracked by the rate-based
-   *          statement if they match the scope-down statement. You can use any nestable <a>Statement</a> in the scope-down statement, and you can nest statements at any
+   *       evaluated and managed by the rate-based statement. When you use a scope-down statement,
+   *       the rate-based rule only tracks and rate limits
+   *       requests that match the scope-down statement. You can use any nestable <a>Statement</a> in the scope-down statement, and you can nest statements at any
    *          level, the same as you can for a rule statement. </p>
    */
   ScopeDownStatement?: Statement;
@@ -6587,10 +7408,14 @@ export interface RateBasedStatement {
    *          <note>
    *             <p>If the specified header isn't present in the request, WAF doesn't apply the rule to the web request at all.</p>
    *          </note>
-   *          <p>This is required if <code>AggregateKeyType</code> is set to
-   *          <code>FORWARDED_IP</code>.</p>
+   *          <p>This is required if you specify a forwarded IP in the rule's aggregate key settings. </p>
    */
   ForwardedIPConfig?: ForwardedIPConfig;
+
+  /**
+   * <p>Specifies the aggregate keys to use in a rate-base rule. </p>
+   */
+  CustomKeys?: RateBasedStatementCustomKey[];
 }
 
 /**
@@ -7392,7 +8217,7 @@ export interface GetWebACLResponse {
   LockToken?: string;
 
   /**
-   * <p>The URL to use in SDK integrations with Amazon Web Services managed rule groups. For example, you can use the integration SDKs with the account takeover prevention managed rule group <code>AWSManagedRulesATPRuleSet</code>. This is only populated if you are using a rule group in your web ACL that integrates with your applications in this way. For more information, see <a href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-application-integration.html">WAF client application integration</a>
+   * <p>The URL to use in SDK integrations with Amazon Web Services managed rule groups. For example, you can use the integration SDKs with the account takeover prevention managed rule group <code>AWSManagedRulesATPRuleSet</code> and the account creation fraud prevention managed rule group <code>AWSManagedRulesACFPRuleSet</code>. This is only populated if you are using a rule group in your web ACL that integrates with your applications in this way. For more information, see <a href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-application-integration.html">WAF client application integration</a>
    * in the <i>WAF Developer Guide</i>.</p>
    */
   ApplicationIntegrationURL?: string;

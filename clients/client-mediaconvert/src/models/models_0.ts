@@ -315,7 +315,7 @@ export interface AacSettings {
   CodecProfile?: AacCodecProfile | string;
 
   /**
-   * The Coding mode that you specify determines the number of audio channels and the audio channel layout metadata in your AAC output. Valid coding modes depend on the Rate control mode and Profile that you select. The following list shows the number of audio channels and channel layout for each coding mode. * 1.0 Audio Description (Receiver Mix): One channel, C. Includes audio description data from your stereo input. For more information see ETSI TS 101 154 Annex E. * 1.0 Mono: One channel, C. * 2.0 Stereo: Two channels, L, R. * 5.1 Surround: Five channels, C, L, R, Ls, Rs, LFE.
+   * The Coding mode that you specify determines the number of audio channels and the audio channel layout metadata in your AAC output. Valid coding modes depend on the Rate control mode and Profile that you select. The following list shows the number of audio channels and channel layout for each coding mode. * 1.0 Audio Description (Receiver Mix): One channel, C. Includes audio description data from your stereo input. For more information see ETSI TS 101 154 Annex E. * 1.0 Mono: One channel, C. * 2.0 Stereo: Two channels, L, R. * 5.1 Surround: Six channels, C, L, R, Ls, Rs, LFE.
    */
   CodingMode?: AacCodingMode | string;
 
@@ -3111,7 +3111,7 @@ export interface AncillarySourceSettings {
  */
 export interface DvbSubSourceSettings {
   /**
-   * When using DVB-Sub with Burn-In or SMPTE-TT, use this PID for the source content. Unused for DVB-Sub passthrough. All DVB-Sub content is passed through, regardless of selectors.
+   * When using DVB-Sub with Burn-in, use this PID for the source content. Unused for DVB-Sub passthrough. All DVB-Sub content is passed through, regardless of selectors.
    */
   Pid?: number;
 }
@@ -3382,16 +3382,16 @@ export interface CaptionSourceSettings {
 
 /**
  * @public
- * Use captions selectors to specify the captions data from your input that you use in your outputs. You can use up to 20 captions selectors per input.
+ * Use captions selectors to specify the captions data from your input that you use in your outputs. You can use up to 100 captions selectors per input.
  */
 export interface CaptionSelector {
   /**
-   * The specific language to extract from source, using the ISO 639-2 or ISO 639-3 three-letter language code. If input is SCTE-27, complete this field and/or PID to select the caption language to extract. If input is DVB-Sub and output is Burn-in or SMPTE-TT, complete this field and/or PID to select the caption language to extract. If input is DVB-Sub that is being passed through, omit this field (and PID field); there is no way to extract a specific language with pass-through captions.
+   * The specific language to extract from source, using the ISO 639-2 or ISO 639-3 three-letter language code. If input is SCTE-27, complete this field and/or PID to select the caption language to extract. If input is DVB-Sub and output is Burn-in, complete this field and/or PID to select the caption language to extract. If input is DVB-Sub that is being passed through, omit this field (and PID field); there is no way to extract a specific language with pass-through captions.
    */
   CustomLanguageCode?: string;
 
   /**
-   * The specific language to extract from source. If input is SCTE-27, complete this field and/or PID to select the caption language to extract. If input is DVB-Sub and output is Burn-in or SMPTE-TT, complete this field and/or PID to select the caption language to extract. If input is DVB-Sub that is being passed through, omit this field (and PID field); there is no way to extract a specific language with pass-through captions.
+   * The specific language to extract from source. If input is SCTE-27, complete this field and/or PID to select the caption language to extract. If input is DVB-Sub and output is Burn-in, complete this field and/or PID to select the caption language to extract. If input is DVB-Sub that is being passed through, omit this field (and PID field); there is no way to extract a specific language with pass-through captions.
    */
   LanguageCode?: LanguageCode | string;
 
@@ -3899,7 +3899,7 @@ export interface VideoSelector {
  */
 export interface Input {
   /**
-   * Use to remove noise, blocking, blurriness, or ringing from your input as a pre-filter step before encoding. The Advanced input filter removes more types of compression artifacts and is an improvement when compared to basic Deblock and Denoise filters. To remove video compression artifacts from your input and improve the video quality: Choose Enabled. Additionally, this filter can help increase the video quality of your output relative to its bitrate, since noisy inputs are more complex and require more bits to encode. To help restore loss of detail after applying the filter, you can optionally add texture or sharpening as an additional step.Jobs that use this feature incur pro-tier pricing. To not apply advanced input filtering: Choose Disabled. Note that you can still apply basic filtering with Deblock and Denoise.
+   * Use to remove noise, blocking, blurriness, or ringing from your input as a pre-filter step before encoding. The Advanced input filter removes more types of compression artifacts and is an improvement when compared to basic Deblock and Denoise filters. To remove video compression artifacts from your input and improve the video quality: Choose Enabled. Additionally, this filter can help increase the video quality of your output relative to its bitrate, since noisy inputs are more complex and require more bits to encode. To help restore loss of detail after applying the filter, you can optionally add texture or sharpening as an additional step. Jobs that use this feature incur pro-tier pricing. To not apply advanced input filtering: Choose Disabled. Note that you can still apply basic filtering with Deblock and Denoise.
    */
   AdvancedInputFilter?: AdvancedInputFilter | string;
 
@@ -3919,7 +3919,7 @@ export interface Input {
   AudioSelectors?: Record<string, AudioSelector>;
 
   /**
-   * Use captions selectors to specify the captions data from your input that you use in your outputs. You can use up to 20 captions selectors per input.
+   * Use captions selectors to specify the captions data from your input that you use in your outputs. You can use up to 100 captions selectors per input.
    */
   CaptionSelectors?: Record<string, CaptionSelector>;
 
@@ -4025,7 +4025,7 @@ export interface Input {
  */
 export interface InputTemplate {
   /**
-   * Use to remove noise, blocking, blurriness, or ringing from your input as a pre-filter step before encoding. The Advanced input filter removes more types of compression artifacts and is an improvement when compared to basic Deblock and Denoise filters. To remove video compression artifacts from your input and improve the video quality: Choose Enabled. Additionally, this filter can help increase the video quality of your output relative to its bitrate, since noisy inputs are more complex and require more bits to encode. To help restore loss of detail after applying the filter, you can optionally add texture or sharpening as an additional step.Jobs that use this feature incur pro-tier pricing. To not apply advanced input filtering: Choose Disabled. Note that you can still apply basic filtering with Deblock and Denoise.
+   * Use to remove noise, blocking, blurriness, or ringing from your input as a pre-filter step before encoding. The Advanced input filter removes more types of compression artifacts and is an improvement when compared to basic Deblock and Denoise filters. To remove video compression artifacts from your input and improve the video quality: Choose Enabled. Additionally, this filter can help increase the video quality of your output relative to its bitrate, since noisy inputs are more complex and require more bits to encode. To help restore loss of detail after applying the filter, you can optionally add texture or sharpening as an additional step. Jobs that use this feature incur pro-tier pricing. To not apply advanced input filtering: Choose Disabled. Note that you can still apply basic filtering with Deblock and Denoise.
    */
   AdvancedInputFilter?: AdvancedInputFilter | string;
 
@@ -4045,7 +4045,7 @@ export interface InputTemplate {
   AudioSelectors?: Record<string, AudioSelector>;
 
   /**
-   * Use captions selectors to specify the captions data from your input that you use in your outputs. You can use up to 20 captions selectors per input.
+   * Use captions selectors to specify the captions data from your input that you use in your outputs. You can use up to 100 captions selectors per input.
    */
   CaptionSelectors?: Record<string, CaptionSelector>;
 
@@ -6058,6 +6058,21 @@ export type HlsProgramDateTime = (typeof HlsProgramDateTime)[keyof typeof HlsPro
  * @public
  * @enum
  */
+export const HlsProgressiveWriteHlsManifest = {
+  DISABLED: "DISABLED",
+  ENABLED: "ENABLED",
+} as const;
+
+/**
+ * @public
+ */
+export type HlsProgressiveWriteHlsManifest =
+  (typeof HlsProgressiveWriteHlsManifest)[keyof typeof HlsProgressiveWriteHlsManifest];
+
+/**
+ * @public
+ * @enum
+ */
 export const HlsSegmentControl = {
   SEGMENTED_FILES: "SEGMENTED_FILES",
   SINGLE_FILE: "SINGLE_FILE",
@@ -6242,6 +6257,11 @@ export interface HlsGroupSettings {
   ProgramDateTimePeriod?: number;
 
   /**
+   * Specify whether MediaConvert generates HLS manifests while your job is running or when your job is complete. To generate HLS manifests while your job is running: Choose Enabled. Use if you want to play back your content as soon as it's available. MediaConvert writes the parent and child manifests after the first three media segments are written to your destination S3 bucket. It then writes new updated manifests after each additional segment is written. The parent manifest includes the latest BANDWIDTH and AVERAGE-BANDWIDTH attributes, and child manifests include the latest available media segment. When your job completes, the final child playlists include an EXT-X-ENDLIST tag. To generate HLS manifests only when your job completes: Choose Disabled.
+   */
+  ProgressiveWriteHlsManifest?: HlsProgressiveWriteHlsManifest | string;
+
+  /**
    * When set to SINGLE_FILE, emits program as a single media resource (.ts) file, uses #EXT-X-BYTERANGE tags to index segment for playback.
    */
   SegmentControl?: HlsSegmentControl | string;
@@ -6257,7 +6277,7 @@ export interface HlsGroupSettings {
   SegmentLengthControl?: HlsSegmentLengthControl | string;
 
   /**
-   * Number of segments to write to a subdirectory before starting a new one. directoryStructure must be SINGLE_DIRECTORY for this setting to have an effect.
+   * Specify the number of segments to write to a subdirectory before starting a new one. You must also set Directory structure to Subdirectory per stream for this setting to have an effect.
    */
   SegmentsPerSubdirectory?: number;
 
@@ -6715,14 +6735,3 @@ export const F4vMoovPlacement = {
  * @public
  */
 export type F4vMoovPlacement = (typeof F4vMoovPlacement)[keyof typeof F4vMoovPlacement];
-
-/**
- * @public
- * Settings for F4v container
- */
-export interface F4vSettings {
-  /**
-   * If set to PROGRESSIVE_DOWNLOAD, the MOOV atom is relocated to the beginning of the archive as required for progressive downloading. Otherwise it is placed normally at the end.
-   */
-  MoovPlacement?: F4vMoovPlacement | string;
-}

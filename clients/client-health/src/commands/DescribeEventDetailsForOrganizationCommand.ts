@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { HealthClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../HealthClient";
 import {
@@ -23,6 +23,10 @@ import {
   se_DescribeEventDetailsForOrganizationCommand,
 } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -68,7 +72,6 @@ export interface DescribeEventDetailsForOrganizationCommandOutput
  *             </li>
  *          </ul>
  *          <p>For more information, see <a href="https://docs.aws.amazon.com/health/latest/APIReference/API_Event.html">Event</a>.</p>
- *
  *          <note>
  *             <p>This operation doesn't support resource-level permissions. You can't use this operation to allow or deny access to specific Health events. For more
  *                   information, see <a href="https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html#resource-action-based-conditions">Resource- and action-based conditions</a> in the <i>Health User Guide</i>.</p>
@@ -98,14 +101,14 @@ export interface DescribeEventDetailsForOrganizationCommandOutput
  * //         arn: "STRING_VALUE",
  * //         service: "STRING_VALUE",
  * //         eventTypeCode: "STRING_VALUE",
- * //         eventTypeCategory: "STRING_VALUE",
+ * //         eventTypeCategory: "issue" || "accountNotification" || "scheduledChange" || "investigation",
  * //         region: "STRING_VALUE",
  * //         availabilityZone: "STRING_VALUE",
  * //         startTime: new Date("TIMESTAMP"),
  * //         endTime: new Date("TIMESTAMP"),
  * //         lastUpdatedTime: new Date("TIMESTAMP"),
- * //         statusCode: "STRING_VALUE",
- * //         eventScopeCode: "STRING_VALUE",
+ * //         statusCode: "open" || "closed" || "upcoming",
+ * //         eventScopeCode: "PUBLIC" || "ACCOUNT_SPECIFIC" || "NONE",
  * //       },
  * //       eventDescription: { // EventDescription
  * //         latestDescription: "STRING_VALUE",

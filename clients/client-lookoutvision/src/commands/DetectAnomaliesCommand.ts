@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { LookoutVisionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutVisionClient";
 import {
@@ -23,9 +23,8 @@ import { de_DetectAnomaliesCommand, se_DetectAnomaliesCommand } from "../protoco
 
 /**
  * @public
- *
- * The input for {@link DetectAnomaliesCommand}.
  */
+export { __MetadataBearer, $Command };
 export type DetectAnomaliesCommandInputType = Omit<DetectAnomaliesRequest, "Body"> & {
   /**
    * For *`DetectAnomaliesRequest["Body"]`*, see {@link DetectAnomaliesRequest.Body}.
@@ -33,7 +32,9 @@ export type DetectAnomaliesCommandInputType = Omit<DetectAnomaliesRequest, "Body
   Body: DetectAnomaliesRequest["Body"] | string | Uint8Array | Buffer;
 };
 /**
- * This interface extends from `DetectAnomaliesRequest` interface. There are more parameters than `Body` defined in {@link DetectAnomaliesRequest}
+ * @public
+ *
+ * The input for {@link DetectAnomaliesCommand}.
  */
 export interface DetectAnomaliesCommandInput extends DetectAnomaliesCommandInputType {}
 /**

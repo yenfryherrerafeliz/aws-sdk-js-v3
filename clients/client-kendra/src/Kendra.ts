@@ -1,6 +1,6 @@
 // smithy-typescript generated code
-import { createAggregatedClient } from "@aws-sdk/smithy-client";
-import { HttpHandlerOptions as __HttpHandlerOptions } from "@aws-sdk/types";
+import { createAggregatedClient } from "@smithy/smithy-client";
+import { HttpHandlerOptions as __HttpHandlerOptions } from "@smithy/types";
 
 import {
   AssociateEntitiesToExperienceCommand,
@@ -230,6 +230,7 @@ import {
   PutPrincipalMappingCommandOutput,
 } from "./commands/PutPrincipalMappingCommand";
 import { QueryCommand, QueryCommandInput, QueryCommandOutput } from "./commands/QueryCommand";
+import { RetrieveCommand, RetrieveCommandInput, RetrieveCommandOutput } from "./commands/RetrieveCommand";
 import {
   StartDataSourceSyncJobCommand,
   StartDataSourceSyncJobCommandInput,
@@ -342,6 +343,7 @@ const commands = {
   ListThesauriCommand,
   PutPrincipalMappingCommand,
   QueryCommand,
+  RetrieveCommand,
   StartDataSourceSyncJobCommand,
   StopDataSourceSyncJobCommand,
   SubmitFeedbackCommand,
@@ -1162,6 +1164,17 @@ export interface Kendra {
     args: QueryCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: QueryCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link RetrieveCommand}
+   */
+  retrieve(args: RetrieveCommandInput, options?: __HttpHandlerOptions): Promise<RetrieveCommandOutput>;
+  retrieve(args: RetrieveCommandInput, cb: (err: any, data?: RetrieveCommandOutput) => void): void;
+  retrieve(
+    args: RetrieveCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: RetrieveCommandOutput) => void
   ): void;
 
   /**

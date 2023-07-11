@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudTrailClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudTrailClient";
 import { RestoreEventDataStoreRequest, RestoreEventDataStoreResponse } from "../models/models_0";
 import { de_RestoreEventDataStoreCommand, se_RestoreEventDataStoreCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -50,7 +54,7 @@ export interface RestoreEventDataStoreCommandOutput extends RestoreEventDataStor
  * // { // RestoreEventDataStoreResponse
  * //   EventDataStoreArn: "STRING_VALUE",
  * //   Name: "STRING_VALUE",
- * //   Status: "CREATED" || "ENABLED" || "PENDING_DELETION",
+ * //   Status: "CREATED" || "ENABLED" || "PENDING_DELETION" || "STARTING_INGESTION" || "STOPPING_INGESTION" || "STOPPED_INGESTION",
  * //   AdvancedEventSelectors: [ // AdvancedEventSelectors
  * //     { // AdvancedEventSelector
  * //       Name: "STRING_VALUE",
@@ -108,7 +112,7 @@ export interface RestoreEventDataStoreCommandOutput extends RestoreEventDataStor
  *  <p>The specified event data store was not found.</p>
  *
  * @throws {@link InsufficientDependencyServiceAccessPermissionException} (client fault)
- *  <p>This exception is thrown when the IAM user or role that is used to create
+ *  <p>This exception is thrown when the IAM identity that is used to create
  *          the organization resource lacks one or more required permissions for creating an
  *          organization resource in a required service.</p>
  *

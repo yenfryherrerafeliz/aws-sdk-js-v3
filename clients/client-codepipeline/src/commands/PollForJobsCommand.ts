@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CodePipelineClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodePipelineClient";
 import { PollForJobsInput, PollForJobsOutput, PollForJobsOutputFilterSensitiveLog } from "../models/models_0";
 import { de_PollForJobsCommand, se_PollForJobsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,16 +36,16 @@ export interface PollForJobsCommandOutput extends PollForJobsOutput, __MetadataB
 
 /**
  * @public
- * <p>Returns information about any jobs for AWS CodePipeline to act on.
+ * <p>Returns information about any jobs for CodePipeline to act on.
  *                 <code>PollForJobs</code> is valid only for action types with "Custom" in the owner
- *             field. If the action type contains "AWS" or "ThirdParty" in the owner field, the
- *                 <code>PollForJobs</code> action returns an error.</p>
- *         <important>
- *             <p>When this API is called, AWS CodePipeline returns temporary credentials for the
- *                 S3 bucket used to store artifacts for the pipeline, if the action requires access to
- *                 that S3 bucket for input or output artifacts. This API also returns any secret
- *                 values defined for the action.</p>
- *         </important>
+ *             field. If the action type contains <code>AWS</code> or <code>ThirdParty</code> in the
+ *             owner field, the <code>PollForJobs</code> action returns an error.</p>
+ *          <important>
+ *             <p>When this API is called, CodePipeline returns temporary credentials for
+ *                 the S3 bucket used to store artifacts for the pipeline, if the action requires
+ *                 access to that S3 bucket for input or output artifacts. This API also returns any
+ *                 secret values defined for the action.</p>
+ *          </important>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -50,8 +54,8 @@ export interface PollForJobsCommandOutput extends PollForJobsOutput, __MetadataB
  * const client = new CodePipelineClient(config);
  * const input = { // PollForJobsInput
  *   actionTypeId: { // ActionTypeId
- *     category: "STRING_VALUE", // required
- *     owner: "STRING_VALUE", // required
+ *     category: "Source" || "Build" || "Deploy" || "Test" || "Invoke" || "Approval", // required
+ *     owner: "AWS" || "ThirdParty" || "Custom", // required
  *     provider: "STRING_VALUE", // required
  *     version: "STRING_VALUE", // required
  *   },
@@ -68,8 +72,8 @@ export interface PollForJobsCommandOutput extends PollForJobsOutput, __MetadataB
  * //       id: "STRING_VALUE",
  * //       data: { // JobData
  * //         actionTypeId: { // ActionTypeId
- * //           category: "STRING_VALUE", // required
- * //           owner: "STRING_VALUE", // required
+ * //           category: "Source" || "Build" || "Deploy" || "Test" || "Invoke" || "Approval", // required
+ * //           owner: "AWS" || "ThirdParty" || "Custom", // required
  * //           provider: "STRING_VALUE", // required
  * //           version: "STRING_VALUE", // required
  * //         },
@@ -95,7 +99,7 @@ export interface PollForJobsCommandOutput extends PollForJobsOutput, __MetadataB
  * //             name: "STRING_VALUE",
  * //             revision: "STRING_VALUE",
  * //             location: { // ArtifactLocation
- * //               type: "STRING_VALUE",
+ * //               type: "S3",
  * //               s3Location: { // S3ArtifactLocation
  * //                 bucketName: "STRING_VALUE", // required
  * //                 objectKey: "STRING_VALUE", // required
@@ -108,7 +112,7 @@ export interface PollForJobsCommandOutput extends PollForJobsOutput, __MetadataB
  * //             name: "STRING_VALUE",
  * //             revision: "STRING_VALUE",
  * //             location: {
- * //               type: "STRING_VALUE",
+ * //               type: "S3",
  * //               s3Location: {
  * //                 bucketName: "STRING_VALUE", // required
  * //                 objectKey: "STRING_VALUE", // required
@@ -124,7 +128,7 @@ export interface PollForJobsCommandOutput extends PollForJobsOutput, __MetadataB
  * //         continuationToken: "STRING_VALUE",
  * //         encryptionKey: { // EncryptionKey
  * //           id: "STRING_VALUE", // required
- * //           type: "STRING_VALUE", // required
+ * //           type: "KMS", // required
  * //         },
  * //       },
  * //       nonce: "STRING_VALUE",

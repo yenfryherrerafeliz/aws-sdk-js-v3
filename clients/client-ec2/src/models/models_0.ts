@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { SENSITIVE_STRING } from "@smithy/smithy-client";
 
 /**
  * @public
@@ -154,6 +154,7 @@ export const ResourceType = {
   import_image_task: "import-image-task",
   import_snapshot_task: "import-snapshot-task",
   instance: "instance",
+  instance_connect_endpoint: "instance-connect-endpoint",
   instance_event_window: "instance-event-window",
   internet_gateway: "internet-gateway",
   ipam: "ipam",
@@ -2464,18 +2465,17 @@ export interface Address {
   PublicIp?: string;
 
   /**
-   * <p>The ID representing the allocation of the address for use with EC2-VPC.</p>
+   * <p>The ID representing the allocation of the address.</p>
    */
   AllocationId?: string;
 
   /**
-   * <p>The ID representing the association of the address with an instance in a VPC.</p>
+   * <p>The ID representing the association of the address with an instance.</p>
    */
   AssociationId?: string;
 
   /**
-   * <p>Indicates whether this Elastic IP address is for use with instances
-   * 				in EC2-Classic (<code>standard</code>) or instances in a VPC (<code>vpc</code>).</p>
+   * <p>The network (<code>vpc</code>).</p>
    */
   Domain?: DomainType | string;
 
@@ -2695,14 +2695,12 @@ export type Affinity = (typeof Affinity)[keyof typeof Affinity];
  */
 export interface AllocateAddressRequest {
   /**
-   * <p>Indicates whether the Elastic IP address is for use with instances in a VPC or instances in EC2-Classic.</p>
-   *          <p>Default: If the Region supports EC2-Classic, the default is <code>standard</code>. Otherwise, the default
-   *          is <code>vpc</code>.</p>
+   * <p>The network (<code>vpc</code>).</p>
    */
   Domain?: DomainType | string;
 
   /**
-   * <p>[EC2-VPC] The Elastic IP address to recover or an IPv4 address from an address pool.</p>
+   * <p>The Elastic IP address to recover or an IPv4 address from an address pool.</p>
    */
   Address?: string;
 
@@ -2752,7 +2750,7 @@ export interface AllocateAddressResult {
   PublicIp?: string;
 
   /**
-   * <p>[EC2-VPC] The ID that Amazon Web Services assigns to represent the allocation of the Elastic IP address for use with instances in a VPC.</p>
+   * <p>The ID that represents the allocation of the Elastic IP address.</p>
    */
   AllocationId?: string;
 
@@ -2768,8 +2766,7 @@ export interface AllocateAddressResult {
   NetworkBorderGroup?: string;
 
   /**
-   * <p>Indicates whether the Elastic IP address is for use with instances in a VPC (<code>vpc</code>) or
-   * 				instances in EC2-Classic (<code>standard</code>).</p>
+   * <p>The network (<code>vpc</code>).</p>
    */
   Domain?: DomainType | string;
 
@@ -2784,8 +2781,8 @@ export interface AllocateAddressResult {
   CustomerOwnedIpv4Pool?: string;
 
   /**
-   * <p>The carrier IP address. This option is only available for network interfaces which  reside
-   *       in a subnet in a Wavelength Zone (for example an EC2 instance). </p>
+   * <p>The carrier IP address. This option is only available for network interfaces that reside
+   *       in a subnet in a Wavelength Zone.</p>
    */
   CarrierIp?: string;
 }
@@ -2877,10 +2874,14 @@ export interface AllocateHostsRequest {
   InstanceFamily?: string;
 
   /**
-   * <p>The number of Dedicated Hosts to allocate to your account with these
-   *             parameters.</p>
+   * <p>The number of Dedicated Hosts to allocate to your account with these parameters. If you are
+   *             allocating the Dedicated Hosts on an Outpost, and you specify <b>AssetIds</b>,
+   *             you can omit this parameter. In this case, Amazon EC2 allocates a Dedicated Host on each
+   *             specified hardware asset. If you specify both <b>AssetIds</b> and
+   *             <b>Quantity</b>, then the value that you specify for
+   *             <b>Quantity</b> must be equal to the number of asset IDs specified.</p>
    */
-  Quantity: number | undefined;
+  Quantity?: number;
 
   /**
    * <p>The tags to apply to the Dedicated Host during creation.</p>
@@ -2898,7 +2899,9 @@ export interface AllocateHostsRequest {
 
   /**
    * <p>The Amazon Resource Name (ARN) of the Amazon Web Services Outpost on which to allocate
-   *             the Dedicated Host.</p>
+   *             the Dedicated Host. If you specify <b>OutpostArn</b>, you can
+   *             optionally specify <b>AssetIds</b>.</p>
+   *          <p>If you are allocating the Dedicated Host in a Region, omit this parameter.</p>
    */
   OutpostArn?: string;
 
@@ -2908,6 +2911,27 @@ export interface AllocateHostsRequest {
    *                 maintenance</a> in the <i>Amazon EC2 User Guide</i>.</p>
    */
   HostMaintenance?: HostMaintenance | string;
+
+  /**
+   * <p>The IDs of the Outpost hardware assets on which to allocate the Dedicated Hosts. Targeting
+   *             specific hardware assets on an Outpost can help to minimize latency between your workloads.
+   *             This parameter is supported only if you specify <b>OutpostArn</b>.
+   *             If you are allocating the Dedicated Hosts in a Region, omit this parameter.</p>
+   *          <ul>
+   *             <li>
+   *                <p>If you specify this parameter, you can omit <b>Quantity</b>.
+   *                     In this case, Amazon EC2 allocates a Dedicated Host on each specified hardware
+   *                     asset.</p>
+   *             </li>
+   *             <li>
+   *                <p>If you specify both <b>AssetIds</b> and
+   *                     <b>Quantity</b>, then the value for
+   *                     <b>Quantity</b> must be equal to the number of asset IDs
+   *                     specified.</p>
+   *             </li>
+   *          </ul>
+   */
+  AssetIds?: string[];
 }
 
 /**
@@ -3451,26 +3475,23 @@ export interface AssignPrivateNatGatewayAddressResult {
  */
 export interface AssociateAddressRequest {
   /**
-   * <p>[EC2-VPC] The allocation ID. This is required for EC2-VPC.</p>
+   * <p>The allocation ID. This is required.</p>
    */
   AllocationId?: string;
 
   /**
    * <p>The ID of the instance. The instance must have exactly one attached network interface.
-   *       For EC2-VPC, you can specify either the instance ID or the network interface ID, but not both.
-   *       For EC2-Classic, you must specify an instance ID and the instance must be in the running
-   *       state.</p>
+   *       You can specify either the instance ID or the network interface ID, but not both.</p>
    */
   InstanceId?: string;
 
   /**
-   * <p>[EC2-Classic] The Elastic IP address to associate with the instance. This is required for
-   *       EC2-Classic.</p>
+   * <p>Deprecated.</p>
    */
   PublicIp?: string;
 
   /**
-   * <p>[EC2-VPC] For a VPC in an EC2-Classic account, specify true to allow an Elastic IP address that is already associated with an instance or network interface to be reassociated with the specified instance or network interface. Otherwise, the operation fails. In a VPC in an EC2-VPC-only account, reassociation is automatic, therefore you can specify false to ensure the operation fails if the Elastic IP address is already associated with another resource.</p>
+   * <p>Reassociation is automatic, but you can specify false to ensure the operation fails if the Elastic IP address is already associated with another resource.</p>
    */
   AllowReassociation?: boolean;
 
@@ -3482,13 +3503,13 @@ export interface AssociateAddressRequest {
   DryRun?: boolean;
 
   /**
-   * <p>[EC2-VPC] The ID of the network interface. If the instance has more than one network interface, you must specify a network interface ID.</p>
-   *          <p>For EC2-VPC, you can specify either the instance ID or the network interface ID, but not both. </p>
+   * <p>The ID of the network interface. If the instance has more than one network interface, you must specify a network interface ID.</p>
+   *          <p>You can specify either the instance ID or the network interface ID, but not both. </p>
    */
   NetworkInterfaceId?: string;
 
   /**
-   * <p>[EC2-VPC] The primary or secondary private IP address to associate with the Elastic IP address. If no private IP address is specified, the Elastic IP address is associated with the primary private IP address.</p>
+   * <p>The primary or secondary private IP address to associate with the Elastic IP address. If no private IP address is specified, the Elastic IP address is associated with the primary private IP address.</p>
    */
   PrivateIpAddress?: string;
 }
@@ -3498,7 +3519,7 @@ export interface AssociateAddressRequest {
  */
 export interface AssociateAddressResult {
   /**
-   * <p>[EC2-VPC] The ID that represents the association of the Elastic IP address with an instance.</p>
+   * <p>The ID that represents the association of the Elastic IP address with an instance.</p>
    */
   AssociationId?: string;
 }
@@ -7684,6 +7705,12 @@ export const _InstanceType = {
   i3en_large: "i3en.large",
   i3en_metal: "i3en.metal",
   i3en_xlarge: "i3en.xlarge",
+  i4g_16xlarge: "i4g.16xlarge",
+  i4g_2xlarge: "i4g.2xlarge",
+  i4g_4xlarge: "i4g.4xlarge",
+  i4g_8xlarge: "i4g.8xlarge",
+  i4g_large: "i4g.large",
+  i4g_xlarge: "i4g.xlarge",
   i4i_16xlarge: "i4i.16xlarge",
   i4i_2xlarge: "i4i.2xlarge",
   i4i_32xlarge: "i4i.32xlarge",

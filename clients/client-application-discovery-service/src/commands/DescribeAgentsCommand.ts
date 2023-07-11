@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   ApplicationDiscoveryServiceClientResolvedConfig,
@@ -21,6 +21,10 @@ import {
 import { DescribeAgentsRequest, DescribeAgentsResponse } from "../models/models_0";
 import { de_DescribeAgentsCommand, se_DescribeAgentsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,8 +40,8 @@ export interface DescribeAgentsCommandOutput extends DescribeAgentsResponse, __M
 
 /**
  * @public
- * <p>Lists agents or connectors as specified by ID or other filters. All agents/connectors
- *       associated with your user account can be listed if you call <code>DescribeAgents</code> as is
+ * <p>Lists agents or collectors as specified by ID or other filters. All agents/collectors
+ *       associated with your user can be listed if you call <code>DescribeAgents</code> as is
  *       without passing any parameters.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -95,11 +99,11 @@ export interface DescribeAgentsCommandOutput extends DescribeAgentsResponse, __M
  * @see {@link ApplicationDiscoveryServiceClientResolvedConfig | config} for ApplicationDiscoveryServiceClient's `config` shape.
  *
  * @throws {@link AuthorizationErrorException} (client fault)
- *  <p>The Amazon Web Services user account does not have permission to perform the action. Check the IAM
- *       policy associated with this account.</p>
+ *  <p>The user does not have permission to perform the action. Check the IAM
+ *       policy associated with this user.</p>
  *
  * @throws {@link HomeRegionNotSetException} (client fault)
- *  <p>The home region is not set. Set the home region to continue.</p>
+ *  <p>The home Region is not set. Set the home Region to continue.</p>
  *
  * @throws {@link InvalidParameterException} (client fault)
  *  <p>One or more parameters are not valid. Verify the parameters and try again.</p>

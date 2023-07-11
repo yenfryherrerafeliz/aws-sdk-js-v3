@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { LexModelsV2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LexModelsV2Client";
 import { DescribeExportRequest, DescribeExportResponse } from "../models/models_0";
 import { de_DescribeExportCommand, se_DescribeExportCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -61,8 +65,11 @@ export interface DescribeExportCommandOutput extends DescribeExportResponse, __M
  * //       botVersion: "STRING_VALUE", // required
  * //       localeId: "STRING_VALUE", // required
  * //     },
+ * //     testSetExportSpecification: { // TestSetExportSpecification
+ * //       testSetId: "STRING_VALUE", // required
+ * //     },
  * //   },
- * //   fileFormat: "LexJson" || "TSV",
+ * //   fileFormat: "LexJson" || "TSV" || "CSV",
  * //   exportStatus: "InProgress" || "Completed" || "Failed" || "Deleting",
  * //   failureReasons: [ // FailureReasons
  * //     "STRING_VALUE",

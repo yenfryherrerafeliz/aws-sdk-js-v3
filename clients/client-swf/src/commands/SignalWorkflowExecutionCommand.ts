@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { SignalWorkflowExecutionInput } from "../models/models_0";
 import { de_SignalWorkflowExecutionCommand, se_SignalWorkflowExecutionCommand } from "../protocols/Aws_json1_0";
 import { ServiceInputTypes, ServiceOutputTypes, SWFClientResolvedConfig } from "../SWFClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,18 +40,15 @@ export interface SignalWorkflowExecutionCommandOutput extends __MetadataBearer {
  *       history and creates a decision task for the workflow execution identified by the given domain,
  *       workflowId and runId. The event is recorded with the specified user defined signalName and
  *       input (if provided).</p>
- *
  *          <note>
  *             <p>If a runId isn't specified, then the <code>WorkflowExecutionSignaled</code> event is
  *         recorded in the history of the current open workflow with the matching workflowId in the
  *         domain.</p>
  *          </note>
- *
  *          <note>
  *             <p>If the specified workflow execution isn't open, this method fails with
  *           <code>UnknownResource</code>.</p>
  *          </note>
- *
  *          <p>
  *             <b>Access Control</b>
  *          </p>

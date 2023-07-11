@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   DatabaseMigrationServiceClientResolvedConfig,
@@ -21,6 +21,10 @@ import {
 import { CreateReplicationInstanceMessage, CreateReplicationInstanceResponse } from "../models/models_0";
 import { de_CreateReplicationInstanceCommand, se_CreateReplicationInstanceCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -159,7 +163,7 @@ export interface CreateReplicationInstanceCommandOutput extends CreateReplicatio
  *  <p>The resource is in a state that prevents it from being used for database migration.</p>
  *
  * @throws {@link InvalidSubnet} (client fault)
- *  <p>The subnet provided is invalid.</p>
+ *  <p>The subnet provided isn't valid.</p>
  *
  * @throws {@link KMSKeyNotAccessibleFault} (client fault)
  *  <p>DMS cannot access the KMS key.</p>

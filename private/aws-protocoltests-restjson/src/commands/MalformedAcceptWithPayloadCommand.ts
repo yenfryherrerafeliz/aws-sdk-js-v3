@@ -1,7 +1,7 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,12 +10,17 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
 import { MalformedAcceptWithPayloadOutput } from "../models/models_0";
 import { de_MalformedAcceptWithPayloadCommand, se_MalformedAcceptWithPayloadCommand } from "../protocols/Aws_restJson1";
 import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RestJsonProtocolClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -24,10 +29,19 @@ import { RestJsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputT
 export interface MalformedAcceptWithPayloadCommandInput {}
 /**
  * @public
+ */
+export type MalformedAcceptWithPayloadCommandOutputType = Omit<MalformedAcceptWithPayloadOutput, "payload"> & {
+  payload?: Uint8ArrayBlobAdapter;
+};
+
+/**
+ * @public
  *
  * The output of {@link MalformedAcceptWithPayloadCommand}.
  */
-export interface MalformedAcceptWithPayloadCommandOutput extends MalformedAcceptWithPayloadOutput, __MetadataBearer {}
+export interface MalformedAcceptWithPayloadCommandOutput
+  extends MalformedAcceptWithPayloadCommandOutputType,
+    __MetadataBearer {}
 
 export class MalformedAcceptWithPayloadCommand extends $Command<
   MalformedAcceptWithPayloadCommandInput,

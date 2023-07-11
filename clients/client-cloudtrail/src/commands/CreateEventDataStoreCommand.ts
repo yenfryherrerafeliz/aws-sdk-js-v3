@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudTrailClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudTrailClient";
 import { CreateEventDataStoreRequest, CreateEventDataStoreResponse } from "../models/models_0";
 import { de_CreateEventDataStoreCommand, se_CreateEventDataStoreCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -78,13 +82,14 @@ export interface CreateEventDataStoreCommandOutput extends CreateEventDataStoreR
  *     },
  *   ],
  *   KmsKeyId: "STRING_VALUE",
+ *   StartIngestion: true || false,
  * };
  * const command = new CreateEventDataStoreCommand(input);
  * const response = await client.send(command);
  * // { // CreateEventDataStoreResponse
  * //   EventDataStoreArn: "STRING_VALUE",
  * //   Name: "STRING_VALUE",
- * //   Status: "CREATED" || "ENABLED" || "PENDING_DELETION",
+ * //   Status: "CREATED" || "ENABLED" || "PENDING_DELETION" || "STARTING_INGESTION" || "STOPPING_INGESTION" || "STOPPED_INGESTION",
  * //   AdvancedEventSelectors: [ // AdvancedEventSelectors
  * //     { // AdvancedEventSelector
  * //       Name: "STRING_VALUE",
@@ -150,7 +155,7 @@ export interface CreateEventDataStoreCommandOutput extends CreateEventDataStoreR
  *  <p>Your account has used the maximum number of event data stores.</p>
  *
  * @throws {@link InsufficientDependencyServiceAccessPermissionException} (client fault)
- *  <p>This exception is thrown when the IAM user or role that is used to create
+ *  <p>This exception is thrown when the IAM identity that is used to create
  *          the organization resource lacks one or more required permissions for creating an
  *          organization resource in a required service.</p>
  *
@@ -204,8 +209,8 @@ export interface CreateEventDataStoreCommandOutput extends CreateEventDataStoreR
  *
  * @throws {@link KmsKeyNotFoundException} (client fault)
  *  <p>This exception is thrown when the KMS key does not exist, when the S3
- *          bucket and the KMS key are not in the same region, or when the KMS key associated with the Amazon SNS topic either does not exist or is
- *          not in the same region.</p>
+ *          bucket and the KMS key are not in the same Region, or when the KMS key associated with the Amazon SNS topic either does not exist or is
+ *          not in the same Region.</p>
  *
  * @throws {@link NoManagementAccountSLRExistsException} (client fault)
  *  <p> This exception is thrown when the management account does not have a service-linked

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { KMSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KMSClient";
 import { VerifyMacRequest, VerifyMacRequestFilterSensitiveLog, VerifyMacResponse } from "../models/models_0";
 import { de_VerifyMacCommand, se_VerifyMacCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -67,6 +71,7 @@ export interface VerifyMacCommandOutput extends VerifyMacResponse, __MetadataBea
  *   GrantTokens: [ // GrantTokenList
  *     "STRING_VALUE",
  *   ],
+ *   DryRun: true || false,
  * };
  * const command = new VerifyMacCommand(input);
  * const response = await client.send(command);
@@ -86,6 +91,11 @@ export interface VerifyMacCommandOutput extends VerifyMacResponse, __MetadataBea
  *
  * @throws {@link DisabledException} (client fault)
  *  <p>The request was rejected because the specified KMS key is not enabled.</p>
+ *
+ * @throws {@link DryRunOperationException} (client fault)
+ *  <p>
+ *       The request was rejected because the DryRun parameter was specified.
+ *     </p>
  *
  * @throws {@link InvalidGrantTokenException} (client fault)
  *  <p>The request was rejected because the specified grant token is not valid.</p>
@@ -138,7 +148,9 @@ export interface VerifyMacCommandOutput extends VerifyMacResponse, __MetadataBea
  *                   </i>.</p>
  *             </li>
  *             <li>
- *                <p>For cryptographic operations on KMS keys in custom key stores, this exception represents a general failure with many possible causes. To identify the cause, see the error message that accompanies the exception.</p>
+ *                <p>For cryptographic operations on KMS keys in custom key stores, this exception
+ *           represents a general failure with many possible causes. To identify the cause, see the
+ *           error message that accompanies the exception.</p>
  *             </li>
  *          </ul>
  *

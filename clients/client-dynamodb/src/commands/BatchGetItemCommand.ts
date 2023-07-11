@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { DynamoDBClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DynamoDBClient";
 import { BatchGetItemInput, BatchGetItemOutput } from "../models/models_0";
 import { de_BatchGetItemCommand, se_BatchGetItemCommand } from "../protocols/Aws_json1_0";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,8 +40,8 @@ export interface BatchGetItemCommandOutput extends BatchGetItemOutput, __Metadat
  *             from one or more tables. You identify requested items by primary key.</p>
  *          <p>A single operation can retrieve up to 16 MB of data, which can contain as many as 100
  *             items. <code>BatchGetItem</code> returns a partial result if the response size limit is
- *             exceeded, the table's provisioned throughput is exceeded, or an internal processing
- *             failure occurs. If a partial result is returned, the operation returns a value for
+ *             exceeded, the table's provisioned throughput is exceeded, more than 1MB per partition is requested,
+ *             or an internal processing failure occurs. If a partial result is returned, the operation returns a value for
  *                 <code>UnprocessedKeys</code>. You can use this value to retry the operation starting
  *             with the next item to get.</p>
  *          <important>

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CreateAutoMLJobV2Request, CreateAutoMLJobV2Response } from "../models/models_0";
 import { de_CreateAutoMLJobV2Command, se_CreateAutoMLJobV2Command } from "../protocols/Aws_json1_1";
 import { SageMakerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../SageMakerClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,14 +36,21 @@ export interface CreateAutoMLJobV2CommandOutput extends CreateAutoMLJobV2Respons
 
 /**
  * @public
- * <p>Creates an Amazon SageMaker AutoML job that uses non-tabular data such as images or text for
- *          Computer Vision or Natural Language Processing problems.</p>
- *          <p>Find the resulting model after you run an AutoML job V2 by calling <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html">DescribeAutoMLJobV2</a>.</p>
- *          <p>To create an <code>AutoMLJob</code> using tabular data, see <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJob.html">CreateAutoMLJob</a>.</p>
+ * <p>Creates an Autopilot job also referred to as Autopilot experiment or AutoML job V2.</p>
  *          <note>
- *             <p>This API action is callable through SageMaker Canvas only. Calling it directly from the CLI
- *             or an SDK results in an error.</p>
+ *             <p>
+ *                <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html">CreateAutoMLJobV2</a> and <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html">DescribeAutoMLJobV2</a> are new versions of <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJob.html">CreateAutoMLJob</a>
+ *             and <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJob.html">DescribeAutoMLJob</a> which offer backward compatibility.</p>
+ *             <p>
+ *                <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of
+ *             its previous version <code>CreateAutoMLJob</code>, as well as non-tabular problem types
+ *             such as image or text classification.</p>
+ *             <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to
+ *                <code>CreateAutoMLJobV2</code> in <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment-api.html#autopilot-create-experiment-api-migrate-v1-v2">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p>
  *          </note>
+ *          <p>For the list of available problem types supported by <code>CreateAutoMLJobV2</code>, see
+ *             <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AutoMLProblemTypeConfig.html">AutoMLProblemTypeConfig</a>.</p>
+ *          <p>You can find the best-performing model after you run an AutoML job V2 by calling <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html">DescribeAutoMLJobV2</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -82,6 +93,59 @@ export interface CreateAutoMLJobV2CommandOutput extends CreateAutoMLJobV2Respons
  *       ContentColumn: "STRING_VALUE",
  *       TargetLabelColumn: "STRING_VALUE",
  *     },
+ *     TabularJobConfig: { // TabularJobConfig
+ *       CandidateGenerationConfig: { // CandidateGenerationConfig
+ *         AlgorithmsConfig: [ // AutoMLAlgorithmsConfig
+ *           { // AutoMLAlgorithmConfig
+ *             AutoMLAlgorithms: [ // AutoMLAlgorithms // required
+ *               "xgboost" || "linear-learner" || "mlp" || "lightgbm" || "catboost" || "randomforest" || "extra-trees" || "nn-torch" || "fastai",
+ *             ],
+ *           },
+ *         ],
+ *       },
+ *       CompletionCriteria: {
+ *         MaxCandidates: Number("int"),
+ *         MaxRuntimePerTrainingJobInSeconds: Number("int"),
+ *         MaxAutoMLJobRuntimeInSeconds: Number("int"),
+ *       },
+ *       FeatureSpecificationS3Uri: "STRING_VALUE",
+ *       Mode: "AUTO" || "ENSEMBLING" || "HYPERPARAMETER_TUNING",
+ *       GenerateCandidateDefinitionsOnly: true || false,
+ *       ProblemType: "BinaryClassification" || "MulticlassClassification" || "Regression",
+ *       TargetAttributeName: "STRING_VALUE", // required
+ *       SampleWeightAttributeName: "STRING_VALUE",
+ *     },
+ *     TimeSeriesForecastingJobConfig: { // TimeSeriesForecastingJobConfig
+ *       FeatureSpecificationS3Uri: "STRING_VALUE",
+ *       CompletionCriteria: {
+ *         MaxCandidates: Number("int"),
+ *         MaxRuntimePerTrainingJobInSeconds: Number("int"),
+ *         MaxAutoMLJobRuntimeInSeconds: Number("int"),
+ *       },
+ *       ForecastFrequency: "STRING_VALUE", // required
+ *       ForecastHorizon: Number("int"), // required
+ *       ForecastQuantiles: [ // ForecastQuantiles
+ *         "STRING_VALUE",
+ *       ],
+ *       Transformations: { // TimeSeriesTransformations
+ *         Filling: { // FillingTransformations
+ *           "<keys>": { // FillingTransformationMap
+ *             "<keys>": "STRING_VALUE",
+ *           },
+ *         },
+ *         Aggregation: { // AggregationTransformations
+ *           "<keys>": "sum" || "avg" || "first" || "min" || "max",
+ *         },
+ *       },
+ *       TimeSeriesConfig: { // TimeSeriesConfig
+ *         TargetAttributeName: "STRING_VALUE", // required
+ *         TimestampAttributeName: "STRING_VALUE", // required
+ *         ItemIdentifierAttributeName: "STRING_VALUE", // required
+ *         GroupingAttributeNames: [ // GroupingAttributeNames
+ *           "STRING_VALUE",
+ *         ],
+ *       },
+ *     },
  *   },
  *   RoleArn: "STRING_VALUE", // required
  *   Tags: [ // TagList
@@ -103,7 +167,7 @@ export interface CreateAutoMLJobV2CommandOutput extends CreateAutoMLJobV2Respons
  *     },
  *   },
  *   AutoMLJobObjective: { // AutoMLJobObjective
- *     MetricName: "Accuracy" || "MSE" || "F1" || "F1macro" || "AUC" || "RMSE" || "MAE" || "R2" || "BalancedAccuracy" || "Precision" || "PrecisionMacro" || "Recall" || "RecallMacro", // required
+ *     MetricName: "Accuracy" || "MSE" || "F1" || "F1macro" || "AUC" || "RMSE" || "MAE" || "R2" || "BalancedAccuracy" || "Precision" || "PrecisionMacro" || "Recall" || "RecallMacro" || "MAPE" || "MASE" || "WAPE" || "AverageWeightedQuantileLoss", // required
  *   },
  *   ModelDeployConfig: { // ModelDeployConfig
  *     AutoGenerateEndpointName: true || false,

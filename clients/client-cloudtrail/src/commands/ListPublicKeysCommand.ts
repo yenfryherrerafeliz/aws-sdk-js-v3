@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudTrailClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudTrailClient";
 import { ListPublicKeysRequest, ListPublicKeysResponse } from "../models/models_0";
 import { de_ListPublicKeysCommand, se_ListPublicKeysCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,9 +40,9 @@ export interface ListPublicKeysCommandOutput extends ListPublicKeysResponse, __M
  *          specified time range. The public key is needed to validate digest files that were signed
  *          with its corresponding private key.</p>
  *          <note>
- *             <p>CloudTrail uses different private and public key pairs per region. Each digest
- *             file is signed with a private key unique to its region. When you validate a digest file
- *             from a specific region, you must look in the same region for its corresponding public
+ *             <p>CloudTrail uses different private and public key pairs per Region. Each digest
+ *             file is signed with a private key unique to its Region. When you validate a digest file
+ *             from a specific Region, you must look in the same Region for its corresponding public
  *             key.</p>
  *          </note>
  * @example

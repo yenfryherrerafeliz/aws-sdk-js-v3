@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { Inspector2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../Inspector2Client";
 import { UpdateOrganizationConfigurationRequest, UpdateOrganizationConfigurationResponse } from "../models/models_0";
@@ -20,6 +20,10 @@ import {
   se_UpdateOrganizationConfigurationCommand,
 } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -49,6 +53,7 @@ export interface UpdateOrganizationConfigurationCommandOutput
  *     ec2: true || false, // required
  *     ecr: true || false, // required
  *     lambda: true || false,
+ *     lambdaCode: true || false,
  *   },
  * };
  * const command = new UpdateOrganizationConfigurationCommand(input);
@@ -58,6 +63,7 @@ export interface UpdateOrganizationConfigurationCommandOutput
  * //     ec2: true || false, // required
  * //     ecr: true || false, // required
  * //     lambda: true || false,
+ * //     lambdaCode: true || false,
  * //   },
  * // };
  *

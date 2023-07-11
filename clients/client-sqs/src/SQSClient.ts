@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,9 +47,13 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AddPermissionCommandInput, AddPermissionCommandOutput } from "./commands/AddPermissionCommand";
+import {
+  CancelMessageMoveTaskCommandInput,
+  CancelMessageMoveTaskCommandOutput,
+} from "./commands/CancelMessageMoveTaskCommand";
 import {
   ChangeMessageVisibilityBatchCommandInput,
   ChangeMessageVisibilityBatchCommandOutput,
@@ -68,6 +72,10 @@ import {
   ListDeadLetterSourceQueuesCommandInput,
   ListDeadLetterSourceQueuesCommandOutput,
 } from "./commands/ListDeadLetterSourceQueuesCommand";
+import {
+  ListMessageMoveTasksCommandInput,
+  ListMessageMoveTasksCommandOutput,
+} from "./commands/ListMessageMoveTasksCommand";
 import { ListQueuesCommandInput, ListQueuesCommandOutput } from "./commands/ListQueuesCommand";
 import { ListQueueTagsCommandInput, ListQueueTagsCommandOutput } from "./commands/ListQueueTagsCommand";
 import { PurgeQueueCommandInput, PurgeQueueCommandOutput } from "./commands/PurgeQueueCommand";
@@ -76,6 +84,10 @@ import { RemovePermissionCommandInput, RemovePermissionCommandOutput } from "./c
 import { SendMessageBatchCommandInput, SendMessageBatchCommandOutput } from "./commands/SendMessageBatchCommand";
 import { SendMessageCommandInput, SendMessageCommandOutput } from "./commands/SendMessageCommand";
 import { SetQueueAttributesCommandInput, SetQueueAttributesCommandOutput } from "./commands/SetQueueAttributesCommand";
+import {
+  StartMessageMoveTaskCommandInput,
+  StartMessageMoveTaskCommandOutput,
+} from "./commands/StartMessageMoveTaskCommand";
 import { TagQueueCommandInput, TagQueueCommandOutput } from "./commands/TagQueueCommand";
 import { UntagQueueCommandInput, UntagQueueCommandOutput } from "./commands/UntagQueueCommand";
 import {
@@ -86,11 +98,14 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
 export type ServiceInputTypes =
   | AddPermissionCommandInput
+  | CancelMessageMoveTaskCommandInput
   | ChangeMessageVisibilityBatchCommandInput
   | ChangeMessageVisibilityCommandInput
   | CreateQueueCommandInput
@@ -100,6 +115,7 @@ export type ServiceInputTypes =
   | GetQueueAttributesCommandInput
   | GetQueueUrlCommandInput
   | ListDeadLetterSourceQueuesCommandInput
+  | ListMessageMoveTasksCommandInput
   | ListQueueTagsCommandInput
   | ListQueuesCommandInput
   | PurgeQueueCommandInput
@@ -108,6 +124,7 @@ export type ServiceInputTypes =
   | SendMessageBatchCommandInput
   | SendMessageCommandInput
   | SetQueueAttributesCommandInput
+  | StartMessageMoveTaskCommandInput
   | TagQueueCommandInput
   | UntagQueueCommandInput;
 
@@ -116,6 +133,7 @@ export type ServiceInputTypes =
  */
 export type ServiceOutputTypes =
   | AddPermissionCommandOutput
+  | CancelMessageMoveTaskCommandOutput
   | ChangeMessageVisibilityBatchCommandOutput
   | ChangeMessageVisibilityCommandOutput
   | CreateQueueCommandOutput
@@ -125,6 +143,7 @@ export type ServiceOutputTypes =
   | GetQueueAttributesCommandOutput
   | GetQueueUrlCommandOutput
   | ListDeadLetterSourceQueuesCommandOutput
+  | ListMessageMoveTasksCommandOutput
   | ListQueueTagsCommandOutput
   | ListQueuesCommandOutput
   | PurgeQueueCommandOutput
@@ -133,6 +152,7 @@ export type ServiceOutputTypes =
   | SendMessageBatchCommandOutput
   | SendMessageCommandOutput
   | SetQueueAttributesCommandOutput
+  | StartMessageMoveTaskCommandOutput
   | TagQueueCommandOutput
   | UntagQueueCommandOutput;
 
@@ -146,7 +166,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -201,7 +221,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -262,7 +282,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -270,7 +290,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type SQSClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type SQSClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -289,7 +309,7 @@ export interface SQSClientConfig extends SQSClientConfigType {}
 /**
  * @public
  */
-type SQSClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type SQSClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
@@ -308,12 +328,15 @@ export interface SQSClientResolvedConfig extends SQSClientResolvedConfigType {}
 /**
  * @public
  * <p>Welcome to the <i>Amazon SQS API Reference</i>.</p>
- *          <p>Amazon SQS is a reliable, highly-scalable hosted queue for storing messages as they travel between applications or microservices. Amazon SQS moves data between distributed application components and helps you decouple these components.</p>
- *          <p>For information on the permissions you need to use this API, see
- *             <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-authentication-and-access-control.html">Identity and
- *             access management</a> in the <i>Amazon SQS Developer Guide.</i>
+ *          <p>Amazon SQS is a reliable, highly-scalable hosted queue for storing messages as they travel
+ *             between applications or microservices. Amazon SQS moves data between distributed application
+ *             components and helps you decouple these components.</p>
+ *          <p>For information on the permissions you need to use this API, see <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-authentication-and-access-control.html">Identity and access management</a> in the <i>Amazon SQS Developer
+ *                 Guide.</i>
  *          </p>
- *          <p>You can use <a href="http://aws.amazon.com/tools/#sdk">Amazon Web Services SDKs</a> to access Amazon SQS using your favorite programming language. The SDKs perform tasks such as the following automatically:</p>
+ *          <p>You can use <a href="http://aws.amazon.com/tools/#sdk">Amazon Web Services SDKs</a> to access
+ *             Amazon SQS using your favorite programming language. The SDKs perform tasks such as the
+ *             following automatically:</p>
  *          <ul>
  *             <li>
  *                <p>Cryptographically sign your service requests</p>
@@ -369,7 +392,8 @@ export interface SQSClientResolvedConfig extends SQSClientResolvedConfigType {}
  *                <ul>
  *                   <li>
  *                      <p>
- *                         <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#sqs_region">Regions and Endpoints</a>
+ *                         <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#sqs_region">Regions and
+ *                                 Endpoints</a>
  *                      </p>
  *                   </li>
  *                </ul>

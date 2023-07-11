@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EMRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EMRClient";
 import { DescribeReleaseLabelInput, DescribeReleaseLabelOutput } from "../models/models_0";
 import { de_DescribeReleaseLabelCommand, se_DescribeReleaseLabelCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,9 +36,9 @@ export interface DescribeReleaseLabelCommandOutput extends DescribeReleaseLabelO
 
 /**
  * @public
- * <p>Provides EMR release label details, such as releases available the region where the API
- *          request is run, and the available applications for a specific EMR release label. Can also
- *          list EMR release versions that support a specified version of Spark.</p>
+ * <p>Provides Amazon EMR release label details, such as the releases available the
+ *          Region where the API request is run, and the available applications for a specific Amazon EMR release label. Can also list Amazon EMR releases that support a
+ *          specified version of Spark.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

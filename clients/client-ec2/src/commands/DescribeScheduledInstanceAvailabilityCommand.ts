@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
 import {
@@ -23,6 +23,10 @@ import {
   se_DescribeScheduledInstanceAvailabilityCommand,
 } from "../protocols/Aws_ec2";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -120,55 +124,6 @@ export interface DescribeScheduledInstanceAvailabilityCommandOutput
  *
  * @throws {@link EC2ServiceException}
  * <p>Base exception class for all service exceptions from EC2 service.</p>
- *
- * @example To describe an available schedule
- * ```javascript
- * // This example describes a schedule that occurs every week on Sunday, starting on the specified date. Note that the output contains a single schedule as an example.
- * const input = {
- *   "FirstSlotStartTimeRange": {
- *     "EarliestTime": "2016-01-31T00:00:00Z",
- *     "LatestTime": "2016-01-31T04:00:00Z"
- *   },
- *   "Recurrence": {
- *     "Frequency": "Weekly",
- *     "Interval": 1,
- *     "OccurrenceDays": [
- *       1
- *     ]
- *   }
- * };
- * const command = new DescribeScheduledInstanceAvailabilityCommand(input);
- * const response = await client.send(command);
- * /* response ==
- * {
- *   "ScheduledInstanceAvailabilitySet": [
- *     {
- *       "AvailabilityZone": "us-west-2b",
- *       "AvailableInstanceCount": 20,
- *       "FirstSlotStartTime": "2016-01-31T00:00:00Z",
- *       "HourlyPrice": "0.095",
- *       "InstanceType": "c4.large",
- *       "MaxTermDurationInDays": 366,
- *       "MinTermDurationInDays": 366,
- *       "NetworkPlatform": "EC2-VPC",
- *       "Platform": "Linux/UNIX",
- *       "PurchaseToken": "eyJ2IjoiMSIsInMiOjEsImMiOi...",
- *       "Recurrence": {
- *         "Frequency": "Weekly",
- *         "Interval": 1,
- *         "OccurrenceDaySet": [
- *           1
- *         ],
- *         "OccurrenceRelativeToEnd": false
- *       },
- *       "SlotDurationInHours": 23,
- *       "TotalScheduledInstanceHours": 1219
- *     }
- *   ]
- * }
- * *\/
- * // example id: ec2-describe-scheduled-instance-availability-1
- * ```
  *
  */
 export class DescribeScheduledInstanceAvailabilityCommand extends $Command<

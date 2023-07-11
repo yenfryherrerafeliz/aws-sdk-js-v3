@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   DatabaseMigrationServiceClientResolvedConfig,
@@ -25,6 +25,10 @@ import {
 } from "../models/models_0";
 import { de_DescribeEndpointsCommand, se_DescribeEndpointsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -147,6 +151,8 @@ export interface DescribeEndpointsCommandOutput extends DescribeEndpointsRespons
  * //         KmsKeyId: "STRING_VALUE",
  * //         SecretsManagerAccessRoleArn: "STRING_VALUE",
  * //         SecretsManagerSecretId: "STRING_VALUE",
+ * //         UseUpdateLookUp: true || false,
+ * //         ReplicateShardCollections: true || false,
  * //       },
  * //       KinesisSettings: { // KinesisSettings
  * //         StreamArn: "STRING_VALUE",
@@ -180,6 +186,7 @@ export interface DescribeEndpointsCommandOutput extends DescribeEndpointsRespons
  * //         SaslPassword: "STRING_VALUE",
  * //         NoHexPrefix: true || false,
  * //         SaslMechanism: "scram-sha-512" || "plain",
+ * //         SslEndpointIdentificationAlgorithm: "none" || "https",
  * //       },
  * //       ElasticsearchSettings: { // ElasticsearchSettings
  * //         ServiceAccessRoleArn: "STRING_VALUE", // required
@@ -251,6 +258,8 @@ export interface DescribeEndpointsCommandOutput extends DescribeEndpointsRespons
  * //         SecretsManagerSecretId: "STRING_VALUE",
  * //         TrimSpaceInChar: true || false,
  * //         MapBooleanAsBoolean: true || false,
+ * //         MapJsonbAsClob: true || false,
+ * //         MapLongVarcharAs: "wstring" || "clob" || "nclob",
  * //       },
  * //       MySQLSettings: { // MySQLSettings
  * //         AfterConnectScript: "STRING_VALUE",
@@ -313,6 +322,7 @@ export interface DescribeEndpointsCommandOutput extends DescribeEndpointsRespons
  * //         SecretsManagerOracleAsmSecretId: "STRING_VALUE",
  * //         TrimSpaceInChar: true || false,
  * //         ConvertTimestampWithZoneToUTC: true || false,
+ * //         OpenTransactionWindow: Number("int"),
  * //       },
  * //       SybaseSettings: { // SybaseSettings
  * //         DatabaseName: "STRING_VALUE",
@@ -366,6 +376,8 @@ export interface DescribeEndpointsCommandOutput extends DescribeEndpointsRespons
  * //         KmsKeyId: "STRING_VALUE",
  * //         SecretsManagerAccessRoleArn: "STRING_VALUE",
  * //         SecretsManagerSecretId: "STRING_VALUE",
+ * //         UseUpdateLookUp: true || false,
+ * //         ReplicateShardCollections: true || false,
  * //       },
  * //       RedisSettings: { // RedisSettings
  * //         ServerName: "STRING_VALUE", // required
@@ -391,6 +403,13 @@ export interface DescribeEndpointsCommandOutput extends DescribeEndpointsRespons
  * //         Username: "STRING_VALUE",
  * //         SecretsManagerAccessRoleArn: "STRING_VALUE",
  * //         SecretsManagerSecretId: "STRING_VALUE",
+ * //       },
+ * //       TimestreamSettings: { // TimestreamSettings
+ * //         DatabaseName: "STRING_VALUE", // required
+ * //         MemoryDuration: Number("int"), // required
+ * //         MagneticDuration: Number("int"), // required
+ * //         CdcInsertsAndUpdates: true || false,
+ * //         EnableMagneticStoreWrites: true || false,
  * //       },
  * //     },
  * //   ],

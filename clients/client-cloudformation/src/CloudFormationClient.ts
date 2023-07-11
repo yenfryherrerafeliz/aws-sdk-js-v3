@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,8 +47,12 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
+import {
+  ActivateOrganizationsAccessCommandInput,
+  ActivateOrganizationsAccessCommandOutput,
+} from "./commands/ActivateOrganizationsAccessCommand";
 import { ActivateTypeCommandInput, ActivateTypeCommandOutput } from "./commands/ActivateTypeCommand";
 import {
   BatchDescribeTypeConfigurationsCommandInput,
@@ -66,6 +70,10 @@ import {
   CreateStackInstancesCommandOutput,
 } from "./commands/CreateStackInstancesCommand";
 import { CreateStackSetCommandInput, CreateStackSetCommandOutput } from "./commands/CreateStackSetCommand";
+import {
+  DeactivateOrganizationsAccessCommandInput,
+  DeactivateOrganizationsAccessCommandOutput,
+} from "./commands/DeactivateOrganizationsAccessCommand";
 import { DeactivateTypeCommandInput, DeactivateTypeCommandOutput } from "./commands/DeactivateTypeCommand";
 import { DeleteChangeSetCommandInput, DeleteChangeSetCommandOutput } from "./commands/DeleteChangeSetCommand";
 import { DeleteStackCommandInput, DeleteStackCommandOutput } from "./commands/DeleteStackCommand";
@@ -84,6 +92,10 @@ import {
   DescribeChangeSetHooksCommandInput,
   DescribeChangeSetHooksCommandOutput,
 } from "./commands/DescribeChangeSetHooksCommand";
+import {
+  DescribeOrganizationsAccessCommandInput,
+  DescribeOrganizationsAccessCommandOutput,
+} from "./commands/DescribeOrganizationsAccessCommand";
 import { DescribePublisherCommandInput, DescribePublisherCommandOutput } from "./commands/DescribePublisherCommand";
 import {
   DescribeStackDriftDetectionStatusCommandInput,
@@ -204,10 +216,13 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
 export type ServiceInputTypes =
+  | ActivateOrganizationsAccessCommandInput
   | ActivateTypeCommandInput
   | BatchDescribeTypeConfigurationsCommandInput
   | CancelUpdateStackCommandInput
@@ -216,6 +231,7 @@ export type ServiceInputTypes =
   | CreateStackCommandInput
   | CreateStackInstancesCommandInput
   | CreateStackSetCommandInput
+  | DeactivateOrganizationsAccessCommandInput
   | DeactivateTypeCommandInput
   | DeleteChangeSetCommandInput
   | DeleteStackCommandInput
@@ -225,6 +241,7 @@ export type ServiceInputTypes =
   | DescribeAccountLimitsCommandInput
   | DescribeChangeSetCommandInput
   | DescribeChangeSetHooksCommandInput
+  | DescribeOrganizationsAccessCommandInput
   | DescribePublisherCommandInput
   | DescribeStackDriftDetectionStatusCommandInput
   | DescribeStackEventsCommandInput
@@ -279,6 +296,7 @@ export type ServiceInputTypes =
  * @public
  */
 export type ServiceOutputTypes =
+  | ActivateOrganizationsAccessCommandOutput
   | ActivateTypeCommandOutput
   | BatchDescribeTypeConfigurationsCommandOutput
   | CancelUpdateStackCommandOutput
@@ -287,6 +305,7 @@ export type ServiceOutputTypes =
   | CreateStackCommandOutput
   | CreateStackInstancesCommandOutput
   | CreateStackSetCommandOutput
+  | DeactivateOrganizationsAccessCommandOutput
   | DeactivateTypeCommandOutput
   | DeleteChangeSetCommandOutput
   | DeleteStackCommandOutput
@@ -296,6 +315,7 @@ export type ServiceOutputTypes =
   | DescribeAccountLimitsCommandOutput
   | DescribeChangeSetCommandOutput
   | DescribeChangeSetHooksCommandOutput
+  | DescribeOrganizationsAccessCommandOutput
   | DescribePublisherCommandOutput
   | DescribeStackDriftDetectionStatusCommandOutput
   | DescribeStackEventsCommandOutput
@@ -356,7 +376,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -411,7 +431,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -465,7 +485,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -473,7 +493,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type CloudFormationClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type CloudFormationClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -492,7 +512,7 @@ export interface CloudFormationClientConfig extends CloudFormationClientConfigTy
 /**
  * @public
  */
-type CloudFormationClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type CloudFormationClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
@@ -511,22 +531,15 @@ export interface CloudFormationClientResolvedConfig extends CloudFormationClient
 /**
  * @public
  * <fullname>CloudFormation</fullname>
- *          <p>CloudFormation allows you to create and manage Amazon Web Services infrastructure
- *          deployments predictably and repeatedly. You can use CloudFormation to leverage
- *             Amazon Web Services products, such as Amazon Elastic Compute Cloud, Amazon Elastic Block Store,
- *             Amazon Simple Notification Service, Elastic Load Balancing, and Auto Scaling to build highly
- *          reliable, highly scalable, cost-effective applications without creating or configuring the
- *          underlying Amazon Web Services infrastructure.</p>
- *          <p>With CloudFormation, you declare all your resources and dependencies in a template
- *          file. The template defines a collection of resources as a single unit called a stack.
- *             CloudFormation creates and deletes all member resources of the stack together and
- *          manages all dependencies between the resources for you.</p>
+ *          <p>CloudFormation allows you to create and manage Amazon Web Services infrastructure deployments predictably
+ *    and repeatedly. You can use CloudFormation to leverage Amazon Web Services products, such as Amazon Elastic Compute Cloud, Amazon Elastic Block Store, Amazon Simple Notification Service, Elastic Load Balancing, and Auto Scaling to build
+ *    highly reliable, highly scalable, cost-effective applications without creating or configuring the underlying Amazon Web Services infrastructure.</p>
+ *          <p>With CloudFormation, you declare all your resources and dependencies in a template file. The template
+ *    defines a collection of resources as a single unit called a stack. CloudFormation creates and deletes all member
+ *    resources of the stack together and manages all dependencies between the resources for you.</p>
  *          <p>For more information about CloudFormation, see the <a href="http://aws.amazon.com/cloudformation/">CloudFormation product page</a>.</p>
- *          <p>CloudFormation makes use of other Amazon Web Services products. If you need
- *          additional technical information about a specific Amazon Web Services product, you can find
- *          the product's technical documentation at <a href="https://docs.aws.amazon.com/">
- *                <code>docs.aws.amazon.com</code>
- *             </a>.</p>
+ *          <p>CloudFormation makes use of other Amazon Web Services products. If you need additional technical information
+ *    about a specific Amazon Web Services product, you can find the product's technical documentation at <a href="https://docs.aws.amazon.com/">docs.aws.amazon.com</a>.</p>
  */
 export class CloudFormationClient extends __Client<
   __HttpHandlerOptions,

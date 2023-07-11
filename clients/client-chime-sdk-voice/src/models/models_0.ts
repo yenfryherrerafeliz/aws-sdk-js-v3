@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType, SENSITIVE_STRING } from "@smithy/smithy-client";
 
 import { ChimeSDKVoiceServiceException as __BaseException } from "./ChimeSDKVoiceServiceException";
 
@@ -491,6 +491,20 @@ export const CallingNameStatus = {
  * @public
  */
 export type CallingNameStatus = (typeof CallingNameStatus)[keyof typeof CallingNameStatus];
+
+/**
+ * @public
+ * @enum
+ */
+export const CallLegType = {
+  CALLEE: "Callee",
+  CALLER: "Caller",
+} as const;
+
+/**
+ * @public
+ */
+export type CallLegType = (typeof CallLegType)[keyof typeof CallLegType];
 
 /**
  * @public
@@ -3683,6 +3697,11 @@ export interface StartSpeakerSearchTaskRequest {
    * <p>The unique identifier for the client request. Use a different token for different speaker search tasks.</p>
    */
   ClientRequestToken?: string;
+
+  /**
+   * <p>Specifies which call leg to stream for speaker search.</p>
+   */
+  CallLeg?: CallLegType | string;
 }
 
 /**

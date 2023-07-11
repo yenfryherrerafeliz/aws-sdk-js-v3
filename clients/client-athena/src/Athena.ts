@@ -1,6 +1,6 @@
 // smithy-typescript generated code
-import { createAggregatedClient } from "@aws-sdk/smithy-client";
-import { HttpHandlerOptions as __HttpHandlerOptions } from "@aws-sdk/types";
+import { createAggregatedClient } from "@smithy/smithy-client";
+import { HttpHandlerOptions as __HttpHandlerOptions } from "@smithy/types";
 
 import { AthenaClient, AthenaClientConfig } from "./AthenaClient";
 import {
@@ -58,6 +58,11 @@ import {
   CreateWorkGroupCommandInput,
   CreateWorkGroupCommandOutput,
 } from "./commands/CreateWorkGroupCommand";
+import {
+  DeleteCapacityReservationCommand,
+  DeleteCapacityReservationCommandInput,
+  DeleteCapacityReservationCommandOutput,
+} from "./commands/DeleteCapacityReservationCommand";
 import {
   DeleteDataCatalogCommand,
   DeleteDataCatalogCommandInput,
@@ -339,6 +344,7 @@ const commands = {
   CreatePreparedStatementCommand,
   CreatePresignedNotebookUrlCommand,
   CreateWorkGroupCommand,
+  DeleteCapacityReservationCommand,
   DeleteDataCatalogCommand,
   DeleteNamedQueryCommand,
   DeleteNotebookCommand,
@@ -577,6 +583,23 @@ export interface Athena {
     args: CreateWorkGroupCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: CreateWorkGroupCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link DeleteCapacityReservationCommand}
+   */
+  deleteCapacityReservation(
+    args: DeleteCapacityReservationCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<DeleteCapacityReservationCommandOutput>;
+  deleteCapacityReservation(
+    args: DeleteCapacityReservationCommandInput,
+    cb: (err: any, data?: DeleteCapacityReservationCommandOutput) => void
+  ): void;
+  deleteCapacityReservation(
+    args: DeleteCapacityReservationCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: DeleteCapacityReservationCommandOutput) => void
   ): void;
 
   /**

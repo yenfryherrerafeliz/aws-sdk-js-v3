@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudTrailClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudTrailClient";
 import { UpdateTrailRequest, UpdateTrailResponse } from "../models/models_0";
 import { de_UpdateTrailCommand, se_UpdateTrailCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -36,7 +40,7 @@ export interface UpdateTrailCommandOutput extends UpdateTrailResponse, __Metadat
  *          files. Changes to a trail do not require stopping the CloudTrail service. Use this
  *          action to designate an existing bucket for log delivery. If the existing bucket has
  *          previously been a target for CloudTrail log files, an IAM policy
- *          exists for the bucket. <code>UpdateTrail</code> must be called from the region in which the
+ *          exists for the bucket. <code>UpdateTrail</code> must be called from the Region in which the
  *          trail was created; otherwise, an <code>InvalidHomeRegionException</code> is thrown.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -94,7 +98,7 @@ export interface UpdateTrailCommandOutput extends UpdateTrailResponse, __Metadat
  *          </p>
  *          <p>This exception is also thrown when you call <code>AddTags</code> or <code>RemoveTags</code> on a trail, event data store, or channel with a resource ARN that is not valid.</p>
  *          <p>The following is the format of an event data store ARN:
- *          <code>arn:aws:cloudtrail:us-east-2:12345678910:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
+ *          <code>arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE</code>
  *          </p>
  *          <p>The following is the format of a channel ARN:
  *          <code>arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890</code>
@@ -106,7 +110,7 @@ export interface UpdateTrailCommandOutput extends UpdateTrailResponse, __Metadat
  *          to an Amazon SNS topic that is in a suspended Amazon Web Services account.</p>
  *
  * @throws {@link CloudWatchLogsDeliveryUnavailableException} (client fault)
- *  <p>Cannot set a CloudWatch Logs delivery for this region.</p>
+ *  <p>Cannot set a CloudWatch Logs delivery for this Region.</p>
  *
  * @throws {@link ConflictException} (client fault)
  *  <p>This exception is thrown when the specified resource is not ready for an operation. This
@@ -115,7 +119,7 @@ export interface UpdateTrailCommandOutput extends UpdateTrailResponse, __Metadat
  *          operation again.</p>
  *
  * @throws {@link InsufficientDependencyServiceAccessPermissionException} (client fault)
- *  <p>This exception is thrown when the IAM user or role that is used to create
+ *  <p>This exception is thrown when the IAM identity that is used to create
  *          the organization resource lacks one or more required permissions for creating an
  *          organization resource in a required service.</p>
  *
@@ -168,8 +172,8 @@ export interface UpdateTrailCommandOutput extends UpdateTrailResponse, __Metadat
  *          </ul>
  *
  * @throws {@link InvalidHomeRegionException} (client fault)
- *  <p>This exception is thrown when an operation is called on a trail from a region other than
- *          the region in which the trail was created.</p>
+ *  <p>This exception is thrown when an operation is called on a trail from a Region other than
+ *          the Region in which the trail was created.</p>
  *
  * @throws {@link InvalidKmsKeyIdException} (client fault)
  *  <p>This exception is thrown when the KMS key ARN is not valid.</p>
@@ -222,8 +226,8 @@ export interface UpdateTrailCommandOutput extends UpdateTrailResponse, __Metadat
  *
  * @throws {@link KmsKeyNotFoundException} (client fault)
  *  <p>This exception is thrown when the KMS key does not exist, when the S3
- *          bucket and the KMS key are not in the same region, or when the KMS key associated with the Amazon SNS topic either does not exist or is
- *          not in the same region.</p>
+ *          bucket and the KMS key are not in the same Region, or when the KMS key associated with the Amazon SNS topic either does not exist or is
+ *          not in the same Region.</p>
  *
  * @throws {@link NoManagementAccountSLRExistsException} (client fault)
  *  <p> This exception is thrown when the management account does not have a service-linked

@@ -1,7 +1,4 @@
 // smithy-typescript generated code
-import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@aws-sdk/config-resolver";
-import { getContentLengthPlugin } from "@aws-sdk/middleware-content-length";
-import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@aws-sdk/middleware-endpoint";
 import {
   getHostHeaderPlugin,
   HostHeaderInputConfig,
@@ -10,7 +7,6 @@ import {
 } from "@aws-sdk/middleware-host-header";
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
-import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@aws-sdk/middleware-retry";
 import {
   AwsAuthInputConfig,
   AwsAuthResolvedConfig,
@@ -23,18 +19,22 @@ import {
   UserAgentInputConfig,
   UserAgentResolvedConfig,
 } from "@aws-sdk/middleware-user-agent";
-import { HttpHandler as __HttpHandler } from "@aws-sdk/protocol-http";
+import { Credentials as __Credentials } from "@aws-sdk/types";
+import { RegionInputConfig, RegionResolvedConfig, resolveRegionConfig } from "@smithy/config-resolver";
+import { getContentLengthPlugin } from "@smithy/middleware-content-length";
+import { EndpointInputConfig, EndpointResolvedConfig, resolveEndpointConfig } from "@smithy/middleware-endpoint";
+import { getRetryPlugin, resolveRetryConfig, RetryInputConfig, RetryResolvedConfig } from "@smithy/middleware-retry";
+import { HttpHandler as __HttpHandler } from "@smithy/protocol-http";
 import {
   Client as __Client,
   DefaultsMode as __DefaultsMode,
   SmithyConfiguration as __SmithyConfiguration,
   SmithyResolvedConfiguration as __SmithyResolvedConfiguration,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
-  Credentials as __Credentials,
   Decoder as __Decoder,
   Encoder as __Encoder,
   EndpointV2 as __EndpointV2,
@@ -47,12 +47,42 @@ import {
   StreamCollector as __StreamCollector,
   UrlParser as __UrlParser,
   UserAgent as __UserAgent,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CreateEnvironmentCommandInput, CreateEnvironmentCommandOutput } from "./commands/CreateEnvironmentCommand";
+import { CreateKxChangesetCommandInput, CreateKxChangesetCommandOutput } from "./commands/CreateKxChangesetCommand";
+import { CreateKxClusterCommandInput, CreateKxClusterCommandOutput } from "./commands/CreateKxClusterCommand";
+import { CreateKxDatabaseCommandInput, CreateKxDatabaseCommandOutput } from "./commands/CreateKxDatabaseCommand";
+import {
+  CreateKxEnvironmentCommandInput,
+  CreateKxEnvironmentCommandOutput,
+} from "./commands/CreateKxEnvironmentCommand";
+import { CreateKxUserCommandInput, CreateKxUserCommandOutput } from "./commands/CreateKxUserCommand";
 import { DeleteEnvironmentCommandInput, DeleteEnvironmentCommandOutput } from "./commands/DeleteEnvironmentCommand";
+import { DeleteKxClusterCommandInput, DeleteKxClusterCommandOutput } from "./commands/DeleteKxClusterCommand";
+import { DeleteKxDatabaseCommandInput, DeleteKxDatabaseCommandOutput } from "./commands/DeleteKxDatabaseCommand";
+import {
+  DeleteKxEnvironmentCommandInput,
+  DeleteKxEnvironmentCommandOutput,
+} from "./commands/DeleteKxEnvironmentCommand";
+import { DeleteKxUserCommandInput, DeleteKxUserCommandOutput } from "./commands/DeleteKxUserCommand";
 import { GetEnvironmentCommandInput, GetEnvironmentCommandOutput } from "./commands/GetEnvironmentCommand";
+import { GetKxChangesetCommandInput, GetKxChangesetCommandOutput } from "./commands/GetKxChangesetCommand";
+import { GetKxClusterCommandInput, GetKxClusterCommandOutput } from "./commands/GetKxClusterCommand";
+import {
+  GetKxConnectionStringCommandInput,
+  GetKxConnectionStringCommandOutput,
+} from "./commands/GetKxConnectionStringCommand";
+import { GetKxDatabaseCommandInput, GetKxDatabaseCommandOutput } from "./commands/GetKxDatabaseCommand";
+import { GetKxEnvironmentCommandInput, GetKxEnvironmentCommandOutput } from "./commands/GetKxEnvironmentCommand";
+import { GetKxUserCommandInput, GetKxUserCommandOutput } from "./commands/GetKxUserCommand";
 import { ListEnvironmentsCommandInput, ListEnvironmentsCommandOutput } from "./commands/ListEnvironmentsCommand";
+import { ListKxChangesetsCommandInput, ListKxChangesetsCommandOutput } from "./commands/ListKxChangesetsCommand";
+import { ListKxClusterNodesCommandInput, ListKxClusterNodesCommandOutput } from "./commands/ListKxClusterNodesCommand";
+import { ListKxClustersCommandInput, ListKxClustersCommandOutput } from "./commands/ListKxClustersCommand";
+import { ListKxDatabasesCommandInput, ListKxDatabasesCommandOutput } from "./commands/ListKxDatabasesCommand";
+import { ListKxEnvironmentsCommandInput, ListKxEnvironmentsCommandOutput } from "./commands/ListKxEnvironmentsCommand";
+import { ListKxUsersCommandInput, ListKxUsersCommandOutput } from "./commands/ListKxUsersCommand";
 import {
   ListTagsForResourceCommandInput,
   ListTagsForResourceCommandOutput,
@@ -61,6 +91,20 @@ import { TagResourceCommandInput, TagResourceCommandOutput } from "./commands/Ta
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "./commands/UntagResourceCommand";
 import { UpdateEnvironmentCommandInput, UpdateEnvironmentCommandOutput } from "./commands/UpdateEnvironmentCommand";
 import {
+  UpdateKxClusterDatabasesCommandInput,
+  UpdateKxClusterDatabasesCommandOutput,
+} from "./commands/UpdateKxClusterDatabasesCommand";
+import { UpdateKxDatabaseCommandInput, UpdateKxDatabaseCommandOutput } from "./commands/UpdateKxDatabaseCommand";
+import {
+  UpdateKxEnvironmentCommandInput,
+  UpdateKxEnvironmentCommandOutput,
+} from "./commands/UpdateKxEnvironmentCommand";
+import {
+  UpdateKxEnvironmentNetworkCommandInput,
+  UpdateKxEnvironmentNetworkCommandOutput,
+} from "./commands/UpdateKxEnvironmentNetworkCommand";
+import { UpdateKxUserCommandInput, UpdateKxUserCommandOutput } from "./commands/UpdateKxUserCommand";
+import {
   ClientInputEndpointParameters,
   ClientResolvedEndpointParameters,
   EndpointParameters,
@@ -68,31 +112,85 @@ import {
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
 
+export { __Client };
+
 /**
  * @public
  */
 export type ServiceInputTypes =
   | CreateEnvironmentCommandInput
+  | CreateKxChangesetCommandInput
+  | CreateKxClusterCommandInput
+  | CreateKxDatabaseCommandInput
+  | CreateKxEnvironmentCommandInput
+  | CreateKxUserCommandInput
   | DeleteEnvironmentCommandInput
+  | DeleteKxClusterCommandInput
+  | DeleteKxDatabaseCommandInput
+  | DeleteKxEnvironmentCommandInput
+  | DeleteKxUserCommandInput
   | GetEnvironmentCommandInput
+  | GetKxChangesetCommandInput
+  | GetKxClusterCommandInput
+  | GetKxConnectionStringCommandInput
+  | GetKxDatabaseCommandInput
+  | GetKxEnvironmentCommandInput
+  | GetKxUserCommandInput
   | ListEnvironmentsCommandInput
+  | ListKxChangesetsCommandInput
+  | ListKxClusterNodesCommandInput
+  | ListKxClustersCommandInput
+  | ListKxDatabasesCommandInput
+  | ListKxEnvironmentsCommandInput
+  | ListKxUsersCommandInput
   | ListTagsForResourceCommandInput
   | TagResourceCommandInput
   | UntagResourceCommandInput
-  | UpdateEnvironmentCommandInput;
+  | UpdateEnvironmentCommandInput
+  | UpdateKxClusterDatabasesCommandInput
+  | UpdateKxDatabaseCommandInput
+  | UpdateKxEnvironmentCommandInput
+  | UpdateKxEnvironmentNetworkCommandInput
+  | UpdateKxUserCommandInput;
 
 /**
  * @public
  */
 export type ServiceOutputTypes =
   | CreateEnvironmentCommandOutput
+  | CreateKxChangesetCommandOutput
+  | CreateKxClusterCommandOutput
+  | CreateKxDatabaseCommandOutput
+  | CreateKxEnvironmentCommandOutput
+  | CreateKxUserCommandOutput
   | DeleteEnvironmentCommandOutput
+  | DeleteKxClusterCommandOutput
+  | DeleteKxDatabaseCommandOutput
+  | DeleteKxEnvironmentCommandOutput
+  | DeleteKxUserCommandOutput
   | GetEnvironmentCommandOutput
+  | GetKxChangesetCommandOutput
+  | GetKxClusterCommandOutput
+  | GetKxConnectionStringCommandOutput
+  | GetKxDatabaseCommandOutput
+  | GetKxEnvironmentCommandOutput
+  | GetKxUserCommandOutput
   | ListEnvironmentsCommandOutput
+  | ListKxChangesetsCommandOutput
+  | ListKxClusterNodesCommandOutput
+  | ListKxClustersCommandOutput
+  | ListKxDatabasesCommandOutput
+  | ListKxEnvironmentsCommandOutput
+  | ListKxUsersCommandOutput
   | ListTagsForResourceCommandOutput
   | TagResourceCommandOutput
   | UntagResourceCommandOutput
-  | UpdateEnvironmentCommandOutput;
+  | UpdateEnvironmentCommandOutput
+  | UpdateKxClusterDatabasesCommandOutput
+  | UpdateKxDatabaseCommandOutput
+  | UpdateKxEnvironmentCommandOutput
+  | UpdateKxEnvironmentNetworkCommandOutput
+  | UpdateKxUserCommandOutput;
 
 /**
  * @public
@@ -104,7 +202,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   requestHandler?: __HttpHandler;
 
   /**
-   * A constructor for a class implementing the {@link @aws-sdk/types#ChecksumConstructor} interface
+   * A constructor for a class implementing the {@link @smithy/types#ChecksumConstructor} interface
    * that computes the SHA-256 HMAC or checksum of a string or binary buffer.
    * @internal
    */
@@ -159,7 +257,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   runtime?: string;
 
   /**
-   * Disable dyanamically changing the endpoint of the client based on the hostPrefix
+   * Disable dynamically changing the endpoint of the client based on the hostPrefix
    * trait of an operation.
    */
   disableHostPrefix?: boolean;
@@ -213,7 +311,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
-   * The {@link @aws-sdk/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
+   * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
 }
@@ -221,7 +319,7 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 /**
  * @public
  */
-type FinspaceClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
+export type FinspaceClientConfigType = Partial<__SmithyConfiguration<__HttpHandlerOptions>> &
   ClientDefaults &
   RegionInputConfig &
   EndpointInputConfig<EndpointParameters> &
@@ -240,7 +338,7 @@ export interface FinspaceClientConfig extends FinspaceClientConfigType {}
 /**
  * @public
  */
-type FinspaceClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
+export type FinspaceClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &

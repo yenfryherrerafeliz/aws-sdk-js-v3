@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { FSxClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FSxClient";
 import {
@@ -21,6 +21,10 @@ import {
 } from "../models/models_0";
 import { de_UpdateStorageVirtualMachineCommand, se_UpdateStorageVirtualMachineCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -38,7 +42,7 @@ export interface UpdateStorageVirtualMachineCommandOutput
 
 /**
  * @public
- * <p>Updates an Amazon FSx for ONTAP storage virtual machine (SVM).</p>
+ * <p>Updates an FSx for ONTAP storage virtual machine (SVM).</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -53,7 +57,11 @@ export interface UpdateStorageVirtualMachineCommandOutput
  *       DnsIps: [ // DnsIps
  *         "STRING_VALUE",
  *       ],
+ *       DomainName: "STRING_VALUE",
+ *       OrganizationalUnitDistinguishedName: "STRING_VALUE",
+ *       FileSystemAdministratorsGroup: "STRING_VALUE",
  *     },
+ *     NetBiosName: "STRING_VALUE",
  *   },
  *   ClientRequestToken: "STRING_VALUE",
  *   StorageVirtualMachineId: "STRING_VALUE", // required

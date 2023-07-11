@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { IoTWirelessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTWirelessClient";
 import { GetResourceLogLevelRequest, GetResourceLogLevelResponse } from "../models/models_0";
 import { de_GetResourceLogLevelCommand, se_GetResourceLogLevelCommand } from "../protocols/Aws_restJson1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,8 +36,8 @@ export interface GetResourceLogLevelCommandOutput extends GetResourceLogLevelRes
 
 /**
  * @public
- * <p>Fetches the log-level override, if any, for a given resource-ID and resource-type. It can be used for
- *             a wireless device or a wireless gateway.</p>
+ * <p>Fetches the log-level override, if any, for a given resource-ID and resource-type. It
+ *             can be used for a wireless device or a wireless gateway.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

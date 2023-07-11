@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { IAMClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IAMClient";
 import { ListRolesRequest, ListRolesResponse } from "../models/models_0";
 import { de_ListRolesCommand, se_ListRolesCommand } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -37,7 +41,19 @@ export interface ListRolesCommandOutput extends ListRolesResponse, __MetadataBea
  *                 roles</a>.</p>
  *          <note>
  *             <p>IAM resource-listing operations return a subset of the available
- *    attributes for the resource. For example, this operation does not return tags, even though they are an attribute of the returned object. To view all of the information for a role, see <a>GetRole</a>.</p>
+ *    attributes for the resource. This operation does not return the following attributes, even though they are an attribute of the returned object:</p>
+ *             <ul>
+ *                <li>
+ *                   <p>PermissionsBoundary</p>
+ *                </li>
+ *                <li>
+ *                   <p>RoleLastUsed</p>
+ *                </li>
+ *                <li>
+ *                   <p>Tags</p>
+ *                </li>
+ *             </ul>
+ *             <p>To view all of the information for a role, see <a>GetRole</a>.</p>
  *          </note>
  *          <p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code>
  *             parameters.</p>

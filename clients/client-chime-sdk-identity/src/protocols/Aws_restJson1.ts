@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectNonNull as __expectNonNull,
   expectNumber as __expectNumber,
@@ -13,12 +14,12 @@ import {
   resolvedPath as __resolvedPath,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import {
@@ -138,6 +139,7 @@ import {
   EndpointAttributes,
   ExpirationSettings,
   ForbiddenException,
+  InvokedBy,
   LexConfiguration,
   NotFoundException,
   ResourceLimitExceededException,
@@ -1086,6 +1088,7 @@ export const se_UpdateAppInstanceBotCommand = async (
   let body: any;
   body = JSON.stringify(
     take(input, {
+      Configuration: (_) => _json(_),
       Metadata: [],
       Name: [],
     })
@@ -3299,6 +3302,8 @@ const de_UnauthorizedClientExceptionRes = async (
 
 // se_ExpirationSettings omitted.
 
+// se_InvokedBy omitted.
+
 // se_LexConfiguration omitted.
 
 // se_Tag omitted.
@@ -3411,6 +3416,8 @@ const de_AppInstanceUserEndpoint = (output: any, context: __SerdeContext): AppIn
 
 // de_Identity omitted.
 
+// de_InvokedBy omitted.
+
 // de_LexConfiguration omitted.
 
 // de_Tag omitted.
@@ -3424,14 +3431,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

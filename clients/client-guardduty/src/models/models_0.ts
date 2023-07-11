@@ -1,5 +1,5 @@
 // smithy-typescript generated code
-import { ExceptionOptionType as __ExceptionOptionType } from "@aws-sdk/smithy-client";
+import { ExceptionOptionType as __ExceptionOptionType } from "@smithy/smithy-client";
 
 import { GuardDutyServiceException as __BaseException } from "./GuardDutyServiceException";
 
@@ -135,6 +135,37 @@ export interface AccessControlList {
    *       Access Control List (ACL).</p>
    */
   AllowsPublicWriteAccess?: boolean;
+}
+
+/**
+ * @public
+ * <p>An access denied exception object.</p>
+ */
+export class AccessDeniedException extends __BaseException {
+  readonly name: "AccessDeniedException" = "AccessDeniedException";
+  readonly $fault: "client" = "client";
+  /**
+   * <p>The error message.</p>
+   */
+  Message?: string;
+
+  /**
+   * <p>The error type.</p>
+   */
+  Type?: string;
+  /**
+   * @internal
+   */
+  constructor(opts: __ExceptionOptionType<AccessDeniedException, __BaseException>) {
+    super({
+      name: "AccessDeniedException",
+      $fault: "client",
+      ...opts,
+    });
+    Object.setPrototypeOf(this, AccessDeniedException.prototype);
+    this.Message = opts.Message;
+    this.Type = opts.Type;
+  }
 }
 
 /**
@@ -541,7 +572,7 @@ export interface AwsApiCallAction {
  */
 export interface DnsRequestAction {
   /**
-   * <p>The domain information for the API request.</p>
+   * <p>The domain information for the DNS query.</p>
    */
   Domain?: string;
 
@@ -4114,6 +4145,12 @@ export interface KubernetesUserDetails {
    * <p>The groups that include the user who called the Kubernetes API.</p>
    */
   Groups?: string[];
+
+  /**
+   * <p>Entity that assumes the IAM role
+   *       when Kubernetes RBAC permissions are assigned to that role.</p>
+   */
+  SessionName?: string[];
 }
 
 /**
@@ -6581,15 +6618,4 @@ export interface StartMonitoringMembersRequest {
    * <p>A list of account IDs of the GuardDuty member accounts to start monitoring.</p>
    */
   AccountIds: string[] | undefined;
-}
-
-/**
- * @public
- */
-export interface StartMonitoringMembersResponse {
-  /**
-   * <p>A list of objects that contain the unprocessed account and a result string that explains
-   *       why it was unprocessed.</p>
-   */
-  UnprocessedAccounts: UnprocessedAccount[] | undefined;
 }

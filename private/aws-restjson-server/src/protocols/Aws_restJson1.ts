@@ -1,7 +1,17 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import {
+  acceptMatches as __acceptMatches,
+  NotAcceptableException as __NotAcceptableException,
+  SerializationException as __SerializationException,
+  ServerSerdeContext,
+  ServiceException as __BaseException,
+  SmithyFrameworkException as __SmithyFrameworkException,
+  UnsupportedMediaTypeException as __UnsupportedMediaTypeException,
+} from "@aws-smithy/server-common";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   dateToUtcString as __dateToUtcString,
   expectBoolean as __expectBoolean,
   expectByte as __expectByte,
@@ -30,23 +40,14 @@ import {
   strictParseLong as __strictParseLong,
   strictParseShort as __strictParseShort,
   take,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   DocumentType as __DocumentType,
   Endpoint as __Endpoint,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
-import { calculateBodyLength } from "@aws-sdk/util-body-length-node";
-import {
-  acceptMatches as __acceptMatches,
-  NotAcceptableException as __NotAcceptableException,
-  SerializationException as __SerializationException,
-  ServerSerdeContext,
-  ServiceException as __BaseException,
-  SmithyFrameworkException as __SmithyFrameworkException,
-  UnsupportedMediaTypeException as __UnsupportedMediaTypeException,
-} from "@aws-smithy/server-common";
+} from "@smithy/types";
+import { calculateBodyLength } from "@smithy/util-body-length-node";
 
 import {
   ComplexError,
@@ -275,6 +276,10 @@ import {
   PostUnionWithJsonNameServerOutput,
 } from "../server/operations/PostUnionWithJsonName";
 import {
+  PutWithContentEncodingServerInput,
+  PutWithContentEncodingServerOutput,
+} from "../server/operations/PutWithContentEncoding";
+import {
   QueryIdempotencyTokenAutoFillServerInput,
   QueryIdempotencyTokenAutoFillServerOutput,
 } from "../server/operations/QueryIdempotencyTokenAutoFill";
@@ -350,13 +355,13 @@ export const deserializeAllQueryStringTypesRequest = async (
       const queryValue = Array.isArray(query["StringList"])
         ? (query["StringList"] as string[])
         : [query["StringList"] as string];
-      contents.queryStringList = queryValue.map((_entry) => _entry.trim() as any);
+      contents.queryStringList = queryValue.map((_entry) => _entry as any);
     }
     if (query["StringSet"] !== undefined) {
       const queryValue = Array.isArray(query["StringSet"])
         ? (query["StringSet"] as string[])
         : [query["StringSet"] as string];
-      contents.queryStringSet = queryValue.map((_entry) => _entry.trim() as any);
+      contents.queryStringSet = queryValue.map((_entry) => _entry as any);
     }
     if (query["Byte"] !== undefined) {
       let queryValue: string;
@@ -401,13 +406,13 @@ export const deserializeAllQueryStringTypesRequest = async (
       const queryValue = Array.isArray(query["IntegerList"])
         ? (query["IntegerList"] as string[])
         : [query["IntegerList"] as string];
-      contents.queryIntegerList = queryValue.map((_entry) => __strictParseInt32(_entry.trim()) as any);
+      contents.queryIntegerList = queryValue.map((_entry) => __strictParseInt32(_entry) as any);
     }
     if (query["IntegerSet"] !== undefined) {
       const queryValue = Array.isArray(query["IntegerSet"])
         ? (query["IntegerSet"] as string[])
         : [query["IntegerSet"] as string];
-      contents.queryIntegerSet = queryValue.map((_entry) => __strictParseInt32(_entry.trim()) as any);
+      contents.queryIntegerSet = queryValue.map((_entry) => __strictParseInt32(_entry) as any);
     }
     if (query["Long"] !== undefined) {
       let queryValue: string;
@@ -452,7 +457,7 @@ export const deserializeAllQueryStringTypesRequest = async (
       const queryValue = Array.isArray(query["DoubleList"])
         ? (query["DoubleList"] as string[])
         : [query["DoubleList"] as string];
-      contents.queryDoubleList = queryValue.map((_entry) => __strictParseDouble(_entry.trim()) as any);
+      contents.queryDoubleList = queryValue.map((_entry) => __strictParseDouble(_entry) as any);
     }
     if (query["Boolean"] !== undefined) {
       let queryValue: string;
@@ -471,7 +476,7 @@ export const deserializeAllQueryStringTypesRequest = async (
       const queryValue = Array.isArray(query["BooleanList"])
         ? (query["BooleanList"] as string[])
         : [query["BooleanList"] as string];
-      contents.queryBooleanList = queryValue.map((_entry) => __parseBoolean(_entry.trim()) as any);
+      contents.queryBooleanList = queryValue.map((_entry) => __parseBoolean(_entry) as any);
     }
     if (query["Timestamp"] !== undefined) {
       let queryValue: string;
@@ -490,9 +495,7 @@ export const deserializeAllQueryStringTypesRequest = async (
       const queryValue = Array.isArray(query["TimestampList"])
         ? (query["TimestampList"] as string[])
         : [query["TimestampList"] as string];
-      contents.queryTimestampList = queryValue.map(
-        (_entry) => __expectNonNull(__parseRfc3339DateTime(_entry.trim())) as any
-      );
+      contents.queryTimestampList = queryValue.map((_entry) => __expectNonNull(__parseRfc3339DateTime(_entry)) as any);
     }
     if (query["Enum"] !== undefined) {
       let queryValue: string;
@@ -511,7 +514,7 @@ export const deserializeAllQueryStringTypesRequest = async (
       const queryValue = Array.isArray(query["EnumList"])
         ? (query["EnumList"] as string[])
         : [query["EnumList"] as string];
-      contents.queryEnumList = queryValue.map((_entry) => _entry.trim() as any);
+      contents.queryEnumList = queryValue.map((_entry) => _entry as any);
     }
     if (query["IntegerEnum"] !== undefined) {
       let queryValue: string;
@@ -530,13 +533,13 @@ export const deserializeAllQueryStringTypesRequest = async (
       const queryValue = Array.isArray(query["IntegerEnumList"])
         ? (query["IntegerEnumList"] as string[])
         : [query["IntegerEnumList"] as string];
-      contents.queryIntegerEnumList = queryValue.map((_entry) => __strictParseInt32(_entry.trim()) as any);
+      contents.queryIntegerEnumList = queryValue.map((_entry) => __strictParseInt32(_entry) as any);
     }
     const parsedQuery: Record<string, string[]> = {};
     for (const [key, value] of Object.entries(query)) {
       let queryValue: string;
       const valueArray = Array.isArray(value) ? (value as string[]) : [value as string];
-      parsedQuery[key] = valueArray.map((_entry) => _entry.trim() as any);
+      parsedQuery[key] = valueArray.map((_entry) => _entry as any);
     }
     contents.queryParamsMapOfStringList = parsedQuery;
   }
@@ -2988,45 +2991,43 @@ export const deserializeOmitsSerializingEmptyListsRequest = async (
       const queryValue = Array.isArray(query["StringList"])
         ? (query["StringList"] as string[])
         : [query["StringList"] as string];
-      contents.queryStringList = queryValue.map((_entry) => _entry.trim() as any);
+      contents.queryStringList = queryValue.map((_entry) => _entry as any);
     }
     if (query["IntegerList"] !== undefined) {
       const queryValue = Array.isArray(query["IntegerList"])
         ? (query["IntegerList"] as string[])
         : [query["IntegerList"] as string];
-      contents.queryIntegerList = queryValue.map((_entry) => __strictParseInt32(_entry.trim()) as any);
+      contents.queryIntegerList = queryValue.map((_entry) => __strictParseInt32(_entry) as any);
     }
     if (query["DoubleList"] !== undefined) {
       const queryValue = Array.isArray(query["DoubleList"])
         ? (query["DoubleList"] as string[])
         : [query["DoubleList"] as string];
-      contents.queryDoubleList = queryValue.map((_entry) => __strictParseDouble(_entry.trim()) as any);
+      contents.queryDoubleList = queryValue.map((_entry) => __strictParseDouble(_entry) as any);
     }
     if (query["BooleanList"] !== undefined) {
       const queryValue = Array.isArray(query["BooleanList"])
         ? (query["BooleanList"] as string[])
         : [query["BooleanList"] as string];
-      contents.queryBooleanList = queryValue.map((_entry) => __parseBoolean(_entry.trim()) as any);
+      contents.queryBooleanList = queryValue.map((_entry) => __parseBoolean(_entry) as any);
     }
     if (query["TimestampList"] !== undefined) {
       const queryValue = Array.isArray(query["TimestampList"])
         ? (query["TimestampList"] as string[])
         : [query["TimestampList"] as string];
-      contents.queryTimestampList = queryValue.map(
-        (_entry) => __expectNonNull(__parseRfc3339DateTime(_entry.trim())) as any
-      );
+      contents.queryTimestampList = queryValue.map((_entry) => __expectNonNull(__parseRfc3339DateTime(_entry)) as any);
     }
     if (query["EnumList"] !== undefined) {
       const queryValue = Array.isArray(query["EnumList"])
         ? (query["EnumList"] as string[])
         : [query["EnumList"] as string];
-      contents.queryEnumList = queryValue.map((_entry) => _entry.trim() as any);
+      contents.queryEnumList = queryValue.map((_entry) => _entry as any);
     }
     if (query["IntegerEnumList"] !== undefined) {
       const queryValue = Array.isArray(query["IntegerEnumList"])
         ? (query["IntegerEnumList"] as string[])
         : [query["IntegerEnumList"] as string];
-      contents.queryIntegerEnumList = queryValue.map((_entry) => __strictParseInt32(_entry.trim()) as any);
+      contents.queryIntegerEnumList = queryValue.map((_entry) => __strictParseInt32(_entry) as any);
     }
   }
   await collectBody(output.body, context);
@@ -3086,6 +3087,37 @@ export const deserializePostUnionWithJsonNameRequest = async (
   const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
   const doc = take(data, {
     value: (_) => de_UnionWithJsonName(__expectUnion(_), context),
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+export const deserializePutWithContentEncodingRequest = async (
+  output: __HttpRequest,
+  context: __SerdeContext
+): Promise<PutWithContentEncodingServerInput> => {
+  const contentTypeHeaderKey: string | undefined = Object.keys(output.headers).find(
+    (key) => key.toLowerCase() === "content-type"
+  );
+  if (contentTypeHeaderKey != null) {
+    const contentType = output.headers[contentTypeHeaderKey];
+    if (contentType !== undefined && contentType !== "application/json") {
+      throw new __UnsupportedMediaTypeException();
+    }
+  }
+  const acceptHeaderKey: string | undefined = Object.keys(output.headers).find((key) => key.toLowerCase() === "accept");
+  if (acceptHeaderKey != null) {
+    const accept = output.headers[acceptHeaderKey];
+    if (!__acceptMatches(accept, "application/json")) {
+      throw new __NotAcceptableException();
+    }
+  }
+  const contents: any = map({
+    encoding: [, output.headers["content-encoding"]],
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    data: __expectString,
   });
   Object.assign(contents, doc);
   return contents;
@@ -3172,7 +3204,7 @@ export const deserializeQueryParamsAsStringListMapRequest = async (
     for (const [key, value] of Object.entries(query)) {
       let queryValue: string;
       const valueArray = Array.isArray(value) ? (value as string[]) : [value as string];
-      parsedQuery[key] = valueArray.map((_entry) => _entry.trim() as any);
+      parsedQuery[key] = valueArray.map((_entry) => _entry as any);
     }
     contents.foo = parsedQuery;
   }
@@ -6419,6 +6451,40 @@ export const serializePostUnionWithJsonNameResponse = async (
   });
 };
 
+export const serializePutWithContentEncodingResponse = async (
+  input: PutWithContentEncodingServerOutput,
+  ctx: ServerSerdeContext
+): Promise<__HttpResponse> => {
+  const context: __SerdeContext = {
+    ...ctx,
+    endpoint: () =>
+      Promise.resolve({
+        protocol: "",
+        hostname: "",
+        path: "",
+      }),
+  };
+  const statusCode = 200;
+  let headers: any = map({}, isSerializableHeaderValue, {});
+  let body: any;
+  if (
+    body &&
+    Object.keys(headers)
+      .map((str) => str.toLowerCase())
+      .indexOf("content-length") === -1
+  ) {
+    const length = calculateBodyLength(body);
+    if (length !== undefined) {
+      headers = { ...headers, "content-length": String(length) };
+    }
+  }
+  return new __HttpResponse({
+    headers,
+    body,
+    statusCode,
+  });
+};
+
 export const serializeQueryIdempotencyTokenAutoFillResponse = async (
   input: QueryIdempotencyTokenAutoFillServerOutput,
   ctx: ServerSerdeContext
@@ -8150,14 +8216,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

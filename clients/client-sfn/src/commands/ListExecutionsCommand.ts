@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { ListExecutionsInput, ListExecutionsOutput } from "../models/models_0";
 import { de_ListExecutionsCommand, se_ListExecutionsCommand } from "../protocols/Aws_json1_0";
 import { ServiceInputTypes, ServiceOutputTypes, SFNClientResolvedConfig } from "../SFNClient";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -33,6 +37,7 @@ export interface ListExecutionsCommandOutput extends ListExecutionsOutput, __Met
 /**
  * @public
  * <p>Lists all executions of a state machine or a Map Run. You can list all executions related to a state machine by specifying a state machine Amazon Resource Name (ARN), or those related to a Map Run by specifying a Map Run ARN.</p>
+ *          <p>You can also provide a state machine <a href="https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-alias.html">alias</a> ARN or <a href="https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-version.html">version</a> ARN to list the executions associated with a specific alias or version.</p>
  *          <p>Results are
  *       sorted by time, with the most recent execution first.</p>
  *          <p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page.
@@ -67,6 +72,8 @@ export interface ListExecutionsCommandOutput extends ListExecutionsOutput, __Met
  * //       stopDate: new Date("TIMESTAMP"),
  * //       mapRunArn: "STRING_VALUE",
  * //       itemCount: Number("int"),
+ * //       stateMachineVersionArn: "STRING_VALUE",
+ * //       stateMachineAliasArn: "STRING_VALUE",
  * //     },
  * //   ],
  * //   nextToken: "STRING_VALUE",
@@ -87,8 +94,7 @@ export interface ListExecutionsCommandOutput extends ListExecutionsOutput, __Met
  *  <p>The provided token is not valid.</p>
  *
  * @throws {@link ResourceNotFound} (client fault)
- *  <p>Could not find the referenced resource. Only state machine and activity ARNs are
- *       supported.</p>
+ *  <p>Could not find the referenced resource.</p>
  *
  * @throws {@link StateMachineDoesNotExist} (client fault)
  *  <p>The specified state machine does not exist.</p>

@@ -2,16 +2,13 @@
 
 # @aws-sdk/client-chime-sdk-messaging
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-chime-sdk-messaging/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-chime-sdk-messaging)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-chime-sdk-messaging.svg)](https://www.npmjs.com/package/@aws-sdk/client-chime-sdk-messaging)
-
 ## Description
 
 AWS SDK for JavaScript ChimeSDKMessaging Client for Node.js, Browser and React Native.
 
-<p>The Amazon Chime SDK Messaging APIs in this section allow software developers to send
+<p>The Amazon Chime SDK messaging APIs in this section allow software developers to send
 and receive messages in custom messaging applications. These APIs depend on the frameworks
-provided by the Amazon Chime SDK Identity APIs. For more information about the messaging
+provided by the Amazon Chime SDK identity APIs. For more information about the messaging
 APIs, see <a href="https://docs.aws.amazon.com/chime/latest/APIReference/API_Operations_Amazon_Chime_SDK_Messaging.html">Amazon Chime SDK messaging</a>.</p>
 
 ## Installing

@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { EMRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EMRClient";
 import { ListNotebookExecutionsInput, ListNotebookExecutionsOutput } from "../models/models_0";
 import { de_ListNotebookExecutionsCommand, se_ListNotebookExecutionsCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -35,7 +39,7 @@ export interface ListNotebookExecutionsCommandOutput extends ListNotebookExecuti
  * <p>Provides summaries of all notebook executions. You can filter the list based on multiple
  *          criteria such as status, time range, and editor id. Returns a maximum of 50 notebook
  *          executions and a marker to track the paging of a longer notebook execution list across
- *          multiple <code>ListNotebookExecution</code> calls.</p>
+ *          multiple <code>ListNotebookExecutions</code> calls.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -48,6 +52,7 @@ export interface ListNotebookExecutionsCommandOutput extends ListNotebookExecuti
  *   From: new Date("TIMESTAMP"),
  *   To: new Date("TIMESTAMP"),
  *   Marker: "STRING_VALUE",
+ *   ExecutionEngineId: "STRING_VALUE",
  * };
  * const command = new ListNotebookExecutionsCommand(input);
  * const response = await client.send(command);
@@ -60,6 +65,11 @@ export interface ListNotebookExecutionsCommandOutput extends ListNotebookExecuti
  * //       Status: "START_PENDING" || "STARTING" || "RUNNING" || "FINISHING" || "FINISHED" || "FAILING" || "FAILED" || "STOP_PENDING" || "STOPPING" || "STOPPED",
  * //       StartTime: new Date("TIMESTAMP"),
  * //       EndTime: new Date("TIMESTAMP"),
+ * //       NotebookS3Location: { // NotebookS3LocationForOutput
+ * //         Bucket: "STRING_VALUE",
+ * //         Key: "STRING_VALUE",
+ * //       },
+ * //       ExecutionEngineId: "STRING_VALUE",
  * //     },
  * //   ],
  * //   Marker: "STRING_VALUE",

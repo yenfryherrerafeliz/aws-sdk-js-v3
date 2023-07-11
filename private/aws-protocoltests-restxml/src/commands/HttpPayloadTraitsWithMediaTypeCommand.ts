@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { BlobTypes } from "@aws-sdk/types";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -10,7 +11,8 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
+import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
 import { HttpPayloadTraitsWithMediaTypeInputOutput } from "../models/models_0";
 import {
@@ -21,17 +23,38 @@ import { RestXmlProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTy
 
 /**
  * @public
+ */
+export { __MetadataBearer, $Command };
+/**
+ * @public
+ */
+export type HttpPayloadTraitsWithMediaTypeCommandInputType = Omit<HttpPayloadTraitsWithMediaTypeInputOutput, "blob"> & {
+  blob?: BlobTypes;
+};
+
+/**
+ * @public
  *
  * The input for {@link HttpPayloadTraitsWithMediaTypeCommand}.
  */
-export interface HttpPayloadTraitsWithMediaTypeCommandInput extends HttpPayloadTraitsWithMediaTypeInputOutput {}
+export interface HttpPayloadTraitsWithMediaTypeCommandInput extends HttpPayloadTraitsWithMediaTypeCommandInputType {}
+/**
+ * @public
+ */
+export type HttpPayloadTraitsWithMediaTypeCommandOutputType = Omit<
+  HttpPayloadTraitsWithMediaTypeInputOutput,
+  "blob"
+> & {
+  blob?: Uint8ArrayBlobAdapter;
+};
+
 /**
  * @public
  *
  * The output of {@link HttpPayloadTraitsWithMediaTypeCommand}.
  */
 export interface HttpPayloadTraitsWithMediaTypeCommandOutput
-  extends HttpPayloadTraitsWithMediaTypeInputOutput,
+  extends HttpPayloadTraitsWithMediaTypeCommandOutputType,
     __MetadataBearer {}
 
 /**
@@ -50,6 +73,11 @@ export interface HttpPayloadTraitsWithMediaTypeCommandOutput
  * };
  * const command = new HttpPayloadTraitsWithMediaTypeCommand(input);
  * const response = await client.send(command);
+ * // { // HttpPayloadTraitsWithMediaTypeInputOutput
+ * //   foo: "STRING_VALUE",
+ * //   blob: "BLOB_VALUE",
+ * // };
+ *
  * ```
  *
  * @param HttpPayloadTraitsWithMediaTypeCommandInput - {@link HttpPayloadTraitsWithMediaTypeCommandInput}
@@ -58,6 +86,8 @@ export interface HttpPayloadTraitsWithMediaTypeCommandOutput
  * @see {@link HttpPayloadTraitsWithMediaTypeCommandOutput} for command's `response` shape.
  * @see {@link RestXmlProtocolClientResolvedConfig | config} for RestXmlProtocolClient's `config` shape.
  *
+ * @throws {@link RestXmlProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestXmlProtocol service.</p>
  *
  */
 export class HttpPayloadTraitsWithMediaTypeCommand extends $Command<

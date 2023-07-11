@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,16 +11,21 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { FSxClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FSxClient";
 import {
   CreateFileSystemRequest,
   CreateFileSystemRequestFilterSensitiveLog,
   CreateFileSystemResponse,
+  CreateFileSystemResponseFilterSensitiveLog,
 } from "../models/models_0";
 import { de_CreateFileSystemCommand, se_CreateFileSystemCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -531,6 +536,7 @@ export interface CreateFileSystemCommandOutput extends CreateFileSystemResponse,
  * //             ],
  * //             ThroughputCapacity: Number("int"),
  * //             WeeklyMaintenanceStartTime: "STRING_VALUE",
+ * //             FsxAdminPassword: "STRING_VALUE",
  * //           },
  * //           FileSystemTypeVersion: "STRING_VALUE",
  * //           OpenZFSConfiguration: { // OpenZFSFileSystemConfiguration
@@ -662,6 +668,7 @@ export interface CreateFileSystemCommandOutput extends CreateFileSystemResponse,
  * //       ],
  * //       ThroughputCapacity: Number("int"),
  * //       WeeklyMaintenanceStartTime: "STRING_VALUE",
+ * //       FsxAdminPassword: "STRING_VALUE",
  * //     },
  * //     FileSystemTypeVersion: "STRING_VALUE",
  * //     OpenZFSConfiguration: {
@@ -850,7 +857,7 @@ export class CreateFileSystemCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: CreateFileSystemRequestFilterSensitiveLog,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: CreateFileSystemResponseFilterSensitiveLog,
     };
     const { requestHandler } = configuration;
     return stack.resolve(

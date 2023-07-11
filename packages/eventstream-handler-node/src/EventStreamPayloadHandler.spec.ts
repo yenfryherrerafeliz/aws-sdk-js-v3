@@ -1,16 +1,17 @@
-import { EventStreamCodec } from "@aws-sdk/eventstream-codec";
-import { Decoder, Encoder, EventSigner, FinalizeHandler, FinalizeHandlerArguments, HttpRequest } from "@aws-sdk/types";
+import { EventStreamCodec } from "@smithy/eventstream-codec";
+import { Decoder, Encoder, FinalizeHandler, FinalizeHandlerArguments, HttpRequest, MessageSigner } from "@smithy/types";
 import { PassThrough, Readable } from "stream";
 
 import { EventSigningStream } from "./EventSigningStream";
 import { EventStreamPayloadHandler } from "./EventStreamPayloadHandler";
 
 jest.mock("./EventSigningStream");
-jest.mock("@aws-sdk/eventstream-codec");
+jest.mock("@smithy/eventstream-codec");
 
 describe(EventStreamPayloadHandler.name, () => {
-  const mockSigner: EventSigner = {
+  const mockMessageSigner: MessageSigner = {
     sign: jest.fn(),
+    signMessage: jest.fn(),
   };
   const mockUtf8Decoder: Decoder = jest.fn();
   const mockUtf8encoder: Encoder = jest.fn();
@@ -27,7 +28,7 @@ describe(EventStreamPayloadHandler.name, () => {
 
   it("should throw if request payload is not a stream", () => {
     const handler = new EventStreamPayloadHandler({
-      eventSigner: () => Promise.resolve(mockSigner),
+      messageSigner: () => Promise.resolve(mockMessageSigner),
       utf8Decoder: mockUtf8Decoder,
       utf8Encoder: mockUtf8encoder,
     });
@@ -44,7 +45,7 @@ describe(EventStreamPayloadHandler.name, () => {
     (mockNextHandler as any).mockImplementationOnce(() => Promise.reject(mockError));
 
     const handler = new EventStreamPayloadHandler({
-      eventSigner: () => Promise.resolve(mockSigner),
+      messageSigner: () => Promise.resolve(mockMessageSigner),
       utf8Decoder: mockUtf8Decoder,
       utf8Encoder: mockUtf8encoder,
     });
@@ -74,7 +75,7 @@ describe(EventStreamPayloadHandler.name, () => {
     } as any;
 
     const handler = new EventStreamPayloadHandler({
-      eventSigner: () => Promise.resolve(mockSigner),
+      messageSigner: () => Promise.resolve(mockMessageSigner),
       utf8Decoder: mockUtf8Decoder,
       utf8Encoder: mockUtf8encoder,
     });
@@ -88,7 +89,7 @@ describe(EventStreamPayloadHandler.name, () => {
     expect(EventSigningStream).toHaveBeenCalledWith({
       priorSignature,
       eventStreamCodec: expect.anything(),
-      eventSigner: expect.anything(),
+      messageSigner: expect.anything(),
     });
   });
 
@@ -105,7 +106,7 @@ describe(EventStreamPayloadHandler.name, () => {
     } as any;
 
     const handler = new EventStreamPayloadHandler({
-      eventSigner: () => Promise.resolve(mockSigner),
+      messageSigner: () => Promise.resolve(mockMessageSigner),
       utf8Decoder: mockUtf8Decoder,
       utf8Encoder: mockUtf8encoder,
     });
@@ -119,7 +120,7 @@ describe(EventStreamPayloadHandler.name, () => {
     expect(EventSigningStream).toHaveBeenCalledWith({
       priorSignature,
       eventStreamCodec: expect.anything(),
-      eventSigner: expect.anything(),
+      messageSigner: expect.anything(),
     });
   });
 
@@ -132,7 +133,7 @@ describe(EventStreamPayloadHandler.name, () => {
       headers: { authorization },
     } as any;
     const handler = new EventStreamPayloadHandler({
-      eventSigner: () => Promise.resolve(mockSigner),
+      messageSigner: () => Promise.resolve(mockMessageSigner),
       utf8Decoder: mockUtf8Decoder,
       utf8Encoder: mockUtf8encoder,
     });

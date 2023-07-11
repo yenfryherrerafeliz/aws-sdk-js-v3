@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -15,13 +16,13 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   AssociateVehicleFleetCommandInput,
@@ -163,6 +164,7 @@ import {
   CreateSignalCatalogRequest,
   CreateVehicleRequest,
   CreateVehicleRequestItem,
+  DataDestinationConfig,
   DecoderManifestSummary,
   DecoderManifestValidationException,
   DeleteCampaignRequest,
@@ -229,6 +231,7 @@ import {
   RegisterAccountRequest,
   RegisterAccountResponse,
   ResourceNotFoundException,
+  S3Config,
   Sensor,
   SignalCatalogSummary,
   SignalDecoder,
@@ -237,6 +240,7 @@ import {
   TagResourceRequest,
   ThrottlingException,
   TimeBasedCollectionScheme,
+  TimestreamConfig,
   TimestreamResources,
   UntagResourceRequest,
   UpdateCampaignRequest,
@@ -4039,7 +4043,9 @@ const se_Actuator = (input: Actuator, context: __SerdeContext): any => {
   return take(input, {
     allowedValues: _json,
     assignedValue: [],
+    comment: [],
     dataType: [],
+    deprecationMessage: [],
     description: [],
     fullyQualifiedName: [],
     max: __serializeFloat,
@@ -4057,8 +4063,10 @@ const se_Attribute = (input: Attribute, context: __SerdeContext): any => {
   return take(input, {
     allowedValues: _json,
     assignedValue: [],
+    comment: [],
     dataType: [],
     defaultValue: [],
+    deprecationMessage: [],
     description: [],
     fullyQualifiedName: [],
     max: __serializeFloat,
@@ -4117,6 +4125,7 @@ const se_CreateCampaignRequest = (input: CreateCampaignRequest, context: __Serde
   return take(input, {
     collectionScheme: _json,
     compression: [],
+    dataDestinationConfigs: _json,
     dataExtraDimensions: _json,
     description: [],
     diagnosticsMode: [],
@@ -4168,6 +4177,10 @@ const se_CreateSignalCatalogRequest = (input: CreateSignalCatalogRequest, contex
 // se_CreateVehicleRequestItem omitted.
 
 // se_createVehicleRequestItems omitted.
+
+// se_DataDestinationConfig omitted.
+
+// se_DataDestinationConfigs omitted.
 
 // se_DataExtraDimensionNodePathList omitted.
 
@@ -4338,13 +4351,17 @@ const se_ObdSignal = (input: ObdSignal, context: __SerdeContext): any => {
 
 // se_RegisterAccountRequest omitted.
 
+// se_S3Config omitted.
+
 /**
  * serializeAws_json1_0Sensor
  */
 const se_Sensor = (input: Sensor, context: __SerdeContext): any => {
   return take(input, {
     allowedValues: _json,
+    comment: [],
     dataType: [],
+    deprecationMessage: [],
     description: [],
     fullyQualifiedName: [],
     max: __serializeFloat,
@@ -4390,6 +4407,8 @@ const se_SignalDecoders = (input: SignalDecoder[], context: __SerdeContext): any
 // se_TagResourceRequest omitted.
 
 // se_TimeBasedCollectionScheme omitted.
+
+// se_TimestreamConfig omitted.
 
 // se_TimestreamResources omitted.
 
@@ -4446,7 +4465,9 @@ const de_Actuator = (output: any, context: __SerdeContext): Actuator => {
   return take(output, {
     allowedValues: _json,
     assignedValue: __expectString,
+    comment: __expectString,
     dataType: __expectString,
+    deprecationMessage: __expectString,
     description: __expectString,
     fullyQualifiedName: __expectString,
     max: __limitedParseDouble,
@@ -4464,8 +4485,10 @@ const de_Attribute = (output: any, context: __SerdeContext): Attribute => {
   return take(output, {
     allowedValues: _json,
     assignedValue: __expectString,
+    comment: __expectString,
     dataType: __expectString,
     defaultValue: __expectString,
+    deprecationMessage: __expectString,
     description: __expectString,
     fullyQualifiedName: __expectString,
     max: __limitedParseDouble,
@@ -4556,6 +4579,10 @@ const de_CanSignal = (output: any, context: __SerdeContext): CanSignal => {
 
 // de_createVehicleResponses omitted.
 
+// de_DataDestinationConfig omitted.
+
+// de_DataDestinationConfigs omitted.
+
 // de_DataExtraDimensionNodePathList omitted.
 
 /**
@@ -4638,6 +4665,7 @@ const de_GetCampaignResponse = (output: any, context: __SerdeContext): GetCampai
     collectionScheme: (_: any) => _json(__expectUnion(_)),
     compression: __expectString,
     creationTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    dataDestinationConfigs: _json,
     dataExtraDimensions: _json,
     description: __expectString,
     diagnosticsMode: __expectString,
@@ -4997,13 +5025,17 @@ const de_RegisterAccountResponse = (output: any, context: __SerdeContext): Regis
 
 // de_ResourceNotFoundException omitted.
 
+// de_S3Config omitted.
+
 /**
  * deserializeAws_json1_0Sensor
  */
 const de_Sensor = (output: any, context: __SerdeContext): Sensor => {
   return take(output, {
     allowedValues: _json,
+    comment: __expectString,
     dataType: __expectString,
+    deprecationMessage: __expectString,
     description: __expectString,
     fullyQualifiedName: __expectString,
     max: __limitedParseDouble,
@@ -5074,6 +5106,8 @@ const de_SignalDecoders = (output: any, context: __SerdeContext): SignalDecoder[
 // de_ThrottlingException omitted.
 
 // de_TimeBasedCollectionScheme omitted.
+
+// de_TimestreamConfig omitted.
 
 // de_TimestreamRegistrationResponse omitted.
 
@@ -5146,14 +5180,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

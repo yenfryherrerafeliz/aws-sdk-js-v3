@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudTrailClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudTrailClient";
 import { ListEventDataStoresRequest, ListEventDataStoresResponse } from "../models/models_0";
 import { de_ListEventDataStoresCommand, se_ListEventDataStoresCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -33,7 +37,7 @@ export interface ListEventDataStoresCommandOutput extends ListEventDataStoresRes
 /**
  * @public
  * <p>Returns information about all event data stores in the account, in the current
- *          region.</p>
+ *          Region.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -52,7 +56,7 @@ export interface ListEventDataStoresCommandOutput extends ListEventDataStoresRes
  * //       EventDataStoreArn: "STRING_VALUE",
  * //       Name: "STRING_VALUE",
  * //       TerminationProtectionEnabled: true || false,
- * //       Status: "CREATED" || "ENABLED" || "PENDING_DELETION",
+ * //       Status: "CREATED" || "ENABLED" || "PENDING_DELETION" || "STARTING_INGESTION" || "STOPPING_INGESTION" || "STOPPED_INGESTION",
  * //       AdvancedEventSelectors: [ // AdvancedEventSelectors
  * //         { // AdvancedEventSelector
  * //           Name: "STRING_VALUE",

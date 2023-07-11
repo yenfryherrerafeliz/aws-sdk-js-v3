@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,7 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
 import { DescribeStackDriftDetectionStatusInput, DescribeStackDriftDetectionStatusOutput } from "../models/models_0";
@@ -20,6 +20,10 @@ import {
   se_DescribeStackDriftDetectionStatusCommand,
 } from "../protocols/Aws_query";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -37,19 +41,16 @@ export interface DescribeStackDriftDetectionStatusCommandOutput
 
 /**
  * @public
- * <p>Returns information about a stack drift detection operation. A stack drift detection
- *          operation detects whether a stack's actual configuration differs, or has
- *             <i>drifted</i>, from it's expected configuration, as defined in the stack
- *          template and any values specified as template parameters. A stack is considered to have
- *          drifted if one or more of its resources have drifted. For more information about stack and
- *          resource drift, see <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-drift.html">Detecting
- *             Unregulated Configuration Changes to Stacks and Resources</a>.</p>
+ * <p>Returns information about a stack drift detection operation. A stack drift detection operation detects whether a
+ *    stack's actual configuration differs, or has <i>drifted</i>, from its expected configuration, as
+ *    defined in the stack template and any values specified as template parameters. A stack is considered to have drifted
+ *    if one or more of its resources have drifted. For more information about stack and resource drift, see <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-drift.html">Detecting Unregulated
+ *     Configuration Changes to Stacks and Resources</a>.</p>
  *          <p>Use <a>DetectStackDrift</a> to initiate a stack drift detection operation.
- *             <code>DetectStackDrift</code> returns a <code>StackDriftDetectionId</code> you can use
- *          to monitor the progress of the operation using
- *             <code>DescribeStackDriftDetectionStatus</code>. Once the drift detection operation has
- *          completed, use <a>DescribeStackResourceDrifts</a> to return drift information
- *          about the stack and its resources.</p>
+ *     <code>DetectStackDrift</code> returns a <code>StackDriftDetectionId</code> you can use to monitor the progress of
+ *    the operation using <code>DescribeStackDriftDetectionStatus</code>. Once the drift detection operation has completed,
+ *    use <a>DescribeStackResourceDrifts</a> to return drift information about the stack and its
+ *    resources.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript

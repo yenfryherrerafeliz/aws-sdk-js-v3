@@ -1,8 +1,8 @@
 // smithy-typescript generated code
-import { EndpointParameterInstructions, getEndpointPlugin } from "@aws-sdk/middleware-endpoint";
-import { getSerdePlugin } from "@aws-sdk/middleware-serde";
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
-import { Command as $Command } from "@aws-sdk/smithy-client";
+import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
+import { getSerdePlugin } from "@smithy/middleware-serde";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
+import { Command as $Command } from "@smithy/smithy-client";
 import {
   FinalizeHandlerArguments,
   Handler,
@@ -11,12 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import { AlexaForBusinessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AlexaForBusinessClient";
 import { SearchProfilesRequest, SearchProfilesResponse } from "../models/models_0";
 import { de_SearchProfilesCommand, se_SearchProfilesCommand } from "../protocols/Aws_json1_1";
 
+/**
+ * @public
+ */
+export { __MetadataBearer, $Command };
 /**
  * @public
  *
@@ -32,6 +36,8 @@ export interface SearchProfilesCommandOutput extends SearchProfilesResponse, __M
 
 /**
  * @public
+ * @deprecated
+ *
  * <p>Searches room profiles and lists the ones that meet a set of filter
  *          criteria.</p>
  * @example
@@ -54,7 +60,7 @@ export interface SearchProfilesCommandOutput extends SearchProfilesResponse, __M
  *   SortCriteria: [ // SortList
  *     { // Sort
  *       Key: "STRING_VALUE", // required
- *       Value: "STRING_VALUE", // required
+ *       Value: "ASC" || "DESC", // required
  *     },
  *   ],
  * };
@@ -68,9 +74,9 @@ export interface SearchProfilesCommandOutput extends SearchProfilesResponse, __M
  * //       IsDefault: true || false,
  * //       Address: "STRING_VALUE",
  * //       Timezone: "STRING_VALUE",
- * //       DistanceUnit: "STRING_VALUE",
- * //       TemperatureUnit: "STRING_VALUE",
- * //       WakeWord: "STRING_VALUE",
+ * //       DistanceUnit: "METRIC" || "IMPERIAL",
+ * //       TemperatureUnit: "FAHRENHEIT" || "CELSIUS",
+ * //       WakeWord: "ALEXA" || "AMAZON" || "ECHO" || "COMPUTER",
  * //       Locale: "STRING_VALUE",
  * //     },
  * //   ],

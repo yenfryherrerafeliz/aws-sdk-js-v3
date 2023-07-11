@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -18,13 +19,13 @@ import {
   serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   EventStreamSerdeContext as __EventStreamSerdeContext,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 
 import {
   AddLayerVersionPermissionCommandInput,
@@ -271,6 +272,7 @@ import {
   PolicyLengthExceededException,
   PreconditionFailedException,
   ProvisionedConcurrencyConfigNotFoundException,
+  RecursiveInvocationException,
   RequestTooLargeException,
   ResourceConflictException,
   ResourceInUseException,
@@ -3387,6 +3389,9 @@ const de_DeleteEventSourceMappingCommandError = async (
     case "InvalidParameterValueException":
     case "com.amazonaws.lambda#InvalidParameterValueException":
       throw await de_InvalidParameterValueExceptionRes(parsedOutput, context);
+    case "ResourceConflictException":
+    case "com.amazonaws.lambda#ResourceConflictException":
+      throw await de_ResourceConflictExceptionRes(parsedOutput, context);
     case "ResourceInUseException":
     case "com.amazonaws.lambda#ResourceInUseException":
       throw await de_ResourceInUseExceptionRes(parsedOutput, context);
@@ -4868,6 +4873,9 @@ const de_InvokeCommandError = async (output: __HttpResponse, context: __SerdeCon
     case "KMSNotFoundException":
     case "com.amazonaws.lambda#KMSNotFoundException":
       throw await de_KMSNotFoundExceptionRes(parsedOutput, context);
+    case "RecursiveInvocationException":
+    case "com.amazonaws.lambda#RecursiveInvocationException":
+      throw await de_RecursiveInvocationExceptionRes(parsedOutput, context);
     case "RequestTooLargeException":
     case "com.amazonaws.lambda#RequestTooLargeException":
       throw await de_RequestTooLargeExceptionRes(parsedOutput, context);
@@ -5059,6 +5067,9 @@ const de_InvokeWithResponseStreamCommandError = async (
     case "KMSNotFoundException":
     case "com.amazonaws.lambda#KMSNotFoundException":
       throw await de_KMSNotFoundExceptionRes(parsedOutput, context);
+    case "RecursiveInvocationException":
+    case "com.amazonaws.lambda#RecursiveInvocationException":
+      throw await de_RecursiveInvocationExceptionRes(parsedOutput, context);
     case "RequestTooLargeException":
     case "com.amazonaws.lambda#RequestTooLargeException":
       throw await de_RequestTooLargeExceptionRes(parsedOutput, context);
@@ -7540,6 +7551,27 @@ const de_ProvisionedConcurrencyConfigNotFoundExceptionRes = async (
 };
 
 /**
+ * deserializeAws_restJson1RecursiveInvocationExceptionRes
+ */
+const de_RecursiveInvocationExceptionRes = async (
+  parsedOutput: any,
+  context: __SerdeContext
+): Promise<RecursiveInvocationException> => {
+  const contents: any = map({});
+  const data: any = parsedOutput.body;
+  const doc = take(data, {
+    Message: __expectString,
+    Type: __expectString,
+  });
+  Object.assign(contents, doc);
+  const exception = new RecursiveInvocationException({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...contents,
+  });
+  return __decorateServiceException(exception, parsedOutput.body);
+};
+
+/**
  * deserializeAws_restJson1RequestTooLargeExceptionRes
  */
 const de_RequestTooLargeExceptionRes = async (
@@ -8222,14 +8254,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

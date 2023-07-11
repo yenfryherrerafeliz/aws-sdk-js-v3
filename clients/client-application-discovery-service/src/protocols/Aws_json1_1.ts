@@ -1,7 +1,8 @@
 // smithy-typescript generated code
-import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@aws-sdk/protocol-http";
+import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
+  collectBody,
   decorateServiceException as __decorateServiceException,
   expectBoolean as __expectBoolean,
   expectInt32 as __expectInt32,
@@ -9,15 +10,16 @@ import {
   expectNumber as __expectNumber,
   expectString as __expectString,
   parseEpochTimestamp as __parseEpochTimestamp,
+  serializeFloat as __serializeFloat,
   take,
   withBaseException,
-} from "@aws-sdk/smithy-client";
+} from "@smithy/smithy-client";
 import {
   Endpoint as __Endpoint,
   HeaderBag as __HeaderBag,
   ResponseMetadata as __ResponseMetadata,
   SerdeContext as __SerdeContext,
-} from "@aws-sdk/types";
+} from "@smithy/types";
 import { v4 as generateIdempotencyToken } from "uuid";
 
 import {
@@ -115,9 +117,11 @@ import {
   DescribeTagsRequest,
   DescribeTagsResponse,
   DisassociateConfigurationItemsFromApplicationRequest,
+  Ec2RecommendationsExportPreferences,
   ExportDataFormat,
   ExportFilter,
   ExportInfo,
+  ExportPreferences,
   Filter,
   GetDiscoverySummaryRequest,
   HomeRegionNotSetException,
@@ -129,6 +133,7 @@ import {
   ListServerNeighborsRequest,
   OperationNotPermittedException,
   OrderByElement,
+  ReservedInstanceOptions,
   ResourceInUseException,
   ResourceNotFoundException,
   ServerInternalErrorException,
@@ -144,6 +149,7 @@ import {
   Tag,
   TagFilter,
   UpdateApplicationRequest,
+  UsageMetricBasis,
 } from "../models/models_0";
 
 /**
@@ -2150,6 +2156,26 @@ const de_ServerInternalErrorExceptionRes = async (
 
 // se_DisassociateConfigurationItemsFromApplicationRequest omitted.
 
+/**
+ * serializeAws_json1_1Ec2RecommendationsExportPreferences
+ */
+const se_Ec2RecommendationsExportPreferences = (
+  input: Ec2RecommendationsExportPreferences,
+  context: __SerdeContext
+): any => {
+  return take(input, {
+    cpuPerformanceMetricBasis: (_) => se_UsageMetricBasis(_, context),
+    enabled: [],
+    excludedInstanceTypes: _json,
+    preferredRegion: [],
+    ramPerformanceMetricBasis: (_) => se_UsageMetricBasis(_, context),
+    reservedInstanceOptions: _json,
+    tenancy: [],
+  });
+};
+
+// se_ExcludedInstanceTypes omitted.
+
 // se_ExportDataFormats omitted.
 
 // se_ExportFilter omitted.
@@ -2157,6 +2183,18 @@ const de_ServerInternalErrorExceptionRes = async (
 // se_ExportFilters omitted.
 
 // se_ExportIds omitted.
+
+/**
+ * serializeAws_json1_1ExportPreferences
+ */
+const se_ExportPreferences = (input: ExportPreferences, context: __SerdeContext): any => {
+  return ExportPreferences.visit(input, {
+    ec2RecommendationsPreferences: (value) => ({
+      ec2RecommendationsPreferences: se_Ec2RecommendationsExportPreferences(value, context),
+    }),
+    _: (name, value) => ({ name: value } as any),
+  });
+};
 
 // se_Filter omitted.
 
@@ -2178,6 +2216,8 @@ const de_ServerInternalErrorExceptionRes = async (
 
 // se_OrderByList omitted.
 
+// se_ReservedInstanceOptions omitted.
+
 // se_StartContinuousExportRequest omitted.
 
 // se_StartDataCollectionByAgentIdsRequest omitted.
@@ -2190,6 +2230,7 @@ const se_StartExportTaskRequest = (input: StartExportTaskRequest, context: __Ser
     endTime: (_) => Math.round(_.getTime() / 1000),
     exportDataFormat: _json,
     filters: _json,
+    preferences: (_) => se_ExportPreferences(_, context),
     startTime: (_) => Math.round(_.getTime() / 1000),
   });
 };
@@ -2220,6 +2261,16 @@ const se_StartImportTaskRequest = (input: StartImportTaskRequest, context: __Ser
 // se_ToDeleteIdentifierList omitted.
 
 // se_UpdateApplicationRequest omitted.
+
+/**
+ * serializeAws_json1_1UsageMetricBasis
+ */
+const se_UsageMetricBasis = (input: UsageMetricBasis, context: __SerdeContext): any => {
+  return take(input, {
+    name: [],
+    percentageAdjust: __serializeFloat,
+  });
+};
 
 // de_AgentConfigurationStatus omitted.
 
@@ -2520,14 +2571,6 @@ const deserializeMetadata = (output: __HttpResponse): __ResponseMetadata => ({
   extendedRequestId: output.headers["x-amz-id-2"],
   cfId: output.headers["x-amz-cf-id"],
 });
-
-// Collect low-level response body stream to Uint8Array.
-const collectBody = (streamBody: any = new Uint8Array(), context: __SerdeContext): Promise<Uint8Array> => {
-  if (streamBody instanceof Uint8Array) {
-    return Promise.resolve(streamBody);
-  }
-  return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
 
 // Encode Uint8Array data into string with utf-8.
 const collectBodyString = (streamBody: any, context: __SerdeContext): Promise<string> =>

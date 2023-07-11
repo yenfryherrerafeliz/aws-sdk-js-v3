@@ -2,9 +2,6 @@
 
 # @aws-sdk/client-sesv2
 
-[![NPM version](https://img.shields.io/npm/v/@aws-sdk/client-sesv2/latest.svg)](https://www.npmjs.com/package/@aws-sdk/client-sesv2)
-[![NPM downloads](https://img.shields.io/npm/dm/@aws-sdk/client-sesv2.svg)](https://www.npmjs.com/package/@aws-sdk/client-sesv2)
-
 ## Description
 
 AWS SDK for JavaScript SESv2 Client for Node.js, Browser and React Native.
@@ -739,6 +736,14 @@ PutDedicatedIpInPool
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-sesv2/classes/putdedicatedipinpoolcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-sesv2/interfaces/putdedicatedipinpoolcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-sesv2/interfaces/putdedicatedipinpoolcommandoutput.html)
+
+</details>
+<details>
+<summary>
+PutDedicatedIpPoolScalingAttributes
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-sesv2/classes/putdedicatedippoolscalingattributescommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-sesv2/interfaces/putdedicatedippoolscalingattributescommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-sesv2/interfaces/putdedicatedippoolscalingattributescommandoutput.html)
 
 </details>
 <details>
