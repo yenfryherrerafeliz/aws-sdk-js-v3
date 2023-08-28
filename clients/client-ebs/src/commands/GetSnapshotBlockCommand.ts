@@ -10,10 +10,9 @@ import {
   HttpHandlerOptions as __HttpHandlerOptions,
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
-  SdkStream as __SdkStream,
   SdkStreamSerdeContext as __SdkStreamSerdeContext,
   SerdeContext as __SerdeContext,
-  WithSdkStreamMixin as __WithSdkStreamMixin,
+  StreamingBlobPayloadOutputTypes,
 } from "@smithy/types";
 
 import { EBSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EBSClient";
@@ -39,13 +38,19 @@ export interface GetSnapshotBlockCommandInput extends GetSnapshotBlockRequest {}
  *
  * The output of {@link GetSnapshotBlockCommand}.
  */
-export interface GetSnapshotBlockCommandOutput
-  extends __WithSdkStreamMixin<GetSnapshotBlockResponse, "BlockData">,
-    __MetadataBearer {}
+export interface GetSnapshotBlockCommandOutput extends Omit<GetSnapshotBlockResponse, "BlockData">, __MetadataBearer {
+  BlockData?: StreamingBlobPayloadOutputTypes;
+}
 
 /**
  * @public
  * <p>Returns the data in a block in an Amazon Elastic Block Store snapshot.</p>
+ *          <note>
+ *             <p>You should always retry requests that receive server (<code>5xx</code>)
+ *     error responses, and <code>ThrottlingException</code> and <code>RequestThrottledException</code>
+ *     client error responses. For more information see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/error-retries.html">Error retries</a> in the
+ *         <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -63,7 +68,7 @@ export interface GetSnapshotBlockCommandOutput
  * //   DataLength: Number("int"),
  * //   BlockData: "STREAMING_BLOB_VALUE",
  * //   Checksum: "STRING_VALUE",
- * //   ChecksumAlgorithm: "STRING_VALUE",
+ * //   ChecksumAlgorithm: "SHA256",
  * // };
  *
  * ```
@@ -78,11 +83,11 @@ export interface GetSnapshotBlockCommandOutput
  *  <p>You do not have sufficient access to perform this action.</p>
  *
  * @throws {@link InternalServerException} (server fault)
- *  <p>An internal error has occurred.</p>
+ *  <p>An internal error has occurred. For more information see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/error-retries.html">Error retries</a>.</p>
  *
  * @throws {@link RequestThrottledException} (client fault)
- *  <p>The number of API requests has exceed the maximum allowed API request throttling
- *             limit.</p>
+ *  <p>The number of API requests has exceeded the maximum allowed API request
+ *             throttling limit for the snapshot. For more information see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/error-retries.html">Error retries</a>.</p>
  *
  * @throws {@link ResourceNotFoundException} (client fault)
  *  <p>The specified resource does not exist.</p>

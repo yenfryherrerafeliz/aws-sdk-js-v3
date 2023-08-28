@@ -82,6 +82,7 @@ export interface GetAnnotationStoreCommandOutput extends GetAnnotationStoreRespo
  * //   storeFormat: "STRING_VALUE",
  * //   statusMessage: "STRING_VALUE", // required
  * //   storeSizeBytes: Number("long"), // required
+ * //   numVersions: Number("int"), // required
  * // };
  *
  * ```

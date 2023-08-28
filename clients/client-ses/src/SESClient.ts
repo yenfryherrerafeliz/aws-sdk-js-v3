@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -277,6 +278,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -551,6 +553,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -580,6 +587,7 @@ export interface SESClientConfig extends SESClientConfigType {}
  */
 export type SESClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -597,14 +605,39 @@ export interface SESClientResolvedConfig extends SESClientResolvedConfigType {}
 /**
  * @public
  * <fullname>Amazon Simple Email Service</fullname>
- *         <p> This document contains reference information for the <a href="https://aws.amazon.com/ses/">Amazon Simple Email Service</a> (Amazon SES) API, version
+ *          <p> This document contains reference information for the <a href="https://aws.amazon.com/ses/">Amazon Simple Email Service</a> (Amazon SES) API, version
  *             2010-12-01. This document is best used in conjunction with the <a href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html">Amazon SES Developer
  *                 Guide</a>. </p>
- *         <note>
+ *          <note>
  *             <p> For a list of Amazon SES endpoints to use in service requests, see <a href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/regions.html">Regions and
  *                     Amazon SES</a> in the <a href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html">Amazon SES Developer
  *                 Guide</a>.</p>
- *         </note>
+ *          </note>
+ *          <p>This documentation contains reference information related to the following:</p>
+ *          <ul>
+ *             <li>
+ *                <p>
+ *                   <a href="https://docs.aws.amazon.com/ses/latest/APIReference/API_Operations.html">Amazon SES API Actions</a>
+ *                </p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a href="https://docs.aws.amazon.com/ses/latest/APIReference/API_Types.html">Amazon SES
+ *                         API Data Types</a>
+ *                </p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a href="https://docs.aws.amazon.com/ses/latest/APIReference/CommonParameters.html">Common
+ *                         Parameters</a>
+ *                </p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a href="https://docs.aws.amazon.com/ses/latest/APIReference/CommonErrors.html">Common Errors</a>
+ *                </p>
+ *             </li>
+ *          </ul>
  */
 export class SESClient extends __Client<
   __HttpHandlerOptions,
@@ -617,8 +650,8 @@ export class SESClient extends __Client<
    */
   readonly config: SESClientResolvedConfig;
 
-  constructor(configuration: SESClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<SESClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -626,8 +659,9 @@ export class SESClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

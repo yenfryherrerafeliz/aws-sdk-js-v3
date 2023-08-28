@@ -39,6 +39,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -92,6 +93,7 @@ import {
   SimpleScalarPropertiesCommandOutput,
 } from "./commands/SimpleScalarPropertiesCommand";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -260,6 +262,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -288,6 +295,7 @@ export interface JsonProtocolClientConfig extends JsonProtocolClientConfigType {
  */
 export type JsonProtocolClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointsResolvedConfig &
   RetryResolvedConfig &
@@ -315,16 +323,17 @@ export class JsonProtocolClient extends __Client<
    */
   readonly config: JsonProtocolClientResolvedConfig;
 
-  constructor(configuration: JsonProtocolClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<JsonProtocolClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveRegionConfig(_config_0);
     const _config_2 = resolveEndpointsConfig(_config_1);
     const _config_3 = resolveRetryConfig(_config_2);
     const _config_4 = resolveHostHeaderConfig(_config_3);
     const _config_5 = resolveAwsAuthConfig(_config_4);
     const _config_6 = resolveUserAgentConfig(_config_5);
-    super(_config_6);
-    this.config = _config_6;
+    const _config_7 = resolveRuntimeExtensions(_config_6, configuration?.extensions || []);
+    super(_config_7);
+    this.config = _config_7;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

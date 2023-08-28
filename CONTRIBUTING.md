@@ -142,6 +142,17 @@ smithy=/Volumes/workplace/smithy
 smithy-typescript=/Volumes/workplace/smithy-typescript
 ```
 
+## Experimental Features
+
+`aws-sdk-js-v3 ` uses `smithy-typescript` to generate code. `smithy-typescript` is under heavy development and has
+experimental features that can affect `aws-sdk-js-v3`. These features are enabled via opt-in settings in `sdk-codegen`.
+Note that any contributions related to these features MUST be reviewed carefully for opt-in behavior via feature flags
+as to not break any existing customers. Here are the experimental features that are currently under development:
+
+| Experimental Feature | Flag                          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| -------------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identity & Auth      | `experimentalIdentityAndAuth` | Standardize identity and auth integrations to match the Smithy specification (see [Authentication Traits](https://smithy.io/2.0/spec/authentication-traits.html)). Newer capabilities include support for multiple auth schemes, `@optionalAuth`, and standardized identity interfaces for authentication schemes both in code generation and TypeScript packages. In `smithy-typescript`, `@httpApiKeyAuth` will be updated to use the new standardized interfaces. In `aws-sdk-js-v3` (`smithy-typescript`'s largest customer), this will affect `@aws.auth#sigv4` and `@httpBearerAuth` implementations, but is planned to be completely backwards-compatible. |
+
 ## Build caching
 
 Build caching is optionally available via Turborepo. See `turbo.json`.
@@ -185,12 +196,12 @@ the generated code change to your PR. Here's how to generate clients:
    clients/client-X> yarn generate:client
    ```
 
-### CLI dispatch helper
+### CLI dispatch helpers
 
-There is an optional CLI helper.
-The CLI helper assists in the dispatch of commands to package contexts.
+There are optional CLI helpers.
+The CLI helpers assist in the dispatch of commands to package or subfolder contexts.
 
-To activate the default alias run:
+To activate the default aliases run:
 
 ```
 . ./scripts/cli-dispatcher/set-alias.sh
@@ -198,37 +209,53 @@ To activate the default alias run:
 
 This enables the command bin/exe
 
-```
-b
-```
+`b` and `r`.
 
 #### General Syntax
 
-```
+```sh
 b (package name query) - (npm script query)
+```
+
+```sh
+r (workspace script query)
 ```
 
 #### Syntax Examples:
 
-Usage examples
+Usage examples for `r`:
 
+`r` depends on what files exist in your unversioned `workspace` directory at the repository root.
+It will run the first matching `*.js`, `*.mjs`, or `*.ts` file.
+
+```sh
+r dyn test
 ```
+
+```sh
+npx esbuilder-runner ./workspace/dynamodb/test.ts # (if *.ts file)
+node ./workspace/dynamodb/test.mjs # (if *.mjs file)
+```
+
+Usage examples for `b`:
+
+```sh
 b s3 - b
 ```
 
-yarn **b**uild in clients/client-**s3**
+matches to: yarn **b**uild in clients/client-**s3**
 
-```
+```sh
 b mar ent - doc
 ```
 
-yarn build:**doc**s in clients/client-**mar**ketplace-**ent**itlement-service
+matches to: yarn build:**doc**s in clients/client-**mar**ketplace-**ent**itlement-service
 
-```
+```sh
 b m sign - t
 ```
 
-yarn **t**est in packages/**m**iddleware-**sign**ing
+matches to: yarn **t**est in packages/**m**iddleware-**sign**ing
 
 The package name query is used to find the package within clients, lib, or packages, and the npm script query is used to
 find a command to execute from within `package.json` `scripts`.

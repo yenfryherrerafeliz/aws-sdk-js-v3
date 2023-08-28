@@ -13,7 +13,12 @@ import {
   SerdeContext as __SerdeContext,
 } from "@smithy/types";
 
-import { CreatePolicyInput, CreatePolicyOutput } from "../models/models_0";
+import {
+  CreatePolicyInput,
+  CreatePolicyInputFilterSensitiveLog,
+  CreatePolicyOutput,
+  CreatePolicyOutputFilterSensitiveLog,
+} from "../models/models_0";
 import { de_CreatePolicyCommand, se_CreatePolicyCommand } from "../protocols/Aws_json1_0";
 import {
   ServiceInputTypes,
@@ -60,6 +65,12 @@ export interface CreatePolicyCommandOutput extends CreatePolicyOutput, __Metadat
  *             <p>Creating a policy causes it to be validated against the schema in the policy store. If the
  *                 policy doesn't pass validation, the operation fails and the policy isn't
  *                 stored.</p>
+ *          </note>
+ *          <note>
+ *             <p>Verified Permissions is <i>
+ *                   <a href="https://wikipedia.org/wiki/Eventual_consistency">eventually consistent</a>
+ *                </i>. It can take a few seconds for a new or changed element to be propagate through
+ *     the service and be visible in the results of other Verified Permissions operations.</p>
  *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -263,8 +274,8 @@ export class CreatePolicyCommand extends $Command<
       logger,
       clientName,
       commandName,
-      inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      inputFilterSensitiveLog: CreatePolicyInputFilterSensitiveLog,
+      outputFilterSensitiveLog: CreatePolicyOutputFilterSensitiveLog,
     };
     const { requestHandler } = configuration;
     return stack.resolve(

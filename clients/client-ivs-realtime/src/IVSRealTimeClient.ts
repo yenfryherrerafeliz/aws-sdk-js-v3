@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -83,6 +84,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -245,6 +247,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -274,6 +281,7 @@ export interface IVSRealTimeClientConfig extends IVSRealTimeClientConfigType {}
  */
 export type IVSRealTimeClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -293,19 +301,17 @@ export interface IVSRealTimeClientResolvedConfig extends IVSRealTimeClientResolv
  * <p>
  *             <b>Introduction</b>
  *          </p>
- *          <p>The Amazon Interactive Video Service (IVS) stage API is REST compatible, using a standard HTTP
+ *          <p>The Amazon Interactive Video Service (IVS) real-time API is REST compatible, using a standard HTTP
  * 	  API and an AWS EventBridge event stream for responses. JSON is used for both requests and responses,
  * 	  including errors.
  *     </p>
  *          <p>Terminology:</p>
  *          <ul>
  *             <li>
- *                <p>The IVS stage API sometimes is referred to as the IVS <i>RealTime</i>
- *           API.</p>
+ *                <p>A <i>stage</i>  is a virtual space where participants can exchange video in real time.</p>
  *             </li>
  *             <li>
- *                <p>A <i>participant token</i> is an authorization token used to publish/subscribe
- *           to a stage.</p>
+ *                <p>A <i>participant token</i> is a token that authenticates a participant when they join a stage.</p>
  *             </li>
  *             <li>
  *                <p>A <i>participant object</i> represents participants
@@ -318,11 +324,11 @@ export interface IVSRealTimeClientResolvedConfig extends IVSRealTimeClientResolv
  *          <p>
  *             <b>Resources</b>
  *          </p>
- *          <p>The following resources contain information about your IVS live stream (see <a href="https://docs.aws.amazon.com/ivs/latest/userguide/getting-started.html">Getting Started with Amazon IVS</a>):</p>
+ *          <p>The following resources contain information about your IVS live stream (see <a href="https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started.html">Getting Started with Amazon IVS Real-Time Streaming</a>):</p>
  *          <ul>
  *             <li>
  *                <p>
- *                   <b>Stage</b> — A stage is a virtual space where multiple participants can exchange audio and video in real time.</p>
+ *                   <b>Stage</b> — A stage is a virtual space where participants can exchange video in real time.</p>
  *             </li>
  *          </ul>
  *          <p>
@@ -337,7 +343,7 @@ export interface IVSRealTimeClientResolvedConfig extends IVSRealTimeClientResolv
  *          <p>Tags can help you identify and organize your AWS resources. For example, you can use the
  *       same tag for different resources to indicate that they are related. You can also use tags to
  *       manage access (see <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html">Access Tags</a>).</p>
- *          <p>The Amazon IVS stage API has these tag-related endpoints: <a>TagResource</a>, <a>UntagResource</a>, and
+ *          <p>The Amazon IVS real-time API has these tag-related endpoints: <a>TagResource</a>, <a>UntagResource</a>, and
  *       <a>ListTagsForResource</a>. The following resource supports tagging: Stage.</p>
  *          <p>At most 50 tags can be applied to a resource.</p>
  *          <p>
@@ -429,8 +435,8 @@ export class IVSRealTimeClient extends __Client<
    */
   readonly config: IVSRealTimeClientResolvedConfig;
 
-  constructor(configuration: IVSRealTimeClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<IVSRealTimeClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -438,8 +444,9 @@ export class IVSRealTimeClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -85,6 +86,10 @@ import {
   DescribeClusterOperationCommandInput,
   DescribeClusterOperationCommandOutput,
 } from "./commands/DescribeClusterOperationCommand";
+import {
+  DescribeClusterOperationV2CommandInput,
+  DescribeClusterOperationV2CommandOutput,
+} from "./commands/DescribeClusterOperationV2Command";
 import { DescribeClusterV2CommandInput, DescribeClusterV2CommandOutput } from "./commands/DescribeClusterV2Command";
 import {
   DescribeConfigurationCommandInput,
@@ -115,6 +120,10 @@ import {
   ListClusterOperationsCommandInput,
   ListClusterOperationsCommandOutput,
 } from "./commands/ListClusterOperationsCommand";
+import {
+  ListClusterOperationsV2CommandInput,
+  ListClusterOperationsV2CommandOutput,
+} from "./commands/ListClusterOperationsV2Command";
 import { ListClustersCommandInput, ListClustersCommandOutput } from "./commands/ListClustersCommand";
 import { ListClustersV2CommandInput, ListClustersV2CommandOutput } from "./commands/ListClustersV2Command";
 import {
@@ -167,6 +176,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -186,6 +196,7 @@ export type ServiceInputTypes =
   | DeleteVpcConnectionCommandInput
   | DescribeClusterCommandInput
   | DescribeClusterOperationCommandInput
+  | DescribeClusterOperationV2CommandInput
   | DescribeClusterV2CommandInput
   | DescribeConfigurationCommandInput
   | DescribeConfigurationRevisionCommandInput
@@ -195,6 +206,7 @@ export type ServiceInputTypes =
   | GetCompatibleKafkaVersionsCommandInput
   | ListClientVpcConnectionsCommandInput
   | ListClusterOperationsCommandInput
+  | ListClusterOperationsV2CommandInput
   | ListClustersCommandInput
   | ListClustersV2CommandInput
   | ListConfigurationRevisionsCommandInput
@@ -236,6 +248,7 @@ export type ServiceOutputTypes =
   | DeleteVpcConnectionCommandOutput
   | DescribeClusterCommandOutput
   | DescribeClusterOperationCommandOutput
+  | DescribeClusterOperationV2CommandOutput
   | DescribeClusterV2CommandOutput
   | DescribeConfigurationCommandOutput
   | DescribeConfigurationRevisionCommandOutput
@@ -245,6 +258,7 @@ export type ServiceOutputTypes =
   | GetCompatibleKafkaVersionsCommandOutput
   | ListClientVpcConnectionsCommandOutput
   | ListClusterOperationsCommandOutput
+  | ListClusterOperationsV2CommandOutput
   | ListClustersCommandOutput
   | ListClustersV2CommandOutput
   | ListConfigurationRevisionsCommandOutput
@@ -389,6 +403,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -418,6 +437,7 @@ export interface KafkaClientConfig extends KafkaClientConfigType {}
  */
 export type KafkaClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -447,8 +467,8 @@ export class KafkaClient extends __Client<
    */
   readonly config: KafkaClientResolvedConfig;
 
-  constructor(configuration: KafkaClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<KafkaClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -456,8 +476,9 @@ export class KafkaClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

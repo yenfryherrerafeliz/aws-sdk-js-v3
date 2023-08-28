@@ -3,6 +3,180 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.398.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.397.0...v3.398.0) (2023-08-23)
+
+**Note:** Version bump only for package @aws-sdk/client-sagemaker
+
+
+
+
+
+# [3.395.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.394.0...v3.395.0) (2023-08-18)
+
+**Note:** Version bump only for package @aws-sdk/client-sagemaker
+
+
+
+
+
+# [3.392.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.391.0...v3.392.0) (2023-08-15)
+
+
+### Features
+
+* **client-sagemaker:** SageMaker Inference Recommender now provides SupportedResponseMIMETypes from DescribeInferenceRecommendationsJob response ([e2e362f](https://github.com/aws/aws-sdk-js-v3/commit/e2e362f9c9fb4738405474f7118dc67cbc7ac09b))
+
+
+
+
+
+# [3.391.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.390.0...v3.391.0) (2023-08-14)
+
+**Note:** Version bump only for package @aws-sdk/client-sagemaker
+
+
+
+
+
+# [3.388.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.387.0...v3.388.0) (2023-08-09)
+
+
+### Features
+
+* **client-sagemaker:** This release adds support for cross account access for SageMaker Model Cards through AWS RAM. ([1f562b4](https://github.com/aws/aws-sdk-js-v3/commit/1f562b46f097b9a5e34baf51223f09ba4be8a415))
+
+
+
+
+
+# [3.387.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.386.0...v3.387.0) (2023-08-08)
+
+
+### Features
+
+* **clients:** allow client creation without configuration ([#5060](https://github.com/aws/aws-sdk-js-v3/issues/5060)) ([a9723dc](https://github.com/aws/aws-sdk-js-v3/commit/a9723dcbbf970402a3131a8ff79153a04b2cfb89))
+
+
+
+
+
+# [3.386.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.385.0...v3.386.0) (2023-08-07)
+
+**Note:** Version bump only for package @aws-sdk/client-sagemaker
+
+
+
+
+
+# [3.385.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.384.0...v3.385.0) (2023-08-04)
+
+
+### Features
+
+* **client-sagemaker:** Including DataCaptureConfig key in the Amazon Sagemaker Search's transform job object ([126b1c6](https://github.com/aws/aws-sdk-js-v3/commit/126b1c6d83889830a94e30a8c56ec0e0ce1d5682))
+
+
+
+
+
+# [3.384.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.383.0...v3.384.0) (2023-08-03)
+
+
+### Features
+
+* **client-sagemaker:** Amazon SageMaker now supports running training jobs on p5.48xlarge instance types. ([87fda49](https://github.com/aws/aws-sdk-js-v3/commit/87fda49544750561ccb5d3a6fc2026c5332928c8))
+
+
+
+
+
+# [3.383.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.382.0...v3.383.0) (2023-08-02)
+
+
+### Features
+
+* **client-sagemaker:** SageMaker Inference Recommender introduces a new API GetScalingConfigurationRecommendation to recommend auto scaling policies based on completed Inference Recommender jobs. ([54b8be8](https://github.com/aws/aws-sdk-js-v3/commit/54b8be8a49e7061cd89bdc79609bb5dc87c72e07))
+
+
+
+
+
+# [3.382.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.381.0...v3.382.0) (2023-08-01)
+
+
+### Features
+
+* **client-sagemaker:** Add Stairs TrafficPattern and FlatInvocations to RecommendationJobStoppingConditions ([aae6569](https://github.com/aws/aws-sdk-js-v3/commit/aae65693a3668ededc6e42a58e964dd212926d44))
+
+
+
+
+
+## [3.379.1](https://github.com/aws/aws-sdk-js-v3/compare/v3.379.0...v3.379.1) (2023-07-28)
+
+**Note:** Version bump only for package @aws-sdk/client-sagemaker
+
+
+
+
+
+# [3.379.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.378.0...v3.379.0) (2023-07-27)
+
+
+### Features
+
+* **client-sagemaker:** Expose ProfilerConfig attribute in SageMaker Search API response. ([d6e75cf](https://github.com/aws/aws-sdk-js-v3/commit/d6e75cfa995eb1df550701a099123e9aa03bf326))
+
+
+
+
+
+# [3.378.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.377.0...v3.378.0) (2023-07-26)
+
+**Note:** Version bump only for package @aws-sdk/client-sagemaker
+
+
+
+
+
+# [3.377.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.376.0...v3.377.0) (2023-07-25)
+
+
+### Features
+
+* **client-sagemaker:** Mark ContentColumn and TargetLabelColumn as required Targets in TextClassificationJobConfig in CreateAutoMLJobV2API ([ee7f0b1](https://github.com/aws/aws-sdk-js-v3/commit/ee7f0b1a7b7a887768c2e9b31c5b600f2556fca2))
+
+
+
+
+
+# [3.374.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.373.1...v3.374.0) (2023-07-20)
+
+
+### Features
+
+* **client-sagemaker:** Cross account support for SageMaker Feature Store ([e4918c1](https://github.com/aws/aws-sdk-js-v3/commit/e4918c1e5a7f8a8d5c4c9dc4de0a12a8707d35cc))
+
+
+
+
+
+# [3.370.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.369.0...v3.370.0) (2023-07-13)
+
+
+### Bug Fixes
+
+* **codegen:** pkg.json merge behavior ([#4954](https://github.com/aws/aws-sdk-js-v3/issues/4954)) ([4fc0b7f](https://github.com/aws/aws-sdk-js-v3/commit/4fc0b7f3961fe8a88c781c8f34269aef12d5f620))
+
+
+### Features
+
+* **client-sagemaker:** Amazon SageMaker Canvas adds WorkspeceSettings support for CanvasAppSettings ([4fd0ab0](https://github.com/aws/aws-sdk-js-v3/commit/4fd0ab0424bc0ef6f65faea2eca58534787164ab))
+
+
+
+
+
 # [3.369.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.368.0...v3.369.0) (2023-07-11)
 
 **Note:** Version bump only for package @aws-sdk/client-sagemaker

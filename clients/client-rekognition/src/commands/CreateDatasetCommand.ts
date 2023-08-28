@@ -38,9 +38,9 @@ export interface CreateDatasetCommandOutput extends CreateDatasetResponse, __Met
  * @public
  * <p>Creates a new Amazon Rekognition Custom Labels dataset. You can create a dataset by using
  *    an Amazon Sagemaker format manifest file or by copying an existing Amazon Rekognition Custom Labels dataset.</p>
- *          <p>To create a training dataset for a project, specify <code>train</code> for the value of
+ *          <p>To create a training dataset for a project, specify <code>TRAIN</code> for the value of
  *       <code>DatasetType</code>. To create the test dataset for a project,
- *       specify <code>test</code> for the value of <code>DatasetType</code>.
+ *       specify <code>TEST</code> for the value of <code>DatasetType</code>.
  *     </p>
  *          <p>The response from <code>CreateDataset</code> is the Amazon Resource Name (ARN) for the dataset.
  *    Creating a dataset takes a while to complete. Use <a>DescribeDataset</a> to check the
@@ -122,6 +122,31 @@ export interface CreateDatasetCommandOutput extends CreateDatasetResponse, __Met
  *
  * @throws {@link RekognitionServiceException}
  * <p>Base exception class for all service exceptions from Rekognition service.</p>
+ *
+ * @example To create an Amazon Rekognition Custom Labels dataset
+ * ```javascript
+ * // Creates an Amazon Rekognition Custom Labels dataset with a manifest file stored in an Amazon S3 bucket.
+ * const input = {
+ *   "DatasetSource": {
+ *     "GroundTruthManifest": {
+ *       "S3Object": {
+ *         "Bucket": "my-bucket",
+ *         "Name": "datasets/flowers_training/manifests/output/output.manifest"
+ *       }
+ *     }
+ *   },
+ *   "DatasetType": "TRAIN",
+ *   "ProjectArn": "arn:aws:rekognition:us-east-1:111122223333:project/my-project/1690474772815"
+ * };
+ * const command = new CreateDatasetCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "DatasetArn": "arn:aws:rekognition:us-east-1:111122223333:project/my-project/dataset/train/1690476084535"
+ * }
+ * *\/
+ * // example id: to-create-an-amazon-rekognition-custom-labels-dataset-1690476237145
+ * ```
  *
  */
 export class CreateDatasetCommand extends $Command<

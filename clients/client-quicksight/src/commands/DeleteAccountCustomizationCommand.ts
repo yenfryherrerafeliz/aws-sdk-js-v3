@@ -13,7 +13,7 @@ import {
   SerdeContext as __SerdeContext,
 } from "@smithy/types";
 
-import { DeleteAccountCustomizationRequest, DeleteAccountCustomizationResponse } from "../models/models_2";
+import { DeleteAccountCustomizationRequest, DeleteAccountCustomizationResponse } from "../models/models_3";
 import { de_DeleteAccountCustomizationCommand, se_DeleteAccountCustomizationCommand } from "../protocols/Aws_restJson1";
 import { QuickSightClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../QuickSightClient";
 
@@ -77,6 +77,12 @@ export interface DeleteAccountCustomizationCommandOutput extends DeleteAccountCu
  *
  * @throws {@link InvalidParameterValueException} (client fault)
  *  <p>One or more parameters has a value that isn't valid.</p>
+ *
+ * @throws {@link LimitExceededException} (client fault)
+ *  <p>A limit is exceeded.</p>
+ *
+ * @throws {@link PreconditionNotMetException} (client fault)
+ *  <p>One or more preconditions aren't met.</p>
  *
  * @throws {@link ResourceNotFoundException} (client fault)
  *  <p>One or more resources can't be found.</p>

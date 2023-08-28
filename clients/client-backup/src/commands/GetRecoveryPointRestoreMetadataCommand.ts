@@ -55,6 +55,7 @@ export interface GetRecoveryPointRestoreMetadataCommandOutput
  * const input = { // GetRecoveryPointRestoreMetadataInput
  *   BackupVaultName: "STRING_VALUE", // required
  *   RecoveryPointArn: "STRING_VALUE", // required
+ *   BackupVaultAccountId: "STRING_VALUE",
  * };
  * const command = new GetRecoveryPointRestoreMetadataCommand(input);
  * const response = await client.send(command);

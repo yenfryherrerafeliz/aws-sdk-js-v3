@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -144,6 +145,10 @@ import {
   DeleteCustomDBEngineVersionCommandInput,
   DeleteCustomDBEngineVersionCommandOutput,
 } from "./commands/DeleteCustomDBEngineVersionCommand";
+import {
+  DeleteDBClusterAutomatedBackupCommandInput,
+  DeleteDBClusterAutomatedBackupCommandOutput,
+} from "./commands/DeleteDBClusterAutomatedBackupCommand";
 import { DeleteDBClusterCommandInput, DeleteDBClusterCommandOutput } from "./commands/DeleteDBClusterCommand";
 import {
   DeleteDBClusterEndpointCommandInput,
@@ -205,6 +210,10 @@ import {
   DescribeCertificatesCommandInput,
   DescribeCertificatesCommandOutput,
 } from "./commands/DescribeCertificatesCommand";
+import {
+  DescribeDBClusterAutomatedBackupsCommandInput,
+  DescribeDBClusterAutomatedBackupsCommandOutput,
+} from "./commands/DescribeDBClusterAutomatedBackupsCommand";
 import {
   DescribeDBClusterBacktracksCommandInput,
   DescribeDBClusterBacktracksCommandOutput,
@@ -502,6 +511,10 @@ import {
   SwitchoverBlueGreenDeploymentCommandOutput,
 } from "./commands/SwitchoverBlueGreenDeploymentCommand";
 import {
+  SwitchoverGlobalClusterCommandInput,
+  SwitchoverGlobalClusterCommandOutput,
+} from "./commands/SwitchoverGlobalClusterCommand";
+import {
   SwitchoverReadReplicaCommandInput,
   SwitchoverReadReplicaCommandOutput,
 } from "./commands/SwitchoverReadReplicaCommand";
@@ -512,6 +525,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -551,6 +565,7 @@ export type ServiceInputTypes =
   | CreateOptionGroupCommandInput
   | DeleteBlueGreenDeploymentCommandInput
   | DeleteCustomDBEngineVersionCommandInput
+  | DeleteDBClusterAutomatedBackupCommandInput
   | DeleteDBClusterCommandInput
   | DeleteDBClusterEndpointCommandInput
   | DeleteDBClusterParameterGroupCommandInput
@@ -570,6 +585,7 @@ export type ServiceInputTypes =
   | DescribeAccountAttributesCommandInput
   | DescribeBlueGreenDeploymentsCommandInput
   | DescribeCertificatesCommandInput
+  | DescribeDBClusterAutomatedBackupsCommandInput
   | DescribeDBClusterBacktracksCommandInput
   | DescribeDBClusterEndpointsCommandInput
   | DescribeDBClusterParameterGroupsCommandInput
@@ -659,6 +675,7 @@ export type ServiceInputTypes =
   | StopDBInstanceAutomatedBackupsReplicationCommandInput
   | StopDBInstanceCommandInput
   | SwitchoverBlueGreenDeploymentCommandInput
+  | SwitchoverGlobalClusterCommandInput
   | SwitchoverReadReplicaCommandInput;
 
 /**
@@ -697,6 +714,7 @@ export type ServiceOutputTypes =
   | CreateOptionGroupCommandOutput
   | DeleteBlueGreenDeploymentCommandOutput
   | DeleteCustomDBEngineVersionCommandOutput
+  | DeleteDBClusterAutomatedBackupCommandOutput
   | DeleteDBClusterCommandOutput
   | DeleteDBClusterEndpointCommandOutput
   | DeleteDBClusterParameterGroupCommandOutput
@@ -716,6 +734,7 @@ export type ServiceOutputTypes =
   | DescribeAccountAttributesCommandOutput
   | DescribeBlueGreenDeploymentsCommandOutput
   | DescribeCertificatesCommandOutput
+  | DescribeDBClusterAutomatedBackupsCommandOutput
   | DescribeDBClusterBacktracksCommandOutput
   | DescribeDBClusterEndpointsCommandOutput
   | DescribeDBClusterParameterGroupsCommandOutput
@@ -805,6 +824,7 @@ export type ServiceOutputTypes =
   | StopDBInstanceAutomatedBackupsReplicationCommandOutput
   | StopDBInstanceCommandOutput
   | SwitchoverBlueGreenDeploymentCommandOutput
+  | SwitchoverGlobalClusterCommandOutput
   | SwitchoverReadReplicaCommandOutput;
 
 /**
@@ -926,6 +946,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -955,6 +980,7 @@ export interface RDSClientConfig extends RDSClientConfigType {}
  */
 export type RDSClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -1036,8 +1062,8 @@ export class RDSClient extends __Client<
    */
   readonly config: RDSClientResolvedConfig;
 
-  constructor(configuration: RDSClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<RDSClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -1045,8 +1071,9 @@ export class RDSClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

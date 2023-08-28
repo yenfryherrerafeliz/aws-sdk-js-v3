@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.400.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.399.0...v3.400.0) (2023-08-25)
+
+
+### Bug Fixes
+
+* **middleware-flexible-checksums:** split stream when validating response checksum ([#5126](https://github.com/aws/aws-sdk-js-v3/issues/5126)) ([e4455a7](https://github.com/aws/aws-sdk-js-v3/commit/e4455a7b72e373e8fd1bb0fc616555b4868dd586))
+
+
+
+
+
+# [3.398.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.397.0...v3.398.0) (2023-08-23)
+
+**Note:** Version bump only for package @aws-sdk/middleware-flexible-checksums
+
+
+
+
+
+# [3.391.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.390.0...v3.391.0) (2023-08-14)
+
+**Note:** Version bump only for package @aws-sdk/middleware-flexible-checksums
+
+
+
+
+
+# [3.387.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.386.0...v3.387.0) (2023-08-08)
+
+**Note:** Version bump only for package @aws-sdk/middleware-flexible-checksums
+
+
+
+
+
+# [3.383.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.382.0...v3.383.0) (2023-08-02)
+
+
+### Bug Fixes
+
+* **middleware-flexible-checksums:** await validateChecksumFromResponse call ([#5043](https://github.com/aws/aws-sdk-js-v3/issues/5043)) ([a11ad5f](https://github.com/aws/aws-sdk-js-v3/commit/a11ad5f215f4ba6905a3825db55c6e972c4bfecb))
+
+
+
+
+
+# [3.378.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.377.0...v3.378.0) (2023-07-26)
+
+**Note:** Version bump only for package @aws-sdk/middleware-flexible-checksums
+
+
+
+
+
+# [3.374.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.373.1...v3.374.0) (2023-07-20)
+
+
+### Bug Fixes
+
+* **packages:** fix migrated package imports ([#4990](https://github.com/aws/aws-sdk-js-v3/issues/4990)) ([d800f78](https://github.com/aws/aws-sdk-js-v3/commit/d800f78377a5fbfddda364a152fdccb6b46f4648))
+
+
+
+
+
+# [3.370.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.369.0...v3.370.0) (2023-07-13)
+
+**Note:** Version bump only for package @aws-sdk/middleware-flexible-checksums
+
+
+
+
+
 # [3.369.0](https://github.com/aws/aws-sdk-js-v3/compare/v3.368.0...v3.369.0) (2023-07-11)
 
 **Note:** Version bump only for package @aws-sdk/middleware-flexible-checksums

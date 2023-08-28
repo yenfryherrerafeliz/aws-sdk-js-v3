@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Properties;
 import software.amazon.smithy.codegen.core.SymbolDependency;
 import software.amazon.smithy.codegen.core.SymbolDependencyContainer;
+import software.amazon.smithy.typescript.codegen.PackageContainer;
 import software.amazon.smithy.utils.IoUtils;
 import software.amazon.smithy.utils.SmithyInternalApi;
 
@@ -35,7 +36,7 @@ import software.amazon.smithy.utils.SmithyInternalApi;
  * this package.
  */
 @SmithyInternalApi
-public enum AwsDependency implements SymbolDependencyContainer {
+public enum AwsDependency implements PackageContainer, SymbolDependencyContainer {
 
     MIDDLEWARE_SIGNING(NORMAL_DEPENDENCY, "@aws-sdk/middleware-signing"),
     MIDDLEWARE_TOKEN(NORMAL_DEPENDENCY, "@aws-sdk/middleware-token"),
@@ -76,9 +77,9 @@ public enum AwsDependency implements SymbolDependencyContainer {
     MIDDLEWARE_WEBSOCKET(NORMAL_DEPENDENCY, "@aws-sdk/middleware-websocket"),
 
     // Conditionally added when httpChecksum trait is present
-    MD5_BROWSER(NORMAL_DEPENDENCY, "@aws-sdk/md5-js"),
-    STREAM_HASHER_NODE(NORMAL_DEPENDENCY, "@aws-sdk/hash-stream-node"),
-    STREAM_HASHER_BROWSER(NORMAL_DEPENDENCY, "@aws-sdk/hash-blob-browser"),
+    @Deprecated MD5_BROWSER(NORMAL_DEPENDENCY, "@aws-sdk/md5-js", "3.374.0"),
+    @Deprecated STREAM_HASHER_NODE(NORMAL_DEPENDENCY, "@aws-sdk/hash-stream-node", "3.374.0"),
+    @Deprecated STREAM_HASHER_BROWSER(NORMAL_DEPENDENCY, "@aws-sdk/hash-blob-browser", "3.374.0"),
     FLEXIBLE_CHECKSUMS_MIDDLEWARE(NORMAL_DEPENDENCY, "@aws-sdk/middleware-flexible-checksums"),
 
     // Conditionally added when auth trait is present
@@ -102,6 +103,11 @@ public enum AwsDependency implements SymbolDependencyContainer {
     @Override
     public List<SymbolDependency> getDependencies() {
         return Collections.singletonList(dependency);
+    }
+
+    @Override
+    public String getPackageName() {
+        return this.packageName;
     }
 
     private static final class SdkVersion {

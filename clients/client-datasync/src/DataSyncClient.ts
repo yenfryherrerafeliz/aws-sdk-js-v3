@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -55,6 +56,10 @@ import {
   CancelTaskExecutionCommandOutput,
 } from "./commands/CancelTaskExecutionCommand";
 import { CreateAgentCommandInput, CreateAgentCommandOutput } from "./commands/CreateAgentCommand";
+import {
+  CreateLocationAzureBlobCommandInput,
+  CreateLocationAzureBlobCommandOutput,
+} from "./commands/CreateLocationAzureBlobCommand";
 import { CreateLocationEfsCommandInput, CreateLocationEfsCommandOutput } from "./commands/CreateLocationEfsCommand";
 import {
   CreateLocationFsxLustreCommandInput,
@@ -89,6 +94,10 @@ import {
   DescribeDiscoveryJobCommandInput,
   DescribeDiscoveryJobCommandOutput,
 } from "./commands/DescribeDiscoveryJobCommand";
+import {
+  DescribeLocationAzureBlobCommandInput,
+  DescribeLocationAzureBlobCommandOutput,
+} from "./commands/DescribeLocationAzureBlobCommand";
 import {
   DescribeLocationEfsCommandInput,
   DescribeLocationEfsCommandOutput,
@@ -168,6 +177,10 @@ import { TagResourceCommandInput, TagResourceCommandOutput } from "./commands/Ta
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "./commands/UntagResourceCommand";
 import { UpdateAgentCommandInput, UpdateAgentCommandOutput } from "./commands/UpdateAgentCommand";
 import { UpdateDiscoveryJobCommandInput, UpdateDiscoveryJobCommandOutput } from "./commands/UpdateDiscoveryJobCommand";
+import {
+  UpdateLocationAzureBlobCommandInput,
+  UpdateLocationAzureBlobCommandOutput,
+} from "./commands/UpdateLocationAzureBlobCommand";
 import { UpdateLocationHdfsCommandInput, UpdateLocationHdfsCommandOutput } from "./commands/UpdateLocationHdfsCommand";
 import { UpdateLocationNfsCommandInput, UpdateLocationNfsCommandOutput } from "./commands/UpdateLocationNfsCommand";
 import {
@@ -191,6 +204,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -201,6 +215,7 @@ export type ServiceInputTypes =
   | AddStorageSystemCommandInput
   | CancelTaskExecutionCommandInput
   | CreateAgentCommandInput
+  | CreateLocationAzureBlobCommandInput
   | CreateLocationEfsCommandInput
   | CreateLocationFsxLustreCommandInput
   | CreateLocationFsxOntapCommandInput
@@ -217,6 +232,7 @@ export type ServiceInputTypes =
   | DeleteTaskCommandInput
   | DescribeAgentCommandInput
   | DescribeDiscoveryJobCommandInput
+  | DescribeLocationAzureBlobCommandInput
   | DescribeLocationEfsCommandInput
   | DescribeLocationFsxLustreCommandInput
   | DescribeLocationFsxOntapCommandInput
@@ -248,6 +264,7 @@ export type ServiceInputTypes =
   | UntagResourceCommandInput
   | UpdateAgentCommandInput
   | UpdateDiscoveryJobCommandInput
+  | UpdateLocationAzureBlobCommandInput
   | UpdateLocationHdfsCommandInput
   | UpdateLocationNfsCommandInput
   | UpdateLocationObjectStorageCommandInput
@@ -263,6 +280,7 @@ export type ServiceOutputTypes =
   | AddStorageSystemCommandOutput
   | CancelTaskExecutionCommandOutput
   | CreateAgentCommandOutput
+  | CreateLocationAzureBlobCommandOutput
   | CreateLocationEfsCommandOutput
   | CreateLocationFsxLustreCommandOutput
   | CreateLocationFsxOntapCommandOutput
@@ -279,6 +297,7 @@ export type ServiceOutputTypes =
   | DeleteTaskCommandOutput
   | DescribeAgentCommandOutput
   | DescribeDiscoveryJobCommandOutput
+  | DescribeLocationAzureBlobCommandOutput
   | DescribeLocationEfsCommandOutput
   | DescribeLocationFsxLustreCommandOutput
   | DescribeLocationFsxOntapCommandOutput
@@ -310,6 +329,7 @@ export type ServiceOutputTypes =
   | UntagResourceCommandOutput
   | UpdateAgentCommandOutput
   | UpdateDiscoveryJobCommandOutput
+  | UpdateLocationAzureBlobCommandOutput
   | UpdateLocationHdfsCommandOutput
   | UpdateLocationNfsCommandOutput
   | UpdateLocationObjectStorageCommandOutput
@@ -437,6 +457,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -466,6 +491,7 @@ export interface DataSyncClientConfig extends DataSyncClientConfigType {}
  */
 export type DataSyncClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -483,9 +509,9 @@ export interface DataSyncClientResolvedConfig extends DataSyncClientResolvedConf
 /**
  * @public
  * <fullname>DataSync</fullname>
- *          <p>DataSync is a managed data transfer service that makes it simpler for you
- *       to automate moving data between on-premises storage and Amazon Web Services storage services.
- *       You also can use DataSync to transfer data between other cloud providers and Amazon Web Services storage services.</p>
+ *          <p>DataSync is an online data movement and discovery service that simplifies data migration
+ *       and helps you quickly, easily, and securely transfer your file or object data to, from, and
+ *       between Amazon Web Services storage services.</p>
  *          <p>This API interface reference includes documentation for using DataSync
  *       programmatically. For complete information, see the <i>
  *                <a href="https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html">DataSync User
@@ -503,8 +529,8 @@ export class DataSyncClient extends __Client<
    */
   readonly config: DataSyncClientResolvedConfig;
 
-  constructor(configuration: DataSyncClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<DataSyncClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -512,8 +538,9 @@ export class DataSyncClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

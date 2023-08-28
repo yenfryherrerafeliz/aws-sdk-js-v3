@@ -147,6 +147,10 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                   CustomLabel: "STRING_VALUE",
  *                 },
  *                 DateTimeFormat: "STRING_VALUE",
+ *                 InfoIconLabelOptions: { // SheetControlInfoIconLabelOptions
+ *                   Visibility: "HIDDEN" || "VISIBLE",
+ *                   InfoIconText: "STRING_VALUE",
+ *                 },
  *               },
  *             },
  *             List: { // ParameterListControl
@@ -174,6 +178,10 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     FontStyle: "NORMAL" || "ITALIC",
  *                   },
  *                   CustomLabel: "STRING_VALUE",
+ *                 },
+ *                 InfoIconLabelOptions: {
+ *                   Visibility: "HIDDEN" || "VISIBLE",
+ *                   InfoIconText: "STRING_VALUE",
  *                 },
  *               },
  *               Type: "MULTI_SELECT" || "SINGLE_SELECT",
@@ -221,6 +229,10 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                   },
  *                   CustomLabel: "STRING_VALUE",
  *                 },
+ *                 InfoIconLabelOptions: {
+ *                   Visibility: "HIDDEN" || "VISIBLE",
+ *                   InfoIconText: "STRING_VALUE",
+ *                 },
  *               },
  *               Type: "MULTI_SELECT" || "SINGLE_SELECT",
  *               SelectableValues: {
@@ -267,6 +279,10 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                 PlaceholderOptions: { // TextControlPlaceholderOptions
  *                   Visibility: "HIDDEN" || "VISIBLE",
  *                 },
+ *                 InfoIconLabelOptions: {
+ *                   Visibility: "HIDDEN" || "VISIBLE",
+ *                   InfoIconText: "STRING_VALUE",
+ *                 },
  *               },
  *             },
  *             TextArea: { // ParameterTextAreaControl
@@ -293,6 +309,10 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                 PlaceholderOptions: {
  *                   Visibility: "HIDDEN" || "VISIBLE",
  *                 },
+ *                 InfoIconLabelOptions: {
+ *                   Visibility: "HIDDEN" || "VISIBLE",
+ *                   InfoIconText: "STRING_VALUE",
+ *                 },
  *               },
  *             },
  *             Slider: { // ParameterSliderControl
@@ -301,6 +321,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *               SourceParameterName: "STRING_VALUE", // required
  *               DisplayOptions: { // SliderControlDisplayOptions
  *                 TitleOptions: "<LabelOptions>",
+ *                 InfoIconLabelOptions: "<SheetControlInfoIconLabelOptions>",
  *               },
  *               MaximumValue: Number("double"), // required
  *               MinimumValue: Number("double"), // required
@@ -317,6 +338,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *               DisplayOptions: {
  *                 TitleOptions: "<LabelOptions>",
  *                 DateTimeFormat: "STRING_VALUE",
+ *                 InfoIconLabelOptions: "<SheetControlInfoIconLabelOptions>",
  *               },
  *               Type: "SINGLE_VALUED" || "DATE_RANGE",
  *             },
@@ -332,6 +354,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                   Visibility: "HIDDEN" || "VISIBLE",
  *                 },
  *                 TitleOptions: "<LabelOptions>",
+ *                 InfoIconLabelOptions: "<SheetControlInfoIconLabelOptions>",
  *               },
  *               Type: "MULTI_SELECT" || "SINGLE_SELECT",
  *               SelectableValues: { // FilterSelectableValues
@@ -360,6 +383,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                   Visibility: "HIDDEN" || "VISIBLE",
  *                 },
  *                 TitleOptions: "<LabelOptions>",
+ *                 InfoIconLabelOptions: "<SheetControlInfoIconLabelOptions>",
  *               },
  *               Type: "MULTI_SELECT" || "SINGLE_SELECT",
  *               SelectableValues: {
@@ -385,6 +409,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                 PlaceholderOptions: {
  *                   Visibility: "HIDDEN" || "VISIBLE",
  *                 },
+ *                 InfoIconLabelOptions: "<SheetControlInfoIconLabelOptions>",
  *               },
  *             },
  *             TextArea: { // FilterTextAreaControl
@@ -397,6 +422,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                 PlaceholderOptions: {
  *                   Visibility: "HIDDEN" || "VISIBLE",
  *                 },
+ *                 InfoIconLabelOptions: "<SheetControlInfoIconLabelOptions>",
  *               },
  *             },
  *             Slider: { // FilterSliderControl
@@ -405,6 +431,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *               SourceFilterId: "STRING_VALUE", // required
  *               DisplayOptions: {
  *                 TitleOptions: "<LabelOptions>",
+ *                 InfoIconLabelOptions: "<SheetControlInfoIconLabelOptions>",
  *               },
  *               Type: "SINGLE_POINT" || "RANGE",
  *               MaximumValue: Number("double"), // required
@@ -418,6 +445,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *               DisplayOptions: { // RelativeDateTimeControlDisplayOptions
  *                 TitleOptions: "<LabelOptions>",
  *                 DateTimeFormat: "STRING_VALUE",
+ *                 InfoIconLabelOptions: "<SheetControlInfoIconLabelOptions>",
  *               },
  *             },
  *           },
@@ -758,6 +786,10 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                           },
  *                           CategoricalAggregationFunction: "COUNT" || "DISTINCT_COUNT",
  *                           DateAggregationFunction: "COUNT" || "DISTINCT_COUNT" || "MIN" || "MAX",
+ *                           AttributeAggregationFunction: { // AttributeAggregationFunction
+ *                             SimpleAttributeAggregation: "UNIQUE_VALUE",
+ *                             ValueForMultipleValues: "STRING_VALUE",
+ *                           },
  *                         },
  *                       },
  *                     },
@@ -774,7 +806,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     FontConfiguration: "<FontConfiguration>",
  *                     TextWrap: "NONE" || "WRAP",
  *                     HorizontalTextAlignment: "LEFT" || "CENTER" || "RIGHT" || "AUTO",
- *                     VerticalTextAlignment: "TOP" || "MIDDLE" || "BOTTOM",
+ *                     VerticalTextAlignment: "TOP" || "MIDDLE" || "BOTTOM" || "AUTO",
  *                     BackgroundColor: "STRING_VALUE",
  *                     Height: Number("int"),
  *                     Border: { // GlobalTableBorderOptions
@@ -814,7 +846,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     FontConfiguration: "<FontConfiguration>",
  *                     TextWrap: "NONE" || "WRAP",
  *                     HorizontalTextAlignment: "LEFT" || "CENTER" || "RIGHT" || "AUTO",
- *                     VerticalTextAlignment: "TOP" || "MIDDLE" || "BOTTOM",
+ *                     VerticalTextAlignment: "TOP" || "MIDDLE" || "BOTTOM" || "AUTO",
  *                     BackgroundColor: "STRING_VALUE",
  *                     Height: Number("int"),
  *                     Border: {
@@ -834,6 +866,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     RowAlternateColors: [ // RowAlternateColorList
  *                       "STRING_VALUE",
  *                     ],
+ *                     UsePrimaryBackgroundColor: "ENABLED" || "DISABLED",
  *                   },
  *                 },
  *                 TotalOptions: { // TotalOptions
@@ -846,7 +879,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     FontConfiguration: "<FontConfiguration>",
  *                     TextWrap: "NONE" || "WRAP",
  *                     HorizontalTextAlignment: "LEFT" || "CENTER" || "RIGHT" || "AUTO",
- *                     VerticalTextAlignment: "TOP" || "MIDDLE" || "BOTTOM",
+ *                     VerticalTextAlignment: "TOP" || "MIDDLE" || "BOTTOM" || "AUTO",
  *                     BackgroundColor: "STRING_VALUE",
  *                     Height: Number("int"),
  *                     Border: {
@@ -893,6 +926,11 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                   Order: [ // FieldOrderList
  *                     "STRING_VALUE",
  *                   ],
+ *                   PinnedFieldOptions: { // TablePinnedFieldOptions
+ *                     PinnedLeftFields: [ // TableFieldOrderList
+ *                       "STRING_VALUE",
+ *                     ],
+ *                   },
  *                 },
  *                 PaginatedReportOptions: { // TablePaginatedReportOptions
  *                   VerticalOverflowVisibility: "HIDDEN" || "VISIBLE",
@@ -1218,6 +1256,10 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                             },
  *                             CategoricalAggregationFunction: "COUNT" || "DISTINCT_COUNT",
  *                             DateAggregationFunction: "COUNT" || "DISTINCT_COUNT" || "MIN" || "MAX",
+ *                             AttributeAggregationFunction: {
+ *                               SimpleAttributeAggregation: "UNIQUE_VALUE",
+ *                               ValueForMultipleValues: "STRING_VALUE",
+ *                             },
  *                           },
  *                         },
  *                         DataPath: { // DataPathSort
@@ -1243,7 +1285,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     FontConfiguration: "<FontConfiguration>",
  *                     TextWrap: "NONE" || "WRAP",
  *                     HorizontalTextAlignment: "LEFT" || "CENTER" || "RIGHT" || "AUTO",
- *                     VerticalTextAlignment: "TOP" || "MIDDLE" || "BOTTOM",
+ *                     VerticalTextAlignment: "TOP" || "MIDDLE" || "BOTTOM" || "AUTO",
  *                     BackgroundColor: "STRING_VALUE",
  *                     Height: Number("int"),
  *                     Border: {
@@ -1263,7 +1305,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     FontConfiguration: "<FontConfiguration>",
  *                     TextWrap: "NONE" || "WRAP",
  *                     HorizontalTextAlignment: "LEFT" || "CENTER" || "RIGHT" || "AUTO",
- *                     VerticalTextAlignment: "TOP" || "MIDDLE" || "BOTTOM",
+ *                     VerticalTextAlignment: "TOP" || "MIDDLE" || "BOTTOM" || "AUTO",
  *                     BackgroundColor: "STRING_VALUE",
  *                     Height: Number("int"),
  *                     Border: {
@@ -1285,8 +1327,15 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     RowAlternateColors: [
  *                       "STRING_VALUE",
  *                     ],
+ *                     UsePrimaryBackgroundColor: "ENABLED" || "DISABLED",
  *                   },
  *                   CollapsedRowDimensionsVisibility: "HIDDEN" || "VISIBLE",
+ *                   RowsLayout: "TABULAR" || "HIERARCHY",
+ *                   RowsLabelOptions: { // PivotTableRowsLabelOptions
+ *                     Visibility: "HIDDEN" || "VISIBLE",
+ *                     CustomLabel: "STRING_VALUE",
+ *                   },
+ *                   DefaultCellWidth: "STRING_VALUE",
  *                 },
  *                 TotalOptions: { // PivotTableTotalOptions
  *                   RowSubtotalOptions: { // SubtotalOptions
@@ -1301,6 +1350,11 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     TotalCellStyle: "<TableCellStyle>",
  *                     ValueCellStyle: "<TableCellStyle>",
  *                     MetricHeaderCellStyle: "<TableCellStyle>",
+ *                     StyleTargets: [ // TableStyleTargetList
+ *                       { // TableStyleTarget
+ *                         CellType: "TOTAL" || "METRIC_HEADER" || "VALUE", // required
+ *                       },
+ *                     ],
  *                   },
  *                   ColumnSubtotalOptions: {
  *                     TotalsVisibility: "HIDDEN" || "VISIBLE",
@@ -1314,6 +1368,11 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     TotalCellStyle: "<TableCellStyle>",
  *                     ValueCellStyle: "<TableCellStyle>",
  *                     MetricHeaderCellStyle: "<TableCellStyle>",
+ *                     StyleTargets: [
+ *                       {
+ *                         CellType: "TOTAL" || "METRIC_HEADER" || "VALUE", // required
+ *                       },
+ *                     ],
  *                   },
  *                   RowTotalOptions: { // PivotTotalOptions
  *                     TotalsVisibility: "HIDDEN" || "VISIBLE",
@@ -1609,6 +1668,10 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                           NumericalAggregationFunction: "<NumericalAggregationFunction>",
  *                           CategoricalAggregationFunction: "COUNT" || "DISTINCT_COUNT",
  *                           DateAggregationFunction: "COUNT" || "DISTINCT_COUNT" || "MIN" || "MAX",
+ *                           AttributeAggregationFunction: {
+ *                             SimpleAttributeAggregation: "UNIQUE_VALUE",
+ *                             ValueForMultipleValues: "STRING_VALUE",
+ *                           },
  *                         },
  *                       },
  *                     },
@@ -1630,6 +1693,10 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                           NumericalAggregationFunction: "<NumericalAggregationFunction>",
  *                           CategoricalAggregationFunction: "COUNT" || "DISTINCT_COUNT",
  *                           DateAggregationFunction: "COUNT" || "DISTINCT_COUNT" || "MIN" || "MAX",
+ *                           AttributeAggregationFunction: {
+ *                             SimpleAttributeAggregation: "UNIQUE_VALUE",
+ *                             ValueForMultipleValues: "STRING_VALUE",
+ *                           },
  *                         },
  *                       },
  *                     },
@@ -1651,6 +1718,10 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                           NumericalAggregationFunction: "<NumericalAggregationFunction>",
  *                           CategoricalAggregationFunction: "COUNT" || "DISTINCT_COUNT",
  *                           DateAggregationFunction: "COUNT" || "DISTINCT_COUNT" || "MIN" || "MAX",
+ *                           AttributeAggregationFunction: {
+ *                             SimpleAttributeAggregation: "UNIQUE_VALUE",
+ *                             ValueForMultipleValues: "STRING_VALUE",
+ *                           },
  *                         },
  *                       },
  *                     },
@@ -3758,7 +3829,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     TopBottomRanked: { // TopBottomRankedComputation
  *                       ComputationId: "STRING_VALUE", // required
  *                       Name: "STRING_VALUE",
- *                       Category: "<DimensionField>", // required
+ *                       Category: "<DimensionField>",
  *                       Value: "<MeasureField>",
  *                       ResultSize: Number("int"),
  *                       Type: "TOP" || "BOTTOM", // required
@@ -3766,8 +3837,8 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     TopBottomMovers: { // TopBottomMoversComputation
  *                       ComputationId: "STRING_VALUE", // required
  *                       Name: "STRING_VALUE",
- *                       Time: "<DimensionField>", // required
- *                       Category: "<DimensionField>", // required
+ *                       Time: "<DimensionField>",
+ *                       Category: "<DimensionField>",
  *                       Value: "<MeasureField>",
  *                       MoverSize: Number("int"),
  *                       SortOrder: "PERCENT_DIFFERENCE" || "ABSOLUTE_DIFFERENCE",
@@ -3776,51 +3847,51 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *                     TotalAggregation: { // TotalAggregationComputation
  *                       ComputationId: "STRING_VALUE", // required
  *                       Name: "STRING_VALUE",
- *                       Value: "<MeasureField>", // required
+ *                       Value: "<MeasureField>",
  *                     },
  *                     MaximumMinimum: { // MaximumMinimumComputation
  *                       ComputationId: "STRING_VALUE", // required
  *                       Name: "STRING_VALUE",
- *                       Time: "<DimensionField>", // required
+ *                       Time: "<DimensionField>",
  *                       Value: "<MeasureField>",
  *                       Type: "MAXIMUM" || "MINIMUM", // required
  *                     },
  *                     MetricComparison: { // MetricComparisonComputation
  *                       ComputationId: "STRING_VALUE", // required
  *                       Name: "STRING_VALUE",
- *                       Time: "<DimensionField>", // required
- *                       FromValue: "<MeasureField>", // required
- *                       TargetValue: "<MeasureField>", // required
+ *                       Time: "<DimensionField>",
+ *                       FromValue: "<MeasureField>",
+ *                       TargetValue: "<MeasureField>",
  *                     },
  *                     PeriodOverPeriod: { // PeriodOverPeriodComputation
  *                       ComputationId: "STRING_VALUE", // required
  *                       Name: "STRING_VALUE",
- *                       Time: "<DimensionField>", // required
+ *                       Time: "<DimensionField>",
  *                       Value: "<MeasureField>",
  *                     },
  *                     PeriodToDate: { // PeriodToDateComputation
  *                       ComputationId: "STRING_VALUE", // required
  *                       Name: "STRING_VALUE",
- *                       Time: "<DimensionField>", // required
+ *                       Time: "<DimensionField>",
  *                       Value: "<MeasureField>",
  *                       PeriodTimeGranularity: "YEAR" || "QUARTER" || "MONTH" || "WEEK" || "DAY" || "HOUR" || "MINUTE" || "SECOND" || "MILLISECOND",
  *                     },
  *                     GrowthRate: { // GrowthRateComputation
  *                       ComputationId: "STRING_VALUE", // required
  *                       Name: "STRING_VALUE",
- *                       Time: "<DimensionField>", // required
+ *                       Time: "<DimensionField>",
  *                       Value: "<MeasureField>",
  *                       PeriodSize: Number("int"),
  *                     },
  *                     UniqueValues: { // UniqueValuesComputation
  *                       ComputationId: "STRING_VALUE", // required
  *                       Name: "STRING_VALUE",
- *                       Category: "<DimensionField>", // required
+ *                       Category: "<DimensionField>",
  *                     },
  *                     Forecast: { // ForecastComputation
  *                       ComputationId: "STRING_VALUE", // required
  *                       Name: "STRING_VALUE",
- *                       Time: "<DimensionField>", // required
+ *                       Time: "<DimensionField>",
  *                       Value: "<MeasureField>",
  *                       PeriodsForward: Number("int"),
  *                       PeriodsBackward: Number("int"),
@@ -4375,6 +4446,7 @@ export interface CreateAnalysisCommandOutput extends CreateAnalysisResponse, __M
  *               },
  *             ],
  *           },
+ *           AllSheets: {},
  *         },
  *         Status: "ENABLED" || "DISABLED",
  *         CrossDataset: "ALL_DATASETS" || "SINGLE_DATASET", // required

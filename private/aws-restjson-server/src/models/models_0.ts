@@ -17,7 +17,7 @@ import {
   ExceptionOptionType as __ExceptionOptionType,
   LazyJsonString as __LazyJsonString,
 } from "@smithy/smithy-client";
-import { DocumentType as __DocumentType } from "@smithy/types";
+import { DocumentType as __DocumentType, StreamingBlobTypes } from "@smithy/types";
 import { Readable } from "stream";
 
 /**
@@ -1190,11 +1190,13 @@ export interface HttpRequestWithLabelsInput {
   float: number | undefined;
   double: number | undefined;
   /**
+   * @public
    * Serialized in the path as true or false.
    */
   boolean: boolean | undefined;
 
   /**
+   * @public
    * Note that this member has no format, so it's serialized as an RFC 3399 date-time.
    */
   timestamp: Date | undefined;
@@ -1918,6 +1920,7 @@ export interface JsonListsInputOutput {
   enumList?: (FooEnum | string)[];
   intEnumList?: (IntegerEnum | number)[];
   /**
+   * @public
    * A list of lists of strings.
    */
   nestedStringList?: string[][];
@@ -2453,6 +2456,9 @@ export namespace MyUnion {
     $unknown?: never;
   }
 
+  /**
+   * @public
+   */
   export interface $UnknownMember {
     stringValue?: never;
     booleanValue?: never;
@@ -2599,6 +2605,7 @@ export namespace MyUnion {
  */
 export interface UnionInputOutput {
   /**
+   * @public
    * A union with a representative set of types for members.
    */
   contents?: MyUnion;
@@ -3726,6 +3733,9 @@ export namespace SimpleUnion {
     $unknown?: never;
   }
 
+  /**
+   * @public
+   */
   export interface $UnknownMember {
     int?: never;
     string?: never;
@@ -4156,6 +4166,7 @@ export type PlayerAction = PlayerAction.QuitMember | PlayerAction.$UnknownMember
  */
 export namespace PlayerAction {
   /**
+   * @public
    * Quit the game.
    */
   export interface QuitMember {
@@ -4163,6 +4174,9 @@ export namespace PlayerAction {
     $unknown?: never;
   }
 
+  /**
+   * @public
+   */
   export interface $UnknownMember {
     quit?: never;
     $unknown: [string, any];
@@ -4306,6 +4320,9 @@ export namespace UnionWithJsonName {
     $unknown?: never;
   }
 
+  /**
+   * @public
+   */
   export interface $UnknownMember {
     foo?: never;
     bar?: never;
@@ -4700,7 +4717,7 @@ export namespace SimpleScalarPropertiesInputOutput {
  */
 export interface StreamingTraitsInputOutput {
   foo?: string;
-  blob?: Readable | ReadableStream | Blob;
+  blob?: StreamingBlobTypes;
 }
 
 /**
@@ -4752,7 +4769,7 @@ export namespace StreamingTraitsInputOutput {
  */
 export interface StreamingTraitsRequireLengthInput {
   foo?: string;
-  blob?: Readable | ReadableStream | Blob;
+  blob?: StreamingBlobTypes;
 }
 
 /**
@@ -4804,7 +4821,7 @@ export namespace StreamingTraitsRequireLengthInput {
  */
 export interface StreamingTraitsWithMediaTypeInputOutput {
   foo?: string;
-  blob?: Readable | ReadableStream | Blob;
+  blob?: StreamingBlobTypes;
 }
 
 /**

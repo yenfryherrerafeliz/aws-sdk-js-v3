@@ -64,7 +64,7 @@ export interface ListResolverEndpointIpAddressesCommandOutput
  * //       SubnetId: "STRING_VALUE",
  * //       Ip: "STRING_VALUE",
  * //       Ipv6: "STRING_VALUE",
- * //       Status: "CREATING" || "FAILED_CREATION" || "ATTACHING" || "ATTACHED" || "REMAP_DETACHING" || "REMAP_ATTACHING" || "DETACHING" || "FAILED_RESOURCE_GONE" || "DELETING" || "DELETE_FAILED_FAS_EXPIRED" || "UPDATING",
+ * //       Status: "CREATING" || "FAILED_CREATION" || "ATTACHING" || "ATTACHED" || "REMAP_DETACHING" || "REMAP_ATTACHING" || "DETACHING" || "FAILED_RESOURCE_GONE" || "DELETING" || "DELETE_FAILED_FAS_EXPIRED" || "UPDATING" || "UPDATE_FAILED",
  * //       StatusMessage: "STRING_VALUE",
  * //       CreationTime: "STRING_VALUE",
  * //       ModificationTime: "STRING_VALUE",

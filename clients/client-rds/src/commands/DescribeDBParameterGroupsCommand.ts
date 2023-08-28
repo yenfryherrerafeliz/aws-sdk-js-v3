@@ -13,7 +13,7 @@ import {
   SerdeContext as __SerdeContext,
 } from "@smithy/types";
 
-import { DBParameterGroupsMessage, DescribeDBParameterGroupsMessage } from "../models/models_0";
+import { DBParameterGroupsMessage, DescribeDBParameterGroupsMessage } from "../models/models_1";
 import { de_DescribeDBParameterGroupsCommand, se_DescribeDBParameterGroupsCommand } from "../protocols/Aws_query";
 import { RDSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RDSClient";
 

@@ -2,6 +2,7 @@
 import { EchoCommandInput, EchoCommandOutput } from "./commands/EchoCommand";
 import { LengthCommandInput, LengthCommandOutput } from "./commands/LengthCommand";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { RuntimeExtension, RuntimeExtensionsConfig, resolveRuntimeExtensions } from "./runtimeExtensions";
 import {
   HostHeaderInputConfig,
   HostHeaderResolvedConfig,
@@ -33,6 +34,7 @@ import {
 import {
   Provider,
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -151,6 +153,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -177,6 +184,7 @@ export interface EchoServiceClientConfig extends EchoServiceClientConfigType {}
  */
 export type EchoServiceClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   CustomEndpointsResolvedConfig &
   RetryResolvedConfig &
   HostHeaderResolvedConfig &
@@ -202,14 +210,15 @@ export class EchoServiceClient extends __Client<
    */
   readonly config: EchoServiceClientResolvedConfig;
 
-  constructor(configuration: EchoServiceClientConfig) {
-    let _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<EchoServiceClientConfig>) {
+    let _config_0 = __getRuntimeConfig(configuration || {});
     let _config_1 = resolveCustomEndpointsConfig(_config_0);
     let _config_2 = resolveRetryConfig(_config_1);
     let _config_3 = resolveHostHeaderConfig(_config_2);
     let _config_4 = resolveUserAgentConfig(_config_3);
-    super(_config_4);
-    this.config = _config_4;
+    let _config_5 = resolveRuntimeExtensions(_config_4, configuration?.extensions || []);
+    super(_config_5);
+    this.config = _config_5;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

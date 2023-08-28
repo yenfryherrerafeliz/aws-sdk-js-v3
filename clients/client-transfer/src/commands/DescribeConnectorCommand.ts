@@ -73,6 +73,12 @@ export interface DescribeConnectorCommandOutput extends DescribeConnectorRespons
  * //         Value: "STRING_VALUE", // required
  * //       },
  * //     ],
+ * //     SftpConfig: { // SftpConnectorConfig
+ * //       UserSecretId: "STRING_VALUE",
+ * //       TrustedHostKeys: [ // SftpConnectorTrustedHostKeyList
+ * //         "STRING_VALUE",
+ * //       ],
+ * //     },
  * //   },
  * // };
  *

@@ -55,6 +55,7 @@ export interface DescribeWorkspaceConfigurationCommandOutput
  * const response = await client.send(command);
  * // { // DescribeWorkspaceConfigurationResponse
  * //   configuration: "STRING_VALUE", // required
+ * //   grafanaVersion: "STRING_VALUE",
  * // };
  *
  * ```

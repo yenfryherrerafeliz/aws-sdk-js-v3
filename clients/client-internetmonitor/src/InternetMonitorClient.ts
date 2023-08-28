@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -69,6 +70,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -221,6 +223,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -250,6 +257,7 @@ export interface InternetMonitorClientConfig extends InternetMonitorClientConfig
  */
 export type InternetMonitorClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -267,7 +275,7 @@ export interface InternetMonitorClientResolvedConfig extends InternetMonitorClie
 /**
  * @public
  * <p>Amazon CloudWatch Internet Monitor provides visibility into how internet issues impact the performance and availability
- * 			between your applications hosted on Amazon Web Services and your end users. It reduces the time it takes for you to diagnose
+ * 			between your applications hosted on Amazon Web Services and your end users. It can reduce the time it takes for you to diagnose
  * 			internet issues from days to minutes. Internet Monitor uses the connectivity data that Amazon Web Services captures from its global
  * 			networking footprint to calculate a baseline of performance and availability for internet traffic. This
  * 			is the same data that Amazon Web Services uses to monitor internet uptime and availability. With those measurements
@@ -278,9 +286,9 @@ export interface InternetMonitorClientResolvedConfig extends InternetMonitorClie
  * 			Internet Monitor sends health events to Amazon EventBridge so that you can set up notifications. If an issue is caused by the Amazon Web Services network,
  * 			you also automatically receive an Amazon Web Services Health Dashboard notification with the steps that Amazon Web Services is taking to mitigate the problem.</p>
  *          <p>To use Internet Monitor, you create a <i>monitor</i> and associate your application's resources
- * 			with it, VPCs, CloudFront distributions, or WorkSpaces directories, to enable Internet Monitor to know
+ * 			with it - VPCs, NLBs, CloudFront distributions, or WorkSpaces directories - so Internet Monitor can determine
  * 			where your application's internet traffic is. Internet Monitor then provides internet measurements from Amazon Web Services that are specific to
- * 			the locations and networks that communicate with your application.</p>
+ * 			the locations and ASNs (typically, internet service providers or ISPs) that communicate with your application.</p>
  *          <p>For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-InternetMonitor.html">Using Amazon CloudWatch Internet Monitor</a> in the <i>Amazon CloudWatch User Guide</i>.</p>
  */
 export class InternetMonitorClient extends __Client<
@@ -294,8 +302,8 @@ export class InternetMonitorClient extends __Client<
    */
   readonly config: InternetMonitorClientResolvedConfig;
 
-  constructor(configuration: InternetMonitorClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<InternetMonitorClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -303,8 +311,9 @@ export class InternetMonitorClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

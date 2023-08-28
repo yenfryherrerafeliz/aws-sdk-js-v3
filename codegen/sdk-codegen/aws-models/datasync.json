@@ -82,7 +82,7 @@
         "AgentArns": {
           "target": "com.amazonaws.datasync#DiscoveryAgentArnList",
           "traits": {
-            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the DataSync agent that connects to\n      and reads from your on-premises storage system's management interface.</p>",
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the DataSync agent that connects to\n      and reads from your on-premises storage system's management interface. You can only specify\n      one ARN.</p>",
             "smithy.api#required": {}
           }
         },
@@ -227,6 +227,97 @@
         }
       }
     },
+    "com.amazonaws.datasync#AzureAccessTier": {
+      "type": "enum",
+      "members": {
+        "HOT": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "HOT"
+          }
+        },
+        "COOL": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "COOL"
+          }
+        },
+        "ARCHIVE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "ARCHIVE"
+          }
+        }
+      }
+    },
+    "com.amazonaws.datasync#AzureBlobAuthenticationType": {
+      "type": "enum",
+      "members": {
+        "SAS": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "SAS"
+          }
+        }
+      }
+    },
+    "com.amazonaws.datasync#AzureBlobContainerUrl": {
+      "type": "string",
+      "traits": {
+        "smithy.api#length": {
+          "min": 0,
+          "max": 325
+        },
+        "smithy.api#pattern": "^https:\\/\\/[A-Za-z0-9]((\\.|-+)?[A-Za-z0-9]){0,252}\\/[a-z0-9](-?[a-z0-9]){2,62}$"
+      }
+    },
+    "com.amazonaws.datasync#AzureBlobSasConfiguration": {
+      "type": "structure",
+      "members": {
+        "Token": {
+          "target": "com.amazonaws.datasync#AzureBlobSasToken",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies a SAS token that provides permissions at the Azure storage account, container,\n      or folder level.</p>\n         <p>The token is part of the SAS URI string that comes after the storage resource URI and a question mark. A token looks something like this:</p>\n         <p>\n            <code>sp=r&st=2023-12-20T14:54:52Z&se=2023-12-20T22:54:52Z&spr=https&sv=2021-06-08&sr=c&sig=aBBKDWQvyuVcTPH9EBp%2FXTI9E%2F%2Fmq171%2BZU178wcwqU%3D</code>\n         </p>",
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "traits": {
+        "smithy.api#documentation": "<p>The shared access signature (SAS) configuration that allows DataSync to access your Microsoft Azure Blob Storage.</p>\n         <p>For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-sas-tokens\">SAS\n        tokens</a> for accessing your Azure Blob Storage.</p>"
+      }
+    },
+    "com.amazonaws.datasync#AzureBlobSasToken": {
+      "type": "string",
+      "traits": {
+        "smithy.api#length": {
+          "min": 1,
+          "max": 255
+        },
+        "smithy.api#pattern": "^.+$",
+        "smithy.api#sensitive": {}
+      }
+    },
+    "com.amazonaws.datasync#AzureBlobSubdirectory": {
+      "type": "string",
+      "traits": {
+        "smithy.api#length": {
+          "min": 0,
+          "max": 1024
+        },
+        "smithy.api#pattern": "^[\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{P}\\p{C}]*$"
+      }
+    },
+    "com.amazonaws.datasync#AzureBlobType": {
+      "type": "enum",
+      "members": {
+        "BLOCK": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "BLOCK"
+          }
+        }
+      }
+    },
     "com.amazonaws.datasync#BytesPerSecond": {
       "type": "long",
       "traits": {
@@ -298,6 +389,12 @@
           "traits": {
             "smithy.api#documentation": "<p>The amount of space that's being used in a storage system resource without accounting for\n      compression or deduplication.</p>"
           }
+        },
+        "ClusterCloudStorageUsed": {
+          "target": "com.amazonaws.datasync#NonNegativeLong",
+          "traits": {
+            "smithy.api#documentation": "<p>The amount of space in the cluster that's in cloud storage (for example, if you're using data tiering).</p>"
+          }
         }
       },
       "traits": {
@@ -330,7 +427,7 @@
         }
       ],
       "traits": {
-        "smithy.api#documentation": "<p>Activates an DataSync agent that you have deployed in your storage\n      environment. The activation process associates your agent with your account. In the activation\n      process, you specify information such as the Amazon Web Services Region that you want to\n      activate the agent in. You activate the agent in the Amazon Web Services Region where your\n      target locations (in Amazon S3 or Amazon EFS) reside. Your tasks are created in this Amazon Web Services Region.</p>\n         <p>You can activate the agent in a VPC (virtual private cloud) or provide the agent access to\n      a VPC endpoint so you can run tasks without going over the public internet.</p>\n         <p>You can use an agent for more than one location. If a task uses multiple agents, all of\n      them need to have status AVAILABLE for the task to run. If you use multiple agents for a\n      source location, the status of all the agents must be AVAILABLE for the task to run. </p>\n         <p>Agents are automatically updated by Amazon Web Services on a regular basis, using a\n      mechanism that ensures minimal interruption to your tasks.</p>"
+        "smithy.api#documentation": "<p>Activates an DataSync agent that you've deployed in your storage\n      environment. The activation process associates the agent with your Amazon Web Services account.</p>\n         <p>If you haven't deployed an agent yet, see the following topics to learn more:</p>\n         <ul>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/agent-requirements.html\">Agent requirements</a>\n               </p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/configure-agent.html\">Create an agent</a>\n               </p>\n            </li>\n         </ul>\n         <note>\n            <p>If you're transferring between Amazon Web Services storage services, you don't need a\n          DataSync agent. </p>\n         </note>"
       }
     },
     "com.amazonaws.datasync#CreateAgentRequest": {
@@ -339,38 +436,38 @@
         "ActivationKey": {
           "target": "com.amazonaws.datasync#ActivationKey",
           "traits": {
-            "smithy.api#documentation": "<p>Your agent activation key. You can get the activation key either by sending an HTTP GET\n      request with redirects that enable you to get the agent IP address (port 80). Alternatively,\n      you can get it from the DataSync console.</p>\n         <p>The redirect URL returned in the response provides you the activation key for your\n      agent in the query string parameter <code>activationKey</code>. It might also include other\n      activation-related parameters; however, these are merely defaults. The arguments you pass to\n      this API call determine the actual configuration of your agent.</p>\n         <p>For more information, see Activating an Agent in the <i>DataSync User Guide.</i>\n         </p>",
+            "smithy.api#documentation": "<p>Specifies your DataSync agent's activation key. If you don't have an\n      activation key, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/activate-agent.html\">Activate your agent</a>.</p>",
             "smithy.api#required": {}
           }
         },
         "AgentName": {
           "target": "com.amazonaws.datasync#TagValue",
           "traits": {
-            "smithy.api#documentation": "<p>The name you configured for your agent. This value is a text reference that is used to\n      identify the agent in the console.</p>"
+            "smithy.api#documentation": "<p>Specifies a name for your agent. You can see this name in the DataSync\n      console.</p>"
           }
         },
         "Tags": {
           "target": "com.amazonaws.datasync#InputTagList",
           "traits": {
-            "smithy.api#documentation": "<p>The key-value pair that represents the tag that you want to associate with the agent.\n      The value can be an empty string. This value helps you manage, filter, and search for your\n      agents.</p>\n         <note>\n            <p>Valid characters for key and value are letters, spaces, and numbers representable in\n        UTF-8 format, and the following special characters: + - = . _ : / @. </p>\n         </note>"
+            "smithy.api#documentation": "<p>Specifies labels that help you categorize, filter, and search for your Amazon Web Services resources.\n      We recommend creating at least one tag for your agent.</p>"
           }
         },
         "VpcEndpointId": {
           "target": "com.amazonaws.datasync#VpcEndpointId",
           "traits": {
-            "smithy.api#documentation": "<p>The ID of the VPC (virtual private cloud) endpoint that the agent has access to. This is\n      the client-side VPC endpoint, also called a PrivateLink. If you don't have a PrivateLink VPC\n      endpoint, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/endpoint-service.html#create-endpoint-service\">Creating a VPC\n        Endpoint Service Configuration</a> in the Amazon VPC User Guide.</p>\n         <p>VPC endpoint ID looks like this: <code>vpce-01234d5aff67890e1</code>.</p>"
+            "smithy.api#documentation": "<p>Specifies the ID of the VPC endpoint that you want your agent to connect to. For example,\n      a VPC endpoint ID looks like <code>vpce-01234d5aff67890e1</code>.</p>\n         <important>\n            <p>The VPC endpoint you use must include the DataSync service name (for example,\n          <code>com.amazonaws.us-east-2.datasync</code>).</p>\n         </important>"
           }
         },
         "SubnetArns": {
           "target": "com.amazonaws.datasync#PLSubnetArnList",
           "traits": {
-            "smithy.api#documentation": "<p>The Amazon Resource Names (ARNs) of the subnets in which DataSync will create\n      elastic network interfaces for each data transfer task. The agent that runs a task must be\n      private. When you start a task that is associated with an agent created in a VPC, or one that\n      has access to an IP address in a VPC, then the task is also private. In this case, DataSync creates four network interfaces for each task in your subnet. For a data transfer\n      to work, the agent must be able to route to all these four network interfaces.</p>"
+            "smithy.api#documentation": "<p>Specifies the ARN of the subnet where you want to run your DataSync task when\n      using a VPC endpoint. This is the subnet where DataSync creates and manages the\n        <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/datasync-network.html#required-network-interfaces\">network\n        interfaces</a> for your transfer. You can only specify one ARN.</p>"
           }
         },
         "SecurityGroupArns": {
           "target": "com.amazonaws.datasync#PLSecurityGroupArnList",
           "traits": {
-            "smithy.api#documentation": "<p>The ARNs of the security groups used to protect your data transfer task subnets. See\n        <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/API_Ec2Config.html#DataSync-Type-Ec2Config-SecurityGroupArns\">SecurityGroupArns</a>.</p>"
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the security group that protects your task's\n        <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/datasync-network.html#required-network-interfaces\">network\n        interfaces</a> when <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/choose-service-endpoint.html#choose-service-endpoint-vpc\">using a virtual private cloud (VPC) endpoint</a>. You can only specify one ARN.</p>"
           }
         }
       },
@@ -385,12 +482,105 @@
         "AgentArn": {
           "target": "com.amazonaws.datasync#AgentArn",
           "traits": {
-            "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the agent. Use the <code>ListAgents</code> operation\n      to return a list of agents for your account and Amazon Web Services Region.</p>"
+            "smithy.api#documentation": "<p>The ARN of the agent that you just activated. Use the <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/API_ListAgents.html\">ListAgents</a> operation to return a\n      list of agents in your Amazon Web Services account and Amazon Web Services Region.</p>"
           }
         }
       },
       "traits": {
         "smithy.api#documentation": "<p>CreateAgentResponse</p>",
+        "smithy.api#output": {}
+      }
+    },
+    "com.amazonaws.datasync#CreateLocationAzureBlob": {
+      "type": "operation",
+      "input": {
+        "target": "com.amazonaws.datasync#CreateLocationAzureBlobRequest"
+      },
+      "output": {
+        "target": "com.amazonaws.datasync#CreateLocationAzureBlobResponse"
+      },
+      "errors": [
+        {
+          "target": "com.amazonaws.datasync#InternalException"
+        },
+        {
+          "target": "com.amazonaws.datasync#InvalidRequestException"
+        }
+      ],
+      "traits": {
+        "smithy.api#documentation": "<p>Creates an endpoint for a Microsoft Azure Blob Storage container that DataSync can use as a transfer source or destination.</p>\n         <p>Before you begin, make sure you know <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-access\">how DataSync accesses Azure Blob Storage</a> and works with <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-access-tiers\">access tiers</a> and <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#blob-types\">blob types</a>. You also need a <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-creating-agent\">DataSync agent</a> that can connect to your\n      container.</p>"
+      }
+    },
+    "com.amazonaws.datasync#CreateLocationAzureBlobRequest": {
+      "type": "structure",
+      "members": {
+        "ContainerUrl": {
+          "target": "com.amazonaws.datasync#AzureBlobContainerUrl",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the URL of the Azure Blob Storage container involved in your transfer.</p>",
+            "smithy.api#required": {}
+          }
+        },
+        "AuthenticationType": {
+          "target": "com.amazonaws.datasync#AzureBlobAuthenticationType",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the authentication method DataSync uses to access your Azure Blob Storage. DataSync can access blob storage using a shared access signature (SAS).</p>",
+            "smithy.api#required": {}
+          }
+        },
+        "SasConfiguration": {
+          "target": "com.amazonaws.datasync#AzureBlobSasConfiguration",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the SAS configuration that allows DataSync to access your Azure Blob Storage.</p>"
+          }
+        },
+        "BlobType": {
+          "target": "com.amazonaws.datasync#AzureBlobType",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the type of blob that you want your objects or files to be when transferring\n      them into Azure Blob Storage. Currently, DataSync only supports moving data into\n      Azure Blob Storage as block blobs. For more information on blob types, see the <a href=\"https://learn.microsoft.com/en-us/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs\">Azure Blob Storage documentation</a>.</p>"
+          }
+        },
+        "AccessTier": {
+          "target": "com.amazonaws.datasync#AzureAccessTier",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the access tier that you want your objects or files transferred into. This only applies when using the location as a transfer destination. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-access-tiers\">Access tiers</a>.</p>"
+          }
+        },
+        "Subdirectory": {
+          "target": "com.amazonaws.datasync#AzureBlobSubdirectory",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies path segments if you want to limit your transfer to a virtual directory in your\n      container (for example, <code>/my/images</code>).</p>"
+          }
+        },
+        "AgentArns": {
+          "target": "com.amazonaws.datasync#AgentArnList",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the DataSync agent that can connect with your Azure Blob Storage container.</p>\n         <p>You can specify more than one agent. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/multiple-agents.html\">Using multiple\n        agents for your transfer</a>.</p>",
+            "smithy.api#required": {}
+          }
+        },
+        "Tags": {
+          "target": "com.amazonaws.datasync#InputTagList",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies labels that help you categorize, filter, and search for your Amazon Web Services resources. We recommend creating at least a name tag for your transfer location.</p>"
+          }
+        }
+      },
+      "traits": {
+        "smithy.api#input": {}
+      }
+    },
+    "com.amazonaws.datasync#CreateLocationAzureBlobResponse": {
+      "type": "structure",
+      "members": {
+        "LocationArn": {
+          "target": "com.amazonaws.datasync#LocationArn",
+          "traits": {
+            "smithy.api#documentation": "<p>The ARN of the Azure Blob Storage transfer location that you created.</p>"
+          }
+        }
+      },
+      "traits": {
         "smithy.api#output": {}
       }
     },
@@ -751,7 +941,7 @@
         "User": {
           "target": "com.amazonaws.datasync#SmbUser",
           "traits": {
-            "smithy.api#documentation": "<p>Specifies the user who has the permissions to access files and folders in the file\n      system.</p>\n         <p>For information about choosing a user name that ensures sufficient permissions to files,\n      folders, and metadata, see <a href=\"create-fsx-location.html#FSxWuser\">user</a>.</p>",
+            "smithy.api#documentation": "<p>Specifies the user who has the permissions to access files, folders, and metadata in your\n      file system.</p>\n         <p>For information about choosing a user with sufficient permissions, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html#create-fsx-windows-location-permissions\">Required permissions</a>.</p>",
             "smithy.api#required": {}
           }
         },
@@ -927,7 +1117,7 @@
         }
       ],
       "traits": {
-        "smithy.api#documentation": "<p>Defines a file system on a Network File System (NFS) server that can be read from or\n      written to.</p>"
+        "smithy.api#documentation": "<p>Creates an endpoint for a Network File System (NFS) file server that DataSync can use for a data transfer.</p>\n         <p>For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html\">Configuring transfers to or from an NFS file\n        server</a>.</p>\n         <note>\n            <p>If you're copying data to or from an Snowcone device, you can also use\n          <code>CreateLocationNfs</code> to create your transfer location. For more information, see\n          <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/nfs-on-snowcone.html\">Configuring transfers with Snowcone</a>.</p>\n         </note>"
       }
     },
     "com.amazonaws.datasync#CreateLocationNfsRequest": {
@@ -936,34 +1126,34 @@
         "Subdirectory": {
           "target": "com.amazonaws.datasync#NfsSubdirectory",
           "traits": {
-            "smithy.api#documentation": "<p>The subdirectory in the NFS file system that is used to read data from the NFS source\n      location or write data to the NFS destination. The NFS path should be a path that's\n      exported by the NFS server, or a subdirectory of that path. The path should be such that it\n      can be mounted by other NFS clients in your network. </p>\n         <p>To see all the paths exported by your NFS server, run \"<code>showmount -e\n        nfs-server-name</code>\" from an NFS client that has access to your server. You can specify\n      any directory that appears in the results, and any subdirectory of that directory. Ensure that\n      the NFS export is accessible without Kerberos authentication. </p>\n         <p>To transfer all the data in the folder you specified, DataSync needs to have\n      permissions to read all the data. To ensure this, either configure the NFS export with\n        <code>no_root_squash,</code> or ensure that the permissions for all of the files that you\n      want DataSync allow read access for all users. Doing either enables the agent to\n      read the files. For the agent to access directories, you must additionally enable all execute\n      access.</p>\n         <p>If you are copying data to or from your Snowcone device, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#nfs-on-snowcone\">NFS Server on\n          Snowcone</a> for more information.</p>\n         <p>For information about NFS export configuration, see 18.7. The /etc/exports\n      Configuration File in the Red Hat Enterprise Linux documentation.</p>",
+            "smithy.api#documentation": "<p>Specifies the export path in your NFS file server that you want DataSync to\n      mount.</p>\n         <p>This path (or a subdirectory of the path) is where DataSync transfers data to\n      or from. For information on configuring an export for DataSync, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#accessing-nfs\">Accessing NFS file servers</a>.</p>",
             "smithy.api#required": {}
           }
         },
         "ServerHostname": {
           "target": "com.amazonaws.datasync#ServerHostname",
           "traits": {
-            "smithy.api#documentation": "<p>The name of the NFS server. This value is the IP address or Domain Name Service (DNS)\n      name of the NFS server. An agent that is installed on-premises uses this hostname to mount the\n      NFS server in a network. </p>\n         <p>If you are copying data to or from your Snowcone device, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#nfs-on-snowcone\">NFS Server on\n          Snowcone</a> for more information.</p>\n         <note>\n            <p>This name must either be DNS-compliant or must be an IP version 4 (IPv4)\n        address.</p>\n         </note>",
+            "smithy.api#documentation": "<p>Specifies the Domain Name System (DNS) name or IP version 4 address of the NFS file\n      server that your DataSync agent connects to.</p>",
             "smithy.api#required": {}
           }
         },
         "OnPremConfig": {
           "target": "com.amazonaws.datasync#OnPremConfig",
           "traits": {
-            "smithy.api#documentation": "<p>Contains a list of Amazon Resource Names (ARNs) of agents that are used to connect to\n      an NFS server. </p>\n         <p>If you are copying data to or from your Snowcone device, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#nfs-on-snowcone\">NFS Server on\n          Snowcone</a> for more information.</p>",
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the DataSync agent that want to\n      connect to your NFS file server.</p>\n         <p>You can specify more than one agent. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/multiple-agents.html\">Using multiple\n        agents for transfers</a>.</p>",
             "smithy.api#required": {}
           }
         },
         "MountOptions": {
           "target": "com.amazonaws.datasync#NfsMountOptions",
           "traits": {
-            "smithy.api#documentation": "<p>The NFS mount options that DataSync can use to mount your NFS share.</p>"
+            "smithy.api#documentation": "<p>Specifies the options that DataSync can use to mount your NFS file\n      server.</p>"
           }
         },
         "Tags": {
           "target": "com.amazonaws.datasync#InputTagList",
           "traits": {
-            "smithy.api#documentation": "<p>The key-value pair that represents the tag that you want to add to the location. The\n      value can be an empty string. We recommend using tags to name your resources.</p>"
+            "smithy.api#documentation": "<p>Specifies labels that help you categorize, filter, and search for your Amazon Web Services resources.\n      We recommend creating at least a name tag for your location.</p>"
           }
         }
       },
@@ -978,7 +1168,7 @@
         "LocationArn": {
           "target": "com.amazonaws.datasync#LocationArn",
           "traits": {
-            "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the source NFS file system location that is\n      created.</p>"
+            "smithy.api#documentation": "<p>The ARN of the transfer location that you created for your NFS file server.</p>"
           }
         }
       },
@@ -1070,7 +1260,7 @@
         "ServerCertificate": {
           "target": "com.amazonaws.datasync#ObjectStorageCertificate",
           "traits": {
-            "smithy.api#documentation": "<p>Specifies a certificate to authenticate with an object storage system that uses a private\n      or self-signed certificate authority (CA). You must specify a Base64-encoded <code>.pem</code>\n      file (for example, <code>file:///home/user/.ssh/storage_sys_certificate.pem</code>). The\n      certificate can be up to 32768 bytes (before Base64 encoding).</p>\n         <p>To use this parameter, configure <code>ServerProtocol</code> to <code>HTTPS</code>.</p>"
+            "smithy.api#documentation": "<p>Specifies a file with the certificates that are used to sign the object storage server's\n      certificate (for example, <code>file:///home/user/.ssh/storage_sys_certificate.pem</code>).\n      The file you specify must include the following:</p>\n         <ul>\n            <li>\n               <p>The certificate of the signing certificate authority (CA)</p>\n            </li>\n            <li>\n               <p>Any intermediate certificates</p>\n            </li>\n            <li>\n               <p>base64 encoding</p>\n            </li>\n            <li>\n               <p>A <code>.pem</code> extension</p>\n            </li>\n         </ul>\n         <p>The file can be up to 32768 bytes (before base64 encoding).</p>\n         <p>To use this parameter, configure <code>ServerProtocol</code> to <code>HTTPS</code>.</p>"
           }
         }
       },
@@ -1192,7 +1382,7 @@
         }
       ],
       "traits": {
-        "smithy.api#documentation": "<p>Creates an endpoint for a Server Message Block (SMB) file server that DataSync can access for a transfer. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html\">Creating an SMB location</a>.</p>"
+        "smithy.api#documentation": "<p>Creates an endpoint for a Server Message Block (SMB) file server that DataSync can use for a data transfer.</p>\n         <p>Before you begin, make sure that you understand how DataSync\n      <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html\">accesses an SMB file server</a>.</p>"
       }
     },
     "com.amazonaws.datasync#CreateLocationSmbRequest": {
@@ -1685,6 +1875,91 @@
           "target": "com.amazonaws.datasync#DiscoveryTime",
           "traits": {
             "smithy.api#documentation": "<p>The time when the discovery job ended.</p>"
+          }
+        }
+      },
+      "traits": {
+        "smithy.api#output": {}
+      }
+    },
+    "com.amazonaws.datasync#DescribeLocationAzureBlob": {
+      "type": "operation",
+      "input": {
+        "target": "com.amazonaws.datasync#DescribeLocationAzureBlobRequest"
+      },
+      "output": {
+        "target": "com.amazonaws.datasync#DescribeLocationAzureBlobResponse"
+      },
+      "errors": [
+        {
+          "target": "com.amazonaws.datasync#InternalException"
+        },
+        {
+          "target": "com.amazonaws.datasync#InvalidRequestException"
+        }
+      ],
+      "traits": {
+        "smithy.api#documentation": "<p>Provides details about how an DataSync transfer location for Microsoft Azure Blob Storage is configured.</p>"
+      }
+    },
+    "com.amazonaws.datasync#DescribeLocationAzureBlobRequest": {
+      "type": "structure",
+      "members": {
+        "LocationArn": {
+          "target": "com.amazonaws.datasync#LocationArn",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of your Azure Blob Storage transfer location.</p>",
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "traits": {
+        "smithy.api#input": {}
+      }
+    },
+    "com.amazonaws.datasync#DescribeLocationAzureBlobResponse": {
+      "type": "structure",
+      "members": {
+        "LocationArn": {
+          "target": "com.amazonaws.datasync#LocationArn",
+          "traits": {
+            "smithy.api#documentation": "<p>The ARN of your Azure Blob Storage transfer location.</p>"
+          }
+        },
+        "LocationUri": {
+          "target": "com.amazonaws.datasync#LocationUri",
+          "traits": {
+            "smithy.api#documentation": "<p>The URL of the Azure Blob Storage container involved in your transfer.</p>"
+          }
+        },
+        "AuthenticationType": {
+          "target": "com.amazonaws.datasync#AzureBlobAuthenticationType",
+          "traits": {
+            "smithy.api#documentation": "<p>The authentication method DataSync uses to access your Azure Blob Storage. DataSync can access blob storage using a shared access signature (SAS).</p>"
+          }
+        },
+        "BlobType": {
+          "target": "com.amazonaws.datasync#AzureBlobType",
+          "traits": {
+            "smithy.api#documentation": "<p>The type of blob that you want your objects or files to be when transferring them into\n      Azure Blob Storage. Currently, DataSync only supports moving data into Azure Blob\n      Storage as block blobs. For more information on blob types, see the <a href=\"https://learn.microsoft.com/en-us/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs\">Azure Blob Storage documentation</a>.</p>"
+          }
+        },
+        "AccessTier": {
+          "target": "com.amazonaws.datasync#AzureAccessTier",
+          "traits": {
+            "smithy.api#documentation": "<p>The access tier that you want your objects or files transferred into. This only applies when using the location as a transfer destination. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-access-tiers\">Access tiers</a>.</p>"
+          }
+        },
+        "AgentArns": {
+          "target": "com.amazonaws.datasync#AgentArnList",
+          "traits": {
+            "smithy.api#documentation": "<p>The ARNs of the DataSync agents that can connect with your Azure Blob Storage container.</p>"
+          }
+        },
+        "CreationTime": {
+          "target": "com.amazonaws.datasync#Time",
+          "traits": {
+            "smithy.api#documentation": "<p>The time that your Azure Blob Storage transfer location was created.</p>"
           }
         }
       },
@@ -2209,7 +2484,7 @@
         }
       ],
       "traits": {
-        "smithy.api#documentation": "<p>Returns metadata, such as the path information, about an NFS location.</p>"
+        "smithy.api#documentation": "<p>Provides details about how an DataSync transfer location for a Network\n      File System (NFS) file server is configured.</p>"
       }
     },
     "com.amazonaws.datasync#DescribeLocationNfsRequest": {
@@ -2218,7 +2493,7 @@
         "LocationArn": {
           "target": "com.amazonaws.datasync#LocationArn",
           "traits": {
-            "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the NFS location to describe.</p>",
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the NFS location that you want information\n      about.</p>",
             "smithy.api#required": {}
           }
         }
@@ -2234,13 +2509,13 @@
         "LocationArn": {
           "target": "com.amazonaws.datasync#LocationArn",
           "traits": {
-            "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the NFS location that was described.</p>"
+            "smithy.api#documentation": "<p>The ARN of the NFS location.</p>"
           }
         },
         "LocationUri": {
           "target": "com.amazonaws.datasync#LocationUri",
           "traits": {
-            "smithy.api#documentation": "<p>The URL of the source NFS location that was described.</p>"
+            "smithy.api#documentation": "<p>The URL of the NFS location.</p>"
           }
         },
         "OnPremConfig": {
@@ -2249,13 +2524,13 @@
         "MountOptions": {
           "target": "com.amazonaws.datasync#NfsMountOptions",
           "traits": {
-            "smithy.api#documentation": "<p>The NFS mount options that DataSync used to mount your NFS share.</p>"
+            "smithy.api#documentation": "<p>The mount options that DataSync uses to mount your NFS file server.</p>"
           }
         },
         "CreationTime": {
           "target": "com.amazonaws.datasync#Time",
           "traits": {
-            "smithy.api#documentation": "<p>The time that the NFS location was created.</p>"
+            "smithy.api#documentation": "<p>The time when the NFS location was created.</p>"
           }
         }
       },
@@ -2841,7 +3116,7 @@
         }
       ],
       "traits": {
-        "smithy.api#documentation": "<p>Returns metadata about a task.</p>"
+        "smithy.api#documentation": "<p>Provides information about an DataSync transfer task.</p>"
       }
     },
     "com.amazonaws.datasync#DescribeTaskExecution": {
@@ -2861,7 +3136,7 @@
         }
       ],
       "traits": {
-        "smithy.api#documentation": "<p>Returns detailed metadata about a task that is being executed.</p>"
+        "smithy.api#documentation": "<p>Provides information about an DataSync transfer task that's\n      running.</p>"
       }
     },
     "com.amazonaws.datasync#DescribeTaskExecutionRequest": {
@@ -2870,7 +3145,7 @@
         "TaskExecutionArn": {
           "target": "com.amazonaws.datasync#TaskExecutionArn",
           "traits": {
-            "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the task that is being executed.</p>",
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the transfer task that's running.</p>",
             "smithy.api#required": {}
           }
         }
@@ -2976,7 +3251,7 @@
         "TaskArn": {
           "target": "com.amazonaws.datasync#TaskArn",
           "traits": {
-            "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the task to describe.</p>",
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the transfer task.</p>",
             "smithy.api#required": {}
           }
         }
@@ -3553,6 +3828,9 @@
           "target": "com.amazonaws.datasync#CreateAgent"
         },
         {
+          "target": "com.amazonaws.datasync#CreateLocationAzureBlob"
+        },
+        {
           "target": "com.amazonaws.datasync#CreateLocationEfs"
         },
         {
@@ -3599,6 +3877,9 @@
         },
         {
           "target": "com.amazonaws.datasync#DescribeDiscoveryJob"
+        },
+        {
+          "target": "com.amazonaws.datasync#DescribeLocationAzureBlob"
         },
         {
           "target": "com.amazonaws.datasync#DescribeLocationEfs"
@@ -3694,6 +3975,9 @@
           "target": "com.amazonaws.datasync#UpdateDiscoveryJob"
         },
         {
+          "target": "com.amazonaws.datasync#UpdateLocationAzureBlob"
+        },
+        {
           "target": "com.amazonaws.datasync#UpdateLocationHdfs"
         },
         {
@@ -3727,7 +4011,7 @@
           "name": "datasync"
         },
         "aws.protocols#awsJson1_1": {},
-        "smithy.api#documentation": "<fullname>DataSync</fullname>\n         <p>DataSync is a managed data transfer service that makes it simpler for you\n      to automate moving data between on-premises storage and Amazon Web Services storage services.\n      You also can use DataSync to transfer data between other cloud providers and Amazon Web Services storage services.</p>\n         <p>This API interface reference includes documentation for using DataSync\n      programmatically. For complete information, see the <i>\n               <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html\">DataSync User\n          Guide</a>\n            </i>.</p>",
+        "smithy.api#documentation": "<fullname>DataSync</fullname>\n         <p>DataSync is an online data movement and discovery service that simplifies data migration\n      and helps you quickly, easily, and securely transfer your file or object data to, from, and\n      between Amazon Web Services storage services.</p>\n         <p>This API interface reference includes documentation for using DataSync\n      programmatically. For complete information, see the <i>\n               <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html\">DataSync User\n          Guide</a>\n            </i>.</p>",
         "smithy.api#title": "AWS DataSync",
         "smithy.rules#endpointRuleSet": {
           "version": "1.0",
@@ -3789,9 +4073,188 @@
                   "type": "error"
                 },
                 {
+                  "conditions": [
+                    {
+                      "fn": "booleanEquals",
+                      "argv": [
+                        {
+                          "ref": "UseDualStack"
+                        },
+                        true
+                      ]
+                    }
+                  ],
+                  "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                  "type": "error"
+                },
+                {
                   "conditions": [],
+                  "endpoint": {
+                    "url": {
+                      "ref": "Endpoint"
+                    },
+                    "properties": {},
+                    "headers": {}
+                  },
+                  "type": "endpoint"
+                }
+              ]
+            },
+            {
+              "conditions": [
+                {
+                  "fn": "isSet",
+                  "argv": [
+                    {
+                      "ref": "Region"
+                    }
+                  ]
+                }
+              ],
+              "type": "tree",
+              "rules": [
+                {
+                  "conditions": [
+                    {
+                      "fn": "aws.partition",
+                      "argv": [
+                        {
+                          "ref": "Region"
+                        }
+                      ],
+                      "assign": "PartitionResult"
+                    }
+                  ],
                   "type": "tree",
                   "rules": [
+                    {
+                      "conditions": [
+                        {
+                          "fn": "booleanEquals",
+                          "argv": [
+                            {
+                              "ref": "UseFIPS"
+                            },
+                            true
+                          ]
+                        },
+                        {
+                          "fn": "booleanEquals",
+                          "argv": [
+                            {
+                              "ref": "UseDualStack"
+                            },
+                            true
+                          ]
+                        }
+                      ],
+                      "type": "tree",
+                      "rules": [
+                        {
+                          "conditions": [
+                            {
+                              "fn": "booleanEquals",
+                              "argv": [
+                                true,
+                                {
+                                  "fn": "getAttr",
+                                  "argv": [
+                                    {
+                                      "ref": "PartitionResult"
+                                    },
+                                    "supportsFIPS"
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "fn": "booleanEquals",
+                              "argv": [
+                                true,
+                                {
+                                  "fn": "getAttr",
+                                  "argv": [
+                                    {
+                                      "ref": "PartitionResult"
+                                    },
+                                    "supportsDualStack"
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "type": "tree",
+                          "rules": [
+                            {
+                              "conditions": [],
+                              "endpoint": {
+                                "url": "https://datasync-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                              },
+                              "type": "endpoint"
+                            }
+                          ]
+                        },
+                        {
+                          "conditions": [],
+                          "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                          "type": "error"
+                        }
+                      ]
+                    },
+                    {
+                      "conditions": [
+                        {
+                          "fn": "booleanEquals",
+                          "argv": [
+                            {
+                              "ref": "UseFIPS"
+                            },
+                            true
+                          ]
+                        }
+                      ],
+                      "type": "tree",
+                      "rules": [
+                        {
+                          "conditions": [
+                            {
+                              "fn": "booleanEquals",
+                              "argv": [
+                                true,
+                                {
+                                  "fn": "getAttr",
+                                  "argv": [
+                                    {
+                                      "ref": "PartitionResult"
+                                    },
+                                    "supportsFIPS"
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "type": "tree",
+                          "rules": [
+                            {
+                              "conditions": [],
+                              "endpoint": {
+                                "url": "https://datasync-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                              },
+                              "type": "endpoint"
+                            }
+                          ]
+                        },
+                        {
+                          "conditions": [],
+                          "error": "FIPS is enabled but this partition does not support FIPS",
+                          "type": "error"
+                        }
+                      ]
+                    },
                     {
                       "conditions": [
                         {
@@ -3804,15 +4267,50 @@
                           ]
                         }
                       ],
-                      "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
-                      "type": "error"
+                      "type": "tree",
+                      "rules": [
+                        {
+                          "conditions": [
+                            {
+                              "fn": "booleanEquals",
+                              "argv": [
+                                true,
+                                {
+                                  "fn": "getAttr",
+                                  "argv": [
+                                    {
+                                      "ref": "PartitionResult"
+                                    },
+                                    "supportsDualStack"
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "type": "tree",
+                          "rules": [
+                            {
+                              "conditions": [],
+                              "endpoint": {
+                                "url": "https://datasync.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                              },
+                              "type": "endpoint"
+                            }
+                          ]
+                        },
+                        {
+                          "conditions": [],
+                          "error": "DualStack is enabled but this partition does not support DualStack",
+                          "type": "error"
+                        }
+                      ]
                     },
                     {
                       "conditions": [],
                       "endpoint": {
-                        "url": {
-                          "ref": "Endpoint"
-                        },
+                        "url": "https://datasync.{Region}.{PartitionResult#dnsSuffix}",
                         "properties": {},
                         "headers": {}
                       },
@@ -3824,258 +4322,8 @@
             },
             {
               "conditions": [],
-              "type": "tree",
-              "rules": [
-                {
-                  "conditions": [
-                    {
-                      "fn": "isSet",
-                      "argv": [
-                        {
-                          "ref": "Region"
-                        }
-                      ]
-                    }
-                  ],
-                  "type": "tree",
-                  "rules": [
-                    {
-                      "conditions": [
-                        {
-                          "fn": "aws.partition",
-                          "argv": [
-                            {
-                              "ref": "Region"
-                            }
-                          ],
-                          "assign": "PartitionResult"
-                        }
-                      ],
-                      "type": "tree",
-                      "rules": [
-                        {
-                          "conditions": [
-                            {
-                              "fn": "booleanEquals",
-                              "argv": [
-                                {
-                                  "ref": "UseFIPS"
-                                },
-                                true
-                              ]
-                            },
-                            {
-                              "fn": "booleanEquals",
-                              "argv": [
-                                {
-                                  "ref": "UseDualStack"
-                                },
-                                true
-                              ]
-                            }
-                          ],
-                          "type": "tree",
-                          "rules": [
-                            {
-                              "conditions": [
-                                {
-                                  "fn": "booleanEquals",
-                                  "argv": [
-                                    true,
-                                    {
-                                      "fn": "getAttr",
-                                      "argv": [
-                                        {
-                                          "ref": "PartitionResult"
-                                        },
-                                        "supportsFIPS"
-                                      ]
-                                    }
-                                  ]
-                                },
-                                {
-                                  "fn": "booleanEquals",
-                                  "argv": [
-                                    true,
-                                    {
-                                      "fn": "getAttr",
-                                      "argv": [
-                                        {
-                                          "ref": "PartitionResult"
-                                        },
-                                        "supportsDualStack"
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ],
-                              "type": "tree",
-                              "rules": [
-                                {
-                                  "conditions": [],
-                                  "type": "tree",
-                                  "rules": [
-                                    {
-                                      "conditions": [],
-                                      "endpoint": {
-                                        "url": "https://datasync-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                                        "properties": {},
-                                        "headers": {}
-                                      },
-                                      "type": "endpoint"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "conditions": [],
-                              "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
-                              "type": "error"
-                            }
-                          ]
-                        },
-                        {
-                          "conditions": [
-                            {
-                              "fn": "booleanEquals",
-                              "argv": [
-                                {
-                                  "ref": "UseFIPS"
-                                },
-                                true
-                              ]
-                            }
-                          ],
-                          "type": "tree",
-                          "rules": [
-                            {
-                              "conditions": [
-                                {
-                                  "fn": "booleanEquals",
-                                  "argv": [
-                                    true,
-                                    {
-                                      "fn": "getAttr",
-                                      "argv": [
-                                        {
-                                          "ref": "PartitionResult"
-                                        },
-                                        "supportsFIPS"
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ],
-                              "type": "tree",
-                              "rules": [
-                                {
-                                  "conditions": [],
-                                  "type": "tree",
-                                  "rules": [
-                                    {
-                                      "conditions": [],
-                                      "endpoint": {
-                                        "url": "https://datasync-fips.{Region}.{PartitionResult#dnsSuffix}",
-                                        "properties": {},
-                                        "headers": {}
-                                      },
-                                      "type": "endpoint"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "conditions": [],
-                              "error": "FIPS is enabled but this partition does not support FIPS",
-                              "type": "error"
-                            }
-                          ]
-                        },
-                        {
-                          "conditions": [
-                            {
-                              "fn": "booleanEquals",
-                              "argv": [
-                                {
-                                  "ref": "UseDualStack"
-                                },
-                                true
-                              ]
-                            }
-                          ],
-                          "type": "tree",
-                          "rules": [
-                            {
-                              "conditions": [
-                                {
-                                  "fn": "booleanEquals",
-                                  "argv": [
-                                    true,
-                                    {
-                                      "fn": "getAttr",
-                                      "argv": [
-                                        {
-                                          "ref": "PartitionResult"
-                                        },
-                                        "supportsDualStack"
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ],
-                              "type": "tree",
-                              "rules": [
-                                {
-                                  "conditions": [],
-                                  "type": "tree",
-                                  "rules": [
-                                    {
-                                      "conditions": [],
-                                      "endpoint": {
-                                        "url": "https://datasync.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                                        "properties": {},
-                                        "headers": {}
-                                      },
-                                      "type": "endpoint"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "conditions": [],
-                              "error": "DualStack is enabled but this partition does not support DualStack",
-                              "type": "error"
-                            }
-                          ]
-                        },
-                        {
-                          "conditions": [],
-                          "type": "tree",
-                          "rules": [
-                            {
-                              "conditions": [],
-                              "endpoint": {
-                                "url": "https://datasync.{Region}.{PartitionResult#dnsSuffix}",
-                                "properties": {},
-                                "headers": {}
-                              },
-                              "type": "endpoint"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "conditions": [],
-                  "error": "Invalid Configuration: Missing Region",
-                  "type": "error"
-                }
-              ]
+              "error": "Invalid Configuration: Missing Region",
+              "type": "error"
             }
           ]
         },
@@ -6086,6 +6334,18 @@
           "traits": {
             "smithy.api#documentation": "<p>Indicates whether DataSync Discovery recommendations for the cluster are ready to view, incomplete,\n      or can't be determined.</p>\n         <p>For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/discovery-job-statuses.html#recommendation-statuses-table\">Recommendation statuses</a>.</p>"
           }
+        },
+        "LunCount": {
+          "target": "com.amazonaws.datasync#NonNegativeLong",
+          "traits": {
+            "smithy.api#documentation": "<p>The number of LUNs (logical unit numbers) in the cluster.</p>"
+          }
+        },
+        "ClusterCloudStorageUsed": {
+          "target": "com.amazonaws.datasync#NonNegativeLong",
+          "traits": {
+            "smithy.api#documentation": "<p>The amount of space in the cluster that's in cloud storage (for example, if you're using data tiering).</p>"
+          }
         }
       },
       "traits": {
@@ -6177,6 +6437,12 @@
           "target": "com.amazonaws.datasync#NonNegativeLong",
           "traits": {
             "smithy.api#documentation": "<p>The amount of storage in the SVM that's being used for snapshots.</p>"
+          }
+        },
+        "LunCount": {
+          "target": "com.amazonaws.datasync#NonNegativeLong",
+          "traits": {
+            "smithy.api#documentation": "<p>The number of LUNs (logical unit numbers) in the SVM.</p>"
           }
         }
       },
@@ -6276,6 +6542,12 @@
           "target": "com.amazonaws.datasync#RecommendationStatus",
           "traits": {
             "smithy.api#documentation": "<p>Indicates whether DataSync Discovery recommendations for the volume are ready to view, incomplete,\n      or can't be determined.</p>\n         <p>For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/discovery-job-statuses.html#recommendation-statuses-table\">Recommendation statuses</a>.</p>"
+          }
+        },
+        "LunCount": {
+          "target": "com.amazonaws.datasync#NonNegativeLong",
+          "traits": {
+            "smithy.api#documentation": "<p>The number of LUNs (logical unit numbers) in the volume.</p>"
           }
         }
       },
@@ -6467,13 +6739,13 @@
         "AgentArns": {
           "target": "com.amazonaws.datasync#AgentArnList",
           "traits": {
-            "smithy.api#documentation": "<p>ARNs of the agents to use for an NFS location.</p>",
+            "smithy.api#documentation": "<p>The Amazon Resource Names (ARNs) of the agents connecting to a transfer\n      location.</p>",
             "smithy.api#required": {}
           }
         }
       },
       "traits": {
-        "smithy.api#documentation": "<p>A list of Amazon Resource Names (ARNs) of agents to use for a Network File System (NFS)\n      location.</p>"
+        "smithy.api#documentation": "<p>The DataSync agents that are connecting to a Network File System (NFS)\n      location.</p>"
       }
     },
     "com.amazonaws.datasync#Operator": {
@@ -6607,7 +6879,7 @@
         "TaskQueueing": {
           "target": "com.amazonaws.datasync#TaskQueueing",
           "traits": {
-            "smithy.api#documentation": "<p>Specifies whether tasks should be queued before executing the tasks. The default is\n        <code>ENABLED</code>, which means the tasks will be queued.</p>\n         <p>If you use the same agent to run multiple tasks, you can enable the tasks to run in\n      series. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/run-task.html#queue-task-execution\">Queueing task\n        executions</a>.</p>"
+            "smithy.api#documentation": "<p>Specifies whether your transfer tasks should be put into a queue during certain scenarios\n      when <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/run-task.html#running-multiple-tasks\">running multiple\n        tasks</a>. This is <code>ENABLED</code> by default.</p>"
           }
         },
         "LogLevel": {
@@ -6798,30 +7070,30 @@
         "VpcEndpointId": {
           "target": "com.amazonaws.datasync#VpcEndpointId",
           "traits": {
-            "smithy.api#documentation": "<p>The ID of the VPC endpoint that is configured for an agent. An agent that is configured\n      with a VPC endpoint will not be accessible over the public internet.</p>"
+            "smithy.api#documentation": "<p>Specifies the ID of the VPC endpoint that your agent connects to.</p>"
           }
         },
         "PrivateLinkEndpoint": {
           "target": "com.amazonaws.datasync#Endpoint",
           "traits": {
-            "smithy.api#documentation": "<p>The private endpoint that is configured for an agent that has access to IP addresses in a\n        <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/endpoint-service.html\">PrivateLink</a>. An agent that is configured with this endpoint will not be accessible\n      over the public internet.</p>"
+            "smithy.api#documentation": "<p>Specifies the VPC endpoint provided by <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/endpoint-service.html\">Amazon Web Services PrivateLink</a> that\n      your agent connects to.</p>"
           }
         },
         "SubnetArns": {
           "target": "com.amazonaws.datasync#PLSubnetArnList",
           "traits": {
-            "smithy.api#documentation": "<p>The Amazon Resource Names (ARNs) of the subnets that are configured for an agent activated\n      in a VPC or an agent that has access to a VPC endpoint.</p>"
+            "smithy.api#documentation": "<p>Specifies the ARN of the subnet where your VPC endpoint is located. You can only specify\n      one ARN.</p>"
           }
         },
         "SecurityGroupArns": {
           "target": "com.amazonaws.datasync#PLSecurityGroupArnList",
           "traits": {
-            "smithy.api#documentation": "<p>The Amazon Resource Names (ARNs) of the security groups that are configured for the EC2\n      resource that hosts an agent activated in a VPC or an agent that has access to a VPC\n      endpoint.</p>"
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Names (ARN) of the security group that provides DataSync access to your VPC endpoint. You can only specify one ARN.</p>"
           }
         }
       },
       "traits": {
-        "smithy.api#documentation": "<p>The VPC endpoint, subnet, and security group that an agent uses to access IP addresses in\n      a VPC (Virtual Private Cloud).</p>"
+        "smithy.api#documentation": "<p>Specifies how your DataSync agent connects to Amazon Web Services using a\n      virtual private cloud (VPC) service endpoint. An agent that uses a VPC endpoint isn't\n      accessible over the public internet.</p>"
       }
     },
     "com.amazonaws.datasync#PtolemyBoolean": {
@@ -8244,6 +8516,84 @@
         "smithy.api#output": {}
       }
     },
+    "com.amazonaws.datasync#UpdateLocationAzureBlob": {
+      "type": "operation",
+      "input": {
+        "target": "com.amazonaws.datasync#UpdateLocationAzureBlobRequest"
+      },
+      "output": {
+        "target": "com.amazonaws.datasync#UpdateLocationAzureBlobResponse"
+      },
+      "errors": [
+        {
+          "target": "com.amazonaws.datasync#InternalException"
+        },
+        {
+          "target": "com.amazonaws.datasync#InvalidRequestException"
+        }
+      ],
+      "traits": {
+        "smithy.api#documentation": "<p>Modifies some configurations of the Microsoft Azure Blob Storage transfer location that you're using with DataSync.</p>"
+      }
+    },
+    "com.amazonaws.datasync#UpdateLocationAzureBlobRequest": {
+      "type": "structure",
+      "members": {
+        "LocationArn": {
+          "target": "com.amazonaws.datasync#LocationArn",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the ARN of the Azure Blob Storage transfer location that you're updating.</p>",
+            "smithy.api#required": {}
+          }
+        },
+        "Subdirectory": {
+          "target": "com.amazonaws.datasync#AzureBlobSubdirectory",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies path segments if you want to limit your transfer to a virtual directory in your\n      container (for example, <code>/my/images</code>).</p>"
+          }
+        },
+        "AuthenticationType": {
+          "target": "com.amazonaws.datasync#AzureBlobAuthenticationType",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the authentication method DataSync uses to access your Azure Blob Storage. DataSync can access blob storage using a shared access signature (SAS).</p>"
+          }
+        },
+        "SasConfiguration": {
+          "target": "com.amazonaws.datasync#AzureBlobSasConfiguration",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the SAS configuration that allows DataSync to access your Azure Blob Storage.</p>"
+          }
+        },
+        "BlobType": {
+          "target": "com.amazonaws.datasync#AzureBlobType",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the type of blob that you want your objects or files to be when transferring\n      them into Azure Blob Storage. Currently, DataSync only supports moving data into\n      Azure Blob Storage as block blobs. For more information on blob types, see the <a href=\"https://learn.microsoft.com/en-us/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs\">Azure Blob Storage documentation</a>.</p>"
+          }
+        },
+        "AccessTier": {
+          "target": "com.amazonaws.datasync#AzureAccessTier",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the access tier that you want your objects or files transferred into. This only applies when using the location as a transfer destination. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-access-tiers\">Access tiers</a>.</p>"
+          }
+        },
+        "AgentArns": {
+          "target": "com.amazonaws.datasync#AgentArnList",
+          "traits": {
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the DataSync agent that can connect with your Azure Blob Storage container.</p>\n         <p>You can specify more than one agent. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/multiple-agents.html\">Using multiple\n      agents for your transfer</a>.</p>"
+          }
+        }
+      },
+      "traits": {
+        "smithy.api#input": {}
+      }
+    },
+    "com.amazonaws.datasync#UpdateLocationAzureBlobResponse": {
+      "type": "structure",
+      "members": {},
+      "traits": {
+        "smithy.api#output": {}
+      }
+    },
     "com.amazonaws.datasync#UpdateLocationHdfs": {
       "type": "operation",
       "input": {
@@ -8375,7 +8725,7 @@
         }
       ],
       "traits": {
-        "smithy.api#documentation": "<p>Updates some of the parameters of a previously created location for Network File System\n      (NFS) access. For information about creating an NFS location, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html\">Creating a location for\n      NFS</a>.</p>"
+        "smithy.api#documentation": "<p>Modifies some configurations of the Network File System (NFS) transfer location that\n      you're using with DataSync.</p>\n         <p>For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html\">Configuring transfers to or from an\n        NFS file server</a>.</p>"
       }
     },
     "com.amazonaws.datasync#UpdateLocationNfsRequest": {
@@ -8384,14 +8734,14 @@
         "LocationArn": {
           "target": "com.amazonaws.datasync#LocationArn",
           "traits": {
-            "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the NFS location to update.</p>",
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the NFS transfer location that you want to\n      update.</p>",
             "smithy.api#required": {}
           }
         },
         "Subdirectory": {
           "target": "com.amazonaws.datasync#NfsSubdirectory",
           "traits": {
-            "smithy.api#documentation": "<p>The subdirectory in the NFS file system that is used to read data from the NFS source\n      location or write data to the NFS destination. The NFS path should be a path that's\n      exported by the NFS server, or a subdirectory of that path. The path should be such that it\n      can be mounted by other NFS clients in your network.</p>\n         <p>To see all the paths exported by your NFS server, run \"<code>showmount -e\n        nfs-server-name</code>\" from an NFS client that has access to your server. You can specify\n      any directory that appears in the results, and any subdirectory of that directory. Ensure that\n      the NFS export is accessible without Kerberos authentication. </p>\n         <p>To transfer all the data in the folder that you specified, DataSync must have\n      permissions to read all the data. To ensure this, either configure the NFS export with\n        <code>no_root_squash</code>, or ensure that the files you want DataSync to access\n      have permissions that allow read access for all users. Doing either option enables the agent\n      to read the files. For the agent to access directories, you must additionally enable all\n      execute access.</p>\n         <p>If you are copying data to or from your Snowcone device, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#nfs-on-snowcone\">NFS Server on\n          Snowcone</a> for more information.</p>\n         <p>For information about NFS export configuration, see 18.7. The /etc/exports\n      Configuration File in the Red Hat Enterprise Linux documentation.</p>"
+            "smithy.api#documentation": "<p>Specifies the export path in your NFS file server that you want DataSync to\n      mount.</p>\n         <p>This path (or a subdirectory of the path) is where DataSync transfers data to\n      or from. For information on configuring an export for DataSync, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#accessing-nfs\">Accessing NFS file servers</a>.</p>"
           }
         },
         "OnPremConfig": {
@@ -8613,7 +8963,7 @@
         "AgentArns": {
           "target": "com.amazonaws.datasync#DiscoveryAgentArnList",
           "traits": {
-            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the DataSync agent that connects to and reads\n      your on-premises storage system.</p>"
+            "smithy.api#documentation": "<p>Specifies the Amazon Resource Name (ARN) of the DataSync agent that connects to and reads\n      your on-premises storage system. You can only specify one ARN.</p>"
           }
         },
         "Name": {

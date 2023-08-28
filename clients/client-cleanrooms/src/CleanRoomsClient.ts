@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -49,7 +50,15 @@ import {
   UserAgent as __UserAgent,
 } from "@smithy/types";
 
+import {
+  BatchGetCollaborationAnalysisTemplateCommandInput,
+  BatchGetCollaborationAnalysisTemplateCommandOutput,
+} from "./commands/BatchGetCollaborationAnalysisTemplateCommand";
 import { BatchGetSchemaCommandInput, BatchGetSchemaCommandOutput } from "./commands/BatchGetSchemaCommand";
+import {
+  CreateAnalysisTemplateCommandInput,
+  CreateAnalysisTemplateCommandOutput,
+} from "./commands/CreateAnalysisTemplateCommand";
 import {
   CreateCollaborationCommandInput,
   CreateCollaborationCommandOutput,
@@ -68,6 +77,10 @@ import {
 } from "./commands/CreateConfiguredTableCommand";
 import { CreateMembershipCommandInput, CreateMembershipCommandOutput } from "./commands/CreateMembershipCommand";
 import {
+  DeleteAnalysisTemplateCommandInput,
+  DeleteAnalysisTemplateCommandOutput,
+} from "./commands/DeleteAnalysisTemplateCommand";
+import {
   DeleteCollaborationCommandInput,
   DeleteCollaborationCommandOutput,
 } from "./commands/DeleteCollaborationCommand";
@@ -85,6 +98,14 @@ import {
 } from "./commands/DeleteConfiguredTableCommand";
 import { DeleteMemberCommandInput, DeleteMemberCommandOutput } from "./commands/DeleteMemberCommand";
 import { DeleteMembershipCommandInput, DeleteMembershipCommandOutput } from "./commands/DeleteMembershipCommand";
+import {
+  GetAnalysisTemplateCommandInput,
+  GetAnalysisTemplateCommandOutput,
+} from "./commands/GetAnalysisTemplateCommand";
+import {
+  GetCollaborationAnalysisTemplateCommandInput,
+  GetCollaborationAnalysisTemplateCommandOutput,
+} from "./commands/GetCollaborationAnalysisTemplateCommand";
 import { GetCollaborationCommandInput, GetCollaborationCommandOutput } from "./commands/GetCollaborationCommand";
 import {
   GetConfiguredTableAnalysisRuleCommandInput,
@@ -102,6 +123,14 @@ import {
   GetSchemaAnalysisRuleCommandOutput,
 } from "./commands/GetSchemaAnalysisRuleCommand";
 import { GetSchemaCommandInput, GetSchemaCommandOutput } from "./commands/GetSchemaCommand";
+import {
+  ListAnalysisTemplatesCommandInput,
+  ListAnalysisTemplatesCommandOutput,
+} from "./commands/ListAnalysisTemplatesCommand";
+import {
+  ListCollaborationAnalysisTemplatesCommandInput,
+  ListCollaborationAnalysisTemplatesCommandOutput,
+} from "./commands/ListCollaborationAnalysisTemplatesCommand";
 import { ListCollaborationsCommandInput, ListCollaborationsCommandOutput } from "./commands/ListCollaborationsCommand";
 import {
   ListConfiguredTableAssociationsCommandInput,
@@ -128,6 +157,10 @@ import {
 } from "./commands/StartProtectedQueryCommand";
 import { TagResourceCommandInput, TagResourceCommandOutput } from "./commands/TagResourceCommand";
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "./commands/UntagResourceCommand";
+import {
+  UpdateAnalysisTemplateCommandInput,
+  UpdateAnalysisTemplateCommandOutput,
+} from "./commands/UpdateAnalysisTemplateCommand";
 import {
   UpdateCollaborationCommandInput,
   UpdateCollaborationCommandOutput,
@@ -156,6 +189,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -163,18 +197,23 @@ export { __Client };
  * @public
  */
 export type ServiceInputTypes =
+  | BatchGetCollaborationAnalysisTemplateCommandInput
   | BatchGetSchemaCommandInput
+  | CreateAnalysisTemplateCommandInput
   | CreateCollaborationCommandInput
   | CreateConfiguredTableAnalysisRuleCommandInput
   | CreateConfiguredTableAssociationCommandInput
   | CreateConfiguredTableCommandInput
   | CreateMembershipCommandInput
+  | DeleteAnalysisTemplateCommandInput
   | DeleteCollaborationCommandInput
   | DeleteConfiguredTableAnalysisRuleCommandInput
   | DeleteConfiguredTableAssociationCommandInput
   | DeleteConfiguredTableCommandInput
   | DeleteMemberCommandInput
   | DeleteMembershipCommandInput
+  | GetAnalysisTemplateCommandInput
+  | GetCollaborationAnalysisTemplateCommandInput
   | GetCollaborationCommandInput
   | GetConfiguredTableAnalysisRuleCommandInput
   | GetConfiguredTableAssociationCommandInput
@@ -183,6 +222,8 @@ export type ServiceInputTypes =
   | GetProtectedQueryCommandInput
   | GetSchemaAnalysisRuleCommandInput
   | GetSchemaCommandInput
+  | ListAnalysisTemplatesCommandInput
+  | ListCollaborationAnalysisTemplatesCommandInput
   | ListCollaborationsCommandInput
   | ListConfiguredTableAssociationsCommandInput
   | ListConfiguredTablesCommandInput
@@ -194,6 +235,7 @@ export type ServiceInputTypes =
   | StartProtectedQueryCommandInput
   | TagResourceCommandInput
   | UntagResourceCommandInput
+  | UpdateAnalysisTemplateCommandInput
   | UpdateCollaborationCommandInput
   | UpdateConfiguredTableAnalysisRuleCommandInput
   | UpdateConfiguredTableAssociationCommandInput
@@ -205,18 +247,23 @@ export type ServiceInputTypes =
  * @public
  */
 export type ServiceOutputTypes =
+  | BatchGetCollaborationAnalysisTemplateCommandOutput
   | BatchGetSchemaCommandOutput
+  | CreateAnalysisTemplateCommandOutput
   | CreateCollaborationCommandOutput
   | CreateConfiguredTableAnalysisRuleCommandOutput
   | CreateConfiguredTableAssociationCommandOutput
   | CreateConfiguredTableCommandOutput
   | CreateMembershipCommandOutput
+  | DeleteAnalysisTemplateCommandOutput
   | DeleteCollaborationCommandOutput
   | DeleteConfiguredTableAnalysisRuleCommandOutput
   | DeleteConfiguredTableAssociationCommandOutput
   | DeleteConfiguredTableCommandOutput
   | DeleteMemberCommandOutput
   | DeleteMembershipCommandOutput
+  | GetAnalysisTemplateCommandOutput
+  | GetCollaborationAnalysisTemplateCommandOutput
   | GetCollaborationCommandOutput
   | GetConfiguredTableAnalysisRuleCommandOutput
   | GetConfiguredTableAssociationCommandOutput
@@ -225,6 +272,8 @@ export type ServiceOutputTypes =
   | GetProtectedQueryCommandOutput
   | GetSchemaAnalysisRuleCommandOutput
   | GetSchemaCommandOutput
+  | ListAnalysisTemplatesCommandOutput
+  | ListCollaborationAnalysisTemplatesCommandOutput
   | ListCollaborationsCommandOutput
   | ListConfiguredTableAssociationsCommandOutput
   | ListConfiguredTablesCommandOutput
@@ -236,6 +285,7 @@ export type ServiceOutputTypes =
   | StartProtectedQueryCommandOutput
   | TagResourceCommandOutput
   | UntagResourceCommandOutput
+  | UpdateAnalysisTemplateCommandOutput
   | UpdateCollaborationCommandOutput
   | UpdateConfiguredTableAnalysisRuleCommandOutput
   | UpdateConfiguredTableAssociationCommandOutput
@@ -362,6 +412,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -391,6 +446,7 @@ export interface CleanRoomsClientConfig extends CleanRoomsClientConfigType {}
  */
 export type CleanRoomsClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -426,8 +482,8 @@ export class CleanRoomsClient extends __Client<
    */
   readonly config: CleanRoomsClientResolvedConfig;
 
-  constructor(configuration: CleanRoomsClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<CleanRoomsClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -435,8 +491,9 @@ export class CleanRoomsClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

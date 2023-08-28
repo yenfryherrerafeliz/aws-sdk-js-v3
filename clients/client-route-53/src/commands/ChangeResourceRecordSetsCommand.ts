@@ -116,12 +116,12 @@ export interface ChangeResourceRecordSetsCommandOutput extends ChangeResourceRec
  *          <p>
  *             <b>Change Propagation to Route 53 DNS Servers</b>
  *          </p>
- *          <p>When you submit a <code>ChangeResourceRecordSets</code> request, Route 53 propagates
- * 			your changes to all of the Route 53 authoritative DNS servers. While your changes are
- * 			propagating, <code>GetChange</code> returns a status of <code>PENDING</code>. When
- * 			propagation is complete, <code>GetChange</code> returns a status of <code>INSYNC</code>.
- * 			Changes generally propagate to all Route 53 name servers within 60 seconds. For more
- * 			information, see <a href="https://docs.aws.amazon.com/Route53/latest/APIReference/API_GetChange.html">GetChange</a>.</p>
+ *          <p>When you submit a <code>ChangeResourceRecordSets</code> request, Route 53 propagates your
+ * 			changes to all of the Route 53 authoritative DNS servers managing the hosted zone. While
+ * 			your changes are propagating, <code>GetChange</code> returns a status of
+ * 				<code>PENDING</code>. When propagation is complete, <code>GetChange</code> returns a
+ * 			status of <code>INSYNC</code>. Changes generally propagate to all Route 53 name servers
+ * 			managing the hosted zone within 60 seconds. For more information, see <a href="https://docs.aws.amazon.com/Route53/latest/APIReference/API_GetChange.html">GetChange</a>.</p>
  *          <p>
  *             <b>Limits on ChangeResourceRecordSets Requests</b>
  *          </p>
@@ -145,7 +145,7 @@ export interface ChangeResourceRecordSetsCommandOutput extends ChangeResourceRec
  *           Type: "SOA" || "A" || "TXT" || "NS" || "CNAME" || "MX" || "NAPTR" || "PTR" || "SRV" || "SPF" || "AAAA" || "CAA" || "DS", // required
  *           SetIdentifier: "STRING_VALUE",
  *           Weight: Number("long"),
- *           Region: "us-east-1" || "us-east-2" || "us-west-1" || "us-west-2" || "ca-central-1" || "eu-west-1" || "eu-west-2" || "eu-west-3" || "eu-central-1" || "eu-central-2" || "ap-southeast-1" || "ap-southeast-2" || "ap-southeast-3" || "ap-northeast-1" || "ap-northeast-2" || "ap-northeast-3" || "eu-north-1" || "sa-east-1" || "cn-north-1" || "cn-northwest-1" || "ap-east-1" || "me-south-1" || "me-central-1" || "ap-south-1" || "ap-south-2" || "af-south-1" || "eu-south-1" || "eu-south-2" || "ap-southeast-4",
+ *           Region: "us-east-1" || "us-east-2" || "us-west-1" || "us-west-2" || "ca-central-1" || "eu-west-1" || "eu-west-2" || "eu-west-3" || "eu-central-1" || "eu-central-2" || "ap-southeast-1" || "ap-southeast-2" || "ap-southeast-3" || "ap-northeast-1" || "ap-northeast-2" || "ap-northeast-3" || "eu-north-1" || "sa-east-1" || "cn-north-1" || "cn-northwest-1" || "ap-east-1" || "me-south-1" || "me-central-1" || "ap-south-1" || "ap-south-2" || "af-south-1" || "eu-south-1" || "eu-south-2" || "ap-southeast-4" || "il-central-1",
  *           GeoLocation: { // GeoLocation
  *             ContinentCode: "STRING_VALUE",
  *             CountryCode: "STRING_VALUE",

@@ -14,7 +14,7 @@ import {
 } from "@smithy/types";
 
 import { GlueClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GlueClient";
-import { GetUnfilteredPartitionsMetadataRequest, GetUnfilteredPartitionsMetadataResponse } from "../models/models_1";
+import { GetUnfilteredPartitionsMetadataRequest, GetUnfilteredPartitionsMetadataResponse } from "../models/models_2";
 import {
   de_GetUnfilteredPartitionsMetadataCommand,
   se_GetUnfilteredPartitionsMetadataCommand,
@@ -63,7 +63,7 @@ export interface GetUnfilteredPartitionsMetadataCommandOutput
  *     AllColumnsRequested: true || false,
  *   },
  *   SupportedPermissionTypes: [ // PermissionTypeList // required
- *     "COLUMN_PERMISSION" || "CELL_FILTER_PERMISSION",
+ *     "COLUMN_PERMISSION" || "CELL_FILTER_PERMISSION" || "NESTED_PERMISSION" || "NESTED_CELL_PERMISSION",
  *   ],
  *   NextToken: "STRING_VALUE",
  *   Segment: { // Segment

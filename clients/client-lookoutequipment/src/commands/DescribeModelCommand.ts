@@ -71,7 +71,7 @@ export interface DescribeModelCommandOutput extends DescribeModelResponse, __Met
  * //   DataPreProcessingConfiguration: { // DataPreProcessingConfiguration
  * //     TargetSamplingRate: "PT1S" || "PT5S" || "PT10S" || "PT15S" || "PT30S" || "PT1M" || "PT5M" || "PT10M" || "PT15M" || "PT30M" || "PT1H",
  * //   },
- * //   Status: "IN_PROGRESS" || "SUCCESS" || "FAILED",
+ * //   Status: "IN_PROGRESS" || "SUCCESS" || "FAILED" || "IMPORT_IN_PROGRESS",
  * //   TrainingExecutionStartTime: new Date("TIMESTAMP"),
  * //   TrainingExecutionEndTime: new Date("TIMESTAMP"),
  * //   FailedReason: "STRING_VALUE",
@@ -80,6 +80,15 @@ export interface DescribeModelCommandOutput extends DescribeModelResponse, __Met
  * //   CreatedAt: new Date("TIMESTAMP"),
  * //   ServerSideKmsKeyId: "STRING_VALUE",
  * //   OffCondition: "STRING_VALUE",
+ * //   SourceModelVersionArn: "STRING_VALUE",
+ * //   ImportJobStartTime: new Date("TIMESTAMP"),
+ * //   ImportJobEndTime: new Date("TIMESTAMP"),
+ * //   ActiveModelVersion: Number("long"),
+ * //   ActiveModelVersionArn: "STRING_VALUE",
+ * //   ModelVersionActivatedAt: new Date("TIMESTAMP"),
+ * //   PreviousActiveModelVersion: Number("long"),
+ * //   PreviousActiveModelVersionArn: "STRING_VALUE",
+ * //   PreviousModelVersionActivatedAt: new Date("TIMESTAMP"),
  * // };
  *
  * ```
@@ -107,7 +116,7 @@ export interface DescribeModelCommandOutput extends DescribeModelResponse, __Met
  *
  * @throws {@link ValidationException} (client fault)
  *  <p> The input fails to satisfy constraints specified by Amazon Lookout for Equipment or a
- *          related AWS service that's being utilized. </p>
+ *          related Amazon Web Services service that's being utilized. </p>
  *
  * @throws {@link LookoutEquipmentServiceException}
  * <p>Base exception class for all service exceptions from LookoutEquipment service.</p>

@@ -27,6 +27,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -53,17 +54,31 @@ import {
   CreateSourceRepositoryBranchCommandInput,
   CreateSourceRepositoryBranchCommandOutput,
 } from "./commands/CreateSourceRepositoryBranchCommand";
+import {
+  CreateSourceRepositoryCommandInput,
+  CreateSourceRepositoryCommandOutput,
+} from "./commands/CreateSourceRepositoryCommand";
 import { DeleteAccessTokenCommandInput, DeleteAccessTokenCommandOutput } from "./commands/DeleteAccessTokenCommand";
 import {
   DeleteDevEnvironmentCommandInput,
   DeleteDevEnvironmentCommandOutput,
 } from "./commands/DeleteDevEnvironmentCommand";
+import { DeleteProjectCommandInput, DeleteProjectCommandOutput } from "./commands/DeleteProjectCommand";
+import {
+  DeleteSourceRepositoryCommandInput,
+  DeleteSourceRepositoryCommandOutput,
+} from "./commands/DeleteSourceRepositoryCommand";
+import { DeleteSpaceCommandInput, DeleteSpaceCommandOutput } from "./commands/DeleteSpaceCommand";
 import { GetDevEnvironmentCommandInput, GetDevEnvironmentCommandOutput } from "./commands/GetDevEnvironmentCommand";
 import { GetProjectCommandInput, GetProjectCommandOutput } from "./commands/GetProjectCommand";
 import {
   GetSourceRepositoryCloneUrlsCommandInput,
   GetSourceRepositoryCloneUrlsCommandOutput,
 } from "./commands/GetSourceRepositoryCloneUrlsCommand";
+import {
+  GetSourceRepositoryCommandInput,
+  GetSourceRepositoryCommandOutput,
+} from "./commands/GetSourceRepositoryCommand";
 import { GetSpaceCommandInput, GetSpaceCommandOutput } from "./commands/GetSpaceCommand";
 import { GetSubscriptionCommandInput, GetSubscriptionCommandOutput } from "./commands/GetSubscriptionCommand";
 import { GetUserDetailsCommandInput, GetUserDetailsCommandOutput } from "./commands/GetUserDetailsCommand";
@@ -104,6 +119,8 @@ import {
   UpdateDevEnvironmentCommandInput,
   UpdateDevEnvironmentCommandOutput,
 } from "./commands/UpdateDevEnvironmentCommand";
+import { UpdateProjectCommandInput, UpdateProjectCommandOutput } from "./commands/UpdateProjectCommand";
+import { UpdateSpaceCommandInput, UpdateSpaceCommandOutput } from "./commands/UpdateSpaceCommand";
 import { VerifySessionCommandInput, VerifySessionCommandOutput } from "./commands/VerifySessionCommand";
 import {
   ClientInputEndpointParameters,
@@ -112,6 +129,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -123,11 +141,16 @@ export type ServiceInputTypes =
   | CreateDevEnvironmentCommandInput
   | CreateProjectCommandInput
   | CreateSourceRepositoryBranchCommandInput
+  | CreateSourceRepositoryCommandInput
   | DeleteAccessTokenCommandInput
   | DeleteDevEnvironmentCommandInput
+  | DeleteProjectCommandInput
+  | DeleteSourceRepositoryCommandInput
+  | DeleteSpaceCommandInput
   | GetDevEnvironmentCommandInput
   | GetProjectCommandInput
   | GetSourceRepositoryCloneUrlsCommandInput
+  | GetSourceRepositoryCommandInput
   | GetSpaceCommandInput
   | GetSubscriptionCommandInput
   | GetUserDetailsCommandInput
@@ -144,6 +167,8 @@ export type ServiceInputTypes =
   | StopDevEnvironmentCommandInput
   | StopDevEnvironmentSessionCommandInput
   | UpdateDevEnvironmentCommandInput
+  | UpdateProjectCommandInput
+  | UpdateSpaceCommandInput
   | VerifySessionCommandInput;
 
 /**
@@ -154,11 +179,16 @@ export type ServiceOutputTypes =
   | CreateDevEnvironmentCommandOutput
   | CreateProjectCommandOutput
   | CreateSourceRepositoryBranchCommandOutput
+  | CreateSourceRepositoryCommandOutput
   | DeleteAccessTokenCommandOutput
   | DeleteDevEnvironmentCommandOutput
+  | DeleteProjectCommandOutput
+  | DeleteSourceRepositoryCommandOutput
+  | DeleteSpaceCommandOutput
   | GetDevEnvironmentCommandOutput
   | GetProjectCommandOutput
   | GetSourceRepositoryCloneUrlsCommandOutput
+  | GetSourceRepositoryCommandOutput
   | GetSpaceCommandOutput
   | GetSubscriptionCommandOutput
   | GetUserDetailsCommandOutput
@@ -175,6 +205,8 @@ export type ServiceOutputTypes =
   | StopDevEnvironmentCommandOutput
   | StopDevEnvironmentSessionCommandOutput
   | UpdateDevEnvironmentCommandOutput
+  | UpdateProjectCommandOutput
+  | UpdateSpaceCommandOutput
   | VerifySessionCommandOutput;
 
 /**
@@ -285,6 +317,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -314,6 +351,7 @@ export interface CodeCatalystClientConfig extends CodeCatalystClientConfigType {
  */
 export type CodeCatalystClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -332,24 +370,90 @@ export interface CodeCatalystClientResolvedConfig extends CodeCatalystClientReso
  * @public
  * <p>Welcome to the Amazon CodeCatalyst API reference. This reference provides descriptions of operations and data types for Amazon CodeCatalyst. You can use the Amazon CodeCatalyst
  *       API to work with the following objects. </p>
- *          <p>Dev Environments and the Amazon Web Services Toolkits, by calling the following:</p>
+ *          <p>Spaces, by calling the following:</p>
  *          <ul>
  *             <li>
  *                <p>
- *                   <a>CreateAccessToken</a>, which creates a personal access token (PAT) for the current user.</p>
+ *                   <a>DeleteSpace</a>, which deletes a space.</p>
  *             </li>
  *             <li>
  *                <p>
- *                   <a>CreateDevEnvironment</a>, which creates a Dev Environment,
- *        where you can quickly work on the code stored in the source repositories of your project.</p>
+ *                   <a>GetSpace</a>, which returns information about a space.</p>
  *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>GetSubscription</a>, which returns information about the Amazon Web Services account used for billing purposes
+ *         and the billing plan for the space.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>ListSpaces</a>, which retrieves a list of spaces.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>UpdateSpace</a>, which hanges one or more values for a space.</p>
+ *             </li>
+ *          </ul>
+ *          <p>Projects, by calling the following:</p>
+ *          <ul>
  *             <li>
  *                <p>
  *                   <a>CreateProject</a> which creates a project in a specified space.</p>
  *             </li>
  *             <li>
  *                <p>
+ *                   <a>GetProject</a>, which returns information about a project.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>ListProjects</a>, which retrieves a list of projects in a space.</p>
+ *             </li>
+ *          </ul>
+ *          <p>Users, by calling the following:</p>
+ *          <ul>
+ *             <li>
+ *                <p>
+ *                   <a>GetUserDetails</a>, which returns information about a user in Amazon CodeCatalyst.</p>
+ *             </li>
+ *          </ul>
+ *          <p>Source repositories, by calling the following:</p>
+ *          <ul>
+ *             <li>
+ *                <p>
+ *                   <a>CreateSourceRepository</a>, which creates an empty Git-based source repository in a specified project.</p>
+ *             </li>
+ *             <li>
+ *                <p>
  *                   <a>CreateSourceRepositoryBranch</a>, which creates a branch in a specified repository where you can work on code.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>DeleteSourceRepository</a>, which deletes a source repository.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>GetSourceRepository</a>, which returns information about a source repository.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>GetSourceRepositoryCloneUrls</a>, which returns information about the URLs that can be used with a Git client to clone a source
+ *         repository.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>ListSourceRepositories</a>, which retrieves a list of source repositories in a project.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>ListSourceRepositoryBranches</a>, which retrieves a list of branches in a source repository.</p>
+ *             </li>
+ *          </ul>
+ *          <p>Dev Environments and the Amazon Web Services Toolkits, by calling the following:</p>
+ *          <ul>
+ *             <li>
+ *                <p>
+ *                   <a>CreateDevEnvironment</a>, which creates a Dev Environment,
+ *        where you can quickly work on the code stored in the source repositories of your project.</p>
  *             </li>
  *             <li>
  *                <p>
@@ -361,49 +465,11 @@ export interface CodeCatalystClientResolvedConfig extends CodeCatalystClientReso
  *             </li>
  *             <li>
  *                <p>
- *                   <a>GetProject</a>, which returns information about a project.</p>
- *             </li>
- *             <li>
- *                <p>
- *                   <a>GetSourceRepositoryCloneUrls</a>, which returns information about the URLs that can be used with a Git client to clone a source
- *        repository.</p>
- *             </li>
- *             <li>
- *                <p>
- *                   <a>GetSpace</a>, which returns information about a space.</p>
- *             </li>
- *             <li>
- *                <p>
- *                   <a>GetSubscription</a>, which returns information about the Amazon Web Services account used for billing purposes
- *        and the billing plan for the space.</p>
- *             </li>
- *             <li>
- *                <p>
- *                   <a>GetUserDetails</a>, which returns information about a user in Amazon CodeCatalyst.</p>
- *             </li>
- *             <li>
- *                <p>
  *                   <a>ListDevEnvironments</a>, which retrieves a list of Dev Environments in a project.</p>
  *             </li>
  *             <li>
  *                <p>
  *                   <a>ListDevEnvironmentSessions</a>, which retrieves a list of active Dev Environment sessions in a project.</p>
- *             </li>
- *             <li>
- *                <p>
- *                   <a>ListProjects</a>, which retrieves a list of projects in a space.</p>
- *             </li>
- *             <li>
- *                <p>
- *                   <a>ListSourceRepositories</a>, which retrieves a list of source repositories in a project.</p>
- *             </li>
- *             <li>
- *                <p>
- *                   <a>ListSourceRepositoryBranches</a>, which retrieves a list of branches in a source repository.</p>
- *             </li>
- *             <li>
- *                <p>
- *                   <a>ListSpaces</a>, which retrieves a list of spaces.</p>
  *             </li>
  *             <li>
  *                <p>
@@ -425,13 +491,13 @@ export interface CodeCatalystClientResolvedConfig extends CodeCatalystClientReso
  *                <p>
  *                   <a>UpdateDevEnvironment</a>, which changes one or more values for a Dev Environment.</p>
  *             </li>
- *             <li>
- *                <p>
- *                   <a>VerifySession</a>, which verifies whether the calling user has a valid Amazon CodeCatalyst login and session.</p>
- *             </li>
  *          </ul>
  *          <p>Security, activity, and resource management in Amazon CodeCatalyst, by calling the following:</p>
  *          <ul>
+ *             <li>
+ *                <p>
+ *                   <a>CreateAccessToken</a>, which creates a personal access token (PAT) for the current user.</p>
+ *             </li>
  *             <li>
  *                <p>
  *                   <a>DeleteAccessToken</a>, which deletes a specified personal access token (PAT).</p>
@@ -443,6 +509,10 @@ export interface CodeCatalystClientResolvedConfig extends CodeCatalystClientReso
  *             <li>
  *                <p>
  *                   <a>ListEventLogs</a>, which retrieves a list of events that occurred during a specified time period in a space.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a>VerifySession</a>, which verifies whether the calling user has a valid Amazon CodeCatalyst login and session.</p>
  *             </li>
  *          </ul>
  *          <note>
@@ -462,8 +532,8 @@ export class CodeCatalystClient extends __Client<
    */
   readonly config: CodeCatalystClientResolvedConfig;
 
-  constructor(configuration: CodeCatalystClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<CodeCatalystClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -471,8 +541,9 @@ export class CodeCatalystClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveTokenConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

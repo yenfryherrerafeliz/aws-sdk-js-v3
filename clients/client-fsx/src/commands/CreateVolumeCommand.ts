@@ -60,6 +60,30 @@ export interface CreateVolumeCommandOutput extends CreateVolumeResponse, __Metad
  *     OntapVolumeType: "RW" || "DP",
  *     SnapshotPolicy: "STRING_VALUE",
  *     CopyTagsToBackups: true || false,
+ *     SnaplockConfiguration: { // CreateSnaplockConfiguration
+ *       AuditLogVolume: true || false,
+ *       AutocommitPeriod: { // AutocommitPeriod
+ *         Type: "MINUTES" || "HOURS" || "DAYS" || "MONTHS" || "YEARS" || "NONE", // required
+ *         Value: Number("int"),
+ *       },
+ *       PrivilegedDelete: "DISABLED" || "ENABLED" || "PERMANENTLY_DISABLED",
+ *       RetentionPeriod: { // SnaplockRetentionPeriod
+ *         DefaultRetention: { // RetentionPeriod
+ *           Type: "SECONDS" || "MINUTES" || "HOURS" || "DAYS" || "MONTHS" || "YEARS" || "INFINITE" || "UNSPECIFIED", // required
+ *           Value: Number("int"),
+ *         },
+ *         MinimumRetention: {
+ *           Type: "SECONDS" || "MINUTES" || "HOURS" || "DAYS" || "MONTHS" || "YEARS" || "INFINITE" || "UNSPECIFIED", // required
+ *           Value: Number("int"),
+ *         },
+ *         MaximumRetention: {
+ *           Type: "SECONDS" || "MINUTES" || "HOURS" || "DAYS" || "MONTHS" || "YEARS" || "INFINITE" || "UNSPECIFIED", // required
+ *           Value: Number("int"),
+ *         },
+ *       },
+ *       SnaplockType: "COMPLIANCE" || "ENTERPRISE", // required
+ *       VolumeAppendModeEnabled: true || false,
+ *     },
  *   },
  *   Tags: [ // Tags
  *     { // Tag
@@ -124,6 +148,30 @@ export interface CreateVolumeCommandOutput extends CreateVolumeResponse, __Metad
  * //       OntapVolumeType: "RW" || "DP" || "LS",
  * //       SnapshotPolicy: "STRING_VALUE",
  * //       CopyTagsToBackups: true || false,
+ * //       SnaplockConfiguration: { // SnaplockConfiguration
+ * //         AuditLogVolume: true || false,
+ * //         AutocommitPeriod: { // AutocommitPeriod
+ * //           Type: "MINUTES" || "HOURS" || "DAYS" || "MONTHS" || "YEARS" || "NONE", // required
+ * //           Value: Number("int"),
+ * //         },
+ * //         PrivilegedDelete: "DISABLED" || "ENABLED" || "PERMANENTLY_DISABLED",
+ * //         RetentionPeriod: { // SnaplockRetentionPeriod
+ * //           DefaultRetention: { // RetentionPeriod
+ * //             Type: "SECONDS" || "MINUTES" || "HOURS" || "DAYS" || "MONTHS" || "YEARS" || "INFINITE" || "UNSPECIFIED", // required
+ * //             Value: Number("int"),
+ * //           },
+ * //           MinimumRetention: {
+ * //             Type: "SECONDS" || "MINUTES" || "HOURS" || "DAYS" || "MONTHS" || "YEARS" || "INFINITE" || "UNSPECIFIED", // required
+ * //             Value: Number("int"),
+ * //           },
+ * //           MaximumRetention: {
+ * //             Type: "SECONDS" || "MINUTES" || "HOURS" || "DAYS" || "MONTHS" || "YEARS" || "INFINITE" || "UNSPECIFIED", // required
+ * //             Value: Number("int"),
+ * //           },
+ * //         },
+ * //         SnaplockType: "COMPLIANCE" || "ENTERPRISE",
+ * //         VolumeAppendModeEnabled: true || false,
+ * //       },
  * //     },
  * //     ResourceARN: "STRING_VALUE",
  * //     Tags: [ // Tags
@@ -139,7 +187,7 @@ export interface CreateVolumeCommandOutput extends CreateVolumeResponse, __Metad
  * //     },
  * //     AdministrativeActions: [ // AdministrativeActions
  * //       { // AdministrativeAction
- * //         AdministrativeActionType: "FILE_SYSTEM_UPDATE" || "STORAGE_OPTIMIZATION" || "FILE_SYSTEM_ALIAS_ASSOCIATION" || "FILE_SYSTEM_ALIAS_DISASSOCIATION" || "VOLUME_UPDATE" || "SNAPSHOT_UPDATE" || "RELEASE_NFS_V3_LOCKS" || "VOLUME_RESTORE",
+ * //         AdministrativeActionType: "FILE_SYSTEM_UPDATE" || "STORAGE_OPTIMIZATION" || "FILE_SYSTEM_ALIAS_ASSOCIATION" || "FILE_SYSTEM_ALIAS_DISASSOCIATION" || "VOLUME_UPDATE" || "SNAPSHOT_UPDATE" || "RELEASE_NFS_V3_LOCKS" || "VOLUME_RESTORE" || "THROUGHPUT_OPTIMIZATION" || "IOPS_OPTIMIZATION" || "STORAGE_TYPE_OPTIMIZATION",
  * //         ProgressPercent: Number("int"),
  * //         RequestTime: new Date("TIMESTAMP"),
  * //         Status: "FAILED" || "IN_PROGRESS" || "PENDING" || "COMPLETED" || "UPDATED_OPTIMIZING",
@@ -204,6 +252,10 @@ export interface CreateVolumeCommandOutput extends CreateVolumeResponse, __Metad
  * //               FileShareAccessAuditLogLevel: "DISABLED" || "SUCCESS_ONLY" || "FAILURE_ONLY" || "SUCCESS_AND_FAILURE", // required
  * //               AuditLogDestination: "STRING_VALUE",
  * //             },
+ * //             DiskIopsConfiguration: { // DiskIopsConfiguration
+ * //               Mode: "AUTOMATIC" || "USER_PROVISIONED",
+ * //               Iops: Number("long"),
+ * //             },
  * //           },
  * //           LustreConfiguration: { // LustreFileSystemConfiguration
  * //             WeeklyMaintenanceStartTime: "STRING_VALUE",
@@ -238,7 +290,7 @@ export interface CreateVolumeCommandOutput extends CreateVolumeResponse, __Metad
  * //           },
  * //           AdministrativeActions: [
  * //             {
- * //               AdministrativeActionType: "FILE_SYSTEM_UPDATE" || "STORAGE_OPTIMIZATION" || "FILE_SYSTEM_ALIAS_ASSOCIATION" || "FILE_SYSTEM_ALIAS_DISASSOCIATION" || "VOLUME_UPDATE" || "SNAPSHOT_UPDATE" || "RELEASE_NFS_V3_LOCKS" || "VOLUME_RESTORE",
+ * //               AdministrativeActionType: "FILE_SYSTEM_UPDATE" || "STORAGE_OPTIMIZATION" || "FILE_SYSTEM_ALIAS_ASSOCIATION" || "FILE_SYSTEM_ALIAS_DISASSOCIATION" || "VOLUME_UPDATE" || "SNAPSHOT_UPDATE" || "RELEASE_NFS_V3_LOCKS" || "VOLUME_RESTORE" || "THROUGHPUT_OPTIMIZATION" || "IOPS_OPTIMIZATION" || "STORAGE_TYPE_OPTIMIZATION",
  * //               ProgressPercent: Number("int"),
  * //               RequestTime: new Date("TIMESTAMP"),
  * //               Status: "FAILED" || "IN_PROGRESS" || "PENDING" || "COMPLETED" || "UPDATED_OPTIMIZING",
@@ -298,6 +350,10 @@ export interface CreateVolumeCommandOutput extends CreateVolumeResponse, __Metad
  * //                     FileShareAccessAuditLogLevel: "DISABLED" || "SUCCESS_ONLY" || "FAILURE_ONLY" || "SUCCESS_AND_FAILURE", // required
  * //                     AuditLogDestination: "STRING_VALUE",
  * //                   },
+ * //                   DiskIopsConfiguration: {
+ * //                     Mode: "AUTOMATIC" || "USER_PROVISIONED",
+ * //                     Iops: Number("long"),
+ * //                   },
  * //                 },
  * //                 LustreConfiguration: {
  * //                   WeeklyMaintenanceStartTime: "STRING_VALUE",
@@ -350,7 +406,7 @@ export interface CreateVolumeCommandOutput extends CreateVolumeResponse, __Metad
  * //                       ],
  * //                     },
  * //                   },
- * //                   DiskIopsConfiguration: { // DiskIopsConfiguration
+ * //                   DiskIopsConfiguration: {
  * //                     Mode: "AUTOMATIC" || "USER_PROVISIONED",
  * //                     Iops: Number("long"),
  * //                   },
@@ -368,7 +424,7 @@ export interface CreateVolumeCommandOutput extends CreateVolumeResponse, __Metad
  * //                   CopyTagsToBackups: true || false,
  * //                   CopyTagsToVolumes: true || false,
  * //                   DailyAutomaticBackupStartTime: "STRING_VALUE",
- * //                   DeploymentType: "SINGLE_AZ_1" || "SINGLE_AZ_2",
+ * //                   DeploymentType: "SINGLE_AZ_1" || "SINGLE_AZ_2" || "MULTI_AZ_1",
  * //                   ThroughputCapacity: Number("int"),
  * //                   WeeklyMaintenanceStartTime: "STRING_VALUE",
  * //                   DiskIopsConfiguration: {
@@ -376,6 +432,12 @@ export interface CreateVolumeCommandOutput extends CreateVolumeResponse, __Metad
  * //                     Iops: Number("long"),
  * //                   },
  * //                   RootVolumeId: "STRING_VALUE",
+ * //                   PreferredSubnetId: "STRING_VALUE",
+ * //                   EndpointIpAddressRange: "STRING_VALUE",
+ * //                   RouteTableIds: [
+ * //                     "STRING_VALUE",
+ * //                   ],
+ * //                   EndpointIpAddress: "STRING_VALUE",
  * //                 },
  * //               },
  * //               FailureDetails: { // AdministrativeActionFailureDetails
@@ -402,6 +464,27 @@ export interface CreateVolumeCommandOutput extends CreateVolumeResponse, __Metad
  * //                   OntapVolumeType: "RW" || "DP" || "LS",
  * //                   SnapshotPolicy: "STRING_VALUE",
  * //                   CopyTagsToBackups: true || false,
+ * //                   SnaplockConfiguration: {
+ * //                     AuditLogVolume: true || false,
+ * //                     AutocommitPeriod: {
+ * //                       Type: "MINUTES" || "HOURS" || "DAYS" || "MONTHS" || "YEARS" || "NONE", // required
+ * //                       Value: Number("int"),
+ * //                     },
+ * //                     PrivilegedDelete: "DISABLED" || "ENABLED" || "PERMANENTLY_DISABLED",
+ * //                     RetentionPeriod: {
+ * //                       DefaultRetention: {
+ * //                         Type: "SECONDS" || "MINUTES" || "HOURS" || "DAYS" || "MONTHS" || "YEARS" || "INFINITE" || "UNSPECIFIED", // required
+ * //                         Value: Number("int"),
+ * //                       },
+ * //                       MinimumRetention: {
+ * //                         Type: "SECONDS" || "MINUTES" || "HOURS" || "DAYS" || "MONTHS" || "YEARS" || "INFINITE" || "UNSPECIFIED", // required
+ * //                         Value: Number("int"),
+ * //                       },
+ * //                       MaximumRetention: "<RetentionPeriod>", // required
+ * //                     },
+ * //                     SnaplockType: "COMPLIANCE" || "ENTERPRISE",
+ * //                     VolumeAppendModeEnabled: true || false,
+ * //                   },
  * //                 },
  * //                 ResourceARN: "STRING_VALUE",
  * //                 Tags: "<Tags>",
@@ -500,14 +583,17 @@ export interface CreateVolumeCommandOutput extends CreateVolumeResponse, __Metad
  * //             CopyTagsToBackups: true || false,
  * //             CopyTagsToVolumes: true || false,
  * //             DailyAutomaticBackupStartTime: "STRING_VALUE",
- * //             DeploymentType: "SINGLE_AZ_1" || "SINGLE_AZ_2",
+ * //             DeploymentType: "SINGLE_AZ_1" || "SINGLE_AZ_2" || "MULTI_AZ_1",
  * //             ThroughputCapacity: Number("int"),
  * //             WeeklyMaintenanceStartTime: "STRING_VALUE",
- * //             DiskIopsConfiguration: {
- * //               Mode: "AUTOMATIC" || "USER_PROVISIONED",
- * //               Iops: Number("long"),
- * //             },
+ * //             DiskIopsConfiguration: "<DiskIopsConfiguration>",
  * //             RootVolumeId: "STRING_VALUE",
+ * //             PreferredSubnetId: "STRING_VALUE",
+ * //             EndpointIpAddressRange: "STRING_VALUE",
+ * //             RouteTableIds: [
+ * //               "STRING_VALUE",
+ * //             ],
+ * //             EndpointIpAddress: "STRING_VALUE",
  * //           },
  * //         },
  * //         FailureDetails: {

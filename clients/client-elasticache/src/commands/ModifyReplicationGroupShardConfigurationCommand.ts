@@ -45,8 +45,8 @@ export interface ModifyReplicationGroupShardConfigurationCommandOutput
 
 /**
  * @public
- * <p>Modifies a replication group's shards (node groups) by allowing you to
- *             add shards, remove shards, or rebalance the keyspaces among existing shards.</p>
+ * <p>Modifies a replication group's shards (node groups) by allowing you to add shards,
+ *             remove shards, or rebalance the keyspaces among existing shards.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -206,8 +206,8 @@ export interface ModifyReplicationGroupShardConfigurationCommandOutput
  * @see {@link ElastiCacheClientResolvedConfig | config} for ElastiCacheClient's `config` shape.
  *
  * @throws {@link InsufficientCacheClusterCapacityFault} (client fault)
- *  <p>The requested cache node type is not available in the specified Availability Zone.
- *             For more information, see <a href="http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/ErrorMessages.html#ErrorMessages.INSUFFICIENT_CACHE_CLUSTER_CAPACITY">InsufficientCacheClusterCapacity</a> in the ElastiCache User Guide.</p>
+ *  <p>The requested cache node type is not available in the specified Availability Zone. For
+ *             more information, see <a href="http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/ErrorMessages.html#ErrorMessages.INSUFFICIENT_CACHE_CLUSTER_CAPACITY">InsufficientCacheClusterCapacity</a> in the ElastiCache User Guide.</p>
  *
  * @throws {@link InvalidCacheClusterStateFault} (client fault)
  *  <p>The requested cluster is not in the <code>available</code> state.</p>
@@ -228,11 +228,12 @@ export interface ModifyReplicationGroupShardConfigurationCommandOutput
  *  <p>The VPC network is in an invalid state.</p>
  *
  * @throws {@link NodeGroupsPerReplicationGroupQuotaExceededFault} (client fault)
- *  <p>The request cannot be processed because it would exceed the maximum allowed number
- *             of node groups (shards) in a single replication group. The default maximum is 90</p>
+ *  <p>The request cannot be processed because it would exceed the maximum allowed number of
+ *             node groups (shards) in a single replication group. The default maximum is 90</p>
  *
  * @throws {@link NodeQuotaForCustomerExceededFault} (client fault)
- *  <p>The request cannot be processed because it would exceed the allowed number of cache nodes per customer.</p>
+ *  <p>The request cannot be processed because it would exceed the allowed number of cache
+ *             nodes per customer.</p>
  *
  * @throws {@link ReplicationGroupNotFoundFault} (client fault)
  *  <p>The specified replication group does not exist.</p>

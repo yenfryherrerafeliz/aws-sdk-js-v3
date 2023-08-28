@@ -66,6 +66,10 @@ import {
   AssociateSecurityKeyCommandInput,
   AssociateSecurityKeyCommandOutput,
 } from "../commands/AssociateSecurityKeyCommand";
+import {
+  AssociateTrafficDistributionGroupUserCommandInput,
+  AssociateTrafficDistributionGroupUserCommandOutput,
+} from "../commands/AssociateTrafficDistributionGroupUserCommand";
 import { ClaimPhoneNumberCommandInput, ClaimPhoneNumberCommandOutput } from "../commands/ClaimPhoneNumberCommand";
 import { CreateAgentStatusCommandInput, CreateAgentStatusCommandOutput } from "../commands/CreateAgentStatusCommand";
 import { CreateContactFlowCommandInput, CreateContactFlowCommandOutput } from "../commands/CreateContactFlowCommand";
@@ -138,7 +142,12 @@ import {
   DeleteIntegrationAssociationCommandOutput,
 } from "../commands/DeleteIntegrationAssociationCommand";
 import { DeletePromptCommandInput, DeletePromptCommandOutput } from "../commands/DeletePromptCommand";
+import { DeleteQueueCommandInput, DeleteQueueCommandOutput } from "../commands/DeleteQueueCommand";
 import { DeleteQuickConnectCommandInput, DeleteQuickConnectCommandOutput } from "../commands/DeleteQuickConnectCommand";
+import {
+  DeleteRoutingProfileCommandInput,
+  DeleteRoutingProfileCommandOutput,
+} from "../commands/DeleteRoutingProfileCommand";
 import { DeleteRuleCommandInput, DeleteRuleCommandOutput } from "../commands/DeleteRuleCommand";
 import {
   DeleteSecurityProfileCommandInput,
@@ -253,6 +262,10 @@ import {
   DisassociateSecurityKeyCommandInput,
   DisassociateSecurityKeyCommandOutput,
 } from "../commands/DisassociateSecurityKeyCommand";
+import {
+  DisassociateTrafficDistributionGroupUserCommandInput,
+  DisassociateTrafficDistributionGroupUserCommandOutput,
+} from "../commands/DisassociateTrafficDistributionGroupUserCommand";
 import { DismissUserContactCommandInput, DismissUserContactCommandOutput } from "../commands/DismissUserContactCommand";
 import {
   GetContactAttributesCommandInput,
@@ -361,6 +374,10 @@ import {
   ListTrafficDistributionGroupsCommandInput,
   ListTrafficDistributionGroupsCommandOutput,
 } from "../commands/ListTrafficDistributionGroupsCommand";
+import {
+  ListTrafficDistributionGroupUsersCommandInput,
+  ListTrafficDistributionGroupUsersCommandOutput,
+} from "../commands/ListTrafficDistributionGroupUsersCommand";
 import { ListUseCasesCommandInput, ListUseCasesCommandOutput } from "../commands/ListUseCasesCommand";
 import {
   ListUserHierarchyGroupsCommandInput,
@@ -517,6 +534,10 @@ import {
   UpdateQuickConnectNameCommandOutput,
 } from "../commands/UpdateQuickConnectNameCommand";
 import {
+  UpdateRoutingProfileAgentAvailabilityTimerCommandInput,
+  UpdateRoutingProfileAgentAvailabilityTimerCommandOutput,
+} from "../commands/UpdateRoutingProfileAgentAvailabilityTimerCommand";
+import {
   UpdateRoutingProfileConcurrencyCommandInput,
   UpdateRoutingProfileConcurrencyCommandOutput,
 } from "../commands/UpdateRoutingProfileConcurrencyCommand";
@@ -573,6 +594,7 @@ import {
 import { ConnectServiceException as __BaseException } from "../models/ConnectServiceException";
 import {
   AccessDeniedException,
+  AgentConfig,
   AgentContactReference,
   AgentInfo,
   AgentStatusReference,
@@ -582,8 +604,7 @@ import {
   ContactFlowNotPublishedException,
   ContactState,
   CrossChannelBehavior,
-  CurrentMetric,
-  CurrentMetricSortCriteria,
+  Distribution,
   DuplicateResourceException,
   EncryptionConfig,
   Evaluation,
@@ -603,8 +624,6 @@ import {
   EvaluationNote,
   EvaluationScore,
   EventBridgeActionDefinition,
-  Filters,
-  Grouping,
   HoursOfOperationConfig,
   HoursOfOperationTimeSlice,
   IdempotencyException,
@@ -672,26 +691,23 @@ import {
   ContactNotFoundException,
   ControlPlaneTagFilter,
   Credentials,
+  CurrentMetric,
   CurrentMetricData,
   CurrentMetricResult,
+  CurrentMetricSortCriteria,
   DestinationNotAllowedException,
-  Distribution,
   EvaluationAnswerInput,
-  EvaluationForm,
-  EvaluationFormContent,
-  EvaluationFormItem,
-  EvaluationFormSection,
   EvaluationFormSummary,
   EvaluationFormVersionSummary,
   EvaluationSummary,
+  Filters,
   FilterV2,
+  Grouping,
   HierarchyGroupCondition,
   HierarchyLevelUpdate,
-  HierarchyStructureUpdate,
   HistoricalMetric,
   HistoricalMetricData,
   HistoricalMetricResult,
-  HoursOfOperationSearchCriteria,
   HoursOfOperationSearchFilter,
   InstanceSummary,
   MaximumResultReturnedException,
@@ -704,9 +720,7 @@ import {
   ParticipantTimerConfiguration,
   ParticipantTimerValue,
   PersistentChat,
-  PromptSearchCriteria,
   PromptSearchFilter,
-  QueueSearchCriteria,
   QueueSearchFilter,
   QuickConnectSearchFilter,
   ResourceTagsSearchCriteria,
@@ -714,6 +728,8 @@ import {
   RuleSummary,
   SecurityKey,
   SecurityProfilesSearchFilter,
+  SignInConfig,
+  SignInDistribution,
   StringCondition,
   TagCondition,
   TagSearchCondition,
@@ -730,6 +746,14 @@ import {
   VoiceRecordingConfiguration,
 } from "../models/models_1";
 import {
+  EvaluationForm,
+  EvaluationFormContent,
+  EvaluationFormItem,
+  EvaluationFormSection,
+  HierarchyStructureUpdate,
+  HoursOfOperationSearchCriteria,
+  PromptSearchCriteria,
+  QueueSearchCriteria,
   QuickConnectSearchCriteria,
   RoutingProfileSearchCriteria,
   SecurityProfileSearchCriteria,
@@ -1104,6 +1128,46 @@ export const se_AssociateSecurityKeyCommand = async (
   body = JSON.stringify(
     take(input, {
       Key: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PUT",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1AssociateTrafficDistributionGroupUserCommand
+ */
+export const se_AssociateTrafficDistributionGroupUserCommand = async (
+  input: AssociateTrafficDistributionGroupUserCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/traffic-distribution-group/{TrafficDistributionGroupId}/user";
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "TrafficDistributionGroupId",
+    () => input.TrafficDistributionGroupId!,
+    "{TrafficDistributionGroupId}",
+    false
+  );
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      InstanceId: [],
+      UserId: [],
     })
   );
   return new __HttpRequest({
@@ -1549,6 +1613,7 @@ export const se_CreateRoutingProfileCommand = async (
   let body: any;
   body = JSON.stringify(
     take(input, {
+      AgentAvailabilityTimer: [],
       DefaultOutboundQueueId: [],
       Description: [],
       MediaConcurrencies: (_) => _json(_),
@@ -2148,6 +2213,31 @@ export const se_DeletePromptCommand = async (
 };
 
 /**
+ * serializeAws_restJson1DeleteQueueCommand
+ */
+export const se_DeleteQueueCommand = async (
+  input: DeleteQueueCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/queues/{InstanceId}/{QueueId}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "InstanceId", () => input.InstanceId!, "{InstanceId}", false);
+  resolvedPath = __resolvedPath(resolvedPath, input, "QueueId", () => input.QueueId!, "{QueueId}", false);
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "DELETE",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1DeleteQuickConnectCommand
  */
 export const se_DeleteQuickConnectCommand = async (
@@ -2166,6 +2256,39 @@ export const se_DeleteQuickConnectCommand = async (
     "QuickConnectId",
     () => input.QuickConnectId!,
     "{QuickConnectId}",
+    false
+  );
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "DELETE",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1DeleteRoutingProfileCommand
+ */
+export const se_DeleteRoutingProfileCommand = async (
+  input: DeleteRoutingProfileCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/routing-profiles/{InstanceId}/{RoutingProfileId}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "InstanceId", () => input.InstanceId!, "{InstanceId}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "RoutingProfileId",
+    () => input.RoutingProfileId!,
+    "{RoutingProfileId}",
     false
   );
   let body: any;
@@ -3391,6 +3514,43 @@ export const se_DisassociateSecurityKeyCommand = async (
     method: "DELETE",
     headers,
     path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1DisassociateTrafficDistributionGroupUserCommand
+ */
+export const se_DisassociateTrafficDistributionGroupUserCommand = async (
+  input: DisassociateTrafficDistributionGroupUserCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/traffic-distribution-group/{TrafficDistributionGroupId}/user";
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "TrafficDistributionGroupId",
+    () => input.TrafficDistributionGroupId!,
+    "{TrafficDistributionGroupId}",
+    false
+  );
+  const query: any = map({
+    UserId: [, __expectNonNull(input.UserId!, `UserId`)],
+    InstanceId: [, __expectNonNull(input.InstanceId!, `InstanceId`)],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "DELETE",
+    headers,
+    path: resolvedPath,
+    query,
     body,
   });
 };
@@ -4691,6 +4851,43 @@ export const se_ListTrafficDistributionGroupsCommand = async (
     maxResults: [() => input.MaxResults !== void 0, () => input.MaxResults!.toString()],
     nextToken: [, input.NextToken!],
     instanceId: [, input.InstanceId!],
+  });
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ListTrafficDistributionGroupUsersCommand
+ */
+export const se_ListTrafficDistributionGroupUsersCommand = async (
+  input: ListTrafficDistributionGroupUsersCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/traffic-distribution-group/{TrafficDistributionGroupId}/user";
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "TrafficDistributionGroupId",
+    () => input.TrafficDistributionGroupId!,
+    "{TrafficDistributionGroupId}",
+    false
+  );
+  const query: any = map({
+    maxResults: [() => input.MaxResults !== void 0, () => input.MaxResults!.toString()],
+    nextToken: [, input.NextToken!],
   });
   let body: any;
   return new __HttpRequest({
@@ -6692,6 +6889,46 @@ export const se_UpdateQuickConnectNameCommand = async (
 };
 
 /**
+ * serializeAws_restJson1UpdateRoutingProfileAgentAvailabilityTimerCommand
+ */
+export const se_UpdateRoutingProfileAgentAvailabilityTimerCommand = async (
+  input: UpdateRoutingProfileAgentAvailabilityTimerCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` +
+    "/routing-profiles/{InstanceId}/{RoutingProfileId}/agent-availability-timer";
+  resolvedPath = __resolvedPath(resolvedPath, input, "InstanceId", () => input.InstanceId!, "{InstanceId}", false);
+  resolvedPath = __resolvedPath(
+    resolvedPath,
+    input,
+    "RoutingProfileId",
+    () => input.RoutingProfileId!,
+    "{RoutingProfileId}",
+    false
+  );
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      AgentAvailabilityTimer: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1UpdateRoutingProfileConcurrencyCommand
  */
 export const se_UpdateRoutingProfileConcurrencyCommand = async (
@@ -6993,6 +7230,8 @@ export const se_UpdateTrafficDistributionCommand = async (
   let body: any;
   body = JSON.stringify(
     take(input, {
+      AgentConfig: (_) => _json(_),
+      SignInConfig: (_) => _json(_),
       TelephonyConfig: (_) => _json(_),
     })
   );
@@ -7883,6 +8122,64 @@ const de_AssociateSecurityKeyCommandError = async (
     case "ServiceQuotaExceededException":
     case "com.amazonaws.connect#ServiceQuotaExceededException":
       throw await de_ServiceQuotaExceededExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.connect#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1AssociateTrafficDistributionGroupUserCommand
+ */
+export const de_AssociateTrafficDistributionGroupUserCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<AssociateTrafficDistributionGroupUserCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_AssociateTrafficDistributionGroupUserCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1AssociateTrafficDistributionGroupUserCommandError
+ */
+const de_AssociateTrafficDistributionGroupUserCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<AssociateTrafficDistributionGroupUserCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.connect#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServiceException":
+    case "com.amazonaws.connect#InternalServiceException":
+      throw await de_InternalServiceExceptionRes(parsedOutput, context);
+    case "InvalidRequestException":
+    case "com.amazonaws.connect#InvalidRequestException":
+      throw await de_InvalidRequestExceptionRes(parsedOutput, context);
+    case "ResourceConflictException":
+    case "com.amazonaws.connect#ResourceConflictException":
+      throw await de_ResourceConflictExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.connect#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
     case "ThrottlingException":
     case "com.amazonaws.connect#ThrottlingException":
       throw await de_ThrottlingExceptionRes(parsedOutput, context);
@@ -9761,6 +10058,64 @@ const de_DeletePromptCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1DeleteQueueCommand
+ */
+export const de_DeleteQueueCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteQueueCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_DeleteQueueCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1DeleteQueueCommandError
+ */
+const de_DeleteQueueCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteQueueCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServiceException":
+    case "com.amazonaws.connect#InternalServiceException":
+      throw await de_InternalServiceExceptionRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.connect#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "InvalidRequestException":
+    case "com.amazonaws.connect#InvalidRequestException":
+      throw await de_InvalidRequestExceptionRes(parsedOutput, context);
+    case "ResourceInUseException":
+    case "com.amazonaws.connect#ResourceInUseException":
+      throw await de_ResourceInUseExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.connect#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.connect#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1DeleteQuickConnectCommand
  */
 export const de_DeleteQuickConnectCommand = async (
@@ -9799,6 +10154,64 @@ const de_DeleteQuickConnectCommandError = async (
     case "InvalidRequestException":
     case "com.amazonaws.connect#InvalidRequestException":
       throw await de_InvalidRequestExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.connect#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.connect#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1DeleteRoutingProfileCommand
+ */
+export const de_DeleteRoutingProfileCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteRoutingProfileCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_DeleteRoutingProfileCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1DeleteRoutingProfileCommandError
+ */
+const de_DeleteRoutingProfileCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DeleteRoutingProfileCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServiceException":
+    case "com.amazonaws.connect#InternalServiceException":
+      throw await de_InternalServiceExceptionRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.connect#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "InvalidRequestException":
+    case "com.amazonaws.connect#InvalidRequestException":
+      throw await de_InvalidRequestExceptionRes(parsedOutput, context);
+    case "ResourceInUseException":
+    case "com.amazonaws.connect#ResourceInUseException":
+      throw await de_ResourceInUseExceptionRes(parsedOutput, context);
     case "ResourceNotFoundException":
     case "com.amazonaws.connect#ResourceNotFoundException":
       throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
@@ -12056,6 +12469,64 @@ const de_DisassociateSecurityKeyCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1DisassociateTrafficDistributionGroupUserCommand
+ */
+export const de_DisassociateTrafficDistributionGroupUserCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DisassociateTrafficDistributionGroupUserCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_DisassociateTrafficDistributionGroupUserCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1DisassociateTrafficDistributionGroupUserCommandError
+ */
+const de_DisassociateTrafficDistributionGroupUserCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DisassociateTrafficDistributionGroupUserCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.connect#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServiceException":
+    case "com.amazonaws.connect#InternalServiceException":
+      throw await de_InternalServiceExceptionRes(parsedOutput, context);
+    case "InvalidRequestException":
+    case "com.amazonaws.connect#InvalidRequestException":
+      throw await de_InvalidRequestExceptionRes(parsedOutput, context);
+    case "ResourceConflictException":
+    case "com.amazonaws.connect#ResourceConflictException":
+      throw await de_ResourceConflictExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.connect#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.connect#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1DismissUserContactCommand
  */
 export const de_DismissUserContactCommand = async (
@@ -12619,8 +13090,10 @@ export const de_GetTrafficDistributionCommand = async (
   });
   const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
   const doc = take(data, {
+    AgentConfig: _json,
     Arn: __expectString,
     Id: __expectString,
+    SignInConfig: _json,
     TelephonyConfig: _json,
   });
   Object.assign(contents, doc);
@@ -14544,6 +15017,66 @@ const de_ListTrafficDistributionGroupsCommandError = async (
     case "InvalidRequestException":
     case "com.amazonaws.connect#InvalidRequestException":
       throw await de_InvalidRequestExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.connect#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1ListTrafficDistributionGroupUsersCommand
+ */
+export const de_ListTrafficDistributionGroupUsersCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListTrafficDistributionGroupUsersCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListTrafficDistributionGroupUsersCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    NextToken: __expectString,
+    TrafficDistributionGroupUserSummaryList: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListTrafficDistributionGroupUsersCommandError
+ */
+const de_ListTrafficDistributionGroupUsersCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListTrafficDistributionGroupUsersCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.connect#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
+    case "InternalServiceException":
+    case "com.amazonaws.connect#InternalServiceException":
+      throw await de_InternalServiceExceptionRes(parsedOutput, context);
+    case "InvalidRequestException":
+    case "com.amazonaws.connect#InvalidRequestException":
+      throw await de_InvalidRequestExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.connect#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
     case "ThrottlingException":
     case "com.amazonaws.connect#ThrottlingException":
       throw await de_ThrottlingExceptionRes(parsedOutput, context);
@@ -17829,6 +18362,61 @@ const de_UpdateQuickConnectNameCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1UpdateRoutingProfileAgentAvailabilityTimerCommand
+ */
+export const de_UpdateRoutingProfileAgentAvailabilityTimerCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdateRoutingProfileAgentAvailabilityTimerCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_UpdateRoutingProfileAgentAvailabilityTimerCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1UpdateRoutingProfileAgentAvailabilityTimerCommandError
+ */
+const de_UpdateRoutingProfileAgentAvailabilityTimerCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<UpdateRoutingProfileAgentAvailabilityTimerCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "InternalServiceException":
+    case "com.amazonaws.connect#InternalServiceException":
+      throw await de_InternalServiceExceptionRes(parsedOutput, context);
+    case "InvalidParameterException":
+    case "com.amazonaws.connect#InvalidParameterException":
+      throw await de_InvalidParameterExceptionRes(parsedOutput, context);
+    case "InvalidRequestException":
+    case "com.amazonaws.connect#InvalidRequestException":
+      throw await de_InvalidRequestExceptionRes(parsedOutput, context);
+    case "ResourceNotFoundException":
+    case "com.amazonaws.connect#ResourceNotFoundException":
+      throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ThrottlingException":
+    case "com.amazonaws.connect#ThrottlingException":
+      throw await de_ThrottlingExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1UpdateRoutingProfileConcurrencyCommand
  */
 export const de_UpdateRoutingProfileConcurrencyCommand = async (
@@ -19127,6 +19715,8 @@ const de_UserNotFoundExceptionRes = async (
   return __decorateServiceException(exception, parsedOutput.body);
 };
 
+// se_AgentConfig omitted.
+
 // se_AgentsMinOneMaxHundred omitted.
 
 // se_AllowedAccessControlTags omitted.
@@ -19601,6 +20191,12 @@ const se_SecurityProfileSearchCriteria = (input: SecurityProfileSearchCriteria, 
 
 // se_SendNotificationActionDefinition omitted.
 
+// se_SignInConfig omitted.
+
+// se_SignInDistribution omitted.
+
+// se_SignInDistributionList omitted.
+
 // se_SingleSelectOptions omitted.
 
 // se_SingleSelectQuestionRuleCategoryAutomation omitted.
@@ -19716,6 +20312,8 @@ const se_UserSearchCriteria = (input: UserSearchCriteria, context: __SerdeContex
 // de_ActionSummaries omitted.
 
 // de_ActionSummary omitted.
+
+// de_AgentConfig omitted.
 
 /**
  * deserializeAws_restJson1AgentContactReference
@@ -20642,6 +21240,12 @@ const de_SecurityKeysList = (output: any, context: __SerdeContext): SecurityKey[
 
 // de_SendNotificationActionDefinition omitted.
 
+// de_SignInConfig omitted.
+
+// de_SignInDistribution omitted.
+
+// de_SignInDistributionList omitted.
+
 // de_SingleSelectOptions omitted.
 
 // de_SingleSelectQuestionRuleCategoryAutomation omitted.
@@ -20738,6 +21342,10 @@ const de_ThresholdV2 = (output: any, context: __SerdeContext): ThresholdV2 => {
 // de_TrafficDistributionGroupSummary omitted.
 
 // de_TrafficDistributionGroupSummaryList omitted.
+
+// de_TrafficDistributionGroupUserSummary omitted.
+
+// de_TrafficDistributionGroupUserSummaryList omitted.
 
 // de_UrlReference omitted.
 

@@ -71,6 +71,7 @@ export interface DescribeRoutingProfileCommandOutput extends DescribeRoutingProf
  * //     },
  * //     NumberOfAssociatedQueues: Number("long"),
  * //     NumberOfAssociatedUsers: Number("long"),
+ * //     AgentAvailabilityTimer: "TIME_SINCE_LAST_ACTIVITY" || "TIME_SINCE_LAST_INBOUND",
  * //   },
  * // };
  *

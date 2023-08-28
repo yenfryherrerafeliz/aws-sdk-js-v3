@@ -49,31 +49,31 @@ export interface GetFindingsCommandOutput extends GetFindingsResponse, __Metadat
  *     ProductArn: [ // StringFilterList
  *       { // StringFilter
  *         Value: "STRING_VALUE",
- *         Comparison: "EQUALS" || "PREFIX" || "NOT_EQUALS" || "PREFIX_NOT_EQUALS",
+ *         Comparison: "EQUALS" || "PREFIX" || "NOT_EQUALS" || "PREFIX_NOT_EQUALS" || "CONTAINS" || "NOT_CONTAINS",
  *       },
  *     ],
  *     AwsAccountId: [
  *       {
  *         Value: "STRING_VALUE",
- *         Comparison: "EQUALS" || "PREFIX" || "NOT_EQUALS" || "PREFIX_NOT_EQUALS",
+ *         Comparison: "EQUALS" || "PREFIX" || "NOT_EQUALS" || "PREFIX_NOT_EQUALS" || "CONTAINS" || "NOT_CONTAINS",
  *       },
  *     ],
  *     Id: [
  *       {
  *         Value: "STRING_VALUE",
- *         Comparison: "EQUALS" || "PREFIX" || "NOT_EQUALS" || "PREFIX_NOT_EQUALS",
+ *         Comparison: "EQUALS" || "PREFIX" || "NOT_EQUALS" || "PREFIX_NOT_EQUALS" || "CONTAINS" || "NOT_CONTAINS",
  *       },
  *     ],
  *     GeneratorId: [
  *       {
  *         Value: "STRING_VALUE",
- *         Comparison: "EQUALS" || "PREFIX" || "NOT_EQUALS" || "PREFIX_NOT_EQUALS",
+ *         Comparison: "EQUALS" || "PREFIX" || "NOT_EQUALS" || "PREFIX_NOT_EQUALS" || "CONTAINS" || "NOT_CONTAINS",
  *       },
  *     ],
  *     Region: [
  *       {
  *         Value: "STRING_VALUE",
- *         Comparison: "EQUALS" || "PREFIX" || "NOT_EQUALS" || "PREFIX_NOT_EQUALS",
+ *         Comparison: "EQUALS" || "PREFIX" || "NOT_EQUALS" || "PREFIX_NOT_EQUALS" || "CONTAINS" || "NOT_CONTAINS",
  *       },
  *     ],
  *     Type: "<StringFilterList>",
@@ -154,7 +154,7 @@ export interface GetFindingsCommandOutput extends GetFindingsResponse, __Metadat
  *       { // MapFilter
  *         Key: "STRING_VALUE",
  *         Value: "STRING_VALUE",
- *         Comparison: "EQUALS" || "NOT_EQUALS",
+ *         Comparison: "EQUALS" || "NOT_EQUALS" || "CONTAINS" || "NOT_CONTAINS",
  *       },
  *     ],
  *     ProductName: "<StringFilterList>",
@@ -163,7 +163,7 @@ export interface GetFindingsCommandOutput extends GetFindingsResponse, __Metadat
  *       {
  *         Key: "STRING_VALUE",
  *         Value: "STRING_VALUE",
- *         Comparison: "EQUALS" || "NOT_EQUALS",
+ *         Comparison: "EQUALS" || "NOT_EQUALS" || "CONTAINS" || "NOT_CONTAINS",
  *       },
  *     ],
  *     MalwareName: "<StringFilterList>",
@@ -232,7 +232,7 @@ export interface GetFindingsCommandOutput extends GetFindingsResponse, __Metadat
  *       {
  *         Key: "STRING_VALUE",
  *         Value: "STRING_VALUE",
- *         Comparison: "EQUALS" || "NOT_EQUALS",
+ *         Comparison: "EQUALS" || "NOT_EQUALS" || "CONTAINS" || "NOT_CONTAINS",
  *       },
  *     ],
  *     ResourceAwsEc2InstanceType: "<StringFilterList>",
@@ -263,7 +263,7 @@ export interface GetFindingsCommandOutput extends GetFindingsResponse, __Metadat
  *       {
  *         Key: "STRING_VALUE",
  *         Value: "STRING_VALUE",
- *         Comparison: "EQUALS" || "NOT_EQUALS",
+ *         Comparison: "EQUALS" || "NOT_EQUALS" || "CONTAINS" || "NOT_CONTAINS",
  *       },
  *     ],
  *     ComplianceStatus: "<StringFilterList>",
@@ -2254,6 +2254,12 @@ export interface GetFindingsCommandOutput extends GetFindingsResponse, __Metadat
  * //               DbClusterIdentifier: "STRING_VALUE",
  * //               DbClusterSnapshotIdentifier: "STRING_VALUE",
  * //               IamDatabaseAuthenticationEnabled: true || false,
+ * //               DbClusterSnapshotAttributes: [ // AwsRdsDbClusterSnapshotDbClusterSnapshotAttributes
+ * //                 { // AwsRdsDbClusterSnapshotDbClusterSnapshotAttribute
+ * //                   AttributeName: "STRING_VALUE",
+ * //                   AttributeValues: "<NonEmptyStringList>",
+ * //                 },
+ * //               ],
  * //             },
  * //             AwsRdsDbCluster: { // AwsRdsDbClusterDetails
  * //               AllocatedStorage: Number("int"),
@@ -4012,6 +4018,19 @@ export interface GetFindingsCommandOutput extends GetFindingsResponse, __Metadat
  * //               },
  * //               Type: "STRING_VALUE",
  * //             },
+ * //             AwsAthenaWorkGroup: { // AwsAthenaWorkGroupDetails
+ * //               Name: "STRING_VALUE",
+ * //               Description: "STRING_VALUE",
+ * //               State: "STRING_VALUE",
+ * //               Configuration: { // AwsAthenaWorkGroupConfigurationDetails
+ * //                 ResultConfiguration: { // AwsAthenaWorkGroupConfigurationResultConfigurationDetails
+ * //                   EncryptionConfiguration: { // AwsAthenaWorkGroupConfigurationResultConfigurationEncryptionConfigurationDetails
+ * //                     EncryptionOption: "STRING_VALUE",
+ * //                     KmsKey: "STRING_VALUE",
+ * //                   },
+ * //                 },
+ * //               },
+ * //             },
  * //           },
  * //         },
  * //       ],
@@ -4092,6 +4111,22 @@ export interface GetFindingsCommandOutput extends GetFindingsResponse, __Metadat
  * //           },
  * //           ReferenceUrls: "<StringList>",
  * //           FixAvailable: "YES" || "NO" || "PARTIAL",
+ * //           EpssScore: Number("double"),
+ * //           ExploitAvailable: "YES" || "NO",
+ * //           CodeVulnerabilities: [ // VulnerabilityCodeVulnerabilitiesList
+ * //             { // VulnerabilityCodeVulnerabilities
+ * //               Cwes: [
+ * //                 "STRING_VALUE",
+ * //               ],
+ * //               FilePath: { // CodeVulnerabilitiesFilePath
+ * //                 EndLine: Number("int"),
+ * //                 FileName: "STRING_VALUE",
+ * //                 FilePath: "STRING_VALUE",
+ * //                 StartLine: Number("int"),
+ * //               },
+ * //               SourceArn: "STRING_VALUE",
+ * //             },
+ * //           ],
  * //         },
  * //       ],
  * //       PatchSummary: { // PatchSummary
@@ -4226,11 +4261,14 @@ export interface GetFindingsCommandOutput extends GetFindingsResponse, __Metadat
  * //           Label: "INFORMATIONAL" || "LOW" || "MEDIUM" || "HIGH" || "CRITICAL",
  * //           Original: "STRING_VALUE",
  * //         },
- * //         Types: [
- * //           "STRING_VALUE",
- * //         ],
+ * //         Types: "<TypeList>",
  * //       },
  * //       Sample: true || false,
+ * //       GeneratorDetails: { // GeneratorDetails
+ * //         Name: "STRING_VALUE",
+ * //         Description: "STRING_VALUE",
+ * //         Labels: "<TypeList>",
+ * //       },
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",

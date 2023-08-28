@@ -59,6 +59,13 @@ export interface DescribeDatasetCommandOutput extends DescribeDatasetResponse, _
  * //     status: "STRING_VALUE",
  * //     creationDateTime: new Date("TIMESTAMP"),
  * //     lastUpdatedDateTime: new Date("TIMESTAMP"),
+ * //     latestDatasetUpdate: { // DatasetUpdateSummary
+ * //       schemaArn: "STRING_VALUE",
+ * //       status: "STRING_VALUE",
+ * //       failureReason: "STRING_VALUE",
+ * //       creationDateTime: new Date("TIMESTAMP"),
+ * //       lastUpdatedDateTime: new Date("TIMESTAMP"),
+ * //     },
  * //   },
  * // };
  *

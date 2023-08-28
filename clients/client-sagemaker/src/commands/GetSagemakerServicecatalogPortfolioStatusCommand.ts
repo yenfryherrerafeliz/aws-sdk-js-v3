@@ -16,7 +16,7 @@ import {
 import {
   GetSagemakerServicecatalogPortfolioStatusInput,
   GetSagemakerServicecatalogPortfolioStatusOutput,
-} from "../models/models_2";
+} from "../models/models_3";
 import {
   de_GetSagemakerServicecatalogPortfolioStatusCommand,
   se_GetSagemakerServicecatalogPortfolioStatusCommand,

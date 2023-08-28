@@ -1,11 +1,11 @@
 {
   "name": "@aws-sdk/credential-providers",
-  "version": "3.369.0",
+  "version": "3.398.0",
   "description": "A collection of credential providers, without requiring service clients like STS, Cognito",
   "main": "./dist-cjs/index.js",
   "module": "./dist-es/index.js",
-  "browser": "./dist-es/index.web.js",
-  "react-native": "./dist-es/index.web.js",
+  "browser": "./dist-es/index.browser.js",
+  "react-native": "./dist-es/index.browser.js",
   "sideEffects": false,
   "scripts": {
     "build": "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
@@ -39,9 +39,9 @@
     "@aws-sdk/credential-provider-sso": "*",
     "@aws-sdk/credential-provider-web-identity": "*",
     "@aws-sdk/types": "*",
-    "@smithy/credential-provider-imds": "^1.0.1",
-    "@smithy/property-provider": "^1.0.1",
-    "@smithy/types": "^1.1.0",
+    "@smithy/credential-provider-imds": "^2.0.0",
+    "@smithy/property-provider": "^2.0.0",
+    "@smithy/types": "^2.2.2",
     "tslib": "^2.5.0"
   },
   "devDependencies": {

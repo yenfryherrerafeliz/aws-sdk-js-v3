@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -75,6 +76,10 @@ import {
   CreateFirewallRuleGroupCommandOutput,
 } from "./commands/CreateFirewallRuleGroupCommand";
 import {
+  CreateOutpostResolverCommandInput,
+  CreateOutpostResolverCommandOutput,
+} from "./commands/CreateOutpostResolverCommand";
+import {
   CreateResolverEndpointCommandInput,
   CreateResolverEndpointCommandOutput,
 } from "./commands/CreateResolverEndpointCommand";
@@ -92,6 +97,10 @@ import {
   DeleteFirewallRuleGroupCommandInput,
   DeleteFirewallRuleGroupCommandOutput,
 } from "./commands/DeleteFirewallRuleGroupCommand";
+import {
+  DeleteOutpostResolverCommandInput,
+  DeleteOutpostResolverCommandOutput,
+} from "./commands/DeleteOutpostResolverCommand";
 import {
   DeleteResolverEndpointCommandInput,
   DeleteResolverEndpointCommandOutput,
@@ -134,6 +143,7 @@ import {
   GetFirewallRuleGroupPolicyCommandInput,
   GetFirewallRuleGroupPolicyCommandOutput,
 } from "./commands/GetFirewallRuleGroupPolicyCommand";
+import { GetOutpostResolverCommandInput, GetOutpostResolverCommandOutput } from "./commands/GetOutpostResolverCommand";
 import { GetResolverConfigCommandInput, GetResolverConfigCommandOutput } from "./commands/GetResolverConfigCommand";
 import {
   GetResolverDnssecConfigCommandInput,
@@ -189,6 +199,10 @@ import {
   ListFirewallRuleGroupsCommandOutput,
 } from "./commands/ListFirewallRuleGroupsCommand";
 import { ListFirewallRulesCommandInput, ListFirewallRulesCommandOutput } from "./commands/ListFirewallRulesCommand";
+import {
+  ListOutpostResolversCommandInput,
+  ListOutpostResolversCommandOutput,
+} from "./commands/ListOutpostResolversCommand";
 import {
   ListResolverConfigsCommandInput,
   ListResolverConfigsCommandOutput,
@@ -250,6 +264,10 @@ import {
   UpdateFirewallRuleGroupAssociationCommandOutput,
 } from "./commands/UpdateFirewallRuleGroupAssociationCommand";
 import {
+  UpdateOutpostResolverCommandInput,
+  UpdateOutpostResolverCommandOutput,
+} from "./commands/UpdateOutpostResolverCommand";
+import {
   UpdateResolverConfigCommandInput,
   UpdateResolverConfigCommandOutput,
 } from "./commands/UpdateResolverConfigCommand";
@@ -269,6 +287,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -283,12 +302,14 @@ export type ServiceInputTypes =
   | CreateFirewallDomainListCommandInput
   | CreateFirewallRuleCommandInput
   | CreateFirewallRuleGroupCommandInput
+  | CreateOutpostResolverCommandInput
   | CreateResolverEndpointCommandInput
   | CreateResolverQueryLogConfigCommandInput
   | CreateResolverRuleCommandInput
   | DeleteFirewallDomainListCommandInput
   | DeleteFirewallRuleCommandInput
   | DeleteFirewallRuleGroupCommandInput
+  | DeleteOutpostResolverCommandInput
   | DeleteResolverEndpointCommandInput
   | DeleteResolverQueryLogConfigCommandInput
   | DeleteResolverRuleCommandInput
@@ -301,6 +322,7 @@ export type ServiceInputTypes =
   | GetFirewallRuleGroupAssociationCommandInput
   | GetFirewallRuleGroupCommandInput
   | GetFirewallRuleGroupPolicyCommandInput
+  | GetOutpostResolverCommandInput
   | GetResolverConfigCommandInput
   | GetResolverDnssecConfigCommandInput
   | GetResolverEndpointCommandInput
@@ -317,6 +339,7 @@ export type ServiceInputTypes =
   | ListFirewallRuleGroupAssociationsCommandInput
   | ListFirewallRuleGroupsCommandInput
   | ListFirewallRulesCommandInput
+  | ListOutpostResolversCommandInput
   | ListResolverConfigsCommandInput
   | ListResolverDnssecConfigsCommandInput
   | ListResolverEndpointIpAddressesCommandInput
@@ -335,6 +358,7 @@ export type ServiceInputTypes =
   | UpdateFirewallDomainsCommandInput
   | UpdateFirewallRuleCommandInput
   | UpdateFirewallRuleGroupAssociationCommandInput
+  | UpdateOutpostResolverCommandInput
   | UpdateResolverConfigCommandInput
   | UpdateResolverDnssecConfigCommandInput
   | UpdateResolverEndpointCommandInput
@@ -351,12 +375,14 @@ export type ServiceOutputTypes =
   | CreateFirewallDomainListCommandOutput
   | CreateFirewallRuleCommandOutput
   | CreateFirewallRuleGroupCommandOutput
+  | CreateOutpostResolverCommandOutput
   | CreateResolverEndpointCommandOutput
   | CreateResolverQueryLogConfigCommandOutput
   | CreateResolverRuleCommandOutput
   | DeleteFirewallDomainListCommandOutput
   | DeleteFirewallRuleCommandOutput
   | DeleteFirewallRuleGroupCommandOutput
+  | DeleteOutpostResolverCommandOutput
   | DeleteResolverEndpointCommandOutput
   | DeleteResolverQueryLogConfigCommandOutput
   | DeleteResolverRuleCommandOutput
@@ -369,6 +395,7 @@ export type ServiceOutputTypes =
   | GetFirewallRuleGroupAssociationCommandOutput
   | GetFirewallRuleGroupCommandOutput
   | GetFirewallRuleGroupPolicyCommandOutput
+  | GetOutpostResolverCommandOutput
   | GetResolverConfigCommandOutput
   | GetResolverDnssecConfigCommandOutput
   | GetResolverEndpointCommandOutput
@@ -385,6 +412,7 @@ export type ServiceOutputTypes =
   | ListFirewallRuleGroupAssociationsCommandOutput
   | ListFirewallRuleGroupsCommandOutput
   | ListFirewallRulesCommandOutput
+  | ListOutpostResolversCommandOutput
   | ListResolverConfigsCommandOutput
   | ListResolverDnssecConfigsCommandOutput
   | ListResolverEndpointIpAddressesCommandOutput
@@ -403,6 +431,7 @@ export type ServiceOutputTypes =
   | UpdateFirewallDomainsCommandOutput
   | UpdateFirewallRuleCommandOutput
   | UpdateFirewallRuleGroupAssociationCommandOutput
+  | UpdateOutpostResolverCommandOutput
   | UpdateResolverConfigCommandOutput
   | UpdateResolverDnssecConfigCommandOutput
   | UpdateResolverEndpointCommandOutput
@@ -527,6 +556,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -556,6 +590,7 @@ export interface Route53ResolverClientConfig extends Route53ResolverClientConfig
  */
 export type Route53ResolverClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -611,8 +646,8 @@ export class Route53ResolverClient extends __Client<
    */
   readonly config: Route53ResolverClientResolvedConfig;
 
-  constructor(configuration: Route53ResolverClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<Route53ResolverClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -620,8 +655,9 @@ export class Route53ResolverClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

@@ -303,6 +303,14 @@ AssociateSecurityKey
 </details>
 <details>
 <summary>
+AssociateTrafficDistributionGroupUser
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/associatetrafficdistributiongroupusercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/associatetrafficdistributiongroupusercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/associatetrafficdistributiongroupusercommandoutput.html)
+
+</details>
+<details>
+<summary>
 ClaimPhoneNumber
 </summary>
 
@@ -543,10 +551,26 @@ DeletePrompt
 </details>
 <details>
 <summary>
+DeleteQueue
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/deletequeuecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deletequeuecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deletequeuecommandoutput.html)
+
+</details>
+<details>
+<summary>
 DeleteQuickConnect
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/deletequickconnectcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deletequickconnectcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deletequickconnectcommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteRoutingProfile
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/deleteroutingprofilecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deleteroutingprofilecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deleteroutingprofilecommandoutput.html)
 
 </details>
 <details>
@@ -859,6 +883,14 @@ DisassociateSecurityKey
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/disassociatesecuritykeycommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/disassociatesecuritykeycommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/disassociatesecuritykeycommandoutput.html)
+
+</details>
+<details>
+<summary>
+DisassociateTrafficDistributionGroupUser
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/disassociatetrafficdistributiongroupusercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/disassociatetrafficdistributiongroupusercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/disassociatetrafficdistributiongroupusercommandoutput.html)
 
 </details>
 <details>
@@ -1195,6 +1227,14 @@ ListTrafficDistributionGroups
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/listtrafficdistributiongroupscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listtrafficdistributiongroupscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listtrafficdistributiongroupscommandoutput.html)
+
+</details>
+<details>
+<summary>
+ListTrafficDistributionGroupUsers
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/listtrafficdistributiongroupuserscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listtrafficdistributiongroupuserscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listtrafficdistributiongroupuserscommandoutput.html)
 
 </details>
 <details>
@@ -1643,6 +1683,14 @@ UpdateQuickConnectName
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/updatequickconnectnamecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/updatequickconnectnamecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/updatequickconnectnamecommandoutput.html)
+
+</details>
+<details>
+<summary>
+UpdateRoutingProfileAgentAvailabilityTimer
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/updateroutingprofileagentavailabilitytimercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/updateroutingprofileagentavailabilitytimercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/updateroutingprofileagentavailabilitytimercommandoutput.html)
 
 </details>
 <details>

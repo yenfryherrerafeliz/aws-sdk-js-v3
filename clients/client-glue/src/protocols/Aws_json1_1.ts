@@ -553,7 +553,6 @@ import {
   Filter,
   FilterExpression,
   FilterValue,
-  FindMatchesParameters,
   GlueEncryptionException,
   GlueRecordType,
   GlueSchema,
@@ -561,6 +560,7 @@ import {
   GlueTable,
   GovernedCatalogSource,
   GovernedCatalogTarget,
+  HudiTarget,
   IcebergTarget,
   IdempotentParameterMismatchException,
   IllegalSessionStateException,
@@ -586,7 +586,6 @@ import {
   Merge,
   MicrosoftSQLServerCatalogSource,
   MicrosoftSQLServerCatalogTarget,
-  MLUserDataEncryption,
   MongoDBTarget,
   MySQLCatalogSource,
   MySQLCatalogTarget,
@@ -609,6 +608,8 @@ import {
   PostgreSQLCatalogTarget,
   Predicate,
   PrincipalPermissions,
+  Recipe,
+  RecipeReference,
   RecrawlPolicy,
   RedshiftSource,
   RedshiftTarget,
@@ -641,6 +642,9 @@ import {
   SelectFromCollection,
   SerDeInfo,
   SkewedInfo,
+  SnowflakeNodeData,
+  SnowflakeSource,
+  SnowflakeTarget,
   SourceControlDetails,
   SparkConnectorSource,
   SparkConnectorTarget,
@@ -651,10 +655,8 @@ import {
   StorageDescriptor,
   StreamingDataPreviewOptions,
   TransformConfigParameter,
-  TransformParameters,
   Union,
   UpsertRedshiftTargetOptions,
-  ValidationException,
   Workflow,
   WorkflowGraph,
   WorkflowRun,
@@ -730,6 +732,7 @@ import {
   EncryptionConfiguration,
   EvaluationMetrics,
   FindMatchesMetrics,
+  FindMatchesParameters,
   GetBlueprintRequest,
   GetBlueprintResponse,
   GetBlueprintRunRequest,
@@ -826,11 +829,6 @@ import {
   GetTagsRequest,
   GetTriggerRequest,
   GetTriggersRequest,
-  GetUnfilteredPartitionMetadataRequest,
-  GetUnfilteredPartitionMetadataResponse,
-  GetUnfilteredPartitionsMetadataRequest,
-  GetUnfilteredPartitionsMetadataResponse,
-  GetUnfilteredTableMetadataRequest,
   GluePolicy,
   GrokClassifier,
   IcebergInput,
@@ -840,10 +838,10 @@ import {
   LongColumnStatisticsData,
   MappingEntry,
   MLTransform,
+  MLUserDataEncryption,
   OpenTableFormatInput,
   PartitionIndex,
   PermissionType,
-  PermissionTypeMismatchException,
   RegistryId,
   ResourceUri,
   S3Encryption,
@@ -865,9 +863,10 @@ import {
   TaskRunSortCriteria,
   TransformEncryption,
   TransformFilterCriteria,
+  TransformParameters,
   TransformSortCriteria,
-  UnfilteredPartition,
   UserDefinedFunctionInput,
+  ValidationException,
   XMLClassifier,
 } from "../models/models_1";
 import {
@@ -892,6 +891,11 @@ import {
   DevEndpointCustomLibraries,
   GetJobResponse,
   GetJobsResponse,
+  GetUnfilteredPartitionMetadataRequest,
+  GetUnfilteredPartitionMetadataResponse,
+  GetUnfilteredPartitionsMetadataRequest,
+  GetUnfilteredPartitionsMetadataResponse,
+  GetUnfilteredTableMetadataRequest,
   GetUnfilteredTableMetadataResponse,
   GetUserDefinedFunctionRequest,
   GetUserDefinedFunctionResponse,
@@ -938,6 +942,7 @@ import {
   MetadataKeyValuePair,
   MLTransformNotReadyException,
   NoScheduleException,
+  PermissionTypeMismatchException,
   PropertyPredicate,
   PutDataCatalogEncryptionSettingsRequest,
   PutResourcePolicyRequest,
@@ -973,6 +978,7 @@ import {
   StopWorkflowRunRequest,
   TagResourceRequest,
   TriggerUpdate,
+  UnfilteredPartition,
   UntagResourceRequest,
   UpdateBlueprintRequest,
   UpdateClassifierRequest,
@@ -15850,6 +15856,7 @@ const se_CodeGenConfigurationNode = (input: CodeGenConfigurationNode, context: _
     PIIDetection: (_) => se_PIIDetection(_, context),
     PostgreSQLCatalogSource: _json,
     PostgreSQLCatalogTarget: _json,
+    Recipe: _json,
     RedshiftSource: _json,
     RedshiftTarget: _json,
     RelationalCatalogSource: _json,
@@ -15871,6 +15878,8 @@ const se_CodeGenConfigurationNode = (input: CodeGenConfigurationNode, context: _
     S3ParquetSource: _json,
     SelectFields: _json,
     SelectFromCollection: _json,
+    SnowflakeSource: _json,
+    SnowflakeTarget: _json,
     SparkConnectorSource: _json,
     SparkConnectorTarget: _json,
     SparkSQL: _json,
@@ -15962,6 +15971,7 @@ const se_CrawlerTargets = (input: CrawlerTargets, context: __SerdeContext): any 
     CatalogTargets: _json,
     DeltaTargets: _json,
     DynamoDBTargets: (_) => se_DynamoDBTargetList(_, context),
+    HudiTargets: _json,
     IcebergTargets: _json,
     JdbcTargets: _json,
     MongoDBTargets: _json,
@@ -16659,6 +16669,10 @@ const se_GetTablesRequest = (input: GetTablesRequest, context: __SerdeContext): 
 
 // se_GovernedCatalogTarget omitted.
 
+// se_HudiTarget omitted.
+
+// se_HudiTargetList omitted.
+
 // se_IcebergInput omitted.
 
 // se_IcebergTarget omitted.
@@ -17050,6 +17064,10 @@ const se_PIIDetection = (input: PIIDetection, context: __SerdeContext): any => {
 
 // se_QuerySchemaVersionMetadataInput omitted.
 
+// se_Recipe omitted.
+
+// se_RecipeReference omitted.
+
 // se_RecrawlPolicy omitted.
 
 // se_RedshiftSource omitted.
@@ -17147,6 +17165,12 @@ const se_PIIDetection = (input: PIIDetection, context: __SerdeContext): any => {
 // se_SessionCommand omitted.
 
 // se_SkewedInfo omitted.
+
+// se_SnowflakeNodeData omitted.
+
+// se_SnowflakeSource omitted.
+
+// se_SnowflakeTarget omitted.
 
 // se_SortCriteria omitted.
 
@@ -17872,6 +17896,7 @@ const de_CodeGenConfigurationNode = (output: any, context: __SerdeContext): Code
     PIIDetection: (_: any) => de_PIIDetection(_, context),
     PostgreSQLCatalogSource: _json,
     PostgreSQLCatalogTarget: _json,
+    Recipe: _json,
     RedshiftSource: _json,
     RedshiftTarget: _json,
     RelationalCatalogSource: _json,
@@ -17893,6 +17918,8 @@ const de_CodeGenConfigurationNode = (output: any, context: __SerdeContext): Code
     S3ParquetSource: _json,
     SelectFields: _json,
     SelectFromCollection: _json,
+    SnowflakeSource: _json,
+    SnowflakeTarget: _json,
     SparkConnectorSource: _json,
     SparkConnectorTarget: _json,
     SparkSQL: _json,
@@ -18212,6 +18239,7 @@ const de_CrawlerTargets = (output: any, context: __SerdeContext): CrawlerTargets
     CatalogTargets: _json,
     DeltaTargets: _json,
     DynamoDBTargets: (_: any) => de_DynamoDBTargetList(_, context),
+    HudiTargets: _json,
     IcebergTargets: _json,
     JdbcTargets: _json,
     MongoDBTargets: _json,
@@ -18332,6 +18360,7 @@ const de_CsvClassifier = (output: any, context: __SerdeContext): CsvClassifier =
     LastUpdated: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     Name: __expectString,
     QuoteSymbol: __expectString,
+    Serde: __expectString,
     Version: __expectLong,
   }) as any;
 };
@@ -19567,6 +19596,10 @@ const de_GrokClassifier = (output: any, context: __SerdeContext): GrokClassifier
   }) as any;
 };
 
+// de_HudiTarget omitted.
+
+// de_HudiTargetList omitted.
+
 // de_IcebergTarget omitted.
 
 // de_IcebergTargetList omitted.
@@ -20166,6 +20199,10 @@ const de_PIIDetection = (output: any, context: __SerdeContext): PIIDetection => 
 
 // de_QuerySchemaVersionMetadataResponse omitted.
 
+// de_Recipe omitted.
+
+// de_RecipeReference omitted.
+
 // de_RecrawlPolicy omitted.
 
 // de_RedshiftSource omitted.
@@ -20317,18 +20354,24 @@ const de_SecurityConfigurationList = (output: any, context: __SerdeContext): Sec
 const de_Session = (output: any, context: __SerdeContext): Session => {
   return take(output, {
     Command: _json,
+    CompletedOn: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     Connections: _json,
     CreatedOn: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    DPUSeconds: __limitedParseDouble,
     DefaultArguments: _json,
     Description: __expectString,
     ErrorMessage: __expectString,
+    ExecutionTime: __limitedParseDouble,
     GlueVersion: __expectString,
     Id: __expectString,
+    IdleTimeout: __expectInt32,
     MaxCapacity: __limitedParseDouble,
+    NumberOfWorkers: __expectInt32,
     Progress: __limitedParseDouble,
     Role: __expectString,
     SecurityConfiguration: __expectString,
     Status: __expectString,
+    WorkerType: __expectString,
   }) as any;
 };
 
@@ -20349,6 +20392,12 @@ const de_SessionList = (output: any, context: __SerdeContext): Session[] => {
 };
 
 // de_SkewedInfo omitted.
+
+// de_SnowflakeNodeData omitted.
+
+// de_SnowflakeSource omitted.
+
+// de_SnowflakeTarget omitted.
 
 // de_SourceControlDetails omitted.
 

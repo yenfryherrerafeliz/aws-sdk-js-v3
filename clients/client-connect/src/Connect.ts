@@ -58,6 +58,11 @@ import {
   AssociateSecurityKeyCommandOutput,
 } from "./commands/AssociateSecurityKeyCommand";
 import {
+  AssociateTrafficDistributionGroupUserCommand,
+  AssociateTrafficDistributionGroupUserCommandInput,
+  AssociateTrafficDistributionGroupUserCommandOutput,
+} from "./commands/AssociateTrafficDistributionGroupUserCommand";
+import {
   ClaimPhoneNumberCommand,
   ClaimPhoneNumberCommandInput,
   ClaimPhoneNumberCommandOutput,
@@ -195,11 +200,17 @@ import {
   DeletePromptCommandInput,
   DeletePromptCommandOutput,
 } from "./commands/DeletePromptCommand";
+import { DeleteQueueCommand, DeleteQueueCommandInput, DeleteQueueCommandOutput } from "./commands/DeleteQueueCommand";
 import {
   DeleteQuickConnectCommand,
   DeleteQuickConnectCommandInput,
   DeleteQuickConnectCommandOutput,
 } from "./commands/DeleteQuickConnectCommand";
+import {
+  DeleteRoutingProfileCommand,
+  DeleteRoutingProfileCommandInput,
+  DeleteRoutingProfileCommandOutput,
+} from "./commands/DeleteRoutingProfileCommand";
 import { DeleteRuleCommand, DeleteRuleCommandInput, DeleteRuleCommandOutput } from "./commands/DeleteRuleCommand";
 import {
   DeleteSecurityProfileCommand,
@@ -387,6 +398,11 @@ import {
   DisassociateSecurityKeyCommandInput,
   DisassociateSecurityKeyCommandOutput,
 } from "./commands/DisassociateSecurityKeyCommand";
+import {
+  DisassociateTrafficDistributionGroupUserCommand,
+  DisassociateTrafficDistributionGroupUserCommandInput,
+  DisassociateTrafficDistributionGroupUserCommandOutput,
+} from "./commands/DisassociateTrafficDistributionGroupUserCommand";
 import {
   DismissUserContactCommand,
   DismissUserContactCommandInput,
@@ -577,6 +593,11 @@ import {
   ListTrafficDistributionGroupsCommandInput,
   ListTrafficDistributionGroupsCommandOutput,
 } from "./commands/ListTrafficDistributionGroupsCommand";
+import {
+  ListTrafficDistributionGroupUsersCommand,
+  ListTrafficDistributionGroupUsersCommandInput,
+  ListTrafficDistributionGroupUsersCommandOutput,
+} from "./commands/ListTrafficDistributionGroupUsersCommand";
 import {
   ListUseCasesCommand,
   ListUseCasesCommandInput,
@@ -842,6 +863,11 @@ import {
   UpdateQuickConnectNameCommandOutput,
 } from "./commands/UpdateQuickConnectNameCommand";
 import {
+  UpdateRoutingProfileAgentAvailabilityTimerCommand,
+  UpdateRoutingProfileAgentAvailabilityTimerCommandInput,
+  UpdateRoutingProfileAgentAvailabilityTimerCommandOutput,
+} from "./commands/UpdateRoutingProfileAgentAvailabilityTimerCommand";
+import {
   UpdateRoutingProfileConcurrencyCommand,
   UpdateRoutingProfileConcurrencyCommandInput,
   UpdateRoutingProfileConcurrencyCommandOutput,
@@ -926,6 +952,7 @@ const commands = {
   AssociateQueueQuickConnectsCommand,
   AssociateRoutingProfileQueuesCommand,
   AssociateSecurityKeyCommand,
+  AssociateTrafficDistributionGroupUserCommand,
   ClaimPhoneNumberCommand,
   CreateAgentStatusCommand,
   CreateContactFlowCommand,
@@ -956,7 +983,9 @@ const commands = {
   DeleteInstanceCommand,
   DeleteIntegrationAssociationCommand,
   DeletePromptCommand,
+  DeleteQueueCommand,
   DeleteQuickConnectCommand,
+  DeleteRoutingProfileCommand,
   DeleteRuleCommand,
   DeleteSecurityProfileCommand,
   DeleteTaskTemplateCommand,
@@ -996,6 +1025,7 @@ const commands = {
   DisassociateQueueQuickConnectsCommand,
   DisassociateRoutingProfileQueuesCommand,
   DisassociateSecurityKeyCommand,
+  DisassociateTrafficDistributionGroupUserCommand,
   DismissUserContactCommand,
   GetContactAttributesCommand,
   GetCurrentMetricDataCommand,
@@ -1038,6 +1068,7 @@ const commands = {
   ListTagsForResourceCommand,
   ListTaskTemplatesCommand,
   ListTrafficDistributionGroupsCommand,
+  ListTrafficDistributionGroupUsersCommand,
   ListUseCasesCommand,
   ListUserHierarchyGroupsCommand,
   ListUsersCommand,
@@ -1094,6 +1125,7 @@ const commands = {
   UpdateQueueStatusCommand,
   UpdateQuickConnectConfigCommand,
   UpdateQuickConnectNameCommand,
+  UpdateRoutingProfileAgentAvailabilityTimerCommand,
   UpdateRoutingProfileConcurrencyCommand,
   UpdateRoutingProfileDefaultOutboundQueueCommand,
   UpdateRoutingProfileNameCommand,
@@ -1288,6 +1320,23 @@ export interface Connect {
     args: AssociateSecurityKeyCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: AssociateSecurityKeyCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link AssociateTrafficDistributionGroupUserCommand}
+   */
+  associateTrafficDistributionGroupUser(
+    args: AssociateTrafficDistributionGroupUserCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<AssociateTrafficDistributionGroupUserCommandOutput>;
+  associateTrafficDistributionGroupUser(
+    args: AssociateTrafficDistributionGroupUserCommandInput,
+    cb: (err: any, data?: AssociateTrafficDistributionGroupUserCommandOutput) => void
+  ): void;
+  associateTrafficDistributionGroupUser(
+    args: AssociateTrafficDistributionGroupUserCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: AssociateTrafficDistributionGroupUserCommandOutput) => void
   ): void;
 
   /**
@@ -1759,6 +1808,17 @@ export interface Connect {
   ): void;
 
   /**
+   * @see {@link DeleteQueueCommand}
+   */
+  deleteQueue(args: DeleteQueueCommandInput, options?: __HttpHandlerOptions): Promise<DeleteQueueCommandOutput>;
+  deleteQueue(args: DeleteQueueCommandInput, cb: (err: any, data?: DeleteQueueCommandOutput) => void): void;
+  deleteQueue(
+    args: DeleteQueueCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: DeleteQueueCommandOutput) => void
+  ): void;
+
+  /**
    * @see {@link DeleteQuickConnectCommand}
    */
   deleteQuickConnect(
@@ -1773,6 +1833,23 @@ export interface Connect {
     args: DeleteQuickConnectCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: DeleteQuickConnectCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link DeleteRoutingProfileCommand}
+   */
+  deleteRoutingProfile(
+    args: DeleteRoutingProfileCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<DeleteRoutingProfileCommandOutput>;
+  deleteRoutingProfile(
+    args: DeleteRoutingProfileCommandInput,
+    cb: (err: any, data?: DeleteRoutingProfileCommandOutput) => void
+  ): void;
+  deleteRoutingProfile(
+    args: DeleteRoutingProfileCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: DeleteRoutingProfileCommandOutput) => void
   ): void;
 
   /**
@@ -2391,6 +2468,23 @@ export interface Connect {
     args: DisassociateSecurityKeyCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: DisassociateSecurityKeyCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link DisassociateTrafficDistributionGroupUserCommand}
+   */
+  disassociateTrafficDistributionGroupUser(
+    args: DisassociateTrafficDistributionGroupUserCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<DisassociateTrafficDistributionGroupUserCommandOutput>;
+  disassociateTrafficDistributionGroupUser(
+    args: DisassociateTrafficDistributionGroupUserCommandInput,
+    cb: (err: any, data?: DisassociateTrafficDistributionGroupUserCommandOutput) => void
+  ): void;
+  disassociateTrafficDistributionGroupUser(
+    args: DisassociateTrafficDistributionGroupUserCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: DisassociateTrafficDistributionGroupUserCommandOutput) => void
   ): void;
 
   /**
@@ -3051,6 +3145,23 @@ export interface Connect {
     args: ListTrafficDistributionGroupsCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: ListTrafficDistributionGroupsCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link ListTrafficDistributionGroupUsersCommand}
+   */
+  listTrafficDistributionGroupUsers(
+    args: ListTrafficDistributionGroupUsersCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<ListTrafficDistributionGroupUsersCommandOutput>;
+  listTrafficDistributionGroupUsers(
+    args: ListTrafficDistributionGroupUsersCommandInput,
+    cb: (err: any, data?: ListTrafficDistributionGroupUsersCommandOutput) => void
+  ): void;
+  listTrafficDistributionGroupUsers(
+    args: ListTrafficDistributionGroupUsersCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: ListTrafficDistributionGroupUsersCommandOutput) => void
   ): void;
 
   /**
@@ -3928,6 +4039,23 @@ export interface Connect {
     args: UpdateQuickConnectNameCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: UpdateQuickConnectNameCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link UpdateRoutingProfileAgentAvailabilityTimerCommand}
+   */
+  updateRoutingProfileAgentAvailabilityTimer(
+    args: UpdateRoutingProfileAgentAvailabilityTimerCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<UpdateRoutingProfileAgentAvailabilityTimerCommandOutput>;
+  updateRoutingProfileAgentAvailabilityTimer(
+    args: UpdateRoutingProfileAgentAvailabilityTimerCommandInput,
+    cb: (err: any, data?: UpdateRoutingProfileAgentAvailabilityTimerCommandOutput) => void
+  ): void;
+  updateRoutingProfileAgentAvailabilityTimer(
+    args: UpdateRoutingProfileAgentAvailabilityTimerCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: UpdateRoutingProfileAgentAvailabilityTimerCommandOutput) => void
   ): void;
 
   /**

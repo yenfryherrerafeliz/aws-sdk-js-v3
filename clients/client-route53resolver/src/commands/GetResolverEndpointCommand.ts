@@ -66,6 +66,8 @@ export interface GetResolverEndpointCommandOutput extends GetResolverEndpointRes
  * //     CreationTime: "STRING_VALUE",
  * //     ModificationTime: "STRING_VALUE",
  * //     ResolverEndpointType: "IPV6" || "IPV4" || "DUALSTACK",
+ * //     OutpostArn: "STRING_VALUE",
+ * //     PreferredInstanceType: "STRING_VALUE",
  * //   },
  * // };
  *

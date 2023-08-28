@@ -52,11 +52,13 @@ export interface ListLogPatternsCommandOutput extends ListLogPatternsResponse, _
  *   PatternSetName: "STRING_VALUE",
  *   MaxResults: Number("int"),
  *   NextToken: "STRING_VALUE",
+ *   AccountId: "STRING_VALUE",
  * };
  * const command = new ListLogPatternsCommand(input);
  * const response = await client.send(command);
  * // { // ListLogPatternsResponse
  * //   ResourceGroupName: "STRING_VALUE",
+ * //   AccountId: "STRING_VALUE",
  * //   LogPatterns: [ // LogPatternList
  * //     { // LogPattern
  * //       PatternSetName: "STRING_VALUE",

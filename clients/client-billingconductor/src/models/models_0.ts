@@ -28,49 +28,51 @@ export class AccessDeniedException extends __BaseException {
 
 /**
  * @public
- * <p> A representation of a linked account. </p>
+ * <p>A representation of a linked account.</p>
  */
 export interface AccountAssociationsListElement {
   /**
-   * <p>
-   *       The associating array of account IDs.
-   *     </p>
+   * @public
+   * <p>The associating array of account IDs.</p>
    */
   AccountId?: string;
 
   /**
-   * <p> The Billing Group Arn that the linked account is associated to. </p>
+   * @public
+   * <p>The Billing Group Arn that the linked account is associated to.</p>
    */
   BillingGroupArn?: string;
 
   /**
-   * <p>
-   *       The Amazon Web Services account name.
-   *     </p>
+   * @public
+   * <p>The Amazon Web Services account name.</p>
    */
   AccountName?: string;
 
   /**
-   * <p>
-   *       The Amazon Web Services account email.
-   *     </p>
+   * @public
+   * <p>The Amazon Web Services account email.</p>
    */
   AccountEmail?: string;
 }
 
 /**
  * @public
- * <p>
- *      The set of accounts that will be under the billing group. The set of accounts resemble the linked accounts in a consolidated family.
- *     </p>
+ * <p>The set of accounts that will be under the billing group. The set of accounts resemble the linked accounts in a consolidated billing family.</p>
  */
 export interface AccountGrouping {
   /**
-   * <p>
-   *       The account IDs that make up the billing group. Account IDs must be a part of the consolidated billing family, and not associated with another billing group.
-   *     </p>
+   * @public
+   * <p>The account IDs that make up the billing group. Account IDs must be a part of the consolidated billing family, and not associated with another billing group.</p>
    */
   LinkedAccountIds: string[] | undefined;
+
+  /**
+   * @public
+   * <p>Specifies if this billing group will automatically associate newly added
+   * Amazon Web Services accounts that join your consolidated billing family.</p>
+   */
+  AutoAssociate?: boolean;
 }
 
 /**
@@ -78,12 +80,14 @@ export interface AccountGrouping {
  */
 export interface AssociateAccountsInput {
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the billing group that associates the array of
    *       account IDs. </p>
    */
   Arn: string | undefined;
 
   /**
+   * @public
    * <p>
    *       The associating array of account IDs.
    *     </p>
@@ -96,6 +100,7 @@ export interface AssociateAccountsInput {
  */
 export interface AssociateAccountsOutput {
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the billing group that associates the array of
    *       account IDs. </p>
    */
@@ -129,18 +134,21 @@ export class ConflictException extends __BaseException {
   readonly $fault: "client" = "client";
   Message: string | undefined;
   /**
+   * @public
    * <p>Identifier of the resource in use.
    *     </p>
    */
   ResourceId: string | undefined;
 
   /**
+   * @public
    * <p>Type of the resource in use.
    *     </p>
    */
   ResourceType: string | undefined;
 
   /**
+   * @public
    * <p>Reason for the inconsistent state.
    *     </p>
    */
@@ -172,6 +180,7 @@ export class InternalServerException extends __BaseException {
   readonly $fault: "server" = "server";
   Message: string | undefined;
   /**
+   * @public
    * <p>Number of seconds you can retry after the call.
    *     </p>
    */
@@ -201,12 +210,14 @@ export class ResourceNotFoundException extends __BaseException {
   readonly $fault: "client" = "client";
   Message: string | undefined;
   /**
+   * @public
    * <p>Resource identifier that was not found.
    *     </p>
    */
   ResourceId: string | undefined;
 
   /**
+   * @public
    * <p>Resource type that was not found.
    *     </p>
    */
@@ -237,24 +248,28 @@ export class ServiceLimitExceededException extends __BaseException {
   readonly $fault: "client" = "client";
   Message: string | undefined;
   /**
+   * @public
    * <p>Identifier of the resource affected.
    *     </p>
    */
   ResourceId?: string;
 
   /**
+   * @public
    * <p>Type of the resource affected.
    *     </p>
    */
   ResourceType?: string;
 
   /**
+   * @public
    * <p>The unique code identifier of the service limit that is being exceeded.
    *     </p>
    */
   LimitCode: string | undefined;
 
   /**
+   * @public
    * <p>The unique code for the service of the limit that is being exceeded.
    *     </p>
    */
@@ -287,6 +302,7 @@ export class ThrottlingException extends __BaseException {
   readonly $fault: "client" = "client";
   Message: string | undefined;
   /**
+   * @public
    * <p>Number of seconds you can safely retry after the call.
    *     </p>
    */
@@ -308,19 +324,18 @@ export class ThrottlingException extends __BaseException {
 
 /**
  * @public
- * <p>The field's information of a request that resulted in an exception.
- *     </p>
+ * <p>The field's information of a request that resulted in an exception.</p>
  */
 export interface ValidationExceptionField {
   /**
-   * <p>The field name.
-   *     </p>
+   * @public
+   * <p>The field name.</p>
    */
   Name: string | undefined;
 
   /**
-   * <p>The message describing why the field failed validation.
-   *     </p>
+   * @public
+   * <p>The message describing why the field failed validation.</p>
    */
   Message: string | undefined;
 }
@@ -332,6 +347,7 @@ export interface ValidationExceptionField {
 export const ValidationExceptionReason = {
   ACCOUNTS_ALREADY_ASSOCIATED: "ACCOUNTS_ALREADY_ASSOCIATED",
   ACCOUNTS_NOT_ASSOCIATED: "ACCOUNTS_NOT_ASSOCIATED",
+  CANNOT_DELETE_AUTO_ASSOCIATE_BILLING_GROUP: "CANNOT_DELETE_AUTO_ASSOCIATE_BILLING_GROUP",
   CANNOT_PARSE: "CANNOT_PARSE",
   CUSTOM_LINE_ITEM_ASSOCIATION_EXISTS: "CUSTOM_LINE_ITEM_ASSOCIATION_EXISTS",
   DUPLICATE_ACCOUNT: "DUPLICATE_ACCOUNT",
@@ -385,6 +401,7 @@ export const ValidationExceptionReason = {
   PRIMARY_CANNOT_DISASSOCIATE: "PRIMARY_CANNOT_DISASSOCIATE",
   PRIMARY_NOT_ASSOCIATED: "PRIMARY_NOT_ASSOCIATED",
   TOO_MANY_ACCOUNTS_IN_REQUEST: "TOO_MANY_ACCOUNTS_IN_REQUEST",
+  TOO_MANY_AUTO_ASSOCIATE_BILLING_GROUPS: "TOO_MANY_AUTO_ASSOCIATE_BILLING_GROUPS",
   TOO_MANY_CUSTOMLINEITEMS_IN_REQUEST: "TOO_MANY_CUSTOMLINEITEMS_IN_REQUEST",
   UNKNOWN_OPERATION: "UNKNOWN_OPERATION",
 } as const;
@@ -396,19 +413,21 @@ export type ValidationExceptionReason = (typeof ValidationExceptionReason)[keyof
 
 /**
  * @public
- * <p>The input doesn't match with the constraints specified by Amazon Web Services services.</p>
+ * <p>The input doesn't match with the constraints specified by Amazon Web Services.</p>
  */
 export class ValidationException extends __BaseException {
   readonly name: "ValidationException" = "ValidationException";
   readonly $fault: "client" = "client";
   Message: string | undefined;
   /**
+   * @public
    * <p>The reason the request's validation failed.
    *     </p>
    */
   Reason?: ValidationExceptionReason | string;
 
   /**
+   * @public
    * <p>The fields that caused the error, if applicable.
    *     </p>
    */
@@ -434,6 +453,7 @@ export class ValidationException extends __BaseException {
  */
 export interface AssociatePricingRulesInput {
   /**
+   * @public
    * <p>
    *       The <code>PricingPlanArn</code> that the <code>PricingRuleArns</code> are associated with.
    *     </p>
@@ -441,6 +461,7 @@ export interface AssociatePricingRulesInput {
   Arn: string | undefined;
 
   /**
+   * @public
    * <p>
    *       The <code>PricingRuleArns</code> that are associated with the Pricing Plan.
    *     </p>
@@ -453,6 +474,7 @@ export interface AssociatePricingRulesInput {
  */
 export interface AssociatePricingRulesOutput {
   /**
+   * @public
    * <p>
    *       The <code>PricingPlanArn</code> that the <code>PricingRuleArns</code> are associated with.
    *     </p>
@@ -480,52 +502,47 @@ export type AssociateResourceErrorReason =
 
 /**
  * @public
- * <p>
- *       A representation of a resource association error.
- *     </p>
+ * <p>A representation of a resource association error.</p>
  */
 export interface AssociateResourceError {
   /**
-   * <p> The reason why the resource association failed. </p>
+   * @public
+   * <p>The reason why the resource association failed.</p>
    */
   Message?: string;
 
   /**
-   * <p> A static error code that's used to classify the type of failure. </p>
+   * @public
+   * <p>A static error code that's used to classify the type of failure.</p>
    */
   Reason?: AssociateResourceErrorReason | string;
 }
 
 /**
  * @public
- * <p>
- *       A resource association result for a percentage custom line item.
- *     </p>
+ * <p>A resource association result for a percentage custom line item.</p>
  */
 export interface AssociateResourceResponseElement {
   /**
-   * <p>
-   *       The resource ARN that was associated to the custom line item.
-   *     </p>
+   * @public
+   * <p>The resource ARN that was associated to the custom line item.</p>
    */
   Arn?: string;
 
   /**
-   * <p>
-   *       An <code>AssociateResourceError</code> that will populate if the resource association fails.
-   *     </p>
+   * @public
+   * <p>An <code>AssociateResourceError</code> that will populate if the resource association fails.</p>
    */
   Error?: AssociateResourceError;
 }
 
 /**
  * @public
- * <p>
- *       The preferences and settings that will be used to compute the Amazon Web Services charges for a billing group.
- *     </p>
+ * <p>The preferences and settings that will be used to compute the Amazon Web Services charges for a billing group.</p>
  */
 export interface ComputationPreference {
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the pricing plan that's used to compute the Amazon Web Services charges for a billing group. </p>
    */
   PricingPlanArn: string | undefined;
@@ -536,6 +553,7 @@ export interface ComputationPreference {
  */
 export interface CreateBillingGroupInput {
   /**
+   * @public
    * <p>
    *       The token that is needed to support idempotency. Idempotency isn't currently supported, but will be implemented in a future update.
    *     </p>
@@ -543,6 +561,7 @@ export interface CreateBillingGroupInput {
   ClientToken?: string;
 
   /**
+   * @public
    * <p>
    *       The billing group name. The names must be unique.
    *     </p>
@@ -550,13 +569,15 @@ export interface CreateBillingGroupInput {
   Name: string | undefined;
 
   /**
+   * @public
    * <p>
-   *       The set of accounts that will be under the billing group. The set of accounts resemble the linked accounts in a consolidated family.
+   *       The set of accounts that will be under the billing group. The set of accounts resemble the linked accounts in a consolidated billing family.
    *     </p>
    */
   AccountGrouping: AccountGrouping | undefined;
 
   /**
+   * @public
    * <p>
    *       The preferences and settings that will be used to compute the Amazon Web Services charges for a billing group.
    *     </p>
@@ -564,16 +585,19 @@ export interface CreateBillingGroupInput {
   ComputationPreference: ComputationPreference | undefined;
 
   /**
+   * @public
    * <p> The account ID that serves as the main account in a billing group. </p>
    */
   PrimaryAccountId?: string;
 
   /**
+   * @public
    * <p>The description of the billing group. </p>
    */
   Description?: string;
 
   /**
+   * @public
    * <p> A map that contains tag keys and tag values that are attached to a billing group. This
    *       feature isn't available during the beta. </p>
    */
@@ -585,6 +609,7 @@ export interface CreateBillingGroupInput {
  */
 export interface CreateBillingGroupOutput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the created billing group. </p>
    */
   Arn?: string;
@@ -595,6 +620,7 @@ export interface CreateBillingGroupOutput {
  */
 export interface DeleteBillingGroupInput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the billing group that you're deleting.</p>
    */
   Arn: string | undefined;
@@ -605,6 +631,7 @@ export interface DeleteBillingGroupInput {
  */
 export interface DeleteBillingGroupOutput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the deleted billing group.</p>
    */
   Arn?: string;
@@ -615,12 +642,14 @@ export interface DeleteBillingGroupOutput {
  */
 export interface DisassociateAccountsInput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the billing group that the array of account IDs will
    *       disassociate from. </p>
    */
   Arn: string | undefined;
 
   /**
+   * @public
    * <p>The array of account IDs to disassociate.
    *     </p>
    */
@@ -632,6 +661,7 @@ export interface DisassociateAccountsInput {
  */
 export interface DisassociateAccountsOutput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the billing group that the array of account IDs is
    *       disassociated from. </p>
    */
@@ -654,26 +684,35 @@ export type BillingGroupStatus = (typeof BillingGroupStatus)[keyof typeof Billin
 
 /**
  * @public
- * <p>The filter that specifies the billing groups and pricing plans to retrieve billing group information.
- *     </p>
+ * <p>The filter that specifies the billing groups and pricing plans to retrieve billing group information.</p>
  */
 export interface ListBillingGroupsFilter {
   /**
-   * <p>The list of billing group Amazon Resource Names (ARNs) to retrieve information. </p>
+   * @public
+   * <p>The list of billing group Amazon Resource Names (ARNs) to retrieve information.</p>
    */
   Arns?: string[];
 
   /**
-   * <p>The pricing plan Amazon Resource Names (ARNs) to retrieve information. </p>
+   * @public
+   * <p>The pricing plan Amazon Resource Names (ARNs) to retrieve information.</p>
    */
   PricingPlan?: string;
 
   /**
+   * @public
    * <p>
    *       A list of billing groups to retrieve their current status for a specific time range
    *     </p>
    */
   Statuses?: (BillingGroupStatus | string)[];
+
+  /**
+   * @public
+   * <p>Specifies if this billing group will automatically associate newly added
+   * Amazon Web Services accounts that join your consolidated billing family.</p>
+   */
+  AutoAssociate?: boolean;
 }
 
 /**
@@ -681,24 +720,28 @@ export interface ListBillingGroupsFilter {
  */
 export interface ListBillingGroupsInput {
   /**
+   * @public
    * <p>The preferred billing period to get billing groups.
    *     </p>
    */
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p>The maximum number of billing groups to retrieve.
    *     </p>
    */
   MaxResults?: number;
 
   /**
+   * @public
    * <p>The pagination token that's used on subsequent calls to get billing groups.
    *     </p>
    */
   NextToken?: string;
 
   /**
+   * @public
    * <p>A <code>ListBillingGroupsFilter</code> that specifies the billing group and pricing plan to retrieve billing group information.
    *     </p>
    */
@@ -707,67 +750,89 @@ export interface ListBillingGroupsInput {
 
 /**
  * @public
- * <p>A representation of a billing group.
- *     </p>
+ * <p>Specifies if the billing group has the following
+ * features enabled.</p>
+ */
+export interface ListBillingGroupAccountGrouping {
+  /**
+   * @public
+   * <p>Specifies if this billing group will automatically associate newly added
+   * Amazon Web Services accounts that join your consolidated billing family.</p>
+   */
+  AutoAssociate?: boolean;
+}
+
+/**
+ * @public
+ * <p>A representation of a billing group.</p>
  */
 export interface BillingGroupListElement {
   /**
-   * <p>The name of the billing group. </p>
+   * @public
+   * <p>The name of the billing group.</p>
    */
   Name?: string;
 
   /**
-   * <p>The Amazon Resource Number (ARN) that can be used to uniquely identify the billing group.
-   *     </p>
+   * @public
+   * <p>The Amazon Resource Number (ARN) that can be used to uniquely identify the billing group.</p>
    */
   Arn?: string;
 
   /**
-   * <p>The description of the billing group. </p>
+   * @public
+   * <p>The description of the billing group.</p>
    */
   Description?: string;
 
   /**
-   * <p>The account ID that serves as the main account in a billing group. </p>
+   * @public
+   * <p>The account ID that serves as the main account in a billing group.</p>
    */
   PrimaryAccountId?: string;
 
   /**
-   * <p>
-   *       The preferences and settings that will be used to compute the Amazon Web Services charges for a billing group.
-   *     </p>
+   * @public
+   * <p>The preferences and settings that will be used to compute the Amazon Web Services charges for a billing group.</p>
    */
   ComputationPreference?: ComputationPreference;
 
   /**
-   * <p>The number of accounts in the particular billing group.
-   *     </p>
+   * @public
+   * <p>The number of accounts in the particular billing group.</p>
    */
   Size?: number;
 
   /**
-   * <p>
-   *       The time when the billing group was created.
-   *     </p>
+   * @public
+   * <p>The time when the billing group was created.</p>
    */
   CreationTime?: number;
 
   /**
-   * <p> The most recent time when the billing group was modified. </p>
+   * @public
+   * <p>The most recent time when the billing group was modified.</p>
    */
   LastModifiedTime?: number;
 
   /**
-   * <p>The billing group status. Only one of the valid values can be used.
-   *     </p>
+   * @public
+   * <p>The billing group status. Only one of the valid values can be used.</p>
    */
   Status?: BillingGroupStatus | string;
 
   /**
-   * <p>The reason why the billing group is in its current status.
-   *     </p>
+   * @public
+   * <p>The reason why the billing group is in its current status.</p>
    */
   StatusReason?: string;
+
+  /**
+   * @public
+   * <p>Specifies if the billing group has automatic account
+   * association (<code>AutoAssociate</code>) enabled.</p>
+   */
+  AccountGrouping?: ListBillingGroupAccountGrouping;
 }
 
 /**
@@ -775,12 +840,14 @@ export interface BillingGroupListElement {
  */
 export interface ListBillingGroupsOutput {
   /**
+   * @public
    * <p>A list of <code>BillingGroupListElement</code> retrieved.
    *     </p>
    */
   BillingGroups?: BillingGroupListElement[];
 
   /**
+   * @public
    * <p>The pagination token that's used on subsequent calls to get billing groups.
    *     </p>
    */
@@ -789,26 +856,44 @@ export interface ListBillingGroupsOutput {
 
 /**
  * @public
+ * <p>Specifies if the billing group has the following
+ * features enabled.</p>
+ */
+export interface UpdateBillingGroupAccountGrouping {
+  /**
+   * @public
+   * <p>Specifies if this billing group will automatically associate newly added
+   * Amazon Web Services accounts that join your consolidated billing family.</p>
+   */
+  AutoAssociate?: boolean;
+}
+
+/**
+ * @public
  */
 export interface UpdateBillingGroupInput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the billing group being updated. </p>
    */
   Arn: string | undefined;
 
   /**
+   * @public
    * <p>The name of the billing group. The names must be unique to each billing group.
    *     </p>
    */
   Name?: string;
 
   /**
+   * @public
    * <p>The status of the billing group. Only one of the valid values can be used.
    *     </p>
    */
   Status?: BillingGroupStatus | string;
 
   /**
+   * @public
    * <p>
    *       The preferences and settings that will be used to compute the Amazon Web Services charges for a billing group.
    *     </p>
@@ -816,10 +901,18 @@ export interface UpdateBillingGroupInput {
   ComputationPreference?: ComputationPreference;
 
   /**
+   * @public
    * <p>A description of the billing group.
    *     </p>
    */
   Description?: string;
+
+  /**
+   * @public
+   * <p>Specifies if the billing group has automatic account
+   * association (<code>AutoAssociate</code>) enabled.</p>
+   */
+  AccountGrouping?: UpdateBillingGroupAccountGrouping;
 }
 
 /**
@@ -827,11 +920,13 @@ export interface UpdateBillingGroupInput {
  */
 export interface UpdateBillingGroupOutput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the billing group that was updated. </p>
    */
   Arn?: string;
 
   /**
+   * @public
    * <p>
    *       The name of the billing group. The names must be unique to each billing group.
    *     </p>
@@ -839,6 +934,7 @@ export interface UpdateBillingGroupOutput {
   Name?: string;
 
   /**
+   * @public
    * <p>
    *       A description of the billing group.
    *     </p>
@@ -846,6 +942,7 @@ export interface UpdateBillingGroupOutput {
   Description?: string;
 
   /**
+   * @public
    * <p>
    *       The account ID that serves as the main account in a billing group.
    *     </p>
@@ -853,6 +950,7 @@ export interface UpdateBillingGroupOutput {
   PrimaryAccountId?: string;
 
   /**
+   * @public
    * <p>
    *       The Amazon Resource Name (ARN) of the pricing plan to compute Amazon Web Services charges for the
    *       billing group.
@@ -861,6 +959,7 @@ export interface UpdateBillingGroupOutput {
   PricingPlanArn?: string;
 
   /**
+   * @public
    * <p>
    *       The number of accounts in the particular billing group.
    *     </p>
@@ -868,11 +967,13 @@ export interface UpdateBillingGroupOutput {
   Size?: number;
 
   /**
+   * @public
    * <p> The most recent time when the billing group was modified. </p>
    */
   LastModifiedTime?: number;
 
   /**
+   * @public
    * <p>
    *       The status of the billing group. Only one of the valid values can be used.
    *     </p>
@@ -880,31 +981,35 @@ export interface UpdateBillingGroupOutput {
   Status?: BillingGroupStatus | string;
 
   /**
+   * @public
    * <p>
    *       The reason why the billing group is in its current status.
    *     </p>
    */
   StatusReason?: string;
+
+  /**
+   * @public
+   * <p>Specifies if the billing group has automatic account
+   * association (<code>AutoAssociate</code>) enabled.</p>
+   */
+  AccountGrouping?: UpdateBillingGroupAccountGrouping;
 }
 
 /**
  * @public
- * <p>
- *       The billing period range in which the custom line item request will be applied.
- *     </p>
+ * <p>The billing period range in which the custom line item request will be applied.</p>
  */
 export interface CustomLineItemBillingPeriodRange {
   /**
-   * <p>
-   *       The inclusive start billing period that defines a billing period range where a custom line is applied.
-   *     </p>
+   * @public
+   * <p>The inclusive start billing period that defines a billing period range where a custom line is applied.</p>
    */
   InclusiveStartBillingPeriod: string | undefined;
 
   /**
-   * <p>
-   *       The inclusive end billing period that defines a billing period range where a custom line is applied.
-   *     </p>
+   * @public
+   * <p>The inclusive end billing period that defines a billing period range where a custom line is applied.</p>
    */
   ExclusiveEndBillingPeriod?: string;
 }
@@ -914,6 +1019,7 @@ export interface CustomLineItemBillingPeriodRange {
  */
 export interface BatchAssociateResourcesToCustomLineItemInput {
   /**
+   * @public
    * <p>
    *       A percentage custom line item ARN to associate the resources to.
    *     </p>
@@ -921,6 +1027,7 @@ export interface BatchAssociateResourcesToCustomLineItemInput {
   TargetArn: string | undefined;
 
   /**
+   * @public
    * <p>
    *       A list containing the ARNs of the resources to be associated.
    *     </p>
@@ -928,9 +1035,8 @@ export interface BatchAssociateResourcesToCustomLineItemInput {
   ResourceArns: string[] | undefined;
 
   /**
-   * <p>
-   *       The billing period range in which the custom line item request will be applied.
-   *     </p>
+   * @public
+   * <p>The billing period range in which the custom line item request will be applied.</p>
    */
   BillingPeriodRange?: CustomLineItemBillingPeriodRange;
 }
@@ -940,6 +1046,7 @@ export interface BatchAssociateResourcesToCustomLineItemInput {
  */
 export interface BatchAssociateResourcesToCustomLineItemOutput {
   /**
+   * @public
    * <p>
    *       A list of <code>AssociateResourceResponseElement</code> for each resource that's been associated to a percentage custom line item successfully.
    *     </p>
@@ -947,6 +1054,7 @@ export interface BatchAssociateResourcesToCustomLineItemOutput {
   SuccessfullyAssociatedResources?: AssociateResourceResponseElement[];
 
   /**
+   * @public
    * <p>
    *       A list of <code>AssociateResourceResponseElement</code> for each resource that failed association to a percentage custom line item.
    *     </p>
@@ -959,6 +1067,7 @@ export interface BatchAssociateResourcesToCustomLineItemOutput {
  */
 export interface BatchDisassociateResourcesFromCustomLineItemInput {
   /**
+   * @public
    * <p>
    *       A percentage custom line item ARN to disassociate the resources from.
    *     </p>
@@ -966,6 +1075,7 @@ export interface BatchDisassociateResourcesFromCustomLineItemInput {
   TargetArn: string | undefined;
 
   /**
+   * @public
    * <p>
    *       A list containing the ARNs of resources to be disassociated.
    *     </p>
@@ -973,28 +1083,26 @@ export interface BatchDisassociateResourcesFromCustomLineItemInput {
   ResourceArns: string[] | undefined;
 
   /**
-   * <p>
-   *       The billing period range in which the custom line item request will be applied.
-   *     </p>
+   * @public
+   * <p>The billing period range in which the custom line item request will be applied.</p>
    */
   BillingPeriodRange?: CustomLineItemBillingPeriodRange;
 }
 
 /**
  * @public
- * <p>
- *       A resource disassociation result for a percentage custom line item.
- *     </p>
+ * <p>A resource disassociation result for a percentage custom line item.</p>
  */
 export interface DisassociateResourceResponseElement {
   /**
-   * <p>
-   *       The resource ARN that was disassociated from the custom line item.
+   * @public
+   * <p>The resource ARN that was disassociated from the custom line item.
    *     </p>
    */
   Arn?: string;
 
   /**
+   * @public
    * <p> An <code>AssociateResourceError</code> that's shown if the resource disassociation fails. </p>
    */
   Error?: AssociateResourceError;
@@ -1005,6 +1113,7 @@ export interface DisassociateResourceResponseElement {
  */
 export interface BatchDisassociateResourcesFromCustomLineItemOutput {
   /**
+   * @public
    * <p>
    *       A list of <code>DisassociateResourceResponseElement</code> for each resource that's been disassociated from a percentage custom line item successfully.
    *     </p>
@@ -1012,6 +1121,7 @@ export interface BatchDisassociateResourcesFromCustomLineItemOutput {
   SuccessfullyDisassociatedResources?: DisassociateResourceResponseElement[];
 
   /**
+   * @public
    * <p>
    *       A list of <code>DisassociateResourceResponseElement</code> for each resource that failed disassociation from a percentage custom line item.
    *     </p>
@@ -1021,37 +1131,31 @@ export interface BatchDisassociateResourcesFromCustomLineItemOutput {
 
 /**
  * @public
- * <p>
- *       A representation of the charge details that are associated with a flat custom line item.
- *     </p>
+ * <p>A representation of the charge details that are associated with a flat custom line item.</p>
  */
 export interface CustomLineItemFlatChargeDetails {
   /**
-   * <p>
-   *       The custom line item's fixed charge value in USD.
-   *     </p>
+   * @public
+   * <p>The custom line item's fixed charge value in USD.</p>
    */
   ChargeValue: number | undefined;
 }
 
 /**
  * @public
- * <p>
- *       A representation of the charge details that are associated with a percentage custom line item.
- *     </p>
+ * <p>A representation of the charge details that are associated with a percentage custom line item.</p>
  */
 export interface CustomLineItemPercentageChargeDetails {
   /**
-   * <p>
-   *       The custom line item's percentage value. This will be multiplied against the combined value of its associated resources to determine its charge value.
-   *     </p>
+   * @public
+   * <p>The custom line item's percentage value. This will be multiplied against the combined
+   *         value of its associated resources to determine its charge value. </p>
    */
   PercentageValue: number | undefined;
 
   /**
-   * <p>
-   *       A list of resource ARNs to associate to the percentage custom line item.
-   *     </p>
+   * @public
+   * <p>A list of resource ARNs to associate to the percentage custom line item.</p>
    */
   AssociatedValues?: string[];
 }
@@ -1072,29 +1176,25 @@ export type CustomLineItemType = (typeof CustomLineItemType)[keyof typeof Custom
 
 /**
  * @public
- * <p>
- *       The charge details of a custom line item. It should contain only one of <code>Flat</code> or <code>Percentage</code>.
- *     </p>
+ * <p>The charge details of a custom line item. It should contain only one of <code>Flat</code> or <code>Percentage</code>.</p>
  */
 export interface CustomLineItemChargeDetails {
   /**
-   * <p>
-   *       A <code>CustomLineItemFlatChargeDetails</code> that describes the charge details of a flat custom line item.
-   *     </p>
+   * @public
+   * <p>A <code>CustomLineItemFlatChargeDetails</code> that describes the charge details of a flat
+   *         custom line item.</p>
    */
   Flat?: CustomLineItemFlatChargeDetails;
 
   /**
-   * <p>
-   *       A <code>CustomLineItemPercentageChargeDetails</code> that describes the charge details of a percentage custom line item.
-   *     </p>
+   * @public
+   * <p>A <code>CustomLineItemPercentageChargeDetails</code> that describes the charge details of a percentage custom line item.</p>
    */
   Percentage?: CustomLineItemPercentageChargeDetails;
 
   /**
-   * <p>
-   *       The type of the custom line item that indicates whether the charge is a fee or credit.
-   *     </p>
+   * @public
+   * <p>The type of the custom line item that indicates whether the charge is a fee or credit.</p>
    */
   Type: CustomLineItemType | string | undefined;
 }
@@ -1104,6 +1204,7 @@ export interface CustomLineItemChargeDetails {
  */
 export interface CreateCustomLineItemInput {
   /**
+   * @public
    * <p>
    *       The token that is needed to support idempotency. Idempotency isn't currently supported, but will be implemented in a future update.
    *     </p>
@@ -1111,6 +1212,7 @@ export interface CreateCustomLineItemInput {
   ClientToken?: string;
 
   /**
+   * @public
    * <p>
    *       The name of the custom line item.
    *     </p>
@@ -1118,6 +1220,7 @@ export interface CreateCustomLineItemInput {
   Name: string | undefined;
 
   /**
+   * @public
    * <p>
    *       The description of the custom line item. This is shown on the Bills page in association with the charge value.
    *     </p>
@@ -1125,22 +1228,26 @@ export interface CreateCustomLineItemInput {
   Description: string | undefined;
 
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) that references the billing group where the custom line
    *       item applies to. </p>
    */
   BillingGroupArn: string | undefined;
 
   /**
+   * @public
    * <p> A time range for which the custom line item is effective. </p>
    */
   BillingPeriodRange?: CustomLineItemBillingPeriodRange;
 
   /**
+   * @public
    * <p> A map that contains tag keys and tag values that are attached to a custom line item. </p>
    */
   Tags?: Record<string, string>;
 
   /**
+   * @public
    * <p>
    *       A <code>CustomLineItemChargeDetails</code> that describes the charge details for a custom line item.
    *     </p>
@@ -1153,6 +1260,7 @@ export interface CreateCustomLineItemInput {
  */
 export interface CreateCustomLineItemOutput {
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the created custom line item. </p>
    */
   Arn?: string;
@@ -1163,6 +1271,7 @@ export interface CreateCustomLineItemOutput {
  */
 export interface DeleteCustomLineItemInput {
   /**
+   * @public
    * <p>
    *       The ARN of the custom line item to be deleted.
    *     </p>
@@ -1170,9 +1279,8 @@ export interface DeleteCustomLineItemInput {
   Arn: string | undefined;
 
   /**
-   * <p>
-   *       The billing period range in which the custom line item request will be applied.
-   *     </p>
+   * @public
+   * <p>The billing period range in which the custom line item request will be applied.</p>
    */
   BillingPeriodRange?: CustomLineItemBillingPeriodRange;
 }
@@ -1182,6 +1290,7 @@ export interface DeleteCustomLineItemInput {
  */
 export interface DeleteCustomLineItemOutput {
   /**
+   * @public
    * <p>
    *       Then ARN of the deleted custom line item.
    *     </p>
@@ -1191,27 +1300,24 @@ export interface DeleteCustomLineItemOutput {
 
 /**
  * @public
- * <p>
- *       A filter that specifies the custom line items and billing groups to retrieve FFLI information.
- *     </p>
+ * <p>A filter that specifies the custom line items and billing groups to retrieve FFLI information.</p>
  */
 export interface ListCustomLineItemsFilter {
   /**
-   * <p>
-   *       A list of custom line items to retrieve information.
-   *     </p>
+   * @public
+   * <p>A list of custom line items to retrieve information.</p>
    */
   Names?: string[];
 
   /**
-   * <p> The billing group Amazon Resource Names (ARNs) to retrieve information. </p>
+   * @public
+   * <p>The billing group Amazon Resource Names (ARNs) to retrieve information.</p>
    */
   BillingGroups?: string[];
 
   /**
-   * <p>
-   *      A list of custom line item ARNs to retrieve information.
-   *     </p>
+   * @public
+   * <p>A list of custom line item ARNs to retrieve information.</p>
    */
   Arns?: string[];
 }
@@ -1221,6 +1327,7 @@ export interface ListCustomLineItemsFilter {
  */
 export interface ListCustomLineItemsInput {
   /**
+   * @public
    * <p>
    *       The preferred billing period to get custom line items (FFLIs).
    *     </p>
@@ -1228,6 +1335,7 @@ export interface ListCustomLineItemsInput {
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p>
    *       The maximum number of billing groups to retrieve.
    *     </p>
@@ -1235,6 +1343,7 @@ export interface ListCustomLineItemsInput {
   MaxResults?: number;
 
   /**
+   * @public
    * <p>
    *       The pagination token that's used on subsequent calls to get custom line items (FFLIs).
    *     </p>
@@ -1242,6 +1351,7 @@ export interface ListCustomLineItemsInput {
   NextToken?: string;
 
   /**
+   * @public
    * <p>A <code>ListCustomLineItemsFilter</code> that specifies the custom line item names
    *       and/or billing group Amazon Resource Names (ARNs) to retrieve FFLI information.</p>
    */
@@ -1256,6 +1366,7 @@ export interface ListCustomLineItemsInput {
  */
 export interface ListCustomLineItemFlatChargeDetails {
   /**
+   * @public
    * <p>
    *       The custom line item's fixed charge value in USD.
    *     </p>
@@ -1271,6 +1382,7 @@ export interface ListCustomLineItemFlatChargeDetails {
  */
 export interface ListCustomLineItemPercentageChargeDetails {
   /**
+   * @public
    * <p>
    *       The custom line item's percentage value. This will be multiplied against the combined value of its associated resources to determine its charge value.
    *     </p>
@@ -1286,6 +1398,7 @@ export interface ListCustomLineItemPercentageChargeDetails {
  */
 export interface ListCustomLineItemChargeDetails {
   /**
+   * @public
    * <p>
    *       A <code>ListCustomLineItemFlatChargeDetails</code> that describes the charge details of a flat custom line item.
    *     </p>
@@ -1293,6 +1406,7 @@ export interface ListCustomLineItemChargeDetails {
   Flat?: ListCustomLineItemFlatChargeDetails;
 
   /**
+   * @public
    * <p>
    *       A <code>ListCustomLineItemPercentageChargeDetails</code> that describes the charge details of a percentage custom line item.
    *     </p>
@@ -1300,6 +1414,7 @@ export interface ListCustomLineItemChargeDetails {
   Percentage?: ListCustomLineItemPercentageChargeDetails;
 
   /**
+   * @public
    * <p>
    *       The type of the custom line item that indicates whether the charge is a <code>fee</code> or <code>credit</code>.
    *     </p>
@@ -1323,73 +1438,66 @@ export type CurrencyCode = (typeof CurrencyCode)[keyof typeof CurrencyCode];
 
 /**
  * @public
- * <p>
- *       A representation of a custom line item.
- *     </p>
+ * <p>A representation of a custom line item.</p>
  */
 export interface CustomLineItemListElement {
   /**
-   * <p> The Amazon Resource Names (ARNs) for custom line items. </p>
+   * @public
+   * <p>The Amazon Resource Names (ARNs) for custom line items.</p>
    */
   Arn?: string;
 
   /**
-   * <p>
-   *       The custom line item's name.
-   *     </p>
+   * @public
+   * <p>The custom line item's name.</p>
    */
   Name?: string;
 
   /**
-   * <p>
-   *       A <code>ListCustomLineItemChargeDetails</code> that describes the charge details of a custom line item.
-   *     </p>
+   * @public
+   * <p>A <code>ListCustomLineItemChargeDetails</code> that describes the charge details of a custom line item.</p>
    */
   ChargeDetails?: ListCustomLineItemChargeDetails;
 
   /**
-   * <p>
-   *       The custom line item's charge value currency. Only one of the valid values can be used.
-   *     </p>
+   * @public
+   * <p>The custom line item's charge value currency. Only one of the valid values can be used.</p>
    */
   CurrencyCode?: CurrencyCode | string;
 
   /**
-   * <p>
-   *       The custom line item's description. This is shown on the Bills page in association with the charge value.
-   *     </p>
+   * @public
+   * <p>The custom line item's description. This is shown on the Bills page in association with the charge value.</p>
    */
   Description?: string;
 
   /**
-   * <p>
-   *       The product code that's associated with the custom line item.
-   *     </p>
+   * @public
+   * <p>The product code that's associated with the custom line item.</p>
    */
   ProductCode?: string;
 
   /**
-   * <p> The Amazon Resource Name (ARN) that references the billing group where the custom line
-   *       item applies to. </p>
+   * @public
+   * <p>The Amazon Resource Name (ARN) that references the billing group where the custom line item applies to.</p>
    */
   BillingGroupArn?: string;
 
   /**
-   * <p>
-   *       The time created.
-   *     </p>
+   * @public
+   * <p>The time created.</p>
    */
   CreationTime?: number;
 
   /**
-   * <p> The most recent time when the custom line item was modified. </p>
+   * @public
+   * <p>The most recent time when the custom line item was modified.</p>
    */
   LastModifiedTime?: number;
 
   /**
-   * <p>
-   *       The number of resources that are associated to the custom line item.
-   *     </p>
+   * @public
+   * <p>The number of resources that are associated to the custom line item.</p>
    */
   AssociationSize?: number;
 }
@@ -1399,6 +1507,7 @@ export interface CustomLineItemListElement {
  */
 export interface ListCustomLineItemsOutput {
   /**
+   * @public
    * <p>
    *       A list of <code>FreeFormLineItemListElements</code> received.
    *     </p>
@@ -1406,6 +1515,7 @@ export interface ListCustomLineItemsOutput {
   CustomLineItems?: CustomLineItemListElement[];
 
   /**
+   * @public
    * <p>
    *       The pagination token that's used on subsequent calls to get custom line items (FFLIs).
    *     </p>
@@ -1419,11 +1529,13 @@ export interface ListCustomLineItemsOutput {
  */
 export interface ListCustomLineItemVersionsBillingPeriodRangeFilter {
   /**
+   * @public
    * <p>The inclusive start billing period that defines a billing period range where  a custom line item version is applied.</p>
    */
   StartBillingPeriod?: string;
 
   /**
+   * @public
    * <p>The exclusive end billing period that defines a billing period range where a  custom line item version is applied.</p>
    */
   EndBillingPeriod?: string;
@@ -1435,6 +1547,7 @@ export interface ListCustomLineItemVersionsBillingPeriodRangeFilter {
  */
 export interface ListCustomLineItemVersionsFilter {
   /**
+   * @public
    * <p>The billing period range in which the custom line item version is applied.</p>
    */
   BillingPeriodRange?: ListCustomLineItemVersionsBillingPeriodRangeFilter;
@@ -1445,21 +1558,25 @@ export interface ListCustomLineItemVersionsFilter {
  */
 export interface ListCustomLineItemVersionsInput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) for the custom line item.</p>
    */
   Arn: string | undefined;
 
   /**
+   * @public
    * <p>The maximum number of custom line item versions to retrieve.</p>
    */
   MaxResults?: number;
 
   /**
+   * @public
    * <p>The pagination token that's used on subsequent calls to retrieve custom line item versions.</p>
    */
   NextToken?: string;
 
   /**
+   * @public
    * <p>A <code>ListCustomLineItemVersionsFilter</code> that specifies the billing period range in which the custom line item versions are applied.</p>
    */
   Filters?: ListCustomLineItemVersionsFilter;
@@ -1471,11 +1588,13 @@ export interface ListCustomLineItemVersionsInput {
  */
 export interface CustomLineItemVersionListElement {
   /**
+   * @public
    * <p>The name of the custom line item.</p>
    */
   Name?: string;
 
   /**
+   * @public
    * <p>
    *       A representation of the charge details of a custom line item.
    *     </p>
@@ -1483,51 +1602,61 @@ export interface CustomLineItemVersionListElement {
   ChargeDetails?: ListCustomLineItemChargeDetails;
 
   /**
+   * @public
    * <p>The charge value currency of the custom line item.</p>
    */
   CurrencyCode?: CurrencyCode | string;
 
   /**
+   * @public
    * <p>The description of the custom line item.</p>
    */
   Description?: string;
 
   /**
+   * @public
    * <p>The product code that’s associated with the custom line item.</p>
    */
   ProductCode?: string;
 
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the billing group that the custom line item applies to.</p>
    */
   BillingGroupArn?: string;
 
   /**
+   * @public
    * <p>The time when the custom line item version was created.</p>
    */
   CreationTime?: number;
 
   /**
+   * @public
    * <p>The most recent time that the custom line item version was modified.</p>
    */
   LastModifiedTime?: number;
 
   /**
+   * @public
    * <p>The number of resources that are associated with the custom line item.</p>
    */
   AssociationSize?: number;
 
   /**
+   * @public
    * <p>The start billing period of the custom line item version.</p>
    */
   StartBillingPeriod?: string;
 
   /**
+   * @public
    * <p>The end billing period of the custom line item version.</p>
    */
   EndBillingPeriod?: string;
 
   /**
+   * @public
    * <p>
    *       A list of custom line item Amazon Resource Names (ARNs) to retrieve information.
    *     </p>
@@ -1535,6 +1664,7 @@ export interface CustomLineItemVersionListElement {
   Arn?: string;
 
   /**
+   * @public
    * <p>
    *       The inclusive start time.
    *     </p>
@@ -1547,11 +1677,13 @@ export interface CustomLineItemVersionListElement {
  */
 export interface ListCustomLineItemVersionsOutput {
   /**
+   * @public
    * <p>A list of <code>CustomLineItemVersionListElements</code> that are received.</p>
    */
   CustomLineItemVersions?: CustomLineItemVersionListElement[];
 
   /**
+   * @public
    * <p>The pagination token that's used on subsequent calls to retrieve custom line item versions.</p>
    */
   NextToken?: string;
@@ -1579,6 +1711,7 @@ export type CustomLineItemRelationship = (typeof CustomLineItemRelationship)[key
  */
 export interface ListResourcesAssociatedToCustomLineItemFilter {
   /**
+   * @public
    * <p>
    *       The type of relationship between the custom line item and the associated resource.
    *     </p>
@@ -1591,6 +1724,7 @@ export interface ListResourcesAssociatedToCustomLineItemFilter {
  */
 export interface ListResourcesAssociatedToCustomLineItemInput {
   /**
+   * @public
    * <p>
    *       The billing period for which the resource associations will be listed.
    *     </p>
@@ -1598,6 +1732,7 @@ export interface ListResourcesAssociatedToCustomLineItemInput {
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p>
    *       The ARN of the custom line item for which the resource associations will be listed.
    *     </p>
@@ -1605,6 +1740,7 @@ export interface ListResourcesAssociatedToCustomLineItemInput {
   Arn: string | undefined;
 
   /**
+   * @public
    * <p>
    *       (Optional) The maximum number of resource associations to be retrieved.
    *     </p>
@@ -1612,11 +1748,13 @@ export interface ListResourcesAssociatedToCustomLineItemInput {
   MaxResults?: number;
 
   /**
+   * @public
    * <p> (Optional) The pagination token that's returned by a previous request. </p>
    */
   NextToken?: string;
 
   /**
+   * @public
    * <p>
    *       (Optional) A <code>ListResourcesAssociatedToCustomLineItemFilter</code> that can specify the types of resources that should be retrieved.
    *     </p>
@@ -1632,6 +1770,7 @@ export interface ListResourcesAssociatedToCustomLineItemInput {
  */
 export interface ListResourcesAssociatedToCustomLineItemResponseElement {
   /**
+   * @public
    * <p>
    *       The ARN of the associated resource.
    *     </p>
@@ -1639,6 +1778,7 @@ export interface ListResourcesAssociatedToCustomLineItemResponseElement {
   Arn?: string;
 
   /**
+   * @public
    * <p>
    *       The type of relationship between the custom line item and the associated resource.
    *     </p>
@@ -1646,6 +1786,7 @@ export interface ListResourcesAssociatedToCustomLineItemResponseElement {
   Relationship?: CustomLineItemRelationship | string;
 
   /**
+   * @public
    * <p>The end billing period of the associated resource.</p>
    */
   EndBillingPeriod?: string;
@@ -1656,6 +1797,7 @@ export interface ListResourcesAssociatedToCustomLineItemResponseElement {
  */
 export interface ListResourcesAssociatedToCustomLineItemOutput {
   /**
+   * @public
    * <p>
    *       The custom line item ARN for which the resource associations are listed.
    *     </p>
@@ -1663,6 +1805,7 @@ export interface ListResourcesAssociatedToCustomLineItemOutput {
   Arn?: string;
 
   /**
+   * @public
    * <p>
    *       A list of <code>ListResourcesAssociatedToCustomLineItemResponseElement</code> for each resource association retrieved.
    *     </p>
@@ -1670,6 +1813,7 @@ export interface ListResourcesAssociatedToCustomLineItemOutput {
   AssociatedResources?: ListResourcesAssociatedToCustomLineItemResponseElement[];
 
   /**
+   * @public
    * <p>
    *       The pagination token to be used in subsequent requests to retrieve additional results.
    *     </p>
@@ -1685,6 +1829,7 @@ export interface ListResourcesAssociatedToCustomLineItemOutput {
  */
 export interface UpdateCustomLineItemFlatChargeDetails {
   /**
+   * @public
    * <p>
    *       The custom line item's new fixed charge value in USD.
    *     </p>
@@ -1700,6 +1845,7 @@ export interface UpdateCustomLineItemFlatChargeDetails {
  */
 export interface UpdateCustomLineItemPercentageChargeDetails {
   /**
+   * @public
    * <p>
    *       The custom line item's new percentage value. This will be multiplied against the combined value of its associated resources to determine its charge value.
    *     </p>
@@ -1715,6 +1861,7 @@ export interface UpdateCustomLineItemPercentageChargeDetails {
  */
 export interface UpdateCustomLineItemChargeDetails {
   /**
+   * @public
    * <p>
    *       An <code>UpdateCustomLineItemFlatChargeDetails</code> that describes the new charge details of a flat custom line item.
    *     </p>
@@ -1722,6 +1869,7 @@ export interface UpdateCustomLineItemChargeDetails {
   Flat?: UpdateCustomLineItemFlatChargeDetails;
 
   /**
+   * @public
    * <p>
    *       An <code>UpdateCustomLineItemPercentageChargeDetails</code> that describes the new charge details of a percentage custom line item.
    *     </p>
@@ -1734,6 +1882,7 @@ export interface UpdateCustomLineItemChargeDetails {
  */
 export interface UpdateCustomLineItemInput {
   /**
+   * @public
    * <p>
    *       The ARN of the custom line item to be updated.
    *     </p>
@@ -1741,6 +1890,7 @@ export interface UpdateCustomLineItemInput {
   Arn: string | undefined;
 
   /**
+   * @public
    * <p>
    *       The new name for the custom line item.
    *     </p>
@@ -1748,6 +1898,7 @@ export interface UpdateCustomLineItemInput {
   Name?: string;
 
   /**
+   * @public
    * <p>
    *       The new line item description of the custom line item.
    *     </p>
@@ -1755,6 +1906,7 @@ export interface UpdateCustomLineItemInput {
   Description?: string;
 
   /**
+   * @public
    * <p>
    *       A <code>ListCustomLineItemChargeDetails</code> containing the new charge details for the custom line item.
    *     </p>
@@ -1762,9 +1914,8 @@ export interface UpdateCustomLineItemInput {
   ChargeDetails?: UpdateCustomLineItemChargeDetails;
 
   /**
-   * <p>
-   *       The billing period range in which the custom line item request will be applied.
-   *     </p>
+   * @public
+   * <p>The billing period range in which the custom line item request will be applied.</p>
    */
   BillingPeriodRange?: CustomLineItemBillingPeriodRange;
 }
@@ -1774,6 +1925,7 @@ export interface UpdateCustomLineItemInput {
  */
 export interface UpdateCustomLineItemOutput {
   /**
+   * @public
    * <p>
    *       The ARN of the successfully updated custom line item.
    *     </p>
@@ -1781,6 +1933,7 @@ export interface UpdateCustomLineItemOutput {
   Arn?: string;
 
   /**
+   * @public
    * <p>
    *       The ARN of the billing group that the custom line item is applied to.
    *     </p>
@@ -1788,6 +1941,7 @@ export interface UpdateCustomLineItemOutput {
   BillingGroupArn?: string;
 
   /**
+   * @public
    * <p>
    *       The name of the successfully updated custom line item.
    *     </p>
@@ -1795,6 +1949,7 @@ export interface UpdateCustomLineItemOutput {
   Name?: string;
 
   /**
+   * @public
    * <p>
    *       The description of the successfully updated custom line item.
    *     </p>
@@ -1802,6 +1957,7 @@ export interface UpdateCustomLineItemOutput {
   Description?: string;
 
   /**
+   * @public
    * <p>
    *       A <code>ListCustomLineItemChargeDetails</code> containing the charge details of the successfully updated custom line item.
    *     </p>
@@ -1809,11 +1965,13 @@ export interface UpdateCustomLineItemOutput {
   ChargeDetails?: ListCustomLineItemChargeDetails;
 
   /**
+   * @public
    * <p> The most recent time when the custom line item was modified. </p>
    */
   LastModifiedTime?: number;
 
   /**
+   * @public
    * <p>
    *       The number of resources that are associated to the custom line item.
    *     </p>
@@ -1827,33 +1985,30 @@ export interface UpdateCustomLineItemOutput {
  *          <p>
  *             <code>MONITORED</code>: linked accounts that are associated to billing groups.</p>
  *          <p>
- *             <code>UNMONITORED</code>: linked accounts that are not associated to billing
- *       groups.</p>
+ *             <code>UNMONITORED</code>: linked accounts that are not associated to billing groups.</p>
  *          <p>
- *             <code>Billing Group Arn</code>: linked accounts that are associated to the provided
- *       Billing Group Arn. </p>
+ *             <code>Billing Group Arn</code>: linked accounts that are associated to the provided Billing Group Arn.</p>
  */
 export interface ListAccountAssociationsFilter {
   /**
+   * @public
    * <p>
    *             <code>MONITORED</code>: linked accounts that are associated to billing groups.</p>
    *          <p>
-   *             <code>UNMONITORED</code>: linked accounts that are not associated to billing
-   *       groups.</p>
+   *             <code>UNMONITORED</code>: linked accounts that are not associated to billing groups.</p>
    *          <p>
-   *             <code>Billing Group Arn</code>: linked accounts that are associated to the provided
-   *       Billing Group Arn. </p>
+   *             <code>Billing Group Arn</code>: linked accounts that are associated to the provided Billing Group Arn.</p>
    */
   Association?: string;
 
   /**
-   * <p>
-   *       The Amazon Web Services account ID to filter on.
-   *     </p>
+   * @public
+   * <p>The Amazon Web Services account ID to filter on.</p>
    */
   AccountId?: string;
 
   /**
+   * @public
    * <p>
    *       The list of Amazon Web Services IDs to retrieve their associated billing group for a given time range.
    *     </p>
@@ -1866,6 +2021,7 @@ export interface ListAccountAssociationsFilter {
  */
 export interface ListAccountAssociationsInput {
   /**
+   * @public
    * <p>
    *       The preferred billing period to get account associations.
    *     </p>
@@ -1873,6 +2029,7 @@ export interface ListAccountAssociationsInput {
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p>The filter on the account ID of the linked account, or any of the following:</p>
    *          <p>
    *             <code>MONITORED</code>: linked accounts that are associated to billing groups.</p>
@@ -1885,6 +2042,7 @@ export interface ListAccountAssociationsInput {
   Filters?: ListAccountAssociationsFilter;
 
   /**
+   * @public
    * <p>
    *       The pagination token that's used on subsequent calls to retrieve accounts.
    *     </p>
@@ -1897,11 +2055,13 @@ export interface ListAccountAssociationsInput {
  */
 export interface ListAccountAssociationsOutput {
   /**
+   * @public
    * <p> The list of linked accounts in the payer account. </p>
    */
   LinkedAccounts?: AccountAssociationsListElement[];
 
   /**
+   * @public
    * <p>
    *       The pagination token that's used on subsequent calls to get accounts.
    *     </p>
@@ -1911,13 +2071,12 @@ export interface ListAccountAssociationsOutput {
 
 /**
  * @public
- * <p>The filter used to retrieve specific <code>BillingGroupCostReportElements</code>.
- *     </p>
+ * <p>The filter used to retrieve specific <code>BillingGroupCostReportElements</code>.</p>
  */
 export interface ListBillingGroupCostReportsFilter {
   /**
-   * <p>The list of Amazon Resource Names (ARNs) used to filter billing groups to retrieve
-   *       reports. </p>
+   * @public
+   * <p>The list of Amazon Resource Names (ARNs) used to filter billing groups to retrieve reports. </p>
    */
   BillingGroupArns?: string[];
 }
@@ -1927,24 +2086,28 @@ export interface ListBillingGroupCostReportsFilter {
  */
 export interface ListBillingGroupCostReportsInput {
   /**
+   * @public
    * <p>The preferred billing period for your report.
    *     </p>
    */
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p>The maximum number of reports to retrieve.
    *     </p>
    */
   MaxResults?: number;
 
   /**
+   * @public
    * <p>The pagination token that's used on subsequent calls to get reports.
    *     </p>
    */
   NextToken?: string;
 
   /**
+   * @public
    * <p>A <code>ListBillingGroupCostReportsFilter</code> to specify billing groups to retrieve reports from.
    *     </p>
    */
@@ -1953,44 +2116,42 @@ export interface ListBillingGroupCostReportsInput {
 
 /**
  * @public
- * <p>A summary report of actual Amazon Web Services charges and calculated Amazon Web Services charges, based on the associated pricing plan of a billing group.
- *     </p>
+ * <p>A summary report of actual Amazon Web Services charges and calculated Amazon Web Services charges, based on the associated pricing plan of a billing group.</p>
  */
 export interface BillingGroupCostReportElement {
   /**
-   * <p>The Amazon Resource Name (ARN) of a billing group. </p>
+   * @public
+   * <p>The Amazon Resource Name (ARN) of a billing group.</p>
    */
   Arn?: string;
 
   /**
-   * <p>The actual Amazon Web Services charges for the billing group.
-   *     </p>
+   * @public
+   * <p>The actual Amazon Web Services charges for the billing group.</p>
    */
   AWSCost?: string;
 
   /**
-   * <p>The hypothetical Amazon Web Services charges based on the associated pricing plan of a billing group.
-   *     </p>
+   * @public
+   * <p>The hypothetical Amazon Web Services charges based on the associated pricing plan of a billing group.</p>
    */
   ProformaCost?: string;
 
   /**
-   * <p>
-   *       The billing group margin.
-   *     </p>
+   * @public
+   * <p>The billing group margin.</p>
    */
   Margin?: string;
 
   /**
-   * <p>
-   *       The percentage of billing group margin.
-   *     </p>
+   * @public
+   * <p>The percentage of billing group margin.</p>
    */
   MarginPercentage?: string;
 
   /**
-   * <p>The displayed currency.
-   *     </p>
+   * @public
+   * <p>The displayed currency.</p>
    */
   Currency?: string;
 }
@@ -2000,12 +2161,14 @@ export interface BillingGroupCostReportElement {
  */
 export interface ListBillingGroupCostReportsOutput {
   /**
+   * @public
    * <p>A list of <code>BillingGroupCostReportElement</code> retrieved.
    *     </p>
    */
   BillingGroupCostReports?: BillingGroupCostReportElement[];
 
   /**
+   * @public
    * <p>The pagination token that's used on subsequent calls to get reports.
    *     </p>
    */
@@ -2017,6 +2180,7 @@ export interface ListBillingGroupCostReportsOutput {
  */
 export interface ListTagsForResourceRequest {
   /**
+   * @public
    * <p>
    *       The Amazon Resource Name (ARN) that identifies the resource to list the tags.
    *     </p>
@@ -2029,6 +2193,7 @@ export interface ListTagsForResourceRequest {
  */
 export interface ListTagsForResourceResponse {
   /**
+   * @public
    * <p>
    *       The tags for the resource.
    *     </p>
@@ -2041,6 +2206,7 @@ export interface ListTagsForResourceResponse {
  */
 export interface CreatePricingPlanInput {
   /**
+   * @public
    * <p>
    *       The token that is needed to support idempotency. Idempotency isn't currently supported, but will be implemented in a future update.
    *     </p>
@@ -2048,21 +2214,25 @@ export interface CreatePricingPlanInput {
   ClientToken?: string;
 
   /**
+   * @public
    * <p>The name of the pricing plan. The names must be unique to each pricing plan. </p>
    */
   Name: string | undefined;
 
   /**
+   * @public
    * <p>The description of the pricing plan. </p>
    */
   Description?: string;
 
   /**
+   * @public
    * <p> A list of Amazon Resource Names (ARNs) that define the pricing plan parameters. </p>
    */
   PricingRuleArns?: string[];
 
   /**
+   * @public
    * <p>
    *       A map that contains tag keys and tag values that are attached to a pricing plan.
    *     </p>
@@ -2075,6 +2245,7 @@ export interface CreatePricingPlanInput {
  */
 export interface CreatePricingPlanOutput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the created pricing plan.</p>
    */
   Arn?: string;
@@ -2085,6 +2256,7 @@ export interface CreatePricingPlanOutput {
  */
 export interface DeletePricingPlanInput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the pricing plan that you're deleting. </p>
    */
   Arn: string | undefined;
@@ -2095,6 +2267,7 @@ export interface DeletePricingPlanInput {
  */
 export interface DeletePricingPlanOutput {
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the deleted pricing plan. </p>
    */
   Arn?: string;
@@ -2105,11 +2278,13 @@ export interface DeletePricingPlanOutput {
  */
 export interface DisassociatePricingRulesInput {
   /**
+   * @public
    * <p> The pricing plan Amazon Resource Name (ARN) to disassociate pricing rules from. </p>
    */
   Arn: string | undefined;
 
   /**
+   * @public
    * <p> A list containing the Amazon Resource Name (ARN) of the pricing rules that will be
    *       disassociated. </p>
    */
@@ -2121,6 +2296,7 @@ export interface DisassociatePricingRulesInput {
  */
 export interface DisassociatePricingRulesOutput {
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the pricing plan that the pricing rules successfully
    *       disassociated from. </p>
    */
@@ -2130,11 +2306,12 @@ export interface DisassociatePricingRulesOutput {
 /**
  * @public
  * <p>The filter that specifies the Amazon Resource Names (ARNs) of pricing plans, to retrieve
- *       pricing plan information. </p>
+ *           pricing plan information.</p>
  */
 export interface ListPricingPlansFilter {
   /**
-   * <p>A list of pricing plan Amazon Resource Names (ARNs) to retrieve information. </p>
+   * @public
+   * <p>A list of pricing plan Amazon Resource Names (ARNs) to retrieve information.</p>
    */
   Arns?: string[];
 }
@@ -2144,23 +2321,27 @@ export interface ListPricingPlansFilter {
  */
 export interface ListPricingPlansInput {
   /**
+   * @public
    * <p>The preferred billing period to get pricing plan.
    *     </p>
    */
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p>A <code>ListPricingPlansFilter</code> that specifies the Amazon Resource Name (ARNs)
    *       of pricing plans to retrieve pricing plans information.</p>
    */
   Filters?: ListPricingPlansFilter;
 
   /**
+   * @public
    * <p>The maximum number of pricing plans to retrieve.</p>
    */
   MaxResults?: number;
 
   /**
+   * @public
    * <p>The pagination token that's used on subsequent call to get pricing plans.
    *     </p>
    */
@@ -2169,44 +2350,42 @@ export interface ListPricingPlansInput {
 
 /**
  * @public
- * <p>A representation of a pricing plan.
- *     </p>
+ * <p>A representation of a pricing plan.</p>
  */
 export interface PricingPlanListElement {
   /**
-   * <p>The name of a pricing plan.
-   *     </p>
+   * @public
+   * <p>The name of a pricing plan.</p>
    */
   Name?: string;
 
   /**
-   * <p>The pricing plan Amazon Resource Names (ARN). This can be used to uniquely identify a
-   *       pricing plan. </p>
+   * @public
+   * <p>The pricing plan Amazon Resource Names (ARN). This can be used to uniquely identify a pricing plan.</p>
    */
   Arn?: string;
 
   /**
-   * <p>The pricing plan description.
-   *     </p>
+   * @public
+   * <p>The pricing plan description.</p>
    */
   Description?: string;
 
   /**
-   * <p>
-   *     The pricing rules count that's currently associated with this pricing plan list element.
-   *     </p>
+   * @public
+   * <p>The pricing rules count that's currently associated with this pricing plan list element.</p>
    */
   Size?: number;
 
   /**
-   * <p>
-   *       The time when the pricing plan was created.
-   *     </p>
+   * @public
+   * <p>The time when the pricing plan was created.</p>
    */
   CreationTime?: number;
 
   /**
-   * <p> The most recent time when the pricing plan was modified. </p>
+   * @public
+   * <p>The most recent time when the pricing plan was modified.</p>
    */
   LastModifiedTime?: number;
 }
@@ -2216,6 +2395,7 @@ export interface PricingPlanListElement {
  */
 export interface ListPricingPlansOutput {
   /**
+   * @public
    * <p>
    *       The billing period for which the described pricing plans are applicable.
    *     </p>
@@ -2223,12 +2403,14 @@ export interface ListPricingPlansOutput {
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p>A list of <code>PricingPlanListElement</code> retrieved.
    *     </p>
    */
   PricingPlans?: PricingPlanListElement[];
 
   /**
+   * @public
    * <p>The pagination token that's used on subsequent calls to get pricing plans.
    *     </p>
    */
@@ -2240,6 +2422,7 @@ export interface ListPricingPlansOutput {
  */
 export interface ListPricingPlansAssociatedWithPricingRuleInput {
   /**
+   * @public
    * <p>
    *       The pricing plan billing period for which associations will be listed.
    *     </p>
@@ -2247,11 +2430,13 @@ export interface ListPricingPlansAssociatedWithPricingRuleInput {
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p> The pricing rule Amazon Resource Name (ARN) for which associations will be listed. </p>
    */
   PricingRuleArn: string | undefined;
 
   /**
+   * @public
    * <p>
    *       The optional maximum number of pricing rule associations to retrieve.
    *     </p>
@@ -2259,6 +2444,7 @@ export interface ListPricingPlansAssociatedWithPricingRuleInput {
   MaxResults?: number;
 
   /**
+   * @public
    * <p>
    *       The optional pagination token returned by a previous call.
    *     </p>
@@ -2271,6 +2457,7 @@ export interface ListPricingPlansAssociatedWithPricingRuleInput {
  */
 export interface ListPricingPlansAssociatedWithPricingRuleOutput {
   /**
+   * @public
    * <p>
    *       The pricing plan billing period for which associations will be listed.
    *     </p>
@@ -2278,11 +2465,13 @@ export interface ListPricingPlansAssociatedWithPricingRuleOutput {
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p> The pricing rule Amazon Resource Name (ARN) for which associations will be listed. </p>
    */
   PricingRuleArn?: string;
 
   /**
+   * @public
    * <p>
    *       The list containing pricing plans that are associated with the requested pricing rule.
    *     </p>
@@ -2290,6 +2479,7 @@ export interface ListPricingPlansAssociatedWithPricingRuleOutput {
   PricingPlanArns?: string[];
 
   /**
+   * @public
    * <p>
    *       The pagination token to be used on subsequent calls.
    *     </p>
@@ -2302,17 +2492,20 @@ export interface ListPricingPlansAssociatedWithPricingRuleOutput {
  */
 export interface UpdatePricingPlanInput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the pricing plan that you're updating. </p>
    */
   Arn: string | undefined;
 
   /**
+   * @public
    * <p>The name of the pricing plan. The name must be unique to each pricing plan.
    *     </p>
    */
   Name?: string;
 
   /**
+   * @public
    * <p>The description of the pricing plan. </p>
    */
   Description?: string;
@@ -2323,11 +2516,13 @@ export interface UpdatePricingPlanInput {
  */
 export interface UpdatePricingPlanOutput {
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the updated pricing plan. </p>
    */
   Arn?: string;
 
   /**
+   * @public
    * <p>
    *       The name of the pricing plan. The name must be unique to each pricing plan.
    *     </p>
@@ -2335,6 +2530,7 @@ export interface UpdatePricingPlanOutput {
   Name?: string;
 
   /**
+   * @public
    * <p>
    *       The new description for the pricing rule.
    *     </p>
@@ -2342,6 +2538,7 @@ export interface UpdatePricingPlanOutput {
   Description?: string;
 
   /**
+   * @public
    * <p>
    *       The pricing rules count that's currently associated with this pricing plan list.
    *     </p>
@@ -2349,6 +2546,7 @@ export interface UpdatePricingPlanOutput {
   Size?: number;
 
   /**
+   * @public
    * <p> The most recent time when the pricing plan was modified. </p>
    */
   LastModifiedTime?: number;
@@ -2378,6 +2576,7 @@ export type PricingRuleScope = (typeof PricingRuleScope)[keyof typeof PricingRul
  */
 export interface CreateFreeTierConfig {
   /**
+   * @public
    * <p>
    *       Activate or deactivate Amazon Web Services Free Tier.
    *     </p>
@@ -2393,6 +2592,7 @@ export interface CreateFreeTierConfig {
  */
 export interface CreateTieringInput {
   /**
+   * @public
    * <p>
    *       The possible Amazon Web Services Free Tier configurations.
    *     </p>
@@ -2420,12 +2620,14 @@ export type PricingRuleType = (typeof PricingRuleType)[keyof typeof PricingRuleT
  */
 export interface CreatePricingRuleInput {
   /**
+   * @public
    * <p> The token that's needed to support idempotency. Idempotency isn't currently supported,
    *       but will be implemented in a future update. </p>
    */
   ClientToken?: string;
 
   /**
+   * @public
    * <p>
    *       The pricing rule name. The names must be unique to each pricing rule.
    *     </p>
@@ -2433,6 +2635,7 @@ export interface CreatePricingRuleInput {
   Name: string | undefined;
 
   /**
+   * @public
    * <p>
    *       The pricing rule description.
    *     </p>
@@ -2440,12 +2643,14 @@ export interface CreatePricingRuleInput {
   Description?: string;
 
   /**
+   * @public
    * <p> The scope of pricing rule that indicates if it's globally applicable, or it's
    *       service-specific. </p>
    */
   Scope: PricingRuleScope | string | undefined;
 
   /**
+   * @public
    * <p>
    *       The type of pricing rule.
    *     </p>
@@ -2453,11 +2658,13 @@ export interface CreatePricingRuleInput {
   Type: PricingRuleType | string | undefined;
 
   /**
+   * @public
    * <p> A percentage modifier that's applied on the public pricing rates. </p>
    */
   ModifierPercentage?: number;
 
   /**
+   * @public
    * <p>
    *       If the <code>Scope</code> attribute is set to <code>SERVICE</code> or <code>SKU</code>, the attribute indicates which service the <code>PricingRule</code> is applicable for.
    *     </p>
@@ -2465,6 +2672,7 @@ export interface CreatePricingRuleInput {
   Service?: string;
 
   /**
+   * @public
    * <p>
    *       A map that contains tag keys and tag values that are attached to a pricing rule.
    *     </p>
@@ -2472,6 +2680,7 @@ export interface CreatePricingRuleInput {
   Tags?: Record<string, string>;
 
   /**
+   * @public
    * <p>
    *       The seller of services provided by Amazon Web Services, their affiliates, or third-party providers selling services via Amazon Web Services Marketplace.
    *     </p>
@@ -2479,6 +2688,7 @@ export interface CreatePricingRuleInput {
   BillingEntity?: string;
 
   /**
+   * @public
    * <p>
    *       The set of tiering configurations for the pricing rule.
    *     </p>
@@ -2486,6 +2696,7 @@ export interface CreatePricingRuleInput {
   Tiering?: CreateTieringInput;
 
   /**
+   * @public
    * <p>
    *       Usage type is the unit that each service uses to measure the usage of a specific type of resource.</p>
    *          <p>If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which usage type the <code>PricingRule</code> is modifying. For example, <code>USW2-BoxUsage:m2.2xlarge</code> describes an<code> M2 High Memory Double Extra Large</code> instance in the US West (Oregon) Region.
@@ -2495,6 +2706,7 @@ export interface CreatePricingRuleInput {
   UsageType?: string;
 
   /**
+   * @public
    * <p>
    *       Operation is the specific Amazon Web Services action covered by this line item. This describes the specific usage of the line item.</p>
    *          <p>
@@ -2508,6 +2720,7 @@ export interface CreatePricingRuleInput {
  */
 export interface CreatePricingRuleOutput {
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the created pricing rule. </p>
    */
   Arn?: string;
@@ -2518,6 +2731,7 @@ export interface CreatePricingRuleOutput {
  */
 export interface DeletePricingRuleInput {
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the pricing rule that you are deleting. </p>
    */
   Arn: string | undefined;
@@ -2528,6 +2742,7 @@ export interface DeletePricingRuleInput {
  */
 export interface DeletePricingRuleOutput {
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the deleted pricing rule. </p>
    */
   Arn?: string;
@@ -2535,13 +2750,12 @@ export interface DeletePricingRuleOutput {
 
 /**
  * @public
- * <p> The filter that specifies criteria that the pricing rules returned by the
- *         <code>ListPricingRules</code> API will adhere to. </p>
+ * <p> The filter that specifies criteria that the pricing rules returned by the <code>ListPricingRules</code> API will adhere to.</p>
  */
 export interface ListPricingRulesFilter {
   /**
-   * <p> A list containing the pricing rule Amazon Resource Names (ARNs) to include in the API
-   *       response. </p>
+   * @public
+   * <p>A list containing the pricing rule Amazon Resource Names (ARNs) to include in the API response.</p>
    */
   Arns?: string[];
 }
@@ -2551,6 +2765,7 @@ export interface ListPricingRulesFilter {
  */
 export interface ListPricingRulesInput {
   /**
+   * @public
    * <p>
    *       The preferred billing period to get the pricing plan.
    *     </p>
@@ -2558,12 +2773,14 @@ export interface ListPricingRulesInput {
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p> A <code>DescribePricingRuleFilter</code> that specifies the Amazon Resource Name (ARNs)
    *       of pricing rules to retrieve pricing rules information. </p>
    */
   Filters?: ListPricingRulesFilter;
 
   /**
+   * @public
    * <p>
    *       The maximum number of pricing rules to retrieve.
    *     </p>
@@ -2571,6 +2788,7 @@ export interface ListPricingRulesInput {
   MaxResults?: number;
 
   /**
+   * @public
    * <p>
    *       The pagination token that's used on subsequent call to get pricing rules.
    *     </p>
@@ -2586,6 +2804,7 @@ export interface ListPricingRulesInput {
  */
 export interface FreeTierConfig {
   /**
+   * @public
    * <p>
    *       Activate or deactivate Amazon Web Services Free Tier application.
    *     </p>
@@ -2601,6 +2820,7 @@ export interface FreeTierConfig {
  */
 export interface Tiering {
   /**
+   * @public
    * <p>
    *       The possible Amazon Web Services Free Tier configurations.
    *     </p>
@@ -2610,78 +2830,71 @@ export interface Tiering {
 
 /**
  * @public
- * <p>
- *       A representation of a pricing rule.
- *     </p>
+ * <p>A representation of a pricing rule.</p>
  */
 export interface PricingRuleListElement {
   /**
-   * <p>
-   *       The name of a pricing rule.
-   *     </p>
+   * @public
+   * <p>The name of a pricing rule.</p>
    */
   Name?: string;
 
   /**
-   * <p> The Amazon Resource Name (ARN) used to uniquely identify a pricing rule. </p>
+   * @public
+   * <p>The Amazon Resource Name (ARN) used to uniquely identify a pricing rule.</p>
    */
   Arn?: string;
 
   /**
-   * <p>
-   *       The pricing rule description.
-   *     </p>
+   * @public
+   * <p>The pricing rule description.</p>
    */
   Description?: string;
 
   /**
-   * <p>
-   *       The scope of pricing rule that indicates if it is globally applicable, or if it is service-specific.
-   *     </p>
+   * @public
+   * <p>The scope of pricing rule that indicates if it is globally applicable, or if it is service-specific.</p>
    */
   Scope?: PricingRuleScope | string;
 
   /**
-   * <p>
-   *       The type of pricing rule.
-   *     </p>
+   * @public
+   * <p>The type of pricing rule.</p>
    */
   Type?: PricingRuleType | string;
 
   /**
-   * <p>
-   *       A percentage modifier applied on the public pricing rates.
-   *     </p>
+   * @public
+   * <p>A percentage modifier applied on the public pricing rates.</p>
    */
   ModifierPercentage?: number;
 
   /**
-   * <p>
-   *       If the <code>Scope</code> attribute is <code>SERVICE</code>, this attribute indicates which service the <code>PricingRule</code> is applicable for.
-   *     </p>
+   * @public
+   * <p>If the <code>Scope</code> attribute is <code>SERVICE</code>, this attribute indicates which service the <code>PricingRule</code> is applicable for.</p>
    */
   Service?: string;
 
   /**
-   * <p>
-   *       The pricing plans count that this pricing rule is associated with.
-   *     </p>
+   * @public
+   * <p>The pricing plans count that this pricing rule is associated with.</p>
    */
   AssociatedPricingPlanCount?: number;
 
   /**
-   * <p>
-   *       The time when the pricing rule was created.
-   *     </p>
+   * @public
+   * <p>The time when the pricing rule was created.</p>
    */
   CreationTime?: number;
 
   /**
-   * <p> The most recent time when the pricing rule was modified. </p>
+   * @public
+   * <p> The most recent time when the pricing rule was modified.</p>
    */
   LastModifiedTime?: number;
 
   /**
+   * @public
    * <p>
    *       The seller of services provided by Amazon Web Services, their affiliates, or third-party providers selling services via Amazon Web Services Marketplace.
    *     </p>
@@ -2689,6 +2902,7 @@ export interface PricingRuleListElement {
   BillingEntity?: string;
 
   /**
+   * @public
    * <p>
    *       The set of tiering configurations for the pricing rule.
    *     </p>
@@ -2696,6 +2910,7 @@ export interface PricingRuleListElement {
   Tiering?: Tiering;
 
   /**
+   * @public
    * <p>
    *       Usage type is the unit that each service uses to measure the usage of a specific type of resource.</p>
    *          <p>If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which usage type the <code>PricingRule</code> is modifying. For example, <code>USW2-BoxUsage:m2.2xlarge</code> describes an<code> M2 High Memory Double Extra Large</code> instance in the US West (Oregon) Region.
@@ -2705,6 +2920,7 @@ export interface PricingRuleListElement {
   UsageType?: string;
 
   /**
+   * @public
    * <p>
    *       Operation is the specific Amazon Web Services action covered by this line item. This describes the specific usage of the line item.</p>
    *          <p>
@@ -2718,6 +2934,7 @@ export interface PricingRuleListElement {
  */
 export interface ListPricingRulesOutput {
   /**
+   * @public
    * <p>
    *       The billing period for which the described pricing rules are applicable.
    *     </p>
@@ -2725,6 +2942,7 @@ export interface ListPricingRulesOutput {
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p>
    *       A list containing the described pricing rules.
    *     </p>
@@ -2732,6 +2950,7 @@ export interface ListPricingRulesOutput {
   PricingRules?: PricingRuleListElement[];
 
   /**
+   * @public
    * <p>
    *       The pagination token that's used on subsequent calls to get pricing rules.
    *     </p>
@@ -2744,6 +2963,7 @@ export interface ListPricingRulesOutput {
  */
 export interface ListPricingRulesAssociatedToPricingPlanInput {
   /**
+   * @public
    * <p>
    *       The billing period for which the pricing rule associations are to be listed.
    *     </p>
@@ -2751,17 +2971,20 @@ export interface ListPricingRulesAssociatedToPricingPlanInput {
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the pricing plan for which associations are to be
    *       listed.</p>
    */
   PricingPlanArn: string | undefined;
 
   /**
+   * @public
    * <p>The optional maximum number of pricing rule associations to retrieve.</p>
    */
   MaxResults?: number;
 
   /**
+   * @public
    * <p>
    *       The optional pagination token returned by a previous call.
    *     </p>
@@ -2774,6 +2997,7 @@ export interface ListPricingRulesAssociatedToPricingPlanInput {
  */
 export interface ListPricingRulesAssociatedToPricingPlanOutput {
   /**
+   * @public
    * <p>
    *       The billing period for which the pricing rule associations are listed.
    *     </p>
@@ -2781,12 +3005,14 @@ export interface ListPricingRulesAssociatedToPricingPlanOutput {
   BillingPeriod?: string;
 
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the pricing plan for which associations are
    *       listed.</p>
    */
   PricingPlanArn?: string;
 
   /**
+   * @public
    * <p>
    *       A list containing pricing rules that are associated with the requested pricing plan.
    *     </p>
@@ -2794,6 +3020,7 @@ export interface ListPricingRulesAssociatedToPricingPlanOutput {
   PricingRuleArns?: string[];
 
   /**
+   * @public
    * <p>
    *       The pagination token to be used on subsequent calls.
    *     </p>
@@ -2809,6 +3036,7 @@ export interface ListPricingRulesAssociatedToPricingPlanOutput {
  */
 export interface UpdateFreeTierConfig {
   /**
+   * @public
    * <p>
    *       Activate or deactivate application of Amazon Web Services Free Tier.
    *     </p>
@@ -2824,6 +3052,7 @@ export interface UpdateFreeTierConfig {
  */
 export interface UpdateTieringInput {
   /**
+   * @public
    * <p>
    *       The possible Amazon Web Services Free Tier configurations.
    *     </p>
@@ -2836,11 +3065,13 @@ export interface UpdateTieringInput {
  */
 export interface UpdatePricingRuleInput {
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the pricing rule to update. </p>
    */
   Arn: string | undefined;
 
   /**
+   * @public
    * <p>
    *       The new name of the pricing rule. The name must be unique to each pricing rule.
    *     </p>
@@ -2848,6 +3079,7 @@ export interface UpdatePricingRuleInput {
   Name?: string;
 
   /**
+   * @public
    * <p>
    *       The new description for the pricing rule.
    *     </p>
@@ -2855,6 +3087,7 @@ export interface UpdatePricingRuleInput {
   Description?: string;
 
   /**
+   * @public
    * <p>
    *       The new pricing rule type.
    *     </p>
@@ -2862,6 +3095,7 @@ export interface UpdatePricingRuleInput {
   Type?: PricingRuleType | string;
 
   /**
+   * @public
    * <p>
    *       The new modifier to show pricing plan rates as a percentage.
    *     </p>
@@ -2869,6 +3103,7 @@ export interface UpdatePricingRuleInput {
   ModifierPercentage?: number;
 
   /**
+   * @public
    * <p>
    *       The set of tiering configurations for the pricing rule.
    *     </p>
@@ -2881,11 +3116,13 @@ export interface UpdatePricingRuleInput {
  */
 export interface UpdatePricingRuleOutput {
   /**
+   * @public
    * <p> The Amazon Resource Name (ARN) of the successfully updated pricing rule. </p>
    */
   Arn?: string;
 
   /**
+   * @public
    * <p>
    *       The new name of the pricing rule. The name must be unique to each pricing rule.
    *     </p>
@@ -2893,6 +3130,7 @@ export interface UpdatePricingRuleOutput {
   Name?: string;
 
   /**
+   * @public
    * <p>
    *       The new description for the pricing rule.
    *     </p>
@@ -2900,12 +3138,14 @@ export interface UpdatePricingRuleOutput {
   Description?: string;
 
   /**
+   * @public
    * <p> The scope of pricing rule that indicates if it's globally applicable, or it's
    *       service-specific. </p>
    */
   Scope?: PricingRuleScope | string;
 
   /**
+   * @public
    * <p>
    *       The new pricing rule type.
    *     </p>
@@ -2913,6 +3153,7 @@ export interface UpdatePricingRuleOutput {
   Type?: PricingRuleType | string;
 
   /**
+   * @public
    * <p>
    *       The new modifier to show pricing plan rates as a percentage.
    *     </p>
@@ -2920,6 +3161,7 @@ export interface UpdatePricingRuleOutput {
   ModifierPercentage?: number;
 
   /**
+   * @public
    * <p>
    *       If the <code>Scope</code> attribute is set to <code>SERVICE</code>, the attribute indicates which service the <code>PricingRule</code> is applicable for.
    *     </p>
@@ -2927,6 +3169,7 @@ export interface UpdatePricingRuleOutput {
   Service?: string;
 
   /**
+   * @public
    * <p>
    *       The pricing plans count that this pricing rule is associated with.
    *     </p>
@@ -2934,6 +3177,7 @@ export interface UpdatePricingRuleOutput {
   AssociatedPricingPlanCount?: number;
 
   /**
+   * @public
    * <p>
    *       The most recent time the pricing rule was modified.
    *     </p>
@@ -2941,6 +3185,7 @@ export interface UpdatePricingRuleOutput {
   LastModifiedTime?: number;
 
   /**
+   * @public
    * <p>
    *       The seller of services provided by Amazon Web Services, their affiliates, or third-party providers selling services via Amazon Web Services Marketplace.
    *     </p>
@@ -2948,6 +3193,7 @@ export interface UpdatePricingRuleOutput {
   BillingEntity?: string;
 
   /**
+   * @public
    * <p>
    *       The set of tiering configurations for the pricing rule.
    *     </p>
@@ -2955,6 +3201,7 @@ export interface UpdatePricingRuleOutput {
   Tiering?: UpdateTieringInput;
 
   /**
+   * @public
    * <p>Usage type is the unit that each service uses to measure the usage of a specific type of resource.</p>
    *          <p>If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which usage type the <code>PricingRule</code> is modifying. For example, <code>USW2-BoxUsage:m2.2xlarge</code> describes an <code>M2 High Memory Double Extra Large</code> instance in the US West (Oregon) Region.
    *     </p>
@@ -2962,6 +3209,7 @@ export interface UpdatePricingRuleOutput {
   UsageType?: string;
 
   /**
+   * @public
    * <p>Operation refers to the specific Amazon Web Services covered by this line item. This describes the specific usage of the line item.</p>
    *          <p>
    *       If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which operation the <code>PricingRule</code> is modifying. For example, a value of <code>RunInstances:0202</code> indicates the operation of running an Amazon EC2 instance.</p>
@@ -2974,6 +3222,7 @@ export interface UpdatePricingRuleOutput {
  */
 export interface TagResourceRequest {
   /**
+   * @public
    * <p>
    *       The Amazon Resource Name (ARN) of the resource to which to add tags.
    *     </p>
@@ -2981,6 +3230,7 @@ export interface TagResourceRequest {
   ResourceArn: string | undefined;
 
   /**
+   * @public
    * <p>
    *       The tags to add to the resource as a list of key-value pairs.
    *     </p>
@@ -2998,6 +3248,7 @@ export interface TagResourceResponse {}
  */
 export interface UntagResourceRequest {
   /**
+   * @public
    * <p>
    *       The Amazon Resource Name (ARN) of the resource to which to delete tags.
    *     </p>
@@ -3005,6 +3256,7 @@ export interface UntagResourceRequest {
   ResourceArn: string | undefined;
 
   /**
+   * @public
    * <p>
    *       The tags to delete from the resource as a list of key-value pairs.
    *     </p>

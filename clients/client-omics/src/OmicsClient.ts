@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -54,6 +55,7 @@ import {
   AbortMultipartReadSetUploadCommandInput,
   AbortMultipartReadSetUploadCommandOutput,
 } from "./commands/AbortMultipartReadSetUploadCommand";
+import { AcceptShareCommandInput, AcceptShareCommandOutput } from "./commands/AcceptShareCommand";
 import { BatchDeleteReadSetCommandInput, BatchDeleteReadSetCommandOutput } from "./commands/BatchDeleteReadSetCommand";
 import {
   CancelAnnotationImportJobCommandInput,
@@ -73,6 +75,10 @@ import {
   CreateAnnotationStoreCommandOutput,
 } from "./commands/CreateAnnotationStoreCommand";
 import {
+  CreateAnnotationStoreVersionCommandInput,
+  CreateAnnotationStoreVersionCommandOutput,
+} from "./commands/CreateAnnotationStoreVersionCommand";
+import {
   CreateMultipartReadSetUploadCommandInput,
   CreateMultipartReadSetUploadCommandOutput,
 } from "./commands/CreateMultipartReadSetUploadCommand";
@@ -85,12 +91,17 @@ import {
   CreateSequenceStoreCommandInput,
   CreateSequenceStoreCommandOutput,
 } from "./commands/CreateSequenceStoreCommand";
+import { CreateShareCommandInput, CreateShareCommandOutput } from "./commands/CreateShareCommand";
 import { CreateVariantStoreCommandInput, CreateVariantStoreCommandOutput } from "./commands/CreateVariantStoreCommand";
 import { CreateWorkflowCommandInput, CreateWorkflowCommandOutput } from "./commands/CreateWorkflowCommand";
 import {
   DeleteAnnotationStoreCommandInput,
   DeleteAnnotationStoreCommandOutput,
 } from "./commands/DeleteAnnotationStoreCommand";
+import {
+  DeleteAnnotationStoreVersionsCommandInput,
+  DeleteAnnotationStoreVersionsCommandOutput,
+} from "./commands/DeleteAnnotationStoreVersionsCommand";
 import { DeleteReferenceCommandInput, DeleteReferenceCommandOutput } from "./commands/DeleteReferenceCommand";
 import {
   DeleteReferenceStoreCommandInput,
@@ -102,6 +113,7 @@ import {
   DeleteSequenceStoreCommandInput,
   DeleteSequenceStoreCommandOutput,
 } from "./commands/DeleteSequenceStoreCommand";
+import { DeleteShareCommandInput, DeleteShareCommandOutput } from "./commands/DeleteShareCommand";
 import { DeleteVariantStoreCommandInput, DeleteVariantStoreCommandOutput } from "./commands/DeleteVariantStoreCommand";
 import { DeleteWorkflowCommandInput, DeleteWorkflowCommandOutput } from "./commands/DeleteWorkflowCommand";
 import {
@@ -109,6 +121,10 @@ import {
   GetAnnotationImportJobCommandOutput,
 } from "./commands/GetAnnotationImportJobCommand";
 import { GetAnnotationStoreCommandInput, GetAnnotationStoreCommandOutput } from "./commands/GetAnnotationStoreCommand";
+import {
+  GetAnnotationStoreVersionCommandInput,
+  GetAnnotationStoreVersionCommandOutput,
+} from "./commands/GetAnnotationStoreVersionCommand";
 import {
   GetReadSetActivationJobCommandInput,
   GetReadSetActivationJobCommandOutput,
@@ -137,6 +153,7 @@ import { GetRunCommandInput, GetRunCommandOutput } from "./commands/GetRunComman
 import { GetRunGroupCommandInput, GetRunGroupCommandOutput } from "./commands/GetRunGroupCommand";
 import { GetRunTaskCommandInput, GetRunTaskCommandOutput } from "./commands/GetRunTaskCommand";
 import { GetSequenceStoreCommandInput, GetSequenceStoreCommandOutput } from "./commands/GetSequenceStoreCommand";
+import { GetShareCommandInput, GetShareCommandOutput } from "./commands/GetShareCommand";
 import {
   GetVariantImportJobCommandInput,
   GetVariantImportJobCommandOutput,
@@ -151,6 +168,10 @@ import {
   ListAnnotationStoresCommandInput,
   ListAnnotationStoresCommandOutput,
 } from "./commands/ListAnnotationStoresCommand";
+import {
+  ListAnnotationStoreVersionsCommandInput,
+  ListAnnotationStoreVersionsCommandOutput,
+} from "./commands/ListAnnotationStoreVersionsCommand";
 import {
   ListMultipartReadSetUploadsCommandInput,
   ListMultipartReadSetUploadsCommandOutput,
@@ -185,6 +206,7 @@ import { ListRunGroupsCommandInput, ListRunGroupsCommandOutput } from "./command
 import { ListRunsCommandInput, ListRunsCommandOutput } from "./commands/ListRunsCommand";
 import { ListRunTasksCommandInput, ListRunTasksCommandOutput } from "./commands/ListRunTasksCommand";
 import { ListSequenceStoresCommandInput, ListSequenceStoresCommandOutput } from "./commands/ListSequenceStoresCommand";
+import { ListSharesCommandInput, ListSharesCommandOutput } from "./commands/ListSharesCommand";
 import {
   ListTagsForResourceCommandInput,
   ListTagsForResourceCommandOutput,
@@ -226,6 +248,10 @@ import {
   UpdateAnnotationStoreCommandInput,
   UpdateAnnotationStoreCommandOutput,
 } from "./commands/UpdateAnnotationStoreCommand";
+import {
+  UpdateAnnotationStoreVersionCommandInput,
+  UpdateAnnotationStoreVersionCommandOutput,
+} from "./commands/UpdateAnnotationStoreVersionCommand";
 import { UpdateRunGroupCommandInput, UpdateRunGroupCommandOutput } from "./commands/UpdateRunGroupCommand";
 import { UpdateVariantStoreCommandInput, UpdateVariantStoreCommandOutput } from "./commands/UpdateVariantStoreCommand";
 import { UpdateWorkflowCommandInput, UpdateWorkflowCommandOutput } from "./commands/UpdateWorkflowCommand";
@@ -237,6 +263,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -245,28 +272,34 @@ export { __Client };
  */
 export type ServiceInputTypes =
   | AbortMultipartReadSetUploadCommandInput
+  | AcceptShareCommandInput
   | BatchDeleteReadSetCommandInput
   | CancelAnnotationImportJobCommandInput
   | CancelRunCommandInput
   | CancelVariantImportJobCommandInput
   | CompleteMultipartReadSetUploadCommandInput
   | CreateAnnotationStoreCommandInput
+  | CreateAnnotationStoreVersionCommandInput
   | CreateMultipartReadSetUploadCommandInput
   | CreateReferenceStoreCommandInput
   | CreateRunGroupCommandInput
   | CreateSequenceStoreCommandInput
+  | CreateShareCommandInput
   | CreateVariantStoreCommandInput
   | CreateWorkflowCommandInput
   | DeleteAnnotationStoreCommandInput
+  | DeleteAnnotationStoreVersionsCommandInput
   | DeleteReferenceCommandInput
   | DeleteReferenceStoreCommandInput
   | DeleteRunCommandInput
   | DeleteRunGroupCommandInput
   | DeleteSequenceStoreCommandInput
+  | DeleteShareCommandInput
   | DeleteVariantStoreCommandInput
   | DeleteWorkflowCommandInput
   | GetAnnotationImportJobCommandInput
   | GetAnnotationStoreCommandInput
+  | GetAnnotationStoreVersionCommandInput
   | GetReadSetActivationJobCommandInput
   | GetReadSetCommandInput
   | GetReadSetExportJobCommandInput
@@ -280,10 +313,12 @@ export type ServiceInputTypes =
   | GetRunGroupCommandInput
   | GetRunTaskCommandInput
   | GetSequenceStoreCommandInput
+  | GetShareCommandInput
   | GetVariantImportJobCommandInput
   | GetVariantStoreCommandInput
   | GetWorkflowCommandInput
   | ListAnnotationImportJobsCommandInput
+  | ListAnnotationStoreVersionsCommandInput
   | ListAnnotationStoresCommandInput
   | ListMultipartReadSetUploadsCommandInput
   | ListReadSetActivationJobsCommandInput
@@ -298,6 +333,7 @@ export type ServiceInputTypes =
   | ListRunTasksCommandInput
   | ListRunsCommandInput
   | ListSequenceStoresCommandInput
+  | ListSharesCommandInput
   | ListTagsForResourceCommandInput
   | ListVariantImportJobsCommandInput
   | ListVariantStoresCommandInput
@@ -312,6 +348,7 @@ export type ServiceInputTypes =
   | TagResourceCommandInput
   | UntagResourceCommandInput
   | UpdateAnnotationStoreCommandInput
+  | UpdateAnnotationStoreVersionCommandInput
   | UpdateRunGroupCommandInput
   | UpdateVariantStoreCommandInput
   | UpdateWorkflowCommandInput
@@ -322,28 +359,34 @@ export type ServiceInputTypes =
  */
 export type ServiceOutputTypes =
   | AbortMultipartReadSetUploadCommandOutput
+  | AcceptShareCommandOutput
   | BatchDeleteReadSetCommandOutput
   | CancelAnnotationImportJobCommandOutput
   | CancelRunCommandOutput
   | CancelVariantImportJobCommandOutput
   | CompleteMultipartReadSetUploadCommandOutput
   | CreateAnnotationStoreCommandOutput
+  | CreateAnnotationStoreVersionCommandOutput
   | CreateMultipartReadSetUploadCommandOutput
   | CreateReferenceStoreCommandOutput
   | CreateRunGroupCommandOutput
   | CreateSequenceStoreCommandOutput
+  | CreateShareCommandOutput
   | CreateVariantStoreCommandOutput
   | CreateWorkflowCommandOutput
   | DeleteAnnotationStoreCommandOutput
+  | DeleteAnnotationStoreVersionsCommandOutput
   | DeleteReferenceCommandOutput
   | DeleteReferenceStoreCommandOutput
   | DeleteRunCommandOutput
   | DeleteRunGroupCommandOutput
   | DeleteSequenceStoreCommandOutput
+  | DeleteShareCommandOutput
   | DeleteVariantStoreCommandOutput
   | DeleteWorkflowCommandOutput
   | GetAnnotationImportJobCommandOutput
   | GetAnnotationStoreCommandOutput
+  | GetAnnotationStoreVersionCommandOutput
   | GetReadSetActivationJobCommandOutput
   | GetReadSetCommandOutput
   | GetReadSetExportJobCommandOutput
@@ -357,10 +400,12 @@ export type ServiceOutputTypes =
   | GetRunGroupCommandOutput
   | GetRunTaskCommandOutput
   | GetSequenceStoreCommandOutput
+  | GetShareCommandOutput
   | GetVariantImportJobCommandOutput
   | GetVariantStoreCommandOutput
   | GetWorkflowCommandOutput
   | ListAnnotationImportJobsCommandOutput
+  | ListAnnotationStoreVersionsCommandOutput
   | ListAnnotationStoresCommandOutput
   | ListMultipartReadSetUploadsCommandOutput
   | ListReadSetActivationJobsCommandOutput
@@ -375,6 +420,7 @@ export type ServiceOutputTypes =
   | ListRunTasksCommandOutput
   | ListRunsCommandOutput
   | ListSequenceStoresCommandOutput
+  | ListSharesCommandOutput
   | ListTagsForResourceCommandOutput
   | ListVariantImportJobsCommandOutput
   | ListVariantStoresCommandOutput
@@ -389,6 +435,7 @@ export type ServiceOutputTypes =
   | TagResourceCommandOutput
   | UntagResourceCommandOutput
   | UpdateAnnotationStoreCommandOutput
+  | UpdateAnnotationStoreVersionCommandOutput
   | UpdateRunGroupCommandOutput
   | UpdateVariantStoreCommandOutput
   | UpdateWorkflowCommandOutput
@@ -513,6 +560,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -548,6 +600,7 @@ export interface OmicsClientConfig extends OmicsClientConfigType {}
  */
 export type OmicsClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -564,8 +617,8 @@ export interface OmicsClientResolvedConfig extends OmicsClientResolvedConfigType
 
 /**
  * @public
- * <p>This is the <i>Amazon Omics API Reference</i>. For an introduction to the service, see <a href="https://docs.aws.amazon.com/omics/latest/dev/">What is Amazon Omics?</a> in the
- *       <i>Amazon Omics User Guide</i>.</p>
+ * <p>This is the <i>AWS HealthOmics API Reference</i>. For an introduction to the service, see <a href="https://docs.aws.amazon.com/omics/latest/dev/">What is AWS HealthOmics?</a> in the
+ *       <i>AWS HealthOmics User Guide</i>.</p>
  */
 export class OmicsClient extends __Client<
   __HttpHandlerOptions,
@@ -578,8 +631,8 @@ export class OmicsClient extends __Client<
    */
   readonly config: OmicsClientResolvedConfig;
 
-  constructor(configuration: OmicsClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<OmicsClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -587,8 +640,9 @@ export class OmicsClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

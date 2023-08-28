@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -198,6 +199,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -428,6 +430,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -457,6 +464,7 @@ export interface GlobalAcceleratorClientConfig extends GlobalAcceleratorClientCo
  */
 export type GlobalAcceleratorClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -474,13 +482,13 @@ export interface GlobalAcceleratorClientResolvedConfig extends GlobalAccelerator
 /**
  * @public
  * <fullname>Global Accelerator</fullname>
- * 	        <p>This is the <i>Global Accelerator API Reference</i>. This guide is for developers who need detailed information about
+ *          <p>This is the <i>Global Accelerator API Reference</i>. This guide is for developers who need detailed information about
  * 		    Global Accelerator API actions, data types, and errors. For more information about Global Accelerator features, see the
  * 	    	<a href="https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html">Global Accelerator Developer Guide</a>.</p>
- * 	        <p>Global Accelerator is a service in which you create <i>accelerators</i> to improve the performance
+ *          <p>Global Accelerator is a service in which you create <i>accelerators</i> to improve the performance
  * 			of your applications for local and global users. Depending on the type of accelerator you choose, you can
  * 			gain additional benefits. </p>
- * 		       <ul>
+ *          <ul>
  *             <li>
  *                <p>By using a standard accelerator, you can improve availability of your internet applications
  * 			    that are used by a global audience. With a standard accelerator, Global Accelerator directs traffic to optimal endpoints over the Amazon Web Services
@@ -491,28 +499,23 @@ export interface GlobalAcceleratorClientResolvedConfig extends GlobalAccelerator
  * 				can use application logic to directly map one or more users to a specific endpoint among many endpoints.</p>
  *             </li>
  *          </ul>
- * 		       <important>
- * 		          <p>Global Accelerator is a global service that supports endpoints in multiple Amazon Web Services Regions but you must specify the
+ *          <important>
+ *             <p>Global Accelerator is a global service that supports endpoints in multiple Amazon Web Services Regions but you must specify the
  * 		    	US West (Oregon) Region to create, update, or otherwise work with accelerators.  That is, for example, specify <code>--region us-west-2</code>
- * 		    	on AWS CLI commands.</p>
- * 		       </important>
- *
- *
- * 		       <p>By default, Global Accelerator provides you with static IP addresses that you associate with your accelerator. The static IP addresses
+ * 		    	on Amazon Web Services CLI commands.</p>
+ *          </important>
+ *          <p>By default, Global Accelerator provides you with static IP addresses that you associate with your accelerator. The static IP addresses
  * 			are anycast from the Amazon Web Services edge network. For IPv4, Global Accelerator provides two static IPv4 addresses. For dual-stack,
  * 			Global Accelerator provides a total of four addresses: two static IPv4 addresses and two static IPv6 addresses.
  * 			With a standard accelerator for IPv4, instead of using the addresses that Global Accelerator provides, you can configure
  * 			these entry points to be IPv4 addresses from your own IP address ranges that you bring toGlobal Accelerator (BYOIP). </p>
- *
- *
- * 	        <p>For a standard accelerator,
+ *          <p>For a standard accelerator,
  * 	        they distribute incoming application traffic across multiple endpoint resources in multiple Amazon Web Services Regions , which increases
  * 			the availability of your applications. Endpoints for standard accelerators can be Network Load Balancers, Application Load Balancers,
  * 	    	Amazon EC2 instances, or Elastic IP addresses that are located in one Amazon Web Services Region or multiple Amazon Web Services Regions. For custom routing
  * 	        accelerators, you map traffic that arrives to the static IP addresses to specific Amazon EC2 servers in endpoints that
  * 			are virtual private cloud (VPC) subnets.</p>
- *
- * 		       <important>
+ *          <important>
  *             <p>The static IP addresses remain assigned to your accelerator for as long as it exists, even if you
  * 				disable the accelerator and it no longer accepts or routes traffic. However, when you
  * 					<i>delete</i> an accelerator, you lose the static IP addresses that
@@ -520,11 +523,11 @@ export interface GlobalAcceleratorClientResolvedConfig extends GlobalAccelerator
  * 				IAM policies like tag-based permissions with Global Accelerator to limit the users who have
  * 				permissions to delete an accelerator. For more information, see <a href="https://docs.aws.amazon.com/global-accelerator/latest/dg/access-control-manage-access-tag-policies.html">Tag-based policies</a>.</p>
  *          </important>
- * 	        <p>For standard accelerators, Global Accelerator uses the Amazon Web Services global network to route traffic to the optimal regional endpoint based
+ *          <p>For standard accelerators, Global Accelerator uses the Amazon Web Services global network to route traffic to the optimal regional endpoint based
  * 			on health, client location, and policies that you configure. The service reacts instantly to
  * 			changes in health or configuration to ensure that internet traffic from clients is always
  * 			directed to healthy endpoints.</p>
- * 		       <p>For more information about understanding and using Global Accelerator, see the
+ *          <p>For more information about understanding and using Global Accelerator, see the
  * 			<a href="https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html">Global Accelerator Developer Guide</a>.</p>
  */
 export class GlobalAcceleratorClient extends __Client<
@@ -538,8 +541,8 @@ export class GlobalAcceleratorClient extends __Client<
    */
   readonly config: GlobalAcceleratorClientResolvedConfig;
 
-  constructor(configuration: GlobalAcceleratorClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<GlobalAcceleratorClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -547,8 +550,9 @@ export class GlobalAcceleratorClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

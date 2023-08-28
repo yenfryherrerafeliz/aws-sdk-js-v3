@@ -15,6 +15,7 @@ export class AccessDeniedException extends __BaseException {
   readonly $fault: "client" = "client";
   Message?: string;
   /**
+   * @public
    * <p>The Amazon Web Services request ID for this request.</p>
    */
   RequestId?: string;
@@ -39,11 +40,13 @@ export class AccessDeniedException extends __BaseException {
  */
 export interface AccountCustomization {
   /**
+   * @public
    * <p>The default theme for this Amazon QuickSight subscription.</p>
    */
   DefaultTheme?: string;
 
   /**
+   * @public
    * <p>The default email customization template.</p>
    */
   DefaultEmailCustomizationTemplate?: string;
@@ -89,6 +92,7 @@ export type Edition = (typeof Edition)[keyof typeof Edition];
  */
 export interface AccountInfo {
   /**
+   * @public
    * <p>The account name that you provided for the Amazon QuickSight subscription in your
    *                 Amazon Web Services account. You create this name when you sign up for Amazon QuickSight. It's unique over all of Amazon Web Services, and it appears only when
    *             users sign in.</p>
@@ -96,24 +100,34 @@ export interface AccountInfo {
   AccountName?: string;
 
   /**
+   * @public
    * <p>The edition of your Amazon QuickSight account.</p>
    */
   Edition?: Edition | string;
 
   /**
+   * @public
    * <p>The email address that will be used for Amazon QuickSight to send notifications regarding your Amazon Web Services account or Amazon QuickSight subscription.</p>
    */
   NotificationEmail?: string;
 
   /**
+   * @public
    * <p>The way that your Amazon QuickSight account is authenticated.</p>
    */
   AuthenticationType?: string;
 
   /**
+   * @public
    * <p>The status of your account subscription.</p>
    */
   AccountSubscriptionStatus?: string;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) for the IAM Identity Center instance.</p>
+   */
+  IAMIdentityCenterInstanceArn?: string;
 }
 
 /**
@@ -122,6 +136,7 @@ export interface AccountInfo {
  */
 export interface AccountSettings {
   /**
+   * @public
    * <p>The "account name" you provided for the Amazon QuickSight subscription in your Amazon Web Services account.
    *             You create this name when you sign up for Amazon QuickSight. It is unique in all of Amazon Web Services and
    *             it appears only when users sign in.</p>
@@ -129,27 +144,32 @@ export interface AccountSettings {
   AccountName?: string;
 
   /**
+   * @public
    * <p>The edition of Amazon QuickSight that you're currently subscribed to:
    *         Enterprise edition or Standard edition.</p>
    */
   Edition?: Edition | string;
 
   /**
+   * @public
    * <p>The default Amazon QuickSight namespace for your Amazon Web Services account. </p>
    */
   DefaultNamespace?: string;
 
   /**
+   * @public
    * <p>The main notification email for your Amazon QuickSight subscription.</p>
    */
   NotificationEmail?: string;
 
   /**
+   * @public
    * <p>A Boolean value that indicates whether public sharing is turned on for an Amazon QuickSight account. For more information about turning on public sharing, see <a href="https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdatePublicSharingSettings.html">UpdatePublicSharingSettings</a>.</p>
    */
   PublicSharingEnabled?: boolean;
 
   /**
+   * @public
    * <p>A boolean value that determines whether or not an Amazon QuickSight account can be deleted. A <code>True</code> value doesn't allow the account to be deleted and results in an error message if a user tries to make a <code>DeleteAccountSubsctiption</code> request. A <code>False</code> value will allow the ccount to be deleted. </p>
    */
   TerminationProtectionEnabled?: boolean;
@@ -161,11 +181,13 @@ export interface AccountSettings {
  */
 export interface ActiveIAMPolicyAssignment {
   /**
+   * @public
    * <p>A name for the IAM policy assignment.</p>
    */
   AssignmentName?: string;
 
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the resource.</p>
    */
   PolicyArn?: string;
@@ -191,9 +213,48 @@ export type DashboardBehavior = (typeof DashboardBehavior)[keyof typeof Dashboar
  */
 export interface AdHocFilteringOption {
   /**
+   * @public
    * <p>Availability status.</p>
    */
   AvailabilityStatus?: DashboardBehavior | string;
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const SimpleAttributeAggregationFunction = {
+  UNIQUE_VALUE: "UNIQUE_VALUE",
+} as const;
+
+/**
+ * @public
+ */
+export type SimpleAttributeAggregationFunction =
+  (typeof SimpleAttributeAggregationFunction)[keyof typeof SimpleAttributeAggregationFunction];
+
+/**
+ * @public
+ * <p>Aggregation for attributes.</p>
+ */
+export interface AttributeAggregationFunction {
+  /**
+   * @public
+   * <p>The built-in aggregation functions for attributes.</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>UNIQUE_VALUE</code>: Returns the unique value for a field, aggregated by the dimension fields.</p>
+   *             </li>
+   *          </ul>
+   */
+  SimpleAttributeAggregation?: SimpleAttributeAggregationFunction | string;
+
+  /**
+   * @public
+   * <p>Used by the <code>UNIQUE_VALUE</code> aggregation function. If there are multiple values for the field used by the aggregation, the value for this property will be returned instead. Defaults to '*'.</p>
+   */
+  ValueForMultipleValues?: string;
 }
 
 /**
@@ -233,6 +294,7 @@ export type DateAggregationFunction = (typeof DateAggregationFunction)[keyof typ
  */
 export interface PercentileAggregation {
   /**
+   * @public
    * <p>The percentile value. This value can be any numeric constant 0–100. A percentile value of 50 computes the median value of the measure.</p>
    */
   PercentileValue?: number;
@@ -268,6 +330,7 @@ export type SimpleNumericalAggregationFunction =
  */
 export interface NumericalAggregationFunction {
   /**
+   * @public
    * <p>Built-in aggregation functions for numerical values.</p>
    *          <ul>
    *             <li>
@@ -319,6 +382,7 @@ export interface NumericalAggregationFunction {
   SimpleNumericalAggregation?: SimpleNumericalAggregationFunction | string;
 
   /**
+   * @public
    * <p>An aggregation based on the percentile of values in a dimension or measure.</p>
    */
   PercentileAggregation?: PercentileAggregation;
@@ -331,11 +395,13 @@ export interface NumericalAggregationFunction {
  */
 export interface AggregationFunction {
   /**
+   * @public
    * <p>Aggregation for numerical values.</p>
    */
   NumericalAggregationFunction?: NumericalAggregationFunction;
 
   /**
+   * @public
    * <p>Aggregation for categorical values.</p>
    *          <ul>
    *             <li>
@@ -351,6 +417,7 @@ export interface AggregationFunction {
   CategoricalAggregationFunction?: CategoricalAggregationFunction | string;
 
   /**
+   * @public
    * <p>Aggregation for date values.</p>
    *          <ul>
    *             <li>
@@ -372,6 +439,12 @@ export interface AggregationFunction {
    *          </ul>
    */
   DateAggregationFunction?: DateAggregationFunction | string;
+
+  /**
+   * @public
+   * <p>Aggregation for attributes.</p>
+   */
+  AttributeAggregationFunction?: AttributeAggregationFunction;
 }
 
 /**
@@ -380,11 +453,13 @@ export interface AggregationFunction {
  */
 export interface ColumnIdentifier {
   /**
+   * @public
    * <p>The data set that the column belongs to.</p>
    */
   DataSetIdentifier: string | undefined;
 
   /**
+   * @public
    * <p>The name of the column.</p>
    */
   ColumnName: string | undefined;
@@ -410,11 +485,13 @@ export type SortDirection = (typeof SortDirection)[keyof typeof SortDirection];
  */
 export interface AggregationSortConfiguration {
   /**
+   * @public
    * <p>The column that determines the sort order of aggregated values.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The sort direction of values.</p>
    *          <ul>
    *             <li>
@@ -430,6 +507,7 @@ export interface AggregationSortConfiguration {
   SortDirection: SortDirection | string | undefined;
 
   /**
+   * @public
    * <p>The function that aggregates the values in <code>Column</code>.</p>
    */
   AggregationFunction?: AggregationFunction;
@@ -437,10 +515,18 @@ export interface AggregationSortConfiguration {
 
 /**
  * @public
+ * <p>The configuration for applying a filter to all sheets. You can apply this filter to all visuals on every sheet.</p>
+ *          <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>
+ */
+export interface AllSheetsFilterScopeConfiguration {}
+
+/**
+ * @public
  * <p>The parameters for OpenSearch.</p>
  */
 export interface AmazonElasticsearchParameters {
   /**
+   * @public
    * <p>The OpenSearch domain.</p>
    */
   Domain: string | undefined;
@@ -452,6 +538,7 @@ export interface AmazonElasticsearchParameters {
  */
 export interface AmazonOpenSearchParameters {
   /**
+   * @public
    * <p>The OpenSearch domain.</p>
    */
   Domain: string | undefined;
@@ -485,6 +572,7 @@ export type AnalysisErrorType = (typeof AnalysisErrorType)[keyof typeof Analysis
  */
 export interface Entity {
   /**
+   * @public
    * <p>The hierarchical path of the entity within the analysis, template, or dashboard definition tree.</p>
    */
   Path?: string;
@@ -496,16 +584,19 @@ export interface Entity {
  */
 export interface AnalysisError {
   /**
+   * @public
    * <p>The type of the analysis error.</p>
    */
   Type?: AnalysisErrorType | string;
 
   /**
+   * @public
    * <p>The message associated with the analysis error.</p>
    */
   Message?: string;
 
   /**
+   * @public
    * <p>Lists the violated entities that caused the analysis error</p>
    */
   ViolatedEntities?: Entity[];
@@ -521,11 +612,13 @@ export interface AnalysisError {
  */
 export interface Sheet {
   /**
+   * @public
    * <p>The unique identifier associated with a sheet.</p>
    */
   SheetId?: string;
 
   /**
+   * @public
    * <p>The name of a sheet. This name is displayed on the sheet's tab in the Amazon QuickSight
    *             console.</p>
    */
@@ -557,51 +650,61 @@ export type ResourceStatus = (typeof ResourceStatus)[keyof typeof ResourceStatus
  */
 export interface Analysis {
   /**
+   * @public
    * <p>The ID of the analysis.</p>
    */
   AnalysisId?: string;
 
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the analysis.</p>
    */
   Arn?: string;
 
   /**
+   * @public
    * <p>The descriptive name of the analysis.</p>
    */
   Name?: string;
 
   /**
+   * @public
    * <p>Status associated with the analysis.</p>
    */
   Status?: ResourceStatus | string;
 
   /**
+   * @public
    * <p>Errors associated with the analysis.</p>
    */
   Errors?: AnalysisError[];
 
   /**
+   * @public
    * <p>The ARNs of the datasets of the analysis.</p>
    */
   DataSetArns?: string[];
 
   /**
+   * @public
    * <p>The ARN of the theme of the analysis.</p>
    */
   ThemeArn?: string;
 
   /**
+   * @public
    * <p>The time that the analysis was created.</p>
    */
   CreatedTime?: Date;
 
   /**
+   * @public
    * <p>The time that the analysis was last updated.</p>
    */
   LastUpdatedTime?: Date;
 
   /**
+   * @public
    * <p>A list of the associated sheets with the unique identifier and name of each sheet.</p>
    */
   Sheets?: Sheet[];
@@ -613,6 +716,7 @@ export interface Analysis {
  */
 export interface FreeFormLayoutScreenCanvasSizeOptions {
   /**
+   * @public
    * <p>The width that the view port will be optimized for when the layout renders.</p>
    */
   OptimizedViewPortWidth: string | undefined;
@@ -624,6 +728,7 @@ export interface FreeFormLayoutScreenCanvasSizeOptions {
  */
 export interface FreeFormLayoutCanvasSizeOptions {
   /**
+   * @public
    * <p>The options that determine the sizing of the canvas used in a free-form layout.</p>
    */
   ScreenCanvasSizeOptions?: FreeFormLayoutScreenCanvasSizeOptions;
@@ -635,6 +740,7 @@ export interface FreeFormLayoutCanvasSizeOptions {
  */
 export interface DefaultFreeFormLayoutConfiguration {
   /**
+   * @public
    * <p>Determines the screen canvas size options for a free-form layout.</p>
    */
   CanvasSizeOptions: FreeFormLayoutCanvasSizeOptions | undefined;
@@ -660,6 +766,7 @@ export type ResizeOption = (typeof ResizeOption)[keyof typeof ResizeOption];
  */
 export interface GridLayoutScreenCanvasSizeOptions {
   /**
+   * @public
    * <p>This value determines the layout behavior when the viewport is resized.</p>
    *          <ul>
    *             <li>
@@ -677,6 +784,7 @@ export interface GridLayoutScreenCanvasSizeOptions {
   ResizeOption: ResizeOption | string | undefined;
 
   /**
+   * @public
    * <p>The width that the view port will be optimized for when the layout renders.</p>
    */
   OptimizedViewPortWidth?: string;
@@ -688,6 +796,7 @@ export interface GridLayoutScreenCanvasSizeOptions {
  */
 export interface GridLayoutCanvasSizeOptions {
   /**
+   * @public
    * <p>The options that determine the sizing of the canvas used in a grid layout.</p>
    */
   ScreenCanvasSizeOptions?: GridLayoutScreenCanvasSizeOptions;
@@ -699,6 +808,7 @@ export interface GridLayoutCanvasSizeOptions {
  */
 export interface DefaultGridLayoutConfiguration {
   /**
+   * @public
    * <p>Determines the screen canvas size options for a grid layout.</p>
    */
   CanvasSizeOptions: GridLayoutCanvasSizeOptions | undefined;
@@ -710,11 +820,13 @@ export interface DefaultGridLayoutConfiguration {
  */
 export interface DefaultInteractiveLayoutConfiguration {
   /**
+   * @public
    * <p>The options that determine the default settings for a grid layout configuration.</p>
    */
   Grid?: DefaultGridLayoutConfiguration;
 
   /**
+   * @public
    * <p>The options that determine the default settings of a free-form layout configuration.</p>
    */
   FreeForm?: DefaultFreeFormLayoutConfiguration;
@@ -726,21 +838,25 @@ export interface DefaultInteractiveLayoutConfiguration {
  */
 export interface Spacing {
   /**
+   * @public
    * <p>Define the top spacing.</p>
    */
   Top?: string;
 
   /**
+   * @public
    * <p>Define the bottom spacing.</p>
    */
   Bottom?: string;
 
   /**
+   * @public
    * <p>Define the left spacing.</p>
    */
   Left?: string;
 
   /**
+   * @public
    * <p>Define the right spacing.</p>
    */
   Right?: string;
@@ -789,11 +905,13 @@ export type PaperSize = (typeof PaperSize)[keyof typeof PaperSize];
  */
 export interface SectionBasedLayoutPaperCanvasSizeOptions {
   /**
+   * @public
    * <p>The paper size that is used to define canvas dimensions.</p>
    */
   PaperSize?: PaperSize | string;
 
   /**
+   * @public
    * <p>The paper orientation that
    *             is used to define canvas dimensions. Choose one of the following
    *             options:</p>
@@ -809,6 +927,7 @@ export interface SectionBasedLayoutPaperCanvasSizeOptions {
   PaperOrientation?: PaperOrientation | string;
 
   /**
+   * @public
    * <p>Defines the spacing between the canvas content and the top, bottom, left, and right edges.</p>
    */
   PaperMargin?: Spacing;
@@ -820,6 +939,7 @@ export interface SectionBasedLayoutPaperCanvasSizeOptions {
  */
 export interface SectionBasedLayoutCanvasSizeOptions {
   /**
+   * @public
    * <p>The options for a paper canvas of a section-based layout.</p>
    */
   PaperCanvasSizeOptions?: SectionBasedLayoutPaperCanvasSizeOptions;
@@ -831,6 +951,7 @@ export interface SectionBasedLayoutCanvasSizeOptions {
  */
 export interface DefaultSectionBasedLayoutConfiguration {
   /**
+   * @public
    * <p>Determines the screen canvas size options for a section-based layout.</p>
    */
   CanvasSizeOptions: SectionBasedLayoutCanvasSizeOptions | undefined;
@@ -842,6 +963,7 @@ export interface DefaultSectionBasedLayoutConfiguration {
  */
 export interface DefaultPaginatedLayoutConfiguration {
   /**
+   * @public
    * <p>The options that determine the default settings for a section-based layout configuration.</p>
    */
   SectionBased?: DefaultSectionBasedLayoutConfiguration;
@@ -867,16 +989,19 @@ export type SheetContentType = (typeof SheetContentType)[keyof typeof SheetConte
  */
 export interface DefaultNewSheetConfiguration {
   /**
+   * @public
    * <p>The options that determine the default settings for interactive layout configuration.</p>
    */
   InteractiveLayoutConfiguration?: DefaultInteractiveLayoutConfiguration;
 
   /**
+   * @public
    * <p>The options that determine the default settings for a paginated layout configuration.</p>
    */
   PaginatedLayoutConfiguration?: DefaultPaginatedLayoutConfiguration;
 
   /**
+   * @public
    * <p>The option that determines the sheet content type.</p>
    */
   SheetContentType?: SheetContentType | string;
@@ -888,6 +1013,7 @@ export interface DefaultNewSheetConfiguration {
  */
 export interface AnalysisDefaults {
   /**
+   * @public
    * <p>The configuration for default new sheet settings.</p>
    */
   DefaultNewSheetConfiguration: DefaultNewSheetConfiguration | undefined;
@@ -899,16 +1025,19 @@ export interface AnalysisDefaults {
  */
 export interface CalculatedField {
   /**
+   * @public
    * <p>The data set that is used in this calculated field.</p>
    */
   DataSetIdentifier: string | undefined;
 
   /**
+   * @public
    * <p>The name of the calculated field.</p>
    */
   Name: string | undefined;
 
   /**
+   * @public
    * <p>The expression of the calculated field.</p>
    */
   Expression: string | undefined;
@@ -935,16 +1064,19 @@ export type SpecialValue = (typeof SpecialValue)[keyof typeof SpecialValue];
  */
 export interface CustomColor {
   /**
+   * @public
    * <p>The data value that the color is applied to.</p>
    */
   FieldValue?: string;
 
   /**
+   * @public
    * <p>The color that is applied to the data value.</p>
    */
   Color: string | undefined;
 
   /**
+   * @public
    * <p>The value of a special data value.</p>
    */
   SpecialValue?: SpecialValue | string;
@@ -956,6 +1088,7 @@ export interface CustomColor {
  */
 export interface ColorsConfiguration {
   /**
+   * @public
    * <p>A list of up to 50 custom colors.</p>
    */
   CustomColors?: CustomColor[];
@@ -967,6 +1100,7 @@ export interface ColorsConfiguration {
  */
 export interface NullValueFormatConfiguration {
   /**
+   * @public
    * <p>Determines the null string of null values.</p>
    */
   NullString: string | undefined;
@@ -978,6 +1112,7 @@ export interface NullValueFormatConfiguration {
  */
 export interface DecimalPlacesConfiguration {
   /**
+   * @public
    * <p>The values of the decimal places.</p>
    */
   DecimalPlaces: number | undefined;
@@ -1003,6 +1138,7 @@ export type NegativeValueDisplayMode = (typeof NegativeValueDisplayMode)[keyof t
  */
 export interface NegativeValueConfiguration {
   /**
+   * @public
    * <p>Determines the display mode of the negative value configuration.</p>
    */
   DisplayMode: NegativeValueDisplayMode | string | undefined;
@@ -1061,11 +1197,13 @@ export type Visibility = (typeof Visibility)[keyof typeof Visibility];
  */
 export interface ThousandSeparatorOptions {
   /**
+   * @public
    * <p>Determines the thousands separator symbol.</p>
    */
   Symbol?: NumericSeparatorSymbol | string;
 
   /**
+   * @public
    * <p>Determines the visibility of the thousands separator.</p>
    */
   Visibility?: Visibility | string;
@@ -1077,11 +1215,13 @@ export interface ThousandSeparatorOptions {
  */
 export interface NumericSeparatorConfiguration {
   /**
+   * @public
    * <p>Determines the decimal separator.</p>
    */
   DecimalSeparator?: NumericSeparatorSymbol | string;
 
   /**
+   * @public
    * <p>The options that determine the thousands separator configuration.</p>
    */
   ThousandsSeparator?: ThousandSeparatorOptions;
@@ -1093,41 +1233,49 @@ export interface NumericSeparatorConfiguration {
  */
 export interface CurrencyDisplayFormatConfiguration {
   /**
+   * @public
    * <p>Determines the prefix value of the currency format.</p>
    */
   Prefix?: string;
 
   /**
+   * @public
    * <p>Determines the suffix value of the currency format.</p>
    */
   Suffix?: string;
 
   /**
+   * @public
    * <p>The options that determine the numeric separator configuration.</p>
    */
   SeparatorConfiguration?: NumericSeparatorConfiguration;
 
   /**
+   * @public
    * <p>Determines the symbol for the currency format.</p>
    */
   Symbol?: string;
 
   /**
+   * @public
    * <p>The option that determines the decimal places configuration.</p>
    */
   DecimalPlacesConfiguration?: DecimalPlacesConfiguration;
 
   /**
+   * @public
    * <p>Determines the number scale value for the currency format.</p>
    */
   NumberScale?: NumberScale | string;
 
   /**
+   * @public
    * <p>The options that determine the negative value configuration.</p>
    */
   NegativeValueConfiguration?: NegativeValueConfiguration;
 
   /**
+   * @public
    * <p>The options that determine the null value format configuration.</p>
    */
   NullValueFormatConfiguration?: NullValueFormatConfiguration;
@@ -1139,36 +1287,43 @@ export interface CurrencyDisplayFormatConfiguration {
  */
 export interface NumberDisplayFormatConfiguration {
   /**
+   * @public
    * <p>Determines the prefix value of the number format.</p>
    */
   Prefix?: string;
 
   /**
+   * @public
    * <p>Determines the suffix value of the number format.</p>
    */
   Suffix?: string;
 
   /**
+   * @public
    * <p>The options that determine the numeric separator configuration.</p>
    */
   SeparatorConfiguration?: NumericSeparatorConfiguration;
 
   /**
+   * @public
    * <p>The option that determines the decimal places configuration.</p>
    */
   DecimalPlacesConfiguration?: DecimalPlacesConfiguration;
 
   /**
+   * @public
    * <p>Determines the number scale value of the number format.</p>
    */
   NumberScale?: NumberScale | string;
 
   /**
+   * @public
    * <p>The options that determine the negative value configuration.</p>
    */
   NegativeValueConfiguration?: NegativeValueConfiguration;
 
   /**
+   * @public
    * <p>The options that determine the null value format configuration.</p>
    */
   NullValueFormatConfiguration?: NullValueFormatConfiguration;
@@ -1180,31 +1335,37 @@ export interface NumberDisplayFormatConfiguration {
  */
 export interface PercentageDisplayFormatConfiguration {
   /**
+   * @public
    * <p>Determines the prefix value of the percentage format.</p>
    */
   Prefix?: string;
 
   /**
+   * @public
    * <p>Determines the suffix value of the percentage format.</p>
    */
   Suffix?: string;
 
   /**
+   * @public
    * <p>The options that determine the numeric separator configuration.</p>
    */
   SeparatorConfiguration?: NumericSeparatorConfiguration;
 
   /**
+   * @public
    * <p>The option that determines the decimal places configuration.</p>
    */
   DecimalPlacesConfiguration?: DecimalPlacesConfiguration;
 
   /**
+   * @public
    * <p>The options that determine the negative value configuration.</p>
    */
   NegativeValueConfiguration?: NegativeValueConfiguration;
 
   /**
+   * @public
    * <p>The options that determine the null value format configuration.</p>
    */
   NullValueFormatConfiguration?: NullValueFormatConfiguration;
@@ -1217,16 +1378,19 @@ export interface PercentageDisplayFormatConfiguration {
  */
 export interface NumericFormatConfiguration {
   /**
+   * @public
    * <p>The options that determine the number display format configuration.</p>
    */
   NumberDisplayFormatConfiguration?: NumberDisplayFormatConfiguration;
 
   /**
+   * @public
    * <p>The options that determine the currency display format configuration.</p>
    */
   CurrencyDisplayFormatConfiguration?: CurrencyDisplayFormatConfiguration;
 
   /**
+   * @public
    * <p>The options that determine the percentage display format configuration.</p>
    */
   PercentageDisplayFormatConfiguration?: PercentageDisplayFormatConfiguration;
@@ -1238,16 +1402,19 @@ export interface NumericFormatConfiguration {
  */
 export interface DateTimeFormatConfiguration {
   /**
+   * @public
    * <p>Determines the <code>DateTime</code> format.</p>
    */
   DateTimeFormat?: string;
 
   /**
+   * @public
    * <p>The options that determine the null value format configuration.</p>
    */
   NullValueFormatConfiguration?: NullValueFormatConfiguration;
 
   /**
+   * @public
    * <p>The formatting configuration for numeric <code>DateTime</code> fields.</p>
    */
   NumericFormatConfiguration?: NumericFormatConfiguration;
@@ -1259,6 +1426,7 @@ export interface DateTimeFormatConfiguration {
  */
 export interface NumberFormatConfiguration {
   /**
+   * @public
    * <p>The options that determine the numeric format configuration.</p>
    */
   FormatConfiguration?: NumericFormatConfiguration;
@@ -1270,11 +1438,13 @@ export interface NumberFormatConfiguration {
  */
 export interface StringFormatConfiguration {
   /**
+   * @public
    * <p>The options that determine the null value format configuration.</p>
    */
   NullValueFormatConfiguration?: NullValueFormatConfiguration;
 
   /**
+   * @public
    * <p>The formatting configuration for numeric strings.</p>
    */
   NumericFormatConfiguration?: NumericFormatConfiguration;
@@ -1286,16 +1456,19 @@ export interface StringFormatConfiguration {
  */
 export interface FormatConfiguration {
   /**
+   * @public
    * <p>Formatting configuration for string fields.</p>
    */
   StringFormatConfiguration?: StringFormatConfiguration;
 
   /**
+   * @public
    * <p>Formatting configuration for number fields.</p>
    */
   NumberFormatConfiguration?: NumberFormatConfiguration;
 
   /**
+   * @public
    * <p>Formatting configuration for <code>DateTime</code> fields.</p>
    */
   DateTimeFormatConfiguration?: DateTimeFormatConfiguration;
@@ -1321,21 +1494,25 @@ export type ColumnRole = (typeof ColumnRole)[keyof typeof ColumnRole];
  */
 export interface ColumnConfiguration {
   /**
+   * @public
    * <p>The column.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The format configuration of a column.</p>
    */
   FormatConfiguration?: FormatConfiguration;
 
   /**
+   * @public
    * <p>The role of the column.</p>
    */
   Role?: ColumnRole | string;
 
   /**
+   * @public
    * <p>The color configurations of the column.</p>
    */
   ColorsConfiguration?: ColorsConfiguration;
@@ -1347,11 +1524,13 @@ export interface ColumnConfiguration {
  */
 export interface DataSetIdentifierDeclaration {
   /**
+   * @public
    * <p>The identifier of the data set, typically the data set's name.</p>
    */
   Identifier: string | undefined;
 
   /**
+   * @public
    * <p>The Amazon Resource Name (ARN) of the data set.</p>
    */
   DataSetArn: string | undefined;
@@ -1425,17 +1604,20 @@ export type CategoryFilterSelectAllOptions =
  */
 export interface CustomFilterConfiguration {
   /**
+   * @public
    * <p>The match operator that is used to determine if a filter should be applied.</p>
    */
   MatchOperator: CategoryFilterMatchOperator | string | undefined;
 
   /**
+   * @public
    * <p>The category value for the filter.</p>
    *          <p>This field is mutually exclusive to <code>ParameterName</code>.</p>
    */
   CategoryValue?: string;
 
   /**
+   * @public
    * <p>Select all of the values. Null is not the assigned value of select all.</p>
    *          <ul>
    *             <li>
@@ -1448,12 +1630,14 @@ export interface CustomFilterConfiguration {
   SelectAllOptions?: CategoryFilterSelectAllOptions | string;
 
   /**
+   * @public
    * <p>The parameter whose value should be used for the filter value.</p>
    *          <p>This field is mutually exclusive to <code>CategoryValue</code>.</p>
    */
   ParameterName?: string;
 
   /**
+   * @public
    * <p>This option determines how null values should be treated when filtering data.</p>
    *          <ul>
    *             <li>
@@ -1479,16 +1663,19 @@ export interface CustomFilterConfiguration {
  */
 export interface CustomFilterListConfiguration {
   /**
+   * @public
    * <p>The match operator that is used to determine if a filter should be applied.</p>
    */
   MatchOperator: CategoryFilterMatchOperator | string | undefined;
 
   /**
+   * @public
    * <p>The list of category values for the filter.</p>
    */
   CategoryValues?: string[];
 
   /**
+   * @public
    * <p>Select all of the values. Null is not the assigned value of select all.</p>
    *          <ul>
    *             <li>
@@ -1501,6 +1688,7 @@ export interface CustomFilterListConfiguration {
   SelectAllOptions?: CategoryFilterSelectAllOptions | string;
 
   /**
+   * @public
    * <p>This option determines how null values should be treated when filtering data.</p>
    *          <ul>
    *             <li>
@@ -1526,16 +1714,19 @@ export interface CustomFilterListConfiguration {
  */
 export interface FilterListConfiguration {
   /**
+   * @public
    * <p>The match operator that is used to determine if a filter should be applied.</p>
    */
   MatchOperator: CategoryFilterMatchOperator | string | undefined;
 
   /**
+   * @public
    * <p>The list of category values for the filter.</p>
    */
   CategoryValues?: string[];
 
   /**
+   * @public
    * <p>Select all of the values. Null is not the assigned value of select all.</p>
    *          <ul>
    *             <li>
@@ -1555,16 +1746,19 @@ export interface FilterListConfiguration {
  */
 export interface CategoryFilterConfiguration {
   /**
+   * @public
    * <p>A list of filter configurations. In the Amazon QuickSight console, this filter type is called a filter list.</p>
    */
   FilterListConfiguration?: FilterListConfiguration;
 
   /**
+   * @public
    * <p>A list of custom filter values. In the Amazon QuickSight console, this filter type is called a custom filter list.</p>
    */
   CustomFilterListConfiguration?: CustomFilterListConfiguration;
 
   /**
+   * @public
    * <p>A custom filter that filters based on a single value. This filter can be partially matched.</p>
    */
   CustomFilterConfiguration?: CustomFilterConfiguration;
@@ -1577,16 +1771,19 @@ export interface CategoryFilterConfiguration {
  */
 export interface CategoryFilter {
   /**
+   * @public
    * <p>An identifier that uniquely identifies a filter within a dashboard, analysis, or template.</p>
    */
   FilterId: string | undefined;
 
   /**
+   * @public
    * <p>The column that the filter is applied to.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The configuration for a <code>CategoryFilter</code>.</p>
    */
   Configuration: CategoryFilterConfiguration | undefined;
@@ -1627,21 +1824,25 @@ export type NumericFilterSelectAllOptions =
  */
 export interface NumericEqualityFilter {
   /**
+   * @public
    * <p>An identifier that uniquely identifies a filter within a dashboard, analysis, or template.</p>
    */
   FilterId: string | undefined;
 
   /**
+   * @public
    * <p>The column that the filter is applied to.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The input value.</p>
    */
   Value?: number;
 
   /**
+   * @public
    * <p>Select all of the values. Null is not the assigned value of select all.</p>
    *          <ul>
    *             <li>
@@ -1654,21 +1855,25 @@ export interface NumericEqualityFilter {
   SelectAllOptions?: NumericFilterSelectAllOptions | string;
 
   /**
+   * @public
    * <p>The match operator that is used to determine if a filter should be applied.</p>
    */
   MatchOperator: NumericEqualityMatchOperator | string | undefined;
 
   /**
+   * @public
    * <p>The aggregation function of the filter.</p>
    */
   AggregationFunction?: AggregationFunction;
 
   /**
+   * @public
    * <p>The parameter whose value should be used for the filter value.</p>
    */
   ParameterName?: string;
 
   /**
+   * @public
    * <p>This option determines how null values should be treated when filtering data.</p>
    *          <ul>
    *             <li>
@@ -1694,11 +1899,13 @@ export interface NumericEqualityFilter {
  */
 export interface NumericRangeFilterValue {
   /**
+   * @public
    * <p>The static value of the numeric range filter.</p>
    */
   StaticValue?: number;
 
   /**
+   * @public
    * <p>The parameter that is used in the numeric range.</p>
    */
   Parameter?: string;
@@ -1710,36 +1917,43 @@ export interface NumericRangeFilterValue {
  */
 export interface NumericRangeFilter {
   /**
+   * @public
    * <p>An identifier that uniquely identifies a filter within a dashboard, analysis, or template.</p>
    */
   FilterId: string | undefined;
 
   /**
+   * @public
    * <p>The column that the filter is applied to.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>Determines whether the minimum value in the filter value range should be included in the filtered results.</p>
    */
   IncludeMinimum?: boolean;
 
   /**
+   * @public
    * <p>Determines whether the maximum value in the filter value range should be included in the filtered results.</p>
    */
   IncludeMaximum?: boolean;
 
   /**
+   * @public
    * <p>The minimum value for the filter value range.</p>
    */
   RangeMinimum?: NumericRangeFilterValue;
 
   /**
+   * @public
    * <p>The maximum value for the filter value range.</p>
    */
   RangeMaximum?: NumericRangeFilterValue;
 
   /**
+   * @public
    * <p>Select all of the values. Null is not the assigned value of select all.</p>
    *          <ul>
    *             <li>
@@ -1752,11 +1966,13 @@ export interface NumericRangeFilter {
   SelectAllOptions?: NumericFilterSelectAllOptions | string;
 
   /**
+   * @public
    * <p>The aggregation function of the filter.</p>
    */
   AggregationFunction?: AggregationFunction;
 
   /**
+   * @public
    * <p>This option determines how null values should be treated when filtering data.</p>
    *          <ul>
    *             <li>
@@ -1795,6 +2011,7 @@ export type AnchorOption = (typeof AnchorOption)[keyof typeof AnchorOption];
  */
 export interface AnchorDateConfiguration {
   /**
+   * @public
    * <p>The options for the date configuration. Choose one of the options below:</p>
    *          <ul>
    *             <li>
@@ -1807,6 +2024,7 @@ export interface AnchorDateConfiguration {
   AnchorOption?: AnchorOption | string;
 
   /**
+   * @public
    * <p>The name of the parameter that is used for the anchor date configuration.</p>
    */
   ParameterName?: string;
@@ -1853,16 +2071,19 @@ export type WidgetStatus = (typeof WidgetStatus)[keyof typeof WidgetStatus];
  */
 export interface ExcludePeriodConfiguration {
   /**
+   * @public
    * <p>The amount or number of the exclude period.</p>
    */
   Amount: number | undefined;
 
   /**
+   * @public
    * <p>The granularity or unit (day, month, year) of the exclude period.</p>
    */
   Granularity: TimeGranularity | string | undefined;
 
   /**
+   * @public
    * <p>The status of the exclude period. Choose from the following options:</p>
    *          <ul>
    *             <li>
@@ -1903,31 +2124,37 @@ export type RelativeDateType = (typeof RelativeDateType)[keyof typeof RelativeDa
  */
 export interface RelativeDatesFilter {
   /**
+   * @public
    * <p>An identifier that uniquely identifies a filter within a dashboard, analysis, or template.</p>
    */
   FilterId: string | undefined;
 
   /**
+   * @public
    * <p>The column that the filter is applied to.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The date configuration of the filter.</p>
    */
   AnchorDateConfiguration: AnchorDateConfiguration | undefined;
 
   /**
+   * @public
    * <p>The minimum granularity (period granularity) of the relative dates filter.</p>
    */
   MinimumGranularity?: TimeGranularity | string;
 
   /**
+   * @public
    * <p>The level of time precision that is used to aggregate <code>DateTime</code> values.</p>
    */
   TimeGranularity: TimeGranularity | string | undefined;
 
   /**
+   * @public
    * <p>The range date type of the filter. Choose one of the options below:</p>
    *          <ul>
    *             <li>
@@ -1960,16 +2187,19 @@ export interface RelativeDatesFilter {
   RelativeDateType: RelativeDateType | string | undefined;
 
   /**
+   * @public
    * <p>The date value of the filter.</p>
    */
   RelativeDateValue?: number;
 
   /**
+   * @public
    * <p>The parameter whose value should be used for the filter value.</p>
    */
   ParameterName?: string;
 
   /**
+   * @public
    * <p>This option determines how null values should be treated when filtering data.</p>
    *          <ul>
    *             <li>
@@ -1989,6 +2219,7 @@ export interface RelativeDatesFilter {
   NullOption: FilterNullOption | string | undefined;
 
   /**
+   * @public
    * <p>The configuration for the exclude period of the filter.</p>
    */
   ExcludePeriodConfiguration?: ExcludePeriodConfiguration;
@@ -2000,28 +2231,33 @@ export interface RelativeDatesFilter {
  */
 export interface TimeEqualityFilter {
   /**
+   * @public
    * <p>An identifier that uniquely identifies a filter within a dashboard, analysis, or template.</p>
    */
   FilterId: string | undefined;
 
   /**
+   * @public
    * <p>The column that the filter is applied to.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The value of a <code>TimeEquality</code> filter.</p>
    *          <p>This field is mutually exclusive to <code>ParameterName</code>.</p>
    */
   Value?: Date;
 
   /**
+   * @public
    * <p>The parameter whose value should be used for the filter value.</p>
    *          <p>This field is mutually exclusive to <code>Value</code>.</p>
    */
   ParameterName?: string;
 
   /**
+   * @public
    * <p>The level of time precision that is used to aggregate <code>DateTime</code> values.</p>
    */
   TimeGranularity?: TimeGranularity | string;
@@ -2033,11 +2269,13 @@ export interface TimeEqualityFilter {
  */
 export interface RollingDateConfiguration {
   /**
+   * @public
    * <p>The data set that is used in the rolling date configuration.</p>
    */
   DataSetIdentifier?: string;
 
   /**
+   * @public
    * <p>The expression of the rolling date configuration.</p>
    */
   Expression: string | undefined;
@@ -2050,16 +2288,19 @@ export interface RollingDateConfiguration {
  */
 export interface TimeRangeFilterValue {
   /**
+   * @public
    * <p>The static input value.</p>
    */
   StaticValue?: Date;
 
   /**
+   * @public
    * <p>The rolling date input value.</p>
    */
   RollingDate?: RollingDateConfiguration;
 
   /**
+   * @public
    * <p>The parameter type input value.</p>
    */
   Parameter?: string;
@@ -2071,36 +2312,43 @@ export interface TimeRangeFilterValue {
  */
 export interface TimeRangeFilter {
   /**
+   * @public
    * <p>An identifier that uniquely identifies a filter within a dashboard, analysis, or template.</p>
    */
   FilterId: string | undefined;
 
   /**
+   * @public
    * <p>The column that the filter is applied to.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>Determines whether the minimum value in the filter value range should be included in the filtered results.</p>
    */
   IncludeMinimum?: boolean;
 
   /**
+   * @public
    * <p>Determines whether the maximum value in the filter value range should be included in the filtered results.</p>
    */
   IncludeMaximum?: boolean;
 
   /**
+   * @public
    * <p>The minimum value for the filter value range.</p>
    */
   RangeMinimumValue?: TimeRangeFilterValue;
 
   /**
+   * @public
    * <p>The maximum value for the filter value range.</p>
    */
   RangeMaximumValue?: TimeRangeFilterValue;
 
   /**
+   * @public
    * <p>This option determines how null values should be treated when filtering data.</p>
    *          <ul>
    *             <li>
@@ -2120,11 +2368,13 @@ export interface TimeRangeFilter {
   NullOption: FilterNullOption | string | undefined;
 
   /**
+   * @public
    * <p>The exclude period of the time range filter.</p>
    */
   ExcludePeriodConfiguration?: ExcludePeriodConfiguration;
 
   /**
+   * @public
    * <p>The level of time precision that is used to aggregate <code>DateTime</code> values.</p>
    */
   TimeGranularity?: TimeGranularity | string;
@@ -2136,31 +2386,37 @@ export interface TimeRangeFilter {
  */
 export interface TopBottomFilter {
   /**
+   * @public
    * <p>An identifier that uniquely identifies a filter within a dashboard, analysis, or template.</p>
    */
   FilterId: string | undefined;
 
   /**
+   * @public
    * <p>The column that the filter is applied to.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The number of items to include in the top bottom filter results.</p>
    */
   Limit?: number;
 
   /**
+   * @public
    * <p>The aggregation and sort configuration of the top bottom filter.</p>
    */
   AggregationSortConfigurations: AggregationSortConfiguration[] | undefined;
 
   /**
+   * @public
    * <p>The level of time precision that is used to aggregate <code>DateTime</code> values.</p>
    */
   TimeGranularity?: TimeGranularity | string;
 
   /**
+   * @public
    * <p>The parameter whose value should be used for the filter value.</p>
    */
   ParameterName?: string;
@@ -2173,38 +2429,45 @@ export interface TopBottomFilter {
  */
 export interface Filter {
   /**
+   * @public
    * <p>A <code>CategoryFilter</code> filters text values.</p>
    *          <p>For more information, see <a href="https://docs.aws.amazon.com/quicksight/latest/user/add-a-text-filter-data-prep.html">Adding text filters</a> in the <i>Amazon QuickSight User Guide</i>.</p>
    */
   CategoryFilter?: CategoryFilter;
 
   /**
+   * @public
    * <p>A <code>NumericRangeFilter</code> filters numeric values that are either inside or outside a given numeric range.</p>
    */
   NumericRangeFilter?: NumericRangeFilter;
 
   /**
+   * @public
    * <p>A <code>NumericEqualityFilter</code> filters numeric values that equal or do not equal a given numeric value.</p>
    */
   NumericEqualityFilter?: NumericEqualityFilter;
 
   /**
+   * @public
    * <p>A <code>TimeEqualityFilter</code> filters date-time values that equal or do not equal
    *             a given date/time value.</p>
    */
   TimeEqualityFilter?: TimeEqualityFilter;
 
   /**
+   * @public
    * <p>A <code>TimeRangeFilter</code> filters date-time values that are either inside or outside a given date/time range.</p>
    */
   TimeRangeFilter?: TimeRangeFilter;
 
   /**
+   * @public
    * <p>A <code>RelativeDatesFilter</code> filters date values that are relative to a given date.</p>
    */
   RelativeDatesFilter?: RelativeDatesFilter;
 
   /**
+   * @public
    * <p>A <code>TopBottomFilter</code> filters data to the top or bottom values for a given column.</p>
    */
   TopBottomFilter?: TopBottomFilter;
@@ -2230,11 +2493,13 @@ export type FilterVisualScope = (typeof FilterVisualScope)[keyof typeof FilterVi
  */
 export interface SheetVisualScopingConfiguration {
   /**
+   * @public
    * <p>The selected sheet that the filter is applied to.</p>
    */
   SheetId: string | undefined;
 
   /**
+   * @public
    * <p>The scope of the applied entities. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -2252,6 +2517,7 @@ export interface SheetVisualScopingConfiguration {
   Scope: FilterVisualScope | string | undefined;
 
   /**
+   * @public
    * <p>The selected visuals that the filter is applied to.</p>
    */
   VisualIds?: string[];
@@ -2264,6 +2530,7 @@ export interface SheetVisualScopingConfiguration {
  */
 export interface SelectedSheetsFilterScopeConfiguration {
   /**
+   * @public
    * <p>The sheet ID and visual IDs of the sheet and visuals that the filter is applied to.</p>
    */
   SheetVisualScopingConfigurations?: SheetVisualScopingConfiguration[];
@@ -2276,9 +2543,16 @@ export interface SelectedSheetsFilterScopeConfiguration {
  */
 export interface FilterScopeConfiguration {
   /**
+   * @public
    * <p>The configuration for applying a filter to specific sheets.</p>
    */
   SelectedSheets?: SelectedSheetsFilterScopeConfiguration;
+
+  /**
+   * @public
+   * <p>The configuration for applying a filter to all sheets.</p>
+   */
+  AllSheets?: AllSheetsFilterScopeConfiguration;
 }
 
 /**
@@ -2288,27 +2562,32 @@ export interface FilterScopeConfiguration {
  */
 export interface FilterGroup {
   /**
+   * @public
    * <p>The value that uniquely identifies a <code>FilterGroup</code> within a dashboard, template, or analysis.</p>
    */
   FilterGroupId: string | undefined;
 
   /**
+   * @public
    * <p>The list of filters that are present in a <code>FilterGroup</code>.</p>
    */
   Filters: Filter[] | undefined;
 
   /**
+   * @public
    * <p>The configuration that specifies what scope to apply to a <code>FilterGroup</code>.</p>
    *          <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>
    */
   ScopeConfiguration: FilterScopeConfiguration | undefined;
 
   /**
+   * @public
    * <p>The status of the <code>FilterGroup</code>.</p>
    */
   Status?: WidgetStatus | string;
 
   /**
+   * @public
    * <p>The filter new feature which can apply filter group to all data sets. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -2332,16 +2611,19 @@ export interface FilterGroup {
  */
 export interface DynamicDefaultValue {
   /**
+   * @public
    * <p>The column that contains the username.</p>
    */
   UserNameColumn?: ColumnIdentifier;
 
   /**
+   * @public
    * <p>The column that contains the group name.</p>
    */
   GroupNameColumn?: ColumnIdentifier;
 
   /**
+   * @public
    * <p>The column that contains the default value of each user or group.</p>
    */
   DefaultValueColumn: ColumnIdentifier | undefined;
@@ -2353,16 +2635,19 @@ export interface DynamicDefaultValue {
  */
 export interface DateTimeDefaultValues {
   /**
+   * @public
    * <p>The dynamic value of the  <code>DataTimeDefaultValues</code>. Different defaults are displayed according to users, groups, and values mapping.</p>
    */
   DynamicValue?: DynamicDefaultValue;
 
   /**
+   * @public
    * <p>The static values of the <code>DataTimeDefaultValues</code>.</p>
    */
   StaticValues?: Date[];
 
   /**
+   * @public
    * <p>The rolling date of the <code>DataTimeDefaultValues</code>. The date is determined from the dataset based on input expression.</p>
    */
   RollingDate?: RollingDateConfiguration;
@@ -2374,11 +2659,13 @@ export interface DateTimeDefaultValues {
  */
 export interface MappedDataSetParameter {
   /**
+   * @public
    * <p>A unique name that identifies a dataset within the analysis or dashboard.</p>
    */
   DataSetIdentifier: string | undefined;
 
   /**
+   * @public
    * <p>The name of the dataset parameter.</p>
    */
   DataSetParameterName: string | undefined;
@@ -2404,6 +2691,7 @@ export type ValueWhenUnsetOption = (typeof ValueWhenUnsetOption)[keyof typeof Va
  */
 export interface DateTimeValueWhenUnsetConfiguration {
   /**
+   * @public
    * <p>The built-in options for default values. The value can be one of the following:</p>
    *          <ul>
    *             <li>
@@ -2419,6 +2707,7 @@ export interface DateTimeValueWhenUnsetConfiguration {
   ValueWhenUnsetOption?: ValueWhenUnsetOption | string;
 
   /**
+   * @public
    * <p>A custom value that's used when the value of a parameter isn't set.</p>
    */
   CustomValue?: Date;
@@ -2430,26 +2719,31 @@ export interface DateTimeValueWhenUnsetConfiguration {
  */
 export interface DateTimeParameterDeclaration {
   /**
+   * @public
    * <p>The name of the parameter that is being declared.</p>
    */
   Name: string | undefined;
 
   /**
+   * @public
    * <p>The default values of a parameter. If the parameter is a single-value parameter, a maximum of one default value can be provided.</p>
    */
   DefaultValues?: DateTimeDefaultValues;
 
   /**
+   * @public
    * <p>The level of time precision that is used to aggregate <code>DateTime</code> values.</p>
    */
   TimeGranularity?: TimeGranularity | string;
 
   /**
+   * @public
    * <p>The configuration that defines the default value of a <code>DateTime</code> parameter when a value has not been set.</p>
    */
   ValueWhenUnset?: DateTimeValueWhenUnsetConfiguration;
 
   /**
+   * @public
    * <p>A list of dataset parameters that are mapped to an analysis parameter.</p>
    */
   MappedDataSetParameters?: MappedDataSetParameter[];
@@ -2461,11 +2755,13 @@ export interface DateTimeParameterDeclaration {
  */
 export interface DecimalDefaultValues {
   /**
+   * @public
    * <p>The dynamic value of the <code>DecimalDefaultValues</code>. Different defaults are displayed according to users, groups, and values mapping.</p>
    */
   DynamicValue?: DynamicDefaultValue;
 
   /**
+   * @public
    * <p>The static values of the <code>DecimalDefaultValues</code>.</p>
    */
   StaticValues?: number[];
@@ -2491,6 +2787,7 @@ export type ParameterValueType = (typeof ParameterValueType)[keyof typeof Parame
  */
 export interface DecimalValueWhenUnsetConfiguration {
   /**
+   * @public
    * <p>The built-in options for default values. The value can be one of the following:</p>
    *          <ul>
    *             <li>
@@ -2506,6 +2803,7 @@ export interface DecimalValueWhenUnsetConfiguration {
   ValueWhenUnsetOption?: ValueWhenUnsetOption | string;
 
   /**
+   * @public
    * <p>A custom value that's used when the value of a parameter isn't set.</p>
    */
   CustomValue?: number;
@@ -2517,26 +2815,31 @@ export interface DecimalValueWhenUnsetConfiguration {
  */
 export interface DecimalParameterDeclaration {
   /**
+   * @public
    * <p>The value type determines whether the parameter is a single-value or multi-value parameter.</p>
    */
   ParameterValueType: ParameterValueType | string | undefined;
 
   /**
+   * @public
    * <p>The name of the parameter that is being declared.</p>
    */
   Name: string | undefined;
 
   /**
+   * @public
    * <p>The default values of a parameter. If the parameter is a single-value parameter, a maximum of one default value can be provided.</p>
    */
   DefaultValues?: DecimalDefaultValues;
 
   /**
+   * @public
    * <p>The configuration that defines the default value of a <code>Decimal</code> parameter when a value has not been set.</p>
    */
   ValueWhenUnset?: DecimalValueWhenUnsetConfiguration;
 
   /**
+   * @public
    * <p>A list of dataset parameters that are mapped to an analysis parameter.</p>
    */
   MappedDataSetParameters?: MappedDataSetParameter[];
@@ -2548,11 +2851,13 @@ export interface DecimalParameterDeclaration {
  */
 export interface IntegerDefaultValues {
   /**
+   * @public
    * <p>The dynamic value of the <code>IntegerDefaultValues</code>. Different defaults are displayed according to users, groups, and values mapping.</p>
    */
   DynamicValue?: DynamicDefaultValue;
 
   /**
+   * @public
    * <p>The static values of the <code>IntegerDefaultValues</code>.</p>
    */
   StaticValues?: number[];
@@ -2565,6 +2870,7 @@ export interface IntegerDefaultValues {
  */
 export interface IntegerValueWhenUnsetConfiguration {
   /**
+   * @public
    * <p>The built-in options for default values. The value can be one of the following:</p>
    *          <ul>
    *             <li>
@@ -2580,6 +2886,7 @@ export interface IntegerValueWhenUnsetConfiguration {
   ValueWhenUnsetOption?: ValueWhenUnsetOption | string;
 
   /**
+   * @public
    * <p>A custom value that's used when the value of a parameter isn't set.</p>
    */
   CustomValue?: number;
@@ -2591,26 +2898,31 @@ export interface IntegerValueWhenUnsetConfiguration {
  */
 export interface IntegerParameterDeclaration {
   /**
+   * @public
    * <p>The value type determines whether the parameter is a single-value or multi-value parameter.</p>
    */
   ParameterValueType: ParameterValueType | string | undefined;
 
   /**
+   * @public
    * <p>The name of the parameter that is being declared.</p>
    */
   Name: string | undefined;
 
   /**
+   * @public
    * <p>The default values of a parameter. If the parameter is a single-value parameter, a maximum of one default value can be provided.</p>
    */
   DefaultValues?: IntegerDefaultValues;
 
   /**
+   * @public
    * <p>A parameter declaration for the <code>Integer</code> data type.</p>
    */
   ValueWhenUnset?: IntegerValueWhenUnsetConfiguration;
 
   /**
+   * @public
    * <p>A list of dataset parameters that are mapped to an analysis parameter.</p>
    */
   MappedDataSetParameters?: MappedDataSetParameter[];
@@ -2622,11 +2934,13 @@ export interface IntegerParameterDeclaration {
  */
 export interface StringDefaultValues {
   /**
+   * @public
    * <p>The dynamic value of the <code>StringDefaultValues</code>. Different defaults displayed according to users, groups, and values mapping.</p>
    */
   DynamicValue?: DynamicDefaultValue;
 
   /**
+   * @public
    * <p>The static values of the <code>DecimalDefaultValues</code>.</p>
    */
   StaticValues?: string[];
@@ -2638,6 +2952,7 @@ export interface StringDefaultValues {
  */
 export interface StringValueWhenUnsetConfiguration {
   /**
+   * @public
    * <p>The built-in options for default values. The value can be one of the following:</p>
    *          <ul>
    *             <li>
@@ -2653,6 +2968,7 @@ export interface StringValueWhenUnsetConfiguration {
   ValueWhenUnsetOption?: ValueWhenUnsetOption | string;
 
   /**
+   * @public
    * <p>A custom value that's used when the value of a parameter isn't set.</p>
    */
   CustomValue?: string;
@@ -2664,26 +2980,31 @@ export interface StringValueWhenUnsetConfiguration {
  */
 export interface StringParameterDeclaration {
   /**
+   * @public
    * <p>The value type determines whether the parameter is a single-value or multi-value parameter.</p>
    */
   ParameterValueType: ParameterValueType | string | undefined;
 
   /**
+   * @public
    * <p>The name of the parameter that is being declared.</p>
    */
   Name: string | undefined;
 
   /**
+   * @public
    * <p>The default values of a parameter. If the parameter is a single-value parameter, a maximum of one default value can be provided.</p>
    */
   DefaultValues?: StringDefaultValues;
 
   /**
+   * @public
    * <p>The configuration that defines the default value of a <code>String</code> parameter when a value has not been set.</p>
    */
   ValueWhenUnset?: StringValueWhenUnsetConfiguration;
 
   /**
+   * @public
    * <p>A list of dataset parameters that are mapped to an analysis parameter.</p>
    */
   MappedDataSetParameters?: MappedDataSetParameter[];
@@ -2697,24 +3018,46 @@ export interface StringParameterDeclaration {
  */
 export interface ParameterDeclaration {
   /**
+   * @public
    * <p>A parameter declaration for the <code>String</code> data type.</p>
    */
   StringParameterDeclaration?: StringParameterDeclaration;
 
   /**
+   * @public
    * <p>A parameter declaration for the <code>Decimal</code> data type.</p>
    */
   DecimalParameterDeclaration?: DecimalParameterDeclaration;
 
   /**
+   * @public
    * <p>A parameter declaration for the <code>Integer</code> data type.</p>
    */
   IntegerParameterDeclaration?: IntegerParameterDeclaration;
 
   /**
+   * @public
    * <p>A parameter declaration for the <code>DateTime</code> data type.</p>
    */
   DateTimeParameterDeclaration?: DateTimeParameterDeclaration;
+}
+
+/**
+ * @public
+ * <p>A control to display info icons for filters and parameters.</p>
+ */
+export interface SheetControlInfoIconLabelOptions {
+  /**
+   * @public
+   * <p>The visibility configuration of info icon label options.</p>
+   */
+  Visibility?: Visibility | string;
+
+  /**
+   * @public
+   * <p> The text content of info icon.</p>
+   */
+  InfoIconText?: string;
 }
 
 /**
@@ -2754,6 +3097,7 @@ export type RelativeFontSize = (typeof RelativeFontSize)[keyof typeof RelativeFo
  */
 export interface FontSize {
   /**
+   * @public
    * <p>The lexical name for the text size, proportional to its surrounding context.</p>
    */
   Relative?: RelativeFontSize | string;
@@ -2793,6 +3137,7 @@ export type FontWeightName = (typeof FontWeightName)[keyof typeof FontWeightName
  */
 export interface FontWeight {
   /**
+   * @public
    * <p>The lexical name for the level of boldness of the text display.</p>
    */
   Name?: FontWeightName | string;
@@ -2804,26 +3149,31 @@ export interface FontWeight {
  */
 export interface FontConfiguration {
   /**
+   * @public
    * <p>The option that determines the text display size.</p>
    */
   FontSize?: FontSize;
 
   /**
+   * @public
    * <p>Determines the appearance of decorative lines on the text.</p>
    */
   FontDecoration?: FontDecoration | string;
 
   /**
+   * @public
    * <p>Determines the color of the text.</p>
    */
   FontColor?: string;
 
   /**
+   * @public
    * <p>The option that determines the text display weight, or boldness.</p>
    */
   FontWeight?: FontWeight;
 
   /**
+   * @public
    * <p>Determines the text display face that is inherited by the given font family.</p>
    */
   FontStyle?: FontStyle | string;
@@ -2835,16 +3185,19 @@ export interface FontConfiguration {
  */
 export interface LabelOptions {
   /**
+   * @public
    * <p>Determines whether or not the label is visible.</p>
    */
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The font configuration of the label.</p>
    */
   FontConfiguration?: FontConfiguration;
 
   /**
+   * @public
    * <p>The text for the label.</p>
    */
   CustomLabel?: string;
@@ -2856,14 +3209,22 @@ export interface LabelOptions {
  */
 export interface DateTimePickerControlDisplayOptions {
   /**
+   * @public
    * <p>The options to configure the title visibility, name, and font size.</p>
    */
   TitleOptions?: LabelOptions;
 
   /**
+   * @public
    * <p>Customize how dates are formatted in controls.</p>
    */
   DateTimeFormat?: string;
+
+  /**
+   * @public
+   * <p>The configuration of info icon label options.</p>
+   */
+  InfoIconLabelOptions?: SheetControlInfoIconLabelOptions;
 }
 
 /**
@@ -2887,26 +3248,31 @@ export type SheetControlDateTimePickerType =
  */
 export interface FilterDateTimePickerControl {
   /**
+   * @public
    * <p>The ID of the <code>FilterDateTimePickerControl</code>.</p>
    */
   FilterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>FilterDateTimePickerControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source filter ID of the <code>FilterDateTimePickerControl</code>.</p>
    */
   SourceFilterId: string | undefined;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: DateTimePickerControlDisplayOptions;
 
   /**
+   * @public
    * <p>The date time picker type of a <code>FilterDateTimePickerControl</code>. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -2928,11 +3294,13 @@ export interface FilterDateTimePickerControl {
  */
 export interface CascadingControlSource {
   /**
+   * @public
    * <p>The source sheet control ID of a <code>CascadingControlSource</code>.</p>
    */
   SourceSheetControlId?: string;
 
   /**
+   * @public
    * <p>The column identifier that determines which column to look up for the source sheet control.</p>
    */
   ColumnToMatch?: ColumnIdentifier;
@@ -2944,6 +3312,7 @@ export interface CascadingControlSource {
  */
 export interface CascadingControlConfiguration {
   /**
+   * @public
    * <p>A list of source controls that determine the values that are used in the current control.</p>
    */
   SourceControls?: CascadingControlSource[];
@@ -2955,6 +3324,7 @@ export interface CascadingControlConfiguration {
  */
 export interface ListControlSelectAllOptions {
   /**
+   * @public
    * <p>The visibility configuration of the <code>Select all</code> options in a list control.</p>
    */
   Visibility?: Visibility | string;
@@ -2966,15 +3336,23 @@ export interface ListControlSelectAllOptions {
  */
 export interface DropDownControlDisplayOptions {
   /**
+   * @public
    * <p>The configuration of the <code>Select all</code> options in a
    *             dropdown control.</p>
    */
   SelectAllOptions?: ListControlSelectAllOptions;
 
   /**
+   * @public
    * <p>The options to configure the title visibility, name, and font size.</p>
    */
   TitleOptions?: LabelOptions;
+
+  /**
+   * @public
+   * <p>The configuration of info icon label options.</p>
+   */
+  InfoIconLabelOptions?: SheetControlInfoIconLabelOptions;
 }
 
 /**
@@ -2983,6 +3361,7 @@ export interface DropDownControlDisplayOptions {
  */
 export interface FilterSelectableValues {
   /**
+   * @public
    * <p>The values that are used in the <code>FilterSelectableValues</code>.</p>
    */
   Values?: string[];
@@ -3008,26 +3387,31 @@ export type SheetControlListType = (typeof SheetControlListType)[keyof typeof Sh
  */
 export interface FilterDropDownControl {
   /**
+   * @public
    * <p>The ID of the <code>FilterDropDownControl</code>.</p>
    */
   FilterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>FilterDropDownControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source filter ID of the <code>FilterDropDownControl</code>.</p>
    */
   SourceFilterId: string | undefined;
 
   /**
+   * @public
    * <p>The display options of the <code>FilterDropDownControl</code>.</p>
    */
   DisplayOptions?: DropDownControlDisplayOptions;
 
   /**
+   * @public
    * <p>The type of the <code>FilterDropDownControl</code>. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -3043,11 +3427,13 @@ export interface FilterDropDownControl {
   Type?: SheetControlListType | string;
 
   /**
+   * @public
    * <p>A list of selectable values that are used in a control.</p>
    */
   SelectableValues?: FilterSelectableValues;
 
   /**
+   * @public
    * <p>The values that are displayed in a control can be configured to only show values that are valid based on what's selected in other controls.</p>
    */
   CascadingControlConfiguration?: CascadingControlConfiguration;
@@ -3059,6 +3445,7 @@ export interface FilterDropDownControl {
  */
 export interface ListControlSearchOptions {
   /**
+   * @public
    * <p>The visibility configuration of the search options in a list control.</p>
    */
   Visibility?: Visibility | string;
@@ -3070,19 +3457,28 @@ export interface ListControlSearchOptions {
  */
 export interface ListControlDisplayOptions {
   /**
+   * @public
    * <p>The configuration of the search options in a list control.</p>
    */
   SearchOptions?: ListControlSearchOptions;
 
   /**
+   * @public
    * <p>The configuration of the <code>Select all</code> options in a list control.</p>
    */
   SelectAllOptions?: ListControlSelectAllOptions;
 
   /**
+   * @public
    * <p>The options to configure the title visibility, name, and font size.</p>
    */
   TitleOptions?: LabelOptions;
+
+  /**
+   * @public
+   * <p>The configuration of info icon label options.</p>
+   */
+  InfoIconLabelOptions?: SheetControlInfoIconLabelOptions;
 }
 
 /**
@@ -3091,26 +3487,31 @@ export interface ListControlDisplayOptions {
  */
 export interface FilterListControl {
   /**
+   * @public
    * <p>The ID of the <code>FilterListControl</code>.</p>
    */
   FilterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>FilterListControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source filter ID of the <code>FilterListControl</code>.</p>
    */
   SourceFilterId: string | undefined;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: ListControlDisplayOptions;
 
   /**
+   * @public
    * <p>The type of <code>FilterListControl</code>. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -3126,11 +3527,13 @@ export interface FilterListControl {
   Type?: SheetControlListType | string;
 
   /**
+   * @public
    * <p>A list of selectable values that are used in a control.</p>
    */
   SelectableValues?: FilterSelectableValues;
 
   /**
+   * @public
    * <p>The values that are displayed in a control can be configured to only show values that are valid based on what's selected in other controls.</p>
    */
   CascadingControlConfiguration?: CascadingControlConfiguration;
@@ -3142,14 +3545,22 @@ export interface FilterListControl {
  */
 export interface RelativeDateTimeControlDisplayOptions {
   /**
+   * @public
    * <p>The options to configure the title visibility, name, and font size.</p>
    */
   TitleOptions?: LabelOptions;
 
   /**
+   * @public
    * <p>Customize how dates are formatted in controls.</p>
    */
   DateTimeFormat?: string;
+
+  /**
+   * @public
+   * <p>The configuration of info icon label options.</p>
+   */
+  InfoIconLabelOptions?: SheetControlInfoIconLabelOptions;
 }
 
 /**
@@ -3158,21 +3569,25 @@ export interface RelativeDateTimeControlDisplayOptions {
  */
 export interface FilterRelativeDateTimeControl {
   /**
+   * @public
    * <p>The ID of the <code>FilterTextAreaControl</code>.</p>
    */
   FilterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>FilterTextAreaControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source filter ID of the <code>FilterTextAreaControl</code>.</p>
    */
   SourceFilterId: string | undefined;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: RelativeDateTimeControlDisplayOptions;
@@ -3184,9 +3599,16 @@ export interface FilterRelativeDateTimeControl {
  */
 export interface SliderControlDisplayOptions {
   /**
+   * @public
    * <p>The options to configure the title visibility, name, and font size.</p>
    */
   TitleOptions?: LabelOptions;
+
+  /**
+   * @public
+   * <p>The configuration of info icon label options.</p>
+   */
+  InfoIconLabelOptions?: SheetControlInfoIconLabelOptions;
 }
 
 /**
@@ -3209,26 +3631,31 @@ export type SheetControlSliderType = (typeof SheetControlSliderType)[keyof typeo
  */
 export interface FilterSliderControl {
   /**
+   * @public
    * <p>The ID of the <code>FilterSliderControl</code>.</p>
    */
   FilterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>FilterSliderControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source filter ID of the <code>FilterSliderControl</code>.</p>
    */
   SourceFilterId: string | undefined;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: SliderControlDisplayOptions;
 
   /**
+   * @public
    * <p>The type of <code>FilterSliderControl</code>. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -3244,16 +3671,19 @@ export interface FilterSliderControl {
   Type?: SheetControlSliderType | string;
 
   /**
+   * @public
    * <p>The smaller value that is displayed at the left of the slider.</p>
    */
   MaximumValue: number | undefined;
 
   /**
+   * @public
    * <p>The larger value that is displayed at the right of the slider.</p>
    */
   MinimumValue: number | undefined;
 
   /**
+   * @public
    * <p>The number of increments that the slider bar is divided into.</p>
    */
   StepSize: number | undefined;
@@ -3265,6 +3695,7 @@ export interface FilterSliderControl {
  */
 export interface TextControlPlaceholderOptions {
   /**
+   * @public
    * <p>The visibility configuration of the placeholder options in a text control.</p>
    */
   Visibility?: Visibility | string;
@@ -3276,14 +3707,22 @@ export interface TextControlPlaceholderOptions {
  */
 export interface TextAreaControlDisplayOptions {
   /**
+   * @public
    * <p>The options to configure the title visibility, name, and font size.</p>
    */
   TitleOptions?: LabelOptions;
 
   /**
+   * @public
    * <p>The configuration of the placeholder options in a text area control.</p>
    */
   PlaceholderOptions?: TextControlPlaceholderOptions;
+
+  /**
+   * @public
+   * <p>The configuration of info icon label options.</p>
+   */
+  InfoIconLabelOptions?: SheetControlInfoIconLabelOptions;
 }
 
 /**
@@ -3292,26 +3731,31 @@ export interface TextAreaControlDisplayOptions {
  */
 export interface FilterTextAreaControl {
   /**
+   * @public
    * <p>The ID of the <code>FilterTextAreaControl</code>.</p>
    */
   FilterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>FilterTextAreaControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source filter ID of the <code>FilterTextAreaControl</code>.</p>
    */
   SourceFilterId: string | undefined;
 
   /**
+   * @public
    * <p>The delimiter that is used to separate the lines in text.</p>
    */
   Delimiter?: string;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: TextAreaControlDisplayOptions;
@@ -3323,14 +3767,22 @@ export interface FilterTextAreaControl {
  */
 export interface TextFieldControlDisplayOptions {
   /**
+   * @public
    * <p>The options to configure the title visibility, name, and font size.</p>
    */
   TitleOptions?: LabelOptions;
 
   /**
+   * @public
    * <p>The configuration of the placeholder options in a text field control.</p>
    */
   PlaceholderOptions?: TextControlPlaceholderOptions;
+
+  /**
+   * @public
+   * <p>The configuration of info icon label options.</p>
+   */
+  InfoIconLabelOptions?: SheetControlInfoIconLabelOptions;
 }
 
 /**
@@ -3339,21 +3791,25 @@ export interface TextFieldControlDisplayOptions {
  */
 export interface FilterTextFieldControl {
   /**
+   * @public
    * <p>The ID of the <code>FilterTextFieldControl</code>.</p>
    */
   FilterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>FilterTextFieldControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source filter ID of the <code>FilterTextFieldControl</code>.</p>
    */
   SourceFilterId: string | undefined;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: TextFieldControlDisplayOptions;
@@ -3366,36 +3822,43 @@ export interface FilterTextFieldControl {
  */
 export interface FilterControl {
   /**
+   * @public
    * <p>A control from a date filter that is used to specify date and time.</p>
    */
   DateTimePicker?: FilterDateTimePickerControl;
 
   /**
+   * @public
    * <p>A control to display a list of buttons or boxes. This is used to select either a single value or multiple values.</p>
    */
   List?: FilterListControl;
 
   /**
+   * @public
    * <p>A control to display a dropdown list with buttons that are used to select a single value.</p>
    */
   Dropdown?: FilterDropDownControl;
 
   /**
+   * @public
    * <p>A control to display a text box that is used to enter a single entry.</p>
    */
   TextField?: FilterTextFieldControl;
 
   /**
+   * @public
    * <p>A control to display a text box that is used to enter multiple entries.</p>
    */
   TextArea?: FilterTextAreaControl;
 
   /**
+   * @public
    * <p>A control to display a horizontal toggle bar. This is used to change a value by sliding the toggle.</p>
    */
   Slider?: FilterSliderControl;
 
   /**
+   * @public
    * <p>A control from a date filter that is used to specify the relative date.</p>
    */
   RelativeDateTime?: FilterRelativeDateTimeControl;
@@ -3407,11 +3870,13 @@ export interface FilterControl {
  */
 export interface FreeFormLayoutElementBackgroundStyle {
   /**
+   * @public
    * <p>The background visibility of a free-form layout element.</p>
    */
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The background color of a free-form layout element.</p>
    */
   Color?: string;
@@ -3423,11 +3888,13 @@ export interface FreeFormLayoutElementBackgroundStyle {
  */
 export interface FreeFormLayoutElementBorderStyle {
   /**
+   * @public
    * <p>The border visibility of a free-form layout element.</p>
    */
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The border color of a free-form layout element.</p>
    */
   Color?: string;
@@ -3455,6 +3922,7 @@ export type LayoutElementType = (typeof LayoutElementType)[keyof typeof LayoutEl
  */
 export interface LoadingAnimation {
   /**
+   * @public
    * <p>The visibility configuration of <code>LoadingAnimation</code>.</p>
    */
   Visibility?: Visibility | string;
@@ -3466,6 +3934,7 @@ export interface LoadingAnimation {
  */
 export interface SheetElementConfigurationOverrides {
   /**
+   * @public
    * <p>Determines whether or not the overrides are visible. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -3489,11 +3958,13 @@ export interface SheetElementConfigurationOverrides {
  */
 export interface SheetElementRenderingRule {
   /**
+   * @public
    * <p>The expression of the rendering rules of a sheet.</p>
    */
   Expression: string | undefined;
 
   /**
+   * @public
    * <p>The override configuration of the rendering rules of a sheet.</p>
    */
   ConfigurationOverrides: SheetElementConfigurationOverrides | undefined;
@@ -3505,61 +3976,73 @@ export interface SheetElementRenderingRule {
  */
 export interface FreeFormLayoutElement {
   /**
+   * @public
    * <p>A unique identifier for an element within a free-form layout.</p>
    */
   ElementId: string | undefined;
 
   /**
+   * @public
    * <p>The type of element.</p>
    */
   ElementType: LayoutElementType | string | undefined;
 
   /**
+   * @public
    * <p>The x-axis coordinate of the element.</p>
    */
   XAxisLocation: string | undefined;
 
   /**
+   * @public
    * <p>The y-axis coordinate of the element.</p>
    */
   YAxisLocation: string | undefined;
 
   /**
+   * @public
    * <p>The width of an element within a free-form layout.</p>
    */
   Width: string | undefined;
 
   /**
+   * @public
    * <p>The height of an element within a free-form layout.</p>
    */
   Height: string | undefined;
 
   /**
+   * @public
    * <p>The visibility of an element within a free-form layout.</p>
    */
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The rendering rules that determine when an element should be displayed within a free-form layout.</p>
    */
   RenderingRules?: SheetElementRenderingRule[];
 
   /**
+   * @public
    * <p>The border style configuration of a free-form layout element.</p>
    */
   BorderStyle?: FreeFormLayoutElementBorderStyle;
 
   /**
+   * @public
    * <p>The border style configuration of a free-form layout element. This border style is used when the element is selected.</p>
    */
   SelectedBorderStyle?: FreeFormLayoutElementBorderStyle;
 
   /**
+   * @public
    * <p>The background style configuration of a free-form layout element.</p>
    */
   BackgroundStyle?: FreeFormLayoutElementBackgroundStyle;
 
   /**
+   * @public
    * <p>The loading animation configuration of a free-form layout element.</p>
    */
   LoadingAnimation?: LoadingAnimation;
@@ -3571,11 +4054,13 @@ export interface FreeFormLayoutElement {
  */
 export interface FreeFormLayoutConfiguration {
   /**
+   * @public
    * <p>The elements that are included in a free-form layout.</p>
    */
   Elements: FreeFormLayoutElement[] | undefined;
 
   /**
+   * @public
    * <p>Configuration options for the canvas of a free-form layout.</p>
    */
   CanvasSizeOptions?: FreeFormLayoutCanvasSizeOptions;
@@ -3587,31 +4072,37 @@ export interface FreeFormLayoutConfiguration {
  */
 export interface GridLayoutElement {
   /**
+   * @public
    * <p>A unique identifier for an element within a grid layout.</p>
    */
   ElementId: string | undefined;
 
   /**
+   * @public
    * <p>The type of element.</p>
    */
   ElementType: LayoutElementType | string | undefined;
 
   /**
+   * @public
    * <p>The column index for the upper left corner of an element.</p>
    */
   ColumnIndex?: number;
 
   /**
+   * @public
    * <p>The width of a grid element expressed as a number of grid columns.</p>
    */
   ColumnSpan: number | undefined;
 
   /**
+   * @public
    * <p>The row index for the upper left corner of an element.</p>
    */
   RowIndex?: number;
 
   /**
+   * @public
    * <p>The height of a grid element expressed as a number of grid rows.</p>
    */
   RowSpan: number | undefined;
@@ -3624,11 +4115,13 @@ export interface GridLayoutElement {
  */
 export interface GridLayoutConfiguration {
   /**
+   * @public
    * <p>The elements that are included in a grid layout.</p>
    */
   Elements: GridLayoutElement[] | undefined;
 
   /**
+   * @public
    * <p>Configuration options for the canvas of a grid layout.</p>
    */
   CanvasSizeOptions?: GridLayoutCanvasSizeOptions;
@@ -3640,6 +4133,7 @@ export interface GridLayoutConfiguration {
  */
 export interface FreeFormSectionLayoutConfiguration {
   /**
+   * @public
    * <p>The elements that are included in the free-form layout.</p>
    */
   Elements: FreeFormLayoutElement[] | undefined;
@@ -3651,6 +4145,7 @@ export interface FreeFormSectionLayoutConfiguration {
  */
 export interface SectionLayoutConfiguration {
   /**
+   * @public
    * <p>The free-form layout configuration of a section.</p>
    */
   FreeFormLayout: FreeFormSectionLayoutConfiguration | undefined;
@@ -3662,6 +4157,7 @@ export interface SectionLayoutConfiguration {
  */
 export interface BodySectionContent {
   /**
+   * @public
    * <p>The layout configuration of a body section.</p>
    */
   Layout?: SectionLayoutConfiguration;
@@ -3687,6 +4183,7 @@ export type SectionPageBreakStatus = (typeof SectionPageBreakStatus)[keyof typeo
  */
 export interface SectionAfterPageBreak {
   /**
+   * @public
    * <p>The option that enables or disables a page break at the end of a section.</p>
    */
   Status?: SectionPageBreakStatus | string;
@@ -3698,6 +4195,7 @@ export interface SectionAfterPageBreak {
  */
 export interface SectionPageBreakConfiguration {
   /**
+   * @public
    * <p>The configuration of a page break after a section.</p>
    */
   After?: SectionAfterPageBreak;
@@ -3709,12 +4207,14 @@ export interface SectionPageBreakConfiguration {
  */
 export interface SectionStyle {
   /**
+   * @public
    * <p>The height of a section.</p>
    *          <p>Heights can only be defined for header and footer sections. The default height margin is 0.5 inches. </p>
    */
   Height?: string;
 
   /**
+   * @public
    * <p>The spacing between section content and its top, bottom, left, and right edges.</p>
    *          <p>There is no padding by default.</p>
    */
@@ -3727,21 +4227,25 @@ export interface SectionStyle {
  */
 export interface BodySectionConfiguration {
   /**
+   * @public
    * <p>The unique identifier of a body section.</p>
    */
   SectionId: string | undefined;
 
   /**
+   * @public
    * <p>The configuration of content in a body section.</p>
    */
   Content: BodySectionContent | undefined;
 
   /**
+   * @public
    * <p>The style options of a body section.</p>
    */
   Style?: SectionStyle;
 
   /**
+   * @public
    * <p>The configuration of a page break for a section.</p>
    */
   PageBreakConfiguration?: SectionPageBreakConfiguration;
@@ -3753,16 +4257,19 @@ export interface BodySectionConfiguration {
  */
 export interface HeaderFooterSectionConfiguration {
   /**
+   * @public
    * <p>The unique identifier of the header or footer section.</p>
    */
   SectionId: string | undefined;
 
   /**
+   * @public
    * <p>The layout configuration of the header or footer section.</p>
    */
   Layout: SectionLayoutConfiguration | undefined;
 
   /**
+   * @public
    * <p>The style options of a header or footer section.</p>
    */
   Style?: SectionStyle;
@@ -3775,21 +4282,25 @@ export interface HeaderFooterSectionConfiguration {
  */
 export interface SectionBasedLayoutConfiguration {
   /**
+   * @public
    * <p>A list of header section configurations.</p>
    */
   HeaderSections: HeaderFooterSectionConfiguration[] | undefined;
 
   /**
+   * @public
    * <p>A list of body section configurations.</p>
    */
   BodySections: BodySectionConfiguration[] | undefined;
 
   /**
+   * @public
    * <p>A list of footer section configurations.</p>
    */
   FooterSections: HeaderFooterSectionConfiguration[] | undefined;
 
   /**
+   * @public
    * <p>The options for the canvas of a section-based layout.</p>
    */
   CanvasSizeOptions: SectionBasedLayoutCanvasSizeOptions | undefined;
@@ -3802,16 +4313,19 @@ export interface SectionBasedLayoutConfiguration {
  */
 export interface LayoutConfiguration {
   /**
+   * @public
    * <p>A type of layout that can be used on a sheet. In a grid layout, visuals snap to a grid with standard spacing and alignment. Dashboards are displayed as designed, with options to fit to screen or view at actual size. A grid layout can be configured to behave in one of two ways when the viewport is resized: <code>FIXED</code> or <code>RESPONSIVE</code>.</p>
    */
   GridLayout?: GridLayoutConfiguration;
 
   /**
+   * @public
    * <p>A free-form is optimized for a fixed width and has more control over the exact placement of layout elements.</p>
    */
   FreeFormLayout?: FreeFormLayoutConfiguration;
 
   /**
+   * @public
    * <p>A section based layout organizes visuals into multiple sections and has customized header, footer and page break.</p>
    */
   SectionBasedLayout?: SectionBasedLayoutConfiguration;
@@ -3825,6 +4339,7 @@ export interface LayoutConfiguration {
  */
 export interface Layout {
   /**
+   * @public
    * <p>The configuration that determines what the type of layout for a sheet.</p>
    */
   Configuration: LayoutConfiguration | undefined;
@@ -3836,21 +4351,25 @@ export interface Layout {
  */
 export interface ParameterDateTimePickerControl {
   /**
+   * @public
    * <p>The ID of the <code>ParameterDateTimePickerControl</code>.</p>
    */
   ParameterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>ParameterDateTimePickerControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The name of the <code>ParameterDateTimePickerControl</code>.</p>
    */
   SourceParameterName: string | undefined;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: DateTimePickerControlDisplayOptions;
@@ -3862,11 +4381,13 @@ export interface ParameterDateTimePickerControl {
  */
 export interface ParameterSelectableValues {
   /**
+   * @public
    * <p>The values that are used in <code>ParameterSelectableValues</code>.</p>
    */
   Values?: string[];
 
   /**
+   * @public
    * <p>The column identifier that fetches values from the data set.</p>
    */
   LinkToDataSetColumn?: ColumnIdentifier;
@@ -3878,36 +4399,43 @@ export interface ParameterSelectableValues {
  */
 export interface ParameterDropDownControl {
   /**
+   * @public
    * <p>The ID of the <code>ParameterDropDownControl</code>.</p>
    */
   ParameterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>ParameterDropDownControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source parameter name of the <code>ParameterDropDownControl</code>.</p>
    */
   SourceParameterName: string | undefined;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: DropDownControlDisplayOptions;
 
   /**
+   * @public
    * <p>The type parameter name of the <code>ParameterDropDownControl</code>.</p>
    */
   Type?: SheetControlListType | string;
 
   /**
+   * @public
    * <p>A list of selectable values that are used in a control.</p>
    */
   SelectableValues?: ParameterSelectableValues;
 
   /**
+   * @public
    * <p>The values that are displayed in a control can be configured to only show values that are valid based on what's selected in other controls.</p>
    */
   CascadingControlConfiguration?: CascadingControlConfiguration;
@@ -3919,36 +4447,43 @@ export interface ParameterDropDownControl {
  */
 export interface ParameterListControl {
   /**
+   * @public
    * <p>The ID of the <code>ParameterListControl</code>.</p>
    */
   ParameterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>ParameterListControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source parameter name of the <code>ParameterListControl</code>.</p>
    */
   SourceParameterName: string | undefined;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: ListControlDisplayOptions;
 
   /**
+   * @public
    * <p>The type of <code>ParameterListControl</code>.</p>
    */
   Type?: SheetControlListType | string;
 
   /**
+   * @public
    * <p>A list of selectable values that are used in a control.</p>
    */
   SelectableValues?: ParameterSelectableValues;
 
   /**
+   * @public
    * <p>The values that are displayed in a control can be configured to only show values that are valid based on what's selected in other controls.</p>
    */
   CascadingControlConfiguration?: CascadingControlConfiguration;
@@ -3960,36 +4495,43 @@ export interface ParameterListControl {
  */
 export interface ParameterSliderControl {
   /**
+   * @public
    * <p>The ID of the <code>ParameterSliderControl</code>.</p>
    */
   ParameterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>ParameterSliderControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source parameter name of the <code>ParameterSliderControl</code>.</p>
    */
   SourceParameterName: string | undefined;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: SliderControlDisplayOptions;
 
   /**
+   * @public
    * <p>The smaller value that is displayed at the left of the slider.</p>
    */
   MaximumValue: number | undefined;
 
   /**
+   * @public
    * <p>The larger value that is displayed at the right of the slider.</p>
    */
   MinimumValue: number | undefined;
 
   /**
+   * @public
    * <p>The number of increments that the slider bar is divided into.</p>
    */
   StepSize: number | undefined;
@@ -4001,26 +4543,31 @@ export interface ParameterSliderControl {
  */
 export interface ParameterTextAreaControl {
   /**
+   * @public
    * <p>The ID of the <code>ParameterTextAreaControl</code>.</p>
    */
   ParameterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>ParameterTextAreaControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source parameter name of the <code>ParameterTextAreaControl</code>.</p>
    */
   SourceParameterName: string | undefined;
 
   /**
+   * @public
    * <p>The delimiter that is used to separate the lines in text.</p>
    */
   Delimiter?: string;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: TextAreaControlDisplayOptions;
@@ -4032,21 +4579,25 @@ export interface ParameterTextAreaControl {
  */
 export interface ParameterTextFieldControl {
   /**
+   * @public
    * <p>The ID of the <code>ParameterTextFieldControl</code>.</p>
    */
   ParameterControlId: string | undefined;
 
   /**
+   * @public
    * <p>The title of the <code>ParameterTextFieldControl</code>.</p>
    */
   Title: string | undefined;
 
   /**
+   * @public
    * <p>The source parameter name of the <code>ParameterTextFieldControl</code>.</p>
    */
   SourceParameterName: string | undefined;
 
   /**
+   * @public
    * <p>The display options of a control.</p>
    */
   DisplayOptions?: TextFieldControlDisplayOptions;
@@ -4059,31 +4610,37 @@ export interface ParameterTextFieldControl {
  */
 export interface ParameterControl {
   /**
+   * @public
    * <p>A control from a date parameter that specifies date and time.</p>
    */
   DateTimePicker?: ParameterDateTimePickerControl;
 
   /**
+   * @public
    * <p>A control to display a list with buttons or boxes that are used to select either a single value or multiple values.</p>
    */
   List?: ParameterListControl;
 
   /**
+   * @public
    * <p>A control to display a dropdown list with buttons that are used to select a single value.</p>
    */
   Dropdown?: ParameterDropDownControl;
 
   /**
+   * @public
    * <p>A control to display a text box that is used to enter a single entry.</p>
    */
   TextField?: ParameterTextFieldControl;
 
   /**
+   * @public
    * <p>A control to display a text box that is used to enter multiple entries.</p>
    */
   TextArea?: ParameterTextAreaControl;
 
   /**
+   * @public
    * <p>A control to display a horizontal toggle bar. This is used to change a value by sliding the toggle.</p>
    */
   Slider?: ParameterSliderControl;
@@ -4095,6 +4652,7 @@ export interface ParameterControl {
  */
 export interface SheetControlLayoutConfiguration {
   /**
+   * @public
    * <p>The configuration that determines the elements and canvas size options of sheet control.</p>
    */
   GridLayout?: GridLayoutConfiguration;
@@ -4106,6 +4664,7 @@ export interface SheetControlLayoutConfiguration {
  */
 export interface SheetControlLayout {
   /**
+   * @public
    * <p>The configuration that determines the elements and canvas size options of sheet control.</p>
    */
   Configuration: SheetControlLayoutConfiguration | undefined;
@@ -4117,11 +4676,13 @@ export interface SheetControlLayout {
  */
 export interface SheetTextBox {
   /**
+   * @public
    * <p>The unique identifier for a text box. This identifier must be unique within the context of a dashboard, template, or analysis. Two dashboards, analyses, or templates can have text boxes that share identifiers.</p>
    */
   SheetTextBoxId: string | undefined;
 
   /**
+   * @public
    * <p>The content that is displayed in the text box.</p>
    */
   Content?: string;
@@ -4147,11 +4708,13 @@ export type SelectedFieldOptions = (typeof SelectedFieldOptions)[keyof typeof Se
  */
 export interface FilterOperationSelectedFieldsConfiguration {
   /**
+   * @public
    * <p>Chooses the fields that are filtered in <code>CustomActionFilterOperation</code>.</p>
    */
   SelectedFields?: string[];
 
   /**
+   * @public
    * <p>A structure that contains the options that choose which fields are filtered in the <code>CustomActionFilterOperation</code>.</p>
    *          <p>Valid values are defined as follows:</p>
    *          <ul>
@@ -4164,6 +4727,7 @@ export interface FilterOperationSelectedFieldsConfiguration {
   SelectedFieldOptions?: SelectedFieldOptions | string;
 
   /**
+   * @public
    * <p>The selected columns of a dataset.</p>
    */
   SelectedColumns?: ColumnIdentifier[];
@@ -4189,11 +4753,13 @@ export type TargetVisualOptions = (typeof TargetVisualOptions)[keyof typeof Targ
  */
 export interface SameSheetTargetVisualConfiguration {
   /**
+   * @public
    * <p>A list of the target visual IDs that are located in the same sheet of the analysis.</p>
    */
   TargetVisuals?: string[];
 
   /**
+   * @public
    * <p>The options that choose the target visual in the same sheet.</p>
    *          <p>Valid values are defined as follows:</p>
    *          <ul>
@@ -4213,6 +4779,7 @@ export interface SameSheetTargetVisualConfiguration {
  */
 export interface FilterOperationTargetVisualsConfiguration {
   /**
+   * @public
    * <p>The configuration of the same-sheet target visuals that you want to be filtered.</p>
    */
   SameSheetTargetVisualConfiguration?: SameSheetTargetVisualConfiguration;
@@ -4224,11 +4791,13 @@ export interface FilterOperationTargetVisualsConfiguration {
  */
 export interface CustomActionFilterOperation {
   /**
+   * @public
    * <p>The configuration that chooses the fields to be filtered.</p>
    */
   SelectedFieldsConfiguration: FilterOperationSelectedFieldsConfiguration | undefined;
 
   /**
+   * @public
    * <p>The configuration that chooses the target visuals to be filtered.</p>
    */
   TargetVisualsConfiguration: FilterOperationTargetVisualsConfiguration | undefined;
@@ -4240,6 +4809,7 @@ export interface CustomActionFilterOperation {
  */
 export interface LocalNavigationConfiguration {
   /**
+   * @public
    * <p>The sheet that is targeted for navigation in the same analysis.</p>
    */
   TargetSheetId: string | undefined;
@@ -4252,6 +4822,7 @@ export interface LocalNavigationConfiguration {
  */
 export interface CustomActionNavigationOperation {
   /**
+   * @public
    * <p>The configuration that chooses the navigation target.</p>
    */
   LocalNavigationConfiguration?: LocalNavigationConfiguration;
@@ -4264,21 +4835,25 @@ export interface CustomActionNavigationOperation {
  */
 export interface CustomParameterValues {
   /**
+   * @public
    * <p>A list of string-type parameter values.</p>
    */
   StringValues?: string[];
 
   /**
+   * @public
    * <p>A list of integer-type parameter values.</p>
    */
   IntegerValues?: number[];
 
   /**
+   * @public
    * <p>A list of decimal-type parameter values.</p>
    */
   DecimalValues?: number[];
 
   /**
+   * @public
    * <p>A list of datetime-type parameter values.</p>
    */
   DateTimeValues?: Date[];
@@ -4290,11 +4865,13 @@ export interface CustomParameterValues {
  */
 export interface CustomValuesConfiguration {
   /**
+   * @public
    * <p>Includes the null value in custom action parameter values.</p>
    */
   IncludeNullValue?: boolean;
 
   /**
+   * @public
    * <p>The customized parameter values.</p>
    *          <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>
    */
@@ -4321,26 +4898,31 @@ export type SelectAllValueOptions = (typeof SelectAllValueOptions)[keyof typeof 
  */
 export interface DestinationParameterValueConfiguration {
   /**
+   * @public
    * <p>The configuration of custom values for destination parameter in <code>DestinationParameterValueConfiguration</code>.</p>
    */
   CustomValuesConfiguration?: CustomValuesConfiguration;
 
   /**
+   * @public
    * <p>The configuration that selects all options.</p>
    */
   SelectAllValueOptions?: SelectAllValueOptions | string;
 
   /**
+   * @public
    * <p>The source parameter name of the destination parameter.</p>
    */
   SourceParameterName?: string;
 
   /**
+   * @public
    * <p>The source field ID of the destination parameter.</p>
    */
   SourceField?: string;
 
   /**
+   * @public
    * <p>A column of a data set.</p>
    */
   SourceColumn?: ColumnIdentifier;
@@ -4352,11 +4934,13 @@ export interface DestinationParameterValueConfiguration {
  */
 export interface SetParameterValueConfiguration {
   /**
+   * @public
    * <p>The destination parameter name of the <code>SetParameterValueConfiguration</code>.</p>
    */
   DestinationParameterName: string | undefined;
 
   /**
+   * @public
    * <p>The configuration of destination parameter values.</p>
    *          <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>
    */
@@ -4369,6 +4953,7 @@ export interface SetParameterValueConfiguration {
  */
 export interface CustomActionSetParametersOperation {
   /**
+   * @public
    * <p>The parameter that determines the value configuration.</p>
    */
   ParameterValueConfigurations: SetParameterValueConfiguration[] | undefined;
@@ -4395,11 +4980,13 @@ export type URLTargetConfiguration = (typeof URLTargetConfiguration)[keyof typeo
  */
 export interface CustomActionURLOperation {
   /**
+   * @public
    * <p>THe URL link of the <code>CustomActionURLOperation</code>.</p>
    */
   URLTemplate: string | undefined;
 
   /**
+   * @public
    * <p>The target of the <code>CustomActionURLOperation</code>.</p>
    *          <p>Valid values are defined as follows:</p>
    *          <ul>
@@ -4427,21 +5014,25 @@ export interface CustomActionURLOperation {
  */
 export interface VisualCustomActionOperation {
   /**
+   * @public
    * <p>The filter operation that filters data included in a visual or in an entire sheet.</p>
    */
   FilterOperation?: CustomActionFilterOperation;
 
   /**
+   * @public
    * <p>The navigation operation that navigates between different sheets in the same analysis.</p>
    */
   NavigationOperation?: CustomActionNavigationOperation;
 
   /**
+   * @public
    * <p>The URL operation that opens a link to another webpage.</p>
    */
   URLOperation?: CustomActionURLOperation;
 
   /**
+   * @public
    * <p>The set parameter operation that sets parameters in custom action.</p>
    */
   SetParametersOperation?: CustomActionSetParametersOperation;
@@ -4467,21 +5058,25 @@ export type VisualCustomActionTrigger = (typeof VisualCustomActionTrigger)[keyof
  */
 export interface VisualCustomAction {
   /**
+   * @public
    * <p>The ID of the <code>VisualCustomAction</code>.</p>
    */
   CustomActionId: string | undefined;
 
   /**
+   * @public
    * <p>The name of the <code>VisualCustomAction</code>.</p>
    */
   Name: string | undefined;
 
   /**
+   * @public
    * <p>The status of the <code>VisualCustomAction</code>.</p>
    */
   Status?: WidgetStatus | string;
 
   /**
+   * @public
    * <p>The trigger of the <code>VisualCustomAction</code>.</p>
    *          <p>Valid values are defined as follows:</p>
    *          <ul>
@@ -4498,6 +5093,7 @@ export interface VisualCustomAction {
   Trigger: VisualCustomActionTrigger | string | undefined;
 
   /**
+   * @public
    * <p>A list of <code>VisualCustomActionOperations</code>.</p>
    *          <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>
    */
@@ -4525,6 +5121,7 @@ export type BarsArrangement = (typeof BarsArrangement)[keyof typeof BarsArrangem
  */
 export interface DateAxisOptions {
   /**
+   * @public
    * <p>Determines whether or not missing dates are displayed.</p>
    */
   MissingDateVisibility?: Visibility | string;
@@ -4542,11 +5139,13 @@ export interface AxisDisplayDataDrivenRange {}
  */
 export interface AxisDisplayMinMaxRange {
   /**
+   * @public
    * <p>The minimum setup for an axis display range.</p>
    */
   Minimum?: number;
 
   /**
+   * @public
    * <p>The maximum setup for an axis display range.</p>
    */
   Maximum?: number;
@@ -4559,11 +5158,13 @@ export interface AxisDisplayMinMaxRange {
  */
 export interface AxisDisplayRange {
   /**
+   * @public
    * <p>The minimum and maximum setup of an axis display range.</p>
    */
   MinMax?: AxisDisplayMinMaxRange;
 
   /**
+   * @public
    * <p>The data-driven setup of an axis display range.</p>
    */
   DataDriven?: AxisDisplayDataDrivenRange;
@@ -4576,11 +5177,13 @@ export interface AxisDisplayRange {
  */
 export interface AxisLinearScale {
   /**
+   * @public
    * <p>The step count setup of a linear axis.</p>
    */
   StepCount?: number;
 
   /**
+   * @public
    * <p>The step size setup of a linear axis.</p>
    */
   StepSize?: number;
@@ -4592,6 +5195,7 @@ export interface AxisLinearScale {
  */
 export interface AxisLogarithmicScale {
   /**
+   * @public
    * <p>The base setup of a logarithmic axis scale.</p>
    */
   Base?: number;
@@ -4605,11 +5209,13 @@ export interface AxisLogarithmicScale {
  */
 export interface AxisScale {
   /**
+   * @public
    * <p>The linear axis scale setup.</p>
    */
   Linear?: AxisLinearScale;
 
   /**
+   * @public
    * <p>The logarithmic axis scale setup.</p>
    */
   Logarithmic?: AxisLogarithmicScale;
@@ -4621,11 +5227,13 @@ export interface AxisScale {
  */
 export interface NumericAxisOptions {
   /**
+   * @public
    * <p>The scale setup of a numeric axis.</p>
    */
   Scale?: AxisScale;
 
   /**
+   * @public
    * <p>The range setup of a numeric axis.</p>
    */
   Range?: AxisDisplayRange;
@@ -4638,11 +5246,13 @@ export interface NumericAxisOptions {
  */
 export interface AxisDataOptions {
   /**
+   * @public
    * <p>The options for an axis with a numeric field.</p>
    */
   NumericAxisOptions?: NumericAxisOptions;
 
   /**
+   * @public
    * <p>The options for an axis with a date field.</p>
    */
   DateAxisOptions?: DateAxisOptions;
@@ -4654,11 +5264,13 @@ export interface AxisDataOptions {
  */
 export interface PercentVisibleRange {
   /**
+   * @public
    * <p>The lower bound of the range.</p>
    */
   From?: number;
 
   /**
+   * @public
    * <p>The top bound of the range.</p>
    */
   To?: number;
@@ -4670,6 +5282,7 @@ export interface PercentVisibleRange {
  */
 export interface VisibleRangeOptions {
   /**
+   * @public
    * <p>The percent range in the visible range.</p>
    */
   PercentRange?: PercentVisibleRange;
@@ -4681,11 +5294,13 @@ export interface VisibleRangeOptions {
  */
 export interface ScrollBarOptions {
   /**
+   * @public
    * <p>The visibility of the data zoom scroll bar.</p>
    */
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The visibility range for the data zoom scroll bar.</p>
    */
   VisibleRange?: VisibleRangeOptions;
@@ -4697,11 +5312,13 @@ export interface ScrollBarOptions {
  */
 export interface AxisTickLabelOptions {
   /**
+   * @public
    * <p>Determines whether or not the axis ticks are visible.</p>
    */
   LabelOptions?: LabelOptions;
 
   /**
+   * @public
    * <p>The rotation angle of the axis tick labels.</p>
    */
   RotationAngle?: number;
@@ -4713,31 +5330,37 @@ export interface AxisTickLabelOptions {
  */
 export interface AxisDisplayOptions {
   /**
+   * @public
    * <p>The tick label options of an axis.</p>
    */
   TickLabelOptions?: AxisTickLabelOptions;
 
   /**
+   * @public
    * <p>Determines whether or not the axis line is visible.</p>
    */
   AxisLineVisibility?: Visibility | string;
 
   /**
+   * @public
    * <p>Determines whether or not the grid line is visible.</p>
    */
   GridLineVisibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The data options for an axis.</p>
    */
   DataOptions?: AxisDataOptions;
 
   /**
+   * @public
    * <p>The scroll bar options for an axis.</p>
    */
   ScrollbarOptions?: ScrollBarOptions;
 
   /**
+   * @public
    * <p>The offset value that determines the starting placement of the axis within a visual's bounds.</p>
    */
   AxisOffset?: string;
@@ -4749,11 +5372,13 @@ export interface AxisDisplayOptions {
  */
 export interface AxisLabelReferenceOptions {
   /**
+   * @public
    * <p>The field that the axis label is targeted to.</p>
    */
   FieldId: string | undefined;
 
   /**
+   * @public
    * <p>The column that the axis label is targeted to.</p>
    */
   Column: ColumnIdentifier | undefined;
@@ -4765,16 +5390,19 @@ export interface AxisLabelReferenceOptions {
  */
 export interface AxisLabelOptions {
   /**
+   * @public
    * <p>The font configuration of the axis label.</p>
    */
   FontConfiguration?: FontConfiguration;
 
   /**
+   * @public
    * <p>The text for the axis label.</p>
    */
   CustomLabel?: string;
 
   /**
+   * @public
    * <p>The options that indicate which field the label belongs to.</p>
    */
   ApplyTo?: AxisLabelReferenceOptions;
@@ -4786,6 +5414,7 @@ export interface AxisLabelOptions {
  */
 export interface ChartAxisLabelOptions {
   /**
+   * @public
    * <p>The visibility of an axis label on a chart. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -4801,11 +5430,13 @@ export interface ChartAxisLabelOptions {
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The visibility configuration of the sort icon on a chart's axis label.</p>
    */
   SortIconVisibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The label options for a chart axis.</p>
    */
   AxisLabelOptions?: AxisLabelOptions[];
@@ -4817,11 +5448,13 @@ export interface ChartAxisLabelOptions {
  */
 export interface ContributionAnalysisDefault {
   /**
+   * @public
    * <p>The measure field that is used in the contribution analysis.</p>
    */
   MeasureFieldId: string | undefined;
 
   /**
+   * @public
    * <p>The dimensions columns that are used in the contribution analysis,
    *             usually a list of <code>ColumnIdentifiers</code>.</p>
    */
@@ -4834,16 +5467,19 @@ export interface ContributionAnalysisDefault {
  */
 export interface DataPathLabelType {
   /**
+   * @public
    * <p>The field ID of the field that the data label needs to be applied to.</p>
    */
   FieldId?: string;
 
   /**
+   * @public
    * <p>The actual value of the field that is labeled.</p>
    */
   FieldValue?: string;
 
   /**
+   * @public
    * <p>The visibility of the data label.</p>
    */
   Visibility?: Visibility | string;
@@ -4855,12 +5491,14 @@ export interface DataPathLabelType {
  */
 export interface FieldLabelType {
   /**
+   * @public
    * <p>Indicates the field that is targeted by the field
    *             label.</p>
    */
   FieldId?: string;
 
   /**
+   * @public
    * <p>The visibility of the field label.</p>
    */
   Visibility?: Visibility | string;
@@ -4872,6 +5510,7 @@ export interface FieldLabelType {
  */
 export interface MaximumLabelType {
   /**
+   * @public
    * <p>The visibility of the maximum label.</p>
    */
   Visibility?: Visibility | string;
@@ -4883,6 +5522,7 @@ export interface MaximumLabelType {
  */
 export interface MinimumLabelType {
   /**
+   * @public
    * <p>The visibility of the minimum label.</p>
    */
   Visibility?: Visibility | string;
@@ -4894,6 +5534,7 @@ export interface MinimumLabelType {
  */
 export interface RangeEndsLabelType {
   /**
+   * @public
    * <p>The visibility of the range ends label.</p>
    */
   Visibility?: Visibility | string;
@@ -4906,26 +5547,31 @@ export interface RangeEndsLabelType {
  */
 export interface DataLabelType {
   /**
+   * @public
    * <p>Determines the label configuration for the entire field.</p>
    */
   FieldLabelType?: FieldLabelType;
 
   /**
+   * @public
    * <p>The option that specifies individual data values for labels.</p>
    */
   DataPathLabelType?: DataPathLabelType;
 
   /**
+   * @public
    * <p>Determines the label configuration for range end value in a visual.</p>
    */
   RangeEndsLabelType?: RangeEndsLabelType;
 
   /**
+   * @public
    * <p>Determines the label configuration for the minimum value in a visual.</p>
    */
   MinimumLabelType?: MinimumLabelType;
 
   /**
+   * @public
    * <p>Determines the label configuration for the maximum value in a visual.</p>
    */
   MaximumLabelType?: MaximumLabelType;
@@ -4984,51 +5630,61 @@ export type DataLabelPosition = (typeof DataLabelPosition)[keyof typeof DataLabe
  */
 export interface DataLabelOptions {
   /**
+   * @public
    * <p>Determines the visibility of the data labels.</p>
    */
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>Determines the visibility of the category field labels.</p>
    */
   CategoryLabelVisibility?: Visibility | string;
 
   /**
+   * @public
    * <p>Determines the visibility of the measure field labels.</p>
    */
   MeasureLabelVisibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The option that determines the data label type.</p>
    */
   DataLabelTypes?: DataLabelType[];
 
   /**
+   * @public
    * <p>Determines the position of the data labels.</p>
    */
   Position?: DataLabelPosition | string;
 
   /**
+   * @public
    * <p>Determines the content of the data labels.</p>
    */
   LabelContent?: DataLabelContent | string;
 
   /**
+   * @public
    * <p>Determines the font configuration of the data labels.</p>
    */
   LabelFontConfiguration?: FontConfiguration;
 
   /**
+   * @public
    * <p>Determines the color of the data labels.</p>
    */
   LabelColor?: string;
 
   /**
+   * @public
    * <p>Determines whether overlap is enabled or disabled for the data labels.</p>
    */
   Overlap?: DataLabelOverlap | string;
 
   /**
+   * @public
    * <p>Determines the visibility of the total.</p>
    */
   TotalsVisibility?: Visibility | string;
@@ -5040,21 +5696,25 @@ export interface DataLabelOptions {
  */
 export interface CategoricalDimensionField {
   /**
+   * @public
    * <p>The custom field ID.</p>
    */
   FieldId: string | undefined;
 
   /**
+   * @public
    * <p>The column that is used in the <code>CategoricalDimensionField</code>.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The custom hierarchy ID.</p>
    */
   HierarchyId?: string;
 
   /**
+   * @public
    * <p>The format configuration of the field.</p>
    */
   FormatConfiguration?: StringFormatConfiguration;
@@ -5066,16 +5726,19 @@ export interface CategoricalDimensionField {
  */
 export interface DateDimensionField {
   /**
+   * @public
    * <p>The custom field ID.</p>
    */
   FieldId: string | undefined;
 
   /**
+   * @public
    * <p>The column that is used in the <code>DateDimensionField</code>.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The date granularity of the <code>DateDimensionField</code>. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -5128,11 +5791,13 @@ export interface DateDimensionField {
   DateGranularity?: TimeGranularity | string;
 
   /**
+   * @public
    * <p>The custom hierarchy ID.</p>
    */
   HierarchyId?: string;
 
   /**
+   * @public
    * <p>The format configuration of the field.</p>
    */
   FormatConfiguration?: DateTimeFormatConfiguration;
@@ -5144,21 +5809,25 @@ export interface DateDimensionField {
  */
 export interface NumericalDimensionField {
   /**
+   * @public
    * <p>The custom field ID.</p>
    */
   FieldId: string | undefined;
 
   /**
+   * @public
    * <p>The column that is used in the <code>NumericalDimensionField</code>.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The custom hierarchy ID.</p>
    */
   HierarchyId?: string;
 
   /**
+   * @public
    * <p>The format configuration of the field.</p>
    */
   FormatConfiguration?: NumberFormatConfiguration;
@@ -5170,16 +5839,19 @@ export interface NumericalDimensionField {
  */
 export interface DimensionField {
   /**
+   * @public
    * <p>The dimension type field with numerical type columns.</p>
    */
   NumericalDimensionField?: NumericalDimensionField;
 
   /**
+   * @public
    * <p>The dimension type field with categorical type columns.</p>
    */
   CategoricalDimensionField?: CategoricalDimensionField;
 
   /**
+   * @public
    * <p>The dimension type field with date type columns.</p>
    */
   DateDimensionField?: DateDimensionField;
@@ -5191,11 +5863,13 @@ export interface DimensionField {
  */
 export interface CalculatedMeasureField {
   /**
+   * @public
    * <p>The custom field ID.</p>
    */
   FieldId: string | undefined;
 
   /**
+   * @public
    * <p>The expression in the table calculation.</p>
    */
   Expression: string | undefined;
@@ -5207,21 +5881,25 @@ export interface CalculatedMeasureField {
  */
 export interface CategoricalMeasureField {
   /**
+   * @public
    * <p>The custom field ID.</p>
    */
   FieldId: string | undefined;
 
   /**
+   * @public
    * <p>The column that is used in the <code>CategoricalMeasureField</code>.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The aggregation function of the measure field.</p>
    */
   AggregationFunction?: CategoricalAggregationFunction | string;
 
   /**
+   * @public
    * <p>The format configuration of the field.</p>
    */
   FormatConfiguration?: StringFormatConfiguration;
@@ -5233,21 +5911,25 @@ export interface CategoricalMeasureField {
  */
 export interface DateMeasureField {
   /**
+   * @public
    * <p>The custom field ID.</p>
    */
   FieldId: string | undefined;
 
   /**
+   * @public
    * <p>The column that is used in the <code>DateMeasureField</code>.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The aggregation function of the measure field.</p>
    */
   AggregationFunction?: DateAggregationFunction | string;
 
   /**
+   * @public
    * <p>The format configuration of the field.</p>
    */
   FormatConfiguration?: DateTimeFormatConfiguration;
@@ -5259,21 +5941,25 @@ export interface DateMeasureField {
  */
 export interface NumericalMeasureField {
   /**
+   * @public
    * <p>The custom field ID.</p>
    */
   FieldId: string | undefined;
 
   /**
+   * @public
    * <p>The column that is used in the <code>NumericalMeasureField</code>.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The aggregation function of the measure field.</p>
    */
   AggregationFunction?: NumericalAggregationFunction;
 
   /**
+   * @public
    * <p>The format configuration of the field.</p>
    */
   FormatConfiguration?: NumberFormatConfiguration;
@@ -5285,21 +5971,25 @@ export interface NumericalMeasureField {
  */
 export interface MeasureField {
   /**
+   * @public
    * <p>The measure type field with numerical type columns.</p>
    */
   NumericalMeasureField?: NumericalMeasureField;
 
   /**
+   * @public
    * <p>The measure type field with categorical type columns.</p>
    */
   CategoricalMeasureField?: CategoricalMeasureField;
 
   /**
+   * @public
    * <p>The measure type field with date type columns.</p>
    */
   DateMeasureField?: DateMeasureField;
 
   /**
+   * @public
    * <p>The calculated measure field only used in pivot tables.</p>
    */
   CalculatedMeasureField?: CalculatedMeasureField;
@@ -5311,22 +6001,26 @@ export interface MeasureField {
  */
 export interface BarChartAggregatedFieldWells {
   /**
+   * @public
    * <p>The category (y-axis) field well of a bar chart.</p>
    */
   Category?: DimensionField[];
 
   /**
+   * @public
    * <p>The value field wells of a bar chart. Values are aggregated by
    *             category.</p>
    */
   Values?: MeasureField[];
 
   /**
+   * @public
    * <p>The color (group/color) field well of a bar chart.</p>
    */
   Colors?: DimensionField[];
 
   /**
+   * @public
    * <p>The small multiples field well of a bar chart.</p>
    */
   SmallMultiples?: DimensionField[];
@@ -5339,6 +6033,7 @@ export interface BarChartAggregatedFieldWells {
  */
 export interface BarChartFieldWells {
   /**
+   * @public
    * <p>The aggregated field wells of a bar chart.</p>
    */
   BarChartAggregatedFieldWells?: BarChartAggregatedFieldWells;
@@ -5366,16 +6061,19 @@ export type LegendPosition = (typeof LegendPosition)[keyof typeof LegendPosition
  */
 export interface LegendOptions {
   /**
+   * @public
    * <p>Determines whether or not the legend is visible.</p>
    */
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The custom title for the legend.</p>
    */
   Title?: LabelOptions;
 
   /**
+   * @public
    * <p>The positions for the legend. Choose one of the following
    *             options:</p>
    *          <ul>
@@ -5404,11 +6102,13 @@ export interface LegendOptions {
   Position?: LegendPosition | string;
 
   /**
+   * @public
    * <p>The width of the legend. If this value is omitted, a default width is used when rendering.</p>
    */
   Width?: string;
 
   /**
+   * @public
    * <p>The height of the legend. If this value is omitted, a default height is used when
    *             rendering.</p>
    */
@@ -5449,16 +6149,19 @@ export type AxisBinding = (typeof AxisBinding)[keyof typeof AxisBinding];
  */
 export interface ReferenceLineDynamicDataConfiguration {
   /**
+   * @public
    * <p>The column that the dynamic data targets.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The aggregation function that is used in the dynamic data.</p>
    */
   MeasureAggregationFunction?: AggregationFunction;
 
   /**
+   * @public
    * <p>The calculation that is used in the dynamic data.</p>
    */
   Calculation: NumericalAggregationFunction | undefined;
@@ -5470,6 +6173,7 @@ export interface ReferenceLineDynamicDataConfiguration {
  */
 export interface ReferenceLineStaticDataConfiguration {
   /**
+   * @public
    * <p>The double input of the static data.</p>
    */
   Value: number | undefined;
@@ -5481,17 +6185,20 @@ export interface ReferenceLineStaticDataConfiguration {
  */
 export interface ReferenceLineDataConfiguration {
   /**
+   * @public
    * <p>The static data configuration of the reference line data
    *             configuration.</p>
    */
   StaticConfiguration?: ReferenceLineStaticDataConfiguration;
 
   /**
+   * @public
    * <p>The dynamic configuration of the reference line data configuration.</p>
    */
   DynamicConfiguration?: ReferenceLineDynamicDataConfiguration;
 
   /**
+   * @public
    * <p>The axis binding type of the reference line. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -5511,6 +6218,7 @@ export interface ReferenceLineDataConfiguration {
  */
 export interface ReferenceLineCustomLabelConfiguration {
   /**
+   * @public
    * <p>The string text of the custom label.</p>
    */
   CustomLabel: string | undefined;
@@ -5553,6 +6261,7 @@ export type ReferenceLineValueLabelRelativePosition =
  */
 export interface ReferenceLineValueLabelConfiguration {
   /**
+   * @public
    * <p>The relative position of the value label. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -5570,6 +6279,7 @@ export interface ReferenceLineValueLabelConfiguration {
   RelativePosition?: ReferenceLineValueLabelRelativePosition | string;
 
   /**
+   * @public
    * <p>The format configuration of the value label.</p>
    */
   FormatConfiguration?: NumericFormatConfiguration;
@@ -5596,26 +6306,31 @@ export type ReferenceLineLabelVerticalPosition =
  */
 export interface ReferenceLineLabelConfiguration {
   /**
+   * @public
    * <p>The value label configuration of the label in a reference line.</p>
    */
   ValueLabelConfiguration?: ReferenceLineValueLabelConfiguration;
 
   /**
+   * @public
    * <p>The custom label configuration of the label in a reference line.</p>
    */
   CustomLabelConfiguration?: ReferenceLineCustomLabelConfiguration;
 
   /**
+   * @public
    * <p>The font configuration of the label in a reference line.</p>
    */
   FontConfiguration?: FontConfiguration;
 
   /**
+   * @public
    * <p>The font color configuration of the label in a reference line.</p>
    */
   FontColor?: string;
 
   /**
+   * @public
    * <p>The horizontal position configuration of the label in a reference line. Choose one of
    *             the following options:</p>
    *          <ul>
@@ -5639,6 +6354,7 @@ export interface ReferenceLineLabelConfiguration {
   HorizontalPosition?: ReferenceLineLabelHorizontalPosition | string;
 
   /**
+   * @public
    * <p>The vertical position configuration of the label in a reference line. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -5678,6 +6394,7 @@ export type ReferenceLinePatternType = (typeof ReferenceLinePatternType)[keyof t
  */
 export interface ReferenceLineStyleConfiguration {
   /**
+   * @public
    * <p>The pattern type of the line style. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -5700,6 +6417,7 @@ export interface ReferenceLineStyleConfiguration {
   Pattern?: ReferenceLinePatternType | string;
 
   /**
+   * @public
    * <p>The hex color of the reference line.</p>
    */
   Color?: string;
@@ -5711,6 +6429,7 @@ export interface ReferenceLineStyleConfiguration {
  */
 export interface ReferenceLine {
   /**
+   * @public
    * <p>The status of the reference line. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -5728,16 +6447,19 @@ export interface ReferenceLine {
   Status?: WidgetStatus | string;
 
   /**
+   * @public
    * <p>The data configuration of the reference line.</p>
    */
   DataConfiguration: ReferenceLineDataConfiguration | undefined;
 
   /**
+   * @public
    * <p>The style configuration of the reference line.</p>
    */
   StyleConfiguration?: ReferenceLineStyleConfiguration;
 
   /**
+   * @public
    * <p>The label configuration of the reference line.</p>
    */
   LabelConfiguration?: ReferenceLineLabelConfiguration;
@@ -5781,16 +6503,19 @@ export type HorizontalTextAlignment = (typeof HorizontalTextAlignment)[keyof typ
  */
 export interface PanelTitleOptions {
   /**
+   * @public
    * <p>Determines whether or not panel titles are displayed.</p>
    */
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>Configures the display properties of the given text.</p>
    */
   FontConfiguration?: FontConfiguration;
 
   /**
+   * @public
    * <p>Sets the horizontal text alignment of the title within each panel.</p>
    */
   HorizontalTextAlignment?: HorizontalTextAlignment | string;
@@ -5802,46 +6527,55 @@ export interface PanelTitleOptions {
  */
 export interface PanelConfiguration {
   /**
+   * @public
    * <p>Configures the title display within each small multiples panel.</p>
    */
   Title?: PanelTitleOptions;
 
   /**
+   * @public
    * <p>Determines whether or not each panel displays a border.</p>
    */
   BorderVisibility?: Visibility | string;
 
   /**
+   * @public
    * <p>Sets the line thickness of panel borders.</p>
    */
   BorderThickness?: string;
 
   /**
+   * @public
    * <p>Sets the line style of panel borders.</p>
    */
   BorderStyle?: PanelBorderStyle | string;
 
   /**
+   * @public
    * <p>Sets the line color of panel borders.</p>
    */
   BorderColor?: string;
 
   /**
+   * @public
    * <p>Determines whether or not negative space between sibling panels is rendered.</p>
    */
   GutterVisibility?: Visibility | string;
 
   /**
+   * @public
    * <p>Sets the total amount of negative space to display between sibling panels.</p>
    */
   GutterSpacing?: string;
 
   /**
+   * @public
    * <p>Determines whether or not a background for each small multiples panel is rendered.</p>
    */
   BackgroundVisibility?: Visibility | string;
 
   /**
+   * @public
    * <p>Sets the background color for each panel.</p>
    */
   BackgroundColor?: string;
@@ -5882,11 +6616,13 @@ export type SmallMultiplesAxisScale = (typeof SmallMultiplesAxisScale)[keyof typ
  */
 export interface SmallMultiplesAxisProperties {
   /**
+   * @public
    * <p>Determines whether scale of the axes are shared or independent. The default value is <code>SHARED</code>.</p>
    */
   Scale?: SmallMultiplesAxisScale | string;
 
   /**
+   * @public
    * <p>Defines the placement of the axis. By default, axes are rendered <code>OUTSIDE</code> of the panels. Axes with <code>INDEPENDENT</code> scale are rendered <code>INSIDE</code> the panels.</p>
    */
   Placement?: SmallMultiplesAxisPlacement | string;
@@ -5898,6 +6634,7 @@ export interface SmallMultiplesAxisProperties {
  */
 export interface SmallMultiplesOptions {
   /**
+   * @public
    * <p>Sets the maximum number of visible rows to display in the grid of small multiples panels.</p>
    *          <p>The default value is <code>Auto</code>,
    *             which automatically adjusts the rows in the grid
@@ -5906,22 +6643,26 @@ export interface SmallMultiplesOptions {
   MaxVisibleRows?: number;
 
   /**
+   * @public
    * <p>Sets the maximum number of visible columns to display in the grid of small multiples panels.</p>
    *          <p>The default is <code>Auto</code>, which automatically adjusts the columns in the grid to fit the overall layout and size of the given chart.</p>
    */
   MaxVisibleColumns?: number;
 
   /**
+   * @public
    * <p>Configures the display options for each small multiples panel.</p>
    */
   PanelConfiguration?: PanelConfiguration;
 
   /**
+   * @public
    * <p>The properties of a small multiples X axis.</p>
    */
   XAxis?: SmallMultiplesAxisProperties;
 
   /**
+   * @public
    * <p>The properties of a small multiples Y axis.</p>
    */
   YAxis?: SmallMultiplesAxisProperties;
@@ -5947,12 +6688,14 @@ export type OtherCategories = (typeof OtherCategories)[keyof typeof OtherCategor
  */
 export interface ItemsLimitConfiguration {
   /**
+   * @public
    * <p>The limit on how many items of a field are showed in the chart. For
    *             example, the number of slices that are displayed in a pie chart.</p>
    */
   ItemsLimit?: number;
 
   /**
+   * @public
    * <p>The <code>Show
    *                 other</code> of an axis in the chart. Choose one of the following options:</p>
    *          <ul>
@@ -5977,16 +6720,19 @@ export interface ItemsLimitConfiguration {
  */
 export interface ColumnSort {
   /**
+   * @public
    * <p>A column of a data set.</p>
    */
   SortBy: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The sort direction.</p>
    */
   Direction: SortDirection | string | undefined;
 
   /**
+   * @public
    * <p>The aggregation function that is defined in the column sort.</p>
    */
   AggregationFunction?: AggregationFunction;
@@ -5999,11 +6745,13 @@ export interface ColumnSort {
  */
 export interface FieldSort {
   /**
+   * @public
    * <p>The sort configuration target field.</p>
    */
   FieldId: string | undefined;
 
   /**
+   * @public
    * <p>The sort direction. Choose one of the following
    *             options:</p>
    *          <ul>
@@ -6026,11 +6774,13 @@ export interface FieldSort {
  */
 export interface FieldSortOptions {
   /**
+   * @public
    * <p>The sort configuration for a field in a field well.</p>
    */
   FieldSort?: FieldSort;
 
   /**
+   * @public
    * <p>The sort configuration for a column that is not used in a field well.</p>
    */
   ColumnSort?: ColumnSort;
@@ -6042,31 +6792,37 @@ export interface FieldSortOptions {
  */
 export interface BarChartSortConfiguration {
   /**
+   * @public
    * <p>The sort configuration of category fields.</p>
    */
   CategorySort?: FieldSortOptions[];
 
   /**
+   * @public
    * <p>The limit on the number of categories displayed in a bar chart.</p>
    */
   CategoryItemsLimit?: ItemsLimitConfiguration;
 
   /**
+   * @public
    * <p>The sort configuration of color fields in a bar chart.</p>
    */
   ColorSort?: FieldSortOptions[];
 
   /**
+   * @public
    * <p>The limit on the number of values displayed in a bar chart.</p>
    */
   ColorItemsLimit?: ItemsLimitConfiguration;
 
   /**
+   * @public
    * <p>The sort configuration of the small multiples field.</p>
    */
   SmallMultiplesSort?: FieldSortOptions[];
 
   /**
+   * @public
    * <p>The limit on the number of small multiples panels that are displayed.</p>
    */
   SmallMultiplesLimitConfiguration?: ItemsLimitConfiguration;
@@ -6078,21 +6834,25 @@ export interface BarChartSortConfiguration {
  */
 export interface ColumnTooltipItem {
   /**
+   * @public
    * <p>The target column of the tooltip item.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The label of the tooltip item.</p>
    */
   Label?: string;
 
   /**
+   * @public
    * <p>The visibility of the tooltip item.</p>
    */
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The aggregation function of the column tooltip item.</p>
    */
   Aggregation?: AggregationFunction;
@@ -6104,16 +6864,19 @@ export interface ColumnTooltipItem {
  */
 export interface FieldTooltipItem {
   /**
+   * @public
    * <p>The unique ID of the field that is targeted by the tooltip.</p>
    */
   FieldId: string | undefined;
 
   /**
+   * @public
    * <p>The label of the tooltip item.</p>
    */
   Label?: string;
 
   /**
+   * @public
    * <p>The visibility of the tooltip item.</p>
    */
   Visibility?: Visibility | string;
@@ -6126,11 +6889,13 @@ export interface FieldTooltipItem {
  */
 export interface TooltipItem {
   /**
+   * @public
    * <p>The tooltip item for the fields.</p>
    */
   FieldTooltipItem?: FieldTooltipItem;
 
   /**
+   * @public
    * <p>The tooltip item for the columns that are not part of a field well.</p>
    */
   ColumnTooltipItem?: ColumnTooltipItem;
@@ -6156,11 +6921,13 @@ export type TooltipTitleType = (typeof TooltipTitleType)[keyof typeof TooltipTit
  */
 export interface FieldBasedTooltip {
   /**
+   * @public
    * <p>The visibility of <code>Show aggregations</code>.</p>
    */
   AggregationVisibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The type for the >tooltip title. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -6176,6 +6943,7 @@ export interface FieldBasedTooltip {
   TooltipTitleType?: TooltipTitleType | string;
 
   /**
+   * @public
    * <p>The fields configuration in the
    *             tooltip.</p>
    */
@@ -6202,11 +6970,13 @@ export type SelectedTooltipType = (typeof SelectedTooltipType)[keyof typeof Sele
  */
 export interface TooltipOptions {
   /**
+   * @public
    * <p>Determines whether or not the tooltip is visible.</p>
    */
   TooltipVisibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The selected type for the tooltip. Choose one of the following options:</p>
    *          <ul>
    *             <li>
@@ -6222,6 +6992,7 @@ export interface TooltipOptions {
   SelectedTooltipType?: SelectedTooltipType | string;
 
   /**
+   * @public
    * <p>The setup for the detailed tooltip. The tooltip setup is always saved. The display type is decided based on the tooltip type.</p>
    */
   FieldBasedTooltip?: FieldBasedTooltip;
@@ -6233,11 +7004,13 @@ export interface TooltipOptions {
  */
 export interface DataPathValue {
   /**
+   * @public
    * <p>The field ID of the field that needs to be sorted.</p>
    */
   FieldId: string | undefined;
 
   /**
+   * @public
    * <p>The actual value of the field that needs to be sorted.</p>
    */
   FieldValue: string | undefined;
@@ -6249,16 +7022,19 @@ export interface DataPathValue {
  */
 export interface DataPathColor {
   /**
+   * @public
    * <p>The element that the color needs to be applied to.</p>
    */
   Element: DataPathValue | undefined;
 
   /**
+   * @public
    * <p>The color that needs to be applied to the element.</p>
    */
   Color: string | undefined;
 
   /**
+   * @public
    * <p>The time granularity of the field that the color needs to be applied to.</p>
    */
   TimeGranularity?: TimeGranularity | string;
@@ -6270,11 +7046,13 @@ export interface DataPathColor {
  */
 export interface VisualPalette {
   /**
+   * @public
    * <p>The chart color options for the visual palette.</p>
    */
   ChartColor?: string;
 
   /**
+   * @public
    * <p>The color map options for the visual palette.</p>
    */
   ColorMap?: DataPathColor[];
@@ -6286,16 +7064,19 @@ export interface VisualPalette {
  */
 export interface BarChartConfiguration {
   /**
+   * @public
    * <p>The field wells of the visual.</p>
    */
   FieldWells?: BarChartFieldWells;
 
   /**
+   * @public
    * <p>The sort configuration of a <code>BarChartVisual</code>.</p>
    */
   SortConfiguration?: BarChartSortConfiguration;
 
   /**
+   * @public
    * <p>The orientation of the bars in a bar chart visual. There are two valid values in this structure:</p>
    *          <ul>
    *             <li>
@@ -6311,66 +7092,79 @@ export interface BarChartConfiguration {
   Orientation?: BarChartOrientation | string;
 
   /**
+   * @public
    * <p>Determines the arrangement of the bars. The orientation and arrangement of bars determine the type of bar that is used in the visual.</p>
    */
   BarsArrangement?: BarsArrangement | string;
 
   /**
+   * @public
    * <p>The palette (chart color) display setup of the visual.</p>
    */
   VisualPalette?: VisualPalette;
 
   /**
+   * @public
    * <p>The small multiples setup for the visual.</p>
    */
   SmallMultiplesOptions?: SmallMultiplesOptions;
 
   /**
+   * @public
    * <p>The label display options (grid line, range, scale, axis step) for bar chart category.</p>
    */
   CategoryAxis?: AxisDisplayOptions;
 
   /**
+   * @public
    * <p>The label options (label text, label visibility and sort icon visibility) for a bar chart.</p>
    */
   CategoryLabelOptions?: ChartAxisLabelOptions;
 
   /**
+   * @public
    * <p>The label display options (grid line, range, scale, axis step) for a bar chart value.</p>
    */
   ValueAxis?: AxisDisplayOptions;
 
   /**
+   * @public
    * <p>The label options (label text, label visibility and sort icon visibility) for a bar chart value.</p>
    */
   ValueLabelOptions?: ChartAxisLabelOptions;
 
   /**
+   * @public
    * <p>The label options (label text, label visibility and sort icon visibility) for a color that is used in a bar chart.</p>
    */
   ColorLabelOptions?: ChartAxisLabelOptions;
 
   /**
+   * @public
    * <p>The legend display setup of the visual.</p>
    */
   Legend?: LegendOptions;
 
   /**
+   * @public
    * <p>The options that determine if visual data labels are displayed.</p>
    */
   DataLabels?: DataLabelOptions;
 
   /**
+   * @public
    * <p>The tooltip display setup of the visual.</p>
    */
   Tooltip?: TooltipOptions;
 
   /**
+   * @public
    * <p>The reference line setup of the visual.</p>
    */
   ReferenceLines?: ReferenceLine[];
 
   /**
+   * @public
    * <p>The contribution analysis (anomaly configuration) setup of the visual.</p>
    */
   ContributionAnalysisDefaults?: ContributionAnalysisDefault[];
@@ -6382,11 +7176,13 @@ export interface BarChartConfiguration {
  */
 export interface CategoryDrillDownFilter {
   /**
+   * @public
    * <p>The column that the filter is applied to.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>A list of the string inputs that are the values of the category drill down filter.</p>
    */
   CategoryValues: string[] | undefined;
@@ -6398,11 +7194,13 @@ export interface CategoryDrillDownFilter {
  */
 export interface NumericEqualityDrillDownFilter {
   /**
+   * @public
    * <p>The column that the filter is applied to.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The value of the double input numeric drill down filter.</p>
    */
   Value: number | undefined;
@@ -6414,21 +7212,25 @@ export interface NumericEqualityDrillDownFilter {
  */
 export interface TimeRangeDrillDownFilter {
   /**
+   * @public
    * <p>The column that the filter is applied to.</p>
    */
   Column: ColumnIdentifier | undefined;
 
   /**
+   * @public
    * <p>The minimum value for the filter value range.</p>
    */
   RangeMinimum: Date | undefined;
 
   /**
+   * @public
    * <p>The maximum value for the filter value range.</p>
    */
   RangeMaximum: Date | undefined;
 
   /**
+   * @public
    * <p>The level of time precision that is used to aggregate <code>DateTime</code> values.</p>
    */
   TimeGranularity: TimeGranularity | string | undefined;
@@ -6441,16 +7243,19 @@ export interface TimeRangeDrillDownFilter {
  */
 export interface DrillDownFilter {
   /**
+   * @public
    * <p>The numeric equality type drill down filter. This filter is used for number type columns.</p>
    */
   NumericEqualityFilter?: NumericEqualityDrillDownFilter;
 
   /**
+   * @public
    * <p>The category type drill down filter. This filter is used for string type columns.</p>
    */
   CategoryFilter?: CategoryDrillDownFilter;
 
   /**
+   * @public
    * <p>The time range drill down filter. This filter is used for date time columns.</p>
    */
   TimeRangeFilter?: TimeRangeDrillDownFilter;
@@ -6462,11 +7267,13 @@ export interface DrillDownFilter {
  */
 export interface DateTimeHierarchy {
   /**
+   * @public
    * <p>The hierarchy ID of the <code>DateTime</code> hierarchy.</p>
    */
   HierarchyId: string | undefined;
 
   /**
+   * @public
    * <p>The option that determines the drill down filters for the
    *                 <code>DateTime</code> hierarchy.</p>
    */
@@ -6479,16 +7286,19 @@ export interface DateTimeHierarchy {
  */
 export interface ExplicitHierarchy {
   /**
+   * @public
    * <p>The hierarchy ID of the explicit hierarchy.</p>
    */
   HierarchyId: string | undefined;
 
   /**
+   * @public
    * <p>The list of columns that define the explicit hierarchy.</p>
    */
   Columns: ColumnIdentifier[] | undefined;
 
   /**
+   * @public
    * <p>The option that determines the drill down filters for the explicit hierarchy.</p>
    */
   DrillDownFilters?: DrillDownFilter[];
@@ -6500,16 +7310,19 @@ export interface ExplicitHierarchy {
  */
 export interface PredefinedHierarchy {
   /**
+   * @public
    * <p>The hierarchy ID of the predefined hierarchy.</p>
    */
   HierarchyId: string | undefined;
 
   /**
+   * @public
    * <p>The list of columns that define the predefined hierarchy.</p>
    */
   Columns: ColumnIdentifier[] | undefined;
 
   /**
+   * @public
    * <p>The option that determines the drill down filters for the predefined hierarchy.</p>
    */
   DrillDownFilters?: DrillDownFilter[];
@@ -6521,16 +7334,19 @@ export interface PredefinedHierarchy {
  */
 export interface ColumnHierarchy {
   /**
+   * @public
    * <p>The option that determines the hierarchy of the fields that are built within a visual's field wells. These fields can't be duplicated to other visuals.</p>
    */
   ExplicitHierarchy?: ExplicitHierarchy;
 
   /**
+   * @public
    * <p>The option that determines the hierarchy of any <code>DateTime</code> fields.</p>
    */
   DateTimeHierarchy?: DateTimeHierarchy;
 
   /**
+   * @public
    * <p>The option that determines the hierarchy of the fields that are defined during data preparation. These fields are available to use in any analysis that uses the data source.</p>
    */
   PredefinedHierarchy?: PredefinedHierarchy;
@@ -6543,11 +7359,13 @@ export interface ColumnHierarchy {
  */
 export interface LongFormatText {
   /**
+   * @public
    * <p>Plain text format.</p>
    */
   PlainText?: string;
 
   /**
+   * @public
    * <p>Rich text. Examples of rich text include bold, underline, and italics.</p>
    */
   RichText?: string;
@@ -6559,11 +7377,13 @@ export interface LongFormatText {
  */
 export interface VisualSubtitleLabelOptions {
   /**
+   * @public
    * <p>The visibility of the subtitle label.</p>
    */
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The long text format of the subtitle label, such as plain text or rich text.</p>
    */
   FormatText?: LongFormatText;
@@ -6576,11 +7396,13 @@ export interface VisualSubtitleLabelOptions {
  */
 export interface ShortFormatText {
   /**
+   * @public
    * <p>Plain text format.</p>
    */
   PlainText?: string;
 
   /**
+   * @public
    * <p>Rich text. Examples of rich text include bold, underline, and italics.</p>
    */
   RichText?: string;
@@ -6592,11 +7414,13 @@ export interface ShortFormatText {
  */
 export interface VisualTitleLabelOptions {
   /**
+   * @public
    * <p>The visibility of the title label.</p>
    */
   Visibility?: Visibility | string;
 
   /**
+   * @public
    * <p>The short text format of the title label, such as plain text or rich text.</p>
    */
   FormatText?: ShortFormatText;
@@ -6630,31 +7454,37 @@ export interface VisualTitleLabelOptions {
  */
 export interface BarChartVisual {
   /**
+   * @public
    * <p>The unique identifier of a visual. This identifier must be unique within the context of a dashboard, template, or analysis. Two dashboards, analyses, or templates can have visuals with the same identifiers.</p>
    */
   VisualId: string | undefined;
 
   /**
+   * @public
    * <p>The title that is displayed on the visual.</p>
    */
   Title?: VisualTitleLabelOptions;
 
   /**
+   * @public
    * <p>The subtitle that is displayed on the visual.</p>
    */
   Subtitle?: VisualSubtitleLabelOptions;
 
   /**
+   * @public
    * <p>The configuration settings of the visual.</p>
    */
   ChartConfiguration?: BarChartConfiguration;
 
   /**
+   * @public
    * <p>The list of custom actions that are configured for a visual.</p>
    */
   Actions?: VisualCustomAction[];
 
   /**
+   * @public
    * <p>The column hierarchy that is used during drill-downs and drill-ups.</p>
    */
   ColumnHierarchies?: ColumnHierarchy[];
@@ -6680,74 +7510,10 @@ export type BoxPlotFillStyle = (typeof BoxPlotFillStyle)[keyof typeof BoxPlotFil
  */
 export interface BoxPlotStyleOptions {
   /**
+   * @public
    * <p>The fill styles (solid, transparent) of the box plot.</p>
    */
   FillStyle?: BoxPlotFillStyle | string;
-}
-
-/**
- * @public
- * <p>The options of a box plot visual.</p>
- */
-export interface BoxPlotOptions {
-  /**
-   * <p>The style options of the box plot.</p>
-   */
-  StyleOptions?: BoxPlotStyleOptions;
-
-  /**
-   * <p>Determines the visibility of the outlier in a box plot.</p>
-   */
-  OutlierVisibility?: Visibility | string;
-
-  /**
-   * <p>Determines the visibility of all data points of the box plot.</p>
-   */
-  AllDataPointsVisibility?: Visibility | string;
-}
-
-/**
- * @public
- * <p>The aggregated field well for a box plot.</p>
- */
-export interface BoxPlotAggregatedFieldWells {
-  /**
-   * <p>The group by field well of a box plot chart. Values are grouped based on group by fields.</p>
-   */
-  GroupBy?: DimensionField[];
-
-  /**
-   * <p>The value field well of a box plot chart. Values are aggregated based on group by fields.</p>
-   */
-  Values?: MeasureField[];
-}
-
-/**
- * @public
- * <p>The field wells of a <code>BoxPlotVisual</code>.</p>
- *          <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>
- */
-export interface BoxPlotFieldWells {
-  /**
-   * <p>The aggregated field wells of a box plot.</p>
-   */
-  BoxPlotAggregatedFieldWells?: BoxPlotAggregatedFieldWells;
-}
-
-/**
- * @public
- * <p>The pagination configuration for a table visual or boxplot.</p>
- */
-export interface PaginationConfiguration {
-  /**
-   * <p>Indicates how many items render in one page.</p>
-   */
-  PageSize: number | undefined;
-
-  /**
-   * <p>Indicates the page number.</p>
-   */
-  PageNumber: number | undefined;
 }
 
 /**
@@ -7450,20 +8216,5 @@ export const BarChartConfigurationFilterSensitiveLog = (obj: BarChartConfigurati
  * @internal
  */
 export const BarChartVisualFilterSensitiveLog = (obj: BarChartVisual): any => ({
-  ...obj,
-});
-
-/**
- * @internal
- */
-export const BoxPlotAggregatedFieldWellsFilterSensitiveLog = (obj: BoxPlotAggregatedFieldWells): any => ({
-  ...obj,
-  ...(obj.Values && { Values: obj.Values.map((item) => MeasureFieldFilterSensitiveLog(item)) }),
-});
-
-/**
- * @internal
- */
-export const BoxPlotFieldWellsFilterSensitiveLog = (obj: BoxPlotFieldWells): any => ({
   ...obj,
 });

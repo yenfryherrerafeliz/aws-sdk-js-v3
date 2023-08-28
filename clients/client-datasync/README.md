@@ -8,9 +8,9 @@ AWS SDK for JavaScript DataSync Client for Node.js, Browser and React Native.
 
 <fullname>DataSync</fullname>
 
-<p>DataSync is a managed data transfer service that makes it simpler for you
-to automate moving data between on-premises storage and Amazon Web Services storage services.
-You also can use DataSync to transfer data between other cloud providers and Amazon Web Services storage services.</p>
+<p>DataSync is an online data movement and discovery service that simplifies data migration
+and helps you quickly, easily, and securely transfer your file or object data to, from, and
+between Amazon Web Services storage services.</p>
 <p>This API interface reference includes documentation for using DataSync
 programmatically. For complete information, see the <i>
 <a href="https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html">DataSync User
@@ -238,6 +238,14 @@ CreateAgent
 </details>
 <details>
 <summary>
+CreateLocationAzureBlob
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/classes/createlocationazureblobcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/interfaces/createlocationazureblobcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/interfaces/createlocationazureblobcommandoutput.html)
+
+</details>
+<details>
+<summary>
 CreateLocationEfs
 </summary>
 
@@ -362,6 +370,14 @@ DescribeDiscoveryJob
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/classes/describediscoveryjobcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/interfaces/describediscoveryjobcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/interfaces/describediscoveryjobcommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeLocationAzureBlob
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/classes/describelocationazureblobcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/interfaces/describelocationazureblobcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/interfaces/describelocationazureblobcommandoutput.html)
 
 </details>
 <details>
@@ -610,6 +626,14 @@ UpdateDiscoveryJob
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/classes/updatediscoveryjobcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/interfaces/updatediscoveryjobcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/interfaces/updatediscoveryjobcommandoutput.html)
+
+</details>
+<details>
+<summary>
+UpdateLocationAzureBlob
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/classes/updatelocationazureblobcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/interfaces/updatelocationazureblobcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-datasync/interfaces/updatelocationazureblobcommandoutput.html)
 
 </details>
 <details>

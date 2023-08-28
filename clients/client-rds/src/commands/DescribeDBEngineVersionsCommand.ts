@@ -13,7 +13,8 @@ import {
   SerdeContext as __SerdeContext,
 } from "@smithy/types";
 
-import { DBEngineVersionMessage, DescribeDBEngineVersionsMessage } from "../models/models_0";
+import { DBEngineVersionMessage } from "../models/models_0";
+import { DescribeDBEngineVersionsMessage } from "../models/models_1";
 import { de_DescribeDBEngineVersionsCommand, se_DescribeDBEngineVersionsCommand } from "../protocols/Aws_query";
 import { RDSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RDSClient";
 
@@ -107,6 +108,7 @@ export interface DescribeDBEngineVersionsCommandOutput extends DBEngineVersionMe
  * //           SupportsParallelQuery: true || false,
  * //           SupportsGlobalDatabases: true || false,
  * //           SupportsBabelfish: true || false,
+ * //           SupportsLocalWriteForwarding: true || false,
  * //         },
  * //       ],
  * //       SupportedTimezones: [ // SupportedTimezonesList
@@ -146,6 +148,7 @@ export interface DescribeDBEngineVersionsCommandOutput extends DBEngineVersionMe
  * //       SupportedCACertificateIdentifiers: [ // CACertificateIdentifiersList
  * //         "STRING_VALUE",
  * //       ],
+ * //       SupportsLocalWriteForwarding: true || false,
  * //     },
  * //   ],
  * // };

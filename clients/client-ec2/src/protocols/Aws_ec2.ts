@@ -2638,6 +2638,7 @@ import {
   DeleteIpamScopeRequest,
   DeleteIpamScopeResult,
   DeleteKeyPairRequest,
+  DeleteKeyPairResult,
   DeleteLaunchTemplateRequest,
   DeleteLaunchTemplateResult,
   DeleteLaunchTemplateVersionsRequest,
@@ -2672,12 +2673,10 @@ import {
   DeletePlacementGroupRequest,
   DeletePublicIpv4PoolRequest,
   DeletePublicIpv4PoolResult,
-  DeleteQueuedReservedInstancesError,
   DeleteQueuedReservedInstancesRequest,
   DnsEntry,
   DnsOptions,
   DnsOptionsSpecification,
-  FailedQueuedPurchaseDeletion,
   IKEVersionsListValue,
   IKEVersionsRequestListValue,
   InstanceEventWindowStateChange,
@@ -2713,6 +2712,7 @@ import {
   SpotDatafeedSubscription,
   SpotInstanceStateFault,
   SubnetCidrReservation,
+  SubnetConfiguration,
   TrafficMirrorFilter,
   TrafficMirrorFilterRule,
   TrafficMirrorNetworkService,
@@ -2779,6 +2779,7 @@ import {
   ConnectionLogResponseOptions,
   ConversionTask,
   CpuOptions,
+  DeleteQueuedReservedInstancesError,
   DeleteQueuedReservedInstancesResult,
   DeleteRouteRequest,
   DeleteRouteTableRequest,
@@ -2968,6 +2969,7 @@ import {
   EventInformation,
   ExportImageTask,
   ExportTaskS3Location,
+  FailedQueuedPurchaseDeletion,
   FastLaunchLaunchTemplateSpecificationResponse,
   FastLaunchSnapshotConfigurationResponse,
   FederatedAuthentication,
@@ -2980,7 +2982,6 @@ import {
   FpgaImage,
   FpgaImageAttribute,
   FpgaImageState,
-  HibernationOptions,
   HistoryRecordEntry,
   Host,
   HostInstance,
@@ -3004,7 +3005,6 @@ import {
   IpamPoolCidr,
   IpamPoolCidrFailureReason,
   LaunchPermission,
-  LicenseConfiguration,
   LoadPermission,
   OnDemandOptions,
   PciId,
@@ -3178,7 +3178,6 @@ import {
   DescribeVerifiedAccessEndpointsResult,
   DescribeVerifiedAccessGroupsRequest,
   DescribeVerifiedAccessGroupsResult,
-  DescribeVerifiedAccessInstanceLoggingConfigurationsRequest,
   DiskInfo,
   EbsInfo,
   EbsOptimizedInfo,
@@ -3189,9 +3188,11 @@ import {
   GpuDeviceInfo,
   GpuDeviceMemoryInfo,
   GpuInfo,
+  HibernationOptions,
   HistoryRecord,
   InferenceAcceleratorInfo,
   InferenceDeviceInfo,
+  InferenceDeviceMemoryInfo,
   Instance,
   InstanceIpv4Prefix,
   InstanceIpv6Prefix,
@@ -3215,6 +3216,7 @@ import {
   LaunchSpecification,
   LaunchTemplateConfig,
   LaunchTemplateOverrides,
+  LicenseConfiguration,
   LoadBalancersConfig,
   LocalGateway,
   LocalGatewayVirtualInterface,
@@ -3226,6 +3228,7 @@ import {
   NetworkInfo,
   NetworkInsightsAccessScopeAnalysis,
   NetworkInsightsAnalysis,
+  NitroTpmInfo,
   PlacementGroupInfo,
   PlacementGroupStrategy,
   PoolCidrBlock,
@@ -3278,10 +3281,6 @@ import {
   TransitGatewayAttachmentAssociation,
   UsageClassType,
   VCpuInfo,
-  VerifiedAccessLogCloudWatchLogsDestination,
-  VerifiedAccessLogDeliveryStatus,
-  VerifiedAccessLogKinesisDataFirehoseDestination,
-  VerifiedAccessLogS3Destination,
 } from "../models/models_4";
 import {
   AssociatedRole,
@@ -3289,10 +3288,10 @@ import {
   CapacityReservationGroup,
   ClassicLinkDnsSupport,
   ClientCertificateRevocationListStatus,
-  ClientData,
   CoipAddressUsage,
   DataQuery,
   DataResponse,
+  DescribeVerifiedAccessInstanceLoggingConfigurationsRequest,
   DescribeVerifiedAccessInstanceLoggingConfigurationsResult,
   DescribeVerifiedAccessInstancesRequest,
   DescribeVerifiedAccessInstancesResult,
@@ -3520,10 +3519,6 @@ import {
   GetVpnConnectionDeviceTypesResult,
   GetVpnTunnelReplacementStatusRequest,
   GetVpnTunnelReplacementStatusResult,
-  ImageDiskContainer,
-  ImportClientVpnClientCertificateRevocationListRequest,
-  ImportClientVpnClientCertificateRevocationListResult,
-  ImportImageLicenseConfigurationRequest,
   InstanceEventWindowDisassociationRequest,
   InstanceFamilyCreditSpecification,
   InstanceRequirementsWithMetadataRequest,
@@ -3556,9 +3551,12 @@ import {
   TransitGatewayPropagation,
   TransitGatewayRouteTableAssociation,
   TransitGatewayRouteTablePropagation,
-  UserBucket,
   VerifiedAccessInstanceLoggingConfiguration,
+  VerifiedAccessLogCloudWatchLogsDestination,
+  VerifiedAccessLogDeliveryStatus,
+  VerifiedAccessLogKinesisDataFirehoseDestination,
   VerifiedAccessLogs,
+  VerifiedAccessLogS3Destination,
   VolumeModification,
   VolumeStatusAction,
   VolumeStatusAttachmentStatus,
@@ -3574,6 +3572,7 @@ import {
   BlobAttributeValue,
   CapacityReservationSpecification,
   CidrAuthorizationContext,
+  ClientData,
   CpuOptionsRequest,
   CreateVolumePermissionModifications,
   DiskImage,
@@ -3583,7 +3582,11 @@ import {
   ElasticInferenceAccelerator,
   EnclaveOptionsRequest,
   HibernationOptionsRequest,
+  ImageDiskContainer,
   ImageRecycleBinInfo,
+  ImportClientVpnClientCertificateRevocationListRequest,
+  ImportClientVpnClientCertificateRevocationListResult,
+  ImportImageLicenseConfigurationRequest,
   ImportImageRequest,
   ImportImageResult,
   ImportInstanceLaunchSpecification,
@@ -3833,16 +3836,10 @@ import {
   RevokeSecurityGroupIngressRequest,
   RevokeSecurityGroupIngressResult,
   RunInstancesRequest,
-  RunScheduledInstancesRequest,
   ScheduledInstancesBlockDeviceMapping,
   ScheduledInstancesEbs,
   ScheduledInstancesIamInstanceProfile,
-  ScheduledInstancesIpv6Address,
-  ScheduledInstancesLaunchSpecification,
   ScheduledInstancesMonitoring,
-  ScheduledInstancesNetworkInterface,
-  ScheduledInstancesPlacement,
-  ScheduledInstancesPrivateIpAddressConfig,
   SecurityGroupRuleRequest,
   SecurityGroupRuleUpdate,
   SnapshotDiskContainer,
@@ -3855,6 +3852,7 @@ import {
   TransitGatewayMulticastRegisteredGroupSources,
   UnsuccessfulInstanceCreditSpecificationItem,
   UnsuccessfulInstanceCreditSpecificationItemError,
+  UserBucket,
   UserData,
   VerifiedAccessLogCloudWatchLogsDestinationOptions,
   VerifiedAccessLogKinesisDataFirehoseDestinationOptions,
@@ -3864,7 +3862,13 @@ import {
 } from "../models/models_6";
 import {
   InstanceStateChange,
+  RunScheduledInstancesRequest,
   RunScheduledInstancesResult,
+  ScheduledInstancesIpv6Address,
+  ScheduledInstancesLaunchSpecification,
+  ScheduledInstancesNetworkInterface,
+  ScheduledInstancesPlacement,
+  ScheduledInstancesPrivateIpAddressConfig,
   SearchLocalGatewayRoutesRequest,
   SearchLocalGatewayRoutesResult,
   SearchTransitGatewayMulticastGroupsRequest,
@@ -20142,9 +20146,12 @@ export const de_DeleteKeyPairCommand = async (
   if (output.statusCode >= 300) {
     return de_DeleteKeyPairCommandError(output, context);
   }
-  await collectBody(output.body, context);
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_DeleteKeyPairResult(data, context);
   const response: DeleteKeyPairCommandOutput = {
     $metadata: deserializeMetadata(output),
+    ...contents,
   };
   return response;
 };
@@ -41647,6 +41654,9 @@ const se_CreateNetworkInterfaceRequest = (input: CreateNetworkInterfaceRequest, 
   if (input.ClientToken != null) {
     entries["ClientToken"] = input.ClientToken;
   }
+  if (input.EnablePrimaryIpv6 != null) {
+    entries["EnablePrimaryIpv6"] = input.EnablePrimaryIpv6;
+  }
   return entries;
 };
 
@@ -43305,6 +43315,16 @@ const se_CreateVpcEndpointRequest = (input: CreateVpcEndpointRequest, context: _
     }
     Object.entries(memberEntries).forEach(([key, value]) => {
       const loc = `TagSpecification.${key.substring(key.indexOf(".") + 1)}`;
+      entries[loc] = value;
+    });
+  }
+  if (input.SubnetConfigurations != null) {
+    const memberEntries = se_SubnetConfigurationsList(input.SubnetConfigurations, context);
+    if (input.SubnetConfigurations?.length === 0) {
+      entries.SubnetConfiguration = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `SubnetConfiguration.${key.substring(key.indexOf(".") + 1)}`;
       entries[loc] = value;
     });
   }
@@ -54152,6 +54172,9 @@ const se_InstanceIpv6Address = (input: InstanceIpv6Address, context: __SerdeCont
   if (input.Ipv6Address != null) {
     entries["Ipv6Address"] = input.Ipv6Address;
   }
+  if (input.IsPrimaryIpv6 != null) {
+    entries["IsPrimaryIpv6"] = input.IsPrimaryIpv6;
+  }
   return entries;
 };
 
@@ -54358,6 +54381,9 @@ const se_InstanceNetworkInterfaceSpecification = (
   }
   if (input.Ipv6PrefixCount != null) {
     entries["Ipv6PrefixCount"] = input.Ipv6PrefixCount;
+  }
+  if (input.PrimaryIpv6 != null) {
+    entries["PrimaryIpv6"] = input.PrimaryIpv6;
   }
   return entries;
 };
@@ -55706,6 +55732,9 @@ const se_LaunchTemplateInstanceNetworkInterfaceSpecificationRequest = (
   }
   if (input.Ipv6PrefixCount != null) {
     entries["Ipv6PrefixCount"] = input.Ipv6PrefixCount;
+  }
+  if (input.PrimaryIpv6 != null) {
+    entries["PrimaryIpv6"] = input.PrimaryIpv6;
   }
   return entries;
 };
@@ -57410,6 +57439,9 @@ const se_ModifyNetworkInterfaceAttributeRequest = (
       entries[loc] = value;
     });
   }
+  if (input.EnablePrimaryIpv6 != null) {
+    entries["EnablePrimaryIpv6"] = input.EnablePrimaryIpv6;
+  }
   return entries;
 };
 
@@ -58479,6 +58511,16 @@ const se_ModifyVpcEndpointRequest = (input: ModifyVpcEndpointRequest, context: _
   }
   if (input.PrivateDnsEnabled != null) {
     entries["PrivateDnsEnabled"] = input.PrivateDnsEnabled;
+  }
+  if (input.SubnetConfigurations != null) {
+    const memberEntries = se_SubnetConfigurationsList(input.SubnetConfigurations, context);
+    if (input.SubnetConfigurations?.length === 0) {
+      entries.SubnetConfiguration = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `SubnetConfiguration.${key.substring(key.indexOf(".") + 1)}`;
+      entries[loc] = value;
+    });
   }
   return entries;
 };
@@ -62332,6 +62374,9 @@ const se_RunInstancesRequest = (input: RunInstancesRequest, context: __SerdeCont
   if (input.DisableApiStop != null) {
     entries["DisableApiStop"] = input.DisableApiStop;
   }
+  if (input.EnablePrimaryIpv6 != null) {
+    entries["EnablePrimaryIpv6"] = input.EnablePrimaryIpv6;
+  }
   return entries;
 };
 
@@ -63774,6 +63819,42 @@ const se_StorageLocation = (input: StorageLocation, context: __SerdeContext): an
   }
   if (input.Key != null) {
     entries["Key"] = input.Key;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_ec2SubnetConfiguration
+ */
+const se_SubnetConfiguration = (input: SubnetConfiguration, context: __SerdeContext): any => {
+  const entries: any = {};
+  if (input.SubnetId != null) {
+    entries["SubnetId"] = input.SubnetId;
+  }
+  if (input.Ipv4 != null) {
+    entries["Ipv4"] = input.Ipv4;
+  }
+  if (input.Ipv6 != null) {
+    entries["Ipv6"] = input.Ipv6;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_ec2SubnetConfigurationsList
+ */
+const se_SubnetConfigurationsList = (input: SubnetConfiguration[], context: __SerdeContext): any => {
+  const entries: any = {};
+  let counter = 1;
+  for (const entry of input) {
+    if (entry === null) {
+      continue;
+    }
+    const memberEntries = se_SubnetConfiguration(entry, context);
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      entries[`Item.${counter}.${key}`] = value;
+    });
+    counter++;
   }
   return entries;
 };
@@ -70136,6 +70217,20 @@ const de_DeleteIpamScopeResult = (output: any, context: __SerdeContext): DeleteI
   const contents: any = {};
   if (output["ipamScope"] !== undefined) {
     contents.IpamScope = de_IpamScope(output["ipamScope"], context);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_ec2DeleteKeyPairResult
+ */
+const de_DeleteKeyPairResult = (output: any, context: __SerdeContext): DeleteKeyPairResult => {
+  const contents: any = {};
+  if (output["return"] !== undefined) {
+    contents.Return = __parseBoolean(output["return"]);
+  }
+  if (output["keyPairId"] !== undefined) {
+    contents.KeyPairId = __expectString(output["keyPairId"]);
   }
   return contents;
 };
@@ -76864,6 +76959,9 @@ const de_GetEbsEncryptionByDefaultResult = (output: any, context: __SerdeContext
   if (output["ebsEncryptionByDefault"] !== undefined) {
     contents.EbsEncryptionByDefault = __parseBoolean(output["ebsEncryptionByDefault"]);
   }
+  if (output["sseType"] !== undefined) {
+    contents.SseType = __expectString(output["sseType"]);
+  }
   return contents;
 };
 
@@ -78731,6 +78829,9 @@ const de_InferenceAcceleratorInfo = (output: any, context: __SerdeContext): Infe
       context
     );
   }
+  if (output["totalInferenceMemoryInMiB"] !== undefined) {
+    contents.TotalInferenceMemoryInMiB = __strictParseInt32(output["totalInferenceMemoryInMiB"]) as number;
+  }
   return contents;
 };
 
@@ -78748,6 +78849,9 @@ const de_InferenceDeviceInfo = (output: any, context: __SerdeContext): Inference
   if (output["manufacturer"] !== undefined) {
     contents.Manufacturer = __expectString(output["manufacturer"]);
   }
+  if (output["memoryInfo"] !== undefined) {
+    contents.MemoryInfo = de_InferenceDeviceMemoryInfo(output["memoryInfo"], context);
+  }
   return contents;
 };
 
@@ -78760,6 +78864,17 @@ const de_InferenceDeviceInfoList = (output: any, context: __SerdeContext): Infer
     .map((entry: any) => {
       return de_InferenceDeviceInfo(entry, context);
     });
+};
+
+/**
+ * deserializeAws_ec2InferenceDeviceMemoryInfo
+ */
+const de_InferenceDeviceMemoryInfo = (output: any, context: __SerdeContext): InferenceDeviceMemoryInfo => {
+  const contents: any = {};
+  if (output["sizeInMiB"] !== undefined) {
+    contents.SizeInMiB = __strictParseInt32(output["sizeInMiB"]) as number;
+  }
+  return contents;
 };
 
 /**
@@ -79391,6 +79506,9 @@ const de_InstanceIpv6Address = (output: any, context: __SerdeContext): InstanceI
   if (output["ipv6Address"] !== undefined) {
     contents.Ipv6Address = __expectString(output["ipv6Address"]);
   }
+  if (output["isPrimaryIpv6"] !== undefined) {
+    contents.IsPrimaryIpv6 = __parseBoolean(output["isPrimaryIpv6"]);
+  }
   return contents;
 };
 
@@ -79727,6 +79845,9 @@ const de_InstanceNetworkInterfaceSpecification = (
   }
   if (output["Ipv6PrefixCount"] !== undefined) {
     contents.Ipv6PrefixCount = __strictParseInt32(output["Ipv6PrefixCount"]) as number;
+  }
+  if (output["PrimaryIpv6"] !== undefined) {
+    contents.PrimaryIpv6 = __parseBoolean(output["PrimaryIpv6"]);
   }
   return contents;
 };
@@ -80228,6 +80349,12 @@ const de_InstanceTypeInfo = (output: any, context: __SerdeContext): InstanceType
   }
   if (output["nitroEnclavesSupport"] !== undefined) {
     contents.NitroEnclavesSupport = __expectString(output["nitroEnclavesSupport"]);
+  }
+  if (output["nitroTpmSupport"] !== undefined) {
+    contents.NitroTpmSupport = __expectString(output["nitroTpmSupport"]);
+  }
+  if (output["nitroTpmInfo"] !== undefined) {
+    contents.NitroTpmInfo = de_NitroTpmInfo(output["nitroTpmInfo"], context);
   }
   return contents;
 };
@@ -82033,6 +82160,9 @@ const de_LaunchTemplateInstanceNetworkInterfaceSpecification = (
   }
   if (output["ipv6PrefixCount"] !== undefined) {
     contents.Ipv6PrefixCount = __strictParseInt32(output["ipv6PrefixCount"]) as number;
+  }
+  if (output["primaryIpv6"] !== undefined) {
+    contents.PrimaryIpv6 = __parseBoolean(output["primaryIpv6"]);
   }
   return contents;
 };
@@ -83976,6 +84106,12 @@ const de_NetworkCardInfo = (output: any, context: __SerdeContext): NetworkCardIn
   if (output["maximumNetworkInterfaces"] !== undefined) {
     contents.MaximumNetworkInterfaces = __strictParseInt32(output["maximumNetworkInterfaces"]) as number;
   }
+  if (output["baselineBandwidthInGbps"] !== undefined) {
+    contents.BaselineBandwidthInGbps = __strictParseFloat(output["baselineBandwidthInGbps"]) as number;
+  }
+  if (output["peakBandwidthInGbps"] !== undefined) {
+    contents.PeakBandwidthInGbps = __strictParseFloat(output["peakBandwidthInGbps"]) as number;
+  }
   return contents;
 };
 
@@ -84524,6 +84660,9 @@ const de_NetworkInterfaceIpv6Address = (output: any, context: __SerdeContext): N
   if (output["ipv6Address"] !== undefined) {
     contents.Ipv6Address = __expectString(output["ipv6Address"]);
   }
+  if (output["isPrimaryIpv6"] !== undefined) {
+    contents.IsPrimaryIpv6 = __parseBoolean(output["isPrimaryIpv6"]);
+  }
   return contents;
 };
 
@@ -84634,6 +84773,33 @@ const de_NetworkInterfacePrivateIpAddressList = (
     .filter((e: any) => e != null)
     .map((entry: any) => {
       return de_NetworkInterfacePrivateIpAddress(entry, context);
+    });
+};
+
+/**
+ * deserializeAws_ec2NitroTpmInfo
+ */
+const de_NitroTpmInfo = (output: any, context: __SerdeContext): NitroTpmInfo => {
+  const contents: any = {};
+  if (output.supportedVersions === "") {
+    contents.SupportedVersions = [];
+  } else if (output["supportedVersions"] !== undefined && output["supportedVersions"]["item"] !== undefined) {
+    contents.SupportedVersions = de_NitroTpmSupportedVersionsList(
+      __getArrayIfSingleItem(output["supportedVersions"]["item"]),
+      context
+    );
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_ec2NitroTpmSupportedVersionsList
+ */
+const de_NitroTpmSupportedVersionsList = (output: any, context: __SerdeContext): string[] => {
+  return (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return __expectString(entry) as any;
     });
 };
 
@@ -87087,6 +87253,9 @@ const de_RestoreSnapshotFromRecycleBinResult = (
   if (output["volumeSize"] !== undefined) {
     contents.VolumeSize = __strictParseInt32(output["volumeSize"]) as number;
   }
+  if (output["sseType"] !== undefined) {
+    contents.SseType = __expectString(output["sseType"]);
+  }
   return contents;
 };
 
@@ -88141,6 +88310,9 @@ const de_Snapshot = (output: any, context: __SerdeContext): Snapshot => {
   if (output["restoreExpiryTime"] !== undefined) {
     contents.RestoreExpiryTime = __expectNonNull(__parseRfc3339DateTimeWithOffset(output["restoreExpiryTime"]));
   }
+  if (output["sseType"] !== undefined) {
+    contents.SseType = __expectString(output["sseType"]);
+  }
   return contents;
 };
 
@@ -88232,6 +88404,9 @@ const de_SnapshotInfo = (output: any, context: __SerdeContext): SnapshotInfo => 
   }
   if (output["outpostArn"] !== undefined) {
     contents.OutpostArn = __expectString(output["outpostArn"]);
+  }
+  if (output["sseType"] !== undefined) {
+    contents.SseType = __expectString(output["sseType"]);
   }
   return contents;
 };
@@ -92502,6 +92677,9 @@ const de_Volume = (output: any, context: __SerdeContext): Volume => {
   }
   if (output["throughput"] !== undefined) {
     contents.Throughput = __strictParseInt32(output["throughput"]) as number;
+  }
+  if (output["sseType"] !== undefined) {
+    contents.SseType = __expectString(output["sseType"]);
   }
   return contents;
 };

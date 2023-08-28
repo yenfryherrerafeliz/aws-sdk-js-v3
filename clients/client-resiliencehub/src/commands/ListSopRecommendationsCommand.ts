@@ -66,6 +66,8 @@ export interface ListSopRecommendationsCommandOutput extends ListSopRecommendati
  * //           targetAccountId: "STRING_VALUE",
  * //           targetRegion: "STRING_VALUE",
  * //           alreadyImplemented: true || false,
+ * //           excluded: true || false,
+ * //           excludeReason: "STRING_VALUE",
  * //         },
  * //       ],
  * //       referenceId: "STRING_VALUE", // required

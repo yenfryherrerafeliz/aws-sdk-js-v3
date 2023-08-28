@@ -13,7 +13,11 @@ import {
   SerdeContext as __SerdeContext,
 } from "@smithy/types";
 
-import { CreateIdentitySourceInput, CreateIdentitySourceOutput } from "../models/models_0";
+import {
+  CreateIdentitySourceInput,
+  CreateIdentitySourceInputFilterSensitiveLog,
+  CreateIdentitySourceOutput,
+} from "../models/models_0";
 import { de_CreateIdentitySourceCommand, se_CreateIdentitySourceCommand } from "../protocols/Aws_json1_0";
 import {
   ServiceInputTypes,
@@ -65,6 +69,12 @@ export interface CreateIdentitySourceCommandOutput extends CreateIdentitySourceO
  *                     <code>PrincipalEntityType</code> parameter for this operation. The
  *                     <code>CognitoUserPoolId</code> and <code>CognitoClientId</code> are defined by
  *                 the Amazon Cognito user pool.</p>
+ *          </note>
+ *          <note>
+ *             <p>Verified Permissions is <i>
+ *                   <a href="https://wikipedia.org/wiki/Eventual_consistency">eventually consistent</a>
+ *                </i>. It can take a few seconds for a new or changed element to be propagate through
+ *     the service and be visible in the results of other Verified Permissions operations.</p>
  *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -253,7 +263,7 @@ export class CreateIdentitySourceCommand extends $Command<
       logger,
       clientName,
       commandName,
-      inputFilterSensitiveLog: (_: any) => _,
+      inputFilterSensitiveLog: CreateIdentitySourceInputFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
     };
     const { requestHandler } = configuration;

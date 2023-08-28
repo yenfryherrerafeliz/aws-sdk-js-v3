@@ -71,12 +71,14 @@ export interface DeleteGlobalClusterCommandOutput extends DeleteGlobalClusterRes
  * //         ],
  * //         IsWriter: true || false,
  * //         GlobalWriteForwardingStatus: "enabled" || "disabled" || "enabling" || "disabling" || "unknown",
+ * //         SynchronizationStatus: "connected" || "pending-resync",
  * //       },
  * //     ],
  * //     FailoverState: { // FailoverState
  * //       Status: "pending" || "failing-over" || "cancelling",
  * //       FromDbClusterArn: "STRING_VALUE",
  * //       ToDbClusterArn: "STRING_VALUE",
+ * //       IsDataLossAllowed: true || false,
  * //     },
  * //   },
  * // };

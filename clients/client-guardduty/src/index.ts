@@ -17,14 +17,15 @@
  *          <p>GuardDuty informs you about the status of your Amazon Web Services environment by producing security
  *       findings that you can view in the GuardDuty console or through Amazon EventBridge. For more
  *       information, see the <i>
- *                <a href="https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html">Amazon
- *           GuardDuty User Guide</a>
+ *                <a href="https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html">Amazon GuardDuty User
+ *         Guide</a>
  *             </i>. </p>
  *
  * @packageDocumentation
  */
 export * from "./GuardDutyClient";
 export * from "./GuardDuty";
+export { ClientInputEndpointParameters } from "./endpoint/EndpointParameters";
 export * from "./commands";
 export * from "./pagination";
 export * from "./models";

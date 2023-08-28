@@ -54,10 +54,11 @@ export interface GetApplicationCommandOutput extends GetApplicationOutput, __Met
  * // { // GetApplicationOutput
  * //   Application: { // Application
  * //     Id: "STRING_VALUE",
- * //     Type: "STRING_VALUE",
+ * //     Type: "HANA",
  * //     Arn: "STRING_VALUE",
  * //     AppRegistryArn: "STRING_VALUE",
- * //     Status: "STRING_VALUE",
+ * //     Status: "ACTIVATED" || "STARTING" || "STOPPED" || "STOPPING" || "FAILED" || "REGISTERING" || "DELETING" || "UNKNOWN",
+ * //     DiscoveryStatus: "SUCCESS" || "REGISTRATION_FAILED" || "REFRESH_FAILED" || "REGISTERING" || "DELETING",
  * //     Components: [ // ComponentIdList
  * //       "STRING_VALUE",
  * //     ],

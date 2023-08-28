@@ -14,7 +14,7 @@ import {
 } from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
-import { UpdateUserSecurityProfilesRequest } from "../models/models_1";
+import { UpdateUserSecurityProfilesRequest } from "../models/models_2";
 import { de_UpdateUserSecurityProfilesCommand, se_UpdateUserSecurityProfilesCommand } from "../protocols/Aws_restJson1";
 
 /**

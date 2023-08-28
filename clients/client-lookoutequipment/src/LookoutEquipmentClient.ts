@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -66,6 +67,10 @@ import { DeleteLabelCommandInput, DeleteLabelCommandOutput } from "./commands/De
 import { DeleteLabelGroupCommandInput, DeleteLabelGroupCommandOutput } from "./commands/DeleteLabelGroupCommand";
 import { DeleteModelCommandInput, DeleteModelCommandOutput } from "./commands/DeleteModelCommand";
 import {
+  DeleteResourcePolicyCommandInput,
+  DeleteResourcePolicyCommandOutput,
+} from "./commands/DeleteResourcePolicyCommand";
+import {
   DescribeDataIngestionJobCommandInput,
   DescribeDataIngestionJobCommandOutput,
 } from "./commands/DescribeDataIngestionJobCommand";
@@ -77,6 +82,16 @@ import {
 import { DescribeLabelCommandInput, DescribeLabelCommandOutput } from "./commands/DescribeLabelCommand";
 import { DescribeLabelGroupCommandInput, DescribeLabelGroupCommandOutput } from "./commands/DescribeLabelGroupCommand";
 import { DescribeModelCommandInput, DescribeModelCommandOutput } from "./commands/DescribeModelCommand";
+import {
+  DescribeModelVersionCommandInput,
+  DescribeModelVersionCommandOutput,
+} from "./commands/DescribeModelVersionCommand";
+import {
+  DescribeResourcePolicyCommandInput,
+  DescribeResourcePolicyCommandOutput,
+} from "./commands/DescribeResourcePolicyCommand";
+import { ImportDatasetCommandInput, ImportDatasetCommandOutput } from "./commands/ImportDatasetCommand";
+import { ImportModelVersionCommandInput, ImportModelVersionCommandOutput } from "./commands/ImportModelVersionCommand";
 import {
   ListDataIngestionJobsCommandInput,
   ListDataIngestionJobsCommandOutput,
@@ -97,6 +112,7 @@ import {
 import { ListLabelGroupsCommandInput, ListLabelGroupsCommandOutput } from "./commands/ListLabelGroupsCommand";
 import { ListLabelsCommandInput, ListLabelsCommandOutput } from "./commands/ListLabelsCommand";
 import { ListModelsCommandInput, ListModelsCommandOutput } from "./commands/ListModelsCommand";
+import { ListModelVersionsCommandInput, ListModelVersionsCommandOutput } from "./commands/ListModelVersionsCommand";
 import {
   ListSensorStatisticsCommandInput,
   ListSensorStatisticsCommandOutput,
@@ -105,6 +121,7 @@ import {
   ListTagsForResourceCommandInput,
   ListTagsForResourceCommandOutput,
 } from "./commands/ListTagsForResourceCommand";
+import { PutResourcePolicyCommandInput, PutResourcePolicyCommandOutput } from "./commands/PutResourcePolicyCommand";
 import {
   StartDataIngestionJobCommandInput,
   StartDataIngestionJobCommandOutput,
@@ -120,6 +137,10 @@ import {
 import { TagResourceCommandInput, TagResourceCommandOutput } from "./commands/TagResourceCommand";
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "./commands/UntagResourceCommand";
 import {
+  UpdateActiveModelVersionCommandInput,
+  UpdateActiveModelVersionCommandOutput,
+} from "./commands/UpdateActiveModelVersionCommand";
+import {
   UpdateInferenceSchedulerCommandInput,
   UpdateInferenceSchedulerCommandOutput,
 } from "./commands/UpdateInferenceSchedulerCommand";
@@ -131,6 +152,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -148,12 +170,17 @@ export type ServiceInputTypes =
   | DeleteLabelCommandInput
   | DeleteLabelGroupCommandInput
   | DeleteModelCommandInput
+  | DeleteResourcePolicyCommandInput
   | DescribeDataIngestionJobCommandInput
   | DescribeDatasetCommandInput
   | DescribeInferenceSchedulerCommandInput
   | DescribeLabelCommandInput
   | DescribeLabelGroupCommandInput
   | DescribeModelCommandInput
+  | DescribeModelVersionCommandInput
+  | DescribeResourcePolicyCommandInput
+  | ImportDatasetCommandInput
+  | ImportModelVersionCommandInput
   | ListDataIngestionJobsCommandInput
   | ListDatasetsCommandInput
   | ListInferenceEventsCommandInput
@@ -161,14 +188,17 @@ export type ServiceInputTypes =
   | ListInferenceSchedulersCommandInput
   | ListLabelGroupsCommandInput
   | ListLabelsCommandInput
+  | ListModelVersionsCommandInput
   | ListModelsCommandInput
   | ListSensorStatisticsCommandInput
   | ListTagsForResourceCommandInput
+  | PutResourcePolicyCommandInput
   | StartDataIngestionJobCommandInput
   | StartInferenceSchedulerCommandInput
   | StopInferenceSchedulerCommandInput
   | TagResourceCommandInput
   | UntagResourceCommandInput
+  | UpdateActiveModelVersionCommandInput
   | UpdateInferenceSchedulerCommandInput
   | UpdateLabelGroupCommandInput;
 
@@ -186,12 +216,17 @@ export type ServiceOutputTypes =
   | DeleteLabelCommandOutput
   | DeleteLabelGroupCommandOutput
   | DeleteModelCommandOutput
+  | DeleteResourcePolicyCommandOutput
   | DescribeDataIngestionJobCommandOutput
   | DescribeDatasetCommandOutput
   | DescribeInferenceSchedulerCommandOutput
   | DescribeLabelCommandOutput
   | DescribeLabelGroupCommandOutput
   | DescribeModelCommandOutput
+  | DescribeModelVersionCommandOutput
+  | DescribeResourcePolicyCommandOutput
+  | ImportDatasetCommandOutput
+  | ImportModelVersionCommandOutput
   | ListDataIngestionJobsCommandOutput
   | ListDatasetsCommandOutput
   | ListInferenceEventsCommandOutput
@@ -199,14 +234,17 @@ export type ServiceOutputTypes =
   | ListInferenceSchedulersCommandOutput
   | ListLabelGroupsCommandOutput
   | ListLabelsCommandOutput
+  | ListModelVersionsCommandOutput
   | ListModelsCommandOutput
   | ListSensorStatisticsCommandOutput
   | ListTagsForResourceCommandOutput
+  | PutResourcePolicyCommandOutput
   | StartDataIngestionJobCommandOutput
   | StartInferenceSchedulerCommandOutput
   | StopInferenceSchedulerCommandOutput
   | TagResourceCommandOutput
   | UntagResourceCommandOutput
+  | UpdateActiveModelVersionCommandOutput
   | UpdateInferenceSchedulerCommandOutput
   | UpdateLabelGroupCommandOutput;
 
@@ -329,6 +367,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -358,6 +401,7 @@ export interface LookoutEquipmentClientConfig extends LookoutEquipmentClientConf
  */
 export type LookoutEquipmentClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -388,8 +432,8 @@ export class LookoutEquipmentClient extends __Client<
    */
   readonly config: LookoutEquipmentClientResolvedConfig;
 
-  constructor(configuration: LookoutEquipmentClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<LookoutEquipmentClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -397,8 +441,9 @@ export class LookoutEquipmentClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

@@ -129,6 +129,10 @@ import {
 import { ListChangeSetsCommandInput, ListChangeSetsCommandOutput } from "../commands/ListChangeSetsCommand";
 import { ListExportsCommandInput, ListExportsCommandOutput } from "../commands/ListExportsCommand";
 import { ListImportsCommandInput, ListImportsCommandOutput } from "../commands/ListImportsCommand";
+import {
+  ListStackInstanceResourceDriftsCommandInput,
+  ListStackInstanceResourceDriftsCommandOutput,
+} from "../commands/ListStackInstanceResourceDriftsCommand";
 import { ListStackInstancesCommandInput, ListStackInstancesCommandOutput } from "../commands/ListStackInstancesCommand";
 import { ListStackResourcesCommandInput, ListStackResourcesCommandOutput } from "../commands/ListStackResourcesCommand";
 import { ListStacksCommandInput, ListStacksCommandOutput } from "../commands/ListStacksCommand";
@@ -290,6 +294,8 @@ import {
   ListExportsOutput,
   ListImportsInput,
   ListImportsOutput,
+  ListStackInstanceResourceDriftsInput,
+  ListStackInstanceResourceDriftsOutput,
   ListStackInstancesInput,
   ListStackInstancesOutput,
   ListStackResourcesInput,
@@ -356,6 +362,7 @@ import {
   StackInstanceComprehensiveStatus,
   StackInstanceFilter,
   StackInstanceNotFoundException,
+  StackInstanceResourceDriftsSummary,
   StackInstanceSummary,
   StackNotFoundException,
   StackResource,
@@ -383,6 +390,7 @@ import {
   Tag,
   TemplateParameter,
   TemplateStage,
+  TemplateSummaryConfig,
   TestTypeInput,
   TestTypeOutput,
   TokenAlreadyExistsException,
@@ -403,6 +411,7 @@ import {
   UpdateTerminationProtectionOutput,
   ValidateTemplateInput,
   ValidateTemplateOutput,
+  Warnings,
 } from "../models/models_0";
 
 /**
@@ -1148,6 +1157,23 @@ export const se_ListImportsCommand = async (
   body = buildFormUrlencodedString({
     ...se_ListImportsInput(input, context),
     Action: "ListImports",
+    Version: "2010-05-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_queryListStackInstanceResourceDriftsCommand
+ */
+export const se_ListStackInstanceResourceDriftsCommand = async (
+  input: ListStackInstanceResourceDriftsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_ListStackInstanceResourceDriftsInput(input, context),
+    Action: "ListStackInstanceResourceDrifts",
     Version: "2010-05-15",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -3627,6 +3653,58 @@ const de_ListImportsCommandError = async (
 };
 
 /**
+ * deserializeAws_queryListStackInstanceResourceDriftsCommand
+ */
+export const de_ListStackInstanceResourceDriftsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListStackInstanceResourceDriftsCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_ListStackInstanceResourceDriftsCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_ListStackInstanceResourceDriftsOutput(data.ListStackInstanceResourceDriftsResult, context);
+  const response: ListStackInstanceResourceDriftsCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_queryListStackInstanceResourceDriftsCommandError
+ */
+const de_ListStackInstanceResourceDriftsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListStackInstanceResourceDriftsCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "OperationNotFoundException":
+    case "com.amazonaws.cloudformation#OperationNotFoundException":
+      throw await de_OperationNotFoundExceptionRes(parsedOutput, context);
+    case "StackInstanceNotFoundException":
+    case "com.amazonaws.cloudformation#StackInstanceNotFoundException":
+      throw await de_StackInstanceNotFoundExceptionRes(parsedOutput, context);
+    case "StackSetNotFoundException":
+    case "com.amazonaws.cloudformation#StackSetNotFoundException":
+      throw await de_StackSetNotFoundExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody: parsedBody.Error,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_queryListStackInstancesCommand
  */
 export const de_ListStackInstancesCommand = async (
@@ -5498,6 +5576,9 @@ const se_CreateStackInput = (input: CreateStackInput, context: __SerdeContext): 
   if (input.EnableTerminationProtection != null) {
     entries["EnableTerminationProtection"] = input.EnableTerminationProtection;
   }
+  if (input.RetainExceptOnCreate != null) {
+    entries["RetainExceptOnCreate"] = input.RetainExceptOnCreate;
+  }
   return entries;
 };
 
@@ -6205,6 +6286,9 @@ const se_ExecuteChangeSetInput = (input: ExecuteChangeSetInput, context: __Serde
   if (input.DisableRollback != null) {
     entries["DisableRollback"] = input.DisableRollback;
   }
+  if (input.RetainExceptOnCreate != null) {
+    entries["RetainExceptOnCreate"] = input.RetainExceptOnCreate;
+  }
   return entries;
 };
 
@@ -6255,6 +6339,13 @@ const se_GetTemplateSummaryInput = (input: GetTemplateSummaryInput, context: __S
   }
   if (input.CallAs != null) {
     entries["CallAs"] = input.CallAs;
+  }
+  if (input.TemplateSummaryConfig != null) {
+    const memberEntries = se_TemplateSummaryConfig(input.TemplateSummaryConfig, context);
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `TemplateSummaryConfig.${key}`;
+      entries[loc] = value;
+    });
   }
   return entries;
 };
@@ -6344,6 +6435,48 @@ const se_ListImportsInput = (input: ListImportsInput, context: __SerdeContext): 
   }
   if (input.NextToken != null) {
     entries["NextToken"] = input.NextToken;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_queryListStackInstanceResourceDriftsInput
+ */
+const se_ListStackInstanceResourceDriftsInput = (
+  input: ListStackInstanceResourceDriftsInput,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.StackSetName != null) {
+    entries["StackSetName"] = input.StackSetName;
+  }
+  if (input.NextToken != null) {
+    entries["NextToken"] = input.NextToken;
+  }
+  if (input.MaxResults != null) {
+    entries["MaxResults"] = input.MaxResults;
+  }
+  if (input.StackInstanceResourceDriftStatuses != null) {
+    const memberEntries = se_StackResourceDriftStatusFilters(input.StackInstanceResourceDriftStatuses, context);
+    if (input.StackInstanceResourceDriftStatuses?.length === 0) {
+      entries.StackInstanceResourceDriftStatuses = [];
+    }
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `StackInstanceResourceDriftStatuses.${key}`;
+      entries[loc] = value;
+    });
+  }
+  if (input.StackInstanceAccount != null) {
+    entries["StackInstanceAccount"] = input.StackInstanceAccount;
+  }
+  if (input.StackInstanceRegion != null) {
+    entries["StackInstanceRegion"] = input.StackInstanceRegion;
+  }
+  if (input.OperationId != null) {
+    entries["OperationId"] = input.OperationId;
+  }
+  if (input.CallAs != null) {
+    entries["CallAs"] = input.CallAs;
   }
   return entries;
 };
@@ -6976,6 +7109,9 @@ const se_RollbackStackInput = (input: RollbackStackInput, context: __SerdeContex
   if (input.ClientRequestToken != null) {
     entries["ClientRequestToken"] = input.ClientRequestToken;
   }
+  if (input.RetainExceptOnCreate != null) {
+    entries["RetainExceptOnCreate"] = input.RetainExceptOnCreate;
+  }
   return entries;
 };
 
@@ -7260,6 +7396,17 @@ const se_Tags = (input: Tag[], context: __SerdeContext): any => {
 };
 
 /**
+ * serializeAws_queryTemplateSummaryConfig
+ */
+const se_TemplateSummaryConfig = (input: TemplateSummaryConfig, context: __SerdeContext): any => {
+  const entries: any = {};
+  if (input.TreatUnrecognizedResourceTypesAsWarnings != null) {
+    entries["TreatUnrecognizedResourceTypesAsWarnings"] = input.TreatUnrecognizedResourceTypesAsWarnings;
+  }
+  return entries;
+};
+
+/**
  * serializeAws_queryTestTypeInput
  */
 const se_TestTypeInput = (input: TestTypeInput, context: __SerdeContext): any => {
@@ -7435,6 +7582,9 @@ const se_UpdateStackInput = (input: UpdateStackInput, context: __SerdeContext): 
   }
   if (input.ClientRequestToken != null) {
     entries["ClientRequestToken"] = input.ClientRequestToken;
+  }
+  if (input.RetainExceptOnCreate != null) {
+    entries["RetainExceptOnCreate"] = input.RetainExceptOnCreate;
   }
   return entries;
 };
@@ -8747,6 +8897,9 @@ const de_GetTemplateSummaryOutput = (output: any, context: __SerdeContext): GetT
       context
     );
   }
+  if (output["Warnings"] !== undefined) {
+    contents.Warnings = de_Warnings(output["Warnings"], context);
+  }
   return contents;
 };
 
@@ -8871,6 +9024,28 @@ const de_ListImportsOutput = (output: any, context: __SerdeContext): ListImports
     contents.Imports = [];
   } else if (output["Imports"] !== undefined && output["Imports"]["member"] !== undefined) {
     contents.Imports = de_Imports(__getArrayIfSingleItem(output["Imports"]["member"]), context);
+  }
+  if (output["NextToken"] !== undefined) {
+    contents.NextToken = __expectString(output["NextToken"]);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryListStackInstanceResourceDriftsOutput
+ */
+const de_ListStackInstanceResourceDriftsOutput = (
+  output: any,
+  context: __SerdeContext
+): ListStackInstanceResourceDriftsOutput => {
+  const contents: any = {};
+  if (output.Summaries === "") {
+    contents.Summaries = [];
+  } else if (output["Summaries"] !== undefined && output["Summaries"]["member"] !== undefined) {
+    contents.Summaries = de_StackInstanceResourceDriftsSummaries(
+      __getArrayIfSingleItem(output["Summaries"]["member"]),
+      context
+    );
   }
   if (output["NextToken"] !== undefined) {
     contents.NextToken = __expectString(output["NextToken"]);
@@ -9765,6 +9940,9 @@ const de_Stack = (output: any, context: __SerdeContext): Stack => {
   if (output["DriftInformation"] !== undefined) {
     contents.DriftInformation = de_StackDriftInformation(output["DriftInformation"], context);
   }
+  if (output["RetainExceptOnCreate"] !== undefined) {
+    contents.RetainExceptOnCreate = __parseBoolean(output["RetainExceptOnCreate"]);
+  }
   return contents;
 };
 
@@ -9935,6 +10113,68 @@ const de_StackInstanceNotFoundException = (output: any, context: __SerdeContext)
   const contents: any = {};
   if (output["Message"] !== undefined) {
     contents.Message = __expectString(output["Message"]);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryStackInstanceResourceDriftsSummaries
+ */
+const de_StackInstanceResourceDriftsSummaries = (
+  output: any,
+  context: __SerdeContext
+): StackInstanceResourceDriftsSummary[] => {
+  return (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_StackInstanceResourceDriftsSummary(entry, context);
+    });
+};
+
+/**
+ * deserializeAws_queryStackInstanceResourceDriftsSummary
+ */
+const de_StackInstanceResourceDriftsSummary = (
+  output: any,
+  context: __SerdeContext
+): StackInstanceResourceDriftsSummary => {
+  const contents: any = {};
+  if (output["StackId"] !== undefined) {
+    contents.StackId = __expectString(output["StackId"]);
+  }
+  if (output["LogicalResourceId"] !== undefined) {
+    contents.LogicalResourceId = __expectString(output["LogicalResourceId"]);
+  }
+  if (output["PhysicalResourceId"] !== undefined) {
+    contents.PhysicalResourceId = __expectString(output["PhysicalResourceId"]);
+  }
+  if (output.PhysicalResourceIdContext === "") {
+    contents.PhysicalResourceIdContext = [];
+  } else if (
+    output["PhysicalResourceIdContext"] !== undefined &&
+    output["PhysicalResourceIdContext"]["member"] !== undefined
+  ) {
+    contents.PhysicalResourceIdContext = de_PhysicalResourceIdContext(
+      __getArrayIfSingleItem(output["PhysicalResourceIdContext"]["member"]),
+      context
+    );
+  }
+  if (output["ResourceType"] !== undefined) {
+    contents.ResourceType = __expectString(output["ResourceType"]);
+  }
+  if (output.PropertyDifferences === "") {
+    contents.PropertyDifferences = [];
+  } else if (output["PropertyDifferences"] !== undefined && output["PropertyDifferences"]["member"] !== undefined) {
+    contents.PropertyDifferences = de_PropertyDifferences(
+      __getArrayIfSingleItem(output["PropertyDifferences"]["member"]),
+      context
+    );
+  }
+  if (output["StackResourceDriftStatus"] !== undefined) {
+    contents.StackResourceDriftStatus = __expectString(output["StackResourceDriftStatus"]);
+  }
+  if (output["Timestamp"] !== undefined) {
+    contents.Timestamp = __expectNonNull(__parseRfc3339DateTimeWithOffset(output["Timestamp"]));
   }
   return contents;
 };
@@ -11059,6 +11299,25 @@ const de_ValidateTemplateOutput = (output: any, context: __SerdeContext): Valida
   } else if (output["DeclaredTransforms"] !== undefined && output["DeclaredTransforms"]["member"] !== undefined) {
     contents.DeclaredTransforms = de_TransformsList(
       __getArrayIfSingleItem(output["DeclaredTransforms"]["member"]),
+      context
+    );
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_queryWarnings
+ */
+const de_Warnings = (output: any, context: __SerdeContext): Warnings => {
+  const contents: any = {};
+  if (output.UnrecognizedResourceTypes === "") {
+    contents.UnrecognizedResourceTypes = [];
+  } else if (
+    output["UnrecognizedResourceTypes"] !== undefined &&
+    output["UnrecognizedResourceTypes"]["member"] !== undefined
+  ) {
+    contents.UnrecognizedResourceTypes = de_ResourceTypes(
+      __getArrayIfSingleItem(output["UnrecognizedResourceTypes"]["member"]),
       context
     );
   }

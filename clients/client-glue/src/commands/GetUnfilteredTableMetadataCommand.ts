@@ -14,8 +14,7 @@ import {
 } from "@smithy/types";
 
 import { GlueClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GlueClient";
-import { GetUnfilteredTableMetadataRequest } from "../models/models_1";
-import { GetUnfilteredTableMetadataResponse } from "../models/models_2";
+import { GetUnfilteredTableMetadataRequest, GetUnfilteredTableMetadataResponse } from "../models/models_2";
 import { de_GetUnfilteredTableMetadataCommand, se_GetUnfilteredTableMetadataCommand } from "../protocols/Aws_json1_1";
 
 /**
@@ -58,7 +57,7 @@ export interface GetUnfilteredTableMetadataCommandOutput extends GetUnfilteredTa
  *     AllColumnsRequested: true || false,
  *   },
  *   SupportedPermissionTypes: [ // PermissionTypeList // required
- *     "COLUMN_PERMISSION" || "CELL_FILTER_PERMISSION",
+ *     "COLUMN_PERMISSION" || "CELL_FILTER_PERMISSION" || "NESTED_PERMISSION" || "NESTED_CELL_PERMISSION",
  *   ],
  * };
  * const command = new GetUnfilteredTableMetadataCommand(input);

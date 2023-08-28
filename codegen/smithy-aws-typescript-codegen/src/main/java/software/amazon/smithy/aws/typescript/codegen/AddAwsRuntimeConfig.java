@@ -91,6 +91,10 @@ public final class AddAwsRuntimeConfig implements TypeScriptIntegration {
             writer.writeDocs("Enables FIPS compatible endpoints.")
                     .write("useFipsEndpoint?: boolean | __Provider<boolean>;\n");
         }
+        if (settings.getExperimentalIdentityAndAuth()) {
+            return;
+        }
+        // feat(experimentalIdentityAndAuth): control branch for AWS config interface fields
         if (isSigV4Service(settings, model)) {
             writer.writeDocs(isAwsService(settings, model)
                                 ? "The AWS region to which this client will send requests"
@@ -134,24 +138,28 @@ public final class AddAwsRuntimeConfig implements TypeScriptIntegration {
         if (!isSigV4Service(settings, model)) {
             return Collections.emptyMap();
         }
+        if (settings.getExperimentalIdentityAndAuth()) {
+            return Collections.emptyMap();
+        }
+        // feat(experimentalIdentityAndAuth): control branch for AWS runtime config
         switch (target) {
             case BROWSER:
                 return MapUtils.of("region", writer -> {
                     writer.addDependency(TypeScriptDependency.INVALID_DEPENDENCY);
                     writer.addImport("invalidProvider", "invalidProvider",
-                            TypeScriptDependency.INVALID_DEPENDENCY.packageName);
+                            TypeScriptDependency.INVALID_DEPENDENCY);
                     writer.write("invalidProvider(\"Region is missing\")");
                 });
             case NODE:
                 return MapUtils.of("region", writer -> {
                     writer.addDependency(TypeScriptDependency.NODE_CONFIG_PROVIDER);
                     writer.addImport("loadConfig", "loadNodeConfig",
-                            TypeScriptDependency.NODE_CONFIG_PROVIDER.packageName);
+                            TypeScriptDependency.NODE_CONFIG_PROVIDER);
                     writer.addDependency(TypeScriptDependency.CONFIG_RESOLVER);
                     writer.addImport("NODE_REGION_CONFIG_OPTIONS", "NODE_REGION_CONFIG_OPTIONS",
-                            TypeScriptDependency.CONFIG_RESOLVER.packageName);
+                            TypeScriptDependency.CONFIG_RESOLVER);
                     writer.addImport("NODE_REGION_CONFIG_FILE_OPTIONS", "NODE_REGION_CONFIG_FILE_OPTIONS",
-                            TypeScriptDependency.CONFIG_RESOLVER.packageName);
+                            TypeScriptDependency.CONFIG_RESOLVER);
                     writer.write(
                             "loadNodeConfig(NODE_REGION_CONFIG_OPTIONS, NODE_REGION_CONFIG_FILE_OPTIONS)");
                 });
@@ -174,13 +182,13 @@ public final class AddAwsRuntimeConfig implements TypeScriptIntegration {
                         "useDualstackEndpoint", writer -> {
                             writer.addDependency(TypeScriptDependency.CONFIG_RESOLVER);
                             writer.addImport("DEFAULT_USE_DUALSTACK_ENDPOINT", "DEFAULT_USE_DUALSTACK_ENDPOINT",
-                                    TypeScriptDependency.CONFIG_RESOLVER.packageName);
+                                    TypeScriptDependency.CONFIG_RESOLVER);
                             writer.write("(() => Promise.resolve(DEFAULT_USE_DUALSTACK_ENDPOINT))");
                         },
                         "useFipsEndpoint", writer -> {
                             writer.addDependency(TypeScriptDependency.CONFIG_RESOLVER);
                             writer.addImport("DEFAULT_USE_FIPS_ENDPOINT", "DEFAULT_USE_FIPS_ENDPOINT",
-                                    TypeScriptDependency.CONFIG_RESOLVER.packageName);
+                                    TypeScriptDependency.CONFIG_RESOLVER);
                             writer.write("(() => Promise.resolve(DEFAULT_USE_FIPS_ENDPOINT))");
                         }
                 );
@@ -189,21 +197,21 @@ public final class AddAwsRuntimeConfig implements TypeScriptIntegration {
                         "useDualstackEndpoint", writer -> {
                             writer.addDependency(TypeScriptDependency.NODE_CONFIG_PROVIDER);
                             writer.addImport("loadConfig", "loadNodeConfig",
-                                    TypeScriptDependency.NODE_CONFIG_PROVIDER.packageName);
+                                    TypeScriptDependency.NODE_CONFIG_PROVIDER);
                             writer.addDependency(TypeScriptDependency.CONFIG_RESOLVER);
                             writer.addImport("NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS",
                                     "NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS",
-                                    TypeScriptDependency.CONFIG_RESOLVER.packageName);
+                                    TypeScriptDependency.CONFIG_RESOLVER);
                             writer.write("loadNodeConfig(NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS)");
                         },
                         "useFipsEndpoint", writer -> {
                             writer.addDependency(TypeScriptDependency.NODE_CONFIG_PROVIDER);
                             writer.addImport("loadConfig", "loadNodeConfig",
-                                    TypeScriptDependency.NODE_CONFIG_PROVIDER.packageName);
+                                    TypeScriptDependency.NODE_CONFIG_PROVIDER);
                             writer.addDependency(TypeScriptDependency.CONFIG_RESOLVER);
                             writer.addImport("NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS",
                                     "NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS",
-                                    TypeScriptDependency.CONFIG_RESOLVER.packageName);
+                                    TypeScriptDependency.CONFIG_RESOLVER);
                             writer.write("loadNodeConfig(NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS)");
                         }
                 );

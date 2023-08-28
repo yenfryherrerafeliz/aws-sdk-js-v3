@@ -33,6 +33,7 @@ import {
 } from "@smithy/smithy-client";
 import {
   BodyLengthCalculator as __BodyLengthCalculator,
+  CheckOptionalClientConfig as __CheckOptionalClientConfig,
   Checksum as __Checksum,
   ChecksumConstructor as __ChecksumConstructor,
   Decoder as __Decoder,
@@ -87,6 +88,10 @@ import {
   AssociateSecurityKeyCommandInput,
   AssociateSecurityKeyCommandOutput,
 } from "./commands/AssociateSecurityKeyCommand";
+import {
+  AssociateTrafficDistributionGroupUserCommandInput,
+  AssociateTrafficDistributionGroupUserCommandOutput,
+} from "./commands/AssociateTrafficDistributionGroupUserCommand";
 import { ClaimPhoneNumberCommandInput, ClaimPhoneNumberCommandOutput } from "./commands/ClaimPhoneNumberCommand";
 import { CreateAgentStatusCommandInput, CreateAgentStatusCommandOutput } from "./commands/CreateAgentStatusCommand";
 import { CreateContactFlowCommandInput, CreateContactFlowCommandOutput } from "./commands/CreateContactFlowCommand";
@@ -159,7 +164,12 @@ import {
   DeleteIntegrationAssociationCommandOutput,
 } from "./commands/DeleteIntegrationAssociationCommand";
 import { DeletePromptCommandInput, DeletePromptCommandOutput } from "./commands/DeletePromptCommand";
+import { DeleteQueueCommandInput, DeleteQueueCommandOutput } from "./commands/DeleteQueueCommand";
 import { DeleteQuickConnectCommandInput, DeleteQuickConnectCommandOutput } from "./commands/DeleteQuickConnectCommand";
+import {
+  DeleteRoutingProfileCommandInput,
+  DeleteRoutingProfileCommandOutput,
+} from "./commands/DeleteRoutingProfileCommand";
 import { DeleteRuleCommandInput, DeleteRuleCommandOutput } from "./commands/DeleteRuleCommand";
 import {
   DeleteSecurityProfileCommandInput,
@@ -274,6 +284,10 @@ import {
   DisassociateSecurityKeyCommandInput,
   DisassociateSecurityKeyCommandOutput,
 } from "./commands/DisassociateSecurityKeyCommand";
+import {
+  DisassociateTrafficDistributionGroupUserCommandInput,
+  DisassociateTrafficDistributionGroupUserCommandOutput,
+} from "./commands/DisassociateTrafficDistributionGroupUserCommand";
 import { DismissUserContactCommandInput, DismissUserContactCommandOutput } from "./commands/DismissUserContactCommand";
 import {
   GetContactAttributesCommandInput,
@@ -382,6 +396,10 @@ import {
   ListTrafficDistributionGroupsCommandInput,
   ListTrafficDistributionGroupsCommandOutput,
 } from "./commands/ListTrafficDistributionGroupsCommand";
+import {
+  ListTrafficDistributionGroupUsersCommandInput,
+  ListTrafficDistributionGroupUsersCommandOutput,
+} from "./commands/ListTrafficDistributionGroupUsersCommand";
 import { ListUseCasesCommandInput, ListUseCasesCommandOutput } from "./commands/ListUseCasesCommand";
 import {
   ListUserHierarchyGroupsCommandInput,
@@ -538,6 +556,10 @@ import {
   UpdateQuickConnectNameCommandOutput,
 } from "./commands/UpdateQuickConnectNameCommand";
 import {
+  UpdateRoutingProfileAgentAvailabilityTimerCommandInput,
+  UpdateRoutingProfileAgentAvailabilityTimerCommandOutput,
+} from "./commands/UpdateRoutingProfileAgentAvailabilityTimerCommand";
+import {
   UpdateRoutingProfileConcurrencyCommandInput,
   UpdateRoutingProfileConcurrencyCommandOutput,
 } from "./commands/UpdateRoutingProfileConcurrencyCommand";
@@ -598,6 +620,7 @@ import {
   resolveClientEndpointParameters,
 } from "./endpoint/EndpointParameters";
 import { getRuntimeConfig as __getRuntimeConfig } from "./runtimeConfig";
+import { resolveRuntimeExtensions, RuntimeExtension, RuntimeExtensionsConfig } from "./runtimeExtensions";
 
 export { __Client };
 
@@ -616,6 +639,7 @@ export type ServiceInputTypes =
   | AssociateQueueQuickConnectsCommandInput
   | AssociateRoutingProfileQueuesCommandInput
   | AssociateSecurityKeyCommandInput
+  | AssociateTrafficDistributionGroupUserCommandInput
   | ClaimPhoneNumberCommandInput
   | CreateAgentStatusCommandInput
   | CreateContactFlowCommandInput
@@ -646,7 +670,9 @@ export type ServiceInputTypes =
   | DeleteInstanceCommandInput
   | DeleteIntegrationAssociationCommandInput
   | DeletePromptCommandInput
+  | DeleteQueueCommandInput
   | DeleteQuickConnectCommandInput
+  | DeleteRoutingProfileCommandInput
   | DeleteRuleCommandInput
   | DeleteSecurityProfileCommandInput
   | DeleteTaskTemplateCommandInput
@@ -686,6 +712,7 @@ export type ServiceInputTypes =
   | DisassociateQueueQuickConnectsCommandInput
   | DisassociateRoutingProfileQueuesCommandInput
   | DisassociateSecurityKeyCommandInput
+  | DisassociateTrafficDistributionGroupUserCommandInput
   | DismissUserContactCommandInput
   | GetContactAttributesCommandInput
   | GetCurrentMetricDataCommandInput
@@ -727,6 +754,7 @@ export type ServiceInputTypes =
   | ListSecurityProfilesCommandInput
   | ListTagsForResourceCommandInput
   | ListTaskTemplatesCommandInput
+  | ListTrafficDistributionGroupUsersCommandInput
   | ListTrafficDistributionGroupsCommandInput
   | ListUseCasesCommandInput
   | ListUserHierarchyGroupsCommandInput
@@ -784,6 +812,7 @@ export type ServiceInputTypes =
   | UpdateQueueStatusCommandInput
   | UpdateQuickConnectConfigCommandInput
   | UpdateQuickConnectNameCommandInput
+  | UpdateRoutingProfileAgentAvailabilityTimerCommandInput
   | UpdateRoutingProfileConcurrencyCommandInput
   | UpdateRoutingProfileDefaultOutboundQueueCommandInput
   | UpdateRoutingProfileNameCommandInput
@@ -815,6 +844,7 @@ export type ServiceOutputTypes =
   | AssociateQueueQuickConnectsCommandOutput
   | AssociateRoutingProfileQueuesCommandOutput
   | AssociateSecurityKeyCommandOutput
+  | AssociateTrafficDistributionGroupUserCommandOutput
   | ClaimPhoneNumberCommandOutput
   | CreateAgentStatusCommandOutput
   | CreateContactFlowCommandOutput
@@ -845,7 +875,9 @@ export type ServiceOutputTypes =
   | DeleteInstanceCommandOutput
   | DeleteIntegrationAssociationCommandOutput
   | DeletePromptCommandOutput
+  | DeleteQueueCommandOutput
   | DeleteQuickConnectCommandOutput
+  | DeleteRoutingProfileCommandOutput
   | DeleteRuleCommandOutput
   | DeleteSecurityProfileCommandOutput
   | DeleteTaskTemplateCommandOutput
@@ -885,6 +917,7 @@ export type ServiceOutputTypes =
   | DisassociateQueueQuickConnectsCommandOutput
   | DisassociateRoutingProfileQueuesCommandOutput
   | DisassociateSecurityKeyCommandOutput
+  | DisassociateTrafficDistributionGroupUserCommandOutput
   | DismissUserContactCommandOutput
   | GetContactAttributesCommandOutput
   | GetCurrentMetricDataCommandOutput
@@ -926,6 +959,7 @@ export type ServiceOutputTypes =
   | ListSecurityProfilesCommandOutput
   | ListTagsForResourceCommandOutput
   | ListTaskTemplatesCommandOutput
+  | ListTrafficDistributionGroupUsersCommandOutput
   | ListTrafficDistributionGroupsCommandOutput
   | ListUseCasesCommandOutput
   | ListUserHierarchyGroupsCommandOutput
@@ -983,6 +1017,7 @@ export type ServiceOutputTypes =
   | UpdateQueueStatusCommandOutput
   | UpdateQuickConnectConfigCommandOutput
   | UpdateQuickConnectNameCommandOutput
+  | UpdateRoutingProfileAgentAvailabilityTimerCommandOutput
   | UpdateRoutingProfileConcurrencyCommandOutput
   | UpdateRoutingProfileDefaultOutboundQueueCommandOutput
   | UpdateRoutingProfileNameCommandOutput
@@ -1118,6 +1153,11 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
   logger?: __Logger;
 
   /**
+   * Optional extensions
+   */
+  extensions?: RuntimeExtension[];
+
+  /**
    * The {@link @smithy/smithy-client#DefaultsMode} that will be used to determine how certain default configuration options are resolved in the SDK.
    */
   defaultsMode?: __DefaultsMode | __Provider<__DefaultsMode>;
@@ -1147,6 +1187,7 @@ export interface ConnectClientConfig extends ConnectClientConfigType {}
  */
 export type ConnectClientResolvedConfigType = __SmithyResolvedConfiguration<__HttpHandlerOptions> &
   Required<ClientDefaults> &
+  RuntimeExtensionsConfig &
   RegionResolvedConfig &
   EndpointResolvedConfig<EndpointParameters> &
   RetryResolvedConfig &
@@ -1186,8 +1227,8 @@ export class ConnectClient extends __Client<
    */
   readonly config: ConnectClientResolvedConfig;
 
-  constructor(configuration: ConnectClientConfig) {
-    const _config_0 = __getRuntimeConfig(configuration);
+  constructor(...[configuration]: __CheckOptionalClientConfig<ConnectClientConfig>) {
+    const _config_0 = __getRuntimeConfig(configuration || {});
     const _config_1 = resolveClientEndpointParameters(_config_0);
     const _config_2 = resolveRegionConfig(_config_1);
     const _config_3 = resolveEndpointConfig(_config_2);
@@ -1195,8 +1236,9 @@ export class ConnectClient extends __Client<
     const _config_5 = resolveHostHeaderConfig(_config_4);
     const _config_6 = resolveAwsAuthConfig(_config_5);
     const _config_7 = resolveUserAgentConfig(_config_6);
-    super(_config_7);
-    this.config = _config_7;
+    const _config_8 = resolveRuntimeExtensions(_config_7, configuration?.extensions || []);
+    super(_config_8);
+    this.config = _config_8;
     this.middlewareStack.use(getRetryPlugin(this.config));
     this.middlewareStack.use(getContentLengthPlugin(this.config));
     this.middlewareStack.use(getHostHeaderPlugin(this.config));

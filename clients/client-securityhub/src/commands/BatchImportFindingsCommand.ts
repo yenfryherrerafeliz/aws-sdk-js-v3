@@ -2064,6 +2064,12 @@ export interface BatchImportFindingsCommandOutput extends BatchImportFindingsRes
  *               DbClusterIdentifier: "STRING_VALUE",
  *               DbClusterSnapshotIdentifier: "STRING_VALUE",
  *               IamDatabaseAuthenticationEnabled: true || false,
+ *               DbClusterSnapshotAttributes: [ // AwsRdsDbClusterSnapshotDbClusterSnapshotAttributes
+ *                 { // AwsRdsDbClusterSnapshotDbClusterSnapshotAttribute
+ *                   AttributeName: "STRING_VALUE",
+ *                   AttributeValues: "<NonEmptyStringList>",
+ *                 },
+ *               ],
  *             },
  *             AwsRdsDbCluster: { // AwsRdsDbClusterDetails
  *               AllocatedStorage: Number("int"),
@@ -3822,6 +3828,19 @@ export interface BatchImportFindingsCommandOutput extends BatchImportFindingsRes
  *               },
  *               Type: "STRING_VALUE",
  *             },
+ *             AwsAthenaWorkGroup: { // AwsAthenaWorkGroupDetails
+ *               Name: "STRING_VALUE",
+ *               Description: "STRING_VALUE",
+ *               State: "STRING_VALUE",
+ *               Configuration: { // AwsAthenaWorkGroupConfigurationDetails
+ *                 ResultConfiguration: { // AwsAthenaWorkGroupConfigurationResultConfigurationDetails
+ *                   EncryptionConfiguration: { // AwsAthenaWorkGroupConfigurationResultConfigurationEncryptionConfigurationDetails
+ *                     EncryptionOption: "STRING_VALUE",
+ *                     KmsKey: "STRING_VALUE",
+ *                   },
+ *                 },
+ *               },
+ *             },
  *           },
  *         },
  *       ],
@@ -3902,6 +3921,22 @@ export interface BatchImportFindingsCommandOutput extends BatchImportFindingsRes
  *           },
  *           ReferenceUrls: "<StringList>",
  *           FixAvailable: "YES" || "NO" || "PARTIAL",
+ *           EpssScore: Number("double"),
+ *           ExploitAvailable: "YES" || "NO",
+ *           CodeVulnerabilities: [ // VulnerabilityCodeVulnerabilitiesList
+ *             { // VulnerabilityCodeVulnerabilities
+ *               Cwes: [
+ *                 "STRING_VALUE",
+ *               ],
+ *               FilePath: { // CodeVulnerabilitiesFilePath
+ *                 EndLine: Number("int"),
+ *                 FileName: "STRING_VALUE",
+ *                 FilePath: "STRING_VALUE",
+ *                 StartLine: Number("int"),
+ *               },
+ *               SourceArn: "STRING_VALUE",
+ *             },
+ *           ],
  *         },
  *       ],
  *       PatchSummary: { // PatchSummary
@@ -4036,11 +4071,14 @@ export interface BatchImportFindingsCommandOutput extends BatchImportFindingsRes
  *           Label: "INFORMATIONAL" || "LOW" || "MEDIUM" || "HIGH" || "CRITICAL",
  *           Original: "STRING_VALUE",
  *         },
- *         Types: [
- *           "STRING_VALUE",
- *         ],
+ *         Types: "<TypeList>",
  *       },
  *       Sample: true || false,
+ *       GeneratorDetails: { // GeneratorDetails
+ *         Name: "STRING_VALUE",
+ *         Description: "STRING_VALUE",
+ *         Labels: "<TypeList>",
+ *       },
  *     },
  *   ],
  * };

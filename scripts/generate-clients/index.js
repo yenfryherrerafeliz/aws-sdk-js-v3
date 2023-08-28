@@ -14,7 +14,10 @@ const {
 } = require("./code-gen-dir");
 const { prettifyCode } = require("./code-prettify");
 const { eslintFixCode } = require("./code-eslint-fix");
+const { buildSmithyTypeScript } = require("./build-smithy-typescript");
+const { SMITHY_TS_COMMIT } = require("./config");
 
+const SMITHY_TS_DIR = path.normalize(path.join(__dirname, "..", "..", "..", "smithy-typescript"));
 const SDK_CLIENTS_DIR = path.normalize(path.join(__dirname, "..", "..", "clients"));
 const PRIVATE_CLIENTS_DIR = path.normalize(path.join(__dirname, "..", "..", "private"));
 
@@ -26,6 +29,8 @@ const {
   s: serverOnly,
   batchSize,
   keepFiles,
+  repo,
+  commit,
 } = yargs(process.argv.slice(2))
   .alias("m", "models")
   .string("m")
@@ -51,10 +56,21 @@ const {
   .number("b")
   .alias("b", "batch-size")
   .default("b", 50)
+  .describe("r", "The location where smithy-typescript is cloned.")
+  .string("r")
+  .alias("r", "repo")
+  .default("r", SMITHY_TS_DIR)
+  .describe("c", "The smithy-typescript commit to be used for codegen.")
+  .string("c")
+  .alias("c", "commit")
+  .default("c", SMITHY_TS_COMMIT)
   .help().argv;
 
 (async () => {
   try {
+    require("../runtime-dependency-version-check/runtime-dep-version-check");
+    await buildSmithyTypeScript(repo, commit);
+
     if (serverOnly === true) {
       await generateProtocolTests();
       await eslintFixCode();

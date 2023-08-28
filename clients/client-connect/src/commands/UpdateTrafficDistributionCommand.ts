@@ -37,6 +37,11 @@ export interface UpdateTrafficDistributionCommandOutput extends UpdateTrafficDis
 /**
  * @public
  * <p>Updates the traffic distribution for a given traffic distribution group. </p>
+ *          <note>
+ *             <p>You can change the <code>SignInConfig</code> only for a default <code>TrafficDistributionGroup</code>. If you call
+ *     <code>UpdateTrafficDistribution</code>  with a modified <code>SignInConfig</code> and a non-default <code>TrafficDistributionGroup</code>,
+ *     an <code>InvalidRequestException</code> is returned.</p>
+ *          </note>
  *          <p>For more information about updating a traffic distribution group, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/update-telephony-traffic-distribution.html">Update telephony
  *     traffic distribution across Amazon Web Services Regions
  *    </a> in the <i>Amazon Connect Administrator Guide</i>. </p>
@@ -51,6 +56,22 @@ export interface UpdateTrafficDistributionCommandOutput extends UpdateTrafficDis
  *   TelephonyConfig: { // TelephonyConfig
  *     Distributions: [ // DistributionList // required
  *       { // Distribution
+ *         Region: "STRING_VALUE", // required
+ *         Percentage: Number("int"), // required
+ *       },
+ *     ],
+ *   },
+ *   SignInConfig: { // SignInConfig
+ *     Distributions: [ // SignInDistributionList // required
+ *       { // SignInDistribution
+ *         Region: "STRING_VALUE", // required
+ *         Enabled: true || false, // required
+ *       },
+ *     ],
+ *   },
+ *   AgentConfig: { // AgentConfig
+ *     Distributions: [ // required
+ *       {
  *         Region: "STRING_VALUE", // required
  *         Percentage: Number("int"), // required
  *       },

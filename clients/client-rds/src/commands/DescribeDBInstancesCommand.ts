@@ -13,7 +13,7 @@ import {
   SerdeContext as __SerdeContext,
 } from "@smithy/types";
 
-import { DBInstanceMessage, DescribeDBInstancesMessage } from "../models/models_0";
+import { DBInstanceMessage, DescribeDBInstancesMessage } from "../models/models_1";
 import { de_DescribeDBInstancesCommand, se_DescribeDBInstancesCommand } from "../protocols/Aws_query";
 import { RDSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RDSClient";
 
@@ -280,6 +280,7 @@ export interface DescribeDBInstancesCommandOutput extends DBInstanceMessage, __M
  * //         ValidTill: new Date("TIMESTAMP"),
  * //       },
  * //       ReadReplicaSourceDBClusterIdentifier: "STRING_VALUE",
+ * //       PercentProgress: "STRING_VALUE",
  * //     },
  * //   ],
  * // };

@@ -58,6 +58,8 @@ export interface CreateCustomDBEngineVersionCommandOutput extends DBEngineVersio
  *       Value: "STRING_VALUE",
  *     },
  *   ],
+ *   SourceCustomDbEngineVersionIdentifier: "STRING_VALUE",
+ *   UseAwsProvidedLatestImage: true || false,
  * };
  * const command = new CreateCustomDBEngineVersionCommand(input);
  * const response = await client.send(command);
@@ -101,6 +103,7 @@ export interface CreateCustomDBEngineVersionCommandOutput extends DBEngineVersio
  * //       SupportsParallelQuery: true || false,
  * //       SupportsGlobalDatabases: true || false,
  * //       SupportsBabelfish: true || false,
+ * //       SupportsLocalWriteForwarding: true || false,
  * //     },
  * //   ],
  * //   SupportedTimezones: [ // SupportedTimezonesList
@@ -140,6 +143,7 @@ export interface CreateCustomDBEngineVersionCommandOutput extends DBEngineVersio
  * //   SupportedCACertificateIdentifiers: [ // CACertificateIdentifiersList
  * //     "STRING_VALUE",
  * //   ],
+ * //   SupportsLocalWriteForwarding: true || false,
  * // };
  *
  * ```

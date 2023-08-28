@@ -784,6 +784,11 @@ import {
   GetSagemakerServicecatalogPortfolioStatusCommandOutput,
 } from "./commands/GetSagemakerServicecatalogPortfolioStatusCommand";
 import {
+  GetScalingConfigurationRecommendationCommand,
+  GetScalingConfigurationRecommendationCommandInput,
+  GetScalingConfigurationRecommendationCommandOutput,
+} from "./commands/GetScalingConfigurationRecommendationCommand";
+import {
   GetSearchSuggestionsCommand,
   GetSearchSuggestionsCommandInput,
   GetSearchSuggestionsCommandOutput,
@@ -1051,6 +1056,11 @@ import {
   ListProjectsCommandInput,
   ListProjectsCommandOutput,
 } from "./commands/ListProjectsCommand";
+import {
+  ListResourceCatalogsCommand,
+  ListResourceCatalogsCommandInput,
+  ListResourceCatalogsCommandOutput,
+} from "./commands/ListResourceCatalogsCommand";
 import { ListSpacesCommand, ListSpacesCommandInput, ListSpacesCommandOutput } from "./commands/ListSpacesCommand";
 import {
   ListStageDevicesCommand,
@@ -1556,6 +1566,7 @@ const commands = {
   GetLineageGroupPolicyCommand,
   GetModelPackageGroupPolicyCommand,
   GetSagemakerServicecatalogPortfolioStatusCommand,
+  GetScalingConfigurationRecommendationCommand,
   GetSearchSuggestionsCommand,
   ImportHubContentCommand,
   ListActionsCommand,
@@ -1616,6 +1627,7 @@ const commands = {
   ListPipelinesCommand,
   ListProcessingJobsCommand,
   ListProjectsCommand,
+  ListResourceCatalogsCommand,
   ListSpacesCommand,
   ListStageDevicesCommand,
   ListStudioLifecycleConfigsCommand,
@@ -4335,6 +4347,23 @@ export interface SageMaker {
   ): void;
 
   /**
+   * @see {@link GetScalingConfigurationRecommendationCommand}
+   */
+  getScalingConfigurationRecommendation(
+    args: GetScalingConfigurationRecommendationCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<GetScalingConfigurationRecommendationCommandOutput>;
+  getScalingConfigurationRecommendation(
+    args: GetScalingConfigurationRecommendationCommandInput,
+    cb: (err: any, data?: GetScalingConfigurationRecommendationCommandOutput) => void
+  ): void;
+  getScalingConfigurationRecommendation(
+    args: GetScalingConfigurationRecommendationCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: GetScalingConfigurationRecommendationCommandOutput) => void
+  ): void;
+
+  /**
    * @see {@link GetSearchSuggestionsCommand}
    */
   getSearchSuggestions(
@@ -5259,6 +5288,23 @@ export interface SageMaker {
     args: ListProjectsCommandInput,
     options: __HttpHandlerOptions,
     cb: (err: any, data?: ListProjectsCommandOutput) => void
+  ): void;
+
+  /**
+   * @see {@link ListResourceCatalogsCommand}
+   */
+  listResourceCatalogs(
+    args: ListResourceCatalogsCommandInput,
+    options?: __HttpHandlerOptions
+  ): Promise<ListResourceCatalogsCommandOutput>;
+  listResourceCatalogs(
+    args: ListResourceCatalogsCommandInput,
+    cb: (err: any, data?: ListResourceCatalogsCommandOutput) => void
+  ): void;
+  listResourceCatalogs(
+    args: ListResourceCatalogsCommandInput,
+    options: __HttpHandlerOptions,
+    cb: (err: any, data?: ListResourceCatalogsCommandOutput) => void
   ): void;
 
   /**

@@ -43,7 +43,7 @@ export interface CreateGlobalClusterCommandOutput extends CreateGlobalClusterRes
  *         data from the primary cluster through high-speed replication
  *         performed by the Aurora storage subsystem.</p>
  *          <p>You can create a global database that is initially empty, and then
- *         add a primary cluster and a secondary cluster to it.
+ *         create the primary and secondary DB clusters in the global database.
  *         Or you can specify an existing Aurora cluster during the create operation,
  *         and this cluster becomes the primary cluster of the global database.</p>
  *          <note>
@@ -85,12 +85,14 @@ export interface CreateGlobalClusterCommandOutput extends CreateGlobalClusterRes
  * //         ],
  * //         IsWriter: true || false,
  * //         GlobalWriteForwardingStatus: "enabled" || "disabled" || "enabling" || "disabling" || "unknown",
+ * //         SynchronizationStatus: "connected" || "pending-resync",
  * //       },
  * //     ],
  * //     FailoverState: { // FailoverState
  * //       Status: "pending" || "failing-over" || "cancelling",
  * //       FromDbClusterArn: "STRING_VALUE",
  * //       ToDbClusterArn: "STRING_VALUE",
+ * //       IsDataLossAllowed: true || false,
  * //     },
  * //   },
  * // };

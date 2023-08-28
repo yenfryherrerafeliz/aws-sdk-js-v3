@@ -522,6 +522,14 @@ DeleteDBCluster
 </details>
 <details>
 <summary>
+DeleteDBClusterAutomatedBackup
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/classes/deletedbclusterautomatedbackupcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/interfaces/deletedbclusterautomatedbackupcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/interfaces/deletedbclusterautomatedbackupcommandoutput.html)
+
+</details>
+<details>
+<summary>
 DeleteDBClusterEndpoint
 </summary>
 
@@ -662,6 +670,14 @@ DescribeCertificates
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/classes/describecertificatescommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/interfaces/describecertificatescommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/interfaces/describecertificatescommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeDBClusterAutomatedBackups
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/classes/describedbclusterautomatedbackupscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/interfaces/describedbclusterautomatedbackupscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/interfaces/describedbclusterautomatedbackupscommandoutput.html)
 
 </details>
 <details>
@@ -1374,6 +1390,14 @@ SwitchoverBlueGreenDeployment
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/classes/switchoverbluegreendeploymentcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/interfaces/switchoverbluegreendeploymentcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/interfaces/switchoverbluegreendeploymentcommandoutput.html)
+
+</details>
+<details>
+<summary>
+SwitchoverGlobalCluster
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/classes/switchoverglobalclustercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/interfaces/switchoverglobalclustercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rds/interfaces/switchoverglobalclustercommandoutput.html)
 
 </details>
 <details>

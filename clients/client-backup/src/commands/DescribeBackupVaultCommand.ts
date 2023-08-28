@@ -45,12 +45,14 @@ export interface DescribeBackupVaultCommandOutput extends DescribeBackupVaultOut
  * const client = new BackupClient(config);
  * const input = { // DescribeBackupVaultInput
  *   BackupVaultName: "STRING_VALUE", // required
+ *   BackupVaultAccountId: "STRING_VALUE",
  * };
  * const command = new DescribeBackupVaultCommand(input);
  * const response = await client.send(command);
  * // { // DescribeBackupVaultOutput
  * //   BackupVaultName: "STRING_VALUE",
  * //   BackupVaultArn: "STRING_VALUE",
+ * //   VaultType: "BACKUP_VAULT" || "LOGICALLY_AIR_GAPPED_BACKUP_VAULT",
  * //   EncryptionKeyArn: "STRING_VALUE",
  * //   CreationDate: new Date("TIMESTAMP"),
  * //   CreatorRequestId: "STRING_VALUE",

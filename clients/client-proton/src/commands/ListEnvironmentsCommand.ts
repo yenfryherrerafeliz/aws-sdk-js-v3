@@ -79,6 +79,8 @@ export interface ListEnvironmentsCommandOutput extends ListEnvironmentsOutput, _
  * //       environmentAccountId: "STRING_VALUE",
  * //       provisioning: "STRING_VALUE",
  * //       componentRoleArn: "STRING_VALUE",
+ * //       lastAttemptedDeploymentId: "STRING_VALUE",
+ * //       lastSucceededDeploymentId: "STRING_VALUE",
  * //     },
  * //   ],
  * // };

@@ -129,6 +129,7 @@ export interface CreateDBInstanceCommandOutput extends CreateDBInstanceResult, _
  *   ManageMasterUserPassword: true || false,
  *   MasterUserSecretKmsKeyId: "STRING_VALUE",
  *   CACertificateIdentifier: "STRING_VALUE",
+ *   DBSystemId: "STRING_VALUE",
  * };
  * const command = new CreateDBInstanceCommand(input);
  * const response = await client.send(command);
@@ -349,6 +350,7 @@ export interface CreateDBInstanceCommandOutput extends CreateDBInstanceResult, _
  * //       ValidTill: new Date("TIMESTAMP"),
  * //     },
  * //     ReadReplicaSourceDBClusterIdentifier: "STRING_VALUE",
+ * //     PercentProgress: "STRING_VALUE",
  * //   },
  * // };
  *

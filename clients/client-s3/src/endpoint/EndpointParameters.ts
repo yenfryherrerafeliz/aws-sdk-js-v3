@@ -1,6 +1,9 @@
 // smithy-typescript generated code
 import { Endpoint, EndpointParameters as __EndpointParameters, EndpointV2, Provider } from "@smithy/types";
 
+/**
+ * @public
+ */
 export interface ClientInputEndpointParameters {
   region?: string | Provider<string>;
   useFipsEndpoint?: boolean | Provider<boolean>;
@@ -24,6 +27,7 @@ export const resolveClientEndpointParameters = <T>(
     ...options,
     useFipsEndpoint: options.useFipsEndpoint ?? false,
     useDualstackEndpoint: options.useDualstackEndpoint ?? false,
+    forcePathStyle: options.forcePathStyle ?? false,
     useAccelerateEndpoint: options.useAccelerateEndpoint ?? false,
     useGlobalEndpoint: options.useGlobalEndpoint ?? false,
     disableMultiregionAccessPoints: options.disableMultiregionAccessPoints ?? false,
