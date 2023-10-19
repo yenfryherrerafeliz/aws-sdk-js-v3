@@ -1,4 +1,5 @@
 // smithy-typescript generated code
+import { awsExpectUnion as __expectUnion } from "@aws-sdk/core";
 import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
@@ -10,7 +11,6 @@ import {
   expectNumber as __expectNumber,
   expectObject as __expectObject,
   expectString as __expectString,
-  expectUnion as __expectUnion,
   extendedEncodeURIComponent as __extendedEncodeURIComponent,
   limitedParseDouble as __limitedParseDouble,
   map,
@@ -134,9 +134,11 @@ export const se_CreateApplicationCommand = async (
       imageConfiguration: (_) => _json(_),
       initialCapacity: (_) => _json(_),
       maximumCapacity: (_) => _json(_),
+      monitoringConfiguration: (_) => _json(_),
       name: [],
       networkConfiguration: (_) => _json(_),
       releaseLabel: [],
+      runtimeConfiguration: (_) => se_ConfigurationList(_, context),
       tags: (_) => _json(_),
       type: [],
       workerTypeSpecifications: (_) => _json(_),
@@ -574,8 +576,10 @@ export const se_UpdateApplicationCommand = async (
       imageConfiguration: (_) => _json(_),
       initialCapacity: (_) => _json(_),
       maximumCapacity: (_) => _json(_),
+      monitoringConfiguration: (_) => _json(_),
       networkConfiguration: (_) => _json(_),
       releaseLabel: [],
+      runtimeConfiguration: (_) => se_ConfigurationList(_, context),
       workerTypeSpecifications: (_) => _json(_),
     })
   );
@@ -1564,9 +1568,11 @@ const de_Application = (output: any, context: __SerdeContext): Application => {
     imageConfiguration: _json,
     initialCapacity: _json,
     maximumCapacity: _json,
+    monitoringConfiguration: _json,
     name: __expectString,
     networkConfiguration: _json,
     releaseLabel: __expectString,
+    runtimeConfiguration: (_: any) => de_ConfigurationList(_, context),
     state: __expectString,
     stateDetails: __expectString,
     tags: _json,

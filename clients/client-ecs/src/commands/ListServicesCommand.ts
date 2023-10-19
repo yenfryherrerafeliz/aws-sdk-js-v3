@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECSClient";
@@ -95,7 +96,7 @@ export interface ListServicesCommandOutput extends ListServicesResponse, __Metad
  * /* response ==
  * {
  *   "serviceArns": [
- *     "arn:aws:ecs:us-east-1:012345678910:service/my-http-service"
+ *     "arn:aws:ecs:us-east-1:012345678910:service/default/my-http-service"
  *   ]
  * }
  * *\/
@@ -151,6 +152,10 @@ export class ListServicesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerServiceV20141113",
+        operation: "ListServices",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

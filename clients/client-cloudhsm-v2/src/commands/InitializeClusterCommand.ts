@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudHSMV2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudHSMV2Client";
@@ -54,7 +55,7 @@ export interface InitializeClusterCommandOutput extends InitializeClusterRespons
  * const command = new InitializeClusterCommand(input);
  * const response = await client.send(command);
  * // { // InitializeClusterResponse
- * //   State: "STRING_VALUE",
+ * //   State: "CREATE_IN_PROGRESS" || "UNINITIALIZED" || "INITIALIZE_IN_PROGRESS" || "INITIALIZED" || "ACTIVE" || "UPDATE_IN_PROGRESS" || "DELETE_IN_PROGRESS" || "DELETED" || "DEGRADED",
  * //   StateMessage: "STRING_VALUE",
  * // };
  *
@@ -138,6 +139,10 @@ export class InitializeClusterCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "BaldrApiService",
+        operation: "InitializeCluster",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

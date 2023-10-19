@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -68,7 +69,7 @@ export interface GetApplicationCommandOutput extends GetApplicationOutput, __Met
  * @see {@link CodeDeployClientResolvedConfig | config} for CodeDeployClient's `config` shape.
  *
  * @throws {@link ApplicationDoesNotExistException} (client fault)
- *  <p>The application does not exist with the IAM user or Amazon Web Services account.</p>
+ *  <p>The application does not exist with the user or Amazon Web Services account.</p>
  *
  * @throws {@link ApplicationNameRequiredException} (client fault)
  *  <p>The minimum number of required application names was not specified.</p>
@@ -130,6 +131,10 @@ export class GetApplicationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "GetApplication",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

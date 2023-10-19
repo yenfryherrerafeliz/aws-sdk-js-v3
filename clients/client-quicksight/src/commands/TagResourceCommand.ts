@@ -11,9 +11,10 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { TagResourceRequest, TagResourceResponse } from "../models/models_3";
+import { TagResourceRequest, TagResourceResponse } from "../models/models_4";
 import { de_TagResourceCommand, se_TagResourceCommand } from "../protocols/Aws_restJson1";
 import { QuickSightClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../QuickSightClient";
 
@@ -45,15 +46,12 @@ export interface TagResourceCommandOutput extends TagResourceResponse, __Metadat
  * 			that is already associated with the resource, the new tag value that you specify
  * 			replaces the previous value for that tag.</p>
  *          <p>You can associate as many as 50 tags with a resource. Amazon QuickSight supports tagging on data
- * 			set, data source, dashboard, template, and topic. </p>
+ * 			set, data source, dashboard, template, topic, and user. </p>
  *          <p>Tagging for Amazon QuickSight works in a similar way to tagging for other Amazon Web Services services, except for
  * 			the following:</p>
  *          <ul>
  *             <li>
- *                <p>You can't use tags to track costs for Amazon QuickSight. This isn't
- * 				possible because you can't tag the resources that Amazon QuickSight costs are based
- * 				on, for example Amazon QuickSight storage capacity (SPICE), number of users, type
- * 				of users, and usage metrics.</p>
+ *                <p>Tags are used to track costs for users in Amazon QuickSight. You can't tag other resources that Amazon QuickSight costs are based on, such as storage capacoty (SPICE), session usage, alert consumption, or reporting units.</p>
  *             </li>
  *             <li>
  *                <p>Amazon QuickSight doesn't currently support the tag editor for Resource Groups.</p>
@@ -162,6 +160,10 @@ export class TagResourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "QuickSight_20180401",
+        operation: "TagResource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

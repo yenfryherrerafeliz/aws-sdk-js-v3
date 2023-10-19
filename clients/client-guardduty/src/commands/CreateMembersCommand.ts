@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GuardDutyClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GuardDutyClient";
@@ -40,17 +41,17 @@ export interface CreateMembersCommandOutput extends CreateMembersResponse, __Met
  *       IDs. This step is a prerequisite for managing the associated member accounts either by
  *       invitation or through an organization.</p>
  *          <p>As a delegated administrator, using <code>CreateMembers</code> will enable GuardDuty in
- *       the added member accounts, with the exception of the organization delegated administrator
- *       account. A delegated administrator must enable GuardDuty prior to being added as a
- *       member.</p>
+ *       the added member accounts, with the exception of the
+ *       organization delegated administrator account. A delegated administrator must enable GuardDuty
+ *       prior to being added as a member.</p>
  *          <p>If you are adding accounts by invitation, before using <a href="https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html">InviteMembers</a>, use
- *         <code>CreateMembers</code> after GuardDuty has been enabled in potential member accounts.</p>
- *          <p>If you disassociate a member from a GuardDuty delegated administrator, the member account
- *       details obtained from this API, including the associated email addresses, will be retained.
- *       This is done so that the delegated administrator can invoke the <a href="https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html">InviteMembers</a> API without
- *       the need to invoke the CreateMembers API again. To remove the details associated with a member
- *       account, the delegated administrator must invoke the <a href="https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html">DeleteMembers</a> API.
- *     </p>
+ *       <code>CreateMembers</code> after GuardDuty has been enabled in potential member accounts.</p>
+ *          <p>If you disassociate a member from a GuardDuty
+ *       delegated administrator, the member account details
+ *       obtained from this API, including the associated email addresses, will be retained.
+ *       This is done so that the delegated administrator can invoke the <a href="https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html">InviteMembers</a> API without the need to invoke the CreateMembers API again. To
+ *       remove the details associated with a member account, the delegated administrator must invoke the
+ *       <a href="https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html">DeleteMembers</a> API. </p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -143,6 +144,10 @@ export class CreateMembersCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "GuardDutyAPIService",
+        operation: "CreateMembers",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

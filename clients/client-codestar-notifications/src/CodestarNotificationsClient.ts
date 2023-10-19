@@ -238,6 +238,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 
@@ -301,7 +303,6 @@ export interface CodestarNotificationsClientResolvedConfig extends CodestarNotif
  * <p>This AWS CodeStar Notifications API Reference provides descriptions and usage examples of the
  *       operations and data types for the AWS CodeStar Notifications API. You can use the AWS CodeStar Notifications API
  *       to work with the following objects:</p>
- *
  *          <p>Notification rules, by calling the following: </p>
  *          <ul>
  *             <li>
@@ -336,7 +337,6 @@ export interface CodestarNotificationsClientResolvedConfig extends CodestarNotif
  *                   <a>Unsubscribe</a>, which removes a target from a notification rule. </p>
  *             </li>
  *          </ul>
- *
  *          <p>Targets, by calling the following: </p>
  *          <ul>
  *             <li>
@@ -350,7 +350,6 @@ export interface CodestarNotificationsClientResolvedConfig extends CodestarNotif
  *                     notification rule. </p>
  *             </li>
  *          </ul>
- *
  *          <p>Events, by calling the following: </p>
  *          <ul>
  *             <li>
@@ -377,10 +376,7 @@ export interface CodestarNotificationsClientResolvedConfig extends CodestarNotif
  *                     your account. </p>
  *             </li>
  *          </ul>
- *
- *
- *
- *         <p> For information about how to use AWS CodeStar Notifications, see the <a href="https://docs.aws.amazon.com/dtconsole/latest/userguide/what-is-dtconsole.html">Amazon Web Services Developer Tools Console User Guide</a>.
+ *          <p> For information about how to use AWS CodeStar Notifications, see the <a href="https://docs.aws.amazon.com/dtconsole/latest/userguide/what-is-dtconsole.html">Amazon Web Services Developer Tools Console User Guide</a>.
  *     </p>
  */
 export class CodestarNotificationsClient extends __Client<

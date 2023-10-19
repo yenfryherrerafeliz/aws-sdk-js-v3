@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateFolderMembershipRequest, CreateFolderMembershipResponse } from "../models/models_2";
@@ -47,7 +48,7 @@ export interface CreateFolderMembershipCommandOutput extends CreateFolderMembers
  *   AwsAccountId: "STRING_VALUE", // required
  *   FolderId: "STRING_VALUE", // required
  *   MemberId: "STRING_VALUE", // required
- *   MemberType: "DASHBOARD" || "ANALYSIS" || "DATASET", // required
+ *   MemberType: "DASHBOARD" || "ANALYSIS" || "DATASET" || "DATASOURCE" || "TOPIC", // required
  * };
  * const command = new CreateFolderMembershipCommand(input);
  * const response = await client.send(command);
@@ -55,7 +56,7 @@ export interface CreateFolderMembershipCommandOutput extends CreateFolderMembers
  * //   Status: Number("int"),
  * //   FolderMember: { // FolderMember
  * //     MemberId: "STRING_VALUE",
- * //     MemberType: "DASHBOARD" || "ANALYSIS" || "DATASET",
+ * //     MemberType: "DASHBOARD" || "ANALYSIS" || "DATASET" || "DATASOURCE" || "TOPIC",
  * //   },
  * //   RequestId: "STRING_VALUE",
  * // };
@@ -152,6 +153,10 @@ export class CreateFolderMembershipCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "QuickSight_20180401",
+        operation: "CreateFolderMembership",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

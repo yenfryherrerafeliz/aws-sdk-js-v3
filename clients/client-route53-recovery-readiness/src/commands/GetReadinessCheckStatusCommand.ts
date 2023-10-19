@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetReadinessCheckStatusRequest, GetReadinessCheckStatusResponse } from "../models/models_0";
@@ -61,12 +62,12 @@ export interface GetReadinessCheckStatusCommandOutput extends GetReadinessCheckS
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
- * //   Readiness: "STRING_VALUE",
+ * //   Readiness: "READY" || "NOT_READY" || "UNKNOWN" || "NOT_AUTHORIZED",
  * //   Resources: [ // __listOfResourceResult
  * //     { // ResourceResult
  * //       ComponentId: "STRING_VALUE",
  * //       LastCheckedTimestamp: new Date("TIMESTAMP"), // required
- * //       Readiness: "STRING_VALUE", // required
+ * //       Readiness: "READY" || "NOT_READY" || "UNKNOWN" || "NOT_AUTHORIZED", // required
  * //       ResourceArn: "STRING_VALUE",
  * //     },
  * //   ],
@@ -149,6 +150,10 @@ export class GetReadinessCheckStatusCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Route53RecoveryReadiness",
+        operation: "GetReadinessCheckStatus",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

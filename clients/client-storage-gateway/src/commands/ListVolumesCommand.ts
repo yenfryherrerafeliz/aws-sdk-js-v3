@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListVolumesInput, ListVolumesOutput } from "../models/models_0";
@@ -39,7 +40,6 @@ export interface ListVolumesCommandOutput extends ListVolumesOutput, __MetadataB
  * <p>Lists the iSCSI stored volumes of a gateway. Results are sorted by volume ARN. The
  *          response includes only the volume ARNs. If you want additional volume information, use the
  *             <a>DescribeStorediSCSIVolumes</a> or the <a>DescribeCachediSCSIVolumes</a> API.</p>
- *
  *          <p>The operation supports pagination. By default, the operation returns a maximum of up to
  *          100 volumes. You can optionally specify the <code>Limit</code> field in the body to limit
  *          the number of volumes in the response. If the number of volumes returned in the response is
@@ -180,6 +180,10 @@ export class ListVolumesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "ListVolumes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

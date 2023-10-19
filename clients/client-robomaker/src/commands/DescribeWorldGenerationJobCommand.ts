@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeWorldGenerationJobRequest, DescribeWorldGenerationJobResponse } from "../models/models_0";
@@ -50,9 +51,9 @@ export interface DescribeWorldGenerationJobCommandOutput extends DescribeWorldGe
  * const response = await client.send(command);
  * // { // DescribeWorldGenerationJobResponse
  * //   arn: "STRING_VALUE",
- * //   status: "STRING_VALUE",
+ * //   status: "Pending" || "Running" || "Completed" || "Failed" || "PartialFailed" || "Canceling" || "Canceled",
  * //   createdAt: new Date("TIMESTAMP"),
- * //   failureCode: "STRING_VALUE",
+ * //   failureCode: "InternalServiceError" || "LimitExceeded" || "ResourceNotFound" || "RequestThrottled" || "InvalidInput" || "AllWorldGenerationFailed",
  * //   failureReason: "STRING_VALUE",
  * //   clientRequestToken: "STRING_VALUE",
  * //   template: "STRING_VALUE",
@@ -69,7 +70,7 @@ export interface DescribeWorldGenerationJobCommandOutput extends DescribeWorldGe
  * //       totalFailureCount: Number("int"),
  * //       failures: [ // WorldFailures
  * //         { // WorldFailure
- * //           failureCode: "STRING_VALUE",
+ * //           failureCode: "InternalServiceError" || "LimitExceeded" || "ResourceNotFound" || "RequestThrottled" || "InvalidInput" || "AllWorldGenerationFailed",
  * //           sampleFailureReason: "STRING_VALUE",
  * //           failureCount: Number("int"),
  * //         },
@@ -159,6 +160,10 @@ export class DescribeWorldGenerationJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "DescribeWorldGenerationJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

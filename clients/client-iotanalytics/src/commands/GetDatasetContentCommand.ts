@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTAnalyticsClient";
@@ -58,7 +59,7 @@ export interface GetDatasetContentCommandOutput extends GetDatasetContentRespons
  * //   ],
  * //   timestamp: new Date("TIMESTAMP"),
  * //   status: { // DatasetContentStatus
- * //     state: "STRING_VALUE",
+ * //     state: "CREATING" || "SUCCEEDED" || "FAILED",
  * //     reason: "STRING_VALUE",
  * //   },
  * // };
@@ -140,6 +141,10 @@ export class GetDatasetContentCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIoTAnalytics",
+        operation: "GetDatasetContent",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

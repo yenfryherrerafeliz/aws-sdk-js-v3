@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { InspectorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../InspectorClient";
@@ -47,7 +48,7 @@ export interface DescribeExclusionsCommandOutput extends DescribeExclusionsRespo
  *   exclusionArns: [ // BatchDescribeExclusionsArnList // required
  *     "STRING_VALUE",
  *   ],
- *   locale: "STRING_VALUE",
+ *   locale: "EN_US",
  * };
  * const command = new DescribeExclusionsCommand(input);
  * const response = await client.send(command);
@@ -60,7 +61,7 @@ export interface DescribeExclusionsCommandOutput extends DescribeExclusionsRespo
  * //       recommendation: "STRING_VALUE", // required
  * //       scopes: [ // ScopeList // required
  * //         { // Scope
- * //           key: "STRING_VALUE",
+ * //           key: "INSTANCE_ID" || "RULES_PACKAGE_ARN",
  * //           value: "STRING_VALUE",
  * //         },
  * //       ],
@@ -74,7 +75,7 @@ export interface DescribeExclusionsCommandOutput extends DescribeExclusionsRespo
  * //   },
  * //   failedItems: { // FailedItems // required
  * //     "<keys>": { // FailedItemDetails
- * //       failureCode: "STRING_VALUE", // required
+ * //       failureCode: "INVALID_ARN" || "DUPLICATE_ARN" || "ITEM_DOES_NOT_EXIST" || "ACCESS_DENIED" || "LIMIT_EXCEEDED" || "INTERNAL_ERROR", // required
  * //       retryable: true || false, // required
  * //     },
  * //   },
@@ -149,6 +150,10 @@ export class DescribeExclusionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "InspectorService",
+        operation: "DescribeExclusions",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

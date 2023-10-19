@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListRobotsRequest, ListRobotsResponse } from "../models/models_0";
@@ -68,10 +69,10 @@ export interface ListRobotsCommandOutput extends ListRobotsResponse, __MetadataB
  * //       arn: "STRING_VALUE",
  * //       name: "STRING_VALUE",
  * //       fleetArn: "STRING_VALUE",
- * //       status: "STRING_VALUE",
+ * //       status: "Available" || "Registered" || "PendingNewDeployment" || "Deploying" || "Failed" || "InSync" || "NoResponse",
  * //       greenGrassGroupId: "STRING_VALUE",
  * //       createdAt: new Date("TIMESTAMP"),
- * //       architecture: "STRING_VALUE",
+ * //       architecture: "X86_64" || "ARM64" || "ARMHF",
  * //       lastDeploymentJob: "STRING_VALUE",
  * //       lastDeploymentTime: new Date("TIMESTAMP"),
  * //     },
@@ -152,6 +153,10 @@ export class ListRobotsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "ListRobots",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

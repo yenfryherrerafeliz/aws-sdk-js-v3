@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateIPSetRequest, UpdateIPSetResponse } from "../models/models_0";
@@ -121,9 +122,9 @@ export interface UpdateIPSetCommandOutput extends UpdateIPSetResponse, __Metadat
  *   ChangeToken: "STRING_VALUE", // required
  *   Updates: [ // IPSetUpdates // required
  *     { // IPSetUpdate
- *       Action: "STRING_VALUE", // required
+ *       Action: "INSERT" || "DELETE", // required
  *       IPSetDescriptor: { // IPSetDescriptor
- *         Type: "STRING_VALUE", // required
+ *         Type: "IPV4" || "IPV6", // required
  *         Value: "STRING_VALUE", // required
  *       },
  *     },
@@ -330,6 +331,10 @@ export class UpdateIPSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_20150824",
+        operation: "UpdateIPSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

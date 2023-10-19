@@ -11,10 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CustomerProfilesClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CustomerProfilesClient";
-import { PutProfileObjectTypeRequest, PutProfileObjectTypeResponse } from "../models/models_0";
+import {
+  PutProfileObjectTypeRequest,
+  PutProfileObjectTypeRequestFilterSensitiveLog,
+  PutProfileObjectTypeResponse,
+  PutProfileObjectTypeResponseFilterSensitiveLog,
+} from "../models/models_0";
 import { de_PutProfileObjectTypeCommand, se_PutProfileObjectTypeCommand } from "../protocols/Aws_restJson1";
 
 /**
@@ -188,8 +194,12 @@ export class PutProfileObjectTypeCommand extends $Command<
       logger,
       clientName,
       commandName,
-      inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      inputFilterSensitiveLog: PutProfileObjectTypeRequestFilterSensitiveLog,
+      outputFilterSensitiveLog: PutProfileObjectTypeResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CustomerProfiles_20200815",
+        operation: "PutProfileObjectType",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

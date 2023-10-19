@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -63,11 +64,11 @@ export interface PrepareQueryCommandOutput extends PrepareQueryResponse, __Metad
  * //     { // SelectColumn
  * //       Name: "STRING_VALUE",
  * //       Type: { // Type
- * //         ScalarType: "STRING_VALUE",
+ * //         ScalarType: "VARCHAR" || "BOOLEAN" || "BIGINT" || "DOUBLE" || "TIMESTAMP" || "DATE" || "TIME" || "INTERVAL_DAY_TO_SECOND" || "INTERVAL_YEAR_TO_MONTH" || "UNKNOWN" || "INTEGER",
  * //         ArrayColumnInfo: { // ColumnInfo
  * //           Name: "STRING_VALUE",
  * //           Type: {
- * //             ScalarType: "STRING_VALUE",
+ * //             ScalarType: "VARCHAR" || "BOOLEAN" || "BIGINT" || "DOUBLE" || "TIMESTAMP" || "DATE" || "TIME" || "INTERVAL_DAY_TO_SECOND" || "INTERVAL_YEAR_TO_MONTH" || "UNKNOWN" || "INTEGER",
  * //             ArrayColumnInfo: {
  * //               Name: "STRING_VALUE",
  * //               Type: "<Type>", // required
@@ -179,6 +180,10 @@ export class PrepareQueryCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: PrepareQueryRequestFilterSensitiveLog,
       outputFilterSensitiveLog: PrepareQueryResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Timestream_20181101",
+        operation: "PrepareQuery",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

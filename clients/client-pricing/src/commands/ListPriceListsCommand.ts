@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListPriceListsRequest, ListPriceListsResponse } from "../models/models_0";
@@ -41,14 +42,13 @@ export interface ListPriceListsCommandOutput extends ListPriceListsResponse, __M
  *                <b>This feature is in preview release and is subject to change. Your use of Amazon Web Services Price List API is subject to the Beta Service Participation terms of the <a href="https://aws.amazon.com/service-terms/">Amazon Web Services Service Terms</a> (Section 1.10).</b>
  *             </i>
  *          </p>
- *          <p>This returns a list of Price List references that the requester if authorized to view, given a <code>ServiceCode</code>, <code>CurrencyCode</code>, and an <code>EffectiveDate</code>.
- *          Use without a <code>RegionCode</code> filter to list Price List references from all
- *          available Amazon Web Services Regions. Use with a <code>RegionCode</code> filter to get the
- *          Price List reference that's specific to a specific Amazon Web Services Region. You can use
- *          the <code>PriceListArn</code> from the response to get your preferred Price List files
- *          through the <a href="https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_pricing_GetPriceListFileUrl.html">
- *                <code>GetPriceListFileUrl</code>
- *             </a> API.</p>
+ *          <p>This returns a list of Price List references that the requester if authorized to view,
+ *          given a <code>ServiceCode</code>, <code>CurrencyCode</code>, and an
+ *             <code>EffectiveDate</code>. Use without a <code>RegionCode</code> filter to list Price
+ *          List references from all available Amazon Web Services Regions. Use with a
+ *             <code>RegionCode</code> filter to get the Price List reference that's specific to a
+ *          specific Amazon Web Services Region. You can use the <code>PriceListArn</code> from the
+ *          response to get your preferred Price List files through the <a href="https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_pricing_GetPriceListFileUrl.html">GetPriceListFileUrl</a> API.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -159,6 +159,10 @@ export class ListPriceListsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSPriceListService",
+        operation: "ListPriceLists",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

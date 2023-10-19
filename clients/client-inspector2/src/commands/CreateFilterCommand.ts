@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { Inspector2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../Inspector2Client";
@@ -36,7 +37,7 @@ export interface CreateFilterCommandOutput extends CreateFilterResponse, __Metad
 
 /**
  * @public
- * <p>Creates a filter resource using specified filter criteria.</p>
+ * <p>Creates a filter resource using specified filter criteria. When the filter action is set to <code>SUPPRESS</code> this action creates a suppression rule.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -266,6 +267,10 @@ export class CreateFilterCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Inspector2",
+        operation: "CreateFilter",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

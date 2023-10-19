@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LakeFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LakeFormationClient";
@@ -65,6 +66,7 @@ export interface ListResourcesCommandOutput extends ListResourcesResponse, __Met
  * //       RoleArn: "STRING_VALUE",
  * //       LastModified: new Date("TIMESTAMP"),
  * //       WithFederation: true || false,
+ * //       HybridAccessEnabled: true || false,
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -139,6 +141,10 @@ export class ListResourcesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSLakeFormation",
+        operation: "ListResources",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

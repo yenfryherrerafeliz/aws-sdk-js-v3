@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { PutCodeBindingRequest, PutCodeBindingResponse } from "../models/models_0";
@@ -55,7 +56,7 @@ export interface PutCodeBindingCommandOutput extends PutCodeBindingResponse, __M
  * //   CreationDate: new Date("TIMESTAMP"),
  * //   LastModified: new Date("TIMESTAMP"),
  * //   SchemaVersion: "STRING_VALUE",
- * //   Status: "STRING_VALUE",
+ * //   Status: "CREATE_IN_PROGRESS" || "CREATE_COMPLETE" || "CREATE_FAILED",
  * // };
  *
  * ```
@@ -134,6 +135,10 @@ export class PutCodeBindingCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "schemas",
+        operation: "PutCodeBinding",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

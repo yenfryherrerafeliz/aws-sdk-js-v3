@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -73,7 +74,7 @@ export interface StartContinuousExportCommandOutput extends StartContinuousExpor
  *       policy associated with this user.</p>
  *
  * @throws {@link ConflictErrorException} (client fault)
- *  <p></p>
+ *  <p>Conflict error.</p>
  *
  * @throws {@link HomeRegionNotSetException} (client fault)
  *  <p>The home Region is not set. Set the home Region to continue.</p>
@@ -152,6 +153,10 @@ export class StartContinuousExportCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSPoseidonService_V2015_11_01",
+        operation: "StartContinuousExport",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateMonitoringScheduleRequest, UpdateMonitoringScheduleResponse } from "../models/models_4";
@@ -48,6 +49,8 @@ export interface UpdateMonitoringScheduleCommandOutput extends UpdateMonitoringS
  *   MonitoringScheduleConfig: { // MonitoringScheduleConfig
  *     ScheduleConfig: { // ScheduleConfig
  *       ScheduleExpression: "STRING_VALUE", // required
+ *       DataAnalysisStartTime: "STRING_VALUE",
+ *       DataAnalysisEndTime: "STRING_VALUE",
  *     },
  *     MonitoringJobDefinition: { // MonitoringJobDefinition
  *       BaselineConfig: { // MonitoringBaselineConfig
@@ -72,6 +75,7 @@ export interface UpdateMonitoringScheduleCommandOutput extends UpdateMonitoringS
  *             ProbabilityThresholdAttribute: Number("double"),
  *             StartTimeOffset: "STRING_VALUE",
  *             EndTimeOffset: "STRING_VALUE",
+ *             ExcludeFeaturesAttribute: "STRING_VALUE",
  *           },
  *           BatchTransformInput: { // BatchTransformInput
  *             DataCapturedDestinationS3Uri: "STRING_VALUE", // required
@@ -93,6 +97,7 @@ export interface UpdateMonitoringScheduleCommandOutput extends UpdateMonitoringS
  *             ProbabilityThresholdAttribute: Number("double"),
  *             StartTimeOffset: "STRING_VALUE",
  *             EndTimeOffset: "STRING_VALUE",
+ *             ExcludeFeaturesAttribute: "STRING_VALUE",
  *           },
  *         },
  *       ],
@@ -226,6 +231,10 @@ export class UpdateMonitoringScheduleCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "UpdateMonitoringSchedule",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

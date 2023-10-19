@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateConfigurationSetRequest, CreateConfigurationSetResponse } from "../models/models_0";
@@ -53,7 +54,7 @@ export interface CreateConfigurationSetCommandOutput extends CreateConfiguration
  *     CustomRedirectDomain: "STRING_VALUE", // required
  *   },
  *   DeliveryOptions: { // DeliveryOptions
- *     TlsPolicy: "STRING_VALUE",
+ *     TlsPolicy: "REQUIRE" || "OPTIONAL",
  *     SendingPoolName: "STRING_VALUE",
  *   },
  *   ReputationOptions: { // ReputationOptions
@@ -154,6 +155,10 @@ export class CreateConfigurationSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonPinpointEmailService",
+        operation: "CreateConfigurationSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

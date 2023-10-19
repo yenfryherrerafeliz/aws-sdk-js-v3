@@ -1294,6 +1294,11 @@ import {
   DisableFastSnapshotRestoresCommandOutput,
 } from "./commands/DisableFastSnapshotRestoresCommand";
 import {
+  DisableImageBlockPublicAccessCommandInput,
+  DisableImageBlockPublicAccessCommandOutput,
+} from "./commands/DisableImageBlockPublicAccessCommand";
+import { DisableImageCommandInput, DisableImageCommandOutput } from "./commands/DisableImageCommand";
+import {
   DisableImageDeprecationCommandInput,
   DisableImageDeprecationCommandOutput,
 } from "./commands/DisableImageDeprecationCommand";
@@ -1395,6 +1400,11 @@ import {
   EnableFastSnapshotRestoresCommandOutput,
 } from "./commands/EnableFastSnapshotRestoresCommand";
 import {
+  EnableImageBlockPublicAccessCommandInput,
+  EnableImageBlockPublicAccessCommandOutput,
+} from "./commands/EnableImageBlockPublicAccessCommand";
+import { EnableImageCommandInput, EnableImageCommandOutput } from "./commands/EnableImageCommand";
+import {
   EnableImageDeprecationCommandInput,
   EnableImageDeprecationCommandOutput,
 } from "./commands/EnableImageDeprecationCommand";
@@ -1486,6 +1496,10 @@ import {
   GetHostReservationPurchasePreviewCommandInput,
   GetHostReservationPurchasePreviewCommandOutput,
 } from "./commands/GetHostReservationPurchasePreviewCommand";
+import {
+  GetImageBlockPublicAccessStateCommandInput,
+  GetImageBlockPublicAccessStateCommandOutput,
+} from "./commands/GetImageBlockPublicAccessStateCommand";
 import {
   GetInstanceTypesFromInstanceRequirementsCommandInput,
   GetInstanceTypesFromInstanceRequirementsCommandOutput,
@@ -2448,6 +2462,8 @@ export type ServiceInputTypes =
   | DisableEbsEncryptionByDefaultCommandInput
   | DisableFastLaunchCommandInput
   | DisableFastSnapshotRestoresCommandInput
+  | DisableImageBlockPublicAccessCommandInput
+  | DisableImageCommandInput
   | DisableImageDeprecationCommandInput
   | DisableIpamOrganizationAdminAccountCommandInput
   | DisableSerialConsoleAccessCommandInput
@@ -2474,6 +2490,8 @@ export type ServiceInputTypes =
   | EnableEbsEncryptionByDefaultCommandInput
   | EnableFastLaunchCommandInput
   | EnableFastSnapshotRestoresCommandInput
+  | EnableImageBlockPublicAccessCommandInput
+  | EnableImageCommandInput
   | EnableImageDeprecationCommandInput
   | EnableIpamOrganizationAdminAccountCommandInput
   | EnableReachabilityAnalyzerOrganizationSharingCommandInput
@@ -2500,6 +2518,7 @@ export type ServiceInputTypes =
   | GetFlowLogsIntegrationTemplateCommandInput
   | GetGroupsForCapacityReservationCommandInput
   | GetHostReservationPurchasePreviewCommandInput
+  | GetImageBlockPublicAccessStateCommandInput
   | GetInstanceTypesFromInstanceRequirementsCommandInput
   | GetInstanceUefiDataCommandInput
   | GetIpamAddressHistoryCommandInput
@@ -3047,6 +3066,8 @@ export type ServiceOutputTypes =
   | DisableEbsEncryptionByDefaultCommandOutput
   | DisableFastLaunchCommandOutput
   | DisableFastSnapshotRestoresCommandOutput
+  | DisableImageBlockPublicAccessCommandOutput
+  | DisableImageCommandOutput
   | DisableImageDeprecationCommandOutput
   | DisableIpamOrganizationAdminAccountCommandOutput
   | DisableSerialConsoleAccessCommandOutput
@@ -3073,6 +3094,8 @@ export type ServiceOutputTypes =
   | EnableEbsEncryptionByDefaultCommandOutput
   | EnableFastLaunchCommandOutput
   | EnableFastSnapshotRestoresCommandOutput
+  | EnableImageBlockPublicAccessCommandOutput
+  | EnableImageCommandOutput
   | EnableImageDeprecationCommandOutput
   | EnableIpamOrganizationAdminAccountCommandOutput
   | EnableReachabilityAnalyzerOrganizationSharingCommandOutput
@@ -3099,6 +3122,7 @@ export type ServiceOutputTypes =
   | GetFlowLogsIntegrationTemplateCommandOutput
   | GetGroupsForCapacityReservationCommandOutput
   | GetHostReservationPurchasePreviewCommandOutput
+  | GetImageBlockPublicAccessStateCommandOutput
   | GetInstanceTypesFromInstanceRequirementsCommandOutput
   | GetInstanceUefiDataCommandOutput
   | GetIpamAddressHistoryCommandOutput
@@ -3379,6 +3403,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 

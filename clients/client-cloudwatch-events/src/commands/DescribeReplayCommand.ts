@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -60,7 +61,7 @@ export interface DescribeReplayCommandOutput extends DescribeReplayResponse, __M
  * //   ReplayName: "STRING_VALUE",
  * //   ReplayArn: "STRING_VALUE",
  * //   Description: "STRING_VALUE",
- * //   State: "STRING_VALUE",
+ * //   State: "STARTING" || "RUNNING" || "CANCELLING" || "COMPLETED" || "CANCELLED" || "FAILED",
  * //   StateReason: "STRING_VALUE",
  * //   EventSourceArn: "STRING_VALUE",
  * //   Destination: { // ReplayDestination
@@ -144,6 +145,10 @@ export class DescribeReplayCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "DescribeReplay",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

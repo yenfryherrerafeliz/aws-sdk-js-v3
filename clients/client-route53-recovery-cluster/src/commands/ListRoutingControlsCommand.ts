@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListRoutingControlsRequest, ListRoutingControlsResponse } from "../models/models_0";
@@ -44,21 +45,21 @@ export interface ListRoutingControlsCommandOutput extends ListRoutingControlsRes
  * 			state for each routing control, along with the control panel name and control panel ARN for the routing controls.
  * 			If you specify a control panel ARN, this call lists the routing controls in the control panel. Otherwise, it lists
  * 			all the routing controls in the cluster.</p>
- * 		       <p>A routing control is a simple on/off switch in Route 53 ARC that you
- * 			can use to route traffic to cells. When a routing control state is On, traffic flows to a cell. When
- * 			the state is Off, traffic does not flow.</p>
- * 		       <p>Before you can create a routing control, you must first create a cluster, and then host the control
+ *          <p>A routing control is a simple on/off switch in Route 53 ARC that you
+ * 			can use to route traffic to cells. When a routing control state is set to ON, traffic flows to a cell. When
+ * 			the state is set to OFF, traffic does not flow.</p>
+ *          <p>Before you can create a routing control, you must first create a cluster, and then host the control
  * 			in a control panel on the cluster. For more information, see <a href="https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html">
  * 				Create routing control structures</a> in the Amazon Route 53 Application Recovery Controller Developer Guide.
  * 			You access one of the endpoints for the cluster to get or update the routing control state to
  * 			redirect traffic for your application. </p>
- * 		       <p>
+ *          <p>
  *             <i>You must specify Regional endpoints when you work with API cluster operations
  * 			to use this API operation to list routing controls in Route 53 ARC.</i>
  *          </p>
- * 		       <p>Learn more about working with routing controls in the following topics in the
+ *          <p>Learn more about working with routing controls in the following topics in the
  * 			Amazon Route 53 Application Recovery Controller Developer Guide:</p>
- * 		       <ul>
+ *          <ul>
  *             <li>
  *                <p>
  *                   <a href="https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html">
@@ -92,7 +93,8 @@ export interface ListRoutingControlsCommandOutput extends ListRoutingControlsRes
  * //       ControlPanelName: "STRING_VALUE",
  * //       RoutingControlArn: "STRING_VALUE",
  * //       RoutingControlName: "STRING_VALUE",
- * //       RoutingControlState: "STRING_VALUE",
+ * //       RoutingControlState: "On" || "Off",
+ * //       Owner: "STRING_VALUE",
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -178,6 +180,10 @@ export class ListRoutingControlsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ToggleCustomerAPI",
+        operation: "ListRoutingControls",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

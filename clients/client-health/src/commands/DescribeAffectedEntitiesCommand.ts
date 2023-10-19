@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { HealthClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../HealthClient";
@@ -82,7 +83,7 @@ export interface DescribeAffectedEntitiesCommandOutput extends DescribeAffectedE
  *       },
  *     ],
  *     statusCodes: [ // entityStatusCodeList
- *       "IMPAIRED" || "UNIMPAIRED" || "UNKNOWN",
+ *       "IMPAIRED" || "UNIMPAIRED" || "UNKNOWN" || "PENDING" || "RESOLVED",
  *     ],
  *   },
  *   locale: "STRING_VALUE",
@@ -100,7 +101,7 @@ export interface DescribeAffectedEntitiesCommandOutput extends DescribeAffectedE
  * //       entityUrl: "STRING_VALUE",
  * //       awsAccountId: "STRING_VALUE",
  * //       lastUpdatedTime: new Date("TIMESTAMP"),
- * //       statusCode: "IMPAIRED" || "UNIMPAIRED" || "UNKNOWN",
+ * //       statusCode: "IMPAIRED" || "UNIMPAIRED" || "UNKNOWN" || "PENDING" || "RESOLVED",
  * //       tags: { // tagSet
  * //         "<keys>": "STRING_VALUE",
  * //       },
@@ -177,6 +178,10 @@ export class DescribeAffectedEntitiesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHealth_20160804",
+        operation: "DescribeAffectedEntities",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

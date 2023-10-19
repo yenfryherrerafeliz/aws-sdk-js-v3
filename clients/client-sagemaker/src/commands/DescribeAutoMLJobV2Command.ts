@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeAutoMLJobV2Request, DescribeAutoMLJobV2Response } from "../models/models_2";
@@ -142,6 +143,11 @@ export interface DescribeAutoMLJobV2CommandOutput extends DescribeAutoMLJobV2Res
  * //           "STRING_VALUE",
  * //         ],
  * //       },
+ * //       HolidayConfig: [ // HolidayConfig
+ * //         { // HolidayConfigAttributes
+ * //           CountryCode: "STRING_VALUE",
+ * //         },
+ * //       ],
  * //     },
  * //   },
  * //   CreationTime: new Date("TIMESTAMP"), // required
@@ -321,6 +327,10 @@ export class DescribeAutoMLJobV2Command extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "DescribeAutoMLJobV2",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

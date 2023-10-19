@@ -54,8 +54,10 @@ import {
   BatchGetTokenBalanceCommandInput,
   BatchGetTokenBalanceCommandOutput,
 } from "./commands/BatchGetTokenBalanceCommand";
+import { GetAssetContractCommandInput, GetAssetContractCommandOutput } from "./commands/GetAssetContractCommand";
 import { GetTokenBalanceCommandInput, GetTokenBalanceCommandOutput } from "./commands/GetTokenBalanceCommand";
 import { GetTransactionCommandInput, GetTransactionCommandOutput } from "./commands/GetTransactionCommand";
+import { ListAssetContractsCommandInput, ListAssetContractsCommandOutput } from "./commands/ListAssetContractsCommand";
 import { ListTokenBalancesCommandInput, ListTokenBalancesCommandOutput } from "./commands/ListTokenBalancesCommand";
 import {
   ListTransactionEventsCommandInput,
@@ -78,8 +80,10 @@ export { __Client };
  */
 export type ServiceInputTypes =
   | BatchGetTokenBalanceCommandInput
+  | GetAssetContractCommandInput
   | GetTokenBalanceCommandInput
   | GetTransactionCommandInput
+  | ListAssetContractsCommandInput
   | ListTokenBalancesCommandInput
   | ListTransactionEventsCommandInput
   | ListTransactionsCommandInput;
@@ -89,8 +93,10 @@ export type ServiceInputTypes =
  */
 export type ServiceOutputTypes =
   | BatchGetTokenBalanceCommandOutput
+  | GetAssetContractCommandOutput
   | GetTokenBalanceCommandOutput
   | GetTransactionCommandOutput
+  | ListAssetContractsCommandOutput
   | ListTokenBalancesCommandOutput
   | ListTransactionEventsCommandOutput
   | ListTransactionsCommandOutput;
@@ -205,6 +211,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 

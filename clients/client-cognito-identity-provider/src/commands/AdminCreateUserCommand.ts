@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -218,6 +219,66 @@ export interface AdminCreateUserCommandOutput extends AdminCreateUserResponse, _
  * @throws {@link CognitoIdentityProviderServiceException}
  * <p>Base exception class for all service exceptions from CognitoIdentityProvider service.</p>
  *
+ * @example An AdminCreateUser request for for a test user named John.
+ * ```javascript
+ * // This request submits a value for all possible parameters for AdminCreateUser.
+ * const input = {
+ *   "DesiredDeliveryMediums": [
+ *     "SMS"
+ *   ],
+ *   "MessageAction": "SUPPRESS",
+ *   "TemporaryPassword": "This-is-my-test-99!",
+ *   "UserAttributes": [
+ *     {
+ *       "Name": "name",
+ *       "Value": "John"
+ *     },
+ *     {
+ *       "Name": "phone_number",
+ *       "Value": "+12065551212"
+ *     },
+ *     {
+ *       "Name": "email",
+ *       "Value": "testuser@example.com"
+ *     }
+ *   ],
+ *   "UserPoolId": "us-east-1_EXAMPLE",
+ *   "Username": "testuser"
+ * };
+ * const command = new AdminCreateUserCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "User": {
+ *     "Attributes": [
+ *       {
+ *         "Name": "sub",
+ *         "Value": "d16b4aa8-8633-4abd-93b3-5062a8e1b5f8"
+ *       },
+ *       {
+ *         "Name": "name",
+ *         "Value": "John"
+ *       },
+ *       {
+ *         "Name": "phone_number",
+ *         "Value": "+12065551212"
+ *       },
+ *       {
+ *         "Name": "email",
+ *         "Value": "testuser@example.com"
+ *       }
+ *     ],
+ *     "Enabled": true,
+ *     "UserCreateDate": 1689980857.949,
+ *     "UserLastModifiedDate": 1689980857.949,
+ *     "UserStatus": "FORCE_CHANGE_PASSWORD",
+ *     "Username": "testuser"
+ *   }
+ * }
+ * *\/
+ * // example id: an-admincreateuser-request-for-for-a-test-user-named-john-1689980900481
+ * ```
+ *
  */
 export class AdminCreateUserCommand extends $Command<
   AdminCreateUserCommandInput,
@@ -270,6 +331,10 @@ export class AdminCreateUserCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: AdminCreateUserRequestFilterSensitiveLog,
       outputFilterSensitiveLog: AdminCreateUserResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSCognitoIdentityProviderService",
+        operation: "AdminCreateUser",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

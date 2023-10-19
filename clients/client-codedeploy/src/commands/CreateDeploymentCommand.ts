@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -130,17 +131,17 @@ export interface CreateDeploymentCommandOutput extends CreateDeploymentOutput, _
  *  <p>The maximum number of alarms for a deployment group (10) was exceeded.</p>
  *
  * @throws {@link ApplicationDoesNotExistException} (client fault)
- *  <p>The application does not exist with the IAM user or Amazon Web Services account.</p>
+ *  <p>The application does not exist with the user or Amazon Web Services account.</p>
  *
  * @throws {@link ApplicationNameRequiredException} (client fault)
  *  <p>The minimum number of required application names was not specified.</p>
  *
  * @throws {@link DeploymentConfigDoesNotExistException} (client fault)
- *  <p>The deployment configuration does not exist with the IAM user or
- *                 Amazon Web Services account.</p>
+ *  <p>The deployment configuration does not exist with the user or Amazon Web Services account.</p>
  *
  * @throws {@link DeploymentGroupDoesNotExistException} (client fault)
- *  <p>The named deployment group with the IAM user or Amazon Web Services account does not exist.</p>
+ *  <p>The named deployment group with the user or Amazon Web Services account does not
+ *             exist.</p>
  *
  * @throws {@link DeploymentGroupNameRequiredException} (client fault)
  *  <p>The deployment group name was not specified.</p>
@@ -153,21 +154,21 @@ export interface CreateDeploymentCommandOutput extends CreateDeploymentOutput, _
  *
  * @throws {@link InvalidAlarmConfigException} (client fault)
  *  <p>The format of the alarm configuration is invalid. Possible causes include:</p>
- *         <ul>
+ *          <ul>
  *             <li>
- *                 <p>The alarm list is null.</p>
+ *                <p>The alarm list is null.</p>
  *             </li>
  *             <li>
- *                 <p>The alarm object is null.</p>
+ *                <p>The alarm object is null.</p>
  *             </li>
  *             <li>
- *                 <p>The alarm name is empty or null or exceeds the limit of 255 characters.</p>
+ *                <p>The alarm name is empty or null or exceeds the limit of 255 characters.</p>
  *             </li>
  *             <li>
- *                 <p>Two alarms with the same name have been specified.</p>
+ *                <p>Two alarms with the same name have been specified.</p>
  *             </li>
  *             <li>
- *                 <p>The alarm configuration is enabled, but the alarm list is empty.</p>
+ *                <p>The alarm configuration is enabled, but the alarm list is empty.</p>
  *             </li>
  *          </ul>
  *
@@ -215,19 +216,19 @@ export interface CreateDeploymentCommandOutput extends CreateDeploymentOutput, _
  *
  * @throws {@link InvalidTargetInstancesException} (client fault)
  *  <p>The target instance configuration is invalid. Possible causes include:</p>
- *         <ul>
+ *          <ul>
  *             <li>
- *                 <p>Configuration data for target instances was entered for an in-place
+ *                <p>Configuration data for target instances was entered for an in-place
  *                     deployment.</p>
  *             </li>
  *             <li>
- *                 <p>The limit of 10 tags for a tag type was exceeded.</p>
+ *                <p>The limit of 10 tags for a tag type was exceeded.</p>
  *             </li>
  *             <li>
- *                 <p>The combined length of the tag names exceeded the limit. </p>
+ *                <p>The combined length of the tag names exceeded the limit. </p>
  *             </li>
  *             <li>
- *                 <p>A specified tag is not currently applied to any instances.</p>
+ *                <p>A specified tag is not currently applied to any instances.</p>
  *             </li>
  *          </ul>
  *
@@ -241,7 +242,7 @@ export interface CreateDeploymentCommandOutput extends CreateDeploymentOutput, _
  *                 <code>true</code> or <code>false</code> is expected.</p>
  *
  * @throws {@link RevisionDoesNotExistException} (client fault)
- *  <p>The named revision does not exist with the IAM user or Amazon Web Services account.</p>
+ *  <p>The named revision does not exist with the user or Amazon Web Services account.</p>
  *
  * @throws {@link RevisionRequiredException} (client fault)
  *  <p>The revision ID was not specified.</p>
@@ -303,6 +304,10 @@ export class CreateDeploymentCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "CreateDeployment",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

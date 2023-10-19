@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -87,7 +88,7 @@ export interface CreateMediaInsightsPipelineConfigurationCommandOutput
  *   },
  *   Elements: [ // MediaInsightsPipelineConfigurationElements // required
  *     { // MediaInsightsPipelineConfigurationElement
- *       Type: "AmazonTranscribeCallAnalyticsProcessor" || "VoiceAnalyticsProcessor" || "AmazonTranscribeProcessor" || "KinesisDataStreamSink" || "LambdaFunctionSink" || "SqsQueueSink" || "SnsTopicSink" || "S3RecordingSink", // required
+ *       Type: "AmazonTranscribeCallAnalyticsProcessor" || "VoiceAnalyticsProcessor" || "AmazonTranscribeProcessor" || "KinesisDataStreamSink" || "LambdaFunctionSink" || "SqsQueueSink" || "SnsTopicSink" || "S3RecordingSink" || "VoiceEnhancementSink", // required
  *       AmazonTranscribeCallAnalyticsProcessorConfiguration: { // AmazonTranscribeCallAnalyticsProcessorConfiguration
  *         LanguageCode: "en-US" || "en-GB" || "es-US" || "fr-CA" || "fr-FR" || "en-AU" || "it-IT" || "de-DE" || "pt-BR", // required
  *         VocabularyName: "STRING_VALUE",
@@ -149,6 +150,9 @@ export interface CreateMediaInsightsPipelineConfigurationCommandOutput
  *       SnsTopicSinkConfiguration: { // SnsTopicSinkConfiguration
  *         InsightsTarget: "STRING_VALUE",
  *       },
+ *       VoiceEnhancementSinkConfiguration: { // VoiceEnhancementSinkConfiguration
+ *         Disabled: true || false,
+ *       },
  *     },
  *   ],
  *   Tags: [ // TagList
@@ -191,7 +195,7 @@ export interface CreateMediaInsightsPipelineConfigurationCommandOutput
  * //     },
  * //     Elements: [ // MediaInsightsPipelineConfigurationElements
  * //       { // MediaInsightsPipelineConfigurationElement
- * //         Type: "AmazonTranscribeCallAnalyticsProcessor" || "VoiceAnalyticsProcessor" || "AmazonTranscribeProcessor" || "KinesisDataStreamSink" || "LambdaFunctionSink" || "SqsQueueSink" || "SnsTopicSink" || "S3RecordingSink", // required
+ * //         Type: "AmazonTranscribeCallAnalyticsProcessor" || "VoiceAnalyticsProcessor" || "AmazonTranscribeProcessor" || "KinesisDataStreamSink" || "LambdaFunctionSink" || "SqsQueueSink" || "SnsTopicSink" || "S3RecordingSink" || "VoiceEnhancementSink", // required
  * //         AmazonTranscribeCallAnalyticsProcessorConfiguration: { // AmazonTranscribeCallAnalyticsProcessorConfiguration
  * //           LanguageCode: "en-US" || "en-GB" || "es-US" || "fr-CA" || "fr-FR" || "en-AU" || "it-IT" || "de-DE" || "pt-BR", // required
  * //           VocabularyName: "STRING_VALUE",
@@ -252,6 +256,9 @@ export interface CreateMediaInsightsPipelineConfigurationCommandOutput
  * //         },
  * //         SnsTopicSinkConfiguration: { // SnsTopicSinkConfiguration
  * //           InsightsTarget: "STRING_VALUE",
+ * //         },
+ * //         VoiceEnhancementSinkConfiguration: { // VoiceEnhancementSinkConfiguration
+ * //           Disabled: true || false,
  * //         },
  * //       },
  * //     ],
@@ -353,6 +360,10 @@ export class CreateMediaInsightsPipelineConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateMediaInsightsPipelineConfigurationRequestFilterSensitiveLog,
       outputFilterSensitiveLog: CreateMediaInsightsPipelineConfigurationResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ChimeSDKMediaPipelinesService",
+        operation: "CreateMediaInsightsPipelineConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

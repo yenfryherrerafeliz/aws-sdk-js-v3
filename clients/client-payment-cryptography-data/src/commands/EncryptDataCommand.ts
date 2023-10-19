@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -107,7 +108,7 @@ export interface EncryptDataCommandOutput extends EncryptDataOutput, __MetadataB
  * const response = await client.send(command);
  * // { // EncryptDataOutput
  * //   KeyArn: "STRING_VALUE", // required
- * //   KeyCheckValue: "STRING_VALUE", // required
+ * //   KeyCheckValue: "STRING_VALUE",
  * //   CipherText: "STRING_VALUE", // required
  * // };
  *
@@ -186,6 +187,10 @@ export class EncryptDataCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: EncryptDataInputFilterSensitiveLog,
       outputFilterSensitiveLog: EncryptDataOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "PaymentCryptographyDataPlane",
+        operation: "EncryptData",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

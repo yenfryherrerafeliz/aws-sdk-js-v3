@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MediaConvertClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaConvertClient";
@@ -287,7 +288,7 @@ export interface CreatePresetCommandOutput extends CreatePresetResponse, __Metad
  *         AudioDuration: "DEFAULT_CODEC_DURATION" || "MATCH_VIDEO_DURATION",
  *         AudioGroupId: "STRING_VALUE",
  *         AudioRenditionSets: "STRING_VALUE",
- *         AudioTrackType: "ALTERNATE_AUDIO_AUTO_SELECT_DEFAULT" || "ALTERNATE_AUDIO_AUTO_SELECT" || "ALTERNATE_AUDIO_NOT_AUTO_SELECT",
+ *         AudioTrackType: "ALTERNATE_AUDIO_AUTO_SELECT_DEFAULT" || "ALTERNATE_AUDIO_AUTO_SELECT" || "ALTERNATE_AUDIO_NOT_AUTO_SELECT" || "AUDIO_ONLY_VARIANT_STREAM",
  *         DescriptiveVideoServiceFlag: "DONT_FLAG" || "FLAG",
  *         IFrameOnlyManifest: "INCLUDE" || "EXCLUDE",
  *         KlvMetadata: "PASSTHROUGH" || "NONE",
@@ -479,6 +480,7 @@ export interface CreatePresetCommandOutput extends CreatePresetResponse, __Metad
  *           CodecLevel: "AUTO" || "LEVEL_1" || "LEVEL_1_1" || "LEVEL_1_2" || "LEVEL_1_3" || "LEVEL_2" || "LEVEL_2_1" || "LEVEL_2_2" || "LEVEL_3" || "LEVEL_3_1" || "LEVEL_3_2" || "LEVEL_4" || "LEVEL_4_1" || "LEVEL_4_2" || "LEVEL_5" || "LEVEL_5_1" || "LEVEL_5_2",
  *           CodecProfile: "BASELINE" || "HIGH" || "HIGH_10BIT" || "HIGH_422" || "HIGH_422_10BIT" || "MAIN",
  *           DynamicSubGop: "ADAPTIVE" || "STATIC",
+ *           EndOfStreamMarkers: "INCLUDE" || "SUPPRESS",
  *           EntropyEncoding: "CABAC" || "CAVLC",
  *           FieldEncoding: "PAFF" || "FORCE_FIELD" || "MBAFF",
  *           FlickerAdaptiveQuantization: "DISABLED" || "ENABLED",
@@ -531,6 +533,7 @@ export interface CreatePresetCommandOutput extends CreatePresetResponse, __Metad
  *           CodecLevel: "AUTO" || "LEVEL_1" || "LEVEL_2" || "LEVEL_2_1" || "LEVEL_3" || "LEVEL_3_1" || "LEVEL_4" || "LEVEL_4_1" || "LEVEL_5" || "LEVEL_5_1" || "LEVEL_5_2" || "LEVEL_6" || "LEVEL_6_1" || "LEVEL_6_2",
  *           CodecProfile: "MAIN_MAIN" || "MAIN_HIGH" || "MAIN10_MAIN" || "MAIN10_HIGH" || "MAIN_422_8BIT_MAIN" || "MAIN_422_8BIT_HIGH" || "MAIN_422_10BIT_MAIN" || "MAIN_422_10BIT_HIGH",
  *           DynamicSubGop: "ADAPTIVE" || "STATIC",
+ *           EndOfStreamMarkers: "INCLUDE" || "SUPPRESS",
  *           FlickerAdaptiveQuantization: "DISABLED" || "ENABLED",
  *           FramerateControl: "INITIALIZE_FROM_SOURCE" || "SPECIFIED",
  *           FramerateConversionAlgorithm: "DUPLICATE_DROP" || "INTERPOLATE" || "FRAMEFORMER",
@@ -1082,7 +1085,7 @@ export interface CreatePresetCommandOutput extends CreatePresetResponse, __Metad
  * //           AudioDuration: "DEFAULT_CODEC_DURATION" || "MATCH_VIDEO_DURATION",
  * //           AudioGroupId: "STRING_VALUE",
  * //           AudioRenditionSets: "STRING_VALUE",
- * //           AudioTrackType: "ALTERNATE_AUDIO_AUTO_SELECT_DEFAULT" || "ALTERNATE_AUDIO_AUTO_SELECT" || "ALTERNATE_AUDIO_NOT_AUTO_SELECT",
+ * //           AudioTrackType: "ALTERNATE_AUDIO_AUTO_SELECT_DEFAULT" || "ALTERNATE_AUDIO_AUTO_SELECT" || "ALTERNATE_AUDIO_NOT_AUTO_SELECT" || "AUDIO_ONLY_VARIANT_STREAM",
  * //           DescriptiveVideoServiceFlag: "DONT_FLAG" || "FLAG",
  * //           IFrameOnlyManifest: "INCLUDE" || "EXCLUDE",
  * //           KlvMetadata: "PASSTHROUGH" || "NONE",
@@ -1274,6 +1277,7 @@ export interface CreatePresetCommandOutput extends CreatePresetResponse, __Metad
  * //             CodecLevel: "AUTO" || "LEVEL_1" || "LEVEL_1_1" || "LEVEL_1_2" || "LEVEL_1_3" || "LEVEL_2" || "LEVEL_2_1" || "LEVEL_2_2" || "LEVEL_3" || "LEVEL_3_1" || "LEVEL_3_2" || "LEVEL_4" || "LEVEL_4_1" || "LEVEL_4_2" || "LEVEL_5" || "LEVEL_5_1" || "LEVEL_5_2",
  * //             CodecProfile: "BASELINE" || "HIGH" || "HIGH_10BIT" || "HIGH_422" || "HIGH_422_10BIT" || "MAIN",
  * //             DynamicSubGop: "ADAPTIVE" || "STATIC",
+ * //             EndOfStreamMarkers: "INCLUDE" || "SUPPRESS",
  * //             EntropyEncoding: "CABAC" || "CAVLC",
  * //             FieldEncoding: "PAFF" || "FORCE_FIELD" || "MBAFF",
  * //             FlickerAdaptiveQuantization: "DISABLED" || "ENABLED",
@@ -1326,6 +1330,7 @@ export interface CreatePresetCommandOutput extends CreatePresetResponse, __Metad
  * //             CodecLevel: "AUTO" || "LEVEL_1" || "LEVEL_2" || "LEVEL_2_1" || "LEVEL_3" || "LEVEL_3_1" || "LEVEL_4" || "LEVEL_4_1" || "LEVEL_5" || "LEVEL_5_1" || "LEVEL_5_2" || "LEVEL_6" || "LEVEL_6_1" || "LEVEL_6_2",
  * //             CodecProfile: "MAIN_MAIN" || "MAIN_HIGH" || "MAIN10_MAIN" || "MAIN10_HIGH" || "MAIN_422_8BIT_MAIN" || "MAIN_422_8BIT_HIGH" || "MAIN_422_10BIT_MAIN" || "MAIN_422_10BIT_HIGH",
  * //             DynamicSubGop: "ADAPTIVE" || "STATIC",
+ * //             EndOfStreamMarkers: "INCLUDE" || "SUPPRESS",
  * //             FlickerAdaptiveQuantization: "DISABLED" || "ENABLED",
  * //             FramerateControl: "INITIALIZE_FROM_SOURCE" || "SPECIFIED",
  * //             FramerateConversionAlgorithm: "DUPLICATE_DROP" || "INTERPOLATE" || "FRAMEFORMER",
@@ -1705,6 +1710,10 @@ export class CreatePresetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaConvert",
+        operation: "CreatePreset",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

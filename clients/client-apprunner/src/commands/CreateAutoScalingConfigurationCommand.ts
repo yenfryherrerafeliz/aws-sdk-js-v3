@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AppRunnerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppRunnerClient";
@@ -47,8 +48,8 @@ export interface CreateAutoScalingConfigurationCommandOutput
  *       returns incremental <code>AutoScalingConfigurationRevision</code> values. When you create a service and configure an auto scaling configuration resource,
  *       the service uses the latest active revision of the auto scaling configuration by default. You can optionally configure the service to use a specific
  *       revision.</p>
- *          <p>Configure a higher <code>MinSize</code> to increase the spread of your App Runner service over more Availability Zones in the Amazon Web Services Region. The tradeoff is
- *       a higher minimal cost.</p>
+ *          <p>Configure a higher <code>MinSize</code> to increase the spread of your App Runner service over more Availability Zones in the Amazon Web Services Region. The
+ *       tradeoff is a higher minimal cost.</p>
  *          <p>Configure a lower <code>MaxSize</code> to control your cost. The tradeoff is lower responsiveness during peak demand.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -82,6 +83,8 @@ export interface CreateAutoScalingConfigurationCommandOutput
  * //     MaxSize: Number("int"),
  * //     CreatedAt: new Date("TIMESTAMP"),
  * //     DeletedAt: new Date("TIMESTAMP"),
+ * //     HasAssociatedService: true || false,
+ * //     IsDefault: true || false,
  * //   },
  * // };
  *
@@ -158,6 +161,10 @@ export class CreateAutoScalingConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AppRunner",
+        operation: "CreateAutoScalingConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

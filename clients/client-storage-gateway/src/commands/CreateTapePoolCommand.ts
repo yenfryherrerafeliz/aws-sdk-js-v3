@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateTapePoolInput, CreateTapePoolOutput } from "../models/models_0";
@@ -46,8 +47,8 @@ export interface CreateTapePoolCommandOutput extends CreateTapePoolOutput, __Met
  * const client = new StorageGatewayClient(config);
  * const input = { // CreateTapePoolInput
  *   PoolName: "STRING_VALUE", // required
- *   StorageClass: "STRING_VALUE", // required
- *   RetentionLockType: "STRING_VALUE",
+ *   StorageClass: "DEEP_ARCHIVE" || "GLACIER", // required
+ *   RetentionLockType: "COMPLIANCE" || "GOVERNANCE" || "NONE",
  *   RetentionLockTimeInDays: Number("int"),
  *   Tags: [ // Tags
  *     { // Tag
@@ -132,6 +133,10 @@ export class CreateTapePoolCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "CreateTapePool",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

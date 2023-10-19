@@ -208,6 +208,7 @@ import {
   ServiceQuotaExceededException,
   Step,
   ThrottlingException,
+  TrackingFilterGeometry,
   TruckDimensions,
   TruckWeight,
   ValidationException,
@@ -237,7 +238,7 @@ export const se_AssociateTrackerConsumerCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "tracking." + resolvedHostname;
+    resolvedHostname = "cp.tracking." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -650,7 +651,7 @@ export const se_CreateGeofenceCollectionCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "geofencing." + resolvedHostname;
+    resolvedHostname = "cp.geofencing." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -691,7 +692,7 @@ export const se_CreateKeyCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "metadata." + resolvedHostname;
+    resolvedHostname = "cp.metadata." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -731,7 +732,7 @@ export const se_CreateMapCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "maps." + resolvedHostname;
+    resolvedHostname = "cp.maps." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -772,7 +773,7 @@ export const se_CreatePlaceIndexCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "places." + resolvedHostname;
+    resolvedHostname = "cp.places." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -812,7 +813,7 @@ export const se_CreateRouteCalculatorCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "routes." + resolvedHostname;
+    resolvedHostname = "cp.routes." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -845,6 +846,7 @@ export const se_CreateTrackerCommand = async (
     take(input, {
       Description: [],
       EventBridgeEnabled: [],
+      KmsKeyEnableGeospatialQueries: [],
       KmsKeyId: [],
       PositionFiltering: [],
       PricingPlan: [],
@@ -855,7 +857,7 @@ export const se_CreateTrackerCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "tracking." + resolvedHostname;
+    resolvedHostname = "cp.tracking." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -894,7 +896,7 @@ export const se_DeleteGeofenceCollectionCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "geofencing." + resolvedHostname;
+    resolvedHostname = "cp.geofencing." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -925,7 +927,7 @@ export const se_DeleteKeyCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "metadata." + resolvedHostname;
+    resolvedHostname = "cp.metadata." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -955,7 +957,7 @@ export const se_DeleteMapCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "maps." + resolvedHostname;
+    resolvedHostname = "cp.maps." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -986,7 +988,7 @@ export const se_DeletePlaceIndexCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "places." + resolvedHostname;
+    resolvedHostname = "cp.places." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1024,7 +1026,7 @@ export const se_DeleteRouteCalculatorCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "routes." + resolvedHostname;
+    resolvedHostname = "cp.routes." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1055,7 +1057,7 @@ export const se_DeleteTrackerCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "tracking." + resolvedHostname;
+    resolvedHostname = "cp.tracking." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1094,7 +1096,7 @@ export const se_DescribeGeofenceCollectionCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "geofencing." + resolvedHostname;
+    resolvedHostname = "cp.geofencing." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1125,7 +1127,7 @@ export const se_DescribeKeyCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "metadata." + resolvedHostname;
+    resolvedHostname = "cp.metadata." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1155,7 +1157,7 @@ export const se_DescribeMapCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "maps." + resolvedHostname;
+    resolvedHostname = "cp.maps." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1186,7 +1188,7 @@ export const se_DescribePlaceIndexCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "places." + resolvedHostname;
+    resolvedHostname = "cp.places." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1224,7 +1226,7 @@ export const se_DescribeRouteCalculatorCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "routes." + resolvedHostname;
+    resolvedHostname = "cp.routes." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1255,7 +1257,7 @@ export const se_DescribeTrackerCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "tracking." + resolvedHostname;
+    resolvedHostname = "cp.tracking." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1288,7 +1290,7 @@ export const se_DisassociateTrackerConsumerCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "tracking." + resolvedHostname;
+    resolvedHostname = "cp.tracking." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1631,6 +1633,7 @@ export const se_ListDevicePositionsCommand = async (
   let body: any;
   body = JSON.stringify(
     take(input, {
+      FilterGeometry: (_) => se_TrackingFilterGeometry(_, context),
       MaxResults: [],
       NextToken: [],
     })
@@ -1675,7 +1678,7 @@ export const se_ListGeofenceCollectionsCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "geofencing." + resolvedHostname;
+    resolvedHostname = "cp.geofencing." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1760,7 +1763,7 @@ export const se_ListKeysCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "metadata." + resolvedHostname;
+    resolvedHostname = "cp.metadata." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1797,7 +1800,7 @@ export const se_ListMapsCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "maps." + resolvedHostname;
+    resolvedHostname = "cp.maps." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1835,7 +1838,7 @@ export const se_ListPlaceIndexesCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "places." + resolvedHostname;
+    resolvedHostname = "cp.places." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1873,7 +1876,7 @@ export const se_ListRouteCalculatorsCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "routes." + resolvedHostname;
+    resolvedHostname = "cp.routes." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1903,7 +1906,7 @@ export const se_ListTagsForResourceCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "metadata." + resolvedHostname;
+    resolvedHostname = "cp.metadata." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1943,7 +1946,7 @@ export const se_ListTrackerConsumersCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "tracking." + resolvedHostname;
+    resolvedHostname = "cp.tracking." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -1981,7 +1984,7 @@ export const se_ListTrackersCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "tracking." + resolvedHostname;
+    resolvedHostname = "cp.tracking." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -2209,7 +2212,7 @@ export const se_TagResourceCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "metadata." + resolvedHostname;
+    resolvedHostname = "cp.metadata." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -2245,7 +2248,7 @@ export const se_UntagResourceCommand = async (
   let body: any;
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "metadata." + resolvedHostname;
+    resolvedHostname = "cp.metadata." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -2294,7 +2297,7 @@ export const se_UpdateGeofenceCollectionCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "geofencing." + resolvedHostname;
+    resolvedHostname = "cp.geofencing." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -2336,7 +2339,7 @@ export const se_UpdateKeyCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "metadata." + resolvedHostname;
+    resolvedHostname = "cp.metadata." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -2375,7 +2378,7 @@ export const se_UpdateMapCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "maps." + resolvedHostname;
+    resolvedHostname = "cp.maps." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -2415,7 +2418,7 @@ export const se_UpdatePlaceIndexCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "places." + resolvedHostname;
+    resolvedHostname = "cp.places." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -2461,7 +2464,7 @@ export const se_UpdateRouteCalculatorCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "routes." + resolvedHostname;
+    resolvedHostname = "cp.routes." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -2496,6 +2499,7 @@ export const se_UpdateTrackerCommand = async (
     take(input, {
       Description: [],
       EventBridgeEnabled: [],
+      KmsKeyEnableGeospatialQueries: [],
       PositionFiltering: [],
       PricingPlan: [],
       PricingPlanDataSource: [],
@@ -2503,7 +2507,7 @@ export const se_UpdateTrackerCommand = async (
   );
   let { hostname: resolvedHostname } = await context.endpoint();
   if (context.disableHostPrefix !== true) {
-    resolvedHostname = "tracking." + resolvedHostname;
+    resolvedHostname = "cp.tracking." + resolvedHostname;
     if (!__isValidHostname(resolvedHostname)) {
       throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
     }
@@ -3792,6 +3796,7 @@ export const de_DescribeGeofenceCollectionCommand = async (
     CollectionName: __expectString,
     CreateTime: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     Description: __expectString,
+    GeofenceCount: __expectInt32,
     KmsKeyId: __expectString,
     PricingPlan: __expectString,
     PricingPlanDataSource: __expectString,
@@ -4125,6 +4130,7 @@ export const de_DescribeTrackerCommand = async (
     CreateTime: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     Description: __expectString,
     EventBridgeEnabled: __expectBoolean,
+    KmsKeyEnableGeospatialQueries: __expectBoolean,
     KmsKeyId: __expectString,
     PositionFiltering: __expectString,
     PricingPlan: __expectString,
@@ -6313,6 +6319,15 @@ const se_PositionList = (input: number[][], context: __SerdeContext): any => {
 // se_RefererPatternList omitted.
 
 // se_TagMap omitted.
+
+/**
+ * serializeAws_restJson1TrackingFilterGeometry
+ */
+const se_TrackingFilterGeometry = (input: TrackingFilterGeometry, context: __SerdeContext): any => {
+  return take(input, {
+    Polygon: (_) => se_LinearRings(_, context),
+  });
+};
 
 /**
  * serializeAws_restJson1TruckDimensions

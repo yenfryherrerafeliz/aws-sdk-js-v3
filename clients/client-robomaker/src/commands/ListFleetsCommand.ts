@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListFleetsRequest, ListFleetsResponse } from "../models/models_0";
@@ -68,7 +69,7 @@ export interface ListFleetsCommandOutput extends ListFleetsResponse, __MetadataB
  * //       name: "STRING_VALUE",
  * //       arn: "STRING_VALUE",
  * //       createdAt: new Date("TIMESTAMP"),
- * //       lastDeploymentStatus: "STRING_VALUE",
+ * //       lastDeploymentStatus: "Pending" || "Preparing" || "InProgress" || "Failed" || "Succeeded" || "Canceled",
  * //       lastDeploymentJob: "STRING_VALUE",
  * //       lastDeploymentTime: new Date("TIMESTAMP"),
  * //     },
@@ -149,6 +150,10 @@ export class ListFleetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "ListFleets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

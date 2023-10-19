@@ -1,4 +1,9 @@
 // smithy-typescript generated code
+import {
+  getAwsRegionExtensionConfiguration,
+  resolveAwsRegionExtensionConfiguration,
+} from "@aws-sdk/region-config-resolver";
+import { getHttpHandlerExtensionConfiguration, resolveHttpHandlerRuntimeConfig } from "@smithy/protocol-http";
 import { getDefaultExtensionConfiguration, resolveDefaultRuntimeConfig } from "@smithy/smithy-client";
 
 import { LexRuntimeServiceExtensionConfiguration } from "./extensionConfiguration";
@@ -7,7 +12,7 @@ import { LexRuntimeServiceExtensionConfiguration } from "./extensionConfiguratio
  * @public
  */
 export interface RuntimeExtension {
-  configure(clientConfiguration: LexRuntimeServiceExtensionConfiguration): void;
+  configure(extensionConfiguration: LexRuntimeServiceExtensionConfiguration): void;
 }
 
 /**
@@ -24,13 +29,17 @@ const asPartial = <T extends Partial<LexRuntimeServiceExtensionConfiguration>>(t
  */
 export const resolveRuntimeExtensions = (runtimeConfig: any, extensions: RuntimeExtension[]) => {
   const extensionConfiguration: LexRuntimeServiceExtensionConfiguration = {
+    ...asPartial(getAwsRegionExtensionConfiguration(runtimeConfig)),
     ...asPartial(getDefaultExtensionConfiguration(runtimeConfig)),
+    ...asPartial(getHttpHandlerExtensionConfiguration(runtimeConfig)),
   };
 
   extensions.forEach((extension) => extension.configure(extensionConfiguration));
 
   return {
     ...runtimeConfig,
+    ...resolveAwsRegionExtensionConfiguration(extensionConfiguration),
     ...resolveDefaultRuntimeConfig(extensionConfiguration),
+    ...resolveHttpHandlerRuntimeConfig(extensionConfiguration),
   };
 };

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeDomainRequest, DescribeDomainResponse } from "../models/models_0";
@@ -55,7 +56,7 @@ export interface DescribeDomainCommandOutput extends DescribeDomainResponse, __M
  * //   DomainName: "STRING_VALUE",
  * //   DisplayName: "STRING_VALUE",
  * //   CreatedTime: new Date("TIMESTAMP"),
- * //   DomainStatus: "STRING_VALUE",
+ * //   DomainStatus: "PENDING_VALIDATION" || "ASSOCIATING" || "ACTIVE" || "INACTIVE" || "DISASSOCIATING" || "DISASSOCIATED" || "FAILED_TO_ASSOCIATE" || "FAILED_TO_DISASSOCIATE",
  * //   AcmCertificateArn: "STRING_VALUE",
  * // };
  *
@@ -136,6 +137,10 @@ export class DescribeDomainCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkLink",
+        operation: "DescribeDomain",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -7,11 +7,85 @@ import {
   JobTemplateSettings,
   Preset,
   PresetSettings,
+  PricingPlan,
   Queue,
   QueueStatus,
   ReservationPlanSettings,
   StatusUpdateInterval,
 } from "./models_1";
+
+/**
+ * @public
+ */
+export interface CreateQueueRequest {
+  /**
+   * @public
+   * Optional. A description of the queue that you are creating.
+   */
+  Description?: string;
+
+  /**
+   * @public
+   * The name of the queue that you are creating.
+   */
+  Name: string | undefined;
+
+  /**
+   * @public
+   * Specifies whether the pricing plan for the queue is on-demand or reserved. For on-demand, you pay per minute, billed in increments of .01 minute. For reserved, you pay for the transcoding capacity of the entire queue, regardless of how much or how little you use it. Reserved pricing requires a 12-month commitment. When you use the API to create a queue, the default is on-demand.
+   */
+  PricingPlan?: PricingPlan;
+
+  /**
+   * @public
+   * Details about the pricing plan for your reserved queue. Required for reserved queues and not applicable to on-demand queues.
+   */
+  ReservationPlanSettings?: ReservationPlanSettings;
+
+  /**
+   * @public
+   * Initial state of the queue. If you create a paused queue, then jobs in that queue won't begin.
+   */
+  Status?: QueueStatus;
+
+  /**
+   * @public
+   * The tags that you want to add to the resource. You can tag resources with a key-value pair or with only a key.
+   */
+  Tags?: Record<string, string>;
+}
+
+/**
+ * @public
+ */
+export interface CreateQueueResponse {
+  /**
+   * @public
+   * You can use queues to manage the resources that are available to your AWS account for running multiple transcoding jobs at the same time. If you don't specify a queue, the service sends all jobs through the default queue. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/working-with-queues.html.
+   */
+  Queue?: Queue;
+}
+
+/**
+ * @public
+ */
+export interface DeleteJobTemplateRequest {
+  /**
+   * @public
+   * The name of the job template to be deleted.
+   */
+  Name: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DeleteJobTemplateResponse {}
+
+/**
+ * @public
+ */
+export interface DeletePolicyRequest {}
 
 /**
  * @public
@@ -79,7 +153,7 @@ export interface DescribeEndpointsRequest {
    * @public
    * Optional field, defaults to DEFAULT. Specify DEFAULT for this operation to return your endpoints if any exist, or to create an endpoint for you and return it if one doesn't already exist. Specify GET_ONLY to return your endpoints if any exist, or an empty list if none exist.
    */
-  Mode?: DescribeEndpointsMode | string;
+  Mode?: DescribeEndpointsMode;
 
   /**
    * @public
@@ -193,19 +267,19 @@ export interface Policy {
    * @public
    * Allow or disallow jobs that specify HTTP inputs.
    */
-  HttpInputs?: InputPolicy | string;
+  HttpInputs?: InputPolicy;
 
   /**
    * @public
    * Allow or disallow jobs that specify HTTPS inputs.
    */
-  HttpsInputs?: InputPolicy | string;
+  HttpsInputs?: InputPolicy;
 
   /**
    * @public
    * Allow or disallow jobs that specify Amazon S3 inputs.
    */
-  S3Inputs?: InputPolicy | string;
+  S3Inputs?: InputPolicy;
 }
 
 /**
@@ -312,7 +386,7 @@ export interface ListJobsRequest {
    * @public
    * Optional. When you request lists of resources, you can specify whether they are sorted in ASCENDING or DESCENDING order. Default varies by resource.
    */
-  Order?: Order | string;
+  Order?: Order;
 
   /**
    * @public
@@ -324,7 +398,7 @@ export interface ListJobsRequest {
    * @public
    * Optional. A job's status can be SUBMITTED, PROGRESSING, COMPLETE, CANCELED, or ERROR.
    */
-  Status?: JobStatus | string;
+  Status?: JobStatus;
 }
 
 /**
@@ -358,7 +432,7 @@ export interface ListJobTemplatesRequest {
    * @public
    * Optional. When you request a list of job templates, you can choose to list them alphabetically by NAME or chronologically by CREATION_DATE. If you don't specify, the service will list them by name.
    */
-  ListBy?: JobTemplateListBy | string;
+  ListBy?: JobTemplateListBy;
 
   /**
    * @public
@@ -376,7 +450,7 @@ export interface ListJobTemplatesRequest {
    * @public
    * Optional. When you request lists of resources, you can specify whether they are sorted in ASCENDING or DESCENDING order. Default varies by resource.
    */
-  Order?: Order | string;
+  Order?: Order;
 }
 
 /**
@@ -425,7 +499,7 @@ export interface ListPresetsRequest {
    * @public
    * Optional. When you request a list of presets, you can choose to list them alphabetically by NAME or chronologically by CREATION_DATE. If you don't specify, the service will list them by name.
    */
-  ListBy?: PresetListBy | string;
+  ListBy?: PresetListBy;
 
   /**
    * @public
@@ -443,7 +517,7 @@ export interface ListPresetsRequest {
    * @public
    * Optional. When you request lists of resources, you can specify whether they are sorted in ASCENDING or DESCENDING order. Default varies by resource.
    */
-  Order?: Order | string;
+  Order?: Order;
 }
 
 /**
@@ -485,7 +559,7 @@ export interface ListQueuesRequest {
    * @public
    * Optional. When you request a list of queues, you can choose to list them alphabetically by NAME or chronologically by CREATION_DATE. If you don't specify, the service will list them by creation date.
    */
-  ListBy?: QueueListBy | string;
+  ListBy?: QueueListBy;
 
   /**
    * @public
@@ -503,7 +577,7 @@ export interface ListQueuesRequest {
    * @public
    * Optional. When you request lists of resources, you can specify whether they are sorted in ASCENDING or DESCENDING order. Default varies by resource.
    */
-  Order?: Order | string;
+  Order?: Order;
 }
 
 /**
@@ -685,7 +759,7 @@ export interface UpdateJobTemplateRequest {
    * @public
    * Specify how often MediaConvert sends STATUS_UPDATE events to Amazon CloudWatch Events. Set the interval, in seconds, between status updates. MediaConvert sends an update at this interval from the time the service begins processing your job to the time it completes the transcode or encounters an error.
    */
-  StatusUpdateInterval?: StatusUpdateInterval | string;
+  StatusUpdateInterval?: StatusUpdateInterval;
 }
 
 /**
@@ -765,7 +839,7 @@ export interface UpdateQueueRequest {
    * @public
    * Pause or activate a queue by changing its status between ACTIVE and PAUSED. If you pause a queue, jobs in that queue won't begin. Jobs that are running when you pause the queue continue to run until they finish or result in an error.
    */
-  Status?: QueueStatus | string;
+  Status?: QueueStatus;
 }
 
 /**

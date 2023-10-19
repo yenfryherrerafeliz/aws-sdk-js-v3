@@ -11,10 +11,10 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { UpdateAccountSettingsRequest } from "../models/models_3";
-import { UpdateAccountSettingsResponse } from "../models/models_4";
+import { UpdateAccountSettingsRequest, UpdateAccountSettingsResponse } from "../models/models_4";
 import { de_UpdateAccountSettingsCommand, se_UpdateAccountSettingsCommand } from "../protocols/Aws_restJson1";
 import { QuickSightClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../QuickSightClient";
 
@@ -140,6 +140,10 @@ export class UpdateAccountSettingsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "QuickSight_20180401",
+        operation: "UpdateAccountSettings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

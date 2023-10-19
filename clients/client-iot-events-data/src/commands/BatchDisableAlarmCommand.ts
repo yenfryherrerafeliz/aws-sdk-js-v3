@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTEventsDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTEventsDataClient";
@@ -60,7 +61,7 @@ export interface BatchDisableAlarmCommandOutput extends BatchDisableAlarmRespons
  * //   errorEntries: [ // BatchAlarmActionErrorEntries
  * //     { // BatchAlarmActionErrorEntry
  * //       requestId: "STRING_VALUE",
- * //       errorCode: "STRING_VALUE",
+ * //       errorCode: "ResourceNotFoundException" || "InvalidRequestException" || "InternalFailureException" || "ServiceUnavailableException" || "ThrottlingException",
  * //       errorMessage: "STRING_VALUE",
  * //     },
  * //   ],
@@ -140,6 +141,10 @@ export class BatchDisableAlarmCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotColumboDataService",
+        operation: "BatchDisableAlarm",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

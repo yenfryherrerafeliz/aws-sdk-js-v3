@@ -137,6 +137,10 @@ import {
   RestoreVolumeFromSnapshotCommandInput,
   RestoreVolumeFromSnapshotCommandOutput,
 } from "./commands/RestoreVolumeFromSnapshotCommand";
+import {
+  StartMisconfiguredStateRecoveryCommandInput,
+  StartMisconfiguredStateRecoveryCommandOutput,
+} from "./commands/StartMisconfiguredStateRecoveryCommand";
 import { TagResourceCommandInput, TagResourceCommandOutput } from "./commands/TagResourceCommand";
 import { UntagResourceCommandInput, UntagResourceCommandOutput } from "./commands/UntagResourceCommand";
 import {
@@ -199,6 +203,7 @@ export type ServiceInputTypes =
   | ListTagsForResourceCommandInput
   | ReleaseFileSystemNfsV3LocksCommandInput
   | RestoreVolumeFromSnapshotCommandInput
+  | StartMisconfiguredStateRecoveryCommandInput
   | TagResourceCommandInput
   | UntagResourceCommandInput
   | UpdateDataRepositoryAssociationCommandInput
@@ -245,6 +250,7 @@ export type ServiceOutputTypes =
   | ListTagsForResourceCommandOutput
   | ReleaseFileSystemNfsV3LocksCommandOutput
   | RestoreVolumeFromSnapshotCommandOutput
+  | StartMisconfiguredStateRecoveryCommandOutput
   | TagResourceCommandOutput
   | UntagResourceCommandOutput
   | UpdateDataRepositoryAssociationCommandOutput
@@ -364,6 +370,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 

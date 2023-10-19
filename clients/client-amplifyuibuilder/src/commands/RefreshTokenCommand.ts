@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AmplifyUIBuilderClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AmplifyUIBuilderClient";
@@ -41,7 +42,10 @@ export interface RefreshTokenCommandOutput extends RefreshTokenResponse, __Metad
 
 /**
  * @public
- * <p>Refreshes a previously issued access token that might have expired.</p>
+ * <note>
+ *             <p>This is for internal use.</p>
+ *          </note>
+ *          <p>Amplify uses this action to refresh a previously issued access token that might have expired.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -125,6 +129,10 @@ export class RefreshTokenCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: RefreshTokenRequestFilterSensitiveLog,
       outputFilterSensitiveLog: RefreshTokenResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmplifyUIBuilder",
+        operation: "RefreshToken",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,9 +11,10 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { SendEmailRequest, SendEmailResponse } from "../models/models_0";
+import { SendEmailRequest, SendEmailResponse } from "../models/models_1";
 import { de_SendEmailCommand, se_SendEmailCommand } from "../protocols/Aws_restJson1";
 import { ServiceInputTypes, ServiceOutputTypes, SESv2ClientResolvedConfig } from "../SESv2Client";
 
@@ -215,6 +216,10 @@ export class SendEmailCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SimpleEmailService_v2",
+        operation: "SendEmail",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

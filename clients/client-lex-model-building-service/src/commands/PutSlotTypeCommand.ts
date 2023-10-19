@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -53,7 +54,6 @@ export interface PutSlotTypeCommandOutput extends PutSlotTypeResponse, __Metadat
  *       uses the <code>$LATEST</code> version of an intent that contains the slot
  *       type, the bot's <code>status</code> field is set to
  *       <code>NOT_BUILT</code>.</p>
- *
  *          <p>This operation requires permissions for the
  *         <code>lex:PutSlotType</code> action.</p>
  * @example
@@ -74,7 +74,7 @@ export interface PutSlotTypeCommandOutput extends PutSlotTypeResponse, __Metadat
  *     },
  *   ],
  *   checksum: "STRING_VALUE",
- *   valueSelectionStrategy: "STRING_VALUE",
+ *   valueSelectionStrategy: "ORIGINAL_VALUE" || "TOP_RESOLUTION",
  *   createVersion: true || false,
  *   parentSlotTypeSignature: "STRING_VALUE",
  *   slotTypeConfigurations: [ // SlotTypeConfigurations
@@ -102,7 +102,7 @@ export interface PutSlotTypeCommandOutput extends PutSlotTypeResponse, __Metadat
  * //   createdDate: new Date("TIMESTAMP"),
  * //   version: "STRING_VALUE",
  * //   checksum: "STRING_VALUE",
- * //   valueSelectionStrategy: "STRING_VALUE",
+ * //   valueSelectionStrategy: "ORIGINAL_VALUE" || "TOP_RESOLUTION",
  * //   createVersion: true || false,
  * //   parentSlotTypeSignature: "STRING_VALUE",
  * //   slotTypeConfigurations: [ // SlotTypeConfigurations
@@ -232,6 +232,10 @@ export class PutSlotTypeCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "PutSlotType",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

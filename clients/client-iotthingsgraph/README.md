@@ -12,7 +12,6 @@ AWS SDK for JavaScript IoTThingsGraph Client for Node.js, Browser and React Nati
 such as units of measure and communication protocols. AWS IoT Things Graph makes it possible to build IoT applications with little to no code by connecting devices and services
 and defining how they interact at an abstract level.</p>
 <p>For more information about how AWS IoT Things Graph works, see the <a href="https://docs.aws.amazon.com/thingsgraph/latest/ug/iot-tg-whatis.html">User Guide</a>.</p>
-
 <p>The AWS IoT Things Graph service is discontinued.</p>
 
 ## Installing
@@ -30,16 +29,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `IoTThingsGraphClient` and
-the commands you need, for example `AssociateEntityToThingCommand`:
+the commands you need, for example `ListTagsForResourceCommand`:
 
 ```js
 // ES5 example
-const { IoTThingsGraphClient, AssociateEntityToThingCommand } = require("@aws-sdk/client-iotthingsgraph");
+const { IoTThingsGraphClient, ListTagsForResourceCommand } = require("@aws-sdk/client-iotthingsgraph");
 ```
 
 ```ts
 // ES6+ example
-import { IoTThingsGraphClient, AssociateEntityToThingCommand } from "@aws-sdk/client-iotthingsgraph";
+import { IoTThingsGraphClient, ListTagsForResourceCommand } from "@aws-sdk/client-iotthingsgraph";
 ```
 
 ### Usage
@@ -58,7 +57,7 @@ const client = new IoTThingsGraphClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new AssociateEntityToThingCommand(params);
+const command = new ListTagsForResourceCommand(params);
 ```
 
 #### Async/await
@@ -137,7 +136,7 @@ const client = new AWS.IoTThingsGraph({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.associateEntityToThing(params);
+  const data = await client.listTagsForResource(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -145,7 +144,7 @@ try {
 
 // Promises.
 client
-  .associateEntityToThing(params)
+  .listTagsForResource(params)
   .then((data) => {
     // process data.
   })
@@ -154,7 +153,7 @@ client
   });
 
 // callbacks.
-client.associateEntityToThing(params, (err, data) => {
+client.listTagsForResource(params, (err, data) => {
   // process err and data.
 });
 ```

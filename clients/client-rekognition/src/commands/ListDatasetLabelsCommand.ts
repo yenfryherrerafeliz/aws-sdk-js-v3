@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListDatasetLabelsRequest, ListDatasetLabelsResponse } from "../models/models_0";
@@ -36,7 +37,10 @@ export interface ListDatasetLabelsCommandOutput extends ListDatasetLabelsRespons
 
 /**
  * @public
- * <p>Lists the labels in a dataset. Amazon Rekognition Custom Labels uses labels to describe images. For more information, see
+ * <note>
+ *             <p>This operation applies only to Amazon Rekognition Custom Labels.</p>
+ *          </note>
+ *          <p>Lists the labels in a dataset. Amazon Rekognition Custom Labels uses labels to describe images. For more information, see
  *    <a href="https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/md-labeling-images.html">Labeling images</a>.
  * </p>
  *          <p>
@@ -198,6 +202,10 @@ export class ListDatasetLabelsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RekognitionService",
+        operation: "ListDatasetLabels",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

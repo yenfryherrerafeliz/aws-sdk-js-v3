@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { de_EndpointOperationCommand, se_EndpointOperationCommand } from "../protocols/Aws_restXml";
@@ -32,6 +33,32 @@ export interface EndpointOperationCommandInput {}
  */
 export interface EndpointOperationCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestXmlProtocolClient, EndpointOperationCommand } from "@aws-sdk/aws-protocoltests-restxml"; // ES Modules import
+ * // const { RestXmlProtocolClient, EndpointOperationCommand } = require("@aws-sdk/aws-protocoltests-restxml"); // CommonJS import
+ * const client = new RestXmlProtocolClient(config);
+ * const input = {};
+ * const command = new EndpointOperationCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param EndpointOperationCommandInput - {@link EndpointOperationCommandInput}
+ * @returns {@link EndpointOperationCommandOutput}
+ * @see {@link EndpointOperationCommandInput} for command's `input` shape.
+ * @see {@link EndpointOperationCommandOutput} for command's `response` shape.
+ * @see {@link RestXmlProtocolClientResolvedConfig | config} for RestXmlProtocolClient's `config` shape.
+ *
+ * @throws {@link RestXmlProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestXmlProtocol service.</p>
+ *
+ */
 export class EndpointOperationCommand extends $Command<
   EndpointOperationCommandInput,
   EndpointOperationCommandOutput,
@@ -70,6 +97,10 @@ export class EndpointOperationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestXml",
+        operation: "EndpointOperation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

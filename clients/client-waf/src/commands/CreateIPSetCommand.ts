@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateIPSetRequest, CreateIPSetResponse } from "../models/models_0";
@@ -88,7 +89,7 @@ export interface CreateIPSetCommandOutput extends CreateIPSetResponse, __Metadat
  * //     Name: "STRING_VALUE",
  * //     IPSetDescriptors: [ // IPSetDescriptors // required
  * //       { // IPSetDescriptor
- * //         Type: "STRING_VALUE", // required
+ * //         Type: "IPV4" || "IPV6", // required
  * //         Value: "STRING_VALUE", // required
  * //       },
  * //     ],
@@ -240,6 +241,10 @@ export class CreateIPSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_20150824",
+        operation: "CreateIPSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

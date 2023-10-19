@@ -180,6 +180,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 
@@ -275,7 +277,6 @@ export interface SSOOIDCClientResolvedConfig extends SSOOIDCClientResolvedConfig
  *             Guide</i>.</p>
  *             </li>
  *          </ul>
- *
  *          <p>For general information about IAM Identity Center, see <a href="https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html">What is
  *         IAM Identity Center?</a> in the <i>IAM Identity Center User Guide</i>.</p>
  */

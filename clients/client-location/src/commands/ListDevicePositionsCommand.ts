@@ -11,11 +11,13 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LocationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LocationClient";
 import {
   ListDevicePositionsRequest,
+  ListDevicePositionsRequestFilterSensitiveLog,
   ListDevicePositionsResponse,
   ListDevicePositionsResponseFilterSensitiveLog,
 } from "../models/models_0";
@@ -51,6 +53,15 @@ export interface ListDevicePositionsCommandOutput extends ListDevicePositionsRes
  *   TrackerName: "STRING_VALUE", // required
  *   MaxResults: Number("int"),
  *   NextToken: "STRING_VALUE",
+ *   FilterGeometry: { // TrackingFilterGeometry
+ *     Polygon: [ // LinearRings
+ *       [ // LinearRing
+ *         [ // Position
+ *           Number("double"),
+ *         ],
+ *       ],
+ *     ],
+ *   },
  * };
  * const command = new ListDevicePositionsCommand(input);
  * const response = await client.send(command);
@@ -146,8 +157,12 @@ export class ListDevicePositionsCommand extends $Command<
       logger,
       clientName,
       commandName,
-      inputFilterSensitiveLog: (_: any) => _,
+      inputFilterSensitiveLog: ListDevicePositionsRequestFilterSensitiveLog,
       outputFilterSensitiveLog: ListDevicePositionsResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LocationService",
+        operation: "ListDevicePositions",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

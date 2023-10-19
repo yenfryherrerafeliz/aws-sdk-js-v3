@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { SimpleScalarPropertiesInputOutput } from "../models/models_0";
@@ -33,6 +34,54 @@ export interface SimpleScalarPropertiesCommandInput extends SimpleScalarProperti
  */
 export interface SimpleScalarPropertiesCommandOutput extends SimpleScalarPropertiesInputOutput, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestXmlProtocolClient, SimpleScalarPropertiesCommand } from "@aws-sdk/aws-protocoltests-restxml"; // ES Modules import
+ * // const { RestXmlProtocolClient, SimpleScalarPropertiesCommand } = require("@aws-sdk/aws-protocoltests-restxml"); // CommonJS import
+ * const client = new RestXmlProtocolClient(config);
+ * const input = { // SimpleScalarPropertiesInputOutput
+ *   foo: "STRING_VALUE",
+ *   stringValue: "STRING_VALUE",
+ *   trueBooleanValue: true || false,
+ *   falseBooleanValue: true || false,
+ *   byteValue: "BYTE_VALUE",
+ *   shortValue: Number("short"),
+ *   integerValue: Number("int"),
+ *   longValue: Number("long"),
+ *   floatValue: Number("float"),
+ *   doubleValue: Number("double"),
+ * };
+ * const command = new SimpleScalarPropertiesCommand(input);
+ * const response = await client.send(command);
+ * // { // SimpleScalarPropertiesInputOutput
+ * //   foo: "STRING_VALUE",
+ * //   stringValue: "STRING_VALUE",
+ * //   trueBooleanValue: true || false,
+ * //   falseBooleanValue: true || false,
+ * //   byteValue: "BYTE_VALUE",
+ * //   shortValue: Number("short"),
+ * //   integerValue: Number("int"),
+ * //   longValue: Number("long"),
+ * //   floatValue: Number("float"),
+ * //   doubleValue: Number("double"),
+ * // };
+ *
+ * ```
+ *
+ * @param SimpleScalarPropertiesCommandInput - {@link SimpleScalarPropertiesCommandInput}
+ * @returns {@link SimpleScalarPropertiesCommandOutput}
+ * @see {@link SimpleScalarPropertiesCommandInput} for command's `input` shape.
+ * @see {@link SimpleScalarPropertiesCommandOutput} for command's `response` shape.
+ * @see {@link RestXmlProtocolClientResolvedConfig | config} for RestXmlProtocolClient's `config` shape.
+ *
+ * @throws {@link RestXmlProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestXmlProtocol service.</p>
+ *
+ */
 export class SimpleScalarPropertiesCommand extends $Command<
   SimpleScalarPropertiesCommandInput,
   SimpleScalarPropertiesCommandOutput,
@@ -71,6 +120,10 @@ export class SimpleScalarPropertiesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestXml",
+        operation: "SimpleScalarProperties",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

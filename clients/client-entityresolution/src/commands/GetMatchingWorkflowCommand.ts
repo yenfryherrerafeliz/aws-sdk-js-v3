@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EntityResolutionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EntityResolutionClient";
@@ -62,18 +63,18 @@ export interface GetMatchingWorkflowCommandOutput extends GetMatchingWorkflowOut
  * //   outputSourceConfig: [ // OutputSourceConfig // required
  * //     { // OutputSource
  * //       outputS3Path: "STRING_VALUE", // required
+ * //       KMSArn: "STRING_VALUE",
  * //       output: [ // OutputAttributes // required
  * //         { // OutputAttribute
  * //           name: "STRING_VALUE", // required
  * //           hashed: true || false,
  * //         },
  * //       ],
- * //       KMSArn: "STRING_VALUE",
  * //       applyNormalization: true || false,
  * //     },
  * //   ],
  * //   resolutionTechniques: { // ResolutionTechniques
- * //     resolutionType: "RULE_MATCHING" || "ML_MATCHING",
+ * //     resolutionType: "RULE_MATCHING" || "ML_MATCHING" || "PROVIDER", // required
  * //     ruleBasedProperties: { // RuleBasedProperties
  * //       rules: [ // RuleList // required
  * //         { // Rule
@@ -84,6 +85,13 @@ export interface GetMatchingWorkflowCommandOutput extends GetMatchingWorkflowOut
  * //         },
  * //       ],
  * //       attributeMatchingModel: "ONE_TO_ONE" || "MANY_TO_MANY", // required
+ * //     },
+ * //     providerProperties: { // ProviderProperties
+ * //       providerServiceArn: "STRING_VALUE", // required
+ * //       providerConfiguration: "DOCUMENT_VALUE",
+ * //       intermediateSourceConfiguration: { // IntermediateSourceConfiguration
+ * //         intermediateS3Path: "STRING_VALUE", // required
+ * //       },
  * //     },
  * //   },
  * //   createdAt: new Date("TIMESTAMP"), // required
@@ -106,11 +114,13 @@ export interface GetMatchingWorkflowCommandOutput extends GetMatchingWorkflowOut
  * @see {@link EntityResolutionClientResolvedConfig | config} for EntityResolutionClient's `config` shape.
  *
  * @throws {@link AccessDeniedException} (client fault)
- *  <p>You do not have sufficient access to perform this action. <code>HTTP Status Code: 403</code>
+ *  <p>You do not have sufficient access to perform this action. <code>HTTP Status Code:
+ *             403</code>
  *          </p>
  *
  * @throws {@link InternalServerException} (server fault)
- *  <p>This exception occurs when there is an internal failure in the AWS Entity Resolution service. <code>HTTP Status Code: 500</code>
+ *  <p>This exception occurs when there is an internal failure in the Entity Resolution
+ *          service. <code>HTTP Status Code: 500</code>
  *          </p>
  *
  * @throws {@link ResourceNotFoundException} (client fault)
@@ -118,11 +128,13 @@ export interface GetMatchingWorkflowCommandOutput extends GetMatchingWorkflowOut
  *          </p>
  *
  * @throws {@link ThrottlingException} (client fault)
- *  <p>The request was denied due to request throttling. <code>HTTP Status Code: 429</code>
+ *  <p>The request was denied due to request throttling. <code>HTTP Status Code:
+ *          429</code>
  *          </p>
  *
  * @throws {@link ValidationException} (client fault)
- *  <p>The input fails to satisfy the constraints specified by AWS Entity Resolution. <code>HTTP Status Code: 400</code>
+ *  <p>The input fails to satisfy the constraints specified by Entity Resolution. <code>HTTP
+ *             Status Code: 400</code>
  *          </p>
  *
  * @throws {@link EntityResolutionServiceException}
@@ -179,6 +191,10 @@ export class GetMatchingWorkflowCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSVeniceService",
+        operation: "GetMatchingWorkflow",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

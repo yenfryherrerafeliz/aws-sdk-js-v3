@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTThingsGraphClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTThingsGraphClient";
@@ -47,11 +48,11 @@ export interface SearchEntitiesCommandOutput extends SearchEntitiesResponse, __M
  * const client = new IoTThingsGraphClient(config);
  * const input = { // SearchEntitiesRequest
  *   entityTypes: [ // EntityTypes // required
- *     "STRING_VALUE",
+ *     "DEVICE" || "SERVICE" || "DEVICE_MODEL" || "CAPABILITY" || "STATE" || "ACTION" || "EVENT" || "PROPERTY" || "MAPPING" || "ENUM",
  *   ],
  *   filters: [ // EntityFilters
  *     { // EntityFilter
- *       name: "STRING_VALUE",
+ *       name: "NAME" || "NAMESPACE" || "SEMANTIC_TYPE_PATH" || "REFERENCED_ENTITY_ID",
  *       value: [ // EntityFilterValues
  *         "STRING_VALUE",
  *       ],
@@ -68,10 +69,10 @@ export interface SearchEntitiesCommandOutput extends SearchEntitiesResponse, __M
  * //     { // EntityDescription
  * //       id: "STRING_VALUE",
  * //       arn: "STRING_VALUE",
- * //       type: "STRING_VALUE",
+ * //       type: "DEVICE" || "SERVICE" || "DEVICE_MODEL" || "CAPABILITY" || "STATE" || "ACTION" || "EVENT" || "PROPERTY" || "MAPPING" || "ENUM",
  * //       createdAt: new Date("TIMESTAMP"),
  * //       definition: { // DefinitionDocument
- * //         language: "STRING_VALUE", // required
+ * //         language: "GRAPHQL", // required
  * //         text: "STRING_VALUE", // required
  * //       },
  * //     },
@@ -150,6 +151,10 @@ export class SearchEntitiesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotThingsGraphFrontEndService",
+        operation: "SearchEntities",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

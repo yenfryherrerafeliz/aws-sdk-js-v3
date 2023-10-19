@@ -11,10 +11,11 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
-import { GetVpnConnectionDeviceTypesRequest, GetVpnConnectionDeviceTypesResult } from "../models/models_5";
+import { GetVpnConnectionDeviceTypesRequest, GetVpnConnectionDeviceTypesResult } from "../models/models_6";
 import { de_GetVpnConnectionDeviceTypesCommand, se_GetVpnConnectionDeviceTypesCommand } from "../protocols/Aws_ec2";
 
 /**
@@ -127,6 +128,10 @@ export class GetVpnConnectionDeviceTypesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2",
+        operation: "GetVpnConnectionDeviceTypes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

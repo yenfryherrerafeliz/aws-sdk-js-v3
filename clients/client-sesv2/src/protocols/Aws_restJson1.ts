@@ -26,6 +26,7 @@ import {
 } from "@smithy/types";
 
 import { BatchGetMetricDataCommandInput, BatchGetMetricDataCommandOutput } from "../commands/BatchGetMetricDataCommand";
+import { CancelExportJobCommandInput, CancelExportJobCommandOutput } from "../commands/CancelExportJobCommand";
 import {
   CreateConfigurationSetCommandInput,
   CreateConfigurationSetCommandOutput,
@@ -60,6 +61,7 @@ import {
   CreateEmailTemplateCommandInput,
   CreateEmailTemplateCommandOutput,
 } from "../commands/CreateEmailTemplateCommand";
+import { CreateExportJobCommandInput, CreateExportJobCommandOutput } from "../commands/CreateExportJobCommand";
 import { CreateImportJobCommandInput, CreateImportJobCommandOutput } from "../commands/CreateImportJobCommand";
 import {
   DeleteConfigurationSetCommandInput,
@@ -139,7 +141,9 @@ import {
   GetEmailIdentityPoliciesCommandOutput,
 } from "../commands/GetEmailIdentityPoliciesCommand";
 import { GetEmailTemplateCommandInput, GetEmailTemplateCommandOutput } from "../commands/GetEmailTemplateCommand";
+import { GetExportJobCommandInput, GetExportJobCommandOutput } from "../commands/GetExportJobCommand";
 import { GetImportJobCommandInput, GetImportJobCommandOutput } from "../commands/GetImportJobCommand";
+import { GetMessageInsightsCommandInput, GetMessageInsightsCommandOutput } from "../commands/GetMessageInsightsCommand";
 import {
   GetSuppressedDestinationCommandInput,
   GetSuppressedDestinationCommandOutput,
@@ -171,6 +175,7 @@ import {
   ListEmailIdentitiesCommandOutput,
 } from "../commands/ListEmailIdentitiesCommand";
 import { ListEmailTemplatesCommandInput, ListEmailTemplatesCommandOutput } from "../commands/ListEmailTemplatesCommand";
+import { ListExportJobsCommandInput, ListExportJobsCommandOutput } from "../commands/ListExportJobsCommand";
 import { ListImportJobsCommandInput, ListImportJobsCommandOutput } from "../commands/ListImportJobsCommand";
 import {
   ListRecommendationsCommandInput,
@@ -316,6 +321,7 @@ import {
   DashboardAttributes,
   DashboardOptions,
   DeliverabilityTestReport,
+  DeliveryEventType,
   DeliveryOptions,
   Destination,
   DkimAttributes,
@@ -324,16 +330,23 @@ import {
   DomainDeliverabilityTrackingOption,
   DomainIspPlacement,
   EmailContent,
+  EmailInsights,
   EmailTemplateContent,
   EmailTemplateMetadata,
+  EngagementEventType,
   EventDestinationDefinition,
   EventType,
+  ExportDataSource,
+  ExportDestination,
+  ExportJobSummary,
+  ExportMetric,
   GuardianAttributes,
   GuardianOptions,
   ImportDataSource,
   ImportDestination,
   ImportJobSummary,
   InboxPlacementTrackingOption,
+  InsightsEvent,
   InternalServiceErrorException,
   InvalidNextTokenException,
   IspPlacement,
@@ -341,11 +354,16 @@ import {
   LimitExceededException,
   ListContactsFilter,
   ListManagementOptions,
+  ListRecommendationsFilterKey,
   MailFromDomainNotVerifiedException,
   Message,
+  MessageInsightsDataSource,
+  MessageInsightsFilters,
   MessageRejected,
   MessageTag,
   MetricDataResult,
+  MetricDimensionName,
+  MetricsDataSource,
   NotFoundException,
   OverallVolume,
   PinpointDestination,
@@ -373,6 +391,7 @@ import {
   TrackingOptions,
   VdmAttributes,
   VdmOptions,
+  VerificationInfo,
 } from "../models/models_0";
 import { SESv2ServiceException as __BaseException } from "../models/SESv2ServiceException";
 
@@ -400,6 +419,30 @@ export const se_BatchGetMetricDataCommand = async (
     hostname,
     port,
     method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1CancelExportJobCommand
+ */
+export const se_CancelExportJobCommand = async (
+  input: CancelExportJobCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/v2/email/export-jobs/{JobId}/cancel";
+  resolvedPath = __resolvedPath(resolvedPath, input, "JobId", () => input.JobId!, "{JobId}", false);
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PUT",
     headers,
     path: resolvedPath,
     body,
@@ -748,6 +791,36 @@ export const se_CreateEmailTemplateCommand = async (
     take(input, {
       TemplateContent: (_) => _json(_),
       TemplateName: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1CreateExportJobCommand
+ */
+export const se_CreateExportJobCommand = async (
+  input: CreateExportJobCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/v2/email/export-jobs";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      ExportDataSource: (_) => se_ExportDataSource(_, context),
+      ExportDestination: (_) => _json(_),
     })
   );
   return new __HttpRequest({
@@ -1624,6 +1697,30 @@ export const se_GetEmailTemplateCommand = async (
 };
 
 /**
+ * serializeAws_restJson1GetExportJobCommand
+ */
+export const se_GetExportJobCommand = async (
+  input: GetExportJobCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/v2/email/export-jobs/{JobId}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "JobId", () => input.JobId!, "{JobId}", false);
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restJson1GetImportJobCommand
  */
 export const se_GetImportJobCommand = async (
@@ -1635,6 +1732,30 @@ export const se_GetImportJobCommand = async (
   let resolvedPath =
     `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/v2/email/import-jobs/{JobId}";
   resolvedPath = __resolvedPath(resolvedPath, input, "JobId", () => input.JobId!, "{JobId}", false);
+  let body: any;
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "GET",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1GetMessageInsightsCommand
+ */
+export const se_GetMessageInsightsCommand = async (
+  input: GetMessageInsightsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {};
+  let resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/v2/email/insights/{MessageId}";
+  resolvedPath = __resolvedPath(resolvedPath, input, "MessageId", () => input.MessageId!, "{MessageId}", false);
   let body: any;
   return new __HttpRequest({
     protocol,
@@ -1960,6 +2081,39 @@ export const se_ListEmailTemplatesCommand = async (
     headers,
     path: resolvedPath,
     query,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restJson1ListExportJobsCommand
+ */
+export const se_ListExportJobsCommand = async (
+  input: ListExportJobsCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/json",
+  };
+  const resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/v2/email/list-export-jobs";
+  let body: any;
+  body = JSON.stringify(
+    take(input, {
+      ExportSourceType: [],
+      JobStatus: [],
+      NextToken: [],
+      PageSize: [],
+    })
+  );
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
     body,
   });
 };
@@ -3353,6 +3507,55 @@ const de_BatchGetMetricDataCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1CancelExportJobCommand
+ */
+export const de_CancelExportJobCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CancelExportJobCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CancelExportJobCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  await collectBody(output.body, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1CancelExportJobCommandError
+ */
+const de_CancelExportJobCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CancelExportJobCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "BadRequestException":
+    case "com.amazonaws.sesv2#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "NotFoundException":
+    case "com.amazonaws.sesv2#NotFoundException":
+      throw await de_NotFoundExceptionRes(parsedOutput, context);
+    case "TooManyRequestsException":
+    case "com.amazonaws.sesv2#TooManyRequestsException":
+      throw await de_TooManyRequestsExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1CreateConfigurationSetCommand
  */
 export const de_CreateConfigurationSetCommand = async (
@@ -3909,6 +4112,62 @@ const de_CreateEmailTemplateCommandError = async (
     case "LimitExceededException":
     case "com.amazonaws.sesv2#LimitExceededException":
       throw await de_LimitExceededExceptionRes(parsedOutput, context);
+    case "TooManyRequestsException":
+    case "com.amazonaws.sesv2#TooManyRequestsException":
+      throw await de_TooManyRequestsExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1CreateExportJobCommand
+ */
+export const de_CreateExportJobCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateExportJobCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CreateExportJobCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    JobId: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1CreateExportJobCommandError
+ */
+const de_CreateExportJobCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<CreateExportJobCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "BadRequestException":
+    case "com.amazonaws.sesv2#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "LimitExceededException":
+    case "com.amazonaws.sesv2#LimitExceededException":
+      throw await de_LimitExceededExceptionRes(parsedOutput, context);
+    case "NotFoundException":
+    case "com.amazonaws.sesv2#NotFoundException":
+      throw await de_NotFoundExceptionRes(parsedOutput, context);
     case "TooManyRequestsException":
     case "com.amazonaws.sesv2#TooManyRequestsException":
       throw await de_TooManyRequestsExceptionRes(parsedOutput, context);
@@ -5279,6 +5538,7 @@ export const de_GetEmailIdentityCommand = async (
     MailFromAttributes: _json,
     Policies: _json,
     Tags: _json,
+    VerificationInfo: (_) => de_VerificationInfo(_, context),
     VerificationStatus: __expectString,
     VerifiedForSendingStatus: __expectBoolean,
   });
@@ -5426,6 +5686,67 @@ const de_GetEmailTemplateCommandError = async (
 };
 
 /**
+ * deserializeAws_restJson1GetExportJobCommand
+ */
+export const de_GetExportJobCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetExportJobCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetExportJobCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    CompletedTimestamp: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    CreatedTimestamp: (_) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    ExportDataSource: (_) => de_ExportDataSource(_, context),
+    ExportDestination: _json,
+    ExportSourceType: __expectString,
+    FailureInfo: _json,
+    JobId: __expectString,
+    JobStatus: __expectString,
+    Statistics: _json,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetExportJobCommandError
+ */
+const de_GetExportJobCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetExportJobCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "BadRequestException":
+    case "com.amazonaws.sesv2#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "NotFoundException":
+    case "com.amazonaws.sesv2#NotFoundException":
+      throw await de_NotFoundExceptionRes(parsedOutput, context);
+    case "TooManyRequestsException":
+    case "com.amazonaws.sesv2#TooManyRequestsException":
+      throw await de_TooManyRequestsExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
  * deserializeAws_restJson1GetImportJobCommand
  */
 export const de_GetImportJobCommand = async (
@@ -5461,6 +5782,63 @@ const de_GetImportJobCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<GetImportJobCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "BadRequestException":
+    case "com.amazonaws.sesv2#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "NotFoundException":
+    case "com.amazonaws.sesv2#NotFoundException":
+      throw await de_NotFoundExceptionRes(parsedOutput, context);
+    case "TooManyRequestsException":
+    case "com.amazonaws.sesv2#TooManyRequestsException":
+      throw await de_TooManyRequestsExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1GetMessageInsightsCommand
+ */
+export const de_GetMessageInsightsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetMessageInsightsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_GetMessageInsightsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    EmailTags: _json,
+    FromEmailAddress: __expectString,
+    Insights: (_) => de_EmailInsightsList(_, context),
+    MessageId: __expectString,
+    Subject: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1GetMessageInsightsCommandError
+ */
+const de_GetMessageInsightsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetMessageInsightsCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -5985,6 +6363,57 @@ const de_ListEmailTemplatesCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<ListEmailTemplatesCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
+  switch (errorCode) {
+    case "BadRequestException":
+    case "com.amazonaws.sesv2#BadRequestException":
+      throw await de_BadRequestExceptionRes(parsedOutput, context);
+    case "TooManyRequestsException":
+    case "com.amazonaws.sesv2#TooManyRequestsException":
+      throw await de_TooManyRequestsExceptionRes(parsedOutput, context);
+    default:
+      const parsedBody = parsedOutput.body;
+      return throwDefaultError({
+        output,
+        parsedBody,
+        errorCode,
+      });
+  }
+};
+
+/**
+ * deserializeAws_restJson1ListExportJobsCommand
+ */
+export const de_ListExportJobsCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListExportJobsCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_ListExportJobsCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  const doc = take(data, {
+    ExportJobs: (_) => de_ExportJobSummaryList(_, context),
+    NextToken: __expectString,
+  });
+  Object.assign(contents, doc);
+  return contents;
+};
+
+/**
+ * deserializeAws_restJson1ListExportJobsCommandError
+ */
+const de_ListExportJobsCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<ListExportJobsCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -8239,6 +8668,8 @@ const se_DomainDeliverabilityTrackingOptions = (
     });
 };
 
+// se_EmailAddressFilterList omitted.
+
 // se_EmailAddressList omitted.
 
 /**
@@ -8252,11 +8683,33 @@ const se_EmailContent = (input: EmailContent, context: __SerdeContext): any => {
   });
 };
 
+// se_EmailSubjectFilterList omitted.
+
 // se_EmailTemplateContent omitted.
 
 // se_EventDestinationDefinition omitted.
 
 // se_EventTypes omitted.
+
+/**
+ * serializeAws_restJson1ExportDataSource
+ */
+const se_ExportDataSource = (input: ExportDataSource, context: __SerdeContext): any => {
+  return take(input, {
+    MessageInsightsDataSource: (_) => se_MessageInsightsDataSource(_, context),
+    MetricsDataSource: (_) => se_MetricsDataSource(_, context),
+  });
+};
+
+// se_ExportDestination omitted.
+
+// se_ExportDimensions omitted.
+
+// se_ExportDimensionValue omitted.
+
+// se_ExportMetric omitted.
+
+// se_ExportMetrics omitted.
 
 // se_GuardianAttributes omitted.
 
@@ -8268,9 +8721,15 @@ const se_EmailContent = (input: EmailContent, context: __SerdeContext): any => {
 
 // se_InboxPlacementTrackingOption omitted.
 
+// se_IspFilterList omitted.
+
 // se_IspNameList omitted.
 
 // se_KinesisFirehoseDestination omitted.
+
+// se_LastDeliveryEventList omitted.
+
+// se_LastEngagementEventList omitted.
 
 // se_ListContactsFilter omitted.
 
@@ -8280,9 +8739,37 @@ const se_EmailContent = (input: EmailContent, context: __SerdeContext): any => {
 
 // se_Message omitted.
 
+/**
+ * serializeAws_restJson1MessageInsightsDataSource
+ */
+const se_MessageInsightsDataSource = (input: MessageInsightsDataSource, context: __SerdeContext): any => {
+  return take(input, {
+    EndDate: (_) => Math.round(_.getTime() / 1000),
+    Exclude: _json,
+    Include: _json,
+    MaxResults: [],
+    StartDate: (_) => Math.round(_.getTime() / 1000),
+  });
+};
+
+// se_MessageInsightsFilters omitted.
+
 // se_MessageTag omitted.
 
 // se_MessageTagList omitted.
+
+/**
+ * serializeAws_restJson1MetricsDataSource
+ */
+const se_MetricsDataSource = (input: MetricsDataSource, context: __SerdeContext): any => {
+  return take(input, {
+    Dimensions: _json,
+    EndDate: (_) => Math.round(_.getTime() / 1000),
+    Metrics: _json,
+    Namespace: [],
+    StartDate: (_) => Math.round(_.getTime() / 1000),
+  });
+};
 
 // se_PinpointDestination omitted.
 
@@ -8376,10 +8863,12 @@ const de_BlacklistReport = (output: any, context: __SerdeContext): Record<string
     if (value === null) {
       return acc;
     }
-    acc[key] = de_BlacklistEntries(value, context);
+    acc[key as string] = de_BlacklistEntries(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, BlacklistEntry[]>);
 };
+
+// de_Bounce omitted.
 
 // de_BulkEmailEntryResult omitted.
 
@@ -8390,6 +8879,8 @@ const de_BlacklistReport = (output: any, context: __SerdeContext): Record<string
 // de_CloudWatchDimensionConfiguration omitted.
 
 // de_CloudWatchDimensionConfigurations omitted.
+
+// de_Complaint omitted.
 
 // de_ConfigurationSetNameList omitted.
 
@@ -8588,6 +9079,33 @@ const de_DomainIspPlacements = (output: any, context: __SerdeContext): DomainIsp
   return retVal;
 };
 
+// de_EmailAddressFilterList omitted.
+
+/**
+ * deserializeAws_restJson1EmailInsights
+ */
+const de_EmailInsights = (output: any, context: __SerdeContext): EmailInsights => {
+  return take(output, {
+    Destination: __expectString,
+    Events: (_: any) => de_InsightsEvents(_, context),
+    Isp: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1EmailInsightsList
+ */
+const de_EmailInsightsList = (output: any, context: __SerdeContext): EmailInsights[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_EmailInsights(entry, context);
+    });
+  return retVal;
+};
+
+// de_EmailSubjectFilterList omitted.
+
 // de_EmailTemplateContent omitted.
 
 /**
@@ -8618,7 +9136,56 @@ const de_EmailTemplateMetadataList = (output: any, context: __SerdeContext): Ema
 
 // de_EventDestinations omitted.
 
+// de_EventDetails omitted.
+
 // de_EventTypes omitted.
+
+/**
+ * deserializeAws_restJson1ExportDataSource
+ */
+const de_ExportDataSource = (output: any, context: __SerdeContext): ExportDataSource => {
+  return take(output, {
+    MessageInsightsDataSource: (_: any) => de_MessageInsightsDataSource(_, context),
+    MetricsDataSource: (_: any) => de_MetricsDataSource(_, context),
+  }) as any;
+};
+
+// de_ExportDestination omitted.
+
+// de_ExportDimensions omitted.
+
+// de_ExportDimensionValue omitted.
+
+/**
+ * deserializeAws_restJson1ExportJobSummary
+ */
+const de_ExportJobSummary = (output: any, context: __SerdeContext): ExportJobSummary => {
+  return take(output, {
+    CompletedTimestamp: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    CreatedTimestamp: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    ExportSourceType: __expectString,
+    JobId: __expectString,
+    JobStatus: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1ExportJobSummaryList
+ */
+const de_ExportJobSummaryList = (output: any, context: __SerdeContext): ExportJobSummary[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_ExportJobSummary(entry, context);
+    });
+  return retVal;
+};
+
+// de_ExportMetric omitted.
+
+// de_ExportMetrics omitted.
+
+// de_ExportStatistics omitted.
 
 // de_FailureInfo omitted.
 
@@ -8662,7 +9229,32 @@ const de_ImportJobSummaryList = (output: any, context: __SerdeContext): ImportJo
 
 // de_InboxPlacementTrackingOption omitted.
 
+/**
+ * deserializeAws_restJson1InsightsEvent
+ */
+const de_InsightsEvent = (output: any, context: __SerdeContext): InsightsEvent => {
+  return take(output, {
+    Details: _json,
+    Timestamp: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Type: __expectString,
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1InsightsEvents
+ */
+const de_InsightsEvents = (output: any, context: __SerdeContext): InsightsEvent[] => {
+  const retVal = (output || [])
+    .filter((e: any) => e != null)
+    .map((entry: any) => {
+      return de_InsightsEvent(entry, context);
+    });
+  return retVal;
+};
+
 // de_IpList omitted.
+
+// de_IspFilterList omitted.
 
 // de_IspNameList omitted.
 
@@ -8689,6 +9281,10 @@ const de_IspPlacements = (output: any, context: __SerdeContext): IspPlacement[] 
 };
 
 // de_KinesisFirehoseDestination omitted.
+
+// de_LastDeliveryEventList omitted.
+
+// de_LastEngagementEventList omitted.
 
 /**
  * deserializeAws_restJson1ListOfContactLists
@@ -8718,6 +9314,25 @@ const de_ListOfContacts = (output: any, context: __SerdeContext): Contact[] => {
 
 // de_MailFromAttributes omitted.
 
+/**
+ * deserializeAws_restJson1MessageInsightsDataSource
+ */
+const de_MessageInsightsDataSource = (output: any, context: __SerdeContext): MessageInsightsDataSource => {
+  return take(output, {
+    EndDate: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Exclude: _json,
+    Include: _json,
+    MaxResults: __expectInt32,
+    StartDate: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+  }) as any;
+};
+
+// de_MessageInsightsFilters omitted.
+
+// de_MessageTag omitted.
+
+// de_MessageTagList omitted.
+
 // de_MetricDataError omitted.
 
 // de_MetricDataErrorList omitted.
@@ -8743,6 +9358,19 @@ const de_MetricDataResultList = (output: any, context: __SerdeContext): MetricDa
       return de_MetricDataResult(entry, context);
     });
   return retVal;
+};
+
+/**
+ * deserializeAws_restJson1MetricsDataSource
+ */
+const de_MetricsDataSource = (output: any, context: __SerdeContext): MetricsDataSource => {
+  return take(output, {
+    Dimensions: _json,
+    EndDate: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    Metrics: _json,
+    Namespace: __expectString,
+    StartDate: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+  }) as any;
 };
 
 // de_MetricValueList omitted.
@@ -8829,6 +9457,8 @@ const de_SendQuota = (output: any, context: __SerdeContext): SendQuota => {
 
 // de_SnsDestination omitted.
 
+// de_SOARecord omitted.
+
 /**
  * deserializeAws_restJson1SuppressedDestination
  */
@@ -8903,6 +9533,18 @@ const de_TimestampList = (output: any, context: __SerdeContext): Date[] => {
 // de_VdmAttributes omitted.
 
 // de_VdmOptions omitted.
+
+/**
+ * deserializeAws_restJson1VerificationInfo
+ */
+const de_VerificationInfo = (output: any, context: __SerdeContext): VerificationInfo => {
+  return take(output, {
+    ErrorType: __expectString,
+    LastCheckedTimestamp: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    LastSuccessTimestamp: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    SOARecord: _json,
+  }) as any;
+};
 
 // de_VolumeStatistics omitted.
 

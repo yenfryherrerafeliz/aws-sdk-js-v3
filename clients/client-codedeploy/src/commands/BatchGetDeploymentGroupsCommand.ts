@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -229,7 +230,7 @@ export interface BatchGetDeploymentGroupsCommandOutput extends BatchGetDeploymen
  * @see {@link CodeDeployClientResolvedConfig | config} for CodeDeployClient's `config` shape.
  *
  * @throws {@link ApplicationDoesNotExistException} (client fault)
- *  <p>The application does not exist with the IAM user or Amazon Web Services account.</p>
+ *  <p>The application does not exist with the user or Amazon Web Services account.</p>
  *
  * @throws {@link ApplicationNameRequiredException} (client fault)
  *  <p>The minimum number of required application names was not specified.</p>
@@ -238,8 +239,7 @@ export interface BatchGetDeploymentGroupsCommandOutput extends BatchGetDeploymen
  *  <p>The maximum number of names or IDs allowed for this request (100) was exceeded.</p>
  *
  * @throws {@link DeploymentConfigDoesNotExistException} (client fault)
- *  <p>The deployment configuration does not exist with the IAM user or
- *                 Amazon Web Services account.</p>
+ *  <p>The deployment configuration does not exist with the user or Amazon Web Services account.</p>
  *
  * @throws {@link DeploymentGroupNameRequiredException} (client fault)
  *  <p>The deployment group name was not specified.</p>
@@ -304,6 +304,10 @@ export class BatchGetDeploymentGroupsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "BatchGetDeploymentGroups",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

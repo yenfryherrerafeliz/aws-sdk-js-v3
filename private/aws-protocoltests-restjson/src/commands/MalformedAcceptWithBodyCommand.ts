@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GreetingStruct } from "../models/models_0";
@@ -33,6 +34,34 @@ export interface MalformedAcceptWithBodyCommandInput {}
  */
 export interface MalformedAcceptWithBodyCommandOutput extends GreetingStruct, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestJsonProtocolClient, MalformedAcceptWithBodyCommand } from "@aws-sdk/aws-protocoltests-restjson"; // ES Modules import
+ * // const { RestJsonProtocolClient, MalformedAcceptWithBodyCommand } = require("@aws-sdk/aws-protocoltests-restjson"); // CommonJS import
+ * const client = new RestJsonProtocolClient(config);
+ * const input = {};
+ * const command = new MalformedAcceptWithBodyCommand(input);
+ * const response = await client.send(command);
+ * // { // GreetingStruct
+ * //   hi: "STRING_VALUE",
+ * // };
+ *
+ * ```
+ *
+ * @param MalformedAcceptWithBodyCommandInput - {@link MalformedAcceptWithBodyCommandInput}
+ * @returns {@link MalformedAcceptWithBodyCommandOutput}
+ * @see {@link MalformedAcceptWithBodyCommandInput} for command's `input` shape.
+ * @see {@link MalformedAcceptWithBodyCommandOutput} for command's `response` shape.
+ * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
+ *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
+ *
+ */
 export class MalformedAcceptWithBodyCommand extends $Command<
   MalformedAcceptWithBodyCommandInput,
   MalformedAcceptWithBodyCommandOutput,
@@ -71,6 +100,10 @@ export class MalformedAcceptWithBodyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "MalformedAcceptWithBody",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

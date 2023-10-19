@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -55,7 +56,7 @@ export interface PutEmailIdentityMailFromAttributesCommandOutput
  * const input = { // PutEmailIdentityMailFromAttributesRequest
  *   EmailIdentity: "STRING_VALUE", // required
  *   MailFromDomain: "STRING_VALUE",
- *   BehaviorOnMxFailure: "STRING_VALUE",
+ *   BehaviorOnMxFailure: "USE_DEFAULT_VALUE" || "REJECT_MESSAGE",
  * };
  * const command = new PutEmailIdentityMailFromAttributesCommand(input);
  * const response = await client.send(command);
@@ -132,6 +133,10 @@ export class PutEmailIdentityMailFromAttributesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonPinpointEmailService",
+        operation: "PutEmailIdentityMailFromAttributes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

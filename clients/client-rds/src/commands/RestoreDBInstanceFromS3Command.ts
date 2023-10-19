@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { RestoreDBInstanceFromS3Message, RestoreDBInstanceFromS3Result } from "../models/models_1";
@@ -116,6 +117,7 @@ export interface RestoreDBInstanceFromS3CommandOutput extends RestoreDBInstanceF
  *   StorageThroughput: Number("int"),
  *   ManageMasterUserPassword: true || false,
  *   MasterUserSecretKmsKeyId: "STRING_VALUE",
+ *   DedicatedLogVolume: true || false,
  * };
  * const command = new RestoreDBInstanceFromS3Command(input);
  * const response = await client.send(command);
@@ -212,6 +214,7 @@ export interface RestoreDBInstanceFromS3CommandOutput extends RestoreDBInstanceF
  * //       ResumeFullAutomationModeTime: new Date("TIMESTAMP"),
  * //       StorageThroughput: Number("int"),
  * //       Engine: "STRING_VALUE",
+ * //       DedicatedLogVolume: true || false,
  * //     },
  * //     LatestRestorableTime: new Date("TIMESTAMP"),
  * //     MultiAZ: true || false,
@@ -337,6 +340,8 @@ export interface RestoreDBInstanceFromS3CommandOutput extends RestoreDBInstanceF
  * //     },
  * //     ReadReplicaSourceDBClusterIdentifier: "STRING_VALUE",
  * //     PercentProgress: "STRING_VALUE",
+ * //     DedicatedLogVolume: true || false,
+ * //     IsStorageConfigUpgradeAvailable: true || false,
  * //   },
  * // };
  *
@@ -467,6 +472,10 @@ export class RestoreDBInstanceFromS3Command extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "RestoreDBInstanceFromS3",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

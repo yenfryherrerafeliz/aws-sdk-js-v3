@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeBuildClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeBuildClient";
@@ -47,14 +48,14 @@ export interface CreateReportGroupCommandOutput extends CreateReportGroupOutput,
  * const client = new CodeBuildClient(config);
  * const input = { // CreateReportGroupInput
  *   name: "STRING_VALUE", // required
- *   type: "STRING_VALUE", // required
+ *   type: "TEST" || "CODE_COVERAGE", // required
  *   exportConfig: { // ReportExportConfig
- *     exportConfigType: "STRING_VALUE",
+ *     exportConfigType: "S3" || "NO_EXPORT",
  *     s3Destination: { // S3ReportExportConfig
  *       bucket: "STRING_VALUE",
  *       bucketOwner: "STRING_VALUE",
  *       path: "STRING_VALUE",
- *       packaging: "STRING_VALUE",
+ *       packaging: "ZIP" || "NONE",
  *       encryptionKey: "STRING_VALUE",
  *       encryptionDisabled: true || false,
  *     },
@@ -72,14 +73,14 @@ export interface CreateReportGroupCommandOutput extends CreateReportGroupOutput,
  * //   reportGroup: { // ReportGroup
  * //     arn: "STRING_VALUE",
  * //     name: "STRING_VALUE",
- * //     type: "STRING_VALUE",
+ * //     type: "TEST" || "CODE_COVERAGE",
  * //     exportConfig: { // ReportExportConfig
- * //       exportConfigType: "STRING_VALUE",
+ * //       exportConfigType: "S3" || "NO_EXPORT",
  * //       s3Destination: { // S3ReportExportConfig
  * //         bucket: "STRING_VALUE",
  * //         bucketOwner: "STRING_VALUE",
  * //         path: "STRING_VALUE",
- * //         packaging: "STRING_VALUE",
+ * //         packaging: "ZIP" || "NONE",
  * //         encryptionKey: "STRING_VALUE",
  * //         encryptionDisabled: true || false,
  * //       },
@@ -92,7 +93,7 @@ export interface CreateReportGroupCommandOutput extends CreateReportGroupOutput,
  * //         value: "STRING_VALUE",
  * //       },
  * //     ],
- * //     status: "STRING_VALUE",
+ * //     status: "ACTIVE" || "DELETING",
  * //   },
  * // };
  *
@@ -168,6 +169,10 @@ export class CreateReportGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeBuild_20161006",
+        operation: "CreateReportGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

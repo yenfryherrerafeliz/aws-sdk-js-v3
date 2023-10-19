@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeInstanceInformationRequest, DescribeInstanceInformationResult } from "../models/models_0";
@@ -88,7 +89,7 @@ export interface DescribeInstanceInformationCommandOutput extends DescribeInstan
  * //       ActivationId: "STRING_VALUE",
  * //       IamRole: "STRING_VALUE",
  * //       RegistrationDate: new Date("TIMESTAMP"),
- * //       ResourceType: "ManagedInstance" || "Document" || "EC2Instance",
+ * //       ResourceType: "ManagedInstance" || "EC2Instance",
  * //       Name: "STRING_VALUE",
  * //       IPAddress: "STRING_VALUE",
  * //       ComputerName: "STRING_VALUE",
@@ -202,6 +203,10 @@ export class DescribeInstanceInformationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonSSM",
+        operation: "DescribeInstanceInformation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

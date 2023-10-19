@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetConnectionStatusRequest, GetConnectionStatusResponse } from "../models/models_1";
@@ -51,7 +52,7 @@ export interface GetConnectionStatusCommandOutput extends GetConnectionStatusRes
  * const response = await client.send(command);
  * // { // GetConnectionStatusResponse
  * //   Target: "STRING_VALUE",
- * //   Status: "Connected" || "NotConnected",
+ * //   Status: "connected" || "notconnected",
  * // };
  *
  * ```
@@ -119,6 +120,10 @@ export class GetConnectionStatusCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonSSM",
+        operation: "GetConnectionStatus",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

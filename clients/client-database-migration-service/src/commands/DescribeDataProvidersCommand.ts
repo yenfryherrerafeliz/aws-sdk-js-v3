@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -71,6 +72,11 @@ export interface DescribeDataProvidersCommandOutput extends DescribeDataProvider
  * //       Description: "STRING_VALUE",
  * //       Engine: "STRING_VALUE",
  * //       Settings: { // DataProviderSettings Union: only one key present
+ * //         RedshiftSettings: { // RedshiftDataProviderSettings
+ * //           ServerName: "STRING_VALUE",
+ * //           Port: Number("int"),
+ * //           DatabaseName: "STRING_VALUE",
+ * //         },
  * //         PostgreSqlSettings: { // PostgreSqlDataProviderSettings
  * //           ServerName: "STRING_VALUE",
  * //           Port: Number("int"),
@@ -103,6 +109,29 @@ export interface DescribeDataProvidersCommandOutput extends DescribeDataProvider
  * //           SslMode: "none" || "require" || "verify-ca" || "verify-full",
  * //           CertificateArn: "STRING_VALUE",
  * //         },
+ * //         DocDbSettings: { // DocDbDataProviderSettings
+ * //           ServerName: "STRING_VALUE",
+ * //           Port: Number("int"),
+ * //           DatabaseName: "STRING_VALUE",
+ * //           SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //           CertificateArn: "STRING_VALUE",
+ * //         },
+ * //         MariaDbSettings: { // MariaDbDataProviderSettings
+ * //           ServerName: "STRING_VALUE",
+ * //           Port: Number("int"),
+ * //           SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //           CertificateArn: "STRING_VALUE",
+ * //         },
+ * //         MongoDbSettings: { // MongoDbDataProviderSettings
+ * //           ServerName: "STRING_VALUE",
+ * //           Port: Number("int"),
+ * //           DatabaseName: "STRING_VALUE",
+ * //           SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //           CertificateArn: "STRING_VALUE",
+ * //           AuthType: "no" || "password",
+ * //           AuthSource: "STRING_VALUE",
+ * //           AuthMechanism: "default" || "mongodb_cr" || "scram_sha_1",
+ * //         },
  * //       },
  * //     },
  * //   ],
@@ -125,6 +154,47 @@ export interface DescribeDataProvidersCommandOutput extends DescribeDataProvider
  *
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
+ *
+ * @example Describe Data Providers
+ * ```javascript
+ * //
+ * const input = {
+ *   "Filters": [
+ *     {
+ *       "Name": "data-provider-identifier",
+ *       "Values": [
+ *         "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+ *       ]
+ *     }
+ *   ],
+ *   "Marker": "EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
+ *   "MaxRecords": 20
+ * };
+ * const command = new DescribeDataProvidersCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "DataProviders": [
+ *     {
+ *       "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:my-target-data-provider",
+ *       "DataProviderCreationTime": "2023-05-12T10:50:41.988561Z",
+ *       "DataProviderName": "my-target-data-provider",
+ *       "Engine": "postgres",
+ *       "Settings": {
+ *         "PostgreSqlSettings": {
+ *           "DatabaseName": "target",
+ *           "Port": 5432,
+ *           "ServerName": "postrgesql.0a1b2c3d4e5f.us-east-1.rds.amazonaws.com",
+ *           "SslMode": "none"
+ *         }
+ *       }
+ *     }
+ *   ],
+ *   "Marker": "EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+ * }
+ * *\/
+ * // example id: describe-data-providers-1689725897156
+ * ```
  *
  */
 export class DescribeDataProvidersCommand extends $Command<
@@ -177,6 +247,10 @@ export class DescribeDataProvidersCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "DescribeDataProviders",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

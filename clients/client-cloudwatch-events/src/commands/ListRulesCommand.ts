@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -38,7 +39,6 @@ export interface ListRulesCommandOutput extends ListRulesResponse, __MetadataBea
  * @public
  * <p>Lists your Amazon EventBridge rules. You can either list all the rules or you can provide
  *       a prefix to match to the rule names.</p>
- *
  *          <p>ListRules does not list the targets of a rule. To see the targets associated with a rule,
  *       use <a href="https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ListTargetsByRule.html">ListTargetsByRule</a>.</p>
  * @example
@@ -61,7 +61,7 @@ export interface ListRulesCommandOutput extends ListRulesResponse, __MetadataBea
  * //       Name: "STRING_VALUE",
  * //       Arn: "STRING_VALUE",
  * //       EventPattern: "STRING_VALUE",
- * //       State: "STRING_VALUE",
+ * //       State: "ENABLED" || "DISABLED",
  * //       Description: "STRING_VALUE",
  * //       ScheduleExpression: "STRING_VALUE",
  * //       RoleArn: "STRING_VALUE",
@@ -138,6 +138,10 @@ export class ListRulesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "ListRules",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

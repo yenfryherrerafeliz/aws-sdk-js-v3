@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -63,7 +64,8 @@ export interface AdminUpdateUserAttributesCommandOutput extends AdminUpdateUserA
  *                     Developer Guide</i>.</p>
  *          </note>
  *          <p>Updates the specified user's attributes, including developer attributes, as an
- *             administrator. Works on any user.</p>
+ *             administrator. Works on any user. To delete an attribute from your user, submit the
+ *             attribute in your API request with a blank value.</p>
  *          <p>For custom attributes, you must prepend the <code>custom:</code> prefix to the
  *             attribute name.</p>
  *          <p>In addition to updating user attributes, this API can also be used to mark phone and
@@ -227,6 +229,10 @@ export class AdminUpdateUserAttributesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: AdminUpdateUserAttributesRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSCognitoIdentityProviderService",
+        operation: "AdminUpdateUserAttributes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

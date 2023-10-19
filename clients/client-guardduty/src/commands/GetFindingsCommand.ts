@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GuardDutyClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GuardDutyClient";
@@ -413,6 +414,7 @@ export interface GetFindingsCommandOutput extends GetFindingsResponse, __Metadat
  * //             Domain: "STRING_VALUE",
  * //             Protocol: "STRING_VALUE",
  * //             Blocked: true || false,
+ * //             DomainWithSuffix: "STRING_VALUE",
  * //           },
  * //           NetworkConnectionAction: { // NetworkConnectionAction
  * //             Blocked: true || false,
@@ -795,6 +797,10 @@ export class GetFindingsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "GuardDutyAPIService",
+        operation: "GetFindings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

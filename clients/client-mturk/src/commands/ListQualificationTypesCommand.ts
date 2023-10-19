@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListQualificationTypesRequest, ListQualificationTypesResponse } from "../models/models_0";
@@ -67,7 +68,7 @@ export interface ListQualificationTypesCommandOutput extends ListQualificationTy
  * //       Name: "STRING_VALUE",
  * //       Description: "STRING_VALUE",
  * //       Keywords: "STRING_VALUE",
- * //       QualificationTypeStatus: "STRING_VALUE",
+ * //       QualificationTypeStatus: "Active" || "Inactive",
  * //       Test: "STRING_VALUE",
  * //       TestDurationInSeconds: Number("long"),
  * //       AnswerKey: "STRING_VALUE",
@@ -147,6 +148,10 @@ export class ListQualificationTypesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MTurkRequesterServiceV20170117",
+        operation: "ListQualificationTypes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

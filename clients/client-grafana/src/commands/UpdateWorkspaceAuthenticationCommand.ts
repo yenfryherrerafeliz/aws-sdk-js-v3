@@ -11,10 +11,16 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GrafanaClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GrafanaClient";
-import { UpdateWorkspaceAuthenticationRequest, UpdateWorkspaceAuthenticationResponse } from "../models/models_0";
+import {
+  UpdateWorkspaceAuthenticationRequest,
+  UpdateWorkspaceAuthenticationRequestFilterSensitiveLog,
+  UpdateWorkspaceAuthenticationResponse,
+  UpdateWorkspaceAuthenticationResponseFilterSensitiveLog,
+} from "../models/models_0";
 import {
   de_UpdateWorkspaceAuthenticationCommand,
   se_UpdateWorkspaceAuthenticationCommand,
@@ -207,8 +213,12 @@ export class UpdateWorkspaceAuthenticationCommand extends $Command<
       logger,
       clientName,
       commandName,
-      inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      inputFilterSensitiveLog: UpdateWorkspaceAuthenticationRequestFilterSensitiveLog,
+      outputFilterSensitiveLog: UpdateWorkspaceAuthenticationResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSGrafanaControlPlane",
+        operation: "UpdateWorkspaceAuthentication",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -52,7 +53,7 @@ export interface GetDatasetCommandOutput extends GetDatasetResponse, __MetadataB
  * //   datasetId: "STRING_VALUE",
  * //   datasetArn: "STRING_VALUE",
  * //   datasetTitle: "STRING_VALUE",
- * //   kind: "STRING_VALUE",
+ * //   kind: "TABULAR" || "NON_TABULAR",
  * //   datasetDescription: "STRING_VALUE",
  * //   createTime: Number("long"),
  * //   lastModifiedTime: Number("long"),
@@ -60,7 +61,7 @@ export interface GetDatasetCommandOutput extends GetDatasetResponse, __MetadataB
  * //     tabularSchemaConfig: { // SchemaDefinition
  * //       columns: [ // ColumnList
  * //         { // ColumnDefinition
- * //           dataType: "STRING_VALUE",
+ * //           dataType: "STRING" || "CHAR" || "INTEGER" || "TINYINT" || "SMALLINT" || "BIGINT" || "FLOAT" || "DOUBLE" || "DATE" || "DATETIME" || "BOOLEAN" || "BINARY",
  * //           columnName: "STRING_VALUE",
  * //           columnDescription: "STRING_VALUE",
  * //         },
@@ -71,7 +72,7 @@ export interface GetDatasetCommandOutput extends GetDatasetResponse, __MetadataB
  * //     },
  * //   },
  * //   alias: "STRING_VALUE",
- * //   status: "STRING_VALUE",
+ * //   status: "PENDING" || "FAILED" || "SUCCESS" || "RUNNING",
  * // };
  *
  * ```
@@ -153,6 +154,10 @@ export class GetDatasetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "GetDataset",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

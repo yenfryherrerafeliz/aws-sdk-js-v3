@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -51,7 +52,7 @@ export interface GetBuiltinIntentsCommandOutput extends GetBuiltinIntentsRespons
  * // const { LexModelBuildingServiceClient, GetBuiltinIntentsCommand } = require("@aws-sdk/client-lex-model-building-service"); // CommonJS import
  * const client = new LexModelBuildingServiceClient(config);
  * const input = { // GetBuiltinIntentsRequest
- *   locale: "STRING_VALUE",
+ *   locale: "de-DE" || "en-AU" || "en-GB" || "en-IN" || "en-US" || "es-419" || "es-ES" || "es-US" || "fr-FR" || "fr-CA" || "it-IT" || "ja-JP" || "ko-KR",
  *   signatureContains: "STRING_VALUE",
  *   nextToken: "STRING_VALUE",
  *   maxResults: Number("int"),
@@ -63,7 +64,7 @@ export interface GetBuiltinIntentsCommandOutput extends GetBuiltinIntentsRespons
  * //     { // BuiltinIntentMetadata
  * //       signature: "STRING_VALUE",
  * //       supportedLocales: [ // LocaleList
- * //         "STRING_VALUE",
+ * //         "de-DE" || "en-AU" || "en-GB" || "en-IN" || "en-US" || "es-419" || "es-ES" || "es-US" || "fr-FR" || "fr-CA" || "it-IT" || "ja-JP" || "ko-KR",
  * //       ],
  * //     },
  * //   ],
@@ -143,6 +144,10 @@ export class GetBuiltinIntentsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "GetBuiltinIntents",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

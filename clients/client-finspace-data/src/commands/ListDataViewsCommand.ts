@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -64,14 +65,14 @@ export interface ListDataViewsCommandOutput extends ListDataViewsResponse, __Met
  * //       sortColumns: [ // SortColumnList
  * //         "STRING_VALUE",
  * //       ],
- * //       status: "STRING_VALUE",
+ * //       status: "RUNNING" || "STARTING" || "FAILED" || "CANCELLED" || "TIMEOUT" || "SUCCESS" || "PENDING" || "FAILED_CLEANUP_FAILED",
  * //       errorInfo: { // DataViewErrorInfo
  * //         errorMessage: "STRING_VALUE",
- * //         errorCategory: "STRING_VALUE",
+ * //         errorCategory: "VALIDATION" || "SERVICE_QUOTA_EXCEEDED" || "ACCESS_DENIED" || "RESOURCE_NOT_FOUND" || "THROTTLING" || "INTERNAL_SERVICE_EXCEPTION" || "CANCELLED" || "USER_RECOVERABLE",
  * //       },
  * //       destinationTypeProperties: { // DataViewDestinationTypeParams
  * //         destinationType: "STRING_VALUE", // required
- * //         s3DestinationExportFileFormat: "STRING_VALUE",
+ * //         s3DestinationExportFileFormat: "PARQUET" || "DELIMITED_TEXT",
  * //         s3DestinationExportFileFormatOptions: { // S3DestinationFormatOptions
  * //           "<keys>": "STRING_VALUE",
  * //         },
@@ -159,6 +160,10 @@ export class ListDataViewsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "ListDataViews",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECSClient";
@@ -392,13 +393,13 @@ export interface RunTaskCommandOutput extends RunTaskResponse, __MetadataBearer 
  * {
  *   "tasks": [
  *     {
- *       "containerInstanceArn": "arn:aws:ecs:us-east-1:<aws_account_id>:container-instance/ffe3d344-77e2-476c-a4d0-bf560ad50acb",
+ *       "containerInstanceArn": "arn:aws:ecs:us-east-1:<aws_account_id>:container-instance/default/ffe3d344-77e2-476c-a4d0-bf560ad50acb",
  *       "containers": [
  *         {
  *           "name": "sleep",
- *           "containerArn": "arn:aws:ecs:us-east-1:<aws_account_id>:container/58591c8e-be29-4ddf-95aa-ee459d4c59fd",
+ *           "containerArn": "arn:aws:ecs:us-east-1:<aws_account_id>:container/default/58591c8e-be29-4ddf-95aa-ee459d4c59fd",
  *           "lastStatus": "PENDING",
- *           "taskArn": "arn:aws:ecs:us-east-1:<aws_account_id>:task/a9f21ea7-c9f5-44b1-b8e6-b31f50ed33c0"
+ *           "taskArn": "arn:aws:ecs:us-east-1:<aws_account_id>:task/default/a9f21ea7-c9f5-44b1-b8e6-b31f50ed33c0"
  *         }
  *       ],
  *       "desiredStatus": "RUNNING",
@@ -410,7 +411,7 @@ export interface RunTaskCommandOutput extends RunTaskResponse, __MetadataBearer 
  *           }
  *         ]
  *       },
- *       "taskArn": "arn:aws:ecs:us-east-1:<aws_account_id>:task/a9f21ea7-c9f5-44b1-b8e6-b31f50ed33c0",
+ *       "taskArn": "arn:aws:ecs:us-east-1:<aws_account_id>:task/default/a9f21ea7-c9f5-44b1-b8e6-b31f50ed33c0",
  *       "taskDefinitionArn": "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/sleep360:1"
  *     }
  *   ]
@@ -464,6 +465,10 @@ export class RunTaskCommand extends $Command<RunTaskCommandInput, RunTaskCommand
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerServiceV20141113",
+        operation: "RunTask",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

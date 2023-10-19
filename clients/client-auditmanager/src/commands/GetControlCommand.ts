@@ -11,10 +11,11 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AuditManagerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AuditManagerClient";
-import { GetControlRequest, GetControlResponse } from "../models/models_0";
+import { GetControlRequest, GetControlResponse, GetControlResponseFilterSensitiveLog } from "../models/models_0";
 import { de_GetControlCommand, se_GetControlCommand } from "../protocols/Aws_restJson1";
 
 /**
@@ -157,7 +158,11 @@ export class GetControlCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: GetControlResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "BedrockAssessmentManagerLambda",
+        operation: "GetControl",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

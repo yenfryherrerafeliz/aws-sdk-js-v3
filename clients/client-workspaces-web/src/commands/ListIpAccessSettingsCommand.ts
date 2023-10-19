@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -56,7 +57,7 @@ export interface ListIpAccessSettingsCommandOutput extends ListIpAccessSettingsR
  * // { // ListIpAccessSettingsResponse
  * //   ipAccessSettings: [ // IpAccessSettingsList
  * //     { // IpAccessSettingsSummary
- * //       ipAccessSettingsArn: "STRING_VALUE",
+ * //       ipAccessSettingsArn: "STRING_VALUE", // required
  * //       displayName: "STRING_VALUE",
  * //       description: "STRING_VALUE",
  * //       creationDate: new Date("TIMESTAMP"),
@@ -139,6 +140,10 @@ export class ListIpAccessSettingsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: ListIpAccessSettingsResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSErmineControlPlaneService",
+        operation: "ListIpAccessSettings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

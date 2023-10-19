@@ -1,6 +1,6 @@
 {
   "name": "@aws-sdk/credential-providers",
-  "version": "3.398.0",
+  "version": "3.431.0",
   "description": "A collection of credential providers, without requiring service clients like STS, Cognito",
   "main": "./dist-cjs/index.js",
   "module": "./dist-es/index.js",
@@ -33,6 +33,7 @@
     "@aws-sdk/client-sts": "*",
     "@aws-sdk/credential-provider-cognito-identity": "*",
     "@aws-sdk/credential-provider-env": "*",
+    "@aws-sdk/credential-provider-http": "*",
     "@aws-sdk/credential-provider-ini": "*",
     "@aws-sdk/credential-provider-node": "*",
     "@aws-sdk/credential-provider-process": "*",
@@ -41,7 +42,7 @@
     "@aws-sdk/types": "*",
     "@smithy/credential-provider-imds": "^2.0.0",
     "@smithy/property-provider": "^2.0.0",
-    "@smithy/types": "^2.2.2",
+    "@smithy/types": "^2.3.5",
     "tslib": "^2.5.0"
   },
   "devDependencies": {

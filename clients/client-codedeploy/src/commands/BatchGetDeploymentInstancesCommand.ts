@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -41,8 +42,8 @@ export interface BatchGetDeploymentInstancesCommandOutput extends BatchGetDeploy
  * <note>
  *             <p> This method works, but is deprecated. Use <code>BatchGetDeploymentTargets</code>
  *                 instead. </p>
- *         </note>
- *         <p> Returns an array of one or more instances associated with a deployment. This method
+ *          </note>
+ *          <p> Returns an array of one or more instances associated with a deployment. This method
  *             works with EC2/On-premises and Lambda compute platforms. The newer
  *                 <code>BatchGetDeploymentTargets</code> works with all compute platforms. The maximum
  *             number of instances that can be returned is 25.</p>
@@ -99,8 +100,7 @@ export interface BatchGetDeploymentInstancesCommandOutput extends BatchGetDeploy
  *  <p>The maximum number of names or IDs allowed for this request (100) was exceeded.</p>
  *
  * @throws {@link DeploymentDoesNotExistException} (client fault)
- *  <p>The deployment with the IAM user or Amazon Web Services account does not
- *             exist.</p>
+ *  <p>The deployment with the user or Amazon Web Services account does not exist.</p>
  *
  * @throws {@link DeploymentIdRequiredException} (client fault)
  *  <p>At least one deployment ID must be specified.</p>
@@ -171,6 +171,10 @@ export class BatchGetDeploymentInstancesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "BatchGetDeploymentInstances",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

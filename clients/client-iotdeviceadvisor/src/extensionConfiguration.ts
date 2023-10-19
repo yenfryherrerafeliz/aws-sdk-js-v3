@@ -1,7 +1,12 @@
 // smithy-typescript generated code
+import { AwsRegionExtensionConfiguration } from "@aws-sdk/types";
+import { HttpHandlerExtensionConfiguration } from "@smithy/protocol-http";
 import { DefaultExtensionConfiguration } from "@smithy/types";
 
 /**
  * @internal
  */
-export interface IotDeviceAdvisorExtensionConfiguration extends DefaultExtensionConfiguration {}
+export interface IotDeviceAdvisorExtensionConfiguration
+  extends HttpHandlerExtensionConfiguration,
+    DefaultExtensionConfiguration,
+    AwsRegionExtensionConfiguration {}

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeCompilationJobRequest, DescribeCompilationJobResponse } from "../models/models_2";
@@ -37,8 +38,8 @@ export interface DescribeCompilationJobCommandOutput extends DescribeCompilation
 /**
  * @public
  * <p>Returns information about a model compilation job.</p>
- *          <p>To create a model compilation job, use <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateCompilationJob.html">CreateCompilationJob</a>. To get
- *             information about multiple model compilation jobs, use <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListCompilationJobs.html">ListCompilationJobs</a>.</p>
+ *          <p>To create a model compilation job, use <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateCompilationJob.html">CreateCompilationJob</a>. To get information about multiple model compilation
+ *             jobs, use <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListCompilationJobs.html">ListCompilationJobs</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -74,7 +75,7 @@ export interface DescribeCompilationJobCommandOutput extends DescribeCompilation
  * //   RoleArn: "STRING_VALUE", // required
  * //   InputConfig: { // InputConfig
  * //     S3Uri: "STRING_VALUE", // required
- * //     DataInputConfig: "STRING_VALUE", // required
+ * //     DataInputConfig: "STRING_VALUE",
  * //     Framework: "TENSORFLOW" || "KERAS" || "MXNET" || "ONNX" || "PYTORCH" || "XGBOOST" || "TFLITE" || "DARKNET" || "SKLEARN", // required
  * //     FrameworkVersion: "STRING_VALUE",
  * //   },
@@ -96,6 +97,9 @@ export interface DescribeCompilationJobCommandOutput extends DescribeCompilation
  * //     Subnets: [ // NeoVpcSubnets // required
  * //       "STRING_VALUE",
  * //     ],
+ * //   },
+ * //   DerivedInformation: { // DerivedInformation
+ * //     DerivedDataInputConfig: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -164,6 +168,10 @@ export class DescribeCompilationJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "DescribeCompilationJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudHSMClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudHSMClient";
@@ -36,6 +37,8 @@ export interface DescribeHsmCommandOutput extends DescribeHsmResponse, __Metadat
 
 /**
  * @public
+ * @deprecated
+ *
  * <p>This is documentation for <b>AWS CloudHSM Classic</b>. For
  *       more information, see <a href="http://aws.amazon.com/cloudhsm/faqs-classic/">AWS CloudHSM
  *       Classic FAQs</a>, the <a href="https://docs.aws.amazon.com/cloudhsm/classic/userguide/">AWS
@@ -62,12 +65,12 @@ export interface DescribeHsmCommandOutput extends DescribeHsmResponse, __Metadat
  * const response = await client.send(command);
  * // { // DescribeHsmResponse
  * //   HsmArn: "STRING_VALUE",
- * //   Status: "STRING_VALUE",
+ * //   Status: "PENDING" || "RUNNING" || "UPDATING" || "SUSPENDED" || "TERMINATING" || "TERMINATED" || "DEGRADED",
  * //   StatusDetails: "STRING_VALUE",
  * //   AvailabilityZone: "STRING_VALUE",
  * //   EniId: "STRING_VALUE",
  * //   EniIp: "STRING_VALUE",
- * //   SubscriptionType: "STRING_VALUE",
+ * //   SubscriptionType: "PRODUCTION",
  * //   SubscriptionStartDate: "STRING_VALUE",
  * //   SubscriptionEndDate: "STRING_VALUE",
  * //   VpcId: "STRING_VALUE",
@@ -155,6 +158,10 @@ export class DescribeHsmCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CloudHsmFrontendService",
+        operation: "DescribeHsm",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

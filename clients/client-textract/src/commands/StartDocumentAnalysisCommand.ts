@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { StartDocumentAnalysisRequest, StartDocumentAnalysisResponse } from "../models/models_0";
@@ -68,7 +69,7 @@ export interface StartDocumentAnalysisCommandOutput extends StartDocumentAnalysi
  *     },
  *   },
  *   FeatureTypes: [ // FeatureTypes // required
- *     "TABLES" || "FORMS" || "QUERIES" || "SIGNATURES",
+ *     "TABLES" || "FORMS" || "QUERIES" || "SIGNATURES" || "LAYOUT",
  *   ],
  *   ClientRequestToken: "STRING_VALUE",
  *   JobTag: "STRING_VALUE",
@@ -89,6 +90,17 @@ export interface StartDocumentAnalysisCommandOutput extends StartDocumentAnalysi
  *         Pages: [ // QueryPages
  *           "STRING_VALUE",
  *         ],
+ *       },
+ *     ],
+ *   },
+ *   AdaptersConfig: { // AdaptersConfig
+ *     Adapters: [ // Adapters // required
+ *       { // Adapter
+ *         AdapterId: "STRING_VALUE", // required
+ *         Pages: [ // AdapterPages
+ *           "STRING_VALUE",
+ *         ],
+ *         Version: "STRING_VALUE", // required
  *       },
  *     ],
  *   },
@@ -217,6 +229,10 @@ export class StartDocumentAnalysisCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Textract",
+        operation: "StartDocumentAnalysis",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

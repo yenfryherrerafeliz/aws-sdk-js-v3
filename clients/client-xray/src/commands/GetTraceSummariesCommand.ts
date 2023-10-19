@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetTraceSummariesRequest, GetTraceSummariesResult } from "../models/models_0";
@@ -62,7 +63,7 @@ export interface GetTraceSummariesCommandOutput extends GetTraceSummariesResult,
  * const input = { // GetTraceSummariesRequest
  *   StartTime: new Date("TIMESTAMP"), // required
  *   EndTime: new Date("TIMESTAMP"), // required
- *   TimeRangeType: "TraceId" || "Event",
+ *   TimeRangeType: "TraceId" || "Event" || "Service",
  *   Sampling: true || false,
  *   SamplingStrategy: { // SamplingStrategy
  *     Name: "PartialScan" || "FixedRate",
@@ -77,6 +78,7 @@ export interface GetTraceSummariesCommandOutput extends GetTraceSummariesResult,
  * //   TraceSummaries: [ // TraceSummaryList
  * //     { // TraceSummary
  * //       Id: "STRING_VALUE",
+ * //       StartTime: new Date("TIMESTAMP"),
  * //       Duration: Number("double"),
  * //       ResponseTime: Number("double"),
  * //       HasFault: true || false,
@@ -299,6 +301,10 @@ export class GetTraceSummariesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSXRay",
+        operation: "GetTraceSummaries",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

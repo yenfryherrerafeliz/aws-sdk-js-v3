@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EntityResolutionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EntityResolutionClient";
@@ -36,7 +37,8 @@ export interface GetMatchIdCommandOutput extends GetMatchIdOutput, __MetadataBea
 
 /**
  * @public
- * <p>Returns the corresponding Match ID of a customer record if the record has been processed.</p>
+ * <p>Returns the corresponding Match ID of a customer record if the record has been
+ *          processed.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -64,11 +66,13 @@ export interface GetMatchIdCommandOutput extends GetMatchIdOutput, __MetadataBea
  * @see {@link EntityResolutionClientResolvedConfig | config} for EntityResolutionClient's `config` shape.
  *
  * @throws {@link AccessDeniedException} (client fault)
- *  <p>You do not have sufficient access to perform this action. <code>HTTP Status Code: 403</code>
+ *  <p>You do not have sufficient access to perform this action. <code>HTTP Status Code:
+ *             403</code>
  *          </p>
  *
  * @throws {@link InternalServerException} (server fault)
- *  <p>This exception occurs when there is an internal failure in the AWS Entity Resolution service. <code>HTTP Status Code: 500</code>
+ *  <p>This exception occurs when there is an internal failure in the Entity Resolution
+ *          service. <code>HTTP Status Code: 500</code>
  *          </p>
  *
  * @throws {@link ResourceNotFoundException} (client fault)
@@ -76,11 +80,13 @@ export interface GetMatchIdCommandOutput extends GetMatchIdOutput, __MetadataBea
  *          </p>
  *
  * @throws {@link ThrottlingException} (client fault)
- *  <p>The request was denied due to request throttling. <code>HTTP Status Code: 429</code>
+ *  <p>The request was denied due to request throttling. <code>HTTP Status Code:
+ *          429</code>
  *          </p>
  *
  * @throws {@link ValidationException} (client fault)
- *  <p>The input fails to satisfy the constraints specified by AWS Entity Resolution. <code>HTTP Status Code: 400</code>
+ *  <p>The input fails to satisfy the constraints specified by Entity Resolution. <code>HTTP
+ *             Status Code: 400</code>
  *          </p>
  *
  * @throws {@link EntityResolutionServiceException}
@@ -135,6 +141,10 @@ export class GetMatchIdCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: GetMatchIdInputFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSVeniceService",
+        operation: "GetMatchId",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

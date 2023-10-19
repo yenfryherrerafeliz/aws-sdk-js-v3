@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
@@ -51,7 +52,7 @@ export interface HttpPayloadTraitsCommandOutput extends HttpPayloadTraitsCommand
 
 /**
  * @public
- * This examples serializes a blob shape in the payload.
+ * This example serializes a blob shape in the payload.
  *
  * In this example, no JSON document is synthesized because the payload is
  * not a structure or a union type.
@@ -122,6 +123,10 @@ export class HttpPayloadTraitsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "HttpPayloadTraits",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

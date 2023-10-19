@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTEventsClient";
@@ -71,14 +72,14 @@ export interface DescribeDetectorModelCommandOutput extends DescribeDetectorMode
  * //                       targetArn: "STRING_VALUE", // required
  * //                       payload: { // Payload
  * //                         contentExpression: "STRING_VALUE", // required
- * //                         type: "STRING_VALUE", // required
+ * //                         type: "STRING" || "JSON", // required
  * //                       },
  * //                     },
  * //                     iotTopicPublish: { // IotTopicPublishAction
  * //                       mqttTopic: "STRING_VALUE", // required
  * //                       payload: {
  * //                         contentExpression: "STRING_VALUE", // required
- * //                         type: "STRING_VALUE", // required
+ * //                         type: "STRING" || "JSON", // required
  * //                       },
  * //                     },
  * //                     setTimer: { // SetTimerAction
@@ -96,14 +97,14 @@ export interface DescribeDetectorModelCommandOutput extends DescribeDetectorMode
  * //                       functionArn: "STRING_VALUE", // required
  * //                       payload: {
  * //                         contentExpression: "STRING_VALUE", // required
- * //                         type: "STRING_VALUE", // required
+ * //                         type: "STRING" || "JSON", // required
  * //                       },
  * //                     },
  * //                     iotEvents: { // IotEventsAction
  * //                       inputName: "STRING_VALUE", // required
  * //                       payload: {
  * //                         contentExpression: "STRING_VALUE", // required
- * //                         type: "STRING_VALUE", // required
+ * //                         type: "STRING" || "JSON", // required
  * //                       },
  * //                     },
  * //                     sqs: { // SqsAction
@@ -111,7 +112,7 @@ export interface DescribeDetectorModelCommandOutput extends DescribeDetectorMode
  * //                       useBase64: true || false,
  * //                       payload: {
  * //                         contentExpression: "STRING_VALUE", // required
- * //                         type: "STRING_VALUE", // required
+ * //                         type: "STRING" || "JSON", // required
  * //                       },
  * //                     },
  * //                     firehose: { // FirehoseAction
@@ -434,9 +435,9 @@ export interface DescribeDetectorModelCommandOutput extends DescribeDetectorMode
  * //       roleArn: "STRING_VALUE",
  * //       creationTime: new Date("TIMESTAMP"),
  * //       lastUpdateTime: new Date("TIMESTAMP"),
- * //       status: "STRING_VALUE",
+ * //       status: "ACTIVE" || "ACTIVATING" || "INACTIVE" || "DEPRECATED" || "DRAFT" || "PAUSED" || "FAILED",
  * //       key: "STRING_VALUE",
- * //       evaluationMethod: "STRING_VALUE",
+ * //       evaluationMethod: "BATCH" || "SERIAL",
  * //     },
  * //   },
  * // };
@@ -518,6 +519,10 @@ export class DescribeDetectorModelCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotColumboService",
+        operation: "DescribeDetectorModel",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

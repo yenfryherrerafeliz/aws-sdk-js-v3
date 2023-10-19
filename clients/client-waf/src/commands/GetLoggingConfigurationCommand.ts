@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetLoggingConfigurationRequest, GetLoggingConfigurationResponse } from "../models/models_0";
@@ -64,7 +65,7 @@ export interface GetLoggingConfigurationCommandOutput extends GetLoggingConfigur
  * //     ],
  * //     RedactedFields: [ // RedactedFields
  * //       { // FieldToMatch
- * //         Type: "STRING_VALUE", // required
+ * //         Type: "URI" || "QUERY_STRING" || "HEADER" || "METHOD" || "BODY" || "SINGLE_QUERY_ARG" || "ALL_QUERY_ARGS", // required
  * //         Data: "STRING_VALUE",
  * //       },
  * //     ],
@@ -139,6 +140,10 @@ export class GetLoggingConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_20150824",
+        operation: "GetLoggingConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateWorldGenerationJobRequest, CreateWorldGenerationJobResponse } from "../models/models_0";
@@ -61,9 +62,9 @@ export interface CreateWorldGenerationJobCommandOutput extends CreateWorldGenera
  * const response = await client.send(command);
  * // { // CreateWorldGenerationJobResponse
  * //   arn: "STRING_VALUE",
- * //   status: "STRING_VALUE",
+ * //   status: "Pending" || "Running" || "Completed" || "Failed" || "PartialFailed" || "Canceling" || "Canceled",
  * //   createdAt: new Date("TIMESTAMP"),
- * //   failureCode: "STRING_VALUE",
+ * //   failureCode: "InternalServiceError" || "LimitExceeded" || "ResourceNotFound" || "RequestThrottled" || "InvalidInput" || "AllWorldGenerationFailed",
  * //   clientRequestToken: "STRING_VALUE",
  * //   template: "STRING_VALUE",
  * //   worldCount: { // WorldCount
@@ -164,6 +165,10 @@ export class CreateWorldGenerationJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "CreateWorldGenerationJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

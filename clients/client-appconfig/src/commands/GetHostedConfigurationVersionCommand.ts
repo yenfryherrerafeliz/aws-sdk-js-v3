@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
@@ -75,6 +76,7 @@ export interface GetHostedConfigurationVersionCommandOutput
  * //   Content: "BLOB_VALUE",
  * //   ContentType: "STRING_VALUE",
  * //   VersionLabel: "STRING_VALUE",
+ * //   KmsKeyArn: "STRING_VALUE",
  * // };
  *
  * ```
@@ -169,6 +171,10 @@ export class GetHostedConfigurationVersionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: HostedConfigurationVersionFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonAppConfig",
+        operation: "GetHostedConfigurationVersion",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

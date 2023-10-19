@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AddCacheInput, AddCacheOutput } from "../models/models_0";
@@ -38,7 +39,6 @@ export interface AddCacheCommandOutput extends AddCacheOutput, __MetadataBearer 
  * @public
  * <p>Configures one or more gateway local disks as cache for a gateway. This operation is
  *          only supported in the cached volume, tape, and file gateway type (see <a href="https://docs.aws.amazon.com/storagegateway/latest/userguide/StorageGatewayConcepts.html">How Storage Gateway works (architecture)</a>.</p>
- *
  *          <p>In the request, you specify the gateway Amazon Resource Name (ARN) to which you want to
  *          add cache, and one or more disk IDs that you want to configure as cache.</p>
  * @example
@@ -147,6 +147,10 @@ export class AddCacheCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "AddCache",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

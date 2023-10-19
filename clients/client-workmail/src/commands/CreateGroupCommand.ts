@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateGroupRequest, CreateGroupResponse } from "../models/models_0";
@@ -46,6 +47,7 @@ export interface CreateGroupCommandOutput extends CreateGroupResponse, __Metadat
  * const input = { // CreateGroupRequest
  *   OrganizationId: "STRING_VALUE", // required
  *   Name: "STRING_VALUE", // required
+ *   HiddenFromGlobalAddressList: true || false,
  * };
  * const command = new CreateGroupCommand(input);
  * const response = await client.send(command);
@@ -139,6 +141,10 @@ export class CreateGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkMailService",
+        operation: "CreateGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

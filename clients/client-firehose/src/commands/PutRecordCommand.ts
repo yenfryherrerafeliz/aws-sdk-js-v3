@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FirehoseClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FirehoseClient";
@@ -45,6 +46,7 @@ export interface PutRecordCommandOutput extends PutRecordOutput, __MetadataBeare
  *          operations for each delivery stream. For more information about limits and how to request
  *          an increase, see <a href="https://docs.aws.amazon.com/firehose/latest/dev/limits.html">Amazon
  *             Kinesis Data Firehose Limits</a>. </p>
+ *          <p>Kinesis Data Firehose accumulates and publishes a particular metric for a customer account in one minute intervals. It is possible that the bursts of incoming bytes/records ingested to a delivery stream last only for a few seconds. Due to this, the actual spikes in the traffic might not be fully visible in the customer's 1 minute CloudWatch metrics.</p>
  *          <p>You must specify the name of the delivery stream and the data record when using <a>PutRecord</a>. The data record consists of a data blob that can be up to 1,000
  *          KiB in size, and any kind of data. For example, it can be a segment from a log file,
  *          geographic location data, website clickstream data, and so on.</p>
@@ -57,13 +59,16 @@ export interface PutRecordCommandOutput extends PutRecordOutput, __MetadataBeare
  *          unique string assigned to each record. Producer applications can use this ID for purposes
  *          such as auditability and investigation.</p>
  *          <p>If the <code>PutRecord</code> operation throws a
- *             <code>ServiceUnavailableException</code>, back off and retry. If the exception persists,
- *          it is possible that the throughput limits have been exceeded for the delivery stream. </p>
+ *             <code>ServiceUnavailableException</code>, the API is automatically reinvoked (retried) 3
+ *          times. If the exception persists, it is possible that the throughput limits have been
+ *          exceeded for the delivery stream. </p>
+ *          <p>Re-invoking the Put API operations (for example, PutRecord and PutRecordBatch) can
+ *          result in data duplicates. For larger data assets, allow for a longer time out before
+ *          retrying Put API operations.</p>
  *          <p>Data records sent to Kinesis Data Firehose are stored for 24 hours from the time they
  *          are added to a delivery stream as it tries to send the records to the destination. If the
  *          destination is unreachable for more than 24 hours, the data is no longer
  *          available.</p>
- *
  *          <important>
  *             <p>Don't concatenate two or more base64 strings to form the data fields of your records.
  *             Instead, concatenate the raw data, then perform base64 encoding.</p>
@@ -166,6 +171,10 @@ export class PutRecordCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Firehose_20150804",
+        operation: "PutRecord",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

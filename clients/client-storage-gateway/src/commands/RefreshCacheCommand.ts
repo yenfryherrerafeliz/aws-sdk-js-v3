@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { RefreshCacheInput, RefreshCacheOutput } from "../models/models_0";
@@ -42,31 +43,23 @@ export interface RefreshCacheCommandOutput extends RefreshCacheOutput, __Metadat
  *          does not import files into the S3 File Gateway cache storage. It only updates the cached
  *          inventory to reflect changes in the inventory of the objects in the S3 bucket. This
  *          operation is only supported in the S3 File Gateway types.</p>
- *
  *          <p>You can subscribe to be notified through an Amazon CloudWatch event when your
  *             <code>RefreshCache</code> operation completes. For more information, see <a href="https://docs.aws.amazon.com/storagegateway/latest/userguide/monitoring-file-gateway.html#get-notification">Getting notified about file operations</a> in the <i>Storage Gateway
  *             User Guide</i>. This operation is Only supported for S3 File Gateways.</p>
- *
  *          <p>When this API is called, it only initiates the refresh operation. When the API call
  *          completes and returns a success code, it doesn't necessarily mean that the file
  *          refresh has completed. You should use the refresh-complete notification to determine that
  *          the operation has completed before you check for new files on the gateway file share. You
  *          can subscribe to be notified through a CloudWatch event when your <code>RefreshCache</code>
  *          operation completes.</p>
- *
  *          <p>Throttle limit: This API is asynchronous, so the gateway will accept no more than two
  *          refreshes at any time. We recommend using the refresh-complete CloudWatch event
  *          notification before issuing additional requests. For more information, see <a href="https://docs.aws.amazon.com/storagegateway/latest/userguide/monitoring-file-gateway.html#get-notification">Getting notified about file operations</a> in the <i>Storage Gateway
  *             User Guide</i>.</p>
- *
  *          <important>
  *             <ul>
  *                <li>
  *                   <p>Wait at least 60 seconds between consecutive RefreshCache API requests.</p>
- *                </li>
- *                <li>
- *                   <p>RefreshCache does not evict cache entries if invoked consecutively within 60
- *                   seconds of a previous RefreshCache request.</p>
  *                </li>
  *                <li>
  *                   <p>If you invoke the RefreshCache API when two requests are already being
@@ -76,14 +69,10 @@ export interface RefreshCacheCommandOutput extends RefreshCacheOutput, __Metadat
  *                </li>
  *             </ul>
  *          </important>
- *
  *          <note>
  *             <p>The S3 bucket name does not need to be included when entering the list of folders in
  *             the FolderList parameter.</p>
  *          </note>
- *
- *
- *
  *          <p>For more information, see <a href="https://docs.aws.amazon.com/storagegateway/latest/userguide/monitoring-file-gateway.html#get-notification">Getting notified about file operations</a> in the <i>Storage Gateway
  *             User Guide</i>.</p>
  * @example
@@ -174,6 +163,10 @@ export class RefreshCacheCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "RefreshCache",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

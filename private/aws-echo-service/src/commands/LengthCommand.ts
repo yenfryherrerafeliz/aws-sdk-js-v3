@@ -10,6 +10,7 @@ import {
   Handler,
   HandlerExecutionContext,
   MiddlewareStack,
+  SMITHY_CONTEXT_KEY,
   HttpHandlerOptions as __HttpHandlerOptions,
   MetadataBearer as __MetadataBearer,
   SerdeContext as __SerdeContext,
@@ -32,6 +33,39 @@ export interface LengthCommandInput extends LengthInput {}
  */
 export interface LengthCommandOutput extends LengthOutput, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { EchoServiceClient, LengthCommand } from "@aws-sdk/aws-echo-service"; // ES Modules import
+ * // const { EchoServiceClient, LengthCommand } = require("@aws-sdk/aws-echo-service"); // CommonJS import
+ * const client = new EchoServiceClient(config);
+ * const input = { // LengthInput
+ *   string: "STRING_VALUE", // required
+ * };
+ * const command = new LengthCommand(input);
+ * const response = await client.send(command);
+ * // { // LengthOutput
+ * //   length: Number("int"),
+ * // };
+ *
+ * ```
+ *
+ * @param LengthCommandInput - {@link LengthCommandInput}
+ * @returns {@link LengthCommandOutput}
+ * @see {@link LengthCommandInput} for command's `input` shape.
+ * @see {@link LengthCommandOutput} for command's `response` shape.
+ * @see {@link EchoServiceClientResolvedConfig | config} for EchoServiceClient's `config` shape.
+ *
+ * @throws {@link PalindromeException} (client fault)
+ *  For some reason, this service does not like palindromes!
+ *
+ * @throws {@link EchoServiceServiceException}
+ * <p>Base exception class for all service exceptions from EchoService service.</p>
+ *
+ */
 export class LengthCommand extends $Command<LengthCommandInput, LengthCommandOutput, EchoServiceClientResolvedConfig> {
   // Start section: command_properties
   // End section: command_properties
@@ -66,6 +100,10 @@ export class LengthCommand extends $Command<LengthCommandInput, LengthCommandOut
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "EchoService",
+        operation: "Length",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

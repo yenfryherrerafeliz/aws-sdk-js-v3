@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeCanariesRequest, DescribeCanariesResponse } from "../models/models_0";
@@ -83,9 +84,9 @@ export interface DescribeCanariesCommandOutput extends DescribeCanariesResponse,
  * //       SuccessRetentionPeriodInDays: Number("int"),
  * //       FailureRetentionPeriodInDays: Number("int"),
  * //       Status: { // CanaryStatus
- * //         State: "STRING_VALUE",
+ * //         State: "CREATING" || "READY" || "STARTING" || "RUNNING" || "UPDATING" || "STOPPING" || "STOPPED" || "ERROR" || "DELETING",
  * //         StateReason: "STRING_VALUE",
- * //         StateReasonCode: "STRING_VALUE",
+ * //         StateReasonCode: "INVALID_PERMISSIONS" || "CREATE_PENDING" || "CREATE_IN_PROGRESS" || "CREATE_FAILED" || "UPDATE_PENDING" || "UPDATE_IN_PROGRESS" || "UPDATE_COMPLETE" || "ROLLBACK_COMPLETE" || "ROLLBACK_FAILED" || "DELETE_IN_PROGRESS" || "DELETE_FAILED" || "SYNC_DELETE_IN_PROGRESS",
  * //       },
  * //       Timeline: { // CanaryTimeline
  * //         Created: new Date("TIMESTAMP"),
@@ -121,7 +122,7 @@ export interface DescribeCanariesCommandOutput extends DescribeCanariesResponse,
  * //       },
  * //       ArtifactConfig: { // ArtifactConfigOutput
  * //         S3Encryption: { // S3EncryptionConfig
- * //           EncryptionMode: "STRING_VALUE",
+ * //           EncryptionMode: "SSE_S3" || "SSE_KMS",
  * //           KmsKeyArn: "STRING_VALUE",
  * //         },
  * //       },
@@ -198,6 +199,10 @@ export class DescribeCanariesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Synthetics",
+        operation: "DescribeCanaries",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

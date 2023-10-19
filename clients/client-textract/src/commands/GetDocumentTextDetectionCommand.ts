@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetDocumentTextDetectionRequest, GetDocumentTextDetectionResponse } from "../models/models_0";
@@ -81,7 +82,7 @@ export interface GetDocumentTextDetectionCommandOutput extends GetDocumentTextDe
  * //   NextToken: "STRING_VALUE",
  * //   Blocks: [ // BlockList
  * //     { // Block
- * //       BlockType: "KEY_VALUE_SET" || "PAGE" || "LINE" || "WORD" || "TABLE" || "CELL" || "SELECTION_ELEMENT" || "MERGED_CELL" || "TITLE" || "QUERY" || "QUERY_RESULT" || "SIGNATURE" || "TABLE_TITLE" || "TABLE_FOOTER",
+ * //       BlockType: "KEY_VALUE_SET" || "PAGE" || "LINE" || "WORD" || "TABLE" || "CELL" || "SELECTION_ELEMENT" || "MERGED_CELL" || "TITLE" || "QUERY" || "QUERY_RESULT" || "SIGNATURE" || "TABLE_TITLE" || "TABLE_FOOTER" || "LAYOUT_TEXT" || "LAYOUT_TITLE" || "LAYOUT_HEADER" || "LAYOUT_FOOTER" || "LAYOUT_SECTION_HEADER" || "LAYOUT_PAGE_NUMBER" || "LAYOUT_LIST" || "LAYOUT_FIGURE" || "LAYOUT_TABLE" || "LAYOUT_KEY_VALUE",
  * //       Confidence: Number("float"),
  * //       Text: "STRING_VALUE",
  * //       TextType: "HANDWRITING" || "PRINTED",
@@ -234,6 +235,10 @@ export class GetDocumentTextDetectionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Textract",
+        operation: "GetDocumentTextDetection",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

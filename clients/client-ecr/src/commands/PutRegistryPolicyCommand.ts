@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -37,7 +38,7 @@ export interface PutRegistryPolicyCommandOutput extends PutRegistryPolicyRespons
 /**
  * @public
  * <p>Creates or updates the permissions policy for your registry.</p>
- *         <p>A registry policy is used to specify permissions for another Amazon Web Services account and is used
+ *          <p>A registry policy is used to specify permissions for another Amazon Web Services account and is used
  *             when configuring cross-account replication. For more information, see <a href="https://docs.aws.amazon.com/AmazonECR/latest/userguide/registry-permissions.html">Registry permissions</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -127,6 +128,10 @@ export class PutRegistryPolicyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "PutRegistryPolicy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

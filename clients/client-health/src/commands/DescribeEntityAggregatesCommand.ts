@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { HealthClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../HealthClient";
@@ -55,6 +56,9 @@ export interface DescribeEntityAggregatesCommandOutput extends DescribeEntityAgg
  * //     { // EntityAggregate
  * //       eventArn: "STRING_VALUE",
  * //       count: Number("int"),
+ * //       statuses: { // entityStatuses
+ * //         "<keys>": Number("int"),
+ * //       },
  * //     },
  * //   ],
  * // };
@@ -121,6 +125,10 @@ export class DescribeEntityAggregatesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHealth_20160804",
+        operation: "DescribeEntityAggregates",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

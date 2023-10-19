@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -114,7 +115,7 @@ export interface GetApplicationRevisionCommandOutput extends GetApplicationRevis
  * @see {@link CodeDeployClientResolvedConfig | config} for CodeDeployClient's `config` shape.
  *
  * @throws {@link ApplicationDoesNotExistException} (client fault)
- *  <p>The application does not exist with the IAM user or Amazon Web Services account.</p>
+ *  <p>The application does not exist with the user or Amazon Web Services account.</p>
  *
  * @throws {@link ApplicationNameRequiredException} (client fault)
  *  <p>The minimum number of required application names was not specified.</p>
@@ -126,7 +127,7 @@ export interface GetApplicationRevisionCommandOutput extends GetApplicationRevis
  *  <p>The revision was specified in an invalid format.</p>
  *
  * @throws {@link RevisionDoesNotExistException} (client fault)
- *  <p>The named revision does not exist with the IAM user or Amazon Web Services account.</p>
+ *  <p>The named revision does not exist with the user or Amazon Web Services account.</p>
  *
  * @throws {@link RevisionRequiredException} (client fault)
  *  <p>The revision ID was not specified.</p>
@@ -185,6 +186,10 @@ export class GetApplicationRevisionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "GetApplicationRevision",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

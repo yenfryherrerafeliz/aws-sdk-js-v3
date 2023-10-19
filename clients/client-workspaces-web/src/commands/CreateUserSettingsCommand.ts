@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -64,6 +65,26 @@ export interface CreateUserSettingsCommandOutput extends CreateUserSettingsRespo
  *   disconnectTimeoutInMinutes: Number("int"),
  *   idleDisconnectTimeoutInMinutes: Number("int"),
  *   clientToken: "STRING_VALUE",
+ *   cookieSynchronizationConfiguration: { // CookieSynchronizationConfiguration
+ *     allowlist: [ // CookieSpecifications // required
+ *       { // CookieSpecification
+ *         domain: "STRING_VALUE", // required
+ *         name: "STRING_VALUE",
+ *         path: "STRING_VALUE",
+ *       },
+ *     ],
+ *     blocklist: [
+ *       {
+ *         domain: "STRING_VALUE", // required
+ *         name: "STRING_VALUE",
+ *         path: "STRING_VALUE",
+ *       },
+ *     ],
+ *   },
+ *   customerManagedKey: "STRING_VALUE",
+ *   additionalEncryptionContext: { // EncryptionContextMap
+ *     "<keys>": "STRING_VALUE",
+ *   },
  * };
  * const command = new CreateUserSettingsCommand(input);
  * const response = await client.send(command);
@@ -151,6 +172,10 @@ export class CreateUserSettingsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateUserSettingsRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSErmineControlPlaneService",
+        operation: "CreateUserSettings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

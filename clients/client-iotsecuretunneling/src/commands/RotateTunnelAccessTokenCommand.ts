@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -46,13 +47,13 @@ export interface RotateTunnelAccessTokenCommandOutput extends RotateTunnelAccess
  * @public
  * <p>Revokes the current client access token (CAT) and returns new CAT for clients to
  * 			use when reconnecting to secure tunneling to access the same tunnel.</p>
- * 		       <p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">RotateTunnelAccessToken</a> action.</p>
- * 		       <note>
- * 			         <p>Rotating the CAT doesn't extend the tunnel duration. For example, say the tunnel
+ *          <p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">RotateTunnelAccessToken</a> action.</p>
+ *          <note>
+ *             <p>Rotating the CAT doesn't extend the tunnel duration. For example, say the tunnel
  * 				duration is 12 hours and the tunnel has already been open for 4 hours. When you
  * 				rotate the access tokens, the new tokens that are generated can only be used for the
  * 				remaining 8 hours.</p>
- * 		       </note>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -61,7 +62,7 @@ export interface RotateTunnelAccessTokenCommandOutput extends RotateTunnelAccess
  * const client = new IoTSecureTunnelingClient(config);
  * const input = { // RotateTunnelAccessTokenRequest
  *   tunnelId: "STRING_VALUE", // required
- *   clientMode: "STRING_VALUE", // required
+ *   clientMode: "SOURCE" || "DESTINATION" || "ALL", // required
  *   destinationConfig: { // DestinationConfig
  *     thingName: "STRING_VALUE",
  *     services: [ // ServiceList // required
@@ -142,6 +143,10 @@ export class RotateTunnelAccessTokenCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: RotateTunnelAccessTokenResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IoTSecuredTunneling",
+        operation: "RotateTunnelAccessToken",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -24,16 +24,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `LookoutEquipmentClient` and
-the commands you need, for example `CreateDatasetCommand`:
+the commands you need, for example `ListModelsCommand`:
 
 ```js
 // ES5 example
-const { LookoutEquipmentClient, CreateDatasetCommand } = require("@aws-sdk/client-lookoutequipment");
+const { LookoutEquipmentClient, ListModelsCommand } = require("@aws-sdk/client-lookoutequipment");
 ```
 
 ```ts
 // ES6+ example
-import { LookoutEquipmentClient, CreateDatasetCommand } from "@aws-sdk/client-lookoutequipment";
+import { LookoutEquipmentClient, ListModelsCommand } from "@aws-sdk/client-lookoutequipment";
 ```
 
 ### Usage
@@ -52,7 +52,7 @@ const client = new LookoutEquipmentClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new CreateDatasetCommand(params);
+const command = new ListModelsCommand(params);
 ```
 
 #### Async/await
@@ -131,7 +131,7 @@ const client = new AWS.LookoutEquipment({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.createDataset(params);
+  const data = await client.listModels(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -139,7 +139,7 @@ try {
 
 // Promises.
 client
-  .createDataset(params)
+  .listModels(params)
   .then((data) => {
     // process data.
   })
@@ -148,7 +148,7 @@ client
   });
 
 // callbacks.
-client.createDataset(params, (err, data) => {
+client.listModels(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -246,6 +246,14 @@ CreateModel
 </details>
 <details>
 <summary>
+CreateRetrainingScheduler
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/createretrainingschedulercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/createretrainingschedulercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/createretrainingschedulercommandoutput.html)
+
+</details>
+<details>
+<summary>
 DeleteDataset
 </summary>
 
@@ -290,6 +298,14 @@ DeleteResourcePolicy
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/deleteresourcepolicycommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/deleteresourcepolicycommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/deleteresourcepolicycommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteRetrainingScheduler
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/deleteretrainingschedulercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/deleteretrainingschedulercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/deleteretrainingschedulercommandoutput.html)
 
 </details>
 <details>
@@ -354,6 +370,14 @@ DescribeResourcePolicy
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/describeresourcepolicycommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/describeresourcepolicycommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/describeresourcepolicycommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeRetrainingScheduler
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/describeretrainingschedulercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/describeretrainingschedulercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/describeretrainingschedulercommandoutput.html)
 
 </details>
 <details>
@@ -446,6 +470,14 @@ ListModelVersions
 </details>
 <details>
 <summary>
+ListRetrainingSchedulers
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/listretrainingschedulerscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/listretrainingschedulerscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/listretrainingschedulerscommandoutput.html)
+
+</details>
+<details>
+<summary>
 ListSensorStatistics
 </summary>
 
@@ -486,10 +518,26 @@ StartInferenceScheduler
 </details>
 <details>
 <summary>
+StartRetrainingScheduler
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/startretrainingschedulercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/startretrainingschedulercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/startretrainingschedulercommandoutput.html)
+
+</details>
+<details>
+<summary>
 StopInferenceScheduler
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/stopinferenceschedulercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/stopinferenceschedulercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/stopinferenceschedulercommandoutput.html)
+
+</details>
+<details>
+<summary>
+StopRetrainingScheduler
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/stopretrainingschedulercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/stopretrainingschedulercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/stopretrainingschedulercommandoutput.html)
 
 </details>
 <details>
@@ -530,5 +578,21 @@ UpdateLabelGroup
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/updatelabelgroupcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/updatelabelgroupcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/updatelabelgroupcommandoutput.html)
+
+</details>
+<details>
+<summary>
+UpdateModel
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/updatemodelcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/updatemodelcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/updatemodelcommandoutput.html)
+
+</details>
+<details>
+<summary>
+UpdateRetrainingScheduler
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/classes/updateretrainingschedulercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/updateretrainingschedulercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lookoutequipment/interfaces/updateretrainingschedulercommandoutput.html)
 
 </details>

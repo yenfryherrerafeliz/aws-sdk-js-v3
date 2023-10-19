@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MachineLearningClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MachineLearningClient";
@@ -58,7 +59,7 @@ export interface GetBatchPredictionCommandOutput extends GetBatchPredictionOutpu
  * //   CreatedAt: new Date("TIMESTAMP"),
  * //   LastUpdatedAt: new Date("TIMESTAMP"),
  * //   Name: "STRING_VALUE",
- * //   Status: "STRING_VALUE",
+ * //   Status: "PENDING" || "INPROGRESS" || "FAILED" || "COMPLETED" || "DELETED",
  * //   OutputUri: "STRING_VALUE",
  * //   LogUri: "STRING_VALUE",
  * //   Message: "STRING_VALUE",
@@ -140,6 +141,10 @@ export class GetBatchPredictionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonML_20141212",
+        operation: "GetBatchPrediction",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

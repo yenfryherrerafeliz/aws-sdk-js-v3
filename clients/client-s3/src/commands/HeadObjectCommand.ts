@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -42,9 +43,9 @@ export interface HeadObjectCommandOutput extends HeadObjectOutput, __MetadataBea
 
 /**
  * @public
- * <p>The <code>HEAD</code> action retrieves metadata from an object without returning the object itself.
- *          This action is useful if you're only interested in an object's metadata. To use <code>HEAD</code>, you
- *          must have READ access to the object.</p>
+ * <p>The <code>HEAD</code> action retrieves metadata from an object without returning the
+ *          object itself. This action is useful if you're only interested in an object's metadata. To
+ *          use <code>HEAD</code>, you must have READ access to the object.</p>
  *          <p>A <code>HEAD</code> request has the same options as a <code>GET</code> action on an
  *          object. The response is identical to the <code>GET</code> response except that there is no
  *          response body. Because of this, if the <code>HEAD</code> request generates an error, it
@@ -133,18 +134,18 @@ export interface HeadObjectCommandOutput extends HeadObjectOutput, __MetadataBea
  *          <dl>
  *             <dt>Permissions</dt>
  *             <dd>
- *                <p>You need the relevant read object (or version) permission for this operation. For more
- *                   information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/list_amazons3.html">Actions, resources, and condition keys for Amazon S3</a>.
- *                   If the object you request doesn't exist, the error that Amazon S3 returns depends
- *                   on whether you also have the s3:ListBucket permission.</p>
+ *                <p>You need the relevant read object (or version) permission for this operation.
+ *                   For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/list_amazons3.html">Actions, resources, and condition
+ *                      keys for Amazon S3</a>. If the object you request doesn't exist, the error that
+ *                   Amazon S3 returns depends on whether you also have the s3:ListBucket permission.</p>
  *                <ul>
  *                   <li>
- *                      <p>If you have the <code>s3:ListBucket</code> permission on the bucket, Amazon S3 returns
- *                         an HTTP status code 404 error.</p>
+ *                      <p>If you have the <code>s3:ListBucket</code> permission on the bucket, Amazon S3
+ *                         returns an HTTP status code 404 error.</p>
  *                   </li>
  *                   <li>
- *                      <p>If you don’t have the <code>s3:ListBucket</code> permission, Amazon S3 returns an HTTP
- *                         status code 403 error.</p>
+ *                      <p>If you don’t have the <code>s3:ListBucket</code> permission, Amazon S3 returns
+ *                         an HTTP status code 403 error.</p>
  *                   </li>
  *                </ul>
  *             </dd>
@@ -219,7 +220,7 @@ export interface HeadObjectCommandOutput extends HeadObjectOutput, __MetadataBea
  * //   BucketKeyEnabled: true || false,
  * //   StorageClass: "STANDARD" || "REDUCED_REDUNDANCY" || "STANDARD_IA" || "ONEZONE_IA" || "INTELLIGENT_TIERING" || "GLACIER" || "DEEP_ARCHIVE" || "OUTPOSTS" || "GLACIER_IR" || "SNOW",
  * //   RequestCharged: "requester",
- * //   ReplicationStatus: "COMPLETE" || "PENDING" || "FAILED" || "REPLICA",
+ * //   ReplicationStatus: "COMPLETE" || "PENDING" || "FAILED" || "REPLICA" || "COMPLETED",
  * //   PartsCount: Number("int"),
  * //   ObjectLockMode: "GOVERNANCE" || "COMPLIANCE",
  * //   ObjectLockRetainUntilDate: new Date("TIMESTAMP"),
@@ -319,6 +320,10 @@ export class HeadObjectCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: HeadObjectRequestFilterSensitiveLog,
       outputFilterSensitiveLog: HeadObjectOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonS3",
+        operation: "HeadObject",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

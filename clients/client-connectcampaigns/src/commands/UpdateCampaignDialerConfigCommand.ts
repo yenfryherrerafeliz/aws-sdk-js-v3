@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ConnectCampaignsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectCampaignsClient";
@@ -48,9 +49,14 @@ export interface UpdateCampaignDialerConfigCommandOutput extends __MetadataBeare
  *   dialerConfig: { // DialerConfig Union: only one key present
  *     progressiveDialerConfig: { // ProgressiveDialerConfig
  *       bandwidthAllocation: Number("double"), // required
+ *       dialingCapacity: Number("double"),
  *     },
  *     predictiveDialerConfig: { // PredictiveDialerConfig
  *       bandwidthAllocation: Number("double"), // required
+ *       dialingCapacity: Number("double"),
+ *     },
+ *     agentlessDialerConfig: { // AgentlessDialerConfig
+ *       dialingCapacity: Number("double"),
  *     },
  *   },
  * };
@@ -135,6 +141,10 @@ export class UpdateCampaignDialerConfigCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonConnectCampaignService",
+        operation: "UpdateCampaignDialerConfig",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

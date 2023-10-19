@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateOrganizationRequest, CreateOrganizationResponse } from "../models/models_0";
@@ -57,7 +58,7 @@ export interface CreateOrganizationCommandOutput extends CreateOrganizationRespo
  *   ClientToken: "STRING_VALUE",
  *   Domains: [ // Domains
  *     { // Domain
- *       DomainName: "STRING_VALUE",
+ *       DomainName: "STRING_VALUE", // required
  *       HostedZoneId: "STRING_VALUE",
  *     },
  *   ],
@@ -147,6 +148,10 @@ export class CreateOrganizationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkMailService",
+        operation: "CreateOrganization",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

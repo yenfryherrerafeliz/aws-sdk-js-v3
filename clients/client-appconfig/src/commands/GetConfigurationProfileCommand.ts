@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AppConfigClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppConfigClient";
@@ -67,6 +68,8 @@ export interface GetConfigurationProfileCommandOutput extends ConfigurationProfi
  * //     },
  * //   ],
  * //   Type: "STRING_VALUE",
+ * //   KmsKeyArn: "STRING_VALUE",
+ * //   KmsKeyIdentifier: "STRING_VALUE",
  * // };
  *
  * ```
@@ -161,6 +164,10 @@ export class GetConfigurationProfileCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: ConfigurationProfileFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonAppConfig",
+        operation: "GetConfigurationProfile",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

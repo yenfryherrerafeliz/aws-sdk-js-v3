@@ -1,4 +1,9 @@
 // smithy-typescript generated code
+import {
+  getAwsRegionExtensionConfiguration,
+  resolveAwsRegionExtensionConfiguration,
+} from "@aws-sdk/region-config-resolver";
+import { getHttpHandlerExtensionConfiguration, resolveHttpHandlerRuntimeConfig } from "@smithy/protocol-http";
 import { getDefaultExtensionConfiguration, resolveDefaultRuntimeConfig } from "@smithy/smithy-client";
 
 import { IoTSecureTunnelingExtensionConfiguration } from "./extensionConfiguration";
@@ -7,7 +12,7 @@ import { IoTSecureTunnelingExtensionConfiguration } from "./extensionConfigurati
  * @public
  */
 export interface RuntimeExtension {
-  configure(clientConfiguration: IoTSecureTunnelingExtensionConfiguration): void;
+  configure(extensionConfiguration: IoTSecureTunnelingExtensionConfiguration): void;
 }
 
 /**
@@ -24,13 +29,17 @@ const asPartial = <T extends Partial<IoTSecureTunnelingExtensionConfiguration>>(
  */
 export const resolveRuntimeExtensions = (runtimeConfig: any, extensions: RuntimeExtension[]) => {
   const extensionConfiguration: IoTSecureTunnelingExtensionConfiguration = {
+    ...asPartial(getAwsRegionExtensionConfiguration(runtimeConfig)),
     ...asPartial(getDefaultExtensionConfiguration(runtimeConfig)),
+    ...asPartial(getHttpHandlerExtensionConfiguration(runtimeConfig)),
   };
 
   extensions.forEach((extension) => extension.configure(extensionConfiguration));
 
   return {
     ...runtimeConfig,
+    ...resolveAwsRegionExtensionConfiguration(extensionConfiguration),
     ...resolveDefaultRuntimeConfig(extensionConfiguration),
+    ...resolveHttpHandlerRuntimeConfig(extensionConfiguration),
   };
 };

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { InspectorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../InspectorClient";
@@ -46,7 +47,7 @@ export interface SubscribeToEventCommandOutput extends __MetadataBearer {}
  * const client = new InspectorClient(config);
  * const input = { // SubscribeToEventRequest
  *   resourceArn: "STRING_VALUE", // required
- *   event: "STRING_VALUE", // required
+ *   event: "ASSESSMENT_RUN_STARTED" || "ASSESSMENT_RUN_COMPLETED" || "ASSESSMENT_RUN_STATE_CHANGED" || "FINDING_REPORTED" || "OTHER", // required
  *   topicArn: "STRING_VALUE", // required
  * };
  * const command = new SubscribeToEventCommand(input);
@@ -149,6 +150,10 @@ export class SubscribeToEventCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "InspectorService",
+        operation: "SubscribeToEvent",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

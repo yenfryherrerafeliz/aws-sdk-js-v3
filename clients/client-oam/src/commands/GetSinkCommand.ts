@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetSinkInput, GetSinkOutput } from "../models/models_0";
@@ -37,7 +38,7 @@ export interface GetSinkCommandOutput extends GetSinkOutput, __MetadataBearer {}
 /**
  * @public
  * <p>Returns complete information about one monitoring account sink.</p>
- *         <p>To use this operation, provide the sink ARN. To retrieve a list of sink ARNs, use <a href="https://docs.aws.amazon.com/OAM/latest/APIReference/API_ListSinks.html">ListSinks</a>.</p>
+ *          <p>To use this operation, provide the sink ARN. To retrieve a list of sink ARNs, use <a href="https://docs.aws.amazon.com/OAM/latest/APIReference/API_ListSinks.html">ListSinks</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -126,6 +127,10 @@ export class GetSinkCommand extends $Command<GetSinkCommandInput, GetSinkCommand
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "oamservice",
+        operation: "GetSink",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

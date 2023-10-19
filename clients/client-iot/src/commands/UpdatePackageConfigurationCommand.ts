@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTClient";
@@ -36,7 +37,7 @@ export interface UpdatePackageConfigurationCommandOutput extends UpdatePackageCo
 
 /**
  * @public
- * <p>Updates the package configuration.</p>
+ * <p>Updates the software package configuration.</p>
  *          <p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">UpdatePackageConfiguration</a> and <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html">iam:PassRole</a> actions.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -127,6 +128,10 @@ export class UpdatePackageConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIotService",
+        operation: "UpdatePackageConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

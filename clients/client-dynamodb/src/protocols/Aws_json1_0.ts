@@ -1,4 +1,5 @@
 // smithy-typescript generated code
+import { awsExpectUnion as __expectUnion } from "@aws-sdk/core";
 import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
@@ -10,7 +11,6 @@ import {
   expectNonNull as __expectNonNull,
   expectNumber as __expectNumber,
   expectString as __expectString,
-  expectUnion as __expectUnion,
   limitedParseDouble as __limitedParseDouble,
   parseEpochTimestamp as __parseEpochTimestamp,
   serializeFloat as __serializeFloat,
@@ -236,6 +236,7 @@ import {
   ImportTableDescription,
   ImportTableInput,
   ImportTableOutput,
+  IncrementalExportSpecification,
   IndexNotFoundException,
   InputFormatOptions,
   InternalServerError,
@@ -4834,6 +4835,8 @@ const se_ExportTableToPointInTimeInput = (input: ExportTableToPointInTimeInput, 
     ClientToken: [true, (_) => _ ?? generateIdempotencyToken()],
     ExportFormat: [],
     ExportTime: (_) => Math.round(_.getTime() / 1000),
+    ExportType: [],
+    IncrementalExportSpecification: (_) => se_IncrementalExportSpecification(_, context),
     S3Bucket: [],
     S3BucketOwner: [],
     S3Prefix: [],
@@ -4972,6 +4975,17 @@ const se_ImportTableInput = (input: ImportTableInput, context: __SerdeContext): 
     InputFormatOptions: _json,
     S3BucketSource: _json,
     TableCreationParameters: _json,
+  });
+};
+
+/**
+ * serializeAws_json1_0IncrementalExportSpecification
+ */
+const se_IncrementalExportSpecification = (input: IncrementalExportSpecification, context: __SerdeContext): any => {
+  return take(input, {
+    ExportFromTime: (_) => Math.round(_.getTime() / 1000),
+    ExportToTime: (_) => Math.round(_.getTime() / 1000),
+    ExportViewType: [],
   });
 };
 
@@ -5595,9 +5609,9 @@ const de_AttributeMap = (output: any, context: __SerdeContext): Record<string, A
     if (value === null) {
       return acc;
     }
-    acc[key] = de_AttributeValue(__expectUnion(value), context);
+    acc[key as string] = de_AttributeValue(__expectUnion(value), context);
     return acc;
-  }, {});
+  }, {} as Record<string, AttributeValue>);
 };
 
 // de_AttributeNameList omitted.
@@ -5791,9 +5805,9 @@ const de_BatchGetRequestMap = (output: any, context: __SerdeContext): Record<str
     if (value === null) {
       return acc;
     }
-    acc[key] = de_KeysAndAttributes(value, context);
+    acc[key as string] = de_KeysAndAttributes(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, KeysAndAttributes>);
 };
 
 /**
@@ -5808,10 +5822,10 @@ const de_BatchGetResponseMap = (
       if (value === null) {
         return acc;
       }
-      acc[key] = de_ItemList(value, context);
+      acc[key as string] = de_ItemList(value, context);
       return acc;
     },
-    {}
+    {} as Record<string, Record<string, AttributeValue>[]>
   );
 };
 
@@ -5856,9 +5870,9 @@ const de_BatchWriteItemRequestMap = (output: any, context: __SerdeContext): Reco
     if (value === null) {
       return acc;
     }
-    acc[key] = de_WriteRequests(value, context);
+    acc[key as string] = de_WriteRequests(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, WriteRequest[]>);
 };
 
 /**
@@ -6188,8 +6202,10 @@ const de_ExportDescription = (output: any, context: __SerdeContext): ExportDescr
     ExportManifest: __expectString,
     ExportStatus: __expectString,
     ExportTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    ExportType: __expectString,
     FailureCode: __expectString,
     FailureMessage: __expectString,
+    IncrementalExportSpecification: (_: any) => de_IncrementalExportSpecification(_, context),
     ItemCount: __expectLong,
     S3Bucket: __expectString,
     S3BucketOwner: __expectString,
@@ -6362,6 +6378,17 @@ const de_ImportTableOutput = (output: any, context: __SerdeContext): ImportTable
   }) as any;
 };
 
+/**
+ * deserializeAws_json1_0IncrementalExportSpecification
+ */
+const de_IncrementalExportSpecification = (output: any, context: __SerdeContext): IncrementalExportSpecification => {
+  return take(output, {
+    ExportFromTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    ExportToTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
+    ExportViewType: __expectString,
+  }) as any;
+};
+
 // de_IndexNotFoundException omitted.
 
 // de_InputFormatOptions omitted.
@@ -6382,9 +6409,9 @@ const de_ItemCollectionKeyAttributeMap = (output: any, context: __SerdeContext):
     if (value === null) {
       return acc;
     }
-    acc[key] = de_AttributeValue(__expectUnion(value), context);
+    acc[key as string] = de_AttributeValue(__expectUnion(value), context);
     return acc;
-  }, {});
+  }, {} as Record<string, AttributeValue>);
 };
 
 /**
@@ -6420,9 +6447,9 @@ const de_ItemCollectionMetricsPerTable = (
     if (value === null) {
       return acc;
     }
-    acc[key] = de_ItemCollectionMetricsMultiple(value, context);
+    acc[key as string] = de_ItemCollectionMetricsMultiple(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, ItemCollectionMetrics[]>);
 };
 
 /**
@@ -6480,9 +6507,9 @@ const de_Key = (output: any, context: __SerdeContext): Record<string, AttributeV
     if (value === null) {
       return acc;
     }
-    acc[key] = de_AttributeValue(__expectUnion(value), context);
+    acc[key as string] = de_AttributeValue(__expectUnion(value), context);
     return acc;
-  }, {});
+  }, {} as Record<string, AttributeValue>);
 };
 
 /**
@@ -6580,9 +6607,9 @@ const de_MapAttributeValue = (output: any, context: __SerdeContext): Record<stri
     if (value === null) {
       return acc;
     }
-    acc[key] = de_AttributeValue(__expectUnion(value), context);
+    acc[key as string] = de_AttributeValue(__expectUnion(value), context);
     return acc;
-  }, {});
+  }, {} as Record<string, AttributeValue>);
 };
 
 // de_NonKeyAttributeNameList omitted.
@@ -6646,9 +6673,9 @@ const de_PutItemInputAttributeMap = (output: any, context: __SerdeContext): Reco
     if (value === null) {
       return acc;
     }
-    acc[key] = de_AttributeValue(__expectUnion(value), context);
+    acc[key as string] = de_AttributeValue(__expectUnion(value), context);
     return acc;
-  }, {});
+  }, {} as Record<string, AttributeValue>);
 };
 
 /**
@@ -6903,9 +6930,9 @@ const de_SecondaryIndexesCapacityMap = (output: any, context: __SerdeContext): R
     if (value === null) {
       return acc;
     }
-    acc[key] = de_Capacity(value, context);
+    acc[key as string] = de_Capacity(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, Capacity>);
 };
 
 /**

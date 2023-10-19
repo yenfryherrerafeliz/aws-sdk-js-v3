@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -39,10 +40,10 @@ export interface BatchCheckLayerAvailabilityCommandOutput
 /**
  * @public
  * <p>Checks the availability of one or more image layers in a repository.</p>
- *         <p>When an image is pushed to a repository, each image layer is checked to verify if it
+ *          <p>When an image is pushed to a repository, each image layer is checked to verify if it
  *             has been uploaded before. If it has been uploaded, then the image layer is
  *             skipped.</p>
- *         <note>
+ *          <note>
  *             <p>This operation is used by the Amazon ECR proxy and is not generally used by
  *         customers for pulling and pushing images. In most cases, you should use the <code>docker</code> CLI to pull, tag, and push images.</p>
  *          </note>
@@ -65,7 +66,7 @@ export interface BatchCheckLayerAvailabilityCommandOutput
  * //   layers: [ // LayerList
  * //     { // Layer
  * //       layerDigest: "STRING_VALUE",
- * //       layerAvailability: "STRING_VALUE",
+ * //       layerAvailability: "AVAILABLE" || "UNAVAILABLE",
  * //       layerSize: Number("long"),
  * //       mediaType: "STRING_VALUE",
  * //     },
@@ -73,7 +74,7 @@ export interface BatchCheckLayerAvailabilityCommandOutput
  * //   failures: [ // LayerFailureList
  * //     { // LayerFailure
  * //       layerDigest: "STRING_VALUE",
- * //       failureCode: "STRING_VALUE",
+ * //       failureCode: "InvalidLayerDigest" || "MissingLayerDigest",
  * //       failureReason: "STRING_VALUE",
  * //     },
  * //   ],
@@ -152,6 +153,10 @@ export class BatchCheckLayerAvailabilityCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "BatchCheckLayerAvailability",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

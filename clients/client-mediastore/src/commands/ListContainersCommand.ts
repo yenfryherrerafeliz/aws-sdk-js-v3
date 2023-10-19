@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MediaStoreClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaStoreClient";
@@ -64,7 +65,7 @@ export interface ListContainersCommandOutput extends ListContainersOutput, __Met
  * //       CreationTime: new Date("TIMESTAMP"),
  * //       ARN: "STRING_VALUE",
  * //       Name: "STRING_VALUE",
- * //       Status: "STRING_VALUE",
+ * //       Status: "ACTIVE" || "CREATING" || "DELETING",
  * //       AccessLoggingEnabled: true || false,
  * //     },
  * //   ],
@@ -136,6 +137,10 @@ export class ListContainersCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaStore_20170901",
+        operation: "ListContainers",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

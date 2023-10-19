@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
@@ -41,8 +42,7 @@ export interface GetMetricDataV2CommandOutput extends GetMetricDataV2Response, _
  *             <code>GetMetricDataV2</code> offers more features than <a href="https://docs.aws.amazon.com/connect/latest/APIReference/API_GetMetricData.html">GetMetricData</a>, the previous
  *    version of this API. It has new metrics, offers filtering at a metric level, and offers the
  *    ability to filter and group data by channels, queues, routing profiles, agents, and agent
- *    hierarchy levels. It can retrieve historical data for the last 35 days, in 24-hour
- *    intervals.</p>
+ *    hierarchy levels. It can retrieve historical data for the last 3 months, at varying intervals. </p>
  *          <p>For a description of the historical metrics that are supported by
  *     <code>GetMetricDataV2</code> and <code>GetMetricData</code>, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/historical-metrics-definitions.html">Historical metrics
  *     definitions</a> in the <i>Amazon Connect Administrator's Guide</i>.</p>
@@ -56,6 +56,10 @@ export interface GetMetricDataV2CommandOutput extends GetMetricDataV2Response, _
  *   ResourceArn: "STRING_VALUE", // required
  *   StartTime: new Date("TIMESTAMP"), // required
  *   EndTime: new Date("TIMESTAMP"), // required
+ *   Interval: { // IntervalDetails
+ *     TimeZone: "STRING_VALUE",
+ *     IntervalPeriod: "FIFTEEN_MIN" || "THIRTY_MIN" || "HOUR" || "DAY" || "WEEK" || "TOTAL",
+ *   },
  *   Filters: [ // FiltersV2List // required
  *     { // FilterV2
  *       FilterKey: "STRING_VALUE",
@@ -82,6 +86,7 @@ export interface GetMetricDataV2CommandOutput extends GetMetricDataV2Response, _
  *           MetricFilterValues: [ // MetricFilterValueList
  *             "STRING_VALUE",
  *           ],
+ *           Negate: true || false,
  *         },
  *       ],
  *     },
@@ -97,6 +102,11 @@ export interface GetMetricDataV2CommandOutput extends GetMetricDataV2Response, _
  * //     { // MetricResultV2
  * //       Dimensions: { // DimensionsV2Map
  * //         "<keys>": "STRING_VALUE",
+ * //       },
+ * //       MetricInterval: { // MetricInterval
+ * //         Interval: "FIFTEEN_MIN" || "THIRTY_MIN" || "HOUR" || "DAY" || "WEEK" || "TOTAL",
+ * //         StartTime: new Date("TIMESTAMP"),
+ * //         EndTime: new Date("TIMESTAMP"),
  * //       },
  * //       Collections: [ // MetricDataCollectionsV2
  * //         { // MetricDataV2
@@ -114,6 +124,7 @@ export interface GetMetricDataV2CommandOutput extends GetMetricDataV2Response, _
  * //                 MetricFilterValues: [ // MetricFilterValueList
  * //                   "STRING_VALUE",
  * //                 ],
+ * //                 Negate: true || false,
  * //               },
  * //             ],
  * //           },
@@ -201,6 +212,10 @@ export class GetMetricDataV2Command extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonConnectService",
+        operation: "GetMetricDataV2",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

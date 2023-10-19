@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { HttpPayloadWithStructureInputOutput } from "../models/models_0";
@@ -35,7 +36,7 @@ export interface HttpPayloadWithStructureCommandOutput extends HttpPayloadWithSt
 
 /**
  * @public
- * This examples serializes a structure in the payload.
+ * This example serializes a structure in the payload.
  *
  * Note that serializing a structure changes the wrapper element name
  * to match the targeted structure.
@@ -110,6 +111,10 @@ export class HttpPayloadWithStructureCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestXml",
+        operation: "HttpPayloadWithStructure",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

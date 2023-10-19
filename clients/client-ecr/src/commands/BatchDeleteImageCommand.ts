@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -38,9 +39,9 @@ export interface BatchDeleteImageCommandOutput extends BatchDeleteImageResponse,
  * @public
  * <p>Deletes a list of specified images within a repository. Images are specified with
  *             either an <code>imageTag</code> or <code>imageDigest</code>.</p>
- *         <p>You can remove a tag from an image by specifying the image's tag in your request. When
+ *          <p>You can remove a tag from an image by specifying the image's tag in your request. When
  *             you remove the last tag from an image, the image is deleted from your repository.</p>
- *         <p>You can completely delete an image (and all of its tags) by specifying the image's
+ *          <p>You can completely delete an image (and all of its tags) by specifying the image's
  *             digest in your request.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -73,7 +74,7 @@ export interface BatchDeleteImageCommandOutput extends BatchDeleteImageResponse,
  * //         imageDigest: "STRING_VALUE",
  * //         imageTag: "STRING_VALUE",
  * //       },
- * //       failureCode: "STRING_VALUE",
+ * //       failureCode: "InvalidImageDigest" || "InvalidImageTag" || "ImageTagDoesNotMatchDigest" || "ImageNotFound" || "MissingDigestAndTag" || "ImageReferencedByManifestList" || "KmsError",
  * //       failureReason: "STRING_VALUE",
  * //     },
  * //   ],
@@ -179,6 +180,10 @@ export class BatchDeleteImageCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "BatchDeleteImage",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

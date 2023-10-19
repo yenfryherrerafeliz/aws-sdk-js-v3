@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeartifactClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeartifactClient";
@@ -74,7 +75,7 @@ export interface AssociateExternalConnectionCommandOutput extends AssociateExter
  * //     externalConnections: [ // RepositoryExternalConnectionInfoList
  * //       { // RepositoryExternalConnectionInfo
  * //         externalConnectionName: "STRING_VALUE",
- * //         packageFormat: "npm" || "pypi" || "maven" || "nuget" || "generic",
+ * //         packageFormat: "npm" || "pypi" || "maven" || "nuget" || "generic" || "swift",
  * //         status: "Available",
  * //       },
  * //     ],
@@ -177,6 +178,10 @@ export class AssociateExternalConnectionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeArtifactControlPlaneService",
+        operation: "AssociateExternalConnection",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

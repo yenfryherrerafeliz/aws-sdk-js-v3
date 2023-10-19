@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { InspectorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../InspectorClient";
@@ -57,7 +58,7 @@ export interface PreviewAgentsCommandOutput extends PreviewAgentsResponse, __Met
  * //       hostname: "STRING_VALUE",
  * //       agentId: "STRING_VALUE", // required
  * //       autoScalingGroup: "STRING_VALUE",
- * //       agentHealth: "STRING_VALUE",
+ * //       agentHealth: "HEALTHY" || "UNHEALTHY" || "UNKNOWN",
  * //       agentVersion: "STRING_VALUE",
  * //       operatingSystem: "STRING_VALUE",
  * //       kernelVersion: "STRING_VALUE",
@@ -167,6 +168,10 @@ export class PreviewAgentsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "InspectorService",
+        operation: "PreviewAgents",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

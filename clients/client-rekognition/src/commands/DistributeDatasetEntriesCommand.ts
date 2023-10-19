@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DistributeDatasetEntriesRequest, DistributeDatasetEntriesResponse } from "../models/models_0";
@@ -36,7 +37,10 @@ export interface DistributeDatasetEntriesCommandOutput extends DistributeDataset
 
 /**
  * @public
- * <p>Distributes the entries (images) in a training dataset across the training dataset and the test dataset for a project.
+ * <note>
+ *             <p>This operation applies only to Amazon Rekognition Custom Labels.</p>
+ *          </note>
+ *          <p>Distributes the entries (images) in a training dataset across the training dataset and the test dataset for a project.
  *          <code>DistributeDatasetEntries</code> moves 20% of the training dataset images to the test dataset.
  *          An entry is a JSON Line that describes an image.
  *       </p>
@@ -169,6 +173,10 @@ export class DistributeDatasetEntriesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RekognitionService",
+        operation: "DistributeDatasetEntries",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateDomainRequest, CreateDomainResponse } from "../models/models_1";
@@ -174,6 +175,19 @@ export interface CreateDomainCommandOutput extends CreateDomainResponse, __Metad
  *         S3ArtifactPath: "STRING_VALUE",
  *         S3KmsKeyId: "STRING_VALUE",
  *       },
+ *       IdentityProviderOAuthSettings: [ // IdentityProviderOAuthSettings
+ *         { // IdentityProviderOAuthSetting
+ *           DataSourceName: "SalesforceGenie" || "Snowflake",
+ *           Status: "ENABLED" || "DISABLED",
+ *           SecretArn: "STRING_VALUE",
+ *         },
+ *       ],
+ *       KendraSettings: { // KendraSettings
+ *         Status: "ENABLED" || "DISABLED",
+ *       },
+ *       DirectDeploySettings: { // DirectDeploySettings
+ *         Status: "ENABLED" || "DISABLED",
+ *       },
  *     },
  *   },
  *   SubnetIds: [ // Subnets // required
@@ -312,6 +326,10 @@ export class CreateDomainCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "CreateDomain",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { RemoveAttributesRequest, RemoveAttributesResponse } from "../models/models_1";
@@ -36,7 +37,7 @@ export interface RemoveAttributesCommandOutput extends RemoveAttributesResponse,
 
 /**
  * @public
- * <p>Removes one or more attributes, of the same attribute type, from all the endpoints that are associated with an application.</p>
+ * <p>Removes one or more custom attributes, of the same attribute type, from the application. Existing endpoints still have the attributes but Amazon Pinpoint will stop capturing new or changed values for these attributes.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -147,6 +148,10 @@ export class RemoveAttributesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Pinpoint",
+        operation: "RemoveAttributes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

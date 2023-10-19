@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateOutpostInput, UpdateOutpostOutput } from "../models/models_0";
@@ -36,9 +37,7 @@ export interface UpdateOutpostCommandOutput extends UpdateOutpostOutput, __Metad
 
 /**
  * @public
- * <p>
- *       Updates an Outpost.
- *     </p>
+ * <p> Updates an Outpost. </p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -147,6 +146,10 @@ export class UpdateOutpostCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OutpostsOlafService",
+        operation: "UpdateOutpost",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

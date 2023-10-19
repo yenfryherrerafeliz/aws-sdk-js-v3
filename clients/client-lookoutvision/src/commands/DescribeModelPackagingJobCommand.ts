@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutVisionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutVisionClient";
@@ -40,7 +41,6 @@ export interface DescribeModelPackagingJobCommandOutput extends DescribeModelPac
  * </p>
  *          <p>This operation requires permissions to perform the
  *          <code>lookoutvision:DescribeModelPackagingJob</code> operation.</p>
- *
  *          <p>For more information, see
  *          <i>Using your Amazon Lookout for Vision model on an edge device</i> in the  Amazon Lookout for Vision Developer Guide. </p>
  * @example
@@ -178,6 +178,10 @@ export class DescribeModelPackagingJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutVisionService",
+        operation: "DescribeModelPackagingJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

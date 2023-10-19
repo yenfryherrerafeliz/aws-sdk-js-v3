@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -38,7 +39,7 @@ export interface BatchGetImageCommandOutput extends BatchGetImageResponse, __Met
  * @public
  * <p>Gets detailed information for an image. Images are specified with either an
  *                 <code>imageTag</code> or <code>imageDigest</code>.</p>
- *         <p>When an image is pulled, the BatchGetImage API is called once to retrieve the image
+ *          <p>When an image is pulled, the BatchGetImage API is called once to retrieve the image
  *             manifest.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -80,7 +81,7 @@ export interface BatchGetImageCommandOutput extends BatchGetImageResponse, __Met
  * //         imageDigest: "STRING_VALUE",
  * //         imageTag: "STRING_VALUE",
  * //       },
- * //       failureCode: "STRING_VALUE",
+ * //       failureCode: "InvalidImageDigest" || "InvalidImageTag" || "ImageTagDoesNotMatchDigest" || "ImageNotFound" || "MissingDigestAndTag" || "ImageReferencedByManifestList" || "KmsError",
  * //       failureReason: "STRING_VALUE",
  * //     },
  * //   ],
@@ -189,6 +190,10 @@ export class BatchGetImageCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "BatchGetImage",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

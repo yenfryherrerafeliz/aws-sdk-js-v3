@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AnalyzeDocumentRequest, AnalyzeDocumentResponse } from "../models/models_0";
@@ -99,7 +100,7 @@ export interface AnalyzeDocumentCommandOutput extends AnalyzeDocumentResponse, _
  *     },
  *   },
  *   FeatureTypes: [ // FeatureTypes // required
- *     "TABLES" || "FORMS" || "QUERIES" || "SIGNATURES",
+ *     "TABLES" || "FORMS" || "QUERIES" || "SIGNATURES" || "LAYOUT",
  *   ],
  *   HumanLoopConfig: { // HumanLoopConfig
  *     HumanLoopName: "STRING_VALUE", // required
@@ -121,6 +122,17 @@ export interface AnalyzeDocumentCommandOutput extends AnalyzeDocumentResponse, _
  *       },
  *     ],
  *   },
+ *   AdaptersConfig: { // AdaptersConfig
+ *     Adapters: [ // Adapters // required
+ *       { // Adapter
+ *         AdapterId: "STRING_VALUE", // required
+ *         Pages: [ // AdapterPages
+ *           "STRING_VALUE",
+ *         ],
+ *         Version: "STRING_VALUE", // required
+ *       },
+ *     ],
+ *   },
  * };
  * const command = new AnalyzeDocumentCommand(input);
  * const response = await client.send(command);
@@ -130,7 +142,7 @@ export interface AnalyzeDocumentCommandOutput extends AnalyzeDocumentResponse, _
  * //   },
  * //   Blocks: [ // BlockList
  * //     { // Block
- * //       BlockType: "KEY_VALUE_SET" || "PAGE" || "LINE" || "WORD" || "TABLE" || "CELL" || "SELECTION_ELEMENT" || "MERGED_CELL" || "TITLE" || "QUERY" || "QUERY_RESULT" || "SIGNATURE" || "TABLE_TITLE" || "TABLE_FOOTER",
+ * //       BlockType: "KEY_VALUE_SET" || "PAGE" || "LINE" || "WORD" || "TABLE" || "CELL" || "SELECTION_ELEMENT" || "MERGED_CELL" || "TITLE" || "QUERY" || "QUERY_RESULT" || "SIGNATURE" || "TABLE_TITLE" || "TABLE_FOOTER" || "LAYOUT_TEXT" || "LAYOUT_TITLE" || "LAYOUT_HEADER" || "LAYOUT_FOOTER" || "LAYOUT_SECTION_HEADER" || "LAYOUT_PAGE_NUMBER" || "LAYOUT_LIST" || "LAYOUT_FIGURE" || "LAYOUT_TABLE" || "LAYOUT_KEY_VALUE",
  * //       Confidence: Number("float"),
  * //       Text: "STRING_VALUE",
  * //       TextType: "HANDWRITING" || "PRINTED",
@@ -290,6 +302,10 @@ export class AnalyzeDocumentCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Textract",
+        operation: "AnalyzeDocument",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

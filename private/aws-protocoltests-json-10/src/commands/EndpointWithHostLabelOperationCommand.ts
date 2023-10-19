@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { JSONRPC10ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../JSONRPC10Client";
@@ -36,6 +37,34 @@ export interface EndpointWithHostLabelOperationCommandInput extends EndpointWith
  */
 export interface EndpointWithHostLabelOperationCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { JSONRPC10Client, EndpointWithHostLabelOperationCommand } from "@aws-sdk/aws-protocoltests-json-10"; // ES Modules import
+ * // const { JSONRPC10Client, EndpointWithHostLabelOperationCommand } = require("@aws-sdk/aws-protocoltests-json-10"); // CommonJS import
+ * const client = new JSONRPC10Client(config);
+ * const input = { // EndpointWithHostLabelOperationInput
+ *   label: "STRING_VALUE", // required
+ * };
+ * const command = new EndpointWithHostLabelOperationCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param EndpointWithHostLabelOperationCommandInput - {@link EndpointWithHostLabelOperationCommandInput}
+ * @returns {@link EndpointWithHostLabelOperationCommandOutput}
+ * @see {@link EndpointWithHostLabelOperationCommandInput} for command's `input` shape.
+ * @see {@link EndpointWithHostLabelOperationCommandOutput} for command's `response` shape.
+ * @see {@link JSONRPC10ClientResolvedConfig | config} for JSONRPC10Client's `config` shape.
+ *
+ * @throws {@link JSONRPC10ServiceException}
+ * <p>Base exception class for all service exceptions from JSONRPC10 service.</p>
+ *
+ */
 export class EndpointWithHostLabelOperationCommand extends $Command<
   EndpointWithHostLabelOperationCommandInput,
   EndpointWithHostLabelOperationCommandOutput,
@@ -74,6 +103,10 @@ export class EndpointWithHostLabelOperationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "JsonRpc10",
+        operation: "EndpointWithHostLabelOperation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

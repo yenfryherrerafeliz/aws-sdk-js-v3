@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -41,9 +42,9 @@ export interface SetSubnetsCommandOutput extends SetSubnetsOutput, __MetadataBea
 /**
  * @public
  * <p>Enables the Availability Zones for the specified public subnets for the specified
- *       Application Load Balancer or Network Load Balancer. The specified subnets replace the
+ *       Application Load Balancer, Network Load Balancer or Gateway Load Balancer. The specified subnets replace the
  *       previously enabled subnets.</p>
- *          <p>When you specify subnets for a Network Load Balancer, you must include all subnets that
+ *          <p>When you specify subnets for a Network Load Balancer, or Gateway Load Balancer you must include all subnets that
  *       were enabled previously, with their existing configurations, plus any additional
  *       subnets.</p>
  * @example
@@ -195,6 +196,10 @@ export class SetSubnetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ElasticLoadBalancing_v10",
+        operation: "SetSubnets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

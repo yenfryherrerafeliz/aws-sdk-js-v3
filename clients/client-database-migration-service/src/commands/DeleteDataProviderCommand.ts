@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -64,6 +65,11 @@ export interface DeleteDataProviderCommandOutput extends DeleteDataProviderRespo
  * //     Description: "STRING_VALUE",
  * //     Engine: "STRING_VALUE",
  * //     Settings: { // DataProviderSettings Union: only one key present
+ * //       RedshiftSettings: { // RedshiftDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         DatabaseName: "STRING_VALUE",
+ * //       },
  * //       PostgreSqlSettings: { // PostgreSqlDataProviderSettings
  * //         ServerName: "STRING_VALUE",
  * //         Port: Number("int"),
@@ -96,6 +102,29 @@ export interface DeleteDataProviderCommandOutput extends DeleteDataProviderRespo
  * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
  * //         CertificateArn: "STRING_VALUE",
  * //       },
+ * //       DocDbSettings: { // DocDbDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         DatabaseName: "STRING_VALUE",
+ * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //         CertificateArn: "STRING_VALUE",
+ * //       },
+ * //       MariaDbSettings: { // MariaDbDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //         CertificateArn: "STRING_VALUE",
+ * //       },
+ * //       MongoDbSettings: { // MongoDbDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         DatabaseName: "STRING_VALUE",
+ * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //         CertificateArn: "STRING_VALUE",
+ * //         AuthType: "no" || "password",
+ * //         AuthSource: "STRING_VALUE",
+ * //         AuthMechanism: "default" || "mongodb_cr" || "scram_sha_1",
+ * //       },
  * //     },
  * //   },
  * // };
@@ -120,6 +149,35 @@ export interface DeleteDataProviderCommandOutput extends DeleteDataProviderRespo
  *
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
+ *
+ * @example Delete Data Provider
+ * ```javascript
+ * // Deletes the specified data provider.
+ * const input = {
+ *   "DataProviderIdentifier": "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+ * };
+ * const command = new DeleteDataProviderCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "DataProvider": {
+ *     "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:my-target-data-provider",
+ *     "DataProviderCreationTime": "2023-05-12T10:50:41.988561Z",
+ *     "DataProviderName": "my-target-data-provider",
+ *     "Engine": "postgres",
+ *     "Settings": {
+ *       "PostgreSqlSettings": {
+ *         "DatabaseName": "target",
+ *         "Port": 5432,
+ *         "ServerName": "postrgesql.0a1b2c3d4e5f.us-east-1.rds.amazonaws.com",
+ *         "SslMode": "none"
+ *       }
+ *     }
+ *   }
+ * }
+ * *\/
+ * // example id: delete-data-provider-1689724476356
+ * ```
  *
  */
 export class DeleteDataProviderCommand extends $Command<
@@ -172,6 +230,10 @@ export class DeleteDataProviderCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "DeleteDataProvider",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

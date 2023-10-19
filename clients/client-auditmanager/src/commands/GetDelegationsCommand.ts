@@ -11,10 +11,15 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AuditManagerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AuditManagerClient";
-import { GetDelegationsRequest, GetDelegationsResponse } from "../models/models_0";
+import {
+  GetDelegationsRequest,
+  GetDelegationsResponse,
+  GetDelegationsResponseFilterSensitiveLog,
+} from "../models/models_0";
 import { de_GetDelegationsCommand, se_GetDelegationsCommand } from "../protocols/Aws_restJson1";
 
 /**
@@ -136,7 +141,11 @@ export class GetDelegationsCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: GetDelegationsResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "BedrockAssessmentManagerLambda",
+        operation: "GetDelegations",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

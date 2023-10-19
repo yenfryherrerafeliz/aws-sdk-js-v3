@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateAppRequest, CreateAppResult } from "../models/models_0";
@@ -61,9 +62,9 @@ export interface CreateAppCommandOutput extends CreateAppResult, __MetadataBeare
  *       DatabaseName: "STRING_VALUE",
  *     },
  *   ],
- *   Type: "STRING_VALUE", // required
+ *   Type: "aws-flow-ruby" || "java" || "rails" || "php" || "nodejs" || "static" || "other", // required
  *   AppSource: { // Source
- *     Type: "STRING_VALUE",
+ *     Type: "git" || "svn" || "archive" || "s3",
  *     Url: "STRING_VALUE",
  *     Username: "STRING_VALUE",
  *     Password: "STRING_VALUE",
@@ -162,6 +163,10 @@ export class CreateAppCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OpsWorks_20130218",
+        operation: "CreateApp",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

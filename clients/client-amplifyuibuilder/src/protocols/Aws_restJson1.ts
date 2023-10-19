@@ -1,4 +1,5 @@
 // smithy-typescript generated code
+import { awsExpectUnion as __expectUnion } from "@aws-sdk/core";
 import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
@@ -9,7 +10,6 @@ import {
   expectNonNull as __expectNonNull,
   expectObject as __expectObject,
   expectString as __expectString,
-  expectUnion as __expectUnion,
   extendedEncodeURIComponent as __extendedEncodeURIComponent,
   limitedParseFloat32 as __limitedParseFloat32,
   map,
@@ -2941,6 +2941,8 @@ const se_PredicateList = (input: Predicate[], context: __SerdeContext): any => {
 
 // se_PutMetadataFlagBody omitted.
 
+// se_ReactCodegenDependencies omitted.
+
 // se_ReactStartCodegenJobData omitted.
 
 // se_RefreshTokenRequestBody omitted.
@@ -3095,6 +3097,10 @@ const de_ActionParameters = (output: any, context: __SerdeContext): ActionParame
 
 // de_AssociatedFieldsList omitted.
 
+// de_CodegenDependencies omitted.
+
+// de_CodegenDependency omitted.
+
 // de_CodegenFeatureFlags omitted.
 
 // de_CodegenGenericDataEnum omitted.
@@ -3128,6 +3134,7 @@ const de_CodegenJob = (output: any, context: __SerdeContext): CodegenJob => {
     asset: _json,
     autoGenerateForms: __expectBoolean,
     createdAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
+    dependencies: _json,
     environmentName: __expectString,
     features: _json,
     genericDataSchema: _json,
@@ -3210,10 +3217,10 @@ const de_ComponentBindingProperties = (
       if (value === null) {
         return acc;
       }
-      acc[key] = de_ComponentBindingPropertiesValue(value, context);
+      acc[key as string] = de_ComponentBindingPropertiesValue(value, context);
       return acc;
     },
-    {}
+    {} as Record<string, ComponentBindingPropertiesValue>
   );
 };
 
@@ -3285,10 +3292,10 @@ const de_ComponentCollectionProperties = (
       if (value === null) {
         return acc;
       }
-      acc[key] = de_ComponentDataConfiguration(value, context);
+      acc[key as string] = de_ComponentDataConfiguration(value, context);
       return acc;
     },
-    {}
+    {} as Record<string, ComponentDataConfiguration>
   );
 };
 
@@ -3338,9 +3345,9 @@ const de_ComponentEvents = (output: any, context: __SerdeContext): Record<string
     if (value === null) {
       return acc;
     }
-    acc[key] = de_ComponentEvent(value, context);
+    acc[key as string] = de_ComponentEvent(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, ComponentEvent>);
 };
 
 /**
@@ -3367,9 +3374,9 @@ const de_ComponentProperties = (output: any, context: __SerdeContext): Record<st
     if (value === null) {
       return acc;
     }
-    acc[key] = de_ComponentProperty(value, context);
+    acc[key as string] = de_ComponentProperty(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, ComponentProperty>);
 };
 
 /**
@@ -3470,9 +3477,9 @@ const de_FieldsMap = (output: any, context: __SerdeContext): Record<string, Fiel
     if (value === null) {
       return acc;
     }
-    acc[key] = de_FieldConfig(value, context);
+    acc[key as string] = de_FieldConfig(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, FieldConfig>);
 };
 
 // de_FieldValidationConfiguration omitted.
@@ -3605,6 +3612,8 @@ const de_PredicateList = (output: any, context: __SerdeContext): Predicate[] => 
     });
   return retVal;
 };
+
+// de_ReactCodegenDependencies omitted.
 
 // de_ReactStartCodegenJobData omitted.
 

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { KendraClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KendraClient";
@@ -45,7 +46,8 @@ export interface BatchPutDocumentCommandOutput extends BatchPutDocumentResponse,
  *                 Amazon Web Services
  *             CloudWatch. Any error messages related to processing the batch are sent to your
  *                 Amazon Web Services
- *             CloudWatch log.</p>
+ *             CloudWatch log. You can also use the <code>BatchGetDocumentStatus</code> API to
+ *             monitor the progress of indexing your documents.</p>
  *          <p>For an example of ingesting inline documents using Python and Java SDKs, see <a href="https://docs.aws.amazon.com/kendra/latest/dg/in-adding-binary-doc.html">Adding files
  *                 directly to an index</a>.</p>
  * @example
@@ -272,6 +274,10 @@ export class BatchPutDocumentCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSKendraFrontendService",
+        operation: "BatchPutDocument",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

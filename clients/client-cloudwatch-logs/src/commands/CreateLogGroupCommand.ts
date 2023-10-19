@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchLogsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchLogsClient";
@@ -36,7 +37,7 @@ export interface CreateLogGroupCommandOutput extends __MetadataBearer {}
 
 /**
  * @public
- * <p>Creates a log group with the specified name. You can create up to 20,000 log groups per account.</p>
+ * <p>Creates a log group with the specified name. You can create up to 1,000,000 log groups per Region per account.</p>
  *          <p>You must use the following guidelines when naming a log group:</p>
  *          <ul>
  *             <li>
@@ -159,6 +160,10 @@ export class CreateLogGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Logs_20140328",
+        operation: "CreateLogGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

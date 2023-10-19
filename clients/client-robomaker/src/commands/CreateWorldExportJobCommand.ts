@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateWorldExportJobRequest, CreateWorldExportJobResponse } from "../models/models_0";
@@ -61,9 +62,9 @@ export interface CreateWorldExportJobCommandOutput extends CreateWorldExportJobR
  * const response = await client.send(command);
  * // { // CreateWorldExportJobResponse
  * //   arn: "STRING_VALUE",
- * //   status: "STRING_VALUE",
+ * //   status: "Pending" || "Running" || "Completed" || "Failed" || "Canceling" || "Canceled",
  * //   createdAt: new Date("TIMESTAMP"),
- * //   failureCode: "STRING_VALUE",
+ * //   failureCode: "InternalServiceError" || "LimitExceeded" || "ResourceNotFound" || "RequestThrottled" || "InvalidInput" || "AccessDenied",
  * //   clientRequestToken: "STRING_VALUE",
  * //   outputLocation: { // OutputLocation
  * //     s3Bucket: "STRING_VALUE",
@@ -157,6 +158,10 @@ export class CreateWorldExportJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "CreateWorldExportJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

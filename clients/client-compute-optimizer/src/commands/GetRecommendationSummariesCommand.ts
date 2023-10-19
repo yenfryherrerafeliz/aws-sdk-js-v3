@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ComputeOptimizerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ComputeOptimizerClient";
@@ -92,7 +93,7 @@ export interface GetRecommendationSummariesCommandOutput extends GetRecommendati
  * //           ],
  * //         },
  * //       ],
- * //       recommendationResourceType: "Ec2Instance" || "AutoScalingGroup" || "EbsVolume" || "LambdaFunction" || "EcsService",
+ * //       recommendationResourceType: "Ec2Instance" || "AutoScalingGroup" || "EbsVolume" || "LambdaFunction" || "EcsService" || "License",
  * //       accountId: "STRING_VALUE",
  * //       savingsOpportunity: { // SavingsOpportunity
  * //         savingsOpportunityPercentage: Number("double"),
@@ -206,6 +207,10 @@ export class GetRecommendationSummariesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ComputeOptimizerService",
+        operation: "GetRecommendationSummaries",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

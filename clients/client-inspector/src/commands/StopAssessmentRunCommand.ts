@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { InspectorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../InspectorClient";
@@ -46,7 +47,7 @@ export interface StopAssessmentRunCommandOutput extends __MetadataBearer {}
  * const client = new InspectorClient(config);
  * const input = { // StopAssessmentRunRequest
  *   assessmentRunArn: "STRING_VALUE", // required
- *   stopAction: "STRING_VALUE",
+ *   stopAction: "START_EVALUATION" || "SKIP_EVALUATION",
  * };
  * const command = new StopAssessmentRunCommand(input);
  * const response = await client.send(command);
@@ -142,6 +143,10 @@ export class StopAssessmentRunCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "InspectorService",
+        operation: "StopAssessmentRun",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

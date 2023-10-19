@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeartifactClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeartifactClient";
@@ -48,7 +49,7 @@ export interface DeletePackageCommandOutput extends DeletePackageResult, __Metad
  *   domain: "STRING_VALUE", // required
  *   domainOwner: "STRING_VALUE",
  *   repository: "STRING_VALUE", // required
- *   format: "npm" || "pypi" || "maven" || "nuget" || "generic", // required
+ *   format: "npm" || "pypi" || "maven" || "nuget" || "generic" || "swift", // required
  *   namespace: "STRING_VALUE",
  *   package: "STRING_VALUE", // required
  * };
@@ -56,7 +57,7 @@ export interface DeletePackageCommandOutput extends DeletePackageResult, __Metad
  * const response = await client.send(command);
  * // { // DeletePackageResult
  * //   deletedPackage: { // PackageSummary
- * //     format: "npm" || "pypi" || "maven" || "nuget" || "generic",
+ * //     format: "npm" || "pypi" || "maven" || "nuget" || "generic" || "swift",
  * //     namespace: "STRING_VALUE",
  * //     package: "STRING_VALUE",
  * //     originConfiguration: { // PackageOriginConfiguration
@@ -156,6 +157,10 @@ export class DeletePackageCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeArtifactControlPlaneService",
+        operation: "DeletePackage",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

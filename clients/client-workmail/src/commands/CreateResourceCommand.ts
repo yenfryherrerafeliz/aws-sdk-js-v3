@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateResourceRequest, CreateResourceResponse } from "../models/models_0";
@@ -47,6 +48,8 @@ export interface CreateResourceCommandOutput extends CreateResourceResponse, __M
  *   OrganizationId: "STRING_VALUE", // required
  *   Name: "STRING_VALUE", // required
  *   Type: "ROOM" || "EQUIPMENT", // required
+ *   Description: "STRING_VALUE",
+ *   HiddenFromGlobalAddressList: true || false,
  * };
  * const command = new CreateResourceCommand(input);
  * const response = await client.send(command);
@@ -84,6 +87,9 @@ export interface CreateResourceCommandOutput extends CreateResourceResponse, __M
  *
  * @throws {@link ReservedNameException} (client fault)
  *  <p>This user, group, or resource name is not allowed in WorkMail.</p>
+ *
+ * @throws {@link UnsupportedOperationException} (client fault)
+ *  <p>You can't perform a write operation against a read-only directory.</p>
  *
  * @throws {@link WorkMailServiceException}
  * <p>Base exception class for all service exceptions from WorkMail service.</p>
@@ -139,6 +145,10 @@ export class CreateResourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkMailService",
+        operation: "CreateResource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

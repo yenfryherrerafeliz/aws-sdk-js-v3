@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTClient";
@@ -42,11 +43,9 @@ export interface CreateCertificateFromCsrCommandOutput extends CreateCertificate
  *          <p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateCertificateFromCsr</a> action.
  *       </p>
  *          <note>
- *             <p>The CSR must include a public key that is either an
- *             RSA key with a length of at least 2048 bits or an ECC key from NIST P-256 or NIST P-384 curves.
- *             For supported certificates, consult <a href="https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html#x509-cert-algorithms">
- *                Certificate signing algorithms supported by IoT</a>.
- *          </p>
+ *             <p>The CSR must include a public key that is either an RSA key with a length of at least
+ *             2048 bits or an ECC key from NIST P-256, NIST P-384, or NIST P-521 curves. For supported
+ *             certificates, consult <a href="https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html#x509-cert-algorithms"> Certificate signing algorithms supported by IoT</a>. </p>
  *          </note>
  *          <note>
  *             <p>Reusing the same certificate signing request (CSR)
@@ -181,6 +180,10 @@ export class CreateCertificateFromCsrCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIotService",
+        operation: "CreateCertificateFromCsr",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

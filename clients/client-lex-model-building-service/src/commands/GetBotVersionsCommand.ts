@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -69,7 +70,7 @@ export interface GetBotVersionsCommandOutput extends GetBotVersionsResponse, __M
  * //     { // BotMetadata
  * //       name: "STRING_VALUE",
  * //       description: "STRING_VALUE",
- * //       status: "STRING_VALUE",
+ * //       status: "BUILDING" || "READY" || "READY_BASIC_TESTING" || "FAILED" || "NOT_BUILT",
  * //       lastUpdatedDate: new Date("TIMESTAMP"),
  * //       createdDate: new Date("TIMESTAMP"),
  * //       version: "STRING_VALUE",
@@ -155,6 +156,10 @@ export class GetBotVersionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "GetBotVersions",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

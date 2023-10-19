@@ -6,14 +6,15 @@ import {
   AdditionalInferenceSpecificationDefinition,
   AlgorithmSpecification,
   AppSecurityGroupManagement,
+  AppSpecification,
   BooleanOperator,
   Channel,
   CheckpointConfig,
-  DefaultSpaceSettings,
-  EdgeOutputConfig,
+  InferenceSpecification,
   KernelGatewayImageConfig,
   MetadataProperties,
   ModelApprovalStatus,
+  ModelPackageStatus,
   OutputDataConfig,
   OutputParameter,
   ResourceConfig,
@@ -28,7 +29,10 @@ import {
   DebugHookConfig,
   DebugRuleConfiguration,
   DebugRuleEvaluationStatus,
+  DefaultSpaceSettings,
   DeploymentConfig,
+  DriftCheckBaselines,
+  EdgeOutputConfig,
   ExperimentConfig,
   FeatureDefinition,
   InferenceExperimentDataStorageConfig,
@@ -36,9 +40,14 @@ import {
   InstanceMetadataServiceConfiguration,
   JobType,
   MemberDefinition,
+  ModelCardSecurityConfig,
   ModelCardStatus,
+  ModelMetrics,
+  ModelPackageValidationSpecification,
   ModelVariantConfig,
   MonitoringScheduleConfig,
+  MonitoringType,
+  NetworkConfig,
   NotebookInstanceAcceleratorType,
   NotebookInstanceLifecycleHook,
   NotificationConfiguration,
@@ -46,6 +55,10 @@ import {
   OidcConfigFilterSensitiveLog,
   ParallelismConfiguration,
   PipelineDefinitionS3Location,
+  ProcessingInput,
+  ProcessingOutputConfig,
+  ProcessingResources,
+  ProcessingStoppingCondition,
   Processor,
   ProfilerConfig,
   ProfilerRuleConfiguration,
@@ -54,12 +67,15 @@ import {
   RootAccess,
   ServiceCatalogProvisioningDetails,
   ShadowModeConfig,
+  SkipModelValidation,
+  SourceAlgorithmSpecification,
   SourceIpConfig,
   SpaceSettings,
   TensorBoardOutputConfig,
   TrialComponentArtifact,
   TrialComponentParameterValue,
   TrialComponentStatus,
+  TtlDuration,
   UiTemplate,
   UserSettings,
   VendorGuidance,
@@ -72,14 +88,18 @@ import {
   DomainSettingsForUpdate,
   Edge,
   Endpoint,
-  Experiment,
-  FeatureGroup,
-  FeatureMetadata,
   FeatureParameter,
-  Filter,
   MetricData,
   ModelArtifacts,
+  ModelPackageGroupStatus,
+  ModelPackageStatusDetails,
+  MonitoringExecutionSummary,
+  PipelineExecutionStatus,
+  PipelineExperimentConfig,
+  PipelineStatus,
+  ProcessingJobStatus,
   ProjectStatus,
+  ScheduleStatus,
   SecondaryStatus,
   SecondaryStatusTransition,
   SelectiveExecutionConfig,
@@ -92,27 +112,971 @@ import {
   Workteam,
 } from "./models_2";
 import {
+  Experiment,
+  FeatureGroup,
+  FeatureMetadata,
+  Filter,
   GitConfigForUpdate,
   HyperParameterTuningJobSearchEntity,
   InferenceExperimentStopDesiredState,
   LineageType,
+  Model,
   ModelCard,
   ModelCardFilterSensitiveLog,
-  ModelDashboardModel,
-  ModelPackage,
-  ModelPackageGroup,
-  ModelVariantAction,
-  NestedFilters,
-  OnlineStoreConfigUpdate,
+  ModelDashboardEndpoint,
+  MonitoringAlertSummary,
   Parameter,
-  Parent,
-  Pipeline,
-  PipelineExecution,
-  ProcessingJob,
-  ProfilerConfigForUpdate,
   ResourceType,
   TransformJob,
 } from "./models_3";
+
+/**
+ * @public
+ * <p>The model card for a model displayed in the Amazon SageMaker Model Dashboard.</p>
+ */
+export interface ModelDashboardModelCard {
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) for a model card.</p>
+   */
+  ModelCardArn?: string;
+
+  /**
+   * @public
+   * <p>The name of a model card.</p>
+   */
+  ModelCardName?: string;
+
+  /**
+   * @public
+   * <p>The model card version.</p>
+   */
+  ModelCardVersion?: number;
+
+  /**
+   * @public
+   * <p>The model card status.</p>
+   */
+  ModelCardStatus?: ModelCardStatus;
+
+  /**
+   * @public
+   * <p>The KMS Key ID (<code>KMSKeyId</code>) for encryption of model card information.</p>
+   */
+  SecurityConfig?: ModelCardSecurityConfig;
+
+  /**
+   * @public
+   * <p>A timestamp that indicates when the model card was created.</p>
+   */
+  CreationTime?: Date;
+
+  /**
+   * @public
+   * <p>Information about the user who created or modified an experiment, trial, trial
+   *       component, lineage group, project, or model card.</p>
+   */
+  CreatedBy?: UserContext;
+
+  /**
+   * @public
+   * <p>A timestamp that indicates when the model card was last updated.</p>
+   */
+  LastModifiedTime?: Date;
+
+  /**
+   * @public
+   * <p>Information about the user who created or modified an experiment, trial, trial
+   *       component, lineage group, project, or model card.</p>
+   */
+  LastModifiedBy?: UserContext;
+
+  /**
+   * @public
+   * <p>The tags associated with a model card.</p>
+   */
+  Tags?: Tag[];
+
+  /**
+   * @public
+   * <p>For models created in SageMaker, this is the model ARN. For models created
+   *          outside of SageMaker, this is a user-customized string.</p>
+   */
+  ModelId?: string;
+
+  /**
+   * @public
+   * <p>A model card's risk rating. Can be low, medium, or high.</p>
+   */
+  RiskRating?: string;
+}
+
+/**
+ * @public
+ * <p>A monitoring schedule for a model displayed in the Amazon SageMaker Model Dashboard.</p>
+ */
+export interface ModelDashboardMonitoringSchedule {
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of a monitoring schedule.</p>
+   */
+  MonitoringScheduleArn?: string;
+
+  /**
+   * @public
+   * <p>The name of a monitoring schedule.</p>
+   */
+  MonitoringScheduleName?: string;
+
+  /**
+   * @public
+   * <p>The status of the monitoring schedule.</p>
+   */
+  MonitoringScheduleStatus?: ScheduleStatus;
+
+  /**
+   * @public
+   * <p>The monitor type of a model monitor.</p>
+   */
+  MonitoringType?: MonitoringType;
+
+  /**
+   * @public
+   * <p>If a monitoring job failed, provides the reason.</p>
+   */
+  FailureReason?: string;
+
+  /**
+   * @public
+   * <p>A timestamp that indicates when the monitoring schedule was created.</p>
+   */
+  CreationTime?: Date;
+
+  /**
+   * @public
+   * <p>A timestamp that indicates when the monitoring schedule was last updated.</p>
+   */
+  LastModifiedTime?: Date;
+
+  /**
+   * @public
+   * <p>Configures the monitoring schedule and defines the monitoring job.</p>
+   */
+  MonitoringScheduleConfig?: MonitoringScheduleConfig;
+
+  /**
+   * @public
+   * <p>The endpoint which is monitored.</p>
+   */
+  EndpointName?: string;
+
+  /**
+   * @public
+   * <p>A JSON array where each element is a summary for a monitoring alert.</p>
+   */
+  MonitoringAlertSummaries?: MonitoringAlertSummary[];
+
+  /**
+   * @public
+   * <p>Summary of information about the last monitoring job to run.</p>
+   */
+  LastMonitoringExecutionSummary?: MonitoringExecutionSummary;
+}
+
+/**
+ * @public
+ * <p>A model displayed in the Amazon SageMaker Model Dashboard.</p>
+ */
+export interface ModelDashboardModel {
+  /**
+   * @public
+   * <p>A model displayed in the Model Dashboard.</p>
+   */
+  Model?: Model;
+
+  /**
+   * @public
+   * <p>The endpoints that host a model.</p>
+   */
+  Endpoints?: ModelDashboardEndpoint[];
+
+  /**
+   * @public
+   * <p>A batch transform job. For information about SageMaker batch transform, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/batch-transform.html">Use Batch
+   *         Transform</a>.</p>
+   */
+  LastBatchTransformJob?: TransformJob;
+
+  /**
+   * @public
+   * <p>The monitoring schedules for a model.</p>
+   */
+  MonitoringSchedules?: ModelDashboardMonitoringSchedule[];
+
+  /**
+   * @public
+   * <p>The model card for a model.</p>
+   */
+  ModelCard?: ModelDashboardModelCard;
+}
+
+/**
+ * @public
+ * <p>A versioned model that can be deployed for SageMaker inference.</p>
+ */
+export interface ModelPackage {
+  /**
+   * @public
+   * <p>The name of the model.</p>
+   */
+  ModelPackageName?: string;
+
+  /**
+   * @public
+   * <p>The model group to which the model belongs.</p>
+   */
+  ModelPackageGroupName?: string;
+
+  /**
+   * @public
+   * <p>The version number of a versioned model.</p>
+   */
+  ModelPackageVersion?: number;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the model package.</p>
+   */
+  ModelPackageArn?: string;
+
+  /**
+   * @public
+   * <p>The description of the model package.</p>
+   */
+  ModelPackageDescription?: string;
+
+  /**
+   * @public
+   * <p>The time that the model package was created.</p>
+   */
+  CreationTime?: Date;
+
+  /**
+   * @public
+   * <p>Defines how to perform inference generation after a training job is run.</p>
+   */
+  InferenceSpecification?: InferenceSpecification;
+
+  /**
+   * @public
+   * <p>A list of algorithms that were used to create a model package.</p>
+   */
+  SourceAlgorithmSpecification?: SourceAlgorithmSpecification;
+
+  /**
+   * @public
+   * <p>Specifies batch transform jobs that SageMaker runs to validate your model package.</p>
+   */
+  ValidationSpecification?: ModelPackageValidationSpecification;
+
+  /**
+   * @public
+   * <p>The status of the model package. This can be one of the following values.</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>PENDING</code> - The model package is pending being created.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>IN_PROGRESS</code> - The model package is in the process of being
+   *                     created.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>COMPLETED</code> - The model package was successfully created.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>FAILED</code> - The model package failed.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>DELETING</code> - The model package is in the process of being deleted.</p>
+   *             </li>
+   *          </ul>
+   */
+  ModelPackageStatus?: ModelPackageStatus;
+
+  /**
+   * @public
+   * <p>Specifies the validation and image scan statuses of the model package.</p>
+   */
+  ModelPackageStatusDetails?: ModelPackageStatusDetails;
+
+  /**
+   * @public
+   * <p>Whether the model package is to be certified to be listed on Amazon Web Services Marketplace. For
+   *             information about listing model packages on Amazon Web Services Marketplace, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-mkt-list.html">List Your
+   *                 Algorithm or Model Package on Amazon Web Services Marketplace</a>.</p>
+   */
+  CertifyForMarketplace?: boolean;
+
+  /**
+   * @public
+   * <p>The approval status of the model. This can be one of the following values.</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>APPROVED</code> - The model is approved</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>REJECTED</code> - The model is rejected.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>PENDING_MANUAL_APPROVAL</code> - The model is waiting for manual
+   *                     approval.</p>
+   *             </li>
+   *          </ul>
+   */
+  ModelApprovalStatus?: ModelApprovalStatus;
+
+  /**
+   * @public
+   * <p>Information about the user who created or modified an experiment, trial, trial component, lineage group, or project.</p>
+   */
+  CreatedBy?: UserContext;
+
+  /**
+   * @public
+   * <p>Metadata properties of the tracking entity, trial, or trial component.</p>
+   */
+  MetadataProperties?: MetadataProperties;
+
+  /**
+   * @public
+   * <p>Metrics for the model.</p>
+   */
+  ModelMetrics?: ModelMetrics;
+
+  /**
+   * @public
+   * <p>The last time the model package was modified.</p>
+   */
+  LastModifiedTime?: Date;
+
+  /**
+   * @public
+   * <p>Information about the user who created or modified an experiment, trial, trial component, lineage group, or project.</p>
+   */
+  LastModifiedBy?: UserContext;
+
+  /**
+   * @public
+   * <p>A description provided when the model approval is set.</p>
+   */
+  ApprovalDescription?: string;
+
+  /**
+   * @public
+   * <p>The machine learning domain of your model package and its components. Common
+   *             machine learning domains include computer vision and natural language processing.</p>
+   */
+  Domain?: string;
+
+  /**
+   * @public
+   * <p>The machine learning task your model package accomplishes. Common machine
+   *             learning tasks include object detection and image classification.</p>
+   */
+  Task?: string;
+
+  /**
+   * @public
+   * <p>The Amazon Simple Storage Service path where the sample payload are stored. This path must point to
+   *            a single gzip compressed tar archive (.tar.gz suffix).</p>
+   */
+  SamplePayloadUrl?: string;
+
+  /**
+   * @public
+   * <p>An array of additional Inference Specification objects.</p>
+   */
+  AdditionalInferenceSpecifications?: AdditionalInferenceSpecificationDefinition[];
+
+  /**
+   * @public
+   * <p>A list of the tags associated with the model package. For more information, see <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services
+   *             resources</a> in the <i>Amazon Web Services General Reference Guide</i>.</p>
+   */
+  Tags?: Tag[];
+
+  /**
+   * @public
+   * <p>The metadata properties for the model package. </p>
+   */
+  CustomerMetadataProperties?: Record<string, string>;
+
+  /**
+   * @public
+   * <p>Represents the drift check baselines that can be used when the model monitor is set using the model package.</p>
+   */
+  DriftCheckBaselines?: DriftCheckBaselines;
+
+  /**
+   * @public
+   * <p>Indicates if you want to skip model validation.</p>
+   */
+  SkipModelValidation?: SkipModelValidation;
+}
+
+/**
+ * @public
+ * <p>A group of versioned models in the model registry.</p>
+ */
+export interface ModelPackageGroup {
+  /**
+   * @public
+   * <p>The name of the model group.</p>
+   */
+  ModelPackageGroupName?: string;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the model group.</p>
+   */
+  ModelPackageGroupArn?: string;
+
+  /**
+   * @public
+   * <p>The description for the model group.</p>
+   */
+  ModelPackageGroupDescription?: string;
+
+  /**
+   * @public
+   * <p>The time that the model group was created.</p>
+   */
+  CreationTime?: Date;
+
+  /**
+   * @public
+   * <p>Information about the user who created or modified an experiment, trial, trial
+   *       component, lineage group, project, or model card.</p>
+   */
+  CreatedBy?: UserContext;
+
+  /**
+   * @public
+   * <p>The status of the model group. This can be one of the following values.</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>PENDING</code> - The model group is pending being created.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>IN_PROGRESS</code> - The model group is in the process of being
+   *                     created.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>COMPLETED</code> - The model group was successfully created.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>FAILED</code> - The model group failed.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>DELETING</code> - The model group is in the process of being deleted.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>DELETE_FAILED</code> - SageMaker failed to delete the model group.</p>
+   *             </li>
+   *          </ul>
+   */
+  ModelPackageGroupStatus?: ModelPackageGroupStatus;
+
+  /**
+   * @public
+   * <p>A list of the tags associated with the model group. For more information, see <a href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging Amazon Web Services
+   *             resources</a> in the <i>Amazon Web Services General Reference Guide</i>.</p>
+   */
+  Tags?: Tag[];
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const ModelVariantAction = {
+  PROMOTE: "Promote",
+  REMOVE: "Remove",
+  RETAIN: "Retain",
+} as const;
+
+/**
+ * @public
+ */
+export type ModelVariantAction = (typeof ModelVariantAction)[keyof typeof ModelVariantAction];
+
+/**
+ * @public
+ * <p>A list of nested <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Filter.html">Filter</a> objects. A resource must satisfy the conditions
+ *       of all filters to be included in the results returned from the <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html">Search</a> API.</p>
+ *          <p>For example, to filter on a training job's <code>InputDataConfig</code> property with a
+ *       specific channel name and <code>S3Uri</code> prefix, define the following filters:</p>
+ *          <ul>
+ *             <li>
+ *                <p>
+ *                   <code>'\{Name:"InputDataConfig.ChannelName", "Operator":"Equals", "Value":"train"\}',</code>
+ *                </p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <code>'\{Name:"InputDataConfig.DataSource.S3DataSource.S3Uri", "Operator":"Contains",
+ *             "Value":"mybucket/catdata"\}'</code>
+ *                </p>
+ *             </li>
+ *          </ul>
+ */
+export interface NestedFilters {
+  /**
+   * @public
+   * <p>The name of the property to use in the nested filters. The value must match a listed property name,
+   *       such as <code>InputDataConfig</code>.</p>
+   */
+  NestedPropertyName: string | undefined;
+
+  /**
+   * @public
+   * <p>A list of filters. Each filter acts on a property. Filters must contain at least one
+   *       <code>Filters</code> value. For example, a <code>NestedFilters</code> call might
+   *       include a filter on the <code>PropertyName</code> parameter of the
+   *       <code>InputDataConfig</code> property:
+   *       <code>InputDataConfig.DataSource.S3DataSource.S3Uri</code>.</p>
+   */
+  Filters: Filter[] | undefined;
+}
+
+/**
+ * @public
+ * <p>Updates the feature group online store configuration.</p>
+ */
+export interface OnlineStoreConfigUpdate {
+  /**
+   * @public
+   * <p>Time to live duration, where the record is hard deleted after the expiration time is
+   *          reached; <code>ExpiresAt</code> = <code>EventTime</code> + <code>TtlDuration</code>. For
+   *          information on HardDelete, see the <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_feature_store_DeleteRecord.html">DeleteRecord</a> API in the Amazon SageMaker API Reference guide.</p>
+   */
+  TtlDuration?: TtlDuration;
+}
+
+/**
+ * @public
+ * <p>The trial that a trial component is associated with and the experiment the trial is part
+ *       of. A component might not be associated with a trial. A component can be associated with
+ *       multiple trials.</p>
+ */
+export interface Parent {
+  /**
+   * @public
+   * <p>The name of the trial.</p>
+   */
+  TrialName?: string;
+
+  /**
+   * @public
+   * <p>The name of the experiment.</p>
+   */
+  ExperimentName?: string;
+}
+
+/**
+ * @public
+ * <p>A SageMaker Model Building Pipeline instance.</p>
+ */
+export interface Pipeline {
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the pipeline.</p>
+   */
+  PipelineArn?: string;
+
+  /**
+   * @public
+   * <p>The name of the pipeline.</p>
+   */
+  PipelineName?: string;
+
+  /**
+   * @public
+   * <p>The display name of the pipeline.</p>
+   */
+  PipelineDisplayName?: string;
+
+  /**
+   * @public
+   * <p>The description of the pipeline.</p>
+   */
+  PipelineDescription?: string;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the role that created the pipeline.</p>
+   */
+  RoleArn?: string;
+
+  /**
+   * @public
+   * <p>The status of the pipeline.</p>
+   */
+  PipelineStatus?: PipelineStatus;
+
+  /**
+   * @public
+   * <p>The creation time of the pipeline.</p>
+   */
+  CreationTime?: Date;
+
+  /**
+   * @public
+   * <p>The time that the pipeline was last modified.</p>
+   */
+  LastModifiedTime?: Date;
+
+  /**
+   * @public
+   * <p>The time when the pipeline was last run.</p>
+   */
+  LastRunTime?: Date;
+
+  /**
+   * @public
+   * <p>Information about the user who created or modified an experiment, trial, trial
+   *       component, lineage group, project, or model card.</p>
+   */
+  CreatedBy?: UserContext;
+
+  /**
+   * @public
+   * <p>Information about the user who created or modified an experiment, trial, trial
+   *       component, lineage group, project, or model card.</p>
+   */
+  LastModifiedBy?: UserContext;
+
+  /**
+   * @public
+   * <p>The parallelism configuration applied to the pipeline.</p>
+   */
+  ParallelismConfiguration?: ParallelismConfiguration;
+
+  /**
+   * @public
+   * <p>A list of tags that apply to the pipeline.</p>
+   */
+  Tags?: Tag[];
+}
+
+/**
+ * @public
+ * <p>An execution of a pipeline.</p>
+ */
+export interface PipelineExecution {
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the pipeline that was executed.</p>
+   */
+  PipelineArn?: string;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the pipeline execution.</p>
+   */
+  PipelineExecutionArn?: string;
+
+  /**
+   * @public
+   * <p>The display name of the pipeline execution.</p>
+   */
+  PipelineExecutionDisplayName?: string;
+
+  /**
+   * @public
+   * <p>The status of the pipeline status.</p>
+   */
+  PipelineExecutionStatus?: PipelineExecutionStatus;
+
+  /**
+   * @public
+   * <p>The description of the pipeline execution.</p>
+   */
+  PipelineExecutionDescription?: string;
+
+  /**
+   * @public
+   * <p>Specifies the names of the experiment and trial created by a pipeline.</p>
+   */
+  PipelineExperimentConfig?: PipelineExperimentConfig;
+
+  /**
+   * @public
+   * <p>If the execution failed, a message describing why.</p>
+   */
+  FailureReason?: string;
+
+  /**
+   * @public
+   * <p>The creation time of the pipeline execution.</p>
+   */
+  CreationTime?: Date;
+
+  /**
+   * @public
+   * <p>The time that the pipeline execution was last modified.</p>
+   */
+  LastModifiedTime?: Date;
+
+  /**
+   * @public
+   * <p>Information about the user who created or modified an experiment, trial, trial
+   *       component, lineage group, project, or model card.</p>
+   */
+  CreatedBy?: UserContext;
+
+  /**
+   * @public
+   * <p>Information about the user who created or modified an experiment, trial, trial
+   *       component, lineage group, project, or model card.</p>
+   */
+  LastModifiedBy?: UserContext;
+
+  /**
+   * @public
+   * <p>The parallelism configuration applied to the pipeline execution.</p>
+   */
+  ParallelismConfiguration?: ParallelismConfiguration;
+
+  /**
+   * @public
+   * <p>Contains a list of pipeline parameters. This list can be empty. </p>
+   */
+  PipelineParameters?: Parameter[];
+
+  /**
+   * @public
+   * <p>The selective execution configuration applied to the pipeline run.</p>
+   */
+  SelectiveExecutionConfig?: SelectiveExecutionConfig;
+}
+
+/**
+ * @public
+ * <p>An Amazon SageMaker processing job that is used to analyze data and evaluate models. For more information,
+ *             see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/processing-job.html">Process
+ *                 Data and Evaluate Models</a>.</p>
+ */
+export interface ProcessingJob {
+  /**
+   * @public
+   * <p>List of input configurations for the processing job.</p>
+   */
+  ProcessingInputs?: ProcessingInput[];
+
+  /**
+   * @public
+   * <p>Configuration for uploading output from the processing container.</p>
+   */
+  ProcessingOutputConfig?: ProcessingOutputConfig;
+
+  /**
+   * @public
+   * <p>The name of the processing job.</p>
+   */
+  ProcessingJobName?: string;
+
+  /**
+   * @public
+   * <p>Identifies the resources, ML compute instances, and ML storage volumes to deploy for a
+   *             processing job. In distributed training, you specify more than one instance.</p>
+   */
+  ProcessingResources?: ProcessingResources;
+
+  /**
+   * @public
+   * <p>Configures conditions under which the processing job should be stopped, such as how long
+   *             the processing job has been running. After the condition is met, the processing job is stopped.</p>
+   */
+  StoppingCondition?: ProcessingStoppingCondition;
+
+  /**
+   * @public
+   * <p>Configuration to run a processing job in a specified container image.</p>
+   */
+  AppSpecification?: AppSpecification;
+
+  /**
+   * @public
+   * <p>Sets the environment variables in the Docker container.</p>
+   */
+  Environment?: Record<string, string>;
+
+  /**
+   * @public
+   * <p>Networking options for a job, such as network traffic encryption between containers,
+   *          whether to allow inbound and outbound network calls to and from containers, and the VPC
+   *          subnets and security groups to use for VPC-enabled jobs.</p>
+   */
+  NetworkConfig?: NetworkConfig;
+
+  /**
+   * @public
+   * <p>The ARN of the role used to create the processing job.</p>
+   */
+  RoleArn?: string;
+
+  /**
+   * @public
+   * <p>Associates a SageMaker job as a trial component with an experiment and trial. Specified when
+   *       you call the following APIs:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateProcessingJob.html">CreateProcessingJob</a>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingJob.html">CreateTrainingJob</a>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTransformJob.html">CreateTransformJob</a>
+   *                </p>
+   *             </li>
+   *          </ul>
+   */
+  ExperimentConfig?: ExperimentConfig;
+
+  /**
+   * @public
+   * <p>The ARN of the processing job.</p>
+   */
+  ProcessingJobArn?: string;
+
+  /**
+   * @public
+   * <p>The status of the processing job.</p>
+   */
+  ProcessingJobStatus?: ProcessingJobStatus;
+
+  /**
+   * @public
+   * <p>A string, up to one KB in size, that contains metadata from the processing
+   *             container when the processing job exits.</p>
+   */
+  ExitMessage?: string;
+
+  /**
+   * @public
+   * <p>A string, up to one KB in size, that contains the reason a processing job failed, if
+   *             it failed.</p>
+   */
+  FailureReason?: string;
+
+  /**
+   * @public
+   * <p>The time that the processing job ended.</p>
+   */
+  ProcessingEndTime?: Date;
+
+  /**
+   * @public
+   * <p>The time that the processing job started.</p>
+   */
+  ProcessingStartTime?: Date;
+
+  /**
+   * @public
+   * <p>The time the processing job was last modified.</p>
+   */
+  LastModifiedTime?: Date;
+
+  /**
+   * @public
+   * <p>The time the processing job was created.</p>
+   */
+  CreationTime?: Date;
+
+  /**
+   * @public
+   * <p>The ARN of a monitoring schedule for an endpoint associated with this processing
+   *             job.</p>
+   */
+  MonitoringScheduleArn?: string;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the AutoML job associated with this processing job.</p>
+   */
+  AutoMLJobArn?: string;
+
+  /**
+   * @public
+   * <p>The ARN of the training job associated with this processing job.</p>
+   */
+  TrainingJobArn?: string;
+
+  /**
+   * @public
+   * <p>An array of key-value pairs. For more information, see <a href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html#allocation-whatURL">Using Cost Allocation Tags</a> in the <i>Amazon Web Services Billing and Cost Management
+   *                 User Guide</i>.</p>
+   */
+  Tags?: Tag[];
+}
+
+/**
+ * @public
+ * <p>Configuration information for updating the Amazon SageMaker Debugger profile parameters, system and framework metrics configurations, and
+ *             storage paths.</p>
+ */
+export interface ProfilerConfigForUpdate {
+  /**
+   * @public
+   * <p>Path to Amazon S3 storage location for system and framework metrics.</p>
+   */
+  S3OutputPath?: string;
+
+  /**
+   * @public
+   * <p>A time interval for capturing system metrics in milliseconds. Available values are
+   *             100, 200, 500, 1000 (1 second), 5000 (5 seconds), and 60000 (1 minute) milliseconds. The default value is 500 milliseconds.</p>
+   */
+  ProfilingIntervalInMilliseconds?: number;
+
+  /**
+   * @public
+   * <p>Configuration information for capturing framework metrics. Available key strings for different profiling options are
+   *             <code>DetailedProfilingConfig</code>, <code>PythonProfilingConfig</code>, and <code>DataLoaderProfilingConfig</code>.
+   *             The following codes are configuration structures for the <code>ProfilingParameters</code> parameter. To learn more about
+   *             how to configure the <code>ProfilingParameters</code> parameter,
+   *             see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/debugger-createtrainingjob-api.html">Use the SageMaker and Debugger Configuration API Operations to Create, Update, and Debug Your Training Job</a>.
+   *         </p>
+   */
+  ProfilingParameters?: Record<string, string>;
+
+  /**
+   * @public
+   * <p>To turn off Amazon SageMaker Debugger monitoring and profiling while a training job is in progress, set to <code>True</code>.</p>
+   */
+  DisableProfiler?: boolean;
+}
 
 /**
  * @public
@@ -163,7 +1127,7 @@ export interface Project {
    * @public
    * <p>The status of the project.</p>
    */
-  ProjectStatus?: ProjectStatus | string;
+  ProjectStatus?: ProjectStatus;
 
   /**
    * @public
@@ -244,7 +1208,7 @@ export interface QueryFilters {
    * @public
    * <p>Filter the lineage entities connected to the <code>StartArn</code>(s) by the type of the lineage entity.</p>
    */
-  LineageTypes?: (LineageType | string)[];
+  LineageTypes?: LineageType[];
 
   /**
    * @public
@@ -293,7 +1257,7 @@ export interface QueryLineageRequest {
    * <p>Associations between lineage entities have a direction.  This parameter determines the direction from the
    *          StartArn(s) that the query traverses.</p>
    */
-  Direction?: Direction | string;
+  Direction?: Direction;
 
   /**
    * @public
@@ -369,7 +1333,7 @@ export interface Vertex {
    * @public
    * <p>The type of resource of the lineage entity.</p>
    */
-  LineageType?: LineageType | string;
+  LineageType?: LineageType;
 }
 
 /**
@@ -643,7 +1607,7 @@ export interface TrainingJob {
    *          <p>For
    *             more detailed information, see <code>SecondaryStatus</code>. </p>
    */
-  TrainingJobStatus?: TrainingJobStatus | string;
+  TrainingJobStatus?: TrainingJobStatus;
 
   /**
    * @public
@@ -744,7 +1708,7 @@ export interface TrainingJob {
    *             </li>
    *          </ul>
    */
-  SecondaryStatus?: SecondaryStatus | string;
+  SecondaryStatus?: SecondaryStatus;
 
   /**
    * @public
@@ -1667,7 +2631,7 @@ export interface StopInferenceExperimentRequest {
    *             </li>
    *          </ul>
    */
-  ModelVariantActions: Record<string, ModelVariantAction | string> | undefined;
+  ModelVariantActions: Record<string, ModelVariantAction> | undefined;
 
   /**
    * @public
@@ -1695,7 +2659,7 @@ export interface StopInferenceExperimentRequest {
    *             </li>
    *          </ul>
    */
-  DesiredState?: InferenceExperimentStopDesiredState | string;
+  DesiredState?: InferenceExperimentStopDesiredState;
 
   /**
    * @public
@@ -1841,7 +2805,7 @@ export interface UpdateActionRequest {
    * @public
    * <p>The new status for the action.</p>
    */
-  Status?: ActionStatus | string;
+  Status?: ActionStatus;
 
   /**
    * @public
@@ -2103,7 +3067,7 @@ export interface UpdateDomainRequest {
    *             provided. If setting up the domain for use with RStudio, this value must be set to
    *                 <code>Service</code>.</p>
    */
-  AppSecurityGroupManagement?: AppSecurityGroupManagement | string;
+  AppSecurityGroupManagement?: AppSecurityGroupManagement;
 }
 
 /**
@@ -2164,7 +3128,7 @@ export interface VariantProperty {
    *             </li>
    *          </ul>
    */
-  VariantPropertyType: VariantPropertyType | string | undefined;
+  VariantPropertyType: VariantPropertyType | undefined;
 }
 
 /**
@@ -2510,7 +3474,7 @@ export interface UpdateImageVersionRequest {
    *             </li>
    *          </ul>
    */
-  VendorGuidance?: VendorGuidance | string;
+  VendorGuidance?: VendorGuidance;
 
   /**
    * @public
@@ -2530,7 +3494,7 @@ export interface UpdateImageVersionRequest {
    *             </li>
    *          </ul>
    */
-  JobType?: JobType | string;
+  JobType?: JobType;
 
   /**
    * @public
@@ -2558,7 +3522,7 @@ export interface UpdateImageVersionRequest {
    *             </li>
    *          </ul>
    */
-  Processor?: Processor | string;
+  Processor?: Processor;
 
   /**
    * @public
@@ -2688,7 +3652,7 @@ export interface UpdateModelCardRequest {
    *             </li>
    *          </ul>
    */
-  ModelCardStatus?: ModelCardStatus | string;
+  ModelCardStatus?: ModelCardStatus;
 }
 
 /**
@@ -2716,7 +3680,7 @@ export interface UpdateModelPackageInput {
    * @public
    * <p>The approval status of the model.</p>
    */
-  ModelApprovalStatus?: ModelApprovalStatus | string;
+  ModelApprovalStatus?: ModelApprovalStatus;
 
   /**
    * @public
@@ -2812,15 +3776,15 @@ export interface UpdateMonitoringAlertResponse {
 export interface UpdateMonitoringScheduleRequest {
   /**
    * @public
-   * <p>The name of the monitoring schedule. The name must be unique within an Amazon Web Services Region within
-   *          an Amazon Web Services account.</p>
+   * <p>The name of the monitoring schedule. The name must be unique within an Amazon Web Services
+   *    Region within an Amazon Web Services account.</p>
    */
   MonitoringScheduleName: string | undefined;
 
   /**
    * @public
-   * <p>The configuration object that specifies the monitoring schedule and defines the
-   *          monitoring job.</p>
+   * <p>The configuration object that specifies the monitoring schedule and defines the monitoring
+   *    job.</p>
    */
   MonitoringScheduleConfig: MonitoringScheduleConfig | undefined;
 }
@@ -2850,7 +3814,7 @@ export interface UpdateNotebookInstanceInput {
    * @public
    * <p>The Amazon ML compute instance type.</p>
    */
-  InstanceType?: _InstanceType | string;
+  InstanceType?: _InstanceType;
 
   /**
    * @public
@@ -2920,7 +3884,7 @@ export interface UpdateNotebookInstanceInput {
    *             instance. For more information, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html">Using Elastic Inference in
    *             Amazon SageMaker</a>.</p>
    */
-  AcceleratorTypes?: (NotebookInstanceAcceleratorType | string)[];
+  AcceleratorTypes?: NotebookInstanceAcceleratorType[];
 
   /**
    * @public
@@ -2958,7 +3922,7 @@ export interface UpdateNotebookInstanceInput {
    *                 permissions.</p>
    *          </note>
    */
-  RootAccess?: RootAccess | string;
+  RootAccess?: RootAccess;
 
   /**
    * @public
@@ -3556,7 +4520,7 @@ export interface SearchExpression {
    *       true for the entire search expression to be true, specify <code>Or</code>. The default
    *       value is <code>And</code>.</p>
    */
-  Operator?: BooleanOperator | string;
+  Operator?: BooleanOperator;
 }
 
 /**
@@ -3567,7 +4531,7 @@ export interface SearchRequest {
    * @public
    * <p>The name of the SageMaker resource to search for.</p>
    */
-  Resource: ResourceType | string | undefined;
+  Resource: ResourceType | undefined;
 
   /**
    * @public
@@ -3591,7 +4555,7 @@ export interface SearchRequest {
    * <p>How <code>SearchResults</code> are ordered. Valid values are <code>Ascending</code> or
    *       <code>Descending</code>. The default is <code>Descending</code>.</p>
    */
-  SortOrder?: SearchSortOrder | string;
+  SortOrder?: SearchSortOrder;
 
   /**
    * @public
@@ -3621,7 +4585,7 @@ export interface SearchRequest {
    *       The maximum number of <code>ResourceCatalog</code>s viewable is 1000.
    *     </p>
    */
-  CrossAccountFilterOption?: CrossAccountFilterOption | string;
+  CrossAccountFilterOption?: CrossAccountFilterOption;
 }
 
 /**
@@ -3630,6 +4594,7 @@ export interface SearchRequest {
 export const SearchRecordFilterSensitiveLog = (obj: SearchRecord): any => ({
   ...obj,
   ...(obj.TrialComponent && { TrialComponent: obj.TrialComponent }),
+  ...(obj.FeatureGroup && { FeatureGroup: obj.FeatureGroup }),
   ...(obj.ModelCard && { ModelCard: ModelCardFilterSensitiveLog(obj.ModelCard) }),
 });
 

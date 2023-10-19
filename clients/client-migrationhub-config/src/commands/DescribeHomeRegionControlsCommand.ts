@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -52,7 +53,7 @@ export interface DescribeHomeRegionControlsCommandOutput extends DescribeHomeReg
  *   ControlId: "STRING_VALUE",
  *   HomeRegion: "STRING_VALUE",
  *   Target: { // Target
- *     Type: "STRING_VALUE", // required
+ *     Type: "ACCOUNT", // required
  *     Id: "STRING_VALUE",
  *   },
  *   MaxResults: Number("int"),
@@ -66,7 +67,7 @@ export interface DescribeHomeRegionControlsCommandOutput extends DescribeHomeReg
  * //       ControlId: "STRING_VALUE",
  * //       HomeRegion: "STRING_VALUE",
  * //       Target: { // Target
- * //         Type: "STRING_VALUE", // required
+ * //         Type: "ACCOUNT", // required
  * //         Id: "STRING_VALUE",
  * //       },
  * //       RequestedTime: new Date("TIMESTAMP"),
@@ -155,6 +156,10 @@ export class DescribeHomeRegionControlsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSMigrationHubMultiAccountService",
+        operation: "DescribeHomeRegionControls",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

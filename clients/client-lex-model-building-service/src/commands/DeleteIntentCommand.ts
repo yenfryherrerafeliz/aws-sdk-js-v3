@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -55,7 +56,6 @@ export interface DeleteIntentCommandOutput extends __MetadataBearer {}
  *         again, repeat until the intent has no references and the call to
  *           <code>DeleteIntent</code> is successful. </p>
  *          </note>
- *
  *          <p> This operation requires permission for the
  *         <code>lex:DeleteIntent</code> action. </p>
  * @example
@@ -168,6 +168,10 @@ export class DeleteIntentCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "DeleteIntent",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

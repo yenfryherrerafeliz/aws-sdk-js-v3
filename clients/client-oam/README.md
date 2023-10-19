@@ -10,14 +10,13 @@ AWS SDK for JavaScript OAM Client for Node.js, Browser and React Native.
 monitoring accounts by using <i>CloudWatch cross-account observability</i>. With
 CloudWatch cross-account observability, you can monitor and troubleshoot applications that span
 multiple accounts within a Region. Seamlessly search, visualize, and analyze your metrics,
-logs, and traces in any of the linked accounts without account boundaries.</p>
-
+logs, traces, and Application Insights applications in any of the linked accounts without account boundaries.</p>
 <p>Set up one or more Amazon Web Services accounts as <i>monitoring
 accounts</i> and link them with multiple <i>source accounts</i>. A
 monitoring account is a central Amazon Web Services account that can view and interact with
 observability data generated from source accounts. A source account is an individual Amazon Web Services account that generates observability data for the resources that reside in it.
 Source accounts share their observability data with the monitoring account. The shared
-observability data can include metrics in Amazon CloudWatch, logs in Amazon CloudWatch Logs, and traces in X-Ray.</p>
+observability data can include metrics in Amazon CloudWatch, logs in Amazon CloudWatch Logs, traces in X-Ray, and applications in Amazon CloudWatch Application Insights.</p>
 
 ## Installing
 
@@ -34,16 +33,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `OAMClient` and
-the commands you need, for example `CreateLinkCommand`:
+the commands you need, for example `ListLinksCommand`:
 
 ```js
 // ES5 example
-const { OAMClient, CreateLinkCommand } = require("@aws-sdk/client-oam");
+const { OAMClient, ListLinksCommand } = require("@aws-sdk/client-oam");
 ```
 
 ```ts
 // ES6+ example
-import { OAMClient, CreateLinkCommand } from "@aws-sdk/client-oam";
+import { OAMClient, ListLinksCommand } from "@aws-sdk/client-oam";
 ```
 
 ### Usage
@@ -62,7 +61,7 @@ const client = new OAMClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new CreateLinkCommand(params);
+const command = new ListLinksCommand(params);
 ```
 
 #### Async/await
@@ -141,7 +140,7 @@ const client = new AWS.OAM({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.createLink(params);
+  const data = await client.listLinks(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -149,7 +148,7 @@ try {
 
 // Promises.
 client
-  .createLink(params)
+  .listLinks(params)
   .then((data) => {
     // process data.
   })
@@ -158,7 +157,7 @@ client
   });
 
 // callbacks.
-client.createLink(params, (err, data) => {
+client.listLinks(params, (err, data) => {
   // process err and data.
 });
 ```

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
@@ -36,8 +37,7 @@ export interface DescribeSecurityProfileCommandOutput extends DescribeSecurityPr
 
 /**
  * @public
- * <p>This API is in preview release for Amazon Connect and is subject to change.</p>
- *          <p>Gets basic information about the security profle.</p>
+ * <p>Gets basic information about the security profle.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -146,6 +146,10 @@ export class DescribeSecurityProfileCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonConnectService",
+        operation: "DescribeSecurityProfile",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

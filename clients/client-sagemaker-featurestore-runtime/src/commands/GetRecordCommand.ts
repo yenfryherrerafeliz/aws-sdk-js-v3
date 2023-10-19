@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetRecordRequest, GetRecordResponse } from "../models/models_0";
@@ -63,7 +64,10 @@ export interface GetRecordCommandOutput extends GetRecordResponse, __MetadataBea
  * //   Record: [ // Record
  * //     { // FeatureValue
  * //       FeatureName: "STRING_VALUE", // required
- * //       ValueAsString: "STRING_VALUE", // required
+ * //       ValueAsString: "STRING_VALUE",
+ * //       ValueAsStringList: [ // ValueAsStringList
+ * //         "STRING_VALUE",
+ * //       ],
  * //     },
  * //   ],
  * //   ExpiresAt: "STRING_VALUE",
@@ -145,6 +149,10 @@ export class GetRecordCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonSageMakerFeatureStoreRuntime",
+        operation: "GetRecord",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

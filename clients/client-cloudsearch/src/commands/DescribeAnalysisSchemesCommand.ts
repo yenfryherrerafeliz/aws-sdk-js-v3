@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudSearchClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudSearchClient";
@@ -57,20 +58,20 @@ export interface DescribeAnalysisSchemesCommandOutput extends DescribeAnalysisSc
  * //     { // AnalysisSchemeStatus
  * //       Options: { // AnalysisScheme
  * //         AnalysisSchemeName: "STRING_VALUE", // required
- * //         AnalysisSchemeLanguage: "STRING_VALUE", // required
+ * //         AnalysisSchemeLanguage: "ar" || "bg" || "ca" || "cs" || "da" || "de" || "el" || "en" || "es" || "eu" || "fa" || "fi" || "fr" || "ga" || "gl" || "he" || "hi" || "hu" || "hy" || "id" || "it" || "ja" || "ko" || "lv" || "mul" || "nl" || "no" || "pt" || "ro" || "ru" || "sv" || "th" || "tr" || "zh-Hans" || "zh-Hant", // required
  * //         AnalysisOptions: { // AnalysisOptions
  * //           Synonyms: "STRING_VALUE",
  * //           Stopwords: "STRING_VALUE",
  * //           StemmingDictionary: "STRING_VALUE",
  * //           JapaneseTokenizationDictionary: "STRING_VALUE",
- * //           AlgorithmicStemming: "STRING_VALUE",
+ * //           AlgorithmicStemming: "none" || "minimal" || "light" || "full",
  * //         },
  * //       },
  * //       Status: { // OptionStatus
  * //         CreationDate: new Date("TIMESTAMP"), // required
  * //         UpdateDate: new Date("TIMESTAMP"), // required
  * //         UpdateVersion: Number("int"),
- * //         State: "STRING_VALUE", // required
+ * //         State: "RequiresIndexDocuments" || "Processing" || "Active" || "FailedToValidate", // required
  * //         PendingDeletion: true || false,
  * //       },
  * //     },
@@ -149,6 +150,10 @@ export class DescribeAnalysisSchemesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "A9SearchCloudConfigService2013",
+        operation: "DescribeAnalysisSchemes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

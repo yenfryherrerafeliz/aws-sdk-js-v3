@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateSMBSecurityStrategyInput, UpdateSMBSecurityStrategyOutput } from "../models/models_0";
@@ -38,10 +39,8 @@ export interface UpdateSMBSecurityStrategyCommandOutput extends UpdateSMBSecurit
  * @public
  * <p>Updates the SMB security strategy on a file gateway. This action is only supported in
  *          file gateways.</p>
- *
  *          <note>
  *             <p>This API is called Security level in the User Guide.</p>
- *
  *             <p>A higher security level can affect performance of the gateway.</p>
  *          </note>
  * @example
@@ -52,7 +51,7 @@ export interface UpdateSMBSecurityStrategyCommandOutput extends UpdateSMBSecurit
  * const client = new StorageGatewayClient(config);
  * const input = { // UpdateSMBSecurityStrategyInput
  *   GatewayARN: "STRING_VALUE", // required
- *   SMBSecurityStrategy: "STRING_VALUE", // required
+ *   SMBSecurityStrategy: "ClientSpecified" || "MandatorySigning" || "MandatoryEncryption", // required
  * };
  * const command = new UpdateSMBSecurityStrategyCommand(input);
  * const response = await client.send(command);
@@ -130,6 +129,10 @@ export class UpdateSMBSecurityStrategyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "UpdateSMBSecurityStrategy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

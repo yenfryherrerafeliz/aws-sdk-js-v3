@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeBuildClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeBuildClient";
@@ -54,10 +55,10 @@ export interface ListCuratedEnvironmentImagesCommandOutput
  * // { // ListCuratedEnvironmentImagesOutput
  * //   platforms: [ // EnvironmentPlatforms
  * //     { // EnvironmentPlatform
- * //       platform: "STRING_VALUE",
+ * //       platform: "DEBIAN" || "AMAZON_LINUX" || "UBUNTU" || "WINDOWS_SERVER",
  * //       languages: [ // EnvironmentLanguages
  * //         { // EnvironmentLanguage
- * //           language: "STRING_VALUE",
+ * //           language: "JAVA" || "PYTHON" || "NODE_JS" || "RUBY" || "GOLANG" || "DOCKER" || "ANDROID" || "DOTNET" || "BASE" || "PHP",
  * //           images: [ // EnvironmentImages
  * //             { // EnvironmentImage
  * //               name: "STRING_VALUE",
@@ -135,6 +136,10 @@ export class ListCuratedEnvironmentImagesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeBuild_20161006",
+        operation: "ListCuratedEnvironmentImages",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

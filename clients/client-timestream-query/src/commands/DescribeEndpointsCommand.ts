@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeEndpointsRequest, DescribeEndpointsResponse } from "../models/models_0";
@@ -38,24 +39,24 @@ export interface DescribeEndpointsCommandOutput extends DescribeEndpointsRespons
  * @public
  * <p>DescribeEndpoints returns a list of available endpoints to make Timestream
  *             API calls against. This API is available through both Write and Query.</p>
- *         <p>Because the Timestream SDKs are designed to transparently work with the
+ *          <p>Because the Timestream SDKs are designed to transparently work with the
  *             service’s architecture, including the management and mapping of the service endpoints,
  *                 <i>it is not recommended that you use this API unless</i>:</p>
- *         <ul>
+ *          <ul>
  *             <li>
- *                 <p>You are using <a href="https://docs.aws.amazon.com/timestream/latest/developerguide/VPCEndpoints">VPC endpoints (Amazon Web Services PrivateLink) with Timestream
+ *                <p>You are using <a href="https://docs.aws.amazon.com/timestream/latest/developerguide/VPCEndpoints">VPC endpoints (Amazon Web Services PrivateLink) with Timestream
  *                     </a>
  *                </p>
  *             </li>
  *             <li>
- *                 <p>Your application uses a programming language that does not yet have SDK
+ *                <p>Your application uses a programming language that does not yet have SDK
  *                     support</p>
  *             </li>
  *             <li>
- *                 <p>You require better control over the client-side implementation</p>
+ *                <p>You require better control over the client-side implementation</p>
  *             </li>
  *          </ul>
- *         <p>For detailed information on how and when to use and implement DescribeEndpoints, see
+ *          <p>For detailed information on how and when to use and implement DescribeEndpoints, see
  *                 <a href="https://docs.aws.amazon.com/timestream/latest/developerguide/Using.API.html#Using-API.endpoint-discovery">The Endpoint Discovery Pattern</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -148,6 +149,10 @@ export class DescribeEndpointsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Timestream_20181101",
+        operation: "DescribeEndpoints",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

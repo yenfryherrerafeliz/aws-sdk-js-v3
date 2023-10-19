@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateSnapshotInput, CreateSnapshotOutput } from "../models/models_0";
@@ -101,7 +102,7 @@ export interface CreateSnapshotCommandOutput extends CreateSnapshotOutput, __Met
  * const input = { // CreateSnapshotInput
  *   Simulation: "STRING_VALUE", // required
  *   Destination: { // S3Destination
- *     BucketName: "STRING_VALUE",
+ *     BucketName: "STRING_VALUE", // required
  *     ObjectKeyPrefix: "STRING_VALUE",
  *   },
  * };
@@ -186,6 +187,10 @@ export class CreateSnapshotCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SimSpaceWeaver",
+        operation: "CreateSnapshot",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

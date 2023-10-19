@@ -11,10 +11,12 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
-import { DeletePublicIpv4PoolRequest, DeletePublicIpv4PoolResult } from "../models/models_2";
+import { DeletePublicIpv4PoolRequest } from "../models/models_2";
+import { DeletePublicIpv4PoolResult } from "../models/models_3";
 import { de_DeletePublicIpv4PoolCommand, se_DeletePublicIpv4PoolCommand } from "../protocols/Aws_ec2";
 
 /**
@@ -115,6 +117,10 @@ export class DeletePublicIpv4PoolCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2",
+        operation: "DeletePublicIpv4Pool",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

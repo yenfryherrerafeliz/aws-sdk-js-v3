@@ -40,16 +40,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `WorkSpacesClient` and
-the commands you need, for example `AssociateConnectionAliasCommand`:
+the commands you need, for example `ListAvailableManagementCidrRangesCommand`:
 
 ```js
 // ES5 example
-const { WorkSpacesClient, AssociateConnectionAliasCommand } = require("@aws-sdk/client-workspaces");
+const { WorkSpacesClient, ListAvailableManagementCidrRangesCommand } = require("@aws-sdk/client-workspaces");
 ```
 
 ```ts
 // ES6+ example
-import { WorkSpacesClient, AssociateConnectionAliasCommand } from "@aws-sdk/client-workspaces";
+import { WorkSpacesClient, ListAvailableManagementCidrRangesCommand } from "@aws-sdk/client-workspaces";
 ```
 
 ### Usage
@@ -68,7 +68,7 @@ const client = new WorkSpacesClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new AssociateConnectionAliasCommand(params);
+const command = new ListAvailableManagementCidrRangesCommand(params);
 ```
 
 #### Async/await
@@ -147,7 +147,7 @@ const client = new AWS.WorkSpaces({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.associateConnectionAlias(params);
+  const data = await client.listAvailableManagementCidrRanges(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -155,7 +155,7 @@ try {
 
 // Promises.
 client
-  .associateConnectionAlias(params)
+  .listAvailableManagementCidrRanges(params)
   .then((data) => {
     // process data.
   })
@@ -164,7 +164,7 @@ client
   });
 
 // callbacks.
-client.associateConnectionAlias(params, (err, data) => {
+client.listAvailableManagementCidrRanges(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -234,6 +234,14 @@ AssociateIpGroups
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/associateipgroupscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/associateipgroupscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/associateipgroupscommandoutput.html)
+
+</details>
+<details>
+<summary>
+AssociateWorkspaceApplication
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/associateworkspaceapplicationcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/associateworkspaceapplicationcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/associateworkspaceapplicationcommandoutput.html)
 
 </details>
 <details>
@@ -382,6 +390,14 @@ DeleteWorkspaceImage
 </details>
 <details>
 <summary>
+DeployWorkspaceApplications
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/deployworkspaceapplicationscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/deployworkspaceapplicationscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/deployworkspaceapplicationscommandoutput.html)
+
+</details>
+<details>
+<summary>
 DeregisterWorkspaceDirectory
 </summary>
 
@@ -402,6 +418,30 @@ DescribeAccountModifications
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/describeaccountmodificationscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describeaccountmodificationscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describeaccountmodificationscommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeApplicationAssociations
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/describeapplicationassociationscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describeapplicationassociationscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describeapplicationassociationscommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeApplications
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/describeapplicationscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describeapplicationscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describeapplicationscommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeBundleAssociations
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/describebundleassociationscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describebundleassociationscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describebundleassociationscommandoutput.html)
 
 </details>
 <details>
@@ -446,6 +486,14 @@ DescribeConnectionAliasPermissions
 </details>
 <details>
 <summary>
+DescribeImageAssociations
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/describeimageassociationscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describeimageassociationscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describeimageassociationscommandoutput.html)
+
+</details>
+<details>
+<summary>
 DescribeIpGroups
 </summary>
 
@@ -458,6 +506,14 @@ DescribeTags
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/describetagscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describetagscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describetagscommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeWorkspaceAssociations
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/describeworkspaceassociationscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describeworkspaceassociationscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/describeworkspaceassociationscommandoutput.html)
 
 </details>
 <details>
@@ -530,6 +586,14 @@ DisassociateIpGroups
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/disassociateipgroupscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/disassociateipgroupscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/disassociateipgroupscommandoutput.html)
+
+</details>
+<details>
+<summary>
+DisassociateWorkspaceApplication
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/classes/disassociateworkspaceapplicationcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/disassociateworkspaceapplicationcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workspaces/interfaces/disassociateworkspaceapplicationcommandoutput.html)
 
 </details>
 <details>

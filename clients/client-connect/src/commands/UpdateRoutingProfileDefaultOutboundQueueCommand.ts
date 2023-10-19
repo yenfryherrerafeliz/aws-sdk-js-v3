@@ -11,10 +11,11 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
-import { UpdateRoutingProfileDefaultOutboundQueueRequest } from "../models/models_1";
+import { UpdateRoutingProfileDefaultOutboundQueueRequest } from "../models/models_2";
 import {
   de_UpdateRoutingProfileDefaultOutboundQueueCommand,
   se_UpdateRoutingProfileDefaultOutboundQueueCommand,
@@ -139,6 +140,10 @@ export class UpdateRoutingProfileDefaultOutboundQueueCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonConnectService",
+        operation: "UpdateRoutingProfileDefaultOutboundQueue",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

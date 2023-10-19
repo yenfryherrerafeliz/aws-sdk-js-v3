@@ -256,6 +256,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 
@@ -316,18 +318,14 @@ export interface IdentitystoreClientResolvedConfig extends IdentitystoreClientRe
 
 /**
  * @public
- * <p>The Identity Store service used by AWS IAM Identity Center (successor to AWS Single Sign-On) provides a single place to retrieve all of
+ * <p>The Identity Store service used by IAM Identity Center provides a single place to retrieve all of
  *          your identities (users and groups). For more information, see the <a href="https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html">IAM Identity Center User
  *             Guide</a>.</p>
- *
- *          <note>
- *             <p>Although AWS Single Sign-On was renamed, the <code>sso</code> and
- *             <code>identitystore</code> API namespaces will continue to retain their original name for
- *             backward compatibility purposes. For more information, see <a href="https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html#renamed">IAM Identity Center rename</a>.</p>
- *          </note>
- *
  *          <p>This reference guide describes the identity store operations that you can call
- *          programatically and includes detailed information about data types and errors.</p>
+ *          programmatically and includes detailed information about data types and errors.</p>
+ *          <note>
+ *             <p>IAM Identity Center uses the <code>sso</code> and <code>identitystore</code> API namespaces.</p>
+ *          </note>
  */
 export class IdentitystoreClient extends __Client<
   __HttpHandlerOptions,

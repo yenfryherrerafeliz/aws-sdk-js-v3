@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -55,7 +56,6 @@ export interface PutBotCommandOutput extends PutBotResponse, __MetadataBearer {}
  *         <code>privacySettings</code> fields, which are set to their default
  *       values. If you don't specify values for required fields, Amazon Lex throws an
  *       exception.</p>
- *
  *          <p>This operation requires permissions for the <code>lex:PutBot</code>
  *       action. For more information, see <a>security-iam</a>.</p>
  * @example
@@ -78,7 +78,7 @@ export interface PutBotCommandOutput extends PutBotResponse, __MetadataBearer {}
  *   clarificationPrompt: { // Prompt
  *     messages: [ // MessageList // required
  *       { // Message
- *         contentType: "STRING_VALUE", // required
+ *         contentType: "PlainText" || "SSML" || "CustomPayload", // required
  *         content: "STRING_VALUE", // required
  *         groupNumber: Number("int"),
  *       },
@@ -89,7 +89,7 @@ export interface PutBotCommandOutput extends PutBotResponse, __MetadataBearer {}
  *   abortStatement: { // Statement
  *     messages: [ // required
  *       {
- *         contentType: "STRING_VALUE", // required
+ *         contentType: "PlainText" || "SSML" || "CustomPayload", // required
  *         content: "STRING_VALUE", // required
  *         groupNumber: Number("int"),
  *       },
@@ -99,8 +99,8 @@ export interface PutBotCommandOutput extends PutBotResponse, __MetadataBearer {}
  *   idleSessionTTLInSeconds: Number("int"),
  *   voiceId: "STRING_VALUE",
  *   checksum: "STRING_VALUE",
- *   processBehavior: "STRING_VALUE",
- *   locale: "STRING_VALUE", // required
+ *   processBehavior: "SAVE" || "BUILD",
+ *   locale: "de-DE" || "en-AU" || "en-GB" || "en-IN" || "en-US" || "es-419" || "es-ES" || "es-US" || "fr-FR" || "fr-CA" || "it-IT" || "ja-JP" || "ko-KR", // required
  *   childDirected: true || false, // required
  *   detectSentiment: true || false,
  *   createVersion: true || false,
@@ -127,7 +127,7 @@ export interface PutBotCommandOutput extends PutBotResponse, __MetadataBearer {}
  * //   clarificationPrompt: { // Prompt
  * //     messages: [ // MessageList // required
  * //       { // Message
- * //         contentType: "STRING_VALUE", // required
+ * //         contentType: "PlainText" || "SSML" || "CustomPayload", // required
  * //         content: "STRING_VALUE", // required
  * //         groupNumber: Number("int"),
  * //       },
@@ -138,14 +138,14 @@ export interface PutBotCommandOutput extends PutBotResponse, __MetadataBearer {}
  * //   abortStatement: { // Statement
  * //     messages: [ // required
  * //       {
- * //         contentType: "STRING_VALUE", // required
+ * //         contentType: "PlainText" || "SSML" || "CustomPayload", // required
  * //         content: "STRING_VALUE", // required
  * //         groupNumber: Number("int"),
  * //       },
  * //     ],
  * //     responseCard: "STRING_VALUE",
  * //   },
- * //   status: "STRING_VALUE",
+ * //   status: "BUILDING" || "READY" || "READY_BASIC_TESTING" || "FAILED" || "NOT_BUILT",
  * //   failureReason: "STRING_VALUE",
  * //   lastUpdatedDate: new Date("TIMESTAMP"),
  * //   createdDate: new Date("TIMESTAMP"),
@@ -153,7 +153,7 @@ export interface PutBotCommandOutput extends PutBotResponse, __MetadataBearer {}
  * //   voiceId: "STRING_VALUE",
  * //   checksum: "STRING_VALUE",
  * //   version: "STRING_VALUE",
- * //   locale: "STRING_VALUE",
+ * //   locale: "de-DE" || "en-AU" || "en-GB" || "en-IN" || "en-US" || "es-419" || "es-ES" || "es-US" || "fr-FR" || "fr-CA" || "it-IT" || "ja-JP" || "ko-KR",
  * //   childDirected: true || false,
  * //   createVersion: true || false,
  * //   detectSentiment: true || false,
@@ -337,6 +337,10 @@ export class PutBotCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "PutBot",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListDatasetEntriesRequest, ListDatasetEntriesResponse } from "../models/models_0";
@@ -36,7 +37,10 @@ export interface ListDatasetEntriesCommandOutput extends ListDatasetEntriesRespo
 
 /**
  * @public
- * <p>
+ * <note>
+ *             <p>This operation applies only to Amazon Rekognition Custom Labels.</p>
+ *          </note>
+ *          <p>
  * Lists the entries (images) within a dataset. An entry is a
  * JSON Line that contains the information for a single image, including
  * the image location, assigned labels, and object location bounding boxes. For
@@ -196,6 +200,10 @@ export class ListDatasetEntriesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RekognitionService",
+        operation: "ListDatasetEntries",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

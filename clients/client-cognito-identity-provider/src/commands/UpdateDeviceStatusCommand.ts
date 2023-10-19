@@ -1,5 +1,4 @@
 // smithy-typescript generated code
-import { getAwsAuthPlugin } from "@aws-sdk/middleware-signing";
 import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
 import { getSerdePlugin } from "@smithy/middleware-serde";
 import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
@@ -12,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -151,7 +151,6 @@ export class UpdateDeviceStatusCommand extends $Command<
     this.middlewareStack.use(
       getEndpointPlugin(configuration, UpdateDeviceStatusCommand.getEndpointParameterInstructions())
     );
-    this.middlewareStack.use(getAwsAuthPlugin(configuration));
 
     const stack = clientStack.concat(this.middlewareStack);
 
@@ -164,6 +163,10 @@ export class UpdateDeviceStatusCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: UpdateDeviceStatusRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSCognitoIdentityProviderService",
+        operation: "UpdateDeviceStatus",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
   StreamingBlobPayloadInputTypes,
 } from "@smithy/types";
 
@@ -55,18 +56,18 @@ export interface NotifyObjectCompleteCommandOutput extends NotifyObjectCompleteO
  *   BackupJobId: "STRING_VALUE", // required
  *   UploadId: "STRING_VALUE", // required
  *   ObjectChecksum: "STRING_VALUE", // required
- *   ObjectChecksumAlgorithm: "STRING_VALUE", // required
+ *   ObjectChecksumAlgorithm: "SUMMARY", // required
  *   MetadataString: "STRING_VALUE",
  *   MetadataBlob: "STREAMING_BLOB_VALUE",
  *   MetadataBlobLength: Number("long"),
  *   MetadataBlobChecksum: "STRING_VALUE",
- *   MetadataBlobChecksumAlgorithm: "STRING_VALUE",
+ *   MetadataBlobChecksumAlgorithm: "SHA256",
  * };
  * const command = new NotifyObjectCompleteCommand(input);
  * const response = await client.send(command);
  * // { // NotifyObjectCompleteOutput
  * //   ObjectChecksum: "STRING_VALUE", // required
- * //   ObjectChecksumAlgorithm: "STRING_VALUE", // required
+ * //   ObjectChecksumAlgorithm: "SUMMARY", // required
  * // };
  *
  * ```
@@ -155,6 +156,10 @@ export class NotifyObjectCompleteCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: NotifyObjectCompleteInputFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CryoStorageFrontendService",
+        operation: "NotifyObjectComplete",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

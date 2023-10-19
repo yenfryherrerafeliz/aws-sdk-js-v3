@@ -6,9 +6,9 @@
 
 AWS SDK for JavaScript ServiceQuotas Client for Node.js, Browser and React Native.
 
-<p>With Service Quotas, you can view and manage your quotas easily as your AWS workloads
-grow. Quotas, also referred to as limits, are the maximum number of resources that you can
-create in your AWS account. For more information, see the <a href="https://docs.aws.amazon.com/servicequotas/latest/userguide/">Service Quotas User Guide</a>.</p>
+<p>With Service Quotas, you can view and manage your quotas easily as your Amazon Web Services workloads grow.
+Quotas, also referred to as limits, are the maximum number of resources that you can
+create in your Amazon Web Services account. For more information, see the <a href="https://docs.aws.amazon.com/servicequotas/latest/userguide/">Service Quotas User Guide</a>.</p>
 
 ## Installing
 
@@ -25,16 +25,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `ServiceQuotasClient` and
-the commands you need, for example `AssociateServiceQuotaTemplateCommand`:
+the commands you need, for example `ListServicesCommand`:
 
 ```js
 // ES5 example
-const { ServiceQuotasClient, AssociateServiceQuotaTemplateCommand } = require("@aws-sdk/client-service-quotas");
+const { ServiceQuotasClient, ListServicesCommand } = require("@aws-sdk/client-service-quotas");
 ```
 
 ```ts
 // ES6+ example
-import { ServiceQuotasClient, AssociateServiceQuotaTemplateCommand } from "@aws-sdk/client-service-quotas";
+import { ServiceQuotasClient, ListServicesCommand } from "@aws-sdk/client-service-quotas";
 ```
 
 ### Usage
@@ -53,7 +53,7 @@ const client = new ServiceQuotasClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new AssociateServiceQuotaTemplateCommand(params);
+const command = new ListServicesCommand(params);
 ```
 
 #### Async/await
@@ -132,7 +132,7 @@ const client = new AWS.ServiceQuotas({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.associateServiceQuotaTemplate(params);
+  const data = await client.listServices(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -140,7 +140,7 @@ try {
 
 // Promises.
 client
-  .associateServiceQuotaTemplate(params)
+  .listServices(params)
   .then((data) => {
     // process data.
   })
@@ -149,7 +149,7 @@ client
   });
 
 // callbacks.
-client.associateServiceQuotaTemplate(params, (err, data) => {
+client.listServices(params, (err, data) => {
   // process err and data.
 });
 ```

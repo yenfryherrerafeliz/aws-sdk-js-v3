@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTAnalyticsClient";
@@ -67,11 +68,11 @@ export interface ListDatastoresCommandOutput extends ListDatastoresResponse, __M
  * //           },
  * //         },
  * //       },
- * //       status: "STRING_VALUE",
+ * //       status: "CREATING" || "ACTIVE" || "DELETING",
  * //       creationTime: new Date("TIMESTAMP"),
  * //       lastUpdateTime: new Date("TIMESTAMP"),
  * //       lastMessageArrivalTime: new Date("TIMESTAMP"),
- * //       fileFormatType: "STRING_VALUE",
+ * //       fileFormatType: "JSON" || "PARQUET",
  * //       datastorePartitions: { // DatastorePartitions
  * //         partitions: [ // Partitions
  * //           { // DatastorePartition
@@ -164,6 +165,10 @@ export class ListDatastoresCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIoTAnalytics",
+        operation: "ListDatastores",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

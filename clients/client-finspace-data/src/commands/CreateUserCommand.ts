@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -45,10 +46,10 @@ export interface CreateUserCommandOutput extends CreateUserResponse, __MetadataB
  * const client = new FinspaceDataClient(config);
  * const input = { // CreateUserRequest
  *   emailAddress: "STRING_VALUE", // required
- *   type: "STRING_VALUE", // required
+ *   type: "SUPER_USER" || "APP_USER", // required
  *   firstName: "STRING_VALUE",
  *   lastName: "STRING_VALUE",
- *   ApiAccess: "STRING_VALUE",
+ *   apiAccess: "ENABLED" || "DISABLED",
  *   apiAccessPrincipalArn: "STRING_VALUE",
  *   clientToken: "STRING_VALUE",
  * };
@@ -137,6 +138,10 @@ export class CreateUserCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateUserRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "CreateUser",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

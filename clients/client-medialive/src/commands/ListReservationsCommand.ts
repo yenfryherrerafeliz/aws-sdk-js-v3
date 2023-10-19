@@ -11,10 +11,11 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MediaLiveClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaLiveClient";
-import { ListReservationsRequest, ListReservationsResponse } from "../models/models_1";
+import { ListReservationsRequest, ListReservationsResponse } from "../models/models_2";
 import { de_ListReservationsCommand, se_ListReservationsCommand } from "../protocols/Aws_restJson1";
 
 /**
@@ -178,6 +179,10 @@ export class ListReservationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaLive",
+        operation: "ListReservations",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

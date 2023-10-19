@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { InspectorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../InspectorClient";
@@ -48,10 +49,10 @@ export interface ListAssessmentRunAgentsCommandOutput extends ListAssessmentRunA
  *   assessmentRunArn: "STRING_VALUE", // required
  *   filter: { // AgentFilter
  *     agentHealths: [ // AgentHealthList // required
- *       "STRING_VALUE",
+ *       "HEALTHY" || "UNHEALTHY" || "UNKNOWN",
  *     ],
  *     agentHealthCodes: [ // AgentHealthCodeList // required
- *       "STRING_VALUE",
+ *       "IDLE" || "RUNNING" || "SHUTDOWN" || "UNHEALTHY" || "THROTTLED" || "UNKNOWN",
  *     ],
  *   },
  *   nextToken: "STRING_VALUE",
@@ -64,8 +65,8 @@ export interface ListAssessmentRunAgentsCommandOutput extends ListAssessmentRunA
  * //     { // AssessmentRunAgent
  * //       agentId: "STRING_VALUE", // required
  * //       assessmentRunArn: "STRING_VALUE", // required
- * //       agentHealth: "STRING_VALUE", // required
- * //       agentHealthCode: "STRING_VALUE", // required
+ * //       agentHealth: "HEALTHY" || "UNHEALTHY" || "UNKNOWN", // required
+ * //       agentHealthCode: "IDLE" || "RUNNING" || "SHUTDOWN" || "UNHEALTHY" || "THROTTLED" || "UNKNOWN", // required
  * //       agentHealthDetails: "STRING_VALUE",
  * //       autoScalingGroup: "STRING_VALUE",
  * //       telemetryMetadata: [ // TelemetryMetadataList // required
@@ -328,6 +329,10 @@ export class ListAssessmentRunAgentsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "InspectorService",
+        operation: "ListAssessmentRunAgents",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

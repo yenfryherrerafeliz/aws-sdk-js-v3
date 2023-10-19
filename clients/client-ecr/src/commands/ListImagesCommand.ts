@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -37,7 +38,7 @@ export interface ListImagesCommandOutput extends ListImagesResponse, __MetadataB
 /**
  * @public
  * <p>Lists all the image IDs for the specified repository.</p>
- *         <p>You can filter images based on whether or not they are tagged by using the
+ *          <p>You can filter images based on whether or not they are tagged by using the
  *                 <code>tagStatus</code> filter and specifying either <code>TAGGED</code>,
  *                 <code>UNTAGGED</code> or <code>ANY</code>. For example, you can filter your results
  *             to return only <code>UNTAGGED</code> images and then pipe that result to a <a>BatchDeleteImage</a> operation to delete them. Or, you can filter your
@@ -55,7 +56,7 @@ export interface ListImagesCommandOutput extends ListImagesResponse, __MetadataB
  *   nextToken: "STRING_VALUE",
  *   maxResults: Number("int"),
  *   filter: { // ListImagesFilter
- *     tagStatus: "STRING_VALUE",
+ *     tagStatus: "TAGGED" || "UNTAGGED" || "ANY",
  *   },
  * };
  * const command = new ListImagesCommand(input);
@@ -162,6 +163,10 @@ export class ListImagesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "ListImages",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

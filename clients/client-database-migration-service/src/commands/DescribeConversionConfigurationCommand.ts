@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -76,6 +77,23 @@ export interface DescribeConversionConfigurationCommandOutput
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
  *
+ * @example Describe Conversion Configuration
+ * ```javascript
+ * // Returns configuration parameters for a schema conversion project.
+ * const input = {
+ *   "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+ * };
+ * const command = new DescribeConversionConfigurationCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "ConversionConfiguration": "{\"Common project settings\":{\"ShowSeverityLevelInSql\":\"CRITICAL\"},\"ORACLE_TO_POSTGRESQL\" : {\"ToTimeZone\":false,\"LastDayBuiltinFunctionOracle\":false,   \"NextDayBuiltinFunctionOracle\":false,\"ConvertProceduresToFunction\":false,\"NvlBuiltinFunctionOracle\":false,\"DbmsAssertBuiltinFunctionOracle\":false}}",
+ *   "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+ * }
+ * *\/
+ * // example id: describe-conversion-configuration-1689717690907
+ * ```
+ *
  */
 export class DescribeConversionConfigurationCommand extends $Command<
   DescribeConversionConfigurationCommandInput,
@@ -127,6 +145,10 @@ export class DescribeConversionConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "DescribeConversionConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

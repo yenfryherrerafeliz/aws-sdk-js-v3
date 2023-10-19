@@ -11,9 +11,10 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { DeleteExperimentRequest, DeleteExperimentResponse } from "../models/models_1";
+import { DeleteExperimentRequest, DeleteExperimentResponse } from "../models/models_2";
 import { de_DeleteExperimentCommand, se_DeleteExperimentCommand } from "../protocols/Aws_json1_1";
 import { SageMakerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../SageMakerClient";
 
@@ -119,6 +120,10 @@ export class DeleteExperimentCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "DeleteExperiment",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

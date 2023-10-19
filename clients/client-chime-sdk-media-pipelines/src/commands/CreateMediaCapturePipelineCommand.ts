@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -130,7 +131,7 @@ export interface CreateMediaCapturePipelineCommandOutput extends CreateMediaCapt
  * //     MediaPipelineArn: "STRING_VALUE",
  * //     SourceType: "ChimeSdkMeeting",
  * //     SourceArn: "STRING_VALUE",
- * //     Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused",
+ * //     Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused" || "NotStarted",
  * //     SinkType: "S3Bucket",
  * //     SinkArn: "STRING_VALUE",
  * //     CreatedTimestamp: new Date("TIMESTAMP"),
@@ -278,6 +279,10 @@ export class CreateMediaCapturePipelineCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateMediaCapturePipelineRequestFilterSensitiveLog,
       outputFilterSensitiveLog: CreateMediaCapturePipelineResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ChimeSDKMediaPipelinesService",
+        operation: "CreateMediaCapturePipeline",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

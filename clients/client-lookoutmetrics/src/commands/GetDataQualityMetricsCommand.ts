@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutMetricsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutMetricsClient";
@@ -58,7 +59,7 @@ export interface GetDataQualityMetricsCommandOutput extends GetDataQualityMetric
  * //           MetricSetArn: "STRING_VALUE",
  * //           DataQualityMetricList: [ // DataQualityMetricList
  * //             { // DataQualityMetric
- * //               MetricType: "STRING_VALUE",
+ * //               MetricType: "COLUMN_COMPLETENESS" || "DIMENSION_UNIQUENESS" || "TIME_SERIES_COUNT" || "ROWS_PROCESSED" || "ROWS_PARTIAL_COMPLIANCE" || "INVALID_ROWS_COMPLIANCE" || "BACKTEST_TRAINING_DATA_START_TIME_STAMP" || "BACKTEST_TRAINING_DATA_END_TIME_STAMP" || "BACKTEST_INFERENCE_DATA_START_TIME_STAMP" || "BACKTEST_INFERENCE_DATA_END_TIME_STAMP",
  * //               MetricDescription: "STRING_VALUE",
  * //               RelatedColumnName: "STRING_VALUE",
  * //               MetricValue: Number("double"),
@@ -148,6 +149,10 @@ export class GetDataQualityMetricsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutMetrics",
+        operation: "GetDataQualityMetrics",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

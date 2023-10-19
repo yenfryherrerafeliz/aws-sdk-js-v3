@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -38,9 +39,9 @@ export interface GetDownloadUrlForLayerCommandOutput extends GetDownloadUrlForLa
  * @public
  * <p>Retrieves the pre-signed Amazon S3 download URL corresponding to an image layer. You can
  *             only get URLs for image layers that are referenced in an image.</p>
- *         <p>When an image is pulled, the GetDownloadUrlForLayer API is called once per image layer
+ *          <p>When an image is pulled, the GetDownloadUrlForLayer API is called once per image layer
  *             that is not already cached.</p>
- *         <note>
+ *          <note>
  *             <p>This operation is used by the Amazon ECR proxy and is not generally used by
  *         customers for pulling and pushing images. In most cases, you should use the <code>docker</code> CLI to pull, tag, and push images.</p>
  *          </note>
@@ -143,6 +144,10 @@ export class GetDownloadUrlForLayerCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "GetDownloadUrlForLayer",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

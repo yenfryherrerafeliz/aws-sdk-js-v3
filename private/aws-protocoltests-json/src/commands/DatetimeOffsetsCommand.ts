@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { JsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../JsonProtocolClient";
@@ -33,6 +34,34 @@ export interface DatetimeOffsetsCommandInput {}
  */
 export interface DatetimeOffsetsCommandOutput extends DatetimeOffsetsOutput, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { JsonProtocolClient, DatetimeOffsetsCommand } from "@aws-sdk/aws-protocoltests-json"; // ES Modules import
+ * // const { JsonProtocolClient, DatetimeOffsetsCommand } = require("@aws-sdk/aws-protocoltests-json"); // CommonJS import
+ * const client = new JsonProtocolClient(config);
+ * const input = {};
+ * const command = new DatetimeOffsetsCommand(input);
+ * const response = await client.send(command);
+ * // { // DatetimeOffsetsOutput
+ * //   datetime: new Date("TIMESTAMP"),
+ * // };
+ *
+ * ```
+ *
+ * @param DatetimeOffsetsCommandInput - {@link DatetimeOffsetsCommandInput}
+ * @returns {@link DatetimeOffsetsCommandOutput}
+ * @see {@link DatetimeOffsetsCommandInput} for command's `input` shape.
+ * @see {@link DatetimeOffsetsCommandOutput} for command's `response` shape.
+ * @see {@link JsonProtocolClientResolvedConfig | config} for JsonProtocolClient's `config` shape.
+ *
+ * @throws {@link JsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from JsonProtocol service.</p>
+ *
+ */
 export class DatetimeOffsetsCommand extends $Command<
   DatetimeOffsetsCommandInput,
   DatetimeOffsetsCommandOutput,
@@ -71,6 +100,10 @@ export class DatetimeOffsetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "JsonProtocol",
+        operation: "DatetimeOffsets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

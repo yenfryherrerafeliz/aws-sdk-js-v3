@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -98,6 +99,8 @@ export interface StopDBInstanceAutomatedBackupsReplicationCommandOutput
  * //     ],
  * //     BackupTarget: "STRING_VALUE",
  * //     StorageThroughput: Number("int"),
+ * //     AwsBackupRecoveryPointArn: "STRING_VALUE",
+ * //     DedicatedLogVolume: true || false,
  * //   },
  * // };
  *
@@ -215,6 +218,10 @@ export class StopDBInstanceAutomatedBackupsReplicationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "StopDBInstanceAutomatedBackupsReplication",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

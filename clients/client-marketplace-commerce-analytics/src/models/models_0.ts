@@ -153,7 +153,7 @@ export interface GenerateDataSetRequest {
    *             </ul>
    *         </p>
    */
-  dataSetType: DataSetType | string | undefined;
+  dataSetType: DataSetType | undefined;
 
   /**
    * @public
@@ -239,8 +239,17 @@ export class MarketplaceCommerceAnalyticsException extends __BaseException {
 
 /**
  * @public
+ * @enum
  */
-export type SupportDataSetType = "customer_support_contacts_data" | "test_customer_support_contacts_data";
+export const SupportDataSetType = {
+  customer_support_contacts_data: "customer_support_contacts_data",
+  test_customer_support_contacts_data: "test_customer_support_contacts_data",
+} as const;
+
+/**
+ * @public
+ */
+export type SupportDataSetType = (typeof SupportDataSetType)[keyof typeof SupportDataSetType];
 
 /**
  * @public
@@ -262,7 +271,7 @@ export interface StartSupportDataExportRequest {
    *             </ul>
    *         </p>
    */
-  dataSetType: SupportDataSetType | string | undefined;
+  dataSetType: SupportDataSetType | undefined;
 
   /**
    * @public

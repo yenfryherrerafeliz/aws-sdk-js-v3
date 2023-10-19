@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetSnapshotRequest, GetSnapshotResponse } from "../models/models_0";
@@ -80,6 +81,8 @@ export interface GetSnapshotCommandOutput extends GetSnapshotResponse, __Metadat
  * //     accountsWithProvisionedRestoreAccess: [
  * //       "STRING_VALUE",
  * //     ],
+ * //     adminPasswordSecretArn: "STRING_VALUE",
+ * //     adminPasswordSecretKmsKeyId: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -152,6 +155,10 @@ export class GetSnapshotCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RedshiftServerless",
+        operation: "GetSnapshot",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

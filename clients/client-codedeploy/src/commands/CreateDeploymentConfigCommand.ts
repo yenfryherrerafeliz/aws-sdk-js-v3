@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -77,8 +78,7 @@ export interface CreateDeploymentConfigCommandOutput extends CreateDeploymentCon
  * @see {@link CodeDeployClientResolvedConfig | config} for CodeDeployClient's `config` shape.
  *
  * @throws {@link DeploymentConfigAlreadyExistsException} (client fault)
- *  <p>A deployment configuration with the specified name with the IAM user or
- *                 Amazon Web Services account already exists.</p>
+ *  <p>A deployment configuration with the specified name with the user or Amazon Web Services account already exists.</p>
  *
  * @throws {@link DeploymentConfigLimitExceededException} (client fault)
  *  <p>The deployment configurations limit was exceeded.</p>
@@ -153,6 +153,10 @@ export class CreateDeploymentConfigCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "CreateDeploymentConfig",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

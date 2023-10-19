@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FSxClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FSxClient";
@@ -43,7 +44,7 @@ export interface UpdateDataRepositoryAssociationCommandOutput
  * @public
  * <p>Updates the configuration of an existing data repository association
  *             on an Amazon FSx for Lustre file system. Data repository associations
- *             are supported on all FSx for Lustre 2.12 and newer file systems,
+ *             are supported on all FSx for Lustre 2.12 and 2.15 file systems,
  *             excluding <code>scratch_1</code> deployment type.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -201,6 +202,10 @@ export class UpdateDataRepositoryAssociationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSSimbaAPIService_v20180301",
+        operation: "UpdateDataRepositoryAssociation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

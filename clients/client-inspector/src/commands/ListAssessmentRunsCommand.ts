@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { InspectorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../InspectorClient";
@@ -51,7 +52,7 @@ export interface ListAssessmentRunsCommandOutput extends ListAssessmentRunsRespo
  *   filter: { // AssessmentRunFilter
  *     namePattern: "STRING_VALUE",
  *     states: [ // AssessmentRunStateList
- *       "STRING_VALUE",
+ *       "CREATED" || "START_DATA_COLLECTION_PENDING" || "START_DATA_COLLECTION_IN_PROGRESS" || "COLLECTING_DATA" || "STOP_DATA_COLLECTION_PENDING" || "DATA_COLLECTED" || "START_EVALUATING_RULES_PENDING" || "EVALUATING_RULES" || "FAILED" || "ERROR" || "COMPLETED" || "COMPLETED_WITH_ERRORS" || "CANCELED",
  *     ],
  *     durationRange: { // DurationRange
  *       minSeconds: Number("int"),
@@ -184,6 +185,10 @@ export class ListAssessmentRunsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "InspectorService",
+        operation: "ListAssessmentRuns",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -180,12 +181,12 @@ export interface PostTextCommandOutput extends PostTextResponse, __MetadataBeare
  * //     sentimentLabel: "STRING_VALUE",
  * //     sentimentScore: "STRING_VALUE",
  * //   },
- * //   messageFormat: "STRING_VALUE",
- * //   dialogState: "STRING_VALUE",
+ * //   messageFormat: "PlainText" || "CustomPayload" || "SSML" || "Composite",
+ * //   dialogState: "ElicitIntent" || "ConfirmIntent" || "ElicitSlot" || "Fulfilled" || "ReadyForFulfillment" || "Failed",
  * //   slotToElicit: "STRING_VALUE",
  * //   responseCard: { // ResponseCard
  * //     version: "STRING_VALUE",
- * //     contentType: "STRING_VALUE",
+ * //     contentType: "application/vnd.amazonaws.card.generic",
  * //     genericAttachments: [ // genericAttachmentList
  * //       { // GenericAttachment
  * //         title: "STRING_VALUE",
@@ -322,6 +323,10 @@ export class PostTextCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: PostTextRequestFilterSensitiveLog,
       outputFilterSensitiveLog: PostTextResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseRunTimeService",
+        operation: "PostText",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DataPipelineClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DataPipelineClient";
@@ -75,7 +76,7 @@ export interface SetTaskStatusCommandOutput extends SetTaskStatusOutput, __Metad
  * const client = new DataPipelineClient(config);
  * const input = { // SetTaskStatusInput
  *   taskId: "STRING_VALUE", // required
- *   taskStatus: "STRING_VALUE", // required
+ *   taskStatus: "FINISHED" || "FAILED" || "FALSE", // required
  *   errorId: "STRING_VALUE",
  *   errorMessage: "STRING_VALUE",
  *   errorStackTrace: "STRING_VALUE",
@@ -159,6 +160,10 @@ export class SetTaskStatusCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "DataPipeline",
+        operation: "SetTaskStatus",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

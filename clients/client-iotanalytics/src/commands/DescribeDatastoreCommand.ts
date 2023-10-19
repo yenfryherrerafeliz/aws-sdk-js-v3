@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTAnalyticsClient";
@@ -67,7 +68,7 @@ export interface DescribeDatastoreCommandOutput extends DescribeDatastoreRespons
  * //       },
  * //     },
  * //     arn: "STRING_VALUE",
- * //     status: "STRING_VALUE",
+ * //     status: "CREATING" || "ACTIVE" || "DELETING",
  * //     retentionPeriod: { // RetentionPeriod
  * //       unlimited: true || false,
  * //       numberOfDays: Number("int"),
@@ -187,6 +188,10 @@ export class DescribeDatastoreCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIoTAnalytics",
+        operation: "DescribeDatastore",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

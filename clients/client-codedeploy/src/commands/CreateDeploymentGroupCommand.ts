@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -191,17 +192,17 @@ export interface CreateDeploymentGroupCommandOutput extends CreateDeploymentGrou
  *  <p>The maximum number of alarms for a deployment group (10) was exceeded.</p>
  *
  * @throws {@link ApplicationDoesNotExistException} (client fault)
- *  <p>The application does not exist with the IAM user or Amazon Web Services account.</p>
+ *  <p>The application does not exist with the user or Amazon Web Services account.</p>
  *
  * @throws {@link ApplicationNameRequiredException} (client fault)
  *  <p>The minimum number of required application names was not specified.</p>
  *
  * @throws {@link DeploymentConfigDoesNotExistException} (client fault)
- *  <p>The deployment configuration does not exist with the IAM user or
- *                 Amazon Web Services account.</p>
+ *  <p>The deployment configuration does not exist with the user or Amazon Web Services account.</p>
  *
  * @throws {@link DeploymentGroupAlreadyExistsException} (client fault)
- *  <p>A deployment group with the specified name with the IAM user or Amazon Web Services account already exists.</p>
+ *  <p>A deployment group with the specified name with the user or Amazon Web Services account
+ *             already exists.</p>
  *
  * @throws {@link DeploymentGroupLimitExceededException} (client fault)
  *  <p> The deployment groups limit was exceeded.</p>
@@ -215,21 +216,21 @@ export interface CreateDeploymentGroupCommandOutput extends CreateDeploymentGrou
  *
  * @throws {@link InvalidAlarmConfigException} (client fault)
  *  <p>The format of the alarm configuration is invalid. Possible causes include:</p>
- *         <ul>
+ *          <ul>
  *             <li>
- *                 <p>The alarm list is null.</p>
+ *                <p>The alarm list is null.</p>
  *             </li>
  *             <li>
- *                 <p>The alarm object is null.</p>
+ *                <p>The alarm object is null.</p>
  *             </li>
  *             <li>
- *                 <p>The alarm name is empty or null or exceeds the limit of 255 characters.</p>
+ *                <p>The alarm name is empty or null or exceeds the limit of 255 characters.</p>
  *             </li>
  *             <li>
- *                 <p>Two alarms with the same name have been specified.</p>
+ *                <p>Two alarms with the same name have been specified.</p>
  *             </li>
  *             <li>
- *                 <p>The alarm configuration is enabled, but the alarm list is empty.</p>
+ *                <p>The alarm configuration is enabled, but the alarm list is empty.</p>
  *             </li>
  *          </ul>
  *
@@ -371,6 +372,10 @@ export class CreateDeploymentGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "CreateDeploymentGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

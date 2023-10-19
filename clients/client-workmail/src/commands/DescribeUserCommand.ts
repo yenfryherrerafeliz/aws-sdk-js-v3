@@ -11,9 +11,10 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { DescribeUserRequest, DescribeUserResponse } from "../models/models_0";
+import { DescribeUserRequest, DescribeUserResponse, DescribeUserResponseFilterSensitiveLog } from "../models/models_0";
 import { de_DescribeUserCommand, se_DescribeUserCommand } from "../protocols/Aws_json1_1";
 import { ServiceInputTypes, ServiceOutputTypes, WorkMailClientResolvedConfig } from "../WorkMailClient";
 
@@ -55,9 +56,24 @@ export interface DescribeUserCommandOutput extends DescribeUserResponse, __Metad
  * //   Email: "STRING_VALUE",
  * //   DisplayName: "STRING_VALUE",
  * //   State: "ENABLED" || "DISABLED" || "DELETED",
- * //   UserRole: "USER" || "RESOURCE" || "SYSTEM_USER",
+ * //   UserRole: "USER" || "RESOURCE" || "SYSTEM_USER" || "REMOTE_USER",
  * //   EnabledDate: new Date("TIMESTAMP"),
  * //   DisabledDate: new Date("TIMESTAMP"),
+ * //   MailboxProvisionedDate: new Date("TIMESTAMP"),
+ * //   MailboxDeprovisionedDate: new Date("TIMESTAMP"),
+ * //   FirstName: "STRING_VALUE",
+ * //   LastName: "STRING_VALUE",
+ * //   HiddenFromGlobalAddressList: true || false,
+ * //   Initials: "STRING_VALUE",
+ * //   Telephone: "STRING_VALUE",
+ * //   Street: "STRING_VALUE",
+ * //   JobTitle: "STRING_VALUE",
+ * //   City: "STRING_VALUE",
+ * //   Company: "STRING_VALUE",
+ * //   ZipCode: "STRING_VALUE",
+ * //   Department: "STRING_VALUE",
+ * //   Country: "STRING_VALUE",
+ * //   Office: "STRING_VALUE",
  * // };
  *
  * ```
@@ -134,7 +150,11 @@ export class DescribeUserCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: DescribeUserResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkMailService",
+        operation: "DescribeUser",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

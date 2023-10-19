@@ -1268,6 +1268,11 @@ import {
   DisableFastSnapshotRestoresCommandOutput,
 } from "../commands/DisableFastSnapshotRestoresCommand";
 import {
+  DisableImageBlockPublicAccessCommandInput,
+  DisableImageBlockPublicAccessCommandOutput,
+} from "../commands/DisableImageBlockPublicAccessCommand";
+import { DisableImageCommandInput, DisableImageCommandOutput } from "../commands/DisableImageCommand";
+import {
   DisableImageDeprecationCommandInput,
   DisableImageDeprecationCommandOutput,
 } from "../commands/DisableImageDeprecationCommand";
@@ -1369,6 +1374,11 @@ import {
   EnableFastSnapshotRestoresCommandOutput,
 } from "../commands/EnableFastSnapshotRestoresCommand";
 import {
+  EnableImageBlockPublicAccessCommandInput,
+  EnableImageBlockPublicAccessCommandOutput,
+} from "../commands/EnableImageBlockPublicAccessCommand";
+import { EnableImageCommandInput, EnableImageCommandOutput } from "../commands/EnableImageCommand";
+import {
   EnableImageDeprecationCommandInput,
   EnableImageDeprecationCommandOutput,
 } from "../commands/EnableImageDeprecationCommand";
@@ -1460,6 +1470,10 @@ import {
   GetHostReservationPurchasePreviewCommandInput,
   GetHostReservationPurchasePreviewCommandOutput,
 } from "../commands/GetHostReservationPurchasePreviewCommand";
+import {
+  GetImageBlockPublicAccessStateCommandInput,
+  GetImageBlockPublicAccessStateCommandOutput,
+} from "../commands/GetImageBlockPublicAccessStateCommand";
 import {
   GetInstanceTypesFromInstanceRequirementsCommandInput,
   GetInstanceTypesFromInstanceRequirementsCommandOutput,
@@ -2176,7 +2190,6 @@ import {
   CapacityReservation,
   CapacityReservationFleetCancellationState,
   CarrierGateway,
-  CertificateAuthenticationRequest,
   CidrBlock,
   ClientVpnAuthorizationRuleStatus,
   ConfirmProductInstanceRequest,
@@ -2265,6 +2278,7 @@ import {
   UnsuccessfulItemError,
   UserIdGroupPair,
   VerifiedAccessInstance,
+  VerifiedAccessSseSpecificationResponse,
   VerifiedAccessTrustProvider,
   VerifiedAccessTrustProviderCondensed,
   VolumeAttachment,
@@ -2287,6 +2301,7 @@ import {
   CapacityReservationOptionsRequest,
   CapacityReservationTarget,
   CapacityReservationTargetResponse,
+  CertificateAuthenticationRequest,
   ClientConnectOptions,
   ClientLoginBannerOptions,
   ClientVpnAuthenticationRequest,
@@ -2369,7 +2384,6 @@ import {
   CreateNetworkInterfaceRequest,
   CreateNetworkInterfaceResult,
   CreatePlacementGroupRequest,
-  CreatePlacementGroupResult,
   CreditSpecification,
   CreditSpecificationRequest,
   CustomerGateway,
@@ -2513,6 +2527,7 @@ import {
   CloudWatchLogOptions,
   CloudWatchLogOptionsSpecification,
   ConnectionNotification,
+  CreatePlacementGroupResult,
   CreatePublicIpv4PoolRequest,
   CreatePublicIpv4PoolResult,
   CreateReplaceRootVolumeTaskRequest,
@@ -2672,8 +2687,6 @@ import {
   DeleteNetworkInterfaceRequest,
   DeletePlacementGroupRequest,
   DeletePublicIpv4PoolRequest,
-  DeletePublicIpv4PoolResult,
-  DeleteQueuedReservedInstancesRequest,
   DnsEntry,
   DnsOptions,
   DnsOptionsSpecification,
@@ -2744,6 +2757,7 @@ import {
   VerifiedAccessEndpointLoadBalancerOptions,
   VerifiedAccessEndpointStatus,
   VerifiedAccessGroup,
+  VerifiedAccessSseSpecificationRequest,
   VgwTelemetry,
   Volume,
   VpcEndpoint,
@@ -2779,7 +2793,9 @@ import {
   ConnectionLogResponseOptions,
   ConversionTask,
   CpuOptions,
+  DeletePublicIpv4PoolResult,
   DeleteQueuedReservedInstancesError,
+  DeleteQueuedReservedInstancesRequest,
   DeleteQueuedReservedInstancesResult,
   DeleteRouteRequest,
   DeleteRouteTableRequest,
@@ -2961,10 +2977,8 @@ import {
   DiskImageDescription,
   DiskImageVolumeDescription,
   EbsInstanceBlockDevice,
-  ElasticGpuAssociation,
   ElasticGpuHealth,
   ElasticGpus,
-  ElasticInferenceAcceleratorAssociation,
   EnclaveOptions,
   EventInformation,
   ExportImageTask,
@@ -3176,12 +3190,12 @@ import {
   DescribeTrunkInterfaceAssociationsResult,
   DescribeVerifiedAccessEndpointsRequest,
   DescribeVerifiedAccessEndpointsResult,
-  DescribeVerifiedAccessGroupsRequest,
-  DescribeVerifiedAccessGroupsResult,
   DiskInfo,
   EbsInfo,
   EbsOptimizedInfo,
   EfaInfo,
+  ElasticGpuAssociation,
+  ElasticInferenceAcceleratorAssociation,
   FpgaDeviceInfo,
   FpgaDeviceMemoryInfo,
   FpgaInfo,
@@ -3291,6 +3305,8 @@ import {
   CoipAddressUsage,
   DataQuery,
   DataResponse,
+  DescribeVerifiedAccessGroupsRequest,
+  DescribeVerifiedAccessGroupsResult,
   DescribeVerifiedAccessInstanceLoggingConfigurationsRequest,
   DescribeVerifiedAccessInstanceLoggingConfigurationsResult,
   DescribeVerifiedAccessInstancesRequest,
@@ -3353,8 +3369,12 @@ import {
   DisableFastSnapshotRestoreStateError,
   DisableFastSnapshotRestoreStateErrorItem,
   DisableFastSnapshotRestoreSuccessItem,
+  DisableImageBlockPublicAccessRequest,
+  DisableImageBlockPublicAccessResult,
   DisableImageDeprecationRequest,
   DisableImageDeprecationResult,
+  DisableImageRequest,
+  DisableImageResult,
   DisableIpamOrganizationAdminAccountRequest,
   DisableIpamOrganizationAdminAccountResult,
   DisableSerialConsoleAccessRequest,
@@ -3406,8 +3426,12 @@ import {
   EnableFastSnapshotRestoreStateError,
   EnableFastSnapshotRestoreStateErrorItem,
   EnableFastSnapshotRestoreSuccessItem,
+  EnableImageBlockPublicAccessRequest,
+  EnableImageBlockPublicAccessResult,
   EnableImageDeprecationRequest,
   EnableImageDeprecationResult,
+  EnableImageRequest,
+  EnableImageResult,
   EnableIpamOrganizationAdminAccountRequest,
   EnableIpamOrganizationAdminAccountResult,
   EnableReachabilityAnalyzerOrganizationSharingRequest,
@@ -3459,6 +3483,8 @@ import {
   GetGroupsForCapacityReservationResult,
   GetHostReservationPurchasePreviewRequest,
   GetHostReservationPurchasePreviewResult,
+  GetImageBlockPublicAccessStateRequest,
+  GetImageBlockPublicAccessStateResult,
   GetInstanceTypesFromInstanceRequirementsRequest,
   GetInstanceTypesFromInstanceRequirementsResult,
   GetInstanceUefiDataRequest,
@@ -3508,17 +3534,6 @@ import {
   GetTransitGatewayRouteTableAssociationsRequest,
   GetTransitGatewayRouteTableAssociationsResult,
   GetTransitGatewayRouteTablePropagationsRequest,
-  GetTransitGatewayRouteTablePropagationsResult,
-  GetVerifiedAccessEndpointPolicyRequest,
-  GetVerifiedAccessEndpointPolicyResult,
-  GetVerifiedAccessGroupPolicyRequest,
-  GetVerifiedAccessGroupPolicyResult,
-  GetVpnConnectionDeviceSampleConfigurationRequest,
-  GetVpnConnectionDeviceSampleConfigurationResult,
-  GetVpnConnectionDeviceTypesRequest,
-  GetVpnConnectionDeviceTypesResult,
-  GetVpnTunnelReplacementStatusRequest,
-  GetVpnTunnelReplacementStatusResult,
   InstanceEventWindowDisassociationRequest,
   InstanceFamilyCreditSpecification,
   InstanceRequirementsWithMetadataRequest,
@@ -3531,7 +3546,6 @@ import {
   IpamDiscoveryFailureReason,
   IpamResourceCidr,
   Ipv6CidrAssociation,
-  MaintenanceDetails,
   MetricPoint,
   PrefixListAssociation,
   PrefixListEntry,
@@ -3550,7 +3564,6 @@ import {
   TransitGatewayPolicyTableEntry,
   TransitGatewayPropagation,
   TransitGatewayRouteTableAssociation,
-  TransitGatewayRouteTablePropagation,
   VerifiedAccessInstanceLoggingConfiguration,
   VerifiedAccessLogCloudWatchLogsDestination,
   VerifiedAccessLogDeliveryStatus,
@@ -3566,7 +3579,6 @@ import {
   VolumeStatusItem,
   VpcClassicLink,
   VpcEndpointConnection,
-  VpnConnectionDeviceType,
 } from "../models/models_5";
 import {
   BlobAttributeValue,
@@ -3580,8 +3592,17 @@ import {
   DnsServersOptionsModifyStructure,
   EbsInstanceBlockDeviceSpecification,
   ElasticInferenceAccelerator,
-  EnclaveOptionsRequest,
-  HibernationOptionsRequest,
+  GetTransitGatewayRouteTablePropagationsResult,
+  GetVerifiedAccessEndpointPolicyRequest,
+  GetVerifiedAccessEndpointPolicyResult,
+  GetVerifiedAccessGroupPolicyRequest,
+  GetVerifiedAccessGroupPolicyResult,
+  GetVpnConnectionDeviceSampleConfigurationRequest,
+  GetVpnConnectionDeviceSampleConfigurationResult,
+  GetVpnConnectionDeviceTypesRequest,
+  GetVpnConnectionDeviceTypesResult,
+  GetVpnTunnelReplacementStatusRequest,
+  GetVpnTunnelReplacementStatusResult,
   ImageDiskContainer,
   ImageRecycleBinInfo,
   ImportClientVpnClientCertificateRevocationListRequest,
@@ -3600,20 +3621,16 @@ import {
   ImportVolumeResult,
   InstanceBlockDeviceMappingSpecification,
   InstanceCreditSpecificationRequest,
-  InstanceMaintenanceOptionsRequest,
-  InstanceMarketOptionsRequest,
-  InstanceMetadataOptionsRequest,
   InstanceMonitoring,
   IpamCidrAuthorizationContext,
   LaunchPermissionModifications,
-  LaunchTemplateSpecification,
-  LicenseConfigurationRequest,
   ListImagesInRecycleBinRequest,
   ListImagesInRecycleBinResult,
   ListSnapshotsInRecycleBinRequest,
   ListSnapshotsInRecycleBinResult,
   LoadPermissionModifications,
   LoadPermissionRequest,
+  MaintenanceDetails,
   ModifyAddressAttributeRequest,
   ModifyAddressAttributeResult,
   ModifyAvailabilityZoneGroupRequest,
@@ -3748,7 +3765,6 @@ import {
   NetworkInterfaceAttachmentChanges,
   PeeringConnectionOptions,
   PeeringConnectionOptionsRequest,
-  PrivateDnsNameOptionsRequest,
   ProvisionByoipCidrRequest,
   ProvisionByoipCidrResult,
   ProvisionIpamPoolCidrRequest,
@@ -3835,21 +3851,16 @@ import {
   RevokeSecurityGroupEgressResult,
   RevokeSecurityGroupIngressRequest,
   RevokeSecurityGroupIngressResult,
-  RunInstancesRequest,
-  ScheduledInstancesBlockDeviceMapping,
-  ScheduledInstancesEbs,
-  ScheduledInstancesIamInstanceProfile,
-  ScheduledInstancesMonitoring,
   SecurityGroupRuleRequest,
   SecurityGroupRuleUpdate,
   SnapshotDiskContainer,
   SnapshotRecycleBinInfo,
-  SpotMarketOptions,
   SuccessfulInstanceCreditSpecificationItem,
   TrafficMirrorFilterRuleField,
   TrafficMirrorSessionField,
   TransitGatewayMulticastRegisteredGroupMembers,
   TransitGatewayMulticastRegisteredGroupSources,
+  TransitGatewayRouteTablePropagation,
   UnsuccessfulInstanceCreditSpecificationItem,
   UnsuccessfulInstanceCreditSpecificationItemError,
   UserBucket,
@@ -3859,13 +3870,27 @@ import {
   VerifiedAccessLogOptions,
   VerifiedAccessLogS3DestinationOptions,
   VolumeDetail,
+  VpnConnectionDeviceType,
 } from "../models/models_6";
 import {
+  EnclaveOptionsRequest,
+  HibernationOptionsRequest,
+  InstanceMaintenanceOptionsRequest,
+  InstanceMarketOptionsRequest,
+  InstanceMetadataOptionsRequest,
   InstanceStateChange,
+  LaunchTemplateSpecification,
+  LicenseConfigurationRequest,
+  PrivateDnsNameOptionsRequest,
+  RunInstancesRequest,
   RunScheduledInstancesRequest,
   RunScheduledInstancesResult,
+  ScheduledInstancesBlockDeviceMapping,
+  ScheduledInstancesEbs,
+  ScheduledInstancesIamInstanceProfile,
   ScheduledInstancesIpv6Address,
   ScheduledInstancesLaunchSpecification,
+  ScheduledInstancesMonitoring,
   ScheduledInstancesNetworkInterface,
   ScheduledInstancesPlacement,
   ScheduledInstancesPrivateIpAddressConfig,
@@ -3877,6 +3902,7 @@ import {
   SearchTransitGatewayRoutesResult,
   SecurityGroupRuleDescription,
   SendDiagnosticInterruptRequest,
+  SpotMarketOptions,
   StartInstancesRequest,
   StartInstancesResult,
   StartNetworkInsightsAccessScopeAnalysisRequest,
@@ -10250,6 +10276,40 @@ export const se_DisableFastSnapshotRestoresCommand = async (
 };
 
 /**
+ * serializeAws_ec2DisableImageCommand
+ */
+export const se_DisableImageCommand = async (
+  input: DisableImageCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_DisableImageRequest(input, context),
+    Action: "DisableImage",
+    Version: "2016-11-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_ec2DisableImageBlockPublicAccessCommand
+ */
+export const se_DisableImageBlockPublicAccessCommand = async (
+  input: DisableImageBlockPublicAccessCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_DisableImageBlockPublicAccessRequest(input, context),
+    Action: "DisableImageBlockPublicAccess",
+    Version: "2016-11-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
  * serializeAws_ec2DisableImageDeprecationCommand
  */
 export const se_DisableImageDeprecationCommand = async (
@@ -10692,6 +10752,40 @@ export const se_EnableFastSnapshotRestoresCommand = async (
 };
 
 /**
+ * serializeAws_ec2EnableImageCommand
+ */
+export const se_EnableImageCommand = async (
+  input: EnableImageCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_EnableImageRequest(input, context),
+    Action: "EnableImage",
+    Version: "2016-11-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_ec2EnableImageBlockPublicAccessCommand
+ */
+export const se_EnableImageBlockPublicAccessCommand = async (
+  input: EnableImageBlockPublicAccessCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_EnableImageBlockPublicAccessRequest(input, context),
+    Action: "EnableImageBlockPublicAccess",
+    Version: "2016-11-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
  * serializeAws_ec2EnableImageDeprecationCommand
  */
 export const se_EnableImageDeprecationCommand = async (
@@ -11128,6 +11222,23 @@ export const se_GetHostReservationPurchasePreviewCommand = async (
   body = buildFormUrlencodedString({
     ...se_GetHostReservationPurchasePreviewRequest(input, context),
     Action: "GetHostReservationPurchasePreview",
+    Version: "2016-11-15",
+  });
+  return buildHttpRpcRequest(context, headers, "/", undefined, body);
+};
+
+/**
+ * serializeAws_ec2GetImageBlockPublicAccessStateCommand
+ */
+export const se_GetImageBlockPublicAccessStateCommand = async (
+  input: GetImageBlockPublicAccessStateCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const headers: __HeaderBag = SHARED_HEADERS;
+  let body: any;
+  body = buildFormUrlencodedString({
+    ...se_GetImageBlockPublicAccessStateRequest(input, context),
+    Action: "GetImageBlockPublicAccessState",
     Version: "2016-11-15",
   });
   return buildHttpRpcRequest(context, headers, "/", undefined, body);
@@ -28837,6 +28948,86 @@ const de_DisableFastSnapshotRestoresCommandError = async (
 };
 
 /**
+ * deserializeAws_ec2DisableImageCommand
+ */
+export const de_DisableImageCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DisableImageCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DisableImageCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_DisableImageResult(data, context);
+  const response: DisableImageCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_ec2DisableImageCommandError
+ */
+const de_DisableImageCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DisableImageCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadEc2ErrorCode(output, parsedOutput.body);
+  const parsedBody = parsedOutput.body;
+  return throwDefaultError({
+    output,
+    parsedBody: parsedBody.Errors.Error,
+    errorCode,
+  });
+};
+
+/**
+ * deserializeAws_ec2DisableImageBlockPublicAccessCommand
+ */
+export const de_DisableImageBlockPublicAccessCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DisableImageBlockPublicAccessCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_DisableImageBlockPublicAccessCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_DisableImageBlockPublicAccessResult(data, context);
+  const response: DisableImageBlockPublicAccessCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_ec2DisableImageBlockPublicAccessCommandError
+ */
+const de_DisableImageBlockPublicAccessCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<DisableImageBlockPublicAccessCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadEc2ErrorCode(output, parsedOutput.body);
+  const parsedBody = parsedOutput.body;
+  return throwDefaultError({
+    output,
+    parsedBody: parsedBody.Errors.Error,
+    errorCode,
+  });
+};
+
+/**
  * deserializeAws_ec2DisableImageDeprecationCommand
  */
 export const de_DisableImageDeprecationCommand = async (
@@ -29854,6 +30045,86 @@ const de_EnableFastSnapshotRestoresCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<EnableFastSnapshotRestoresCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadEc2ErrorCode(output, parsedOutput.body);
+  const parsedBody = parsedOutput.body;
+  return throwDefaultError({
+    output,
+    parsedBody: parsedBody.Errors.Error,
+    errorCode,
+  });
+};
+
+/**
+ * deserializeAws_ec2EnableImageCommand
+ */
+export const de_EnableImageCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<EnableImageCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_EnableImageCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_EnableImageResult(data, context);
+  const response: EnableImageCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_ec2EnableImageCommandError
+ */
+const de_EnableImageCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<EnableImageCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadEc2ErrorCode(output, parsedOutput.body);
+  const parsedBody = parsedOutput.body;
+  return throwDefaultError({
+    output,
+    parsedBody: parsedBody.Errors.Error,
+    errorCode,
+  });
+};
+
+/**
+ * deserializeAws_ec2EnableImageBlockPublicAccessCommand
+ */
+export const de_EnableImageBlockPublicAccessCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<EnableImageBlockPublicAccessCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_EnableImageBlockPublicAccessCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_EnableImageBlockPublicAccessResult(data, context);
+  const response: EnableImageBlockPublicAccessCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_ec2EnableImageBlockPublicAccessCommandError
+ */
+const de_EnableImageBlockPublicAccessCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<EnableImageBlockPublicAccessCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -30888,6 +31159,46 @@ const de_GetHostReservationPurchasePreviewCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<GetHostReservationPurchasePreviewCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadEc2ErrorCode(output, parsedOutput.body);
+  const parsedBody = parsedOutput.body;
+  return throwDefaultError({
+    output,
+    parsedBody: parsedBody.Errors.Error,
+    errorCode,
+  });
+};
+
+/**
+ * deserializeAws_ec2GetImageBlockPublicAccessStateCommand
+ */
+export const de_GetImageBlockPublicAccessStateCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetImageBlockPublicAccessStateCommandOutput> => {
+  if (output.statusCode >= 300) {
+    return de_GetImageBlockPublicAccessStateCommandError(output, context);
+  }
+  const data: any = await parseBody(output.body, context);
+  let contents: any = {};
+  contents = de_GetImageBlockPublicAccessStateResult(data, context);
+  const response: GetImageBlockPublicAccessStateCommandOutput = {
+    $metadata: deserializeMetadata(output),
+    ...contents,
+  };
+  return response;
+};
+
+/**
+ * deserializeAws_ec2GetImageBlockPublicAccessStateCommandError
+ */
+const de_GetImageBlockPublicAccessStateCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<GetImageBlockPublicAccessStateCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -37632,7 +37943,7 @@ const se_AcceleratorCountRequest = (input: AcceleratorCountRequest, context: __S
 /**
  * serializeAws_ec2AcceleratorManufacturerSet
  */
-const se_AcceleratorManufacturerSet = (input: (AcceleratorManufacturer | string)[], context: __SerdeContext): any => {
+const se_AcceleratorManufacturerSet = (input: AcceleratorManufacturer[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -37648,7 +37959,7 @@ const se_AcceleratorManufacturerSet = (input: (AcceleratorManufacturer | string)
 /**
  * serializeAws_ec2AcceleratorNameSet
  */
-const se_AcceleratorNameSet = (input: (AcceleratorName | string)[], context: __SerdeContext): any => {
+const se_AcceleratorNameSet = (input: AcceleratorName[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -37692,7 +38003,7 @@ const se_AcceleratorTotalMemoryMiBRequest = (input: AcceleratorTotalMemoryMiBReq
 /**
  * serializeAws_ec2AcceleratorTypeSet
  */
-const se_AcceleratorTypeSet = (input: (AcceleratorType | string)[], context: __SerdeContext): any => {
+const se_AcceleratorTypeSet = (input: AcceleratorType[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -37925,7 +38236,7 @@ const se_AccessScopePathRequest = (input: AccessScopePathRequest, context: __Ser
 /**
  * serializeAws_ec2AccountAttributeNameStringList
  */
-const se_AccountAttributeNameStringList = (input: (AccountAttributeName | string)[], context: __SerdeContext): any => {
+const se_AccountAttributeNameStringList = (input: AccountAttributeName[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -38229,7 +38540,7 @@ const se_ApplySecurityGroupsToClientVpnTargetNetworkRequest = (
 /**
  * serializeAws_ec2ArchitectureTypeSet
  */
-const se_ArchitectureTypeSet = (input: (ArchitectureType | string)[], context: __SerdeContext): any => {
+const se_ArchitectureTypeSet = (input: ArchitectureType[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -39982,7 +40293,7 @@ const se_CopySnapshotRequest = (input: CopySnapshotRequest, context: __SerdeCont
 /**
  * serializeAws_ec2CpuManufacturerSet
  */
-const se_CpuManufacturerSet = (input: (CpuManufacturer | string)[], context: __SerdeContext): any => {
+const se_CpuManufacturerSet = (input: CpuManufacturer[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -42892,6 +43203,13 @@ const se_CreateVerifiedAccessEndpointRequest = (
   if (input.DryRun != null) {
     entries["DryRun"] = input.DryRun;
   }
+  if (input.SseSpecification != null) {
+    const memberEntries = se_VerifiedAccessSseSpecificationRequest(input.SseSpecification, context);
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `SseSpecification.${key}`;
+      entries[loc] = value;
+    });
+  }
   return entries;
 };
 
@@ -42944,6 +43262,13 @@ const se_CreateVerifiedAccessGroupRequest = (input: CreateVerifiedAccessGroupReq
   if (input.DryRun != null) {
     entries["DryRun"] = input.DryRun;
   }
+  if (input.SseSpecification != null) {
+    const memberEntries = se_VerifiedAccessSseSpecificationRequest(input.SseSpecification, context);
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `SseSpecification.${key}`;
+      entries[loc] = value;
+    });
+  }
   return entries;
 };
 
@@ -42976,6 +43301,9 @@ const se_CreateVerifiedAccessInstanceRequest = (
   }
   if (input.DryRun != null) {
     entries["DryRun"] = input.DryRun;
+  }
+  if (input.FIPSEnabled != null) {
+    entries["FIPSEnabled"] = input.FIPSEnabled;
   }
   return entries;
 };
@@ -43081,6 +43409,13 @@ const se_CreateVerifiedAccessTrustProviderRequest = (
   }
   if (input.DryRun != null) {
     entries["DryRun"] = input.DryRun;
+  }
+  if (input.SseSpecification != null) {
+    const memberEntries = se_VerifiedAccessSseSpecificationRequest(input.SseSpecification, context);
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `SseSpecification.${key}`;
+      entries[loc] = value;
+    });
   }
   return entries;
 };
@@ -46472,6 +46807,9 @@ const se_DescribeImagesRequest = (input: DescribeImagesRequest, context: __Serde
   }
   if (input.IncludeDeprecated != null) {
     entries["IncludeDeprecated"] = input.IncludeDeprecated;
+  }
+  if (input.IncludeDisabled != null) {
+    entries["IncludeDisabled"] = input.IncludeDisabled;
   }
   if (input.DryRun != null) {
     entries["DryRun"] = input.DryRun;
@@ -50583,9 +50921,37 @@ const se_DisableFastSnapshotRestoresRequest = (
 };
 
 /**
+ * serializeAws_ec2DisableImageBlockPublicAccessRequest
+ */
+const se_DisableImageBlockPublicAccessRequest = (
+  input: DisableImageBlockPublicAccessRequest,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.DryRun != null) {
+    entries["DryRun"] = input.DryRun;
+  }
+  return entries;
+};
+
+/**
  * serializeAws_ec2DisableImageDeprecationRequest
  */
 const se_DisableImageDeprecationRequest = (input: DisableImageDeprecationRequest, context: __SerdeContext): any => {
+  const entries: any = {};
+  if (input.ImageId != null) {
+    entries["ImageId"] = input.ImageId;
+  }
+  if (input.DryRun != null) {
+    entries["DryRun"] = input.DryRun;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_ec2DisableImageRequest
+ */
+const se_DisableImageRequest = (input: DisableImageRequest, context: __SerdeContext): any => {
   const entries: any = {};
   if (input.ImageId != null) {
     entries["ImageId"] = input.ImageId;
@@ -51376,6 +51742,23 @@ const se_EnableFastSnapshotRestoresRequest = (
 };
 
 /**
+ * serializeAws_ec2EnableImageBlockPublicAccessRequest
+ */
+const se_EnableImageBlockPublicAccessRequest = (
+  input: EnableImageBlockPublicAccessRequest,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.ImageBlockPublicAccessState != null) {
+    entries["ImageBlockPublicAccessState"] = input.ImageBlockPublicAccessState;
+  }
+  if (input.DryRun != null) {
+    entries["DryRun"] = input.DryRun;
+  }
+  return entries;
+};
+
+/**
  * serializeAws_ec2EnableImageDeprecationRequest
  */
 const se_EnableImageDeprecationRequest = (input: EnableImageDeprecationRequest, context: __SerdeContext): any => {
@@ -51385,6 +51768,20 @@ const se_EnableImageDeprecationRequest = (input: EnableImageDeprecationRequest, 
   }
   if (input.DeprecateAt != null) {
     entries["DeprecateAt"] = input.DeprecateAt.toISOString().split(".")[0] + "Z";
+  }
+  if (input.DryRun != null) {
+    entries["DryRun"] = input.DryRun;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_ec2EnableImageRequest
+ */
+const se_EnableImageRequest = (input: EnableImageRequest, context: __SerdeContext): any => {
+  const entries: any = {};
+  if (input.ImageId != null) {
+    entries["ImageId"] = input.ImageId;
   }
   if (input.DryRun != null) {
     entries["DryRun"] = input.DryRun;
@@ -52391,6 +52788,20 @@ const se_GetHostReservationPurchasePreviewRequest = (
   }
   if (input.OfferingId != null) {
     entries["OfferingId"] = input.OfferingId;
+  }
+  return entries;
+};
+
+/**
+ * serializeAws_ec2GetImageBlockPublicAccessStateRequest
+ */
+const se_GetImageBlockPublicAccessStateRequest = (
+  input: GetImageBlockPublicAccessStateRequest,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.DryRun != null) {
+    entries["DryRun"] = input.DryRun;
   }
   return entries;
 };
@@ -54119,7 +54530,7 @@ const se_InstanceEventWindowTimeRangeRequestSet = (
 /**
  * serializeAws_ec2InstanceGenerationSet
  */
-const se_InstanceGenerationSet = (input: (InstanceGeneration | string)[], context: __SerdeContext): any => {
+const se_InstanceGenerationSet = (input: InstanceGeneration[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -54829,7 +55240,7 @@ const se_InstanceTagKeySet = (input: string[], context: __SerdeContext): any => 
 /**
  * serializeAws_ec2InstanceTypeList
  */
-const se_InstanceTypeList = (input: (_InstanceType | string)[], context: __SerdeContext): any => {
+const se_InstanceTypeList = (input: _InstanceType[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -56289,7 +56700,7 @@ const se_LocalGatewayVirtualInterfaceIdSet = (input: string[], context: __SerdeC
 /**
  * serializeAws_ec2LocalStorageTypeSet
  */
-const se_LocalStorageTypeSet = (input: (LocalStorageType | string)[], context: __SerdeContext): any => {
+const se_LocalStorageTypeSet = (input: LocalStorageType[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -58072,6 +58483,13 @@ const se_ModifyVerifiedAccessEndpointPolicyRequest = (
   if (input.DryRun != null) {
     entries["DryRun"] = input.DryRun;
   }
+  if (input.SseSpecification != null) {
+    const memberEntries = se_VerifiedAccessSseSpecificationRequest(input.SseSpecification, context);
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `SseSpecification.${key}`;
+      entries[loc] = value;
+    });
+  }
   return entries;
 };
 
@@ -58159,6 +58577,13 @@ const se_ModifyVerifiedAccessGroupPolicyRequest = (
   }
   if (input.DryRun != null) {
     entries["DryRun"] = input.DryRun;
+  }
+  if (input.SseSpecification != null) {
+    const memberEntries = se_VerifiedAccessSseSpecificationRequest(input.SseSpecification, context);
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `SseSpecification.${key}`;
+      entries[loc] = value;
+    });
   }
   return entries;
 };
@@ -58306,6 +58731,13 @@ const se_ModifyVerifiedAccessTrustProviderRequest = (
   }
   if (input.ClientToken != null) {
     entries["ClientToken"] = input.ClientToken;
+  }
+  if (input.SseSpecification != null) {
+    const memberEntries = se_VerifiedAccessSseSpecificationRequest(input.SseSpecification, context);
+    Object.entries(memberEntries).forEach(([key, value]) => {
+      const loc = `SseSpecification.${key}`;
+      entries[loc] = value;
+    });
   }
   return entries;
 };
@@ -59979,7 +60411,7 @@ const se_ProductDescriptionList = (input: string[], context: __SerdeContext): an
 /**
  * serializeAws_ec2ProtocolList
  */
-const se_ProtocolList = (input: (Protocol | string)[], context: __SerdeContext): any => {
+const se_ProtocolList = (input: Protocol[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -60256,7 +60688,7 @@ const se_PurchaseScheduledInstancesRequest = (
 /**
  * serializeAws_ec2ReasonCodesList
  */
-const se_ReasonCodesList = (input: (ReportInstanceReasonCodes | string)[], context: __SerdeContext): any => {
+const se_ReasonCodesList = (input: ReportInstanceReasonCodes[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -61046,7 +61478,7 @@ const se_RequestHostIdSet = (input: string[], context: __SerdeContext): any => {
 /**
  * serializeAws_ec2RequestInstanceTypeList
  */
-const se_RequestInstanceTypeList = (input: (_InstanceType | string)[], context: __SerdeContext): any => {
+const se_RequestInstanceTypeList = (input: _InstanceType[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -64183,10 +64615,7 @@ const se_TrafficMirrorFilterIdList = (input: string[], context: __SerdeContext):
 /**
  * serializeAws_ec2TrafficMirrorFilterRuleFieldList
  */
-const se_TrafficMirrorFilterRuleFieldList = (
-  input: (TrafficMirrorFilterRuleField | string)[],
-  context: __SerdeContext
-): any => {
+const se_TrafficMirrorFilterRuleFieldList = (input: TrafficMirrorFilterRuleField[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -64202,10 +64631,7 @@ const se_TrafficMirrorFilterRuleFieldList = (
 /**
  * serializeAws_ec2TrafficMirrorNetworkServiceList
  */
-const se_TrafficMirrorNetworkServiceList = (
-  input: (TrafficMirrorNetworkService | string)[],
-  context: __SerdeContext
-): any => {
+const se_TrafficMirrorNetworkServiceList = (input: TrafficMirrorNetworkService[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -64235,10 +64661,7 @@ const se_TrafficMirrorPortRangeRequest = (input: TrafficMirrorPortRangeRequest, 
 /**
  * serializeAws_ec2TrafficMirrorSessionFieldList
  */
-const se_TrafficMirrorSessionFieldList = (
-  input: (TrafficMirrorSessionField | string)[],
-  context: __SerdeContext
-): any => {
+const se_TrafficMirrorSessionFieldList = (input: TrafficMirrorSessionField[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -64998,6 +65421,23 @@ const se_VerifiedAccessLogS3DestinationOptions = (
 };
 
 /**
+ * serializeAws_ec2VerifiedAccessSseSpecificationRequest
+ */
+const se_VerifiedAccessSseSpecificationRequest = (
+  input: VerifiedAccessSseSpecificationRequest,
+  context: __SerdeContext
+): any => {
+  const entries: any = {};
+  if (input.CustomerManagedKeyEnabled != null) {
+    entries["CustomerManagedKeyEnabled"] = input.CustomerManagedKeyEnabled;
+  }
+  if (input.KmsKeyArn != null) {
+    entries["KmsKeyArn"] = input.KmsKeyArn;
+  }
+  return entries;
+};
+
+/**
  * serializeAws_ec2VerifiedAccessTrustProviderIdList
  */
 const se_VerifiedAccessTrustProviderIdList = (input: string[], context: __SerdeContext): any => {
@@ -65032,7 +65472,7 @@ const se_VersionStringList = (input: string[], context: __SerdeContext): any => 
 /**
  * serializeAws_ec2VirtualizationTypeSet
  */
-const se_VirtualizationTypeSet = (input: (VirtualizationType | string)[], context: __SerdeContext): any => {
+const se_VirtualizationTypeSet = (input: VirtualizationType[], context: __SerdeContext): any => {
   const entries: any = {};
   let counter = 1;
   for (const entry of input) {
@@ -65501,7 +65941,7 @@ const de_AcceleratorCount = (output: any, context: __SerdeContext): AcceleratorC
 /**
  * deserializeAws_ec2AcceleratorManufacturerSet
  */
-const de_AcceleratorManufacturerSet = (output: any, context: __SerdeContext): (AcceleratorManufacturer | string)[] => {
+const de_AcceleratorManufacturerSet = (output: any, context: __SerdeContext): AcceleratorManufacturer[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -65512,7 +65952,7 @@ const de_AcceleratorManufacturerSet = (output: any, context: __SerdeContext): (A
 /**
  * deserializeAws_ec2AcceleratorNameSet
  */
-const de_AcceleratorNameSet = (output: any, context: __SerdeContext): (AcceleratorName | string)[] => {
+const de_AcceleratorNameSet = (output: any, context: __SerdeContext): AcceleratorName[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -65537,7 +65977,7 @@ const de_AcceleratorTotalMemoryMiB = (output: any, context: __SerdeContext): Acc
 /**
  * deserializeAws_ec2AcceleratorTypeSet
  */
-const de_AcceleratorTypeSet = (output: any, context: __SerdeContext): (AcceleratorType | string)[] => {
+const de_AcceleratorTypeSet = (output: any, context: __SerdeContext): AcceleratorType[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -66394,7 +66834,7 @@ const de_ApplySecurityGroupsToClientVpnTargetNetworkResult = (
 /**
  * deserializeAws_ec2ArchitectureTypeList
  */
-const de_ArchitectureTypeList = (output: any, context: __SerdeContext): (ArchitectureType | string)[] => {
+const de_ArchitectureTypeList = (output: any, context: __SerdeContext): ArchitectureType[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -67158,7 +67598,7 @@ const de_BlockDeviceMappingList = (output: any, context: __SerdeContext): BlockD
 /**
  * deserializeAws_ec2BootModeTypeList
  */
-const de_BootModeTypeList = (output: any, context: __SerdeContext): (BootModeType | string)[] => {
+const de_BootModeTypeList = (output: any, context: __SerdeContext): BootModeType[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -68641,7 +69081,7 @@ const de_CoreCountList = (output: any, context: __SerdeContext): number[] => {
 /**
  * deserializeAws_ec2CpuManufacturerSet
  */
-const de_CpuManufacturerSet = (output: any, context: __SerdeContext): (CpuManufacturer | string)[] => {
+const de_CpuManufacturerSet = (output: any, context: __SerdeContext): CpuManufacturer[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -74501,9 +74941,34 @@ const de_DisableFastSnapshotRestoreSuccessSet = (
 };
 
 /**
+ * deserializeAws_ec2DisableImageBlockPublicAccessResult
+ */
+const de_DisableImageBlockPublicAccessResult = (
+  output: any,
+  context: __SerdeContext
+): DisableImageBlockPublicAccessResult => {
+  const contents: any = {};
+  if (output["imageBlockPublicAccessState"] !== undefined) {
+    contents.ImageBlockPublicAccessState = __expectString(output["imageBlockPublicAccessState"]);
+  }
+  return contents;
+};
+
+/**
  * deserializeAws_ec2DisableImageDeprecationResult
  */
 const de_DisableImageDeprecationResult = (output: any, context: __SerdeContext): DisableImageDeprecationResult => {
+  const contents: any = {};
+  if (output["return"] !== undefined) {
+    contents.Return = __parseBoolean(output["return"]);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_ec2DisableImageResult
+ */
+const de_DisableImageResult = (output: any, context: __SerdeContext): DisableImageResult => {
   const contents: any = {};
   if (output["return"] !== undefined) {
     contents.Return = __parseBoolean(output["return"]);
@@ -75489,9 +75954,34 @@ const de_EnableFastSnapshotRestoreSuccessSet = (
 };
 
 /**
+ * deserializeAws_ec2EnableImageBlockPublicAccessResult
+ */
+const de_EnableImageBlockPublicAccessResult = (
+  output: any,
+  context: __SerdeContext
+): EnableImageBlockPublicAccessResult => {
+  const contents: any = {};
+  if (output["imageBlockPublicAccessState"] !== undefined) {
+    contents.ImageBlockPublicAccessState = __expectString(output["imageBlockPublicAccessState"]);
+  }
+  return contents;
+};
+
+/**
  * deserializeAws_ec2EnableImageDeprecationResult
  */
 const de_EnableImageDeprecationResult = (output: any, context: __SerdeContext): EnableImageDeprecationResult => {
+  const contents: any = {};
+  if (output["return"] !== undefined) {
+    contents.Return = __parseBoolean(output["return"]);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_ec2EnableImageResult
+ */
+const de_EnableImageResult = (output: any, context: __SerdeContext): EnableImageResult => {
   const contents: any = {};
   if (output["return"] !== undefined) {
     contents.Return = __parseBoolean(output["return"]);
@@ -77030,6 +77520,20 @@ const de_GetHostReservationPurchasePreviewResult = (
 };
 
 /**
+ * deserializeAws_ec2GetImageBlockPublicAccessStateResult
+ */
+const de_GetImageBlockPublicAccessStateResult = (
+  output: any,
+  context: __SerdeContext
+): GetImageBlockPublicAccessStateResult => {
+  const contents: any = {};
+  if (output["imageBlockPublicAccessState"] !== undefined) {
+    contents.ImageBlockPublicAccessState = __expectString(output["imageBlockPublicAccessState"]);
+  }
+  return contents;
+};
+
+/**
  * deserializeAws_ec2GetInstanceTypesFromInstanceRequirementsResult
  */
 const de_GetInstanceTypesFromInstanceRequirementsResult = (
@@ -78333,6 +78837,9 @@ const de_Image = (output: any, context: __SerdeContext): Image => {
   if (output["imdsSupport"] !== undefined) {
     contents.ImdsSupport = __expectString(output["imdsSupport"]);
   }
+  if (output["sourceInstanceId"] !== undefined) {
+    contents.SourceInstanceId = __expectString(output["sourceInstanceId"]);
+  }
   return contents;
 };
 
@@ -79435,7 +79942,7 @@ const de_InstanceFamilyCreditSpecification = (
 /**
  * deserializeAws_ec2InstanceGenerationSet
  */
-const de_InstanceGenerationSet = (output: any, context: __SerdeContext): (InstanceGeneration | string)[] => {
+const de_InstanceGenerationSet = (output: any, context: __SerdeContext): InstanceGeneration[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -82864,7 +83371,7 @@ const de_LocalGatewayVirtualInterfaceSet = (output: any, context: __SerdeContext
 /**
  * deserializeAws_ec2LocalStorageTypeSet
  */
-const de_LocalStorageTypeSet = (output: any, context: __SerdeContext): (LocalStorageType | string)[] => {
+const de_LocalStorageTypeSet = (output: any, context: __SerdeContext): LocalStorageType[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -83513,6 +84020,9 @@ const de_ModifyVerifiedAccessEndpointPolicyResult = (
   if (output["policyDocument"] !== undefined) {
     contents.PolicyDocument = __expectString(output["policyDocument"]);
   }
+  if (output["sseSpecification"] !== undefined) {
+    contents.SseSpecification = de_VerifiedAccessSseSpecificationResponse(output["sseSpecification"], context);
+  }
   return contents;
 };
 
@@ -83543,6 +84053,9 @@ const de_ModifyVerifiedAccessGroupPolicyResult = (
   }
   if (output["policyDocument"] !== undefined) {
     contents.PolicyDocument = __expectString(output["policyDocument"]);
+  }
+  if (output["sseSpecification"] !== undefined) {
+    contents.SseSpecification = de_VerifiedAccessSseSpecificationResponse(output["sseSpecification"], context);
   }
   return contents;
 };
@@ -85380,7 +85893,7 @@ const de_PlacementGroupList = (output: any, context: __SerdeContext): PlacementG
 /**
  * deserializeAws_ec2PlacementGroupStrategyList
  */
-const de_PlacementGroupStrategyList = (output: any, context: __SerdeContext): (PlacementGroupStrategy | string)[] => {
+const de_PlacementGroupStrategyList = (output: any, context: __SerdeContext): PlacementGroupStrategy[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -85837,7 +86350,7 @@ const de_ProtocolIntList = (output: any, context: __SerdeContext): number[] => {
 /**
  * deserializeAws_ec2ProtocolList
  */
-const de_ProtocolList = (output: any, context: __SerdeContext): (Protocol | string)[] => {
+const de_ProtocolList = (output: any, context: __SerdeContext): Protocol[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -87334,7 +87847,7 @@ const de_RevokeSecurityGroupIngressResult = (
 /**
  * deserializeAws_ec2RootDeviceTypeList
  */
-const de_RootDeviceTypeList = (output: any, context: __SerdeContext): (RootDeviceType | string)[] => {
+const de_RootDeviceTypeList = (output: any, context: __SerdeContext): RootDeviceType[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -89642,7 +90155,7 @@ const de_SuccessfulQueuedPurchaseDeletionSet = (
 const de_SupportedAdditionalProcessorFeatureList = (
   output: any,
   context: __SerdeContext
-): (SupportedAdditionalProcessorFeature | string)[] => {
+): SupportedAdditionalProcessorFeature[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -89653,7 +90166,7 @@ const de_SupportedAdditionalProcessorFeatureList = (
 /**
  * deserializeAws_ec2SupportedIpAddressTypes
  */
-const de_SupportedIpAddressTypes = (output: any, context: __SerdeContext): (ServiceConnectivityType | string)[] => {
+const de_SupportedIpAddressTypes = (output: any, context: __SerdeContext): ServiceConnectivityType[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -90105,10 +90618,7 @@ const de_TrafficMirrorFilterSet = (output: any, context: __SerdeContext): Traffi
 /**
  * deserializeAws_ec2TrafficMirrorNetworkServiceList
  */
-const de_TrafficMirrorNetworkServiceList = (
-  output: any,
-  context: __SerdeContext
-): (TrafficMirrorNetworkService | string)[] => {
+const de_TrafficMirrorNetworkServiceList = (output: any, context: __SerdeContext): TrafficMirrorNetworkService[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -91942,7 +92452,7 @@ const de_UpdateSecurityGroupRuleDescriptionsIngressResult = (
 /**
  * deserializeAws_ec2UsageClassTypeList
  */
-const de_UsageClassTypeList = (output: any, context: __SerdeContext): (UsageClassType | string)[] => {
+const de_UsageClassTypeList = (output: any, context: __SerdeContext): UsageClassType[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -92163,6 +92673,9 @@ const de_VerifiedAccessEndpoint = (output: any, context: __SerdeContext): Verifi
   } else if (output["tagSet"] !== undefined && output["tagSet"]["item"] !== undefined) {
     contents.Tags = de_TagList(__getArrayIfSingleItem(output["tagSet"]["item"]), context);
   }
+  if (output["sseSpecification"] !== undefined) {
+    contents.SseSpecification = de_VerifiedAccessSseSpecificationResponse(output["sseSpecification"], context);
+  }
   return contents;
 };
 
@@ -92284,6 +92797,9 @@ const de_VerifiedAccessGroup = (output: any, context: __SerdeContext): VerifiedA
   } else if (output["tagSet"] !== undefined && output["tagSet"]["item"] !== undefined) {
     contents.Tags = de_TagList(__getArrayIfSingleItem(output["tagSet"]["item"]), context);
   }
+  if (output["sseSpecification"] !== undefined) {
+    contents.SseSpecification = de_VerifiedAccessSseSpecificationResponse(output["sseSpecification"], context);
+  }
   return contents;
 };
 
@@ -92330,6 +92846,9 @@ const de_VerifiedAccessInstance = (output: any, context: __SerdeContext): Verifi
     contents.Tags = [];
   } else if (output["tagSet"] !== undefined && output["tagSet"]["item"] !== undefined) {
     contents.Tags = de_TagList(__getArrayIfSingleItem(output["tagSet"]["item"]), context);
+  }
+  if (output["fipsEnabled"] !== undefined) {
+    contents.FipsEnabled = __parseBoolean(output["fipsEnabled"]);
   }
   return contents;
 };
@@ -92480,6 +92999,23 @@ const de_VerifiedAccessLogS3Destination = (output: any, context: __SerdeContext)
 };
 
 /**
+ * deserializeAws_ec2VerifiedAccessSseSpecificationResponse
+ */
+const de_VerifiedAccessSseSpecificationResponse = (
+  output: any,
+  context: __SerdeContext
+): VerifiedAccessSseSpecificationResponse => {
+  const contents: any = {};
+  if (output["customerManagedKeyEnabled"] !== undefined) {
+    contents.CustomerManagedKeyEnabled = __parseBoolean(output["customerManagedKeyEnabled"]);
+  }
+  if (output["kmsKeyArn"] !== undefined) {
+    contents.KmsKeyArn = __expectString(output["kmsKeyArn"]);
+  }
+  return contents;
+};
+
+/**
  * deserializeAws_ec2VerifiedAccessTrustProvider
  */
 const de_VerifiedAccessTrustProvider = (output: any, context: __SerdeContext): VerifiedAccessTrustProvider => {
@@ -92518,6 +93054,9 @@ const de_VerifiedAccessTrustProvider = (output: any, context: __SerdeContext): V
     contents.Tags = [];
   } else if (output["tagSet"] !== undefined && output["tagSet"]["item"] !== undefined) {
     contents.Tags = de_TagList(__getArrayIfSingleItem(output["tagSet"]["item"]), context);
+  }
+  if (output["sseSpecification"] !== undefined) {
+    contents.SseSpecification = de_VerifiedAccessSseSpecificationResponse(output["sseSpecification"], context);
   }
   return contents;
 };
@@ -92613,7 +93152,7 @@ const de_VgwTelemetryList = (output: any, context: __SerdeContext): VgwTelemetry
 /**
  * deserializeAws_ec2VirtualizationTypeList
  */
-const de_VirtualizationTypeList = (output: any, context: __SerdeContext): (VirtualizationType | string)[] => {
+const de_VirtualizationTypeList = (output: any, context: __SerdeContext): VirtualizationType[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {

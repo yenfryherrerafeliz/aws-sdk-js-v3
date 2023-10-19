@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ConnectCampaignsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectCampaignsClient";
@@ -49,15 +50,20 @@ export interface CreateCampaignCommandOutput extends CreateCampaignResponse, __M
  *   dialerConfig: { // DialerConfig Union: only one key present
  *     progressiveDialerConfig: { // ProgressiveDialerConfig
  *       bandwidthAllocation: Number("double"), // required
+ *       dialingCapacity: Number("double"),
  *     },
  *     predictiveDialerConfig: { // PredictiveDialerConfig
  *       bandwidthAllocation: Number("double"), // required
+ *       dialingCapacity: Number("double"),
+ *     },
+ *     agentlessDialerConfig: { // AgentlessDialerConfig
+ *       dialingCapacity: Number("double"),
  *     },
  *   },
  *   outboundCallConfig: { // OutboundCallConfig
  *     connectContactFlowId: "STRING_VALUE", // required
  *     connectSourcePhoneNumber: "STRING_VALUE",
- *     connectQueueId: "STRING_VALUE", // required
+ *     connectQueueId: "STRING_VALUE",
  *     answerMachineDetectionConfig: { // AnswerMachineDetectionConfig
  *       enableAnswerMachineDetection: true || false, // required
  *     },
@@ -159,6 +165,10 @@ export class CreateCampaignCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonConnectCampaignService",
+        operation: "CreateCampaign",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -70,8 +71,7 @@ export interface ListDeploymentTargetsCommandOutput extends ListDeploymentTarget
  * @see {@link CodeDeployClientResolvedConfig | config} for CodeDeployClient's `config` shape.
  *
  * @throws {@link DeploymentDoesNotExistException} (client fault)
- *  <p>The deployment with the IAM user or Amazon Web Services account does not
- *             exist.</p>
+ *  <p>The deployment with the user or Amazon Web Services account does not exist.</p>
  *
  * @throws {@link DeploymentIdRequiredException} (client fault)
  *  <p>At least one deployment ID must be specified.</p>
@@ -151,6 +151,10 @@ export class ListDeploymentTargetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "ListDeploymentTargets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { SendTestEventNotificationRequest, SendTestEventNotificationResponse } from "../models/models_0";
@@ -52,13 +53,13 @@ export interface SendTestEventNotificationCommandOutput extends SendTestEventNot
  * const input = { // SendTestEventNotificationRequest
  *   Notification: { // NotificationSpecification
  *     Destination: "STRING_VALUE", // required
- *     Transport: "STRING_VALUE", // required
+ *     Transport: "Email" || "SQS" || "SNS", // required
  *     Version: "STRING_VALUE", // required
  *     EventTypes: [ // EventTypeList // required
- *       "STRING_VALUE",
+ *       "AssignmentAccepted" || "AssignmentAbandoned" || "AssignmentReturned" || "AssignmentSubmitted" || "AssignmentRejected" || "AssignmentApproved" || "HITCreated" || "HITExpired" || "HITReviewable" || "HITExtended" || "HITDisposed" || "Ping",
  *     ],
  *   },
- *   TestEventType: "STRING_VALUE", // required
+ *   TestEventType: "AssignmentAccepted" || "AssignmentAbandoned" || "AssignmentReturned" || "AssignmentSubmitted" || "AssignmentRejected" || "AssignmentApproved" || "HITCreated" || "HITExpired" || "HITReviewable" || "HITExtended" || "HITDisposed" || "Ping", // required
  * };
  * const command = new SendTestEventNotificationCommand(input);
  * const response = await client.send(command);
@@ -132,6 +133,10 @@ export class SendTestEventNotificationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MTurkRequesterServiceV20170117",
+        operation: "SendTestEventNotification",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

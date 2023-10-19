@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -42,7 +43,7 @@ export interface OpenTunnelCommandOutput extends OpenTunnelResponse, __MetadataB
  * @public
  * <p>Creates a new tunnel, and returns two client access tokens for clients to use to
  * 			connect to the IoT Secure Tunneling proxy server.</p>
- * 		       <p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">OpenTunnel</a> action.</p>
+ *          <p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">OpenTunnel</a> action.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -139,6 +140,10 @@ export class OpenTunnelCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: OpenTunnelResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IoTSecuredTunneling",
+        operation: "OpenTunnel",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

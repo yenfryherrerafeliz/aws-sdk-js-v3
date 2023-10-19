@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetDedicatedIpRequest, GetDedicatedIpResponse } from "../models/models_0";
@@ -53,7 +54,7 @@ export interface GetDedicatedIpCommandOutput extends GetDedicatedIpResponse, __M
  * // { // GetDedicatedIpResponse
  * //   DedicatedIp: { // DedicatedIp
  * //     Ip: "STRING_VALUE", // required
- * //     WarmupStatus: "STRING_VALUE", // required
+ * //     WarmupStatus: "IN_PROGRESS" || "DONE", // required
  * //     WarmupPercentage: Number("int"), // required
  * //     PoolName: "STRING_VALUE",
  * //   },
@@ -130,6 +131,10 @@ export class GetDedicatedIpCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonPinpointEmailService",
+        operation: "GetDedicatedIp",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

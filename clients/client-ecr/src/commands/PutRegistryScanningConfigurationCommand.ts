@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -49,14 +50,14 @@ export interface PutRegistryScanningConfigurationCommandOutput
  * // const { ECRClient, PutRegistryScanningConfigurationCommand } = require("@aws-sdk/client-ecr"); // CommonJS import
  * const client = new ECRClient(config);
  * const input = { // PutRegistryScanningConfigurationRequest
- *   scanType: "STRING_VALUE",
+ *   scanType: "BASIC" || "ENHANCED",
  *   rules: [ // RegistryScanningRuleList
  *     { // RegistryScanningRule
- *       scanFrequency: "STRING_VALUE", // required
+ *       scanFrequency: "SCAN_ON_PUSH" || "CONTINUOUS_SCAN" || "MANUAL", // required
  *       repositoryFilters: [ // ScanningRepositoryFilterList // required
  *         { // ScanningRepositoryFilter
  *           filter: "STRING_VALUE", // required
- *           filterType: "STRING_VALUE", // required
+ *           filterType: "WILDCARD", // required
  *         },
  *       ],
  *     },
@@ -66,14 +67,14 @@ export interface PutRegistryScanningConfigurationCommandOutput
  * const response = await client.send(command);
  * // { // PutRegistryScanningConfigurationResponse
  * //   registryScanningConfiguration: { // RegistryScanningConfiguration
- * //     scanType: "STRING_VALUE",
+ * //     scanType: "BASIC" || "ENHANCED",
  * //     rules: [ // RegistryScanningRuleList
  * //       { // RegistryScanningRule
- * //         scanFrequency: "STRING_VALUE", // required
+ * //         scanFrequency: "SCAN_ON_PUSH" || "CONTINUOUS_SCAN" || "MANUAL", // required
  * //         repositoryFilters: [ // ScanningRepositoryFilterList // required
  * //           { // ScanningRepositoryFilter
  * //             filter: "STRING_VALUE", // required
- * //             filterType: "STRING_VALUE", // required
+ * //             filterType: "WILDCARD", // required
  * //           },
  * //         ],
  * //       },
@@ -153,6 +154,10 @@ export class PutRegistryScanningConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "PutRegistryScanningConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

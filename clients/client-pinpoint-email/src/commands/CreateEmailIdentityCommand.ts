@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateEmailIdentityRequest, CreateEmailIdentityResponse } from "../models/models_0";
@@ -68,11 +69,11 @@ export interface CreateEmailIdentityCommandOutput extends CreateEmailIdentityRes
  * const command = new CreateEmailIdentityCommand(input);
  * const response = await client.send(command);
  * // { // CreateEmailIdentityResponse
- * //   IdentityType: "STRING_VALUE",
+ * //   IdentityType: "EMAIL_ADDRESS" || "DOMAIN" || "MANAGED_DOMAIN",
  * //   VerifiedForSendingStatus: true || false,
  * //   DkimAttributes: { // DkimAttributes
  * //     SigningEnabled: true || false,
- * //     Status: "STRING_VALUE",
+ * //     Status: "PENDING" || "SUCCESS" || "FAILED" || "TEMPORARY_FAILURE" || "NOT_STARTED",
  * //     Tokens: [ // DnsTokenList
  * //       "STRING_VALUE",
  * //     ],
@@ -153,6 +154,10 @@ export class CreateEmailIdentityCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonPinpointEmailService",
+        operation: "CreateEmailIdentity",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

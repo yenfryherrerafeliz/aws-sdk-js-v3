@@ -93,6 +93,36 @@ import {
 
 /**
  * @public
+ */
+export interface DeletePublicIpv4PoolResult {
+  /**
+   * @public
+   * <p>Information about the result of deleting the public IPv4 pool.</p>
+   */
+  ReturnValue?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface DeleteQueuedReservedInstancesRequest {
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually making the request,
+   *       and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
+   *       Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+
+  /**
+   * @public
+   * <p>The IDs of the Reserved Instances.</p>
+   */
+  ReservedInstancesIds: string[] | undefined;
+}
+
+/**
+ * @public
  * @enum
  */
 export const DeleteQueuedReservedInstancesErrorCode = {
@@ -116,7 +146,7 @@ export interface DeleteQueuedReservedInstancesError {
    * @public
    * <p>The error code.</p>
    */
-  Code?: DeleteQueuedReservedInstancesErrorCode | string;
+  Code?: DeleteQueuedReservedInstancesErrorCode;
 
   /**
    * @public
@@ -1280,7 +1310,7 @@ export interface IpamPoolCidrFailureReason {
    * @public
    * <p>An error code related to why an IPAM pool CIDR failed to be provisioned.</p>
    */
-  Code?: IpamPoolCidrFailureCode | string;
+  Code?: IpamPoolCidrFailureCode;
 
   /**
    * @public
@@ -1325,7 +1355,7 @@ export interface IpamPoolCidr {
    * @public
    * <p>The state of the CIDR.</p>
    */
-  State?: IpamPoolCidrState | string;
+  State?: IpamPoolCidrState;
 
   /**
    * @public
@@ -1629,7 +1659,7 @@ export interface DescribeAccountAttributesRequest {
    * @public
    * <p>The account attribute names.</p>
    */
-  AttributeNames?: (AccountAttributeName | string)[];
+  AttributeNames?: AccountAttributeName[];
 
   /**
    * @public
@@ -1775,7 +1805,7 @@ export interface DescribeAddressesAttributeRequest {
    * @public
    * <p>The attribute of the IP address.</p>
    */
-  Attribute?: AddressAttributeName | string;
+  Attribute?: AddressAttributeName;
 
   /**
    * @public
@@ -2067,7 +2097,7 @@ export interface AvailabilityZone {
    * <p>The state of the Availability Zone, Local Zone, or Wavelength Zone. This value is always
    *         <code>available</code>.</p>
    */
-  State?: AvailabilityZoneState | string;
+  State?: AvailabilityZoneState;
 
   /**
    * @public
@@ -2076,7 +2106,7 @@ export interface AvailabilityZone {
    *          <p>For Local Zones and Wavelength Zones, this parameter is the opt-in status. The possible
    *       values are <code>opted-in</code>, and <code>not-opted-in</code>.</p>
    */
-  OptInStatus?: AvailabilityZoneOptInStatus | string;
+  OptInStatus?: AvailabilityZoneOptInStatus;
 
   /**
    * @public
@@ -2248,19 +2278,19 @@ export interface Subscription {
    * @public
    * <p>The metric used for the subscription.</p>
    */
-  Metric?: MetricType | string;
+  Metric?: MetricType;
 
   /**
    * @public
    * <p>The statistic used for the subscription.</p>
    */
-  Statistic?: StatisticType | string;
+  Statistic?: StatisticType;
 
   /**
    * @public
    * <p>The data aggregation time for the subscription.</p>
    */
-  Period?: PeriodType | string;
+  Period?: PeriodType;
 }
 
 /**
@@ -2532,7 +2562,7 @@ export interface CapacityReservationFleet {
    *             </li>
    *          </ul>
    */
-  State?: CapacityReservationFleetState | string;
+  State?: CapacityReservationFleetState;
 
   /**
    * @public
@@ -2564,7 +2594,7 @@ export interface CapacityReservationFleet {
    *             </li>
    *          </ul>
    */
-  Tenancy?: FleetCapacityReservationTenancy | string;
+  Tenancy?: FleetCapacityReservationTenancy;
 
   /**
    * @public
@@ -2587,7 +2617,7 @@ export interface CapacityReservationFleet {
    * 			Availability Zone) run in the Capacity Reservations automatically. Instances do not need to
    * 			explicitly target a Capacity Reservation Fleet to use its reserved capacity.</p>
    */
-  InstanceMatchCriteria?: FleetInstanceMatchCriteria | string;
+  InstanceMatchCriteria?: FleetInstanceMatchCriteria;
 
   /**
    * @public
@@ -3169,7 +3199,7 @@ export interface ClientVpnConnectionStatus {
    * @public
    * <p>The state of the client connection.</p>
    */
-  Code?: ClientVpnConnectionStatusCode | string;
+  Code?: ClientVpnConnectionStatusCode;
 
   /**
    * @public
@@ -3361,7 +3391,7 @@ export interface AssociatedTargetNetwork {
    * @public
    * <p>The target network type.</p>
    */
-  NetworkType?: AssociatedNetworkType | string;
+  NetworkType?: AssociatedNetworkType;
 }
 
 /**
@@ -3416,7 +3446,7 @@ export interface ClientVpnAuthentication {
    * @public
    * <p>The authentication type used.</p>
    */
-  Type?: ClientVpnAuthenticationType | string;
+  Type?: ClientVpnAuthenticationType;
 
   /**
    * @public
@@ -3461,7 +3491,7 @@ export interface ClientVpnEndpointAttributeStatus {
    * @public
    * <p>The status code.</p>
    */
-  Code?: ClientVpnEndpointAttributeStatusCode | string;
+  Code?: ClientVpnEndpointAttributeStatusCode;
 
   /**
    * @public
@@ -3619,13 +3649,13 @@ export interface ClientVpnEndpoint {
    * @public
    * <p>The protocol used by the VPN session.</p>
    */
-  VpnProtocol?: VpnProtocol | string;
+  VpnProtocol?: VpnProtocol;
 
   /**
    * @public
    * <p>The transport protocol used by the Client VPN endpoint.</p>
    */
-  TransportProtocol?: TransportProtocol | string;
+  TransportProtocol?: TransportProtocol;
 
   /**
    * @public
@@ -4054,7 +4084,7 @@ export interface DiskImageDescription {
    * @public
    * <p>The disk image format.</p>
    */
-  Format?: DiskImageFormat | string;
+  Format?: DiskImageFormat;
 
   /**
    * @public
@@ -4159,7 +4189,7 @@ export interface ImportInstanceTaskDetails {
    * @public
    * <p>The instance operating system.</p>
    */
-  Platform?: PlatformValues | string;
+  Platform?: PlatformValues;
 
   /**
    * @public
@@ -4254,7 +4284,7 @@ export interface ConversionTask {
    * @public
    * <p>The state of the conversion task.</p>
    */
-  State?: ConversionTaskState | string;
+  State?: ConversionTaskState;
 
   /**
    * @public
@@ -4596,7 +4626,7 @@ export interface ElasticGpuHealth {
    * @public
    * <p>The health status.</p>
    */
-  Status?: ElasticGpuStatus | string;
+  Status?: ElasticGpuStatus;
 }
 
 /**
@@ -4645,7 +4675,7 @@ export interface ElasticGpus {
    * @public
    * <p>The state of the Elastic Graphics accelerator.</p>
    */
-  ElasticGpuState?: ElasticGpuState | string;
+  ElasticGpuState?: ElasticGpuState;
 
   /**
    * @public
@@ -4984,7 +5014,7 @@ export interface DescribeFastLaunchImagesSuccessItem {
    * <p>The resource type that is used for pre-provisioning the Windows AMI. Supported values
    * 			include: <code>snapshot</code>.</p>
    */
-  ResourceType?: FastLaunchResourceType | string;
+  ResourceType?: FastLaunchResourceType;
 
   /**
    * @public
@@ -5017,7 +5047,7 @@ export interface DescribeFastLaunchImagesSuccessItem {
    * @public
    * <p>The current state of faster launching for the specified Windows AMI.</p>
    */
-  State?: FastLaunchStateCode | string;
+  State?: FastLaunchStateCode;
 
   /**
    * @public
@@ -5147,7 +5177,7 @@ export interface DescribeFastSnapshotRestoreSuccessItem {
    * @public
    * <p>The state of fast snapshot restores.</p>
    */
-  State?: FastSnapshotRestoreStateCode | string;
+  State?: FastSnapshotRestoreStateCode;
 
   /**
    * @public
@@ -5259,7 +5289,7 @@ export interface DescribeFleetHistoryRequest {
    * @public
    * <p>The type of events to describe. By default, all events are described.</p>
    */
-  EventType?: FleetEventType | string;
+  EventType?: FleetEventType;
 
   /**
    * @public
@@ -5455,7 +5485,7 @@ export interface HistoryRecordEntry {
    * @public
    * <p>The event type.</p>
    */
-  EventType?: FleetEventType | string;
+  EventType?: FleetEventType;
 
   /**
    * @public
@@ -5682,7 +5712,7 @@ export interface DescribeFleetError {
    * @public
    * <p>Indicates if the instance that could not be launched was a Spot Instance or On-Demand Instance.</p>
    */
-  Lifecycle?: InstanceLifecycle | string;
+  Lifecycle?: InstanceLifecycle;
 
   /**
    * @public
@@ -5715,7 +5745,7 @@ export interface DescribeFleetsInstances {
    * @public
    * <p>Indicates if the instance that was launched is a Spot Instance or On-Demand Instance.</p>
    */
-  Lifecycle?: InstanceLifecycle | string;
+  Lifecycle?: InstanceLifecycle;
 
   /**
    * @public
@@ -5727,14 +5757,14 @@ export interface DescribeFleetsInstances {
    * @public
    * <p>The instance type.</p>
    */
-  InstanceType?: _InstanceType | string;
+  InstanceType?: _InstanceType;
 
   /**
    * @public
    * <p>The value is <code>Windows</code> for Windows instances. Otherwise, the value is
    *          blank.</p>
    */
-  Platform?: PlatformValues | string;
+  Platform?: PlatformValues;
 }
 
 /**
@@ -5783,7 +5813,7 @@ export interface CapacityReservationOptions {
    *          <p>If you do not specify a value, the fleet fulfils the On-Demand capacity according to the
    *          chosen On-Demand allocation strategy.</p>
    */
-  UsageStrategy?: FleetCapacityReservationUsageStrategy | string;
+  UsageStrategy?: FleetCapacityReservationUsageStrategy;
 }
 
 /**
@@ -5804,7 +5834,7 @@ export interface OnDemandOptions {
    *          <p>Default: <code>lowest-price</code>
    *          </p>
    */
-  AllocationStrategy?: FleetOnDemandAllocationStrategy | string;
+  AllocationStrategy?: FleetOnDemandAllocationStrategy;
 
   /**
    * @public
@@ -5843,6 +5873,14 @@ export interface OnDemandOptions {
   /**
    * @public
    * <p>The maximum amount per hour for On-Demand Instances that you're willing to pay.</p>
+   *          <note>
+   *             <p>If your fleet includes T instances that are configured as <code>unlimited</code>,
+   *             and if their average CPU usage exceeds the baseline utilization, you will incur a charge
+   *             for surplus credits. The <code>maxTotalPrice</code> does not account for surplus
+   *             credits, and, if you use surplus credits, your final cost might be higher than what you
+   *             specified for <code>maxTotalPrice</code>. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances-unlimited-mode-concepts.html#unlimited-mode-surplus-credits">Surplus credits can incur charges</a> in the <i>EC2 User
+   *                   Guide</i>.</p>
+   *          </note>
    */
   MaxTotalPrice?: string;
 }
@@ -5869,7 +5907,7 @@ export interface FleetSpotCapacityRebalance {
    *          fleet, and then, after a delay that you specify (in <code>TerminationDelay</code>),
    *          terminates the instances that received a rebalance notification.</p>
    */
-  ReplacementStrategy?: FleetReplacementStrategy | string;
+  ReplacementStrategy?: FleetReplacementStrategy;
 
   /**
    * @public
@@ -5949,7 +5987,7 @@ export interface SpotOptions {
    *          <p>Default: <code>lowest-price</code>
    *          </p>
    */
-  AllocationStrategy?: SpotAllocationStrategy | string;
+  AllocationStrategy?: SpotAllocationStrategy;
 
   /**
    * @public
@@ -5964,7 +6002,7 @@ export interface SpotOptions {
    *          <p>Default: <code>terminate</code>
    *          </p>
    */
-  InstanceInterruptionBehavior?: SpotInstanceInterruptionBehavior | string;
+  InstanceInterruptionBehavior?: SpotInstanceInterruptionBehavior;
 
   /**
    * @public
@@ -6016,6 +6054,14 @@ export interface SpotOptions {
    *          <important>
    *             <p>If you specify a maximum price, your Spot Instances will be interrupted more frequently than if you do not specify this parameter.</p>
    *          </important>
+   *          <note>
+   *             <p>If your fleet includes T instances that are configured as <code>unlimited</code>,
+   *             and if their average CPU usage exceeds the baseline utilization, you will incur a charge
+   *             for surplus credits. The <code>maxTotalPrice</code> does not account for surplus
+   *             credits, and, if you use surplus credits, your final cost might be higher than what you
+   *             specified for <code>maxTotalPrice</code>. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances-unlimited-mode-concepts.html#unlimited-mode-surplus-credits">Surplus credits can incur charges</a> in the <i>EC2 User
+   *                   Guide</i>.</p>
+   *          </note>
    */
   MaxTotalPrice?: string;
 }
@@ -6060,14 +6106,14 @@ export interface TargetCapacitySpecification {
    * <p>The default <code>TotalTargetCapacity</code>, which is either <code>Spot</code> or
    *          <code>On-Demand</code>.</p>
    */
-  DefaultTargetCapacityType?: DefaultTargetCapacityType | string;
+  DefaultTargetCapacityType?: DefaultTargetCapacityType;
 
   /**
    * @public
    * <p>The unit for the target capacity. <code>TargetCapacityUnitType</code> can only be specified when <code>InstanceRequirements</code> is specified.</p>
    *          <p>Default: <code>units</code> (translates to number of instances)</p>
    */
-  TargetCapacityUnitType?: TargetCapacityUnitType | string;
+  TargetCapacityUnitType?: TargetCapacityUnitType;
 }
 
 /**
@@ -6083,7 +6129,7 @@ export interface FleetData {
    *          If the size of the EC2 Fleet is decreased, the status is <code>pending_termination</code> while
    *          instances are terminating.</p>
    */
-  ActivityStatus?: FleetActivityStatus | string;
+  ActivityStatus?: FleetActivityStatus;
 
   /**
    * @public
@@ -6101,7 +6147,7 @@ export interface FleetData {
    * @public
    * <p>The state of the EC2 Fleet.</p>
    */
-  FleetState?: FleetStateCode | string;
+  FleetState?: FleetStateCode;
 
   /**
    * @public
@@ -6118,7 +6164,7 @@ export interface FleetData {
    *          EC2 Fleet is decreased below the current size of the EC2 Fleet.</p>
    *          <p>Supported only for fleets of type <code>maintain</code>.</p>
    */
-  ExcessCapacityTerminationPolicy?: FleetExcessCapacityTerminationPolicy | string;
+  ExcessCapacityTerminationPolicy?: FleetExcessCapacityTerminationPolicy;
 
   /**
    * @public
@@ -6165,7 +6211,7 @@ export interface FleetData {
    *          places the required requests to meet this target capacity. It also automatically
    *          replenishes any interrupted Spot Instances. Default: <code>maintain</code>.</p>
    */
-  Type?: FleetType | string;
+  Type?: FleetType;
 
   /**
    * @public
@@ -6213,14 +6259,14 @@ export interface FleetData {
   /**
    * @public
    * <p>Information about the instances that could not be launched by the fleet. Valid only when
-   *             <b>Type</b> is set to <code>instant</code>.</p>
+   *          <b>Type</b> is set to <code>instant</code>.</p>
    */
   Errors?: DescribeFleetError[];
 
   /**
    * @public
    * <p>Information about the instances that were launched by the fleet. Valid only when
-   *             <b>Type</b> is set to <code>instant</code>.</p>
+   *          <b>Type</b> is set to <code>instant</code>.</p>
    */
   Instances?: DescribeFleetsInstances[];
 
@@ -6337,7 +6383,7 @@ export interface DestinationOptionsResponse {
    * @public
    * <p>The format for the flow log.</p>
    */
-  FileFormat?: DestinationFileFormat | string;
+  FileFormat?: DestinationFileFormat;
 
   /**
    * @public
@@ -6420,13 +6466,13 @@ export interface FlowLog {
    * @public
    * <p>The type of traffic captured for the flow log.</p>
    */
-  TrafficType?: TrafficType | string;
+  TrafficType?: TrafficType;
 
   /**
    * @public
    * <p>The type of destination for the flow log data.</p>
    */
-  LogDestinationType?: LogDestinationType | string;
+  LogDestinationType?: LogDestinationType;
 
   /**
    * @public
@@ -6519,7 +6565,7 @@ export interface DescribeFpgaImageAttributeRequest {
    * @public
    * <p>The AFI attribute.</p>
    */
-  Attribute: FpgaImageAttributeName | string | undefined;
+  Attribute: FpgaImageAttributeName | undefined;
 }
 
 /**
@@ -6550,7 +6596,7 @@ export interface LoadPermission {
    * @public
    * <p>The name of the group.</p>
    */
-  Group?: PermissionGroup | string;
+  Group?: PermissionGroup;
 }
 
 /**
@@ -6582,7 +6628,7 @@ export interface ProductCode {
    * @public
    * <p>The type of product code.</p>
    */
-  ProductCodeType?: ProductCodeValues | string;
+  ProductCodeType?: ProductCodeValues;
 }
 
 /**
@@ -6797,7 +6843,7 @@ export interface FpgaImageState {
    *             </li>
    *          </ul>
    */
-  Code?: FpgaImageStateCode | string;
+  Code?: FpgaImageStateCode;
 
   /**
    * @public
@@ -7008,7 +7054,7 @@ export interface HostOffering {
    * @public
    * <p>The currency of the offering.</p>
    */
-  CurrencyCode?: CurrencyCodeValues | string;
+  CurrencyCode?: CurrencyCodeValues;
 
   /**
    * @public
@@ -7038,7 +7084,7 @@ export interface HostOffering {
    * @public
    * <p>The available payment option.</p>
    */
-  PaymentOption?: PaymentOption | string;
+  PaymentOption?: PaymentOption;
 
   /**
    * @public
@@ -7153,7 +7199,7 @@ export interface HostReservation {
    *             amounts are specified. At this time, the only supported currency is
    *             <code>USD</code>.</p>
    */
-  CurrencyCode?: CurrencyCodeValues | string;
+  CurrencyCode?: CurrencyCodeValues;
 
   /**
    * @public
@@ -7204,7 +7250,7 @@ export interface HostReservation {
    * @public
    * <p>The payment option selected for this reservation.</p>
    */
-  PaymentOption?: PaymentOption | string;
+  PaymentOption?: PaymentOption;
 
   /**
    * @public
@@ -7216,7 +7262,7 @@ export interface HostReservation {
    * @public
    * <p>The state of the reservation.</p>
    */
-  State?: ReservationState | string;
+  State?: ReservationState;
 
   /**
    * @public
@@ -7438,7 +7484,7 @@ export interface Host {
    * @public
    * <p>Whether auto-placement is on or off.</p>
    */
-  AutoPlacement?: AutoPlacement | string;
+  AutoPlacement?: AutoPlacement;
 
   /**
    * @public
@@ -7487,7 +7533,7 @@ export interface Host {
    * @public
    * <p>The Dedicated Host's state.</p>
    */
-  State?: AllocationState | string;
+  State?: AllocationState;
 
   /**
    * @public
@@ -7511,7 +7557,7 @@ export interface Host {
    * @public
    * <p>Indicates whether host recovery is enabled or disabled for the Dedicated Host.</p>
    */
-  HostRecovery?: HostRecovery | string;
+  HostRecovery?: HostRecovery;
 
   /**
    * @public
@@ -7520,7 +7566,7 @@ export interface Host {
    *             instance types in the instance family. If the value is <code>off</code>, the Dedicated
    *             Host supports a single instance type only.</p>
    */
-  AllowsMultipleInstanceTypes?: AllowsMultipleInstanceTypes | string;
+  AllowsMultipleInstanceTypes?: AllowsMultipleInstanceTypes;
 
   /**
    * @public
@@ -7553,7 +7599,7 @@ export interface Host {
    * <p>Indicates whether host maintenance is enabled or disabled for the Dedicated
    *             Host.</p>
    */
-  HostMaintenance?: HostMaintenance | string;
+  HostMaintenance?: HostMaintenance;
 
   /**
    * @public
@@ -7753,7 +7799,7 @@ export interface DescribeImageAttributeRequest {
    *    	    Using this attribute returns the <code>Client.AuthFailure</code> error. To get information about
    *    	    the block device mappings for an AMI, use the <a>DescribeImages</a> action.</p>
    */
-  Attribute: ImageAttributeName | string | undefined;
+  Attribute: ImageAttributeName | undefined;
 
   /**
    * @public
@@ -7779,7 +7825,7 @@ export interface LaunchPermission {
    * @public
    * <p>The name of the group.</p>
    */
-  Group?: PermissionGroup | string;
+  Group?: PermissionGroup;
 
   /**
    * @public
@@ -8052,6 +8098,12 @@ export interface DescribeImagesRequest {
    *             </li>
    *             <li>
    *                <p>
+   *                   <code>source-instance-id</code> - The ID of the instance that the AMI was created from
+   *           if the AMI was created using CreateImage. This filter is applicable only if the AMI was
+   *           created using <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html">CreateImage</a>.</p>
+   *             </li>
+   *             <li>
+   *                <p>
    *                   <code>state</code> - The state of the image (<code>available</code> | <code>pending</code>
    *           | <code>failed</code>).</p>
    *             </li>
@@ -8112,6 +8164,13 @@ export interface DescribeImagesRequest {
    *          </note>
    */
   IncludeDeprecated?: boolean;
+
+  /**
+   * @public
+   * <p>Specifies whether to include disabled AMIs.</p>
+   *          <p>Default: No disabled AMIs are included in the response.</p>
+   */
+  IncludeDisabled?: boolean;
 
   /**
    * @public
@@ -8231,6 +8290,7 @@ export type DeviceType = (typeof DeviceType)[keyof typeof DeviceType];
 export const ImageState = {
   available: "available",
   deregistered: "deregistered",
+  disabled: "disabled",
   error: "error",
   failed: "failed",
   invalid: "invalid",
@@ -8279,7 +8339,7 @@ export interface Image {
    * @public
    * <p>The architecture of the image.</p>
    */
-  Architecture?: ArchitectureValues | string;
+  Architecture?: ArchitectureValues;
 
   /**
    * @public
@@ -8303,7 +8363,7 @@ export interface Image {
    * @public
    * <p>The type of image.</p>
    */
-  ImageType?: ImageTypeValues | string;
+  ImageType?: ImageTypeValues;
 
   /**
    * @public
@@ -8329,7 +8389,7 @@ export interface Image {
    * @public
    * <p>This value is set to <code>windows</code> for Windows AMIs; otherwise, it is blank.</p>
    */
-  Platform?: PlatformValues | string;
+  Platform?: PlatformValues;
 
   /**
    * @public
@@ -8367,7 +8427,7 @@ export interface Image {
    * @public
    * <p>The current state of the AMI. If the state is <code>available</code>, the image is successfully registered and can be used to launch an instance.</p>
    */
-  State?: ImageState | string;
+  State?: ImageState;
 
   /**
    * @public
@@ -8389,9 +8449,10 @@ export interface Image {
 
   /**
    * @public
-   * <p>The hypervisor type of the image.</p>
+   * <p>The hypervisor type of the image. Only <code>xen</code> is supported. <code>ovm</code> is
+   *       not supported.</p>
    */
-  Hypervisor?: HypervisorType | string;
+  Hypervisor?: HypervisorType;
 
   /**
    * @public
@@ -8416,7 +8477,7 @@ export interface Image {
    * @public
    * <p>The type of root device used by the AMI. The AMI can use an Amazon EBS volume or an instance store volume.</p>
    */
-  RootDeviceType?: DeviceType | string;
+  RootDeviceType?: DeviceType;
 
   /**
    * @public
@@ -8440,14 +8501,14 @@ export interface Image {
    * @public
    * <p>The type of virtualization of the AMI.</p>
    */
-  VirtualizationType?: VirtualizationType | string;
+  VirtualizationType?: VirtualizationType;
 
   /**
    * @public
    * <p>The boot mode of the image. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-boot.html">Boot modes</a> in the
    *         <i>Amazon EC2 User Guide</i>.</p>
    */
-  BootMode?: BootModeValues | string;
+  BootMode?: BootModeValues;
 
   /**
    * @public
@@ -8455,7 +8516,7 @@ export interface Image {
    *       For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitrotpm.html">NitroTPM</a> in the
    *       <i>Amazon EC2 User Guide</i>.</p>
    */
-  TpmSupport?: TpmSupportValues | string;
+  TpmSupport?: TpmSupportValues;
 
   /**
    * @public
@@ -8475,7 +8536,14 @@ export interface Image {
    *       information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-IMDS-new-instances.html#configure-IMDS-new-instances-ami-configuration">Configure
    *         the AMI</a> in the <i>Amazon EC2 User Guide</i>.</p>
    */
-  ImdsSupport?: ImdsSupportValues | string;
+  ImdsSupport?: ImdsSupportValues;
+
+  /**
+   * @public
+   * <p>The ID of the instance that the AMI was created from if the AMI was created using <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html">CreateImage</a>. This field only appears if the AMI was created using
+   *       CreateImage.</p>
+   */
+  SourceInstanceId?: string;
 }
 
 /**
@@ -8739,7 +8807,7 @@ export interface ImportImageTask {
    * @public
    * <p>The boot mode of the virtual machine.</p>
    */
-  BootMode?: BootModeValues | string;
+  BootMode?: BootModeValues;
 }
 
 /**
@@ -8957,7 +9025,7 @@ export interface DescribeInstanceAttributeRequest {
    * <p>The instance attribute.</p>
    *          <p>Note: The <code>enaSupport</code> attribute is not supported at this time.</p>
    */
-  Attribute: InstanceAttributeName | string | undefined;
+  Attribute: InstanceAttributeName | undefined;
 
   /**
    * @public
@@ -8995,7 +9063,7 @@ export interface EbsInstanceBlockDevice {
    * @public
    * <p>The attachment state.</p>
    */
-  Status?: AttachmentStatus | string;
+  Status?: AttachmentStatus;
 
   /**
    * @public
@@ -9696,10 +9764,6 @@ export interface DescribeInstancesRequest {
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>license-pool</code> - </p>
-   *             </li>
-   *             <li>
-   *                <p>
    *                   <code>maintenance-options.auto-recovery</code> - The current automatic
    *                     recovery behavior of the instance (<code>disabled</code> | <code>default</code>).</p>
    *             </li>
@@ -9748,18 +9812,19 @@ export interface DescribeInstancesRequest {
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>network-interface.addresses.primary</code> - Specifies whether the IPv4
-   *                     address of the network interface is the primary private IPv4 address.</p>
+   *                   <code>network-interface.addresses.association.allocation-id</code> - The allocation ID.</p>
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>network-interface.addresses.private-ip-address</code> - The private IPv4
-   *                     address associated with the network interface.</p>
+   *                   <code>network-interface.addresses.association.association-id</code> - The association ID.</p>
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>network-interface.addresses.association.public-ip</code> - The ID of the
-   *                     association of an Elastic IP address (IPv4) with a network interface.</p>
+   *                   <code>network-interface.addresses.association.carrier-ip</code> - The carrier IP address.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.addresses.association.customer-owned-ip</code> - The customer-owned IP address.</p>
    *             </li>
    *             <li>
    *                <p>
@@ -9768,13 +9833,26 @@ export interface DescribeInstancesRequest {
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>network-interface.association.public-ip</code> - The address of the
-   *                     Elastic IP address (IPv4) bound to the network interface.</p>
+   *                   <code>network-interface.addresses.association.public-dns-name</code> - The public DNS name.</p>
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>network-interface.association.ip-owner-id</code> - The owner of the
-   *                     Elastic IP address (IPv4) associated with the network interface.</p>
+   *                   <code>network-interface.addresses.association.public-ip</code> - The ID of the
+   *                     association of an Elastic IP address (IPv4) with a network interface.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.addresses.primary</code> - Specifies whether the IPv4
+   *                     address of the network interface is the primary private IPv4 address.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.addresses.private-dns-name</code> - The private DNS name.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.addresses.private-ip-address</code> - The private IPv4
+   *                     address associated with the network interface.</p>
    *             </li>
    *             <li>
    *                <p>
@@ -9789,8 +9867,45 @@ export interface DescribeInstancesRequest {
    *             </li>
    *             <li>
    *                <p>
+   *                   <code>network-interface.association.carrier-ip</code> - The customer-owned IP address.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.association.customer-owned-ip</code> - The customer-owned IP address.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.association.ip-owner-id</code> - The owner of the
+   *                     Elastic IP address (IPv4) associated with the network interface.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.association.public-dns-name</code> - The public DNS name.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.association.public-ip</code> - The address of the
+   *                     Elastic IP address (IPv4) bound to the network interface.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.attachment.attach-time</code> - The time that the
+   *                     network interface was attached to an instance.</p>
+   *             </li>
+   *             <li>
+   *                <p>
    *                   <code>network-interface.attachment.attachment-id</code> - The ID of the
    *                     interface attachment.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.attachment.delete-on-termination</code> - Specifies
+   *                     whether the attachment is deleted when an instance is terminated.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.attachment.device-index</code> - The device index to
+   *                     which the network interface is attached.</p>
    *             </li>
    *             <li>
    *                <p>
@@ -9804,29 +9919,23 @@ export interface DescribeInstancesRequest {
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>network-interface.attachment.device-index</code> - The device index to
-   *                     which the network interface is attached.</p>
+   *                   <code>network-interface.attachment.network-card-index</code> - The index of the network card.</p>
    *             </li>
    *             <li>
    *                <p>
    *                   <code>network-interface.attachment.status</code> - The status of the
    *                     attachment (<code>attaching</code> | <code>attached</code> |
-   *                         <code>detaching</code> | <code>detached</code>).</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>network-interface.attachment.attach-time</code> - The time that the
-   *                     network interface was attached to an instance.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>network-interface.attachment.delete-on-termination</code> - Specifies
-   *                     whether the attachment is deleted when an instance is terminated.</p>
+   *                     <code>detaching</code> | <code>detached</code>).</p>
    *             </li>
    *             <li>
    *                <p>
    *                   <code>network-interface.availability-zone</code> - The Availability Zone for
    *                     the network interface.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.deny-all-igw-traffic</code> - A Boolean that indicates whether
+   *                 a network interface with an IPv6 address is unreachable from the public internet.</p>
    *             </li>
    *             <li>
    *                <p>
@@ -9845,8 +9954,30 @@ export interface DescribeInstancesRequest {
    *             </li>
    *             <li>
    *                <p>
+   *                   <code>network-interface.ipv4-prefixes.ipv4-prefix</code> - The IPv4 prefixes that are assigned to the network interface.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.ipv6-address</code> - The IPv6 address associated with the network interface.</p>
+   *             </li>
+   *             <li>
+   *                <p>
    *                   <code>network-interface.ipv6-addresses.ipv6-address</code> - The IPv6 address
    *                     associated with the network interface.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.ipv6-addresses.is-primary-ipv6</code> - A Boolean that indicates whether this
+   *                     is the primary IPv6 address.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.ipv6-native</code> - A Boolean that indicates whether this is
+   *                     an IPv6 only network interface.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.ipv6-prefixes.ipv6-prefix</code> - The IPv6 prefix assigned to the network interface.</p>
    *             </li>
    *             <li>
    *                <p>
@@ -9860,6 +9991,10 @@ export interface DescribeInstancesRequest {
    *             </li>
    *             <li>
    *                <p>
+   *                   <code>network-interface.outpost-arn</code> - The ARN of the Outpost.</p>
+   *             </li>
+   *             <li>
+   *                <p>
    *                   <code>network-interface.owner-id</code> - The ID of the owner of the network
    *                     interface.</p>
    *             </li>
@@ -9867,6 +10002,14 @@ export interface DescribeInstancesRequest {
    *                <p>
    *                   <code>network-interface.private-dns-name</code> - The private DNS name of the
    *                     network interface.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.private-ip-address</code> - The private IPv4 address.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.public-dns-name</code> - The public DNS name.</p>
    *             </li>
    *             <li>
    *                <p>
@@ -9895,6 +10038,14 @@ export interface DescribeInstancesRequest {
    *                <p>
    *                   <code>network-interface.subnet-id</code> - The ID of the subnet for the
    *                     network interface.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.tag-key</code> - The key of a tag assigned to the network interface.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>network-interface.tag-value</code> - The value of a tag assigned to the network interface.</p>
    *             </li>
    *             <li>
    *                <p>
@@ -10148,7 +10299,7 @@ export interface CapacityReservationSpecificationResponse {
    *             </li>
    *          </ul>
    */
-  CapacityReservationPreference?: CapacityReservationPreference | string;
+  CapacityReservationPreference?: CapacityReservationPreference;
 
   /**
    * @public
@@ -10179,7 +10330,7 @@ export interface CpuOptions {
    * <p>Indicates whether the instance is enabled for AMD SEV-SNP. For more information, see
    *             <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/sev-snp.html">AMD SEV-SNP</a>.</p>
    */
-  AmdSevSnp?: AmdSevSnpSpecification | string;
+  AmdSevSnp?: AmdSevSnpSpecification;
 }
 
 /**
@@ -10195,77 +10346,6 @@ export const InstanceBootModeValues = {
  * @public
  */
 export type InstanceBootModeValues = (typeof InstanceBootModeValues)[keyof typeof InstanceBootModeValues];
-
-/**
- * @public
- * <p>Describes the association between an instance and an Elastic Graphics accelerator.</p>
- */
-export interface ElasticGpuAssociation {
-  /**
-   * @public
-   * <p>The ID of the Elastic Graphics accelerator.</p>
-   */
-  ElasticGpuId?: string;
-
-  /**
-   * @public
-   * <p>The ID of the association.</p>
-   */
-  ElasticGpuAssociationId?: string;
-
-  /**
-   * @public
-   * <p>The state of the association between the instance and the
-   *             Elastic Graphics accelerator.</p>
-   */
-  ElasticGpuAssociationState?: string;
-
-  /**
-   * @public
-   * <p>The time the Elastic Graphics accelerator was associated with the instance.</p>
-   */
-  ElasticGpuAssociationTime?: string;
-}
-
-/**
- * @public
- * <p>
- *             Describes the association between an instance and an elastic inference accelerator.
- *         </p>
- */
-export interface ElasticInferenceAcceleratorAssociation {
-  /**
-   * @public
-   * <p>
-   *             The Amazon Resource Name (ARN) of the elastic inference accelerator.
-   *         </p>
-   */
-  ElasticInferenceAcceleratorArn?: string;
-
-  /**
-   * @public
-   * <p>
-   *             The ID of the association.
-   *         </p>
-   */
-  ElasticInferenceAcceleratorAssociationId?: string;
-
-  /**
-   * @public
-   * <p>
-   *             The state of the elastic inference accelerator.
-   *         </p>
-   */
-  ElasticInferenceAcceleratorAssociationState?: string;
-
-  /**
-   * @public
-   * <p>
-   *             The time at which the elastic inference accelerator is associated with an instance.
-   *         </p>
-   */
-  ElasticInferenceAcceleratorAssociationTime?: Date;
-}
 
 /**
  * @internal

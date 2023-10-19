@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -114,7 +115,7 @@ export interface CreateMediaInsightsPipelineCommandOutput
  * //     MediaPipelineId: "STRING_VALUE",
  * //     MediaPipelineArn: "STRING_VALUE",
  * //     MediaInsightsPipelineConfigurationArn: "STRING_VALUE",
- * //     Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused",
+ * //     Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused" || "NotStarted",
  * //     KinesisVideoStreamSourceRuntimeConfiguration: { // KinesisVideoStreamSourceRuntimeConfiguration
  * //       Streams: [ // Streams // required
  * //         { // StreamConfiguration
@@ -156,6 +157,12 @@ export interface CreateMediaInsightsPipelineCommandOutput
  * //       RecordingFileFormat: "Wav" || "Opus", // required
  * //     },
  * //     CreatedTimestamp: new Date("TIMESTAMP"),
+ * //     ElementStatuses: [ // MediaInsightsPipelineElementStatuses
+ * //       { // MediaInsightsPipelineElementStatus
+ * //         Type: "AmazonTranscribeCallAnalyticsProcessor" || "VoiceAnalyticsProcessor" || "AmazonTranscribeProcessor" || "KinesisDataStreamSink" || "LambdaFunctionSink" || "SqsQueueSink" || "SnsTopicSink" || "S3RecordingSink" || "VoiceEnhancementSink",
+ * //         Status: "NotStarted" || "NotSupported" || "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused",
+ * //       },
+ * //     ],
  * //   },
  * // };
  *
@@ -245,6 +252,10 @@ export class CreateMediaInsightsPipelineCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateMediaInsightsPipelineRequestFilterSensitiveLog,
       outputFilterSensitiveLog: CreateMediaInsightsPipelineResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ChimeSDKMediaPipelinesService",
+        operation: "CreateMediaInsightsPipeline",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

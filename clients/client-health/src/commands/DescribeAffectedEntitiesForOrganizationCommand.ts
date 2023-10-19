@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { HealthClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../HealthClient";
@@ -71,7 +72,7 @@ export interface DescribeAffectedEntitiesForOrganizationCommandOutput
  * // const { HealthClient, DescribeAffectedEntitiesForOrganizationCommand } = require("@aws-sdk/client-health"); // CommonJS import
  * const client = new HealthClient(config);
  * const input = { // DescribeAffectedEntitiesForOrganizationRequest
- *   organizationEntityFilters: [ // OrganizationEntityFiltersList // required
+ *   organizationEntityFilters: [ // OrganizationEntityFiltersList
  *     { // EventAccountFilter
  *       eventArn: "STRING_VALUE", // required
  *       awsAccountId: "STRING_VALUE",
@@ -80,6 +81,15 @@ export interface DescribeAffectedEntitiesForOrganizationCommandOutput
  *   locale: "STRING_VALUE",
  *   nextToken: "STRING_VALUE",
  *   maxResults: Number("int"),
+ *   organizationEntityAccountFilters: [ // OrganizationEntityAccountFiltersList
+ *     { // EntityAccountFilter
+ *       eventArn: "STRING_VALUE", // required
+ *       awsAccountId: "STRING_VALUE",
+ *       statusCodes: [ // entityStatusCodeList
+ *         "IMPAIRED" || "UNIMPAIRED" || "UNKNOWN" || "PENDING" || "RESOLVED",
+ *       ],
+ *     },
+ *   ],
  * };
  * const command = new DescribeAffectedEntitiesForOrganizationCommand(input);
  * const response = await client.send(command);
@@ -92,7 +102,7 @@ export interface DescribeAffectedEntitiesForOrganizationCommandOutput
  * //       entityUrl: "STRING_VALUE",
  * //       awsAccountId: "STRING_VALUE",
  * //       lastUpdatedTime: new Date("TIMESTAMP"),
- * //       statusCode: "IMPAIRED" || "UNIMPAIRED" || "UNKNOWN",
+ * //       statusCode: "IMPAIRED" || "UNIMPAIRED" || "UNKNOWN" || "PENDING" || "RESOLVED",
  * //       tags: { // tagSet
  * //         "<keys>": "STRING_VALUE",
  * //       },
@@ -183,6 +193,10 @@ export class DescribeAffectedEntitiesForOrganizationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHealth_20160804",
+        operation: "DescribeAffectedEntitiesForOrganization",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

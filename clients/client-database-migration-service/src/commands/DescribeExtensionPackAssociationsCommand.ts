@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -104,6 +105,39 @@ export interface DescribeExtensionPackAssociationsCommandOutput
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
  *
+ * @example Describe Extension Pack Associations
+ * ```javascript
+ * // Returns a paginated list of extension pack associations for the specified migration project.
+ * const input = {
+ *   "Filters": [
+ *     {
+ *       "Name": "instance-profile-identifier",
+ *       "Values": [
+ *         "arn:aws:dms:us-east-1:012345678901:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+ *       ]
+ *     }
+ *   ],
+ *   "Marker": "0123456789abcdefghijklmnopqrs",
+ *   "MaxRecords": 20,
+ *   "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+ * };
+ * const command = new DescribeExtensionPackAssociationsCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "Marker": "0123456789abcdefghijklmnopqrs",
+ *   "Requests": [
+ *     {
+ *       "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+ *       "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef",
+ *       "Status": "SUCCESS"
+ *     }
+ *   ]
+ * }
+ * *\/
+ * // example id: describe-extension-pack-associations-1689718322580
+ * ```
+ *
  */
 export class DescribeExtensionPackAssociationsCommand extends $Command<
   DescribeExtensionPackAssociationsCommandInput,
@@ -155,6 +189,10 @@ export class DescribeExtensionPackAssociationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "DescribeExtensionPackAssociations",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

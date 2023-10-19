@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudHSMV2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudHSMV2Client";
@@ -64,7 +65,7 @@ export interface DescribeBackupsCommandOutput extends DescribeBackupsResponse, _
  * //   Backups: [ // Backups
  * //     { // Backup
  * //       BackupId: "STRING_VALUE", // required
- * //       BackupState: "STRING_VALUE",
+ * //       BackupState: "CREATE_IN_PROGRESS" || "READY" || "DELETED" || "PENDING_DELETION",
  * //       ClusterId: "STRING_VALUE",
  * //       CreateTimestamp: new Date("TIMESTAMP"),
  * //       CopyTimestamp: new Date("TIMESTAMP"),
@@ -167,6 +168,10 @@ export class DescribeBackupsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "BaldrApiService",
+        operation: "DescribeBackups",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

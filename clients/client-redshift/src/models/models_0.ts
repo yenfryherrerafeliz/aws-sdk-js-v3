@@ -161,7 +161,7 @@ export interface ReservedNode {
    * @public
    * <p></p>
    */
-  ReservedNodeOfferingType?: ReservedNodeOfferingType | string;
+  ReservedNodeOfferingType?: ReservedNodeOfferingType;
 }
 
 /**
@@ -579,13 +579,13 @@ export interface AquaConfiguration {
    * @public
    * <p>This field is retired. Amazon Redshift automatically determines whether to use AQUA (Advanced Query Accelerator).</p>
    */
-  AquaStatus?: AquaStatus | string;
+  AquaStatus?: AquaStatus;
 
   /**
    * @public
    * <p>This field is retired. Amazon Redshift automatically determines whether to use AQUA (Advanced Query Accelerator).</p>
    */
-  AquaConfigurationStatus?: AquaConfigurationStatus | string;
+  AquaConfigurationStatus?: AquaConfigurationStatus;
 }
 
 /**
@@ -653,7 +653,7 @@ export interface DataShareAssociation {
    * @public
    * <p>The status of the datashare that is associated.</p>
    */
-  Status?: DataShareStatus | string;
+  Status?: DataShareStatus;
 
   /**
    * @public
@@ -780,7 +780,7 @@ export interface ClusterAssociatedToSchedule {
    * @public
    * <p></p>
    */
-  ScheduleAssociationState?: ScheduleState | string;
+  ScheduleAssociationState?: ScheduleState;
 }
 
 /**
@@ -1260,7 +1260,7 @@ export interface EndpointAuthorization {
    * @public
    * <p>The status of the authorization action.</p>
    */
-  Status?: AuthorizationStatus | string;
+  Status?: AuthorizationStatus;
 
   /**
    * @public
@@ -1642,6 +1642,18 @@ export interface Snapshot {
    * <p>A timestamp representing the start of the retention period for the snapshot.</p>
    */
   SnapshotRetentionStartTime?: Date;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) for the cluster's admin user credentials secret.</p>
+   */
+  MasterPasswordSecretArn?: string;
+
+  /**
+   * @public
+   * <p>The ID of the Key Management Service (KMS) key used to encrypt and store the cluster's admin credentials secret.</p>
+   */
+  MasterPasswordSecretKmsKeyId?: string;
 }
 
 /**
@@ -2656,7 +2668,7 @@ export interface ReservedNodeExchangeStatus {
    * @public
    * <p>The status of the reserved-node exchange request. Statuses include in-progress and requested.</p>
    */
-  Status?: ReservedNodeExchangeStatusType | string;
+  Status?: ReservedNodeExchangeStatusType;
 
   /**
    * @public
@@ -3198,7 +3210,7 @@ export interface Cluster {
    * @public
    * <p>The current state of the cluster snapshot schedule.</p>
    */
-  SnapshotScheduleState?: ScheduleState | string;
+  SnapshotScheduleState?: ScheduleState;
 
   /**
    * @public
@@ -3294,6 +3306,18 @@ export interface Cluster {
    * <p>The expiration date for the certificate associated with the custom domain name.</p>
    */
   CustomDomainCertificateExpiryDate?: Date;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) for the cluster's admin user credentials secret.</p>
+   */
+  MasterPasswordSecretArn?: string;
+
+  /**
+   * @public
+   * <p>The ID of the Key Management Service (KMS) key used to encrypt and store the cluster's admin credentials secret.</p>
+   */
+  MasterPasswordSecretKmsKeyId?: string;
 }
 
 /**
@@ -3589,7 +3613,7 @@ export interface Parameter {
    * <a href="https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-parameter-groups.html">Amazon Redshift Parameter Groups</a>
    * in the <i>Amazon Redshift Cluster Management Guide</i>.</p>
    */
-  ApplyType?: ParameterApplyType | string;
+  ApplyType?: ParameterApplyType;
 
   /**
    * @public
@@ -4379,6 +4403,7 @@ export interface CreateClusterMessage {
    * @public
    * <p>The password associated with the admin user account for the cluster that is being
    *             created.</p>
+   *          <p>You can't use <code>MasterUserPassword</code> if <code>ManageMasterPassword</code> is <code>true</code>.</p>
    *          <p>Constraints:</p>
    *          <ul>
    *             <li>
@@ -4399,7 +4424,7 @@ export interface CreateClusterMessage {
    *             </li>
    *          </ul>
    */
-  MasterUserPassword: string | undefined;
+  MasterUserPassword?: string;
 
   /**
    * @public
@@ -4651,7 +4676,7 @@ export interface CreateClusterMessage {
    * @public
    * <p>This parameter is retired. It does not set the AQUA configuration status. Amazon Redshift automatically determines whether to use AQUA (Advanced Query Accelerator).</p>
    */
-  AquaConfigurationStatus?: AquaConfigurationStatus | string;
+  AquaConfigurationStatus?: AquaConfigurationStatus;
 
   /**
    * @public
@@ -4664,6 +4689,23 @@ export interface CreateClusterMessage {
    * <p>A flag that specifies whether to load sample data once the cluster is created.</p>
    */
   LoadSampleData?: string;
+
+  /**
+   * @public
+   * <p>If <code>true</code>, Amazon Redshift uses Secrets Manager to manage this cluster's admin credentials.
+   *             You can't use <code>MasterUserPassword</code> if <code>ManageMasterPassword</code> is true.
+   *             If <code>ManageMasterPassword</code> is false or not set, Amazon Redshift uses
+   *             <code>MasterUserPassword</code> for the admin user account's password.
+   *         </p>
+   */
+  ManageMasterPassword?: boolean;
+
+  /**
+   * @public
+   * <p>The ID of the Key Management Service (KMS) key used to encrypt and store the cluster's admin credentials secret.
+   *             You can only use this parameter if <code>ManageMasterPassword</code> is true.</p>
+   */
+  MasterPasswordSecretKmsKeyId?: string;
 }
 
 /**
@@ -6335,7 +6377,7 @@ export interface ScheduledAction {
    * @public
    * <p>The state of the scheduled action. For example, <code>DISABLED</code>. </p>
    */
-  State?: ScheduledActionState | string;
+  State?: ScheduledActionState;
 
   /**
    * @public
@@ -6821,7 +6863,7 @@ export interface CreateUsageLimitMessage {
    * @public
    * <p>The Amazon Redshift feature that you want to limit.</p>
    */
-  FeatureType: UsageLimitFeatureType | string | undefined;
+  FeatureType: UsageLimitFeatureType | undefined;
 
   /**
    * @public
@@ -6831,7 +6873,7 @@ export interface CreateUsageLimitMessage {
    *             If <code>FeatureType</code> is <code>cross-region-datasharing</code>, then <code>LimitType</code> must be <code>data-scanned</code>.
    *            </p>
    */
-  LimitType: UsageLimitLimitType | string | undefined;
+  LimitType: UsageLimitLimitType | undefined;
 
   /**
    * @public
@@ -6846,14 +6888,14 @@ export interface CreateUsageLimitMessage {
    * <p>The time period that the amount applies to. A <code>weekly</code> period begins on Sunday. The default is <code>monthly</code>.
    *             </p>
    */
-  Period?: UsageLimitPeriod | string;
+  Period?: UsageLimitPeriod;
 
   /**
    * @public
    * <p>The action that Amazon Redshift takes when the limit is reached. The default is log.
    *             For more information about this parameter, see <a>UsageLimit</a>.</p>
    */
-  BreachAction?: UsageLimitBreachAction | string;
+  BreachAction?: UsageLimitBreachAction;
 
   /**
    * @public
@@ -6903,13 +6945,13 @@ export interface UsageLimit {
    * @public
    * <p>The Amazon Redshift feature to which the limit applies.</p>
    */
-  FeatureType?: UsageLimitFeatureType | string;
+  FeatureType?: UsageLimitFeatureType;
 
   /**
    * @public
    * <p>The type of limit. Depending on the feature type, this can be based on a time duration or data size.</p>
    */
-  LimitType?: UsageLimitLimitType | string;
+  LimitType?: UsageLimitLimitType;
 
   /**
    * @public
@@ -6921,7 +6963,7 @@ export interface UsageLimit {
    * @public
    * <p>The time period that the amount applies to. A <code>weekly</code> period begins on Sunday. The default is <code>monthly</code>. </p>
    */
-  Period?: UsageLimitPeriod | string;
+  Period?: UsageLimitPeriod;
 
   /**
    * @public
@@ -6941,7 +6983,7 @@ export interface UsageLimit {
    *             </li>
    *          </ul>
    */
-  BreachAction?: UsageLimitBreachAction | string;
+  BreachAction?: UsageLimitBreachAction;
 
   /**
    * @public
@@ -7987,13 +8029,13 @@ export interface SnapshotSortingEntity {
    * @public
    * <p>The category for sorting the snapshots.</p>
    */
-  Attribute: SnapshotAttributeToSortBy | string | undefined;
+  Attribute: SnapshotAttributeToSortBy | undefined;
 
   /**
    * @public
    * <p>The order for listing the attributes.</p>
    */
-  SortOrder?: SortByOrder | string;
+  SortOrder?: SortByOrder;
 }
 
 /**
@@ -8479,7 +8521,7 @@ export interface DescribeDataSharesForConsumerMessage {
    * <p>An identifier giving the status of a datashare in the consumer cluster. If this field is specified, Amazon
    *             Redshift returns the list of datashares that have the specified status.</p>
    */
-  Status?: DataShareStatusForConsumer | string;
+  Status?: DataShareStatusForConsumer;
 
   /**
    * @public
@@ -8539,7 +8581,7 @@ export interface DescribeDataSharesForProducerMessage {
    * <p>An identifier giving the status of a datashare in the producer. If this field is specified, Amazon
    *             Redshift returns the list of datashares that have the specified status.</p>
    */
-  Status?: DataShareStatusForProducer | string;
+  Status?: DataShareStatusForProducer;
 
   /**
    * @public
@@ -8826,6 +8868,24 @@ export interface EventCategoriesMap {
 /**
  * @internal
  */
+export const PendingModifiedValuesFilterSensitiveLog = (obj: PendingModifiedValues): any => ({
+  ...obj,
+  ...(obj.MasterUserPassword && { MasterUserPassword: SENSITIVE_STRING }),
+});
+
+/**
+ * @internal
+ */
+export const ClusterFilterSensitiveLog = (obj: Cluster): any => ({
+  ...obj,
+  ...(obj.PendingModifiedValues && {
+    PendingModifiedValues: PendingModifiedValuesFilterSensitiveLog(obj.PendingModifiedValues),
+  }),
+});
+
+/**
+ * @internal
+ */
 export const ClusterCredentialsFilterSensitiveLog = (obj: ClusterCredentials): any => ({
   ...obj,
   ...(obj.DbPassword && { DbPassword: SENSITIVE_STRING }),
@@ -8837,4 +8897,36 @@ export const ClusterCredentialsFilterSensitiveLog = (obj: ClusterCredentials): a
 export const ClusterExtendedCredentialsFilterSensitiveLog = (obj: ClusterExtendedCredentials): any => ({
   ...obj,
   ...(obj.DbPassword && { DbPassword: SENSITIVE_STRING }),
+});
+
+/**
+ * @internal
+ */
+export const ClustersMessageFilterSensitiveLog = (obj: ClustersMessage): any => ({
+  ...obj,
+  ...(obj.Clusters && { Clusters: obj.Clusters.map((item) => ClusterFilterSensitiveLog(item)) }),
+});
+
+/**
+ * @internal
+ */
+export const CreateClusterMessageFilterSensitiveLog = (obj: CreateClusterMessage): any => ({
+  ...obj,
+  ...(obj.MasterUserPassword && { MasterUserPassword: SENSITIVE_STRING }),
+});
+
+/**
+ * @internal
+ */
+export const CreateClusterResultFilterSensitiveLog = (obj: CreateClusterResult): any => ({
+  ...obj,
+  ...(obj.Cluster && { Cluster: ClusterFilterSensitiveLog(obj.Cluster) }),
+});
+
+/**
+ * @internal
+ */
+export const DeleteClusterResultFilterSensitiveLog = (obj: DeleteClusterResult): any => ({
+  ...obj,
+  ...(obj.Cluster && { Cluster: ClusterFilterSensitiveLog(obj.Cluster) }),
 });

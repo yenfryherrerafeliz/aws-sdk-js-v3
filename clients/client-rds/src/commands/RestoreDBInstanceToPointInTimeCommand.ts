@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { RestoreDBInstanceToPointInTimeMessage, RestoreDBInstanceToPointInTimeResult } from "../models/models_1";
@@ -41,7 +42,7 @@ export interface RestoreDBInstanceToPointInTimeCommandOutput
 
 /**
  * @public
- * <p>Restores a DB instance to an arbitrary point in time. You can restore to any point in time before the time identified by the LatestRestorableTime property. You can restore to a point up to the number of days specified by the BackupRetentionPeriod property.</p>
+ * <p>Restores a DB instance to an arbitrary point in time. You can restore to any point in time before the time identified by the <code>LatestRestorableTime</code> property. You can restore to a point up to the number of days specified by the <code>BackupRetentionPeriod</code> property.</p>
  *          <p>The target database is created with most of the original configuration, but in a
  *             system-selected Availability Zone, with the default security group, the default subnet
  *             group, and the default DB parameter group. By default, the new DB instance is created as
@@ -117,6 +118,7 @@ export interface RestoreDBInstanceToPointInTimeCommandOutput
  *   NetworkType: "STRING_VALUE",
  *   StorageThroughput: Number("int"),
  *   AllocatedStorage: Number("int"),
+ *   DedicatedLogVolume: true || false,
  * };
  * const command = new RestoreDBInstanceToPointInTimeCommand(input);
  * const response = await client.send(command);
@@ -213,6 +215,7 @@ export interface RestoreDBInstanceToPointInTimeCommandOutput
  * //       ResumeFullAutomationModeTime: new Date("TIMESTAMP"),
  * //       StorageThroughput: Number("int"),
  * //       Engine: "STRING_VALUE",
+ * //       DedicatedLogVolume: true || false,
  * //     },
  * //     LatestRestorableTime: new Date("TIMESTAMP"),
  * //     MultiAZ: true || false,
@@ -338,6 +341,8 @@ export interface RestoreDBInstanceToPointInTimeCommandOutput
  * //     },
  * //     ReadReplicaSourceDBClusterIdentifier: "STRING_VALUE",
  * //     PercentProgress: "STRING_VALUE",
+ * //     DedicatedLogVolume: true || false,
+ * //     IsStorageConfigUpgradeAvailable: true || false,
  * //   },
  * // };
  *
@@ -581,6 +586,10 @@ export class RestoreDBInstanceToPointInTimeCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "RestoreDBInstanceToPointInTime",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

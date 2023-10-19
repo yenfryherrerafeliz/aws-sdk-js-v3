@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DeleteFolderMembershipRequest, DeleteFolderMembershipResponse } from "../models/models_3";
@@ -47,7 +48,7 @@ export interface DeleteFolderMembershipCommandOutput extends DeleteFolderMembers
  *   AwsAccountId: "STRING_VALUE", // required
  *   FolderId: "STRING_VALUE", // required
  *   MemberId: "STRING_VALUE", // required
- *   MemberType: "DASHBOARD" || "ANALYSIS" || "DATASET", // required
+ *   MemberType: "DASHBOARD" || "ANALYSIS" || "DATASET" || "DATASOURCE" || "TOPIC", // required
  * };
  * const command = new DeleteFolderMembershipCommand(input);
  * const response = await client.send(command);
@@ -142,6 +143,10 @@ export class DeleteFolderMembershipCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "QuickSight_20180401",
+        operation: "DeleteFolderMembership",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

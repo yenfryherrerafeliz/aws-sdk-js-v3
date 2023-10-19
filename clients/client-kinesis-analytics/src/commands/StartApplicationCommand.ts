@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { KinesisAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KinesisAnalyticsClient";
@@ -60,7 +61,7 @@ export interface StartApplicationCommandOutput extends StartApplicationResponse,
  *     { // InputConfiguration
  *       Id: "STRING_VALUE", // required
  *       InputStartingPositionConfiguration: { // InputStartingPositionConfiguration
- *         InputStartingPosition: "STRING_VALUE",
+ *         InputStartingPosition: "NOW" || "TRIM_HORIZON" || "LAST_STOPPED_POINT",
  *       },
  *     },
  *   ],
@@ -146,6 +147,10 @@ export class StartApplicationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "KinesisAnalytics_20150814",
+        operation: "StartApplication",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

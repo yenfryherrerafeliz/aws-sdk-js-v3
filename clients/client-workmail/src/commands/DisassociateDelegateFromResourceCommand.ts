@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DisassociateDelegateFromResourceRequest, DisassociateDelegateFromResourceResponse } from "../models/models_0";
@@ -84,6 +85,9 @@ export interface DisassociateDelegateFromResourceCommandOutput
  *  <p>The organization must have a valid state to perform certain
  *          operations on the organization or its members.</p>
  *
+ * @throws {@link UnsupportedOperationException} (client fault)
+ *  <p>You can't perform a write operation against a read-only directory.</p>
+ *
  * @throws {@link WorkMailServiceException}
  * <p>Base exception class for all service exceptions from WorkMail service.</p>
  *
@@ -138,6 +142,10 @@ export class DisassociateDelegateFromResourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkMailService",
+        operation: "DisassociateDelegateFromResource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

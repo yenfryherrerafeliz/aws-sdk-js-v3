@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudHSMV2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudHSMV2Client";
@@ -59,7 +60,7 @@ export interface CreateHsmCommandOutput extends CreateHsmResponse, __MetadataBea
  * //     EniId: "STRING_VALUE",
  * //     EniIp: "STRING_VALUE",
  * //     HsmId: "STRING_VALUE", // required
- * //     State: "STRING_VALUE",
+ * //     State: "CREATE_IN_PROGRESS" || "ACTIVE" || "DEGRADED" || "DELETE_IN_PROGRESS" || "DELETED",
  * //     StateMessage: "STRING_VALUE",
  * //   },
  * // };
@@ -142,6 +143,10 @@ export class CreateHsmCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "BaldrApiService",
+        operation: "CreateHsm",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

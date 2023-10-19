@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { BraketClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../BraketClient";
@@ -45,6 +46,9 @@ export interface GetJobCommandOutput extends GetJobResponse, __MetadataBearer {}
  * const client = new BraketClient(config);
  * const input = { // GetJobRequest
  *   jobArn: "STRING_VALUE", // required
+ *   additionalAttributeNames: [ // HybridJobAdditionalAttributeNamesList
+ *     "STRING_VALUE",
+ *   ],
  * };
  * const command = new GetJobCommand(input);
  * const response = await client.send(command);
@@ -110,6 +114,11 @@ export interface GetJobCommandOutput extends GetJobResponse, __MetadataBearer {}
  * //   ],
  * //   tags: { // TagsMap
  * //     "<keys>": "STRING_VALUE",
+ * //   },
+ * //   queueInfo: { // HybridJobQueueInfo
+ * //     queue: "STRING_VALUE", // required
+ * //     position: "STRING_VALUE", // required
+ * //     message: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -185,6 +194,10 @@ export class GetJobCommand extends $Command<GetJobCommandInput, GetJobCommandOut
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Braket",
+        operation: "GetJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

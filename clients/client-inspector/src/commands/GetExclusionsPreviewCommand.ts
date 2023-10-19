@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { InspectorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../InspectorClient";
@@ -50,12 +51,12 @@ export interface GetExclusionsPreviewCommandOutput extends GetExclusionsPreviewR
  *   previewToken: "STRING_VALUE", // required
  *   nextToken: "STRING_VALUE",
  *   maxResults: Number("int"),
- *   locale: "STRING_VALUE",
+ *   locale: "EN_US",
  * };
  * const command = new GetExclusionsPreviewCommand(input);
  * const response = await client.send(command);
  * // { // GetExclusionsPreviewResponse
- * //   previewStatus: "STRING_VALUE", // required
+ * //   previewStatus: "WORK_IN_PROGRESS" || "COMPLETED", // required
  * //   exclusionPreviews: [ // ExclusionPreviewList
  * //     { // ExclusionPreview
  * //       title: "STRING_VALUE", // required
@@ -63,7 +64,7 @@ export interface GetExclusionsPreviewCommandOutput extends GetExclusionsPreviewR
  * //       recommendation: "STRING_VALUE", // required
  * //       scopes: [ // ScopeList // required
  * //         { // Scope
- * //           key: "STRING_VALUE",
+ * //           key: "INSTANCE_ID" || "RULES_PACKAGE_ARN",
  * //           value: "STRING_VALUE",
  * //         },
  * //       ],
@@ -154,6 +155,10 @@ export class GetExclusionsPreviewCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "InspectorService",
+        operation: "GetExclusionsPreview",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

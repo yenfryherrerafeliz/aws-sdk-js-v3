@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListProtectionGroupsRequest, ListProtectionGroupsResponse } from "../models/models_0";
@@ -52,13 +53,13 @@ export interface ListProtectionGroupsCommandOutput extends ListProtectionGroupsR
  *       "STRING_VALUE",
  *     ],
  *     Patterns: [ // ProtectionGroupPatternFilters
- *       "STRING_VALUE",
+ *       "ALL" || "ARBITRARY" || "BY_RESOURCE_TYPE",
  *     ],
  *     ResourceTypes: [ // ProtectedResourceTypeFilters
- *       "STRING_VALUE",
+ *       "CLOUDFRONT_DISTRIBUTION" || "ROUTE_53_HOSTED_ZONE" || "ELASTIC_IP_ALLOCATION" || "CLASSIC_LOAD_BALANCER" || "APPLICATION_LOAD_BALANCER" || "GLOBAL_ACCELERATOR",
  *     ],
  *     Aggregations: [ // ProtectionGroupAggregationFilters
- *       "STRING_VALUE",
+ *       "SUM" || "MEAN" || "MAX",
  *     ],
  *   },
  * };
@@ -68,9 +69,9 @@ export interface ListProtectionGroupsCommandOutput extends ListProtectionGroupsR
  * //   ProtectionGroups: [ // ProtectionGroups // required
  * //     { // ProtectionGroup
  * //       ProtectionGroupId: "STRING_VALUE", // required
- * //       Aggregation: "STRING_VALUE", // required
- * //       Pattern: "STRING_VALUE", // required
- * //       ResourceType: "STRING_VALUE",
+ * //       Aggregation: "SUM" || "MEAN" || "MAX", // required
+ * //       Pattern: "ALL" || "ARBITRARY" || "BY_RESOURCE_TYPE", // required
+ * //       ResourceType: "CLOUDFRONT_DISTRIBUTION" || "ROUTE_53_HOSTED_ZONE" || "ELASTIC_IP_ALLOCATION" || "CLASSIC_LOAD_BALANCER" || "APPLICATION_LOAD_BALANCER" || "GLOBAL_ACCELERATOR",
  * //       Members: [ // ProtectionGroupMembers // required
  * //         "STRING_VALUE",
  * //       ],
@@ -151,6 +152,10 @@ export class ListProtectionGroupsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSShield_20160616",
+        operation: "ListProtectionGroups",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

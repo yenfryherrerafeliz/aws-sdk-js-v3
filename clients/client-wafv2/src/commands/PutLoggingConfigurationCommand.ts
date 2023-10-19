@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { PutLoggingConfigurationRequest, PutLoggingConfigurationResponse } from "../models/models_0";
@@ -146,6 +147,9 @@ export interface PutLoggingConfigurationCommandOutput extends PutLoggingConfigur
  *         HeaderOrder: { // HeaderOrder
  *           OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *         },
+ *         JA3Fingerprint: { // JA3Fingerprint
+ *           FallbackBehavior: "MATCH" || "NO_MATCH", // required
+ *         },
  *       },
  *     ],
  *     ManagedByFirewallManager: true || false,
@@ -232,6 +236,9 @@ export interface PutLoggingConfigurationCommandOutput extends PutLoggingConfigur
  * //         },
  * //         HeaderOrder: { // HeaderOrder
  * //           OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
+ * //         },
+ * //         JA3Fingerprint: { // JA3Fingerprint
+ * //           FallbackBehavior: "MATCH" || "NO_MATCH", // required
  * //         },
  * //       },
  * //     ],
@@ -380,6 +387,10 @@ export class PutLoggingConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_20190729",
+        operation: "PutLoggingConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

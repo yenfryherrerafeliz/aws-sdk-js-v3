@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { BraketClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../BraketClient";
@@ -64,6 +65,13 @@ export interface GetDeviceCommandOutput extends GetDeviceResponse, __MetadataBea
  * //   deviceType: "STRING_VALUE", // required
  * //   deviceStatus: "STRING_VALUE", // required
  * //   deviceCapabilities: "STRING_VALUE", // required
+ * //   deviceQueueInfo: [ // DeviceQueueInfoList
+ * //     { // DeviceQueueInfo
+ * //       queue: "STRING_VALUE", // required
+ * //       queueSize: "STRING_VALUE", // required
+ * //       queuePriority: "STRING_VALUE",
+ * //     },
+ * //   ],
  * // };
  *
  * ```
@@ -142,6 +150,10 @@ export class GetDeviceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Braket",
+        operation: "GetDevice",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

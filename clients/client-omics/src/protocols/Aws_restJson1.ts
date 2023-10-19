@@ -1,4 +1,5 @@
 // smithy-typescript generated code
+import { awsExpectUnion as __expectUnion } from "@aws-sdk/core";
 import {
   HttpRequest as __HttpRequest,
   HttpResponse as __HttpResponse,
@@ -14,7 +15,6 @@ import {
   expectNonNull as __expectNonNull,
   expectObject as __expectObject,
   expectString as __expectString,
-  expectUnion as __expectUnion,
   extendedEncodeURIComponent as __extendedEncodeURIComponent,
   map,
   parseRfc3339DateTimeWithOffset as __parseRfc3339DateTimeWithOffset,
@@ -251,6 +251,7 @@ import {
   ExportReadSetJobDetail,
   Filter,
   FormatOptions,
+  FormatToHeaderKey,
   ImportReadSetFilter,
   ImportReadSetJobItem,
   ImportReferenceFilter,
@@ -3142,6 +3143,7 @@ export const se_StartRunCommand = async (
       parameters: (_) => se_RunParameters(_, context),
       priority: [],
       requestId: [true, (_) => _ ?? generateIdempotencyToken()],
+      retentionMode: [],
       roleArn: [],
       runGroupId: [],
       runId: [],
@@ -5725,6 +5727,7 @@ export const de_GetReadSetMetadataCommand = async (
     creationTime: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     creationType: __expectString,
     description: __expectString,
+    etag: _json,
     fileType: __expectString,
     files: _json,
     id: __expectString,
@@ -6079,6 +6082,7 @@ export const de_GetRunCommand = async (
     parameters: (_) => de_RunParameters(_, context),
     priority: __expectInt32,
     resourceDigests: _json,
+    retentionMode: __expectString,
     roleArn: __expectString,
     runGroupId: __expectString,
     runId: __expectString,
@@ -9507,6 +9511,8 @@ const de_AnnotationStoreVersionItems = (output: any, context: __SerdeContext): A
   return retVal;
 };
 
+// de_ETag omitted.
+
 // de_ExportReadSetDetail omitted.
 
 // de_ExportReadSetDetailList omitted.
@@ -9663,6 +9669,7 @@ const de_ReadSetListItem = (output: any, context: __SerdeContext): ReadSetListIt
     creationTime: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     creationType: __expectString,
     description: __expectString,
+    etag: _json,
     fileType: __expectString,
     id: __expectString,
     name: __expectString,

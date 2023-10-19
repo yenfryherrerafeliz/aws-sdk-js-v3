@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetResourcePolicyRequest, GetResourcePolicyResponse } from "../models/models_0";
@@ -37,7 +38,7 @@ export interface GetResourcePolicyCommandOutput extends GetResourcePolicyRespons
 /**
  * @public
  * <p>Retrieves information about the resource policy. The resource policy is an IAM policy
- *    created on behalf of the resource owner when they share a resource.</p>
+ *    created by AWS RAM on behalf of the resource owner when they share a resource.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -131,6 +132,10 @@ export class GetResourcePolicyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MercuryControlPlane",
+        operation: "GetResourcePolicy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

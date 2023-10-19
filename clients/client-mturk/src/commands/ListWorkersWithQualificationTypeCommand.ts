@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListWorkersWithQualificationTypeRequest, ListWorkersWithQualificationTypeResponse } from "../models/models_0";
@@ -53,7 +54,7 @@ export interface ListWorkersWithQualificationTypeCommandOutput
  * const client = new MTurkClient(config);
  * const input = { // ListWorkersWithQualificationTypeRequest
  *   QualificationTypeId: "STRING_VALUE", // required
- *   Status: "STRING_VALUE",
+ *   Status: "Granted" || "Revoked",
  *   NextToken: "STRING_VALUE",
  *   MaxResults: Number("int"),
  * };
@@ -72,7 +73,7 @@ export interface ListWorkersWithQualificationTypeCommandOutput
  * //         Country: "STRING_VALUE", // required
  * //         Subdivision: "STRING_VALUE",
  * //       },
- * //       Status: "STRING_VALUE",
+ * //       Status: "Granted" || "Revoked",
  * //     },
  * //   ],
  * // };
@@ -145,6 +146,10 @@ export class ListWorkersWithQualificationTypeCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MTurkRequesterServiceV20170117",
+        operation: "ListWorkersWithQualificationType",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

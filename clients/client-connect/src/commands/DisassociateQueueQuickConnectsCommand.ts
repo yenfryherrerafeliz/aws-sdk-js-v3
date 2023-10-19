@@ -11,10 +11,11 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
-import { DisassociateQueueQuickConnectsRequest } from "../models/models_0";
+import { DisassociateQueueQuickConnectsRequest } from "../models/models_1";
 import {
   de_DisassociateQueueQuickConnectsCommand,
   se_DisassociateQueueQuickConnectsCommand,
@@ -135,6 +136,10 @@ export class DisassociateQueueQuickConnectsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonConnectService",
+        operation: "DisassociateQueueQuickConnects",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -33,16 +33,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `ConnectClient` and
-the commands you need, for example `ActivateEvaluationFormCommand`:
+the commands you need, for example `ListInstancesCommand`:
 
 ```js
 // ES5 example
-const { ConnectClient, ActivateEvaluationFormCommand } = require("@aws-sdk/client-connect");
+const { ConnectClient, ListInstancesCommand } = require("@aws-sdk/client-connect");
 ```
 
 ```ts
 // ES6+ example
-import { ConnectClient, ActivateEvaluationFormCommand } from "@aws-sdk/client-connect";
+import { ConnectClient, ListInstancesCommand } from "@aws-sdk/client-connect";
 ```
 
 ### Usage
@@ -61,7 +61,7 @@ const client = new ConnectClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new ActivateEvaluationFormCommand(params);
+const command = new ListInstancesCommand(params);
 ```
 
 #### Async/await
@@ -140,7 +140,7 @@ const client = new AWS.Connect({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.activateEvaluationForm(params);
+  const data = await client.listInstances(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -148,7 +148,7 @@ try {
 
 // Promises.
 client
-  .activateEvaluationForm(params)
+  .listInstances(params)
   .then((data) => {
     // process data.
   })
@@ -157,7 +157,7 @@ client
   });
 
 // callbacks.
-client.activateEvaluationForm(params, (err, data) => {
+client.listInstances(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -471,6 +471,22 @@ CreateUserHierarchyGroup
 </details>
 <details>
 <summary>
+CreateView
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/createviewcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/createviewcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/createviewcommandoutput.html)
+
+</details>
+<details>
+<summary>
+CreateViewVersion
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/createviewversioncommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/createviewversioncommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/createviewversioncommandoutput.html)
+
+</details>
+<details>
+<summary>
 CreateVocabulary
 </summary>
 
@@ -627,6 +643,22 @@ DeleteUserHierarchyGroup
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/deleteuserhierarchygroupcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deleteuserhierarchygroupcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deleteuserhierarchygroupcommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteView
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/deleteviewcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deleteviewcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deleteviewcommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteViewVersion
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/deleteviewversioncommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deleteviewversioncommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/deleteviewversioncommandoutput.html)
 
 </details>
 <details>
@@ -803,6 +835,14 @@ DescribeUserHierarchyStructure
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/describeuserhierarchystructurecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/describeuserhierarchystructurecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/describeuserhierarchystructurecommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeView
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/describeviewcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/describeviewcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/describeviewcommandoutput.html)
 
 </details>
 <details>
@@ -1191,6 +1231,14 @@ ListSecurityKeys
 </details>
 <details>
 <summary>
+ListSecurityProfileApplications
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/listsecurityprofileapplicationscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listsecurityprofileapplicationscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listsecurityprofileapplicationscommandoutput.html)
+
+</details>
+<details>
+<summary>
 ListSecurityProfilePermissions
 </summary>
 
@@ -1259,6 +1307,22 @@ ListUsers
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/listuserscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listuserscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listuserscommandoutput.html)
+
+</details>
+<details>
+<summary>
+ListViews
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/listviewscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listviewscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listviewscommandoutput.html)
+
+</details>
+<details>
+<summary>
+ListViewVersions
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/listviewversionscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listviewversionscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/listviewversionscommandoutput.html)
 
 </details>
 <details>
@@ -1811,5 +1875,21 @@ UpdateUserSecurityProfiles
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/updateusersecurityprofilescommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/updateusersecurityprofilescommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/updateusersecurityprofilescommandoutput.html)
+
+</details>
+<details>
+<summary>
+UpdateViewContent
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/updateviewcontentcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/updateviewcontentcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/updateviewcontentcommandoutput.html)
+
+</details>
+<details>
+<summary>
+UpdateViewMetadata
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/classes/updateviewmetadatacommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/updateviewmetadatacommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-connect/interfaces/updateviewmetadatacommandoutput.html)
 
 </details>

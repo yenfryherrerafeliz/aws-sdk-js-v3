@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListImportJobsRequest, ListImportJobsResponse } from "../models/models_0";
@@ -63,7 +64,7 @@ export interface ListImportJobsCommandOutput extends ListImportJobsResponse, __M
  * //           ContactListImportAction: "DELETE" || "PUT", // required
  * //         },
  * //       },
- * //       JobStatus: "CREATED" || "PROCESSING" || "COMPLETED" || "FAILED",
+ * //       JobStatus: "CREATED" || "PROCESSING" || "COMPLETED" || "FAILED" || "CANCELLED",
  * //       CreatedTimestamp: new Date("TIMESTAMP"),
  * //       ProcessedRecordsCount: Number("int"),
  * //       FailedRecordsCount: Number("int"),
@@ -140,6 +141,10 @@ export class ListImportJobsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SimpleEmailService_v2",
+        operation: "ListImportJobs",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

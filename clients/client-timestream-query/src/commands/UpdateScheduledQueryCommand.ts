@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateScheduledQueryRequest } from "../models/models_0";
@@ -46,7 +47,7 @@ export interface UpdateScheduledQueryCommandOutput extends __MetadataBearer {}
  * const client = new TimestreamQueryClient(config);
  * const input = { // UpdateScheduledQueryRequest
  *   ScheduledQueryArn: "STRING_VALUE", // required
- *   State: "STRING_VALUE", // required
+ *   State: "ENABLED" || "DISABLED", // required
  * };
  * const command = new UpdateScheduledQueryCommand(input);
  * const response = await client.send(command);
@@ -137,6 +138,10 @@ export class UpdateScheduledQueryCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Timestream_20181101",
+        operation: "UpdateScheduledQuery",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

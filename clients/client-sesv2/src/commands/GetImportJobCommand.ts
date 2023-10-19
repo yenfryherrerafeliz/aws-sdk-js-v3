@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetImportJobRequest, GetImportJobResponse } from "../models/models_0";
@@ -67,7 +68,7 @@ export interface GetImportJobCommandOutput extends GetImportJobResponse, __Metad
  * //     FailedRecordsS3Url: "STRING_VALUE",
  * //     ErrorMessage: "STRING_VALUE",
  * //   },
- * //   JobStatus: "CREATED" || "PROCESSING" || "COMPLETED" || "FAILED",
+ * //   JobStatus: "CREATED" || "PROCESSING" || "COMPLETED" || "FAILED" || "CANCELLED",
  * //   CreatedTimestamp: new Date("TIMESTAMP"),
  * //   CompletedTimestamp: new Date("TIMESTAMP"),
  * //   ProcessedRecordsCount: Number("int"),
@@ -143,6 +144,10 @@ export class GetImportJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SimpleEmailService_v2",
+        operation: "GetImportJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

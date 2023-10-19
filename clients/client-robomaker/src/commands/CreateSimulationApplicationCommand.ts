@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateSimulationApplicationRequest, CreateSimulationApplicationResponse } from "../models/models_0";
@@ -54,19 +55,19 @@ export interface CreateSimulationApplicationCommandOutput
  *     { // SourceConfig
  *       s3Bucket: "STRING_VALUE",
  *       s3Key: "STRING_VALUE",
- *       architecture: "STRING_VALUE",
+ *       architecture: "X86_64" || "ARM64" || "ARMHF",
  *     },
  *   ],
  *   simulationSoftwareSuite: { // SimulationSoftwareSuite
- *     name: "STRING_VALUE",
+ *     name: "Gazebo" || "RosbagPlay" || "SimulationRuntime",
  *     version: "STRING_VALUE",
  *   },
  *   robotSoftwareSuite: { // RobotSoftwareSuite
- *     name: "STRING_VALUE",
- *     version: "STRING_VALUE",
+ *     name: "ROS" || "ROS2" || "General",
+ *     version: "Kinetic" || "Melodic" || "Dashing" || "Foxy",
  *   },
  *   renderingEngine: { // RenderingEngine
- *     name: "STRING_VALUE",
+ *     name: "OGRE",
  *     version: "STRING_VALUE",
  *   },
  *   tags: { // TagMap
@@ -87,19 +88,19 @@ export interface CreateSimulationApplicationCommandOutput
  * //       s3Bucket: "STRING_VALUE",
  * //       s3Key: "STRING_VALUE",
  * //       etag: "STRING_VALUE",
- * //       architecture: "STRING_VALUE",
+ * //       architecture: "X86_64" || "ARM64" || "ARMHF",
  * //     },
  * //   ],
  * //   simulationSoftwareSuite: { // SimulationSoftwareSuite
- * //     name: "STRING_VALUE",
+ * //     name: "Gazebo" || "RosbagPlay" || "SimulationRuntime",
  * //     version: "STRING_VALUE",
  * //   },
  * //   robotSoftwareSuite: { // RobotSoftwareSuite
- * //     name: "STRING_VALUE",
- * //     version: "STRING_VALUE",
+ * //     name: "ROS" || "ROS2" || "General",
+ * //     version: "Kinetic" || "Melodic" || "Dashing" || "Foxy",
  * //   },
  * //   renderingEngine: { // RenderingEngine
- * //     name: "STRING_VALUE",
+ * //     name: "OGRE",
  * //     version: "STRING_VALUE",
  * //   },
  * //   lastUpdatedAt: new Date("TIMESTAMP"),
@@ -195,6 +196,10 @@ export class CreateSimulationApplicationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "CreateSimulationApplication",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

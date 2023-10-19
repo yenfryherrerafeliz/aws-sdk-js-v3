@@ -26,8 +26,19 @@ export class SearchException extends __BaseException {
 
 /**
  * @public
+ * @enum
  */
-export type QueryParser = "dismax" | "lucene" | "simple" | "structured";
+export const QueryParser = {
+  dismax: "dismax",
+  lucene: "lucene",
+  simple: "simple",
+  structured: "structured",
+} as const;
+
+/**
+ * @public
+ */
+export type QueryParser = (typeof QueryParser)[keyof typeof QueryParser];
 
 /**
  * @public
@@ -279,7 +290,7 @@ export interface SearchRequest {
    *
    *       </ul>
    */
-  queryParser?: QueryParser | string;
+  queryParser?: QueryParser;
 
   /**
    * @public
@@ -662,8 +673,17 @@ export class DocumentServiceException extends __BaseException {
 
 /**
  * @public
+ * @enum
  */
-export type ContentType = "application/json" | "application/xml";
+export const ContentType = {
+  application_json: "application/json",
+  application_xml: "application/xml",
+} as const;
+
+/**
+ * @public
+ */
+export type ContentType = (typeof ContentType)[keyof typeof ContentType];
 
 /**
  * @public
@@ -684,7 +704,7 @@ export interface UploadDocumentsRequest {
    *          <li>application/xml</li>
    *       </ul>
    */
-  contentType: ContentType | string | undefined;
+  contentType: ContentType | undefined;
 }
 
 /**

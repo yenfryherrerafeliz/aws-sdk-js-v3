@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
@@ -51,7 +52,7 @@ export interface ListIntegrationAssociationsCommandOutput
  * const client = new ConnectClient(config);
  * const input = { // ListIntegrationAssociationsRequest
  *   InstanceId: "STRING_VALUE", // required
- *   IntegrationType: "EVENT" || "VOICE_ID" || "PINPOINT_APP" || "WISDOM_ASSISTANT" || "WISDOM_KNOWLEDGE_BASE" || "CASES_DOMAIN",
+ *   IntegrationType: "EVENT" || "VOICE_ID" || "PINPOINT_APP" || "WISDOM_ASSISTANT" || "WISDOM_KNOWLEDGE_BASE" || "CASES_DOMAIN" || "APPLICATION",
  *   NextToken: "STRING_VALUE",
  *   MaxResults: Number("int"),
  * };
@@ -63,7 +64,7 @@ export interface ListIntegrationAssociationsCommandOutput
  * //       IntegrationAssociationId: "STRING_VALUE",
  * //       IntegrationAssociationArn: "STRING_VALUE",
  * //       InstanceId: "STRING_VALUE",
- * //       IntegrationType: "EVENT" || "VOICE_ID" || "PINPOINT_APP" || "WISDOM_ASSISTANT" || "WISDOM_KNOWLEDGE_BASE" || "CASES_DOMAIN",
+ * //       IntegrationType: "EVENT" || "VOICE_ID" || "PINPOINT_APP" || "WISDOM_ASSISTANT" || "WISDOM_KNOWLEDGE_BASE" || "CASES_DOMAIN" || "APPLICATION",
  * //       IntegrationArn: "STRING_VALUE",
  * //       SourceApplicationUrl: "STRING_VALUE",
  * //       SourceApplicationName: "STRING_VALUE",
@@ -147,6 +148,10 @@ export class ListIntegrationAssociationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonConnectService",
+        operation: "ListIntegrationAssociations",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
   StreamingBlobPayloadInputTypes,
 } from "@smithy/types";
 
@@ -112,7 +113,7 @@ export interface WriteGetObjectResponseCommandOutput extends __MetadataBearer {}
  *   ObjectLockLegalHoldStatus: "ON" || "OFF",
  *   ObjectLockRetainUntilDate: new Date("TIMESTAMP"),
  *   PartsCount: Number("int"),
- *   ReplicationStatus: "COMPLETE" || "PENDING" || "FAILED" || "REPLICA",
+ *   ReplicationStatus: "COMPLETE" || "PENDING" || "FAILED" || "REPLICA" || "COMPLETED",
  *   RequestCharged: "requester",
  *   Restore: "STRING_VALUE",
  *   ServerSideEncryption: "AES256" || "aws:kms" || "aws:kms:dsse",
@@ -196,6 +197,10 @@ export class WriteGetObjectResponseCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: WriteGetObjectResponseRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonS3",
+        operation: "WriteGetObjectResponse",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MediaLiveClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaLiveClient";
@@ -355,6 +356,13 @@ export interface UpdateChannelClassCommandOutput extends UpdateChannelClassRespo
  * //         OutputLockingMode: "EPOCH_LOCKING" || "PIPELINE_LOCKING",
  * //         OutputTimingSource: "INPUT_CLOCK" || "SYSTEM_CLOCK",
  * //         SupportLowFramerateInputs: "DISABLED" || "ENABLED",
+ * //         OutputLockingSettings: { // OutputLockingSettings
+ * //           EpochLockingSettings: { // EpochLockingSettings
+ * //             CustomEpoch: "STRING_VALUE",
+ * //             JamSyncTime: "STRING_VALUE",
+ * //           },
+ * //           PipelineLockingSettings: {},
+ * //         },
  * //       },
  * //       MotionGraphicsConfiguration: { // MotionGraphicsConfiguration
  * //         MotionGraphicsInsertion: "DISABLED" || "ENABLED",
@@ -1176,6 +1184,10 @@ export class UpdateChannelClassCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaLive",
+        operation: "UpdateChannelClass",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

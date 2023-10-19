@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ConvertRecoveryPointToSnapshotRequest, ConvertRecoveryPointToSnapshotResponse } from "../models/models_0";
@@ -92,6 +93,8 @@ export interface ConvertRecoveryPointToSnapshotCommandOutput
  * //     accountsWithProvisionedRestoreAccess: [
  * //       "STRING_VALUE",
  * //     ],
+ * //     adminPasswordSecretArn: "STRING_VALUE",
+ * //     adminPasswordSecretKmsKeyId: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -175,6 +178,10 @@ export class ConvertRecoveryPointToSnapshotCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RedshiftServerless",
+        operation: "ConvertRecoveryPointToSnapshot",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

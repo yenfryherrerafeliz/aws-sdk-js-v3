@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { HoneycodeClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../HoneycodeClient";
@@ -58,7 +59,7 @@ export interface StartTableDataImportJobCommandOutput extends StartTableDataImpo
  *       dataSourceUrl: "STRING_VALUE",
  *     },
  *   },
- *   dataFormat: "STRING_VALUE", // required
+ *   dataFormat: "DELIMITED_TEXT", // required
  *   destinationTableId: "STRING_VALUE", // required
  *   importOptions: { // ImportOptions
  *     destinationOptions: { // DestinationOptions
@@ -72,7 +73,7 @@ export interface StartTableDataImportJobCommandOutput extends StartTableDataImpo
  *       delimiter: "STRING_VALUE", // required
  *       hasHeaderRow: true || false,
  *       ignoreEmptyRows: true || false,
- *       dataCharacterEncoding: "STRING_VALUE",
+ *       dataCharacterEncoding: "UTF-8" || "US-ASCII" || "ISO-8859-1" || "UTF-16BE" || "UTF-16LE" || "UTF-16",
  *     },
  *   },
  *   clientRequestToken: "STRING_VALUE", // required
@@ -81,7 +82,7 @@ export interface StartTableDataImportJobCommandOutput extends StartTableDataImpo
  * const response = await client.send(command);
  * // { // StartTableDataImportJobResult
  * //   jobId: "STRING_VALUE", // required
- * //   jobStatus: "STRING_VALUE", // required
+ * //   jobStatus: "SUBMITTED" || "IN_PROGRESS" || "COMPLETED" || "FAILED", // required
  * // };
  *
  * ```
@@ -177,6 +178,10 @@ export class StartTableDataImportJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: StartTableDataImportJobRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SheetsPublicApiService",
+        operation: "StartTableDataImportJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

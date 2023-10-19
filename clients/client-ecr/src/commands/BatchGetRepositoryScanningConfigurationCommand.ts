@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -65,11 +66,11 @@ export interface BatchGetRepositoryScanningConfigurationCommandOutput
  * //       repositoryArn: "STRING_VALUE",
  * //       repositoryName: "STRING_VALUE",
  * //       scanOnPush: true || false,
- * //       scanFrequency: "STRING_VALUE",
+ * //       scanFrequency: "SCAN_ON_PUSH" || "CONTINUOUS_SCAN" || "MANUAL",
  * //       appliedScanFilters: [ // ScanningRepositoryFilterList
  * //         { // ScanningRepositoryFilter
  * //           filter: "STRING_VALUE", // required
- * //           filterType: "STRING_VALUE", // required
+ * //           filterType: "WILDCARD", // required
  * //         },
  * //       ],
  * //     },
@@ -77,7 +78,7 @@ export interface BatchGetRepositoryScanningConfigurationCommandOutput
  * //   failures: [ // RepositoryScanningConfigurationFailureList
  * //     { // RepositoryScanningConfigurationFailure
  * //       repositoryName: "STRING_VALUE",
- * //       failureCode: "STRING_VALUE",
+ * //       failureCode: "REPOSITORY_NOT_FOUND",
  * //       failureReason: "STRING_VALUE",
  * //     },
  * //   ],
@@ -165,6 +166,10 @@ export class BatchGetRepositoryScanningConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "BatchGetRepositoryScanningConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

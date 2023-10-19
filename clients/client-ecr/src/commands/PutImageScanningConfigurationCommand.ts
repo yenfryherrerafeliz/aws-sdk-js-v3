@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -45,8 +46,8 @@ export interface PutImageScanningConfigurationCommandOutput
  *             <p>The <code>PutImageScanningConfiguration</code> API is being deprecated, in favor
  *                 of specifying the image scanning configuration at the registry level. For more
  *                 information, see <a>PutRegistryScanningConfiguration</a>.</p>
- *         </important>
- *         <p>Updates the image scanning configuration for the specified repository.</p>
+ *          </important>
+ *          <p>Updates the image scanning configuration for the specified repository.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -146,6 +147,10 @@ export class PutImageScanningConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "PutImageScanningConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

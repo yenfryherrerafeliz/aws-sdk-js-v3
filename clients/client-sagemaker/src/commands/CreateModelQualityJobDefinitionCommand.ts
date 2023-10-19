@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateModelQualityJobDefinitionRequest, CreateModelQualityJobDefinitionResponse } from "../models/models_1";
@@ -42,7 +43,8 @@ export interface CreateModelQualityJobDefinitionCommandOutput
 /**
  * @public
  * <p>Creates a definition for a job that monitors model quality and drift. For information
- *          about model monitor, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor.html">Amazon SageMaker Model Monitor</a>.</p>
+ *          about model monitor, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor.html">Amazon SageMaker Model
+ *          Monitor</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -84,6 +86,7 @@ export interface CreateModelQualityJobDefinitionCommandOutput
  *       ProbabilityThresholdAttribute: Number("double"),
  *       StartTimeOffset: "STRING_VALUE",
  *       EndTimeOffset: "STRING_VALUE",
+ *       ExcludeFeaturesAttribute: "STRING_VALUE",
  *     },
  *     BatchTransformInput: { // BatchTransformInput
  *       DataCapturedDestinationS3Uri: "STRING_VALUE", // required
@@ -105,6 +108,7 @@ export interface CreateModelQualityJobDefinitionCommandOutput
  *       ProbabilityThresholdAttribute: Number("double"),
  *       StartTimeOffset: "STRING_VALUE",
  *       EndTimeOffset: "STRING_VALUE",
+ *       ExcludeFeaturesAttribute: "STRING_VALUE",
  *     },
  *     GroundTruthS3Input: { // MonitoringGroundTruthS3Input
  *       S3Uri: "STRING_VALUE",
@@ -228,6 +232,10 @@ export class CreateModelQualityJobDefinitionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "CreateModelQualityJobDefinition",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

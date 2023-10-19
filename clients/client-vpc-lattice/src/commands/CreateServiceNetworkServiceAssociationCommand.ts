@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -89,6 +90,9 @@ export interface CreateServiceNetworkServiceAssociationCommandOutput
  * @see {@link CreateServiceNetworkServiceAssociationCommandOutput} for command's `response` shape.
  * @see {@link VPCLatticeClientResolvedConfig | config} for VPCLatticeClient's `config` shape.
  *
+ * @throws {@link AccessDeniedException} (client fault)
+ *  <p>The user does not have sufficient access to perform this action.</p>
+ *
  * @throws {@link ConflictException} (client fault)
  *  <p>The request conflicts with the current state of the resource. Updating or deleting a
  *    resource can cause an inconsistent state.</p>
@@ -163,6 +167,10 @@ export class CreateServiceNetworkServiceAssociationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MercuryControlPlane",
+        operation: "CreateServiceNetworkServiceAssociation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

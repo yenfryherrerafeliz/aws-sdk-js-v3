@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ComputeOptimizerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ComputeOptimizerClient";
@@ -56,7 +57,7 @@ export interface GetRecommendationPreferencesCommandOutput
  * // const { ComputeOptimizerClient, GetRecommendationPreferencesCommand } = require("@aws-sdk/client-compute-optimizer"); // CommonJS import
  * const client = new ComputeOptimizerClient(config);
  * const input = { // GetRecommendationPreferencesRequest
- *   resourceType: "Ec2Instance" || "AutoScalingGroup" || "EbsVolume" || "LambdaFunction" || "NotApplicable" || "EcsService", // required
+ *   resourceType: "Ec2Instance" || "AutoScalingGroup" || "EbsVolume" || "LambdaFunction" || "NotApplicable" || "EcsService" || "License", // required
  *   scope: { // Scope
  *     name: "Organization" || "AccountId" || "ResourceArn",
  *     value: "STRING_VALUE",
@@ -74,7 +75,7 @@ export interface GetRecommendationPreferencesCommandOutput
  * //         name: "Organization" || "AccountId" || "ResourceArn",
  * //         value: "STRING_VALUE",
  * //       },
- * //       resourceType: "Ec2Instance" || "AutoScalingGroup" || "EbsVolume" || "LambdaFunction" || "NotApplicable" || "EcsService",
+ * //       resourceType: "Ec2Instance" || "AutoScalingGroup" || "EbsVolume" || "LambdaFunction" || "NotApplicable" || "EcsService" || "License",
  * //       enhancedInfrastructureMetrics: "Active" || "Inactive",
  * //       inferredWorkloadTypes: "Active" || "Inactive",
  * //       externalMetricsPreference: { // ExternalMetricsPreference
@@ -171,6 +172,10 @@ export class GetRecommendationPreferencesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ComputeOptimizerService",
+        operation: "GetRecommendationPreferences",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

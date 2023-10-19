@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DeleteProjectRequest, DeleteProjectResponse } from "../models/models_0";
@@ -36,8 +37,8 @@ export interface DeleteProjectCommandOutput extends DeleteProjectResponse, __Met
 
 /**
  * @public
- * <p>Deletes an Amazon Rekognition Custom Labels project.  To delete a project you must first delete all models associated
- *          with the project. To delete a model, see <a>DeleteProjectVersion</a>.</p>
+ * <p>Deletes a Amazon Rekognition project. To delete a project you must first delete all models or
+ *          adapters associated with the project. To delete a model or adapter, see <a>DeleteProjectVersion</a>.</p>
  *          <p>
  *             <code>DeleteProject</code> is an asynchronous operation. To check if the project is
  *          deleted, call <a>DescribeProjects</a>. The project is deleted when the project
@@ -159,6 +160,10 @@ export class DeleteProjectCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RekognitionService",
+        operation: "DeleteProject",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

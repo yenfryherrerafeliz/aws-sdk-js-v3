@@ -1,7 +1,7 @@
 // smithy-typescript generated code
 import { SENSITIVE_STRING } from "@smithy/smithy-client";
 
-import { ResourceStatus } from "./models_0";
+import { AccountCustomization, ResourceStatus } from "./models_0";
 import { AnalysisDefinition, AnalysisSourceEntity } from "./models_1";
 import {
   _Parameters,
@@ -28,6 +28,7 @@ import {
   RowLevelPermissionTagConfiguration,
   RowLevelPermissionTagConfigurationFilterSensitiveLog,
   SslProperties,
+  Tag,
   TemplateAlias,
   TemplateSourceEntity,
   TemplateVersionDefinition,
@@ -35,11 +36,261 @@ import {
   ThemeConfiguration,
   TopicDetails,
   TopicRefreshSchedule,
+  ValidationStrategy,
   VPCConnectionAvailabilityStatus,
   VpcConnectionProperties,
   VPCConnectionResourceStatus,
 } from "./models_2";
-import { LinkSharingConfiguration, User, UserRole } from "./models_3";
+import { LinkSharingConfiguration, SnapshotAnonymousUser, SnapshotConfiguration, User, UserRole } from "./models_3";
+
+/**
+ * @public
+ * <p>A structure that contains information about the users that the dashboard snapshot is generated for.</p>
+ */
+export interface SnapshotUserConfiguration {
+  /**
+   * @public
+   * <p>An array of records that describe the anonymous users that the dashboard snapshot is generated for.</p>
+   */
+  AnonymousUsers?: SnapshotAnonymousUser[];
+}
+
+/**
+ * @public
+ */
+export interface StartDashboardSnapshotJobRequest {
+  /**
+   * @public
+   * <p>The ID of the Amazon Web Services account that the dashboard snapshot job is executed in.</p>
+   */
+  AwsAccountId: string | undefined;
+
+  /**
+   * @public
+   * <p>The ID of the dashboard that you want to start a snapshot job for.
+   *         </p>
+   */
+  DashboardId: string | undefined;
+
+  /**
+   * @public
+   * <p>An ID for the dashboard snapshot job. This ID is unique to the dashboard while the job is running. This ID can be used to poll the status of a job with a <code>DescribeDashboardSnapshotJob</code> while the job runs. You can reuse this ID for another job 24 hours after the current job is completed.</p>
+   */
+  SnapshotJobId: string | undefined;
+
+  /**
+   * @public
+   * <p>
+   *             A structure that contains information about the anonymous users that the generated snapshot is for. This API will not return information about registered Amazon QuickSight.</p>
+   */
+  UserConfiguration: SnapshotUserConfiguration | undefined;
+
+  /**
+   * @public
+   * <p>A structure that describes the configuration of the dashboard snapshot.</p>
+   */
+  SnapshotConfiguration: SnapshotConfiguration | undefined;
+}
+
+/**
+ * @public
+ */
+export interface StartDashboardSnapshotJobResponse {
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) for the dashboard snapshot job.</p>
+   */
+  Arn?: string;
+
+  /**
+   * @public
+   * <p>The ID of the job. The job ID is set when you start a new job with a <code>StartDashboardSnapshotJob</code> API call.</p>
+   */
+  SnapshotJobId?: string;
+
+  /**
+   * @public
+   * <p>
+   *             The Amazon Web Services request ID for this operation.
+   *         </p>
+   */
+  RequestId?: string;
+
+  /**
+   * @public
+   * <p>The HTTP status of the request</p>
+   */
+  Status?: number;
+}
+
+/**
+ * @public
+ */
+export interface TagResourceRequest {
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the resource that you want to tag.</p>
+   */
+  ResourceArn: string | undefined;
+
+  /**
+   * @public
+   * <p>Contains a map of the key-value pairs for the resource tag or tags assigned to the resource.</p>
+   */
+  Tags: Tag[] | undefined;
+}
+
+/**
+ * @public
+ */
+export interface TagResourceResponse {
+  /**
+   * @public
+   * <p>The Amazon Web Services request ID for this operation.</p>
+   */
+  RequestId?: string;
+
+  /**
+   * @public
+   * <p>The HTTP status of the request.</p>
+   */
+  Status?: number;
+}
+
+/**
+ * @public
+ */
+export interface UntagResourceRequest {
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the resource that you want to untag.</p>
+   */
+  ResourceArn: string | undefined;
+
+  /**
+   * @public
+   * <p>The keys of the key-value pairs for the resource tag or tags assigned to the resource.</p>
+   */
+  TagKeys: string[] | undefined;
+}
+
+/**
+ * @public
+ */
+export interface UntagResourceResponse {
+  /**
+   * @public
+   * <p>The Amazon Web Services request ID for this operation.</p>
+   */
+  RequestId?: string;
+
+  /**
+   * @public
+   * <p>The HTTP status of the request.</p>
+   */
+  Status?: number;
+}
+
+/**
+ * @public
+ */
+export interface UpdateAccountCustomizationRequest {
+  /**
+   * @public
+   * <p>The ID for the Amazon Web Services account that you want to update Amazon QuickSight customizations
+   *             for.</p>
+   */
+  AwsAccountId: string | undefined;
+
+  /**
+   * @public
+   * <p>The namespace that you want to update Amazon QuickSight customizations for.</p>
+   */
+  Namespace?: string;
+
+  /**
+   * @public
+   * <p>The Amazon QuickSight customizations you're updating in the current Amazon Web Services Region. </p>
+   */
+  AccountCustomization: AccountCustomization | undefined;
+}
+
+/**
+ * @public
+ */
+export interface UpdateAccountCustomizationResponse {
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) for the updated customization for this Amazon Web Services account.</p>
+   */
+  Arn?: string;
+
+  /**
+   * @public
+   * <p>The ID for the Amazon Web Services account that you want to update Amazon QuickSight customizations
+   *             for.</p>
+   */
+  AwsAccountId?: string;
+
+  /**
+   * @public
+   * <p>The namespace associated with the customization that you're updating.</p>
+   */
+  Namespace?: string;
+
+  /**
+   * @public
+   * <p>The Amazon QuickSight customizations you're updating in the current Amazon Web Services Region. </p>
+   */
+  AccountCustomization?: AccountCustomization;
+
+  /**
+   * @public
+   * <p>The Amazon Web Services request ID for this operation.</p>
+   */
+  RequestId?: string;
+
+  /**
+   * @public
+   * <p>The HTTP status of the request.</p>
+   */
+  Status?: number;
+}
+
+/**
+ * @public
+ */
+export interface UpdateAccountSettingsRequest {
+  /**
+   * @public
+   * <p>The ID for the Amazon Web Services account that contains the Amazon QuickSight settings that you want to
+   *             list.</p>
+   */
+  AwsAccountId: string | undefined;
+
+  /**
+   * @public
+   * <p>The default namespace for this Amazon Web Services account. Currently, the default is
+   *                 <code>default</code>. IAM users that
+   *             register for the first time with Amazon QuickSight provide an email address that becomes
+   *             associated with the default namespace.
+   *         </p>
+   */
+  DefaultNamespace: string | undefined;
+
+  /**
+   * @public
+   * <p>The email address that you want Amazon QuickSight to send notifications to regarding your
+   *             Amazon Web Services account or Amazon QuickSight subscription.</p>
+   */
+  NotificationEmail?: string;
+
+  /**
+   * @public
+   * <p>A boolean value that determines whether or not an Amazon QuickSight account can be deleted. A <code>True</code> value doesn't allow the account to be deleted and results in an error message if a user tries to make a <code>DeleteAccountSubscription</code> request. A <code>False</code> value will allow the account to be deleted.</p>
+   */
+  TerminationProtectionEnabled?: boolean;
+}
 
 /**
  * @public
@@ -110,6 +361,12 @@ export interface UpdateAnalysisRequest {
    *          <p>A definition is the data model of all features in a Dashboard, Template, or Analysis.</p>
    */
   Definition?: AnalysisDefinition;
+
+  /**
+   * @public
+   * <p>The option to relax the validation needed to update an analysis with definition objects. This skips the validation step for specific errors.</p>
+   */
+  ValidationStrategy?: ValidationStrategy;
 }
 
 /**
@@ -132,7 +389,7 @@ export interface UpdateAnalysisResponse {
    * @public
    * <p>The update status of the last update that was made to the analysis.</p>
    */
-  UpdateStatus?: ResourceStatus | string;
+  UpdateStatus?: ResourceStatus;
 
   /**
    * @public
@@ -315,6 +572,12 @@ export interface UpdateDashboardRequest {
    *          <p>A definition is the data model of all features in a Dashboard, Template, or Analysis.</p>
    */
   Definition?: DashboardVersionDefinition;
+
+  /**
+   * @public
+   * <p>The option to relax the validation needed to update a dashboard with definition objects. This skips the validation step for specific errors.</p>
+   */
+  ValidationStrategy?: ValidationStrategy;
 }
 
 /**
@@ -343,7 +606,7 @@ export interface UpdateDashboardResponse {
    * @public
    * <p>The creation status of the request.</p>
    */
-  CreationStatus?: ResourceStatus | string;
+  CreationStatus?: ResourceStatus;
 
   /**
    * @public
@@ -533,7 +796,7 @@ export interface UpdateDataSetRequest {
    * @public
    * <p>Indicates whether you want to import the data into SPICE.</p>
    */
-  ImportMode: DataSetImportMode | string | undefined;
+  ImportMode: DataSetImportMode | undefined;
 
   /**
    * @public
@@ -753,7 +1016,7 @@ export interface UpdateDataSourceResponse {
    * @public
    * <p>The update status of the data source's last update.</p>
    */
-  UpdateStatus?: ResourceStatus | string;
+  UpdateStatus?: ResourceStatus;
 
   /**
    * @public
@@ -1042,7 +1305,7 @@ export interface UpdateIAMPolicyAssignmentRequest {
    *             </li>
    *          </ul>
    */
-  AssignmentStatus?: AssignmentStatus | string;
+  AssignmentStatus?: AssignmentStatus;
 
   /**
    * @public
@@ -1110,7 +1373,7 @@ export interface UpdateIAMPolicyAssignmentResponse {
    *             </li>
    *          </ul>
    */
-  AssignmentStatus?: AssignmentStatus | string;
+  AssignmentStatus?: AssignmentStatus;
 
   /**
    * @public
@@ -1309,6 +1572,12 @@ export interface UpdateTemplateRequest {
    *          <p>A definition is the data model of all features in a Dashboard, Template, or Analysis.</p>
    */
   Definition?: TemplateVersionDefinition;
+
+  /**
+   * @public
+   * <p>The option to relax the validation needed to update a template with definition objects. This skips the validation step for specific errors.</p>
+   */
+  ValidationStrategy?: ValidationStrategy;
 }
 
 /**
@@ -1337,7 +1606,7 @@ export interface UpdateTemplateResponse {
    * @public
    * <p>The creation status of the template.</p>
    */
-  CreationStatus?: ResourceStatus | string;
+  CreationStatus?: ResourceStatus;
 
   /**
    * @public
@@ -1541,7 +1810,7 @@ export interface UpdateThemeResponse {
    * @public
    * <p>The creation status of the theme.</p>
    */
-  CreationStatus?: ResourceStatus | string;
+  CreationStatus?: ResourceStatus;
 
   /**
    * @public
@@ -1913,7 +2182,7 @@ export interface UpdateUserRequest {
    *          <p>The name of the Amazon QuickSight role is invisible to the user except for the console
    * 	        screens dealing with permissions.</p>
    */
-  Role: UserRole | string | undefined;
+  Role: UserRole | undefined;
 
   /**
    * @public
@@ -2086,13 +2355,13 @@ export interface UpdateVPCConnectionResponse {
    * @public
    * <p>The update status of the VPC connection's last update.</p>
    */
-  UpdateStatus?: VPCConnectionResourceStatus | string;
+  UpdateStatus?: VPCConnectionResourceStatus;
 
   /**
    * @public
    * <p>The availability status of the VPC connection.</p>
    */
-  AvailabilityStatus?: VPCConnectionAvailabilityStatus | string;
+  AvailabilityStatus?: VPCConnectionAvailabilityStatus;
 
   /**
    * @public
@@ -2106,6 +2375,20 @@ export interface UpdateVPCConnectionResponse {
    */
   Status?: number;
 }
+
+/**
+ * @internal
+ */
+export const SnapshotUserConfigurationFilterSensitiveLog = (obj: SnapshotUserConfiguration): any => ({
+  ...obj,
+});
+
+/**
+ * @internal
+ */
+export const StartDashboardSnapshotJobRequestFilterSensitiveLog = (obj: StartDashboardSnapshotJobRequest): any => ({
+  ...obj,
+});
 
 /**
  * @internal

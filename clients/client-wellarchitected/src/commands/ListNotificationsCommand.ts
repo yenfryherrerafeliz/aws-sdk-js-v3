@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListNotificationsInput, ListNotificationsOutput } from "../models/models_0";
@@ -47,6 +48,7 @@ export interface ListNotificationsCommandOutput extends ListNotificationsOutput,
  *   WorkloadId: "STRING_VALUE",
  *   NextToken: "STRING_VALUE",
  *   MaxResults: Number("int"),
+ *   ResourceArn: "STRING_VALUE",
  * };
  * const command = new ListNotificationsCommand(input);
  * const response = await client.send(command);
@@ -61,6 +63,8 @@ export interface ListNotificationsCommandOutput extends ListNotificationsOutput,
  * //         LensArn: "STRING_VALUE",
  * //         CurrentLensVersion: "STRING_VALUE",
  * //         LatestLensVersion: "STRING_VALUE",
+ * //         ResourceArn: "STRING_VALUE",
+ * //         ResourceName: "STRING_VALUE",
  * //       },
  * //     },
  * //   ],
@@ -141,6 +145,10 @@ export class ListNotificationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WellArchitectedApiServiceLambda",
+        operation: "ListNotifications",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

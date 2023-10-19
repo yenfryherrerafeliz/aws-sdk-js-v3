@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -104,6 +105,39 @@ export interface DescribeMetadataModelExportsToTargetCommandOutput
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
  *
+ * @example Describe Metadata Model Exports To Target
+ * ```javascript
+ * // Returns a paginated list of metadata model exports.
+ * const input = {
+ *   "Filters": [
+ *     {
+ *       "Name": "request-id",
+ *       "Values": [
+ *         "01234567-89ab-cdef-0123-456789abcdef"
+ *       ]
+ *     }
+ *   ],
+ *   "Marker": "0123456789abcdefghijklmnopqrs",
+ *   "MaxRecords": 20,
+ *   "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+ * };
+ * const command = new DescribeMetadataModelExportsToTargetCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "Marker": "0123456789abcdefghijklmnopqrs",
+ *   "Requests": [
+ *     {
+ *       "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+ *       "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef",
+ *       "Status": "SUCCESS"
+ *     }
+ *   ]
+ * }
+ * *\/
+ * // example id: describe-metadata-model-exports-to-target-1689719484750
+ * ```
+ *
  */
 export class DescribeMetadataModelExportsToTargetCommand extends $Command<
   DescribeMetadataModelExportsToTargetCommandInput,
@@ -155,6 +189,10 @@ export class DescribeMetadataModelExportsToTargetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "DescribeMetadataModelExportsToTarget",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

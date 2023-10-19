@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
@@ -44,8 +45,12 @@ export interface RevokeSecurityGroupIngressCommandOutput extends RevokeSecurityG
  *            destination port or range of ports. For the ICMP protocol, you must also specify the ICMP type
  *            and code. If the security group rule has a description, you do not need to specify the description
  *            to revoke the rule.</p>
- *          <p>For a default VPC, if the values you specify do not match the existing rule's values, no error is
- *            returned, and the output describes the security group rules that were not revoked.</p>
+ *          <p>For a default VPC, if the values you specify do not match the existing rule's values,
+ *             no error is returned, and the output describes the security group rules that were not
+ *             revoked.</p>
+ *          <p>For a non-default VPC, if the values you specify do not match the existing rule's
+ *             values, an <code>InvalidPermission.NotFound</code> client error is returned, and no
+ *             rules are revoked.</p>
  *          <p>Amazon Web Services recommends that you describe the security group to verify that the rules were removed.</p>
  *          <p>Rule changes are propagated to instances within the security group as quickly as possible.
  *          However, a small delay might occur.</p>
@@ -209,6 +214,10 @@ export class RevokeSecurityGroupIngressCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2",
+        operation: "RevokeSecurityGroupIngress",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

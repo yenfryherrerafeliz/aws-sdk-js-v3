@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutMetricsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutMetricsClient";
@@ -54,7 +55,7 @@ export interface GetSampleDataCommandOutput extends GetSampleDataResponse, __Met
  *     ],
  *     FileFormatDescriptor: { // FileFormatDescriptor
  *       CsvFormatDescriptor: { // CsvFormatDescriptor
- *         FileCompression: "STRING_VALUE",
+ *         FileCompression: "NONE" || "GZIP",
  *         Charset: "STRING_VALUE",
  *         ContainsHeader: true || false,
  *         Delimiter: "STRING_VALUE",
@@ -64,7 +65,7 @@ export interface GetSampleDataCommandOutput extends GetSampleDataResponse, __Met
  *         QuoteSymbol: "STRING_VALUE",
  *       },
  *       JsonFormatDescriptor: { // JsonFormatDescriptor
- *         FileCompression: "STRING_VALUE",
+ *         FileCompression: "NONE" || "GZIP",
  *         Charset: "STRING_VALUE",
  *       },
  *     },
@@ -159,6 +160,10 @@ export class GetSampleDataCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutMetrics",
+        operation: "GetSampleData",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

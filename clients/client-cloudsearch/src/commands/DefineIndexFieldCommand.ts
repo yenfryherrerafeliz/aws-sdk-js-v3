@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudSearchClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudSearchClient";
@@ -47,7 +48,7 @@ export interface DefineIndexFieldCommandOutput extends DefineIndexFieldResponse,
  *   DomainName: "STRING_VALUE", // required
  *   IndexField: { // IndexField
  *     IndexFieldName: "STRING_VALUE", // required
- *     IndexFieldType: "STRING_VALUE", // required
+ *     IndexFieldType: "int" || "double" || "literal" || "text" || "date" || "latlon" || "int-array" || "double-array" || "literal-array" || "text-array" || "date-array", // required
  *     IntOptions: { // IntOptions
  *       DefaultValue: Number("long"),
  *       SourceField: "STRING_VALUE",
@@ -139,7 +140,7 @@ export interface DefineIndexFieldCommandOutput extends DefineIndexFieldResponse,
  * //   IndexField: { // IndexFieldStatus
  * //     Options: { // IndexField
  * //       IndexFieldName: "STRING_VALUE", // required
- * //       IndexFieldType: "STRING_VALUE", // required
+ * //       IndexFieldType: "int" || "double" || "literal" || "text" || "date" || "latlon" || "int-array" || "double-array" || "literal-array" || "text-array" || "date-array", // required
  * //       IntOptions: { // IntOptions
  * //         DefaultValue: Number("long"),
  * //         SourceField: "STRING_VALUE",
@@ -228,7 +229,7 @@ export interface DefineIndexFieldCommandOutput extends DefineIndexFieldResponse,
  * //       CreationDate: new Date("TIMESTAMP"), // required
  * //       UpdateDate: new Date("TIMESTAMP"), // required
  * //       UpdateVersion: Number("int"),
- * //       State: "STRING_VALUE", // required
+ * //       State: "RequiresIndexDocuments" || "Processing" || "Active" || "FailedToValidate", // required
  * //       PendingDeletion: true || false,
  * //     },
  * //   },
@@ -315,6 +316,10 @@ export class DefineIndexFieldCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "A9SearchCloudConfigService2013",
+        operation: "DefineIndexField",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

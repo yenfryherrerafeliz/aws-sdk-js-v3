@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -38,10 +39,8 @@ export interface RemoveTargetsCommandOutput extends RemoveTargetsResponse, __Met
  * @public
  * <p>Removes the specified targets from the specified rule. When the rule is triggered, those
  *       targets are no longer be invoked.</p>
- *
  *          <p>When you remove a target, when the associated rule triggers, removed targets might
  *       continue to be invoked. Allow a short period of time for changes to take effect.</p>
- *
  *          <p>This action can partially fail if too many requests are made at the same time. If that
  *       happens, <code>FailedEntryCount</code> is non-zero in the response and each entry in
  *         <code>FailedEntries</code> provides the ID of the failed target and the error code.</p>
@@ -149,6 +148,10 @@ export class RemoveTargetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "RemoveTargets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

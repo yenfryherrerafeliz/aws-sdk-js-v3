@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateFeatureGroupRequest, UpdateFeatureGroupResponse } from "../models/models_4";
@@ -60,6 +61,12 @@ export interface UpdateFeatureGroupCommandOutput extends UpdateFeatureGroupRespo
  *     { // FeatureDefinition
  *       FeatureName: "STRING_VALUE",
  *       FeatureType: "Integral" || "Fractional" || "String",
+ *       CollectionType: "List" || "Set" || "Vector",
+ *       CollectionConfig: { // CollectionConfig Union: only one key present
+ *         VectorConfig: { // VectorConfig
+ *           Dimension: Number("int"), // required
+ *         },
+ *       },
  *     },
  *   ],
  *   OnlineStoreConfig: { // OnlineStoreConfigUpdate
@@ -140,6 +147,10 @@ export class UpdateFeatureGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "UpdateFeatureGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

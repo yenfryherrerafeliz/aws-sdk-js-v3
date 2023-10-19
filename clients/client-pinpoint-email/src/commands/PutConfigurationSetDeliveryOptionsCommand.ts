@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -54,7 +55,7 @@ export interface PutConfigurationSetDeliveryOptionsCommandOutput
  * const client = new PinpointEmailClient(config);
  * const input = { // PutConfigurationSetDeliveryOptionsRequest
  *   ConfigurationSetName: "STRING_VALUE", // required
- *   TlsPolicy: "STRING_VALUE",
+ *   TlsPolicy: "REQUIRE" || "OPTIONAL",
  *   SendingPoolName: "STRING_VALUE",
  * };
  * const command = new PutConfigurationSetDeliveryOptionsCommand(input);
@@ -132,6 +133,10 @@ export class PutConfigurationSetDeliveryOptionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonPinpointEmailService",
+        operation: "PutConfigurationSetDeliveryOptions",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

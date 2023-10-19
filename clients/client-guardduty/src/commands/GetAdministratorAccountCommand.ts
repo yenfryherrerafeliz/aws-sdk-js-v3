@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GuardDutyClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GuardDutyClient";
@@ -36,8 +37,12 @@ export interface GetAdministratorAccountCommandOutput extends GetAdministratorAc
 
 /**
  * @public
- * <p>Provides the details for the GuardDuty administrator account associated with the current
+ * <p>Provides the details of the GuardDuty administrator account associated with the current
  *       GuardDuty member account.</p>
+ *          <note>
+ *             <p>If the organization's management account or a delegated administrator runs this API,
+ *     it will return success (<code>HTTP 200</code>) but no content.</p>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -126,6 +131,10 @@ export class GetAdministratorAccountCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "GuardDutyAPIService",
+        operation: "GetAdministratorAccount",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

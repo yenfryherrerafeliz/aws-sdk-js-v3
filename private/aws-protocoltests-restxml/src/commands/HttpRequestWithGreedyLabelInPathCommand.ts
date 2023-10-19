@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { HttpRequestWithGreedyLabelInPathInput } from "../models/models_0";
@@ -36,6 +37,35 @@ export interface HttpRequestWithGreedyLabelInPathCommandInput extends HttpReques
  */
 export interface HttpRequestWithGreedyLabelInPathCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestXmlProtocolClient, HttpRequestWithGreedyLabelInPathCommand } from "@aws-sdk/aws-protocoltests-restxml"; // ES Modules import
+ * // const { RestXmlProtocolClient, HttpRequestWithGreedyLabelInPathCommand } = require("@aws-sdk/aws-protocoltests-restxml"); // CommonJS import
+ * const client = new RestXmlProtocolClient(config);
+ * const input = { // HttpRequestWithGreedyLabelInPathInput
+ *   foo: "STRING_VALUE", // required
+ *   baz: "STRING_VALUE", // required
+ * };
+ * const command = new HttpRequestWithGreedyLabelInPathCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param HttpRequestWithGreedyLabelInPathCommandInput - {@link HttpRequestWithGreedyLabelInPathCommandInput}
+ * @returns {@link HttpRequestWithGreedyLabelInPathCommandOutput}
+ * @see {@link HttpRequestWithGreedyLabelInPathCommandInput} for command's `input` shape.
+ * @see {@link HttpRequestWithGreedyLabelInPathCommandOutput} for command's `response` shape.
+ * @see {@link RestXmlProtocolClientResolvedConfig | config} for RestXmlProtocolClient's `config` shape.
+ *
+ * @throws {@link RestXmlProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestXmlProtocol service.</p>
+ *
+ */
 export class HttpRequestWithGreedyLabelInPathCommand extends $Command<
   HttpRequestWithGreedyLabelInPathCommandInput,
   HttpRequestWithGreedyLabelInPathCommandOutput,
@@ -74,6 +104,10 @@ export class HttpRequestWithGreedyLabelInPathCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestXml",
+        operation: "HttpRequestWithGreedyLabelInPath",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

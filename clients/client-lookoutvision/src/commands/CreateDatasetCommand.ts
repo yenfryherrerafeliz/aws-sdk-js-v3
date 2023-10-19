@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutVisionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutVisionClient";
@@ -40,11 +41,11 @@ export interface CreateDatasetCommandOutput extends CreateDatasetResponse, __Met
  *       training or a test dataset from a valid dataset source (<code>DatasetSource</code>).</p>
  *          <p>If you want a single dataset project, specify <code>train</code> for the value of
  *          <code>DatasetType</code>.</p>
- *         <p>To have a project with separate training and test datasets, call <code>CreateDataset</code> twice.
+ *          <p>To have a project with separate training and test datasets, call <code>CreateDataset</code> twice.
  *            On the first call, specify <code>train</code> for the value of
  *            <code>DatasetType</code>. On the second call, specify <code>test</code> for the value of
  *            <code>DatasetType</code>. </p>
- *         <p>This operation requires permissions to perform the
+ *          <p>This operation requires permissions to perform the
  *            <code>lookoutvision:CreateDataset</code> operation.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -160,6 +161,10 @@ export class CreateDatasetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutVisionService",
+        operation: "CreateDataset",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

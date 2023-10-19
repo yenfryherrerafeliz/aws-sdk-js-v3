@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DeleteGatewayInput, DeleteGatewayOutput } from "../models/models_0";
@@ -39,12 +40,10 @@ export interface DeleteGatewayCommandOutput extends DeleteGatewayOutput, __Metad
  * <p>Deletes a gateway. To specify which gateway to delete, use the Amazon Resource Name
  *          (ARN) of the gateway in your request. The operation deletes the gateway; however, it does
  *          not delete the gateway virtual machine (VM) from your host computer.</p>
- *
  *          <p>After you delete a gateway, you cannot reactivate it. Completed snapshots of the gateway
  *          volumes are not deleted upon deleting the gateway, however, pending snapshots will not
  *          complete. After you delete a gateway, your next step is to remove it from your
  *          environment.</p>
- *
  *          <important>
  *             <p>You no longer pay software charges after the gateway is deleted; however, your
  *             existing Amazon EBS snapshots persist and you will continue to be billed for these
@@ -153,6 +152,10 @@ export class DeleteGatewayCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "DeleteGateway",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

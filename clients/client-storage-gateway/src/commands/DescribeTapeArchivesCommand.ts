@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeTapeArchivesInput, DescribeTapeArchivesOutput } from "../models/models_0";
@@ -38,7 +39,6 @@ export interface DescribeTapeArchivesCommandOutput extends DescribeTapeArchivesO
  * @public
  * <p>Returns a description of specified virtual tapes in the virtual tape shelf (VTS). This
  *          operation is only supported in the tape gateway type.</p>
- *
  *          <p>If a specific <code>TapeARN</code> is not specified, Storage Gateway returns a
  *          description of all virtual tapes found in the VTS associated with your account.</p>
  * @example
@@ -184,6 +184,10 @@ export class DescribeTapeArchivesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "DescribeTapeArchives",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -40,7 +40,7 @@ export interface ApiKeyFilter {
    * @public
    * <p>Filter on <code>Active</code> or <code>Expired</code> API keys.</p>
    */
-  KeyStatus?: Status | string;
+  KeyStatus?: Status;
 }
 
 /**
@@ -437,7 +437,7 @@ export class ValidationException extends __BaseException {
    * @public
    * <p>A message with the reason for the validation exception error.</p>
    */
-  Reason: ValidationExceptionReason | string | undefined;
+  Reason: ValidationExceptionReason | undefined;
 
   /**
    * @public
@@ -830,7 +830,7 @@ export interface BatchItemError {
    * @public
    * <p>The error code associated with the batch request error.</p>
    */
-  Code?: BatchItemErrorCode | string;
+  Code?: BatchItemErrorCode;
 
   /**
    * @public
@@ -1463,7 +1463,7 @@ export interface TruckDimensions {
    *          <p>Default Value: <code>Meters</code>
    *          </p>
    */
-  Unit?: DimensionUnit | string;
+  Unit?: DimensionUnit;
 }
 
 /**
@@ -1495,7 +1495,7 @@ export interface TruckWeight {
    *          <p>Default Value: <code>Kilograms</code>
    *          </p>
    */
-  Unit?: VehicleWeightUnit | string;
+  Unit?: VehicleWeightUnit;
 }
 
 /**
@@ -1649,7 +1649,7 @@ export interface CalculateRouteRequest {
    *          <p>Default Value: <code>Car</code>
    *          </p>
    */
-  TravelMode?: TravelMode | string;
+  TravelMode?: TravelMode;
 
   /**
    * @public
@@ -1689,7 +1689,7 @@ export interface CalculateRouteRequest {
    *          <p>Default Value: <code>Kilometers</code>
    *          </p>
    */
-  DistanceUnit?: DistanceUnit | string;
+  DistanceUnit?: DistanceUnit;
 
   /**
    * @public
@@ -1966,7 +1966,7 @@ export interface CalculateRouteSummary {
    * @public
    * <p>The unit of measurement for route distances.</p>
    */
-  DistanceUnit: DistanceUnit | string | undefined;
+  DistanceUnit: DistanceUnit | undefined;
 }
 
 /**
@@ -2100,7 +2100,7 @@ export interface CalculateRouteMatrixRequest {
    *          <p>Default Value: <code>Car</code>
    *          </p>
    */
-  TravelMode?: TravelMode | string;
+  TravelMode?: TravelMode;
 
   /**
    * @public
@@ -2142,7 +2142,7 @@ export interface CalculateRouteMatrixRequest {
    *          <p>Default Value: <code>Kilometers</code>
    *          </p>
    */
-  DistanceUnit?: DistanceUnit | string;
+  DistanceUnit?: DistanceUnit;
 
   /**
    * @public
@@ -2235,7 +2235,7 @@ export interface RouteMatrixEntryError {
    * @public
    * <p>The type of error which occurred for the route calculation.</p>
    */
-  Code: RouteMatrixErrorCode | string | undefined;
+  Code: RouteMatrixErrorCode | undefined;
 
   /**
    * @public
@@ -2320,7 +2320,7 @@ export interface CalculateRouteMatrixSummary {
    * @public
    * <p>The unit of measurement for route distances.</p>
    */
-  DistanceUnit: DistanceUnit | string | undefined;
+  DistanceUnit: DistanceUnit | undefined;
 }
 
 /**
@@ -2398,7 +2398,7 @@ export interface CreateGeofenceCollectionRequest {
    * <p>No longer used. If included, the only allowed value is
    *             <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -2691,7 +2691,7 @@ export interface CreateMapRequest {
    * <p>No longer used. If included, the only allowed value is
    *             <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -2808,7 +2808,7 @@ export interface DataSourceConfiguration {
    *          <p>Default value: <code>SingleUse</code>
    *          </p>
    */
-  IntendedUse?: IntendedUse | string;
+  IntendedUse?: IntendedUse;
 }
 
 /**
@@ -2876,7 +2876,7 @@ export interface CreatePlaceIndexRequest {
    * <p>No longer used. If included, the only allowed value is
    *             <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -3017,7 +3017,7 @@ export interface CreateRouteCalculatorRequest {
    * <p>No longer used. If included, the only allowed value is
    *             <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -3140,7 +3140,7 @@ export interface CreateTrackerRequest {
    * <p>No longer used. If included, the only allowed value is
    *            <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -3229,7 +3229,7 @@ export interface CreateTrackerRequest {
    *          </ul>
    *          <p>This field is optional. If not specified, the default value is <code>TimeBased</code>.</p>
    */
-  PositionFiltering?: PositionFiltering | string;
+  PositionFiltering?: PositionFiltering;
 
   /**
    * @public
@@ -3242,6 +3242,20 @@ export interface CreateTrackerRequest {
    *          </note>
    */
   EventBridgeEnabled?: boolean;
+
+  /**
+   * @public
+   * <p>Enables <code>GeospatialQueries</code> for a tracker that uses a <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Amazon Web Services
+   *             KMS customer managed key</a>.</p>
+   *          <p>This parameter is only used if you are using a KMS customer managed key.</p>
+   *          <note>
+   *             <p>If you wish to encrypt your data using your own KMS customer managed key, then the Bounding Polygon Queries feature will be disabled by default.
+   *                 This is because by using this feature, a representation of your device positions will not be encrypted using the your KMS managed key. The exact device position, however; is still encrypted using your managed key.</p>
+   *             <p>You can choose to opt-in to the Bounding Polygon Quseries feature. This is done by setting the <code>KmsKeyEnableGeospatialQueries</code> parameter to
+   *                 true when creating or updating a Tracker.</p>
+   *          </note>
+   */
+  KmsKeyEnableGeospatialQueries?: boolean;
 }
 
 /**
@@ -3403,7 +3417,7 @@ export interface DescribeGeofenceCollectionResponse {
    *
    * <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -3442,6 +3456,12 @@ export interface DescribeGeofenceCollectionResponse {
    *          </p>
    */
   UpdateTime: Date | undefined;
+
+  /**
+   * @public
+   * <p>The number of geofences in the geofence collection.</p>
+   */
+  GeofenceCount?: number;
 }
 
 /**
@@ -3485,7 +3505,7 @@ export interface DescribeMapResponse {
    *
    * <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -3567,7 +3587,7 @@ export interface DescribePlaceIndexResponse {
    *
    * <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -3667,7 +3687,7 @@ export interface DescribeRouteCalculatorResponse {
    *
    * <p>Always returns <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -3780,7 +3800,7 @@ export interface DescribeTrackerResponse {
    *
    * <p>Always returns <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -3821,7 +3841,7 @@ export interface DescribeTrackerResponse {
    * @public
    * <p>The position filtering method of the tracker resource.</p>
    */
-  PositionFiltering?: PositionFiltering | string;
+  PositionFiltering?: PositionFiltering;
 
   /**
    * @public
@@ -3829,6 +3849,20 @@ export interface DescribeTrackerResponse {
    *             enabled. If set to <code>true</code> these events will be sent to EventBridge.</p>
    */
   EventBridgeEnabled?: boolean;
+
+  /**
+   * @public
+   * <p>Enables <code>GeospatialQueries</code> for a tracker that uses a <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Amazon Web Services
+   *             KMS customer managed key</a>.</p>
+   *          <p>This parameter is only used if you are using a KMS customer managed key.</p>
+   *          <note>
+   *             <p>If you wish to encrypt your data using your own KMS customer managed key, then the Bounding Polygon Queries feature will be disabled by default.
+   *                 This is because by using this feature, a representation of your device positions will not be encrypted using the your KMS managed key. The exact device position, however; is still encrypted using your managed key.</p>
+   *             <p>You can choose to opt-in to the Bounding Polygon Quseries feature. This is done by setting the <code>KmsKeyEnableGeospatialQueries</code> parameter to
+   *                 true when creating or updating a Tracker.</p>
+   *          </note>
+   */
+  KmsKeyEnableGeospatialQueries?: boolean;
 }
 
 /**
@@ -4117,7 +4151,7 @@ export interface ListGeofenceCollectionsResponseEntry {
    *
    * <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -4365,7 +4399,7 @@ export interface UpdateGeofenceCollectionRequest {
    * <p>No longer used. If included, the only allowed value is
    *             <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -4571,7 +4605,7 @@ export interface GetMapGlyphsRequest {
    * @public
    * <p>A comma-separated list of fonts to load glyphs from in order of preference. For
    *             example, <code>Noto Sans Regular, Arial Unicode</code>.</p>
-   *          <p>Valid fonts stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri</a> styles: </p>
+   *          <p>Valid font stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri</a> styles: </p>
    *          <ul>
    *             <li>
    *                <p>VectorEsriDarkGrayCanvas – <code>Ubuntu Medium Italic</code> | <code>Ubuntu
@@ -5105,6 +5139,18 @@ export interface GetPlaceResponse {
 
 /**
  * @public
+ * <p>The geomerty used to filter device positions.</p>
+ */
+export interface TrackingFilterGeometry {
+  /**
+   * @public
+   * <p>The set of arrays which define the polygon. A polygon can have between 4 and 1000 vertices.</p>
+   */
+  Polygon?: number[][][];
+}
+
+/**
+ * @public
  */
 export interface ListDevicePositionsRequest {
   /**
@@ -5129,6 +5175,12 @@ export interface ListDevicePositionsRequest {
    *          </p>
    */
   NextToken?: string;
+
+  /**
+   * @public
+   * <p>The geomerty used to filter device positions.</p>
+   */
+  FilterGeometry?: TrackingFilterGeometry;
 }
 
 /**
@@ -5174,8 +5226,7 @@ export interface ListDevicePositionsResponseEntry {
 export interface ListDevicePositionsResponse {
   /**
    * @public
-   * <p>Contains details about each device's last known position. These details includes the device ID,
-   *             the time when the position was sampled on the device, the time that the service received the update, and the most recent coordinates.</p>
+   * <p>Contains details about each device's last known position.</p>
    */
   Entries: ListDevicePositionsResponseEntry[] | undefined;
 
@@ -5238,7 +5289,7 @@ export interface ListMapsResponseEntry {
    *
    * <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -5341,7 +5392,7 @@ export interface ListPlaceIndexesResponseEntry {
    *
    * <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -5446,7 +5497,7 @@ export interface ListRouteCalculatorsResponseEntry {
    *
    * <p>Always returns <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -5584,7 +5635,7 @@ export interface ListTrackersResponseEntry {
    *
    * <p>Always returns <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -5665,7 +5716,7 @@ export interface UpdateMapRequest {
    * <p>No longer used. If included, the only allowed value is
    *             <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -6410,7 +6461,7 @@ export interface UpdatePlaceIndexRequest {
    * <p>No longer used. If included, the only allowed value is
    *             <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -6474,7 +6525,7 @@ export interface UpdateRouteCalculatorRequest {
    * <p>No longer used. If included, the only allowed value is
    *             <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -6532,7 +6583,7 @@ export interface UpdateTrackerRequest {
    * <p>No longer used. If included, the only allowed value is
    *             <code>RequestBasedUsage</code>.</p>
    */
-  PricingPlan?: PricingPlan | string;
+  PricingPlan?: PricingPlan;
 
   /**
    * @public
@@ -6581,7 +6632,7 @@ export interface UpdateTrackerRequest {
    *             </li>
    *          </ul>
    */
-  PositionFiltering?: PositionFiltering | string;
+  PositionFiltering?: PositionFiltering;
 
   /**
    * @public
@@ -6594,6 +6645,14 @@ export interface UpdateTrackerRequest {
    *          </note>
    */
   EventBridgeEnabled?: boolean;
+
+  /**
+   * @public
+   * <p>Enables <code>GeospatialQueries</code> for a tracker that uses a <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Amazon Web Services
+   *             KMS customer managed key</a>.</p>
+   *          <p>This parameter is only used if you are using a KMS customer managed key.</p>
+   */
+  KmsKeyEnableGeospatialQueries?: boolean;
 }
 
 /**
@@ -6914,6 +6973,22 @@ export const PlaceFilterSensitiveLog = (obj: Place): any => ({
 export const GetPlaceResponseFilterSensitiveLog = (obj: GetPlaceResponse): any => ({
   ...obj,
   ...(obj.Place && { Place: PlaceFilterSensitiveLog(obj.Place) }),
+});
+
+/**
+ * @internal
+ */
+export const TrackingFilterGeometryFilterSensitiveLog = (obj: TrackingFilterGeometry): any => ({
+  ...obj,
+  ...(obj.Polygon && { Polygon: obj.Polygon.map((item) => SENSITIVE_STRING) }),
+});
+
+/**
+ * @internal
+ */
+export const ListDevicePositionsRequestFilterSensitiveLog = (obj: ListDevicePositionsRequest): any => ({
+  ...obj,
+  ...(obj.FilterGeometry && { FilterGeometry: TrackingFilterGeometryFilterSensitiveLog(obj.FilterGeometry) }),
 });
 
 /**

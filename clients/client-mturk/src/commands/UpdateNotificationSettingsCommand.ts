@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateNotificationSettingsRequest, UpdateNotificationSettingsResponse } from "../models/models_0";
@@ -58,10 +59,10 @@ export interface UpdateNotificationSettingsCommandOutput extends UpdateNotificat
  *   HITTypeId: "STRING_VALUE", // required
  *   Notification: { // NotificationSpecification
  *     Destination: "STRING_VALUE", // required
- *     Transport: "STRING_VALUE", // required
+ *     Transport: "Email" || "SQS" || "SNS", // required
  *     Version: "STRING_VALUE", // required
  *     EventTypes: [ // EventTypeList // required
- *       "STRING_VALUE",
+ *       "AssignmentAccepted" || "AssignmentAbandoned" || "AssignmentReturned" || "AssignmentSubmitted" || "AssignmentRejected" || "AssignmentApproved" || "HITCreated" || "HITExpired" || "HITReviewable" || "HITExtended" || "HITDisposed" || "Ping",
  *     ],
  *   },
  *   Active: true || false,
@@ -138,6 +139,10 @@ export class UpdateNotificationSettingsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MTurkRequesterServiceV20170117",
+        operation: "UpdateNotificationSettings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

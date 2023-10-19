@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -68,8 +69,7 @@ export interface SkipWaitTimeForInstanceTerminationCommandOutput extends __Metad
  *  <p>The deployment is already complete.</p>
  *
  * @throws {@link DeploymentDoesNotExistException} (client fault)
- *  <p>The deployment with the IAM user or Amazon Web Services account does not
- *             exist.</p>
+ *  <p>The deployment with the user or Amazon Web Services account does not exist.</p>
  *
  * @throws {@link DeploymentIdRequiredException} (client fault)
  *  <p>At least one deployment ID must be specified.</p>
@@ -137,6 +137,10 @@ export class SkipWaitTimeForInstanceTerminationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "SkipWaitTimeForInstanceTermination",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DeletePackageRequest, DeletePackageResponse } from "../models/models_0";
@@ -53,7 +54,7 @@ export interface DeletePackageCommandOutput extends DeletePackageResponse, __Met
  * //   PackageDetails: { // PackageDetails
  * //     PackageID: "STRING_VALUE",
  * //     PackageName: "STRING_VALUE",
- * //     PackageType: "TXT-DICTIONARY",
+ * //     PackageType: "TXT-DICTIONARY" || "ZIP-PLUGIN",
  * //     PackageDescription: "STRING_VALUE",
  * //     PackageStatus: "COPYING" || "COPY_FAILED" || "VALIDATING" || "VALIDATION_FAILED" || "AVAILABLE" || "DELETING" || "DELETED" || "DELETE_FAILED",
  * //     CreatedAt: new Date("TIMESTAMP"),
@@ -62,6 +63,14 @@ export interface DeletePackageCommandOutput extends DeletePackageResponse, __Met
  * //     ErrorDetails: { // ErrorDetails
  * //       ErrorType: "STRING_VALUE",
  * //       ErrorMessage: "STRING_VALUE",
+ * //     },
+ * //     EngineVersion: "STRING_VALUE",
+ * //     AvailablePluginProperties: { // PluginProperties
+ * //       Name: "STRING_VALUE",
+ * //       Description: "STRING_VALUE",
+ * //       Version: "STRING_VALUE",
+ * //       ClassName: "STRING_VALUE",
+ * //       UncompressedSizeInBytes: Number("long"),
  * //     },
  * //   },
  * // };
@@ -144,6 +153,10 @@ export class DeletePackageCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonOpenSearchService",
+        operation: "DeletePackage",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

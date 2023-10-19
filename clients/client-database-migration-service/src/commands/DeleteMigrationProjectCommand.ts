@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -108,6 +109,48 @@ export interface DeleteMigrationProjectCommandOutput extends DeleteMigrationProj
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
  *
+ * @example Delete Migration Project
+ * ```javascript
+ * // Deletes the specified migration project.
+ * const input = {
+ *   "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+ * };
+ * const command = new DeleteMigrationProjectCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "MigrationProject": {
+ *     "InstanceProfileArn": "arn:aws:dms:us-east-1:012345678901:instance-profile:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+ *     "InstanceProfileName": "my-instance-profile",
+ *     "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+ *     "MigrationProjectCreationTime": "2023-04-19T11:45:15.805253Z",
+ *     "MigrationProjectName": "my-migration-project",
+ *     "SchemaConversionApplicationAttributes": {
+ *       "S3BucketPath": "my-s3-bucket/my_folder",
+ *       "S3BucketRoleArn": "arn:aws:iam::012345678901:role/my-s3role"
+ *     },
+ *     "SourceDataProviderDescriptors": [
+ *       {
+ *         "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+ *         "DataProviderName": "all-source-oracle-12",
+ *         "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/my-access-role",
+ *         "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myuser/ALL.SOURCE.ORACLE_12-0123456"
+ *       }
+ *     ],
+ *     "TargetDataProviderDescriptors": [
+ *       {
+ *         "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+ *         "DataProviderName": "sde-obilyns-dataprovider-3",
+ *         "SecretsManagerAccessRoleArn": "arn:aws:iam::437223687239:role/dmytbon-admin-access",
+ *         "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myuser/TARGET.postgresql-0123456"
+ *       }
+ *     ]
+ *   }
+ * }
+ * *\/
+ * // example id: delete-migration-project-1689717217454
+ * ```
+ *
  */
 export class DeleteMigrationProjectCommand extends $Command<
   DeleteMigrationProjectCommandInput,
@@ -159,6 +202,10 @@ export class DeleteMigrationProjectCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "DeleteMigrationProject",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

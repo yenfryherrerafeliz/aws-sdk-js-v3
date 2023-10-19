@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DrsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DrsClient";
@@ -58,6 +59,10 @@ export interface GetLaunchConfigurationCommandOutput extends LaunchConfiguration
  * //   copyTags: true || false,
  * //   licensing: { // Licensing
  * //     osByol: true || false,
+ * //   },
+ * //   postLaunchEnabled: true || false,
+ * //   launchIntoInstanceProperties: { // LaunchIntoInstanceProperties
+ * //     launchIntoEC2InstanceID: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -135,6 +140,10 @@ export class GetLaunchConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ElasticDisasterRecoveryService",
+        operation: "GetLaunchConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

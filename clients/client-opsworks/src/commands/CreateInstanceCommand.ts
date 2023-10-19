@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateInstanceRequest, CreateInstanceResult } from "../models/models_0";
@@ -55,7 +56,7 @@ export interface CreateInstanceCommandOutput extends CreateInstanceResult, __Met
  *     "STRING_VALUE",
  *   ],
  *   InstanceType: "STRING_VALUE", // required
- *   AutoScalingType: "STRING_VALUE",
+ *   AutoScalingType: "load" || "timer",
  *   Hostname: "STRING_VALUE",
  *   Os: "STRING_VALUE",
  *   AmiId: "STRING_VALUE",
@@ -63,8 +64,8 @@ export interface CreateInstanceCommandOutput extends CreateInstanceResult, __Met
  *   AvailabilityZone: "STRING_VALUE",
  *   VirtualizationType: "STRING_VALUE",
  *   SubnetId: "STRING_VALUE",
- *   Architecture: "STRING_VALUE",
- *   RootDeviceType: "STRING_VALUE",
+ *   Architecture: "x86_64" || "i386",
+ *   RootDeviceType: "ebs" || "instance-store",
  *   BlockDeviceMappings: [ // BlockDeviceMappings
  *     { // BlockDeviceMapping
  *       DeviceName: "STRING_VALUE",
@@ -74,7 +75,7 @@ export interface CreateInstanceCommandOutput extends CreateInstanceResult, __Met
  *         SnapshotId: "STRING_VALUE",
  *         Iops: Number("int"),
  *         VolumeSize: Number("int"),
- *         VolumeType: "STRING_VALUE",
+ *         VolumeType: "gp2" || "io1" || "standard",
  *         DeleteOnTermination: true || false,
  *       },
  *     },
@@ -158,6 +159,10 @@ export class CreateInstanceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OpsWorks_20130218",
+        operation: "CreateInstance",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

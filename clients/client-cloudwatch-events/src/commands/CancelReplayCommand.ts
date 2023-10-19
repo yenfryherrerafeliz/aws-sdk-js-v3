@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -50,7 +51,7 @@ export interface CancelReplayCommandOutput extends CancelReplayResponse, __Metad
  * const response = await client.send(command);
  * // { // CancelReplayResponse
  * //   ReplayArn: "STRING_VALUE",
- * //   State: "STRING_VALUE",
+ * //   State: "STARTING" || "RUNNING" || "CANCELLING" || "COMPLETED" || "CANCELLED" || "FAILED",
  * //   StateReason: "STRING_VALUE",
  * // };
  *
@@ -127,6 +128,10 @@ export class CancelReplayCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "CancelReplay",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,9 +11,14 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { EnableSnapshotCopyMessage, EnableSnapshotCopyResult } from "../models/models_1";
+import {
+  EnableSnapshotCopyMessage,
+  EnableSnapshotCopyResult,
+  EnableSnapshotCopyResultFilterSensitiveLog,
+} from "../models/models_1";
 import { de_EnableSnapshotCopyCommand, se_EnableSnapshotCopyCommand } from "../protocols/Aws_query";
 import { RedshiftClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RedshiftClient";
 
@@ -227,6 +232,8 @@ export interface EnableSnapshotCopyCommandOutput extends EnableSnapshotCopyResul
  * //     CustomDomainName: "STRING_VALUE",
  * //     CustomDomainCertificateArn: "STRING_VALUE",
  * //     CustomDomainCertificateExpiryDate: new Date("TIMESTAMP"),
+ * //     MasterPasswordSecretArn: "STRING_VALUE",
+ * //     MasterPasswordSecretKmsKeyId: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -329,7 +336,11 @@ export class EnableSnapshotCopyCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: EnableSnapshotCopyResultFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RedshiftServiceVersion20121201",
+        operation: "EnableSnapshotCopy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

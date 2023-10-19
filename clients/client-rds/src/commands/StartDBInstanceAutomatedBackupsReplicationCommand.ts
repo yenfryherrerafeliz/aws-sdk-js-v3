@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -102,6 +103,8 @@ export interface StartDBInstanceAutomatedBackupsReplicationCommandOutput
  * //     ],
  * //     BackupTarget: "STRING_VALUE",
  * //     StorageThroughput: Number("int"),
+ * //     AwsBackupRecoveryPointArn: "STRING_VALUE",
+ * //     DedicatedLogVolume: true || false,
  * //   },
  * // };
  *
@@ -229,6 +232,10 @@ export class StartDBInstanceAutomatedBackupsReplicationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "StartDBInstanceAutomatedBackupsReplication",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

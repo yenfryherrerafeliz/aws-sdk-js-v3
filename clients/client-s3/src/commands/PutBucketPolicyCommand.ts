@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { PutBucketPolicyRequest } from "../models/models_0";
@@ -48,10 +49,11 @@ export interface PutBucketPolicyCommandOutput extends __MetadataBearer {}
  *          <important>
  *             <p>To ensure that bucket owners don't inadvertently lock themselves out of their own
  *             buckets, the root principal in a bucket owner's Amazon Web Services account can perform the
- *             <code>GetBucketPolicy</code>, <code>PutBucketPolicy</code>, and
- *             <code>DeleteBucketPolicy</code> API actions, even if their bucket policy explicitly
- *             denies the root principal's access. Bucket owner root principals can only be blocked from performing
- *             these API actions by VPC endpoint policies and Amazon Web Services Organizations policies.</p>
+ *                <code>GetBucketPolicy</code>, <code>PutBucketPolicy</code>, and
+ *                <code>DeleteBucketPolicy</code> API actions, even if their bucket policy explicitly
+ *             denies the root principal's access. Bucket owner root principals can only be blocked
+ *             from performing these API actions by VPC endpoint policies and Amazon Web Services Organizations
+ *             policies.</p>
  *          </important>
  *          <p>For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-policies.html">Bucket policy
  *             examples</a>.</p>
@@ -173,6 +175,10 @@ export class PutBucketPolicyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonS3",
+        operation: "PutBucketPolicy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

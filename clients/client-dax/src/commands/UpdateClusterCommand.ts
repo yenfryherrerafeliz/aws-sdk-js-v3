@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DAXClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DAXClient";
@@ -110,9 +111,9 @@ export interface UpdateClusterCommandOutput extends UpdateClusterResponse, __Met
  * //       ],
  * //     },
  * //     SSEDescription: { // SSEDescription
- * //       Status: "STRING_VALUE",
+ * //       Status: "ENABLING" || "ENABLED" || "DISABLING" || "DISABLED",
  * //     },
- * //     ClusterEndpointEncryptionType: "STRING_VALUE",
+ * //     ClusterEndpointEncryptionType: "NONE" || "TLS",
  * //   },
  * // };
  *
@@ -198,6 +199,10 @@ export class UpdateClusterCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDAXV3",
+        operation: "UpdateCluster",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

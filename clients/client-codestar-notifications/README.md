@@ -9,7 +9,6 @@ AWS SDK for JavaScript CodestarNotifications Client for Node.js, Browser and Rea
 <p>This AWS CodeStar Notifications API Reference provides descriptions and usage examples of the
 operations and data types for the AWS CodeStar Notifications API. You can use the AWS CodeStar Notifications API
 to work with the following objects:</p>
-
 <p>Notification rules, by calling the following: </p>
 <ul>
 <li>
@@ -44,7 +43,6 @@ notification rule. </p>
 <a>Unsubscribe</a>, which removes a target from a notification rule. </p>
 </li>
 </ul>
-
 <p>Targets, by calling the following: </p>
 <ul>
 <li>
@@ -58,7 +56,6 @@ notification rule. </p>
 notification rule. </p>
 </li>
 </ul>
-
 <p>Events, by calling the following: </p>
 <ul>
 <li>
@@ -85,7 +82,6 @@ notification rule in your account. </p>
 your account. </p>
 </li>
 </ul>
-
 <p> For information about how to use AWS CodeStar Notifications, see the <a href="https://docs.aws.amazon.com/dtconsole/latest/userguide/what-is-dtconsole.html">Amazon Web Services Developer Tools Console User Guide</a>.
 </p>
 
@@ -104,19 +100,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `CodestarNotificationsClient` and
-the commands you need, for example `CreateNotificationRuleCommand`:
+the commands you need, for example `ListTargetsCommand`:
 
 ```js
 // ES5 example
-const {
-  CodestarNotificationsClient,
-  CreateNotificationRuleCommand,
-} = require("@aws-sdk/client-codestar-notifications");
+const { CodestarNotificationsClient, ListTargetsCommand } = require("@aws-sdk/client-codestar-notifications");
 ```
 
 ```ts
 // ES6+ example
-import { CodestarNotificationsClient, CreateNotificationRuleCommand } from "@aws-sdk/client-codestar-notifications";
+import { CodestarNotificationsClient, ListTargetsCommand } from "@aws-sdk/client-codestar-notifications";
 ```
 
 ### Usage
@@ -135,7 +128,7 @@ const client = new CodestarNotificationsClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new CreateNotificationRuleCommand(params);
+const command = new ListTargetsCommand(params);
 ```
 
 #### Async/await
@@ -214,7 +207,7 @@ const client = new AWS.CodestarNotifications({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.createNotificationRule(params);
+  const data = await client.listTargets(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -222,7 +215,7 @@ try {
 
 // Promises.
 client
-  .createNotificationRule(params)
+  .listTargets(params)
   .then((data) => {
     // process data.
   })
@@ -231,7 +224,7 @@ client
   });
 
 // callbacks.
-client.createNotificationRule(params, (err, data) => {
+client.listTargets(params, (err, data) => {
   // process err and data.
 });
 ```

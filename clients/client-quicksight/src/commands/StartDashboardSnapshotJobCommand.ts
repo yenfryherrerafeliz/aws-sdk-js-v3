@@ -11,13 +11,14 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
   StartDashboardSnapshotJobRequest,
   StartDashboardSnapshotJobRequestFilterSensitiveLog,
   StartDashboardSnapshotJobResponse,
-} from "../models/models_3";
+} from "../models/models_4";
 import { de_StartDashboardSnapshotJobCommand, se_StartDashboardSnapshotJobCommand } from "../protocols/Aws_restJson1";
 import { QuickSightClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../QuickSightClient";
 
@@ -253,6 +254,10 @@ export class StartDashboardSnapshotJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: StartDashboardSnapshotJobRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "QuickSight_20180401",
+        operation: "StartDashboardSnapshotJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

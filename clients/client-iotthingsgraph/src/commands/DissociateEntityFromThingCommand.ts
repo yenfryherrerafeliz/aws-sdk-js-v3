@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTThingsGraphClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTThingsGraphClient";
@@ -48,7 +49,7 @@ export interface DissociateEntityFromThingCommandOutput extends DissociateEntity
  * const client = new IoTThingsGraphClient(config);
  * const input = { // DissociateEntityFromThingRequest
  *   thingName: "STRING_VALUE", // required
- *   entityType: "STRING_VALUE", // required
+ *   entityType: "DEVICE" || "SERVICE" || "DEVICE_MODEL" || "CAPABILITY" || "STATE" || "ACTION" || "EVENT" || "PROPERTY" || "MAPPING" || "ENUM", // required
  * };
  * const command = new DissociateEntityFromThingCommand(input);
  * const response = await client.send(command);
@@ -128,6 +129,10 @@ export class DissociateEntityFromThingCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotThingsGraphFrontEndService",
+        operation: "DissociateEntityFromThing",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -92,7 +93,7 @@ export interface GetMediaInsightsPipelineConfigurationCommandOutput
  * //     },
  * //     Elements: [ // MediaInsightsPipelineConfigurationElements
  * //       { // MediaInsightsPipelineConfigurationElement
- * //         Type: "AmazonTranscribeCallAnalyticsProcessor" || "VoiceAnalyticsProcessor" || "AmazonTranscribeProcessor" || "KinesisDataStreamSink" || "LambdaFunctionSink" || "SqsQueueSink" || "SnsTopicSink" || "S3RecordingSink", // required
+ * //         Type: "AmazonTranscribeCallAnalyticsProcessor" || "VoiceAnalyticsProcessor" || "AmazonTranscribeProcessor" || "KinesisDataStreamSink" || "LambdaFunctionSink" || "SqsQueueSink" || "SnsTopicSink" || "S3RecordingSink" || "VoiceEnhancementSink", // required
  * //         AmazonTranscribeCallAnalyticsProcessorConfiguration: { // AmazonTranscribeCallAnalyticsProcessorConfiguration
  * //           LanguageCode: "en-US" || "en-GB" || "es-US" || "fr-CA" || "fr-FR" || "en-AU" || "it-IT" || "de-DE" || "pt-BR", // required
  * //           VocabularyName: "STRING_VALUE",
@@ -153,6 +154,9 @@ export interface GetMediaInsightsPipelineConfigurationCommandOutput
  * //         },
  * //         SnsTopicSinkConfiguration: { // SnsTopicSinkConfiguration
  * //           InsightsTarget: "STRING_VALUE",
+ * //         },
+ * //         VoiceEnhancementSinkConfiguration: { // VoiceEnhancementSinkConfiguration
+ * //           Disabled: true || false,
  * //         },
  * //       },
  * //     ],
@@ -245,6 +249,10 @@ export class GetMediaInsightsPipelineConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: GetMediaInsightsPipelineConfigurationResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ChimeSDKMediaPipelinesService",
+        operation: "GetMediaInsightsPipelineConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

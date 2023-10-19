@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AddUploadBufferInput, AddUploadBufferOutput } from "../models/models_0";
@@ -39,7 +40,6 @@ export interface AddUploadBufferCommandOutput extends AddUploadBufferOutput, __M
  * <p>Configures one or more gateway local disks as upload buffer for a specified gateway.
  *          This operation is supported for the stored volume, cached volume, and tape gateway
  *          types.</p>
- *
  *          <p>In the request, you specify the gateway Amazon Resource Name (ARN) to which you want to
  *          add upload buffer, and one or more disk IDs that you want to configure as upload
  *          buffer.</p>
@@ -151,6 +151,10 @@ export class AddUploadBufferCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "AddUploadBuffer",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

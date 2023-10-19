@@ -118,10 +118,12 @@ final class XmlShapeSerVisitor extends DocumentShapeSerVisitor {
         Model model = context.getModel();
         writer.addImport("XmlNode", "__XmlNode", "@aws-sdk/xml-builder");
 
+        String keyTypeName = "keyof typeof input";
+
         // Filter out null entries if we don't have the sparse trait.
         String potentialFilter = "";
         if (!shape.hasTrait(SparseTrait.ID)) {
-            potentialFilter = ".filter((key) => input[key] != null)";
+            potentialFilter = ".filter((key) => input[key as " + keyTypeName + "] != null)";
         }
 
         // Use the keys as an iteration point to dispatch to the input value providers.
@@ -138,7 +140,7 @@ final class XmlShapeSerVisitor extends DocumentShapeSerVisitor {
                     .orElse("key");
             writer.write("const keyNode = $L.withName($S);", keyTarget.accept(getMemberVisitor("key")), keyName);
             // Add @xmlNamespace value of the key member.
-            AwsProtocolUtils.writeXmlNamespace(context, keyMember, "workingNode");
+            AwsProtocolUtils.writeXmlNamespace(context, keyMember, "keyNode");
             writer.write("entryNode.addChildNode(keyNode);");
 
             // Prepare the value's node.
@@ -160,7 +162,7 @@ final class XmlShapeSerVisitor extends DocumentShapeSerVisitor {
             }
 
             // Dispatch to the input value provider for any additional handling.
-            writer.write("node = $L;", valueTarget.accept(getMemberVisitor("input[key]")));
+            writer.write("node = $L;", valueTarget.accept(getMemberVisitor("input[key as " + keyTypeName + "]")));
 
             if (shape.hasTrait(SparseTrait.ID)) {
                 writer.dedent();

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudHSMClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudHSMClient";
@@ -36,6 +37,8 @@ export interface CreateHsmCommandOutput extends CreateHsmResponse, __MetadataBea
 
 /**
  * @public
+ * @deprecated
+ *
  * <p>This is documentation for <b>AWS CloudHSM Classic</b>. For
  *       more information, see <a href="http://aws.amazon.com/cloudhsm/faqs-classic/">AWS CloudHSM
  *       Classic FAQs</a>, the <a href="https://docs.aws.amazon.com/cloudhsm/classic/userguide/">AWS
@@ -68,7 +71,7 @@ export interface CreateHsmCommandOutput extends CreateHsmResponse, __MetadataBea
  *   EniIp: "STRING_VALUE",
  *   IamRoleArn: "STRING_VALUE", // required
  *   ExternalId: "STRING_VALUE",
- *   SubscriptionType: "STRING_VALUE", // required
+ *   SubscriptionType: "PRODUCTION", // required
  *   ClientToken: "STRING_VALUE",
  *   SyslogIp: "STRING_VALUE",
  * };
@@ -147,6 +150,10 @@ export class CreateHsmCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CloudHsmFrontendService",
+        operation: "CreateHsm",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

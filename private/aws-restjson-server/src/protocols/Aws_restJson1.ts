@@ -1,4 +1,5 @@
 // smithy-typescript generated code
+import { awsExpectUnion as __expectUnion } from "@aws-sdk/core";
 import {
   acceptMatches as __acceptMatches,
   NotAcceptableException as __NotAcceptableException,
@@ -22,7 +23,6 @@ import {
   expectObject as __expectObject,
   expectShort as __expectShort,
   expectString as __expectString,
-  expectUnion as __expectUnion,
   LazyJsonString as __LazyJsonString,
   limitedParseDouble as __limitedParseDouble,
   limitedParseFloat32 as __limitedParseFloat32,
@@ -67,6 +67,7 @@ import {
   SimpleUnion,
   StructureListMember,
   TestConfig,
+  UnionPayload,
   UnionWithJsonName,
   Unit,
 } from "../models/models_0";
@@ -117,6 +118,10 @@ import {
   HttpPayloadWithStructureServerInput,
   HttpPayloadWithStructureServerOutput,
 } from "../server/operations/HttpPayloadWithStructure";
+import {
+  HttpPayloadWithUnionServerInput,
+  HttpPayloadWithUnionServerOutput,
+} from "../server/operations/HttpPayloadWithUnion";
 import { HttpPrefixHeadersServerInput, HttpPrefixHeadersServerOutput } from "../server/operations/HttpPrefixHeaders";
 import {
   HttpPrefixHeadersInResponseServerInput,
@@ -990,6 +995,32 @@ export const deserializeHttpPayloadWithStructureRequest = async (
   const contents: any = map({});
   const data: Record<string, any> | undefined = __expectObject(await parseBody(output.body, context));
   contents.nested = de_NestedPayload(data, context);
+  return contents;
+};
+
+export const deserializeHttpPayloadWithUnionRequest = async (
+  output: __HttpRequest,
+  context: __SerdeContext
+): Promise<HttpPayloadWithUnionServerInput> => {
+  const contentTypeHeaderKey: string | undefined = Object.keys(output.headers).find(
+    (key) => key.toLowerCase() === "content-type"
+  );
+  if (contentTypeHeaderKey != null) {
+    const contentType = output.headers[contentTypeHeaderKey];
+    if (contentType !== undefined && contentType !== "application/json") {
+      throw new __UnsupportedMediaTypeException();
+    }
+  }
+  const acceptHeaderKey: string | undefined = Object.keys(output.headers).find((key) => key.toLowerCase() === "accept");
+  if (acceptHeaderKey != null) {
+    const accept = output.headers[acceptHeaderKey];
+    if (!__acceptMatches(accept, "application/json")) {
+      throw new __NotAcceptableException();
+    }
+  }
+  const contents: any = map({});
+  const data: Record<string, any> | undefined = __expectUnion(await parseBody(output.body, context));
+  contents.nested = de_UnionPayload(data, context);
   return contents;
 };
 
@@ -3927,7 +3958,6 @@ export const serializeFractionalSecondsResponse = async (
   body = JSON.stringify(
     take(input, {
       datetime: (_) => _.toISOString().split(".")[0] + "Z",
-      httpdate: (_) => __dateToUtcString(_),
     })
   );
   if (
@@ -4200,6 +4230,49 @@ export const serializeHttpPayloadWithStructureResponse = async (
   let body: any;
   if (input.nested !== undefined) {
     body = se_NestedPayload(input.nested, context);
+  }
+  if (body === undefined) {
+    body = {};
+  }
+  body = JSON.stringify(body);
+  if (
+    body &&
+    Object.keys(headers)
+      .map((str) => str.toLowerCase())
+      .indexOf("content-length") === -1
+  ) {
+    const length = calculateBodyLength(body);
+    if (length !== undefined) {
+      headers = { ...headers, "content-length": String(length) };
+    }
+  }
+  return new __HttpResponse({
+    headers,
+    body,
+    statusCode,
+  });
+};
+
+export const serializeHttpPayloadWithUnionResponse = async (
+  input: HttpPayloadWithUnionServerOutput,
+  ctx: ServerSerdeContext
+): Promise<__HttpResponse> => {
+  const context: __SerdeContext = {
+    ...ctx,
+    endpoint: () =>
+      Promise.resolve({
+        protocol: "",
+        hostname: "",
+        path: "",
+      }),
+  };
+  const statusCode = 200;
+  let headers: any = map({}, isSerializableHeaderValue, {
+    "content-type": "application/json",
+  });
+  let body: any;
+  if (input.nested !== undefined) {
+    body = se_UnionPayload(input.nested, context);
   }
   if (body === undefined) {
     body = {};
@@ -7471,6 +7544,16 @@ const se_TestConfig = (input: TestConfig, context: __SerdeContext): any => {
 };
 
 /**
+ * serializeAws_restJson1UnionPayload
+ */
+const se_UnionPayload = (input: UnionPayload, context: __SerdeContext): any => {
+  return UnionPayload.visit(input, {
+    greeting: (value) => ({ greeting: value }),
+    _: (name, value) => ({ name: value } as any),
+  });
+};
+
+/**
  * serializeAws_restJson1UnionWithJsonName
  */
 const se_UnionWithJsonName = (input: UnionWithJsonName, context: __SerdeContext): any => {
@@ -7501,14 +7584,14 @@ const se_BooleanList = (input: boolean[], context: __SerdeContext): any => {
 /**
  * serializeAws_restJson1FooEnumList
  */
-const se_FooEnumList = (input: (FooEnum | string)[], context: __SerdeContext): any => {
+const se_FooEnumList = (input: FooEnum[], context: __SerdeContext): any => {
   return input.filter((e: any) => e != null);
 };
 
 /**
  * serializeAws_restJson1FooEnumMap
  */
-const se_FooEnumMap = (input: Record<string, FooEnum | string>, context: __SerdeContext): any => {
+const se_FooEnumMap = (input: Record<string, FooEnum>, context: __SerdeContext): any => {
   return Object.entries(input).reduce((acc: Record<string, any>, [key, value]: [string, any]) => {
     if (value === null) {
       return acc;
@@ -7521,7 +7604,7 @@ const se_FooEnumMap = (input: Record<string, FooEnum | string>, context: __Serde
 /**
  * serializeAws_restJson1FooEnumSet
  */
-const se_FooEnumSet = (input: (FooEnum | string)[], context: __SerdeContext): any => {
+const se_FooEnumSet = (input: FooEnum[], context: __SerdeContext): any => {
   return input.filter((e: any) => e != null);
 };
 
@@ -7537,14 +7620,14 @@ const se_GreetingStruct = (input: GreetingStruct, context: __SerdeContext): any 
 /**
  * serializeAws_restJson1IntegerEnumList
  */
-const se_IntegerEnumList = (input: (IntegerEnum | number)[], context: __SerdeContext): any => {
+const se_IntegerEnumList = (input: IntegerEnum[], context: __SerdeContext): any => {
   return input.filter((e: any) => e != null);
 };
 
 /**
  * serializeAws_restJson1IntegerEnumMap
  */
-const se_IntegerEnumMap = (input: Record<string, IntegerEnum | number>, context: __SerdeContext): any => {
+const se_IntegerEnumMap = (input: Record<string, IntegerEnum>, context: __SerdeContext): any => {
   return Object.entries(input).reduce((acc: Record<string, any>, [key, value]: [string, any]) => {
     if (value === null) {
       return acc;
@@ -7557,7 +7640,7 @@ const se_IntegerEnumMap = (input: Record<string, IntegerEnum | number>, context:
 /**
  * serializeAws_restJson1IntegerEnumSet
  */
-const se_IntegerEnumSet = (input: (IntegerEnum | number)[], context: __SerdeContext): any => {
+const se_IntegerEnumSet = (input: IntegerEnum[], context: __SerdeContext): any => {
   return input.filter((e: any) => e != null);
 };
 
@@ -7653,9 +7736,9 @@ const de_DenseBooleanMap = (output: any, context: __SerdeContext): Record<string
     if (value === null) {
       return acc;
     }
-    acc[key] = __expectBoolean(value) as any;
+    acc[key as string] = __expectBoolean(value) as any;
     return acc;
-  }, {});
+  }, {} as Record<string, boolean>);
 };
 
 /**
@@ -7666,9 +7749,9 @@ const de_DenseNumberMap = (output: any, context: __SerdeContext): Record<string,
     if (value === null) {
       return acc;
     }
-    acc[key] = __expectInt32(value) as any;
+    acc[key as string] = __expectInt32(value) as any;
     return acc;
-  }, {});
+  }, {} as Record<string, number>);
 };
 
 /**
@@ -7679,9 +7762,9 @@ const de_DenseSetMap = (output: any, context: __SerdeContext): Record<string, st
     if (value === null) {
       return acc;
     }
-    acc[key] = de_StringSet(value, context);
+    acc[key as string] = de_StringSet(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, string[]>);
 };
 
 /**
@@ -7692,9 +7775,9 @@ const de_DenseStringMap = (output: any, context: __SerdeContext): Record<string,
     if (value === null) {
       return acc;
     }
-    acc[key] = __expectString(value) as any;
+    acc[key as string] = __expectString(value) as any;
     return acc;
-  }, {});
+  }, {} as Record<string, string>);
 };
 
 /**
@@ -7705,9 +7788,9 @@ const de_DenseStructMap = (output: any, context: __SerdeContext): Record<string,
     if (value === null) {
       return acc;
     }
-    acc[key] = de_GreetingStruct(value, context);
+    acc[key as string] = de_GreetingStruct(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, GreetingStruct>);
 };
 
 /**
@@ -7846,9 +7929,9 @@ const de_SimpleMap = (output: any, context: __SerdeContext): Record<string, stri
     if (value === null) {
       return acc;
     }
-    acc[key] = __expectString(value) as any;
+    acc[key as string] = __expectString(value) as any;
     return acc;
-  }, {});
+  }, {} as Record<string, string>);
 };
 
 /**
@@ -7870,12 +7953,12 @@ const de_SimpleUnion = (output: any, context: __SerdeContext): SimpleUnion => {
 const de_SparseBooleanMap = (output: any, context: __SerdeContext): Record<string, boolean> => {
   return Object.entries(output).reduce((acc: Record<string, boolean>, [key, value]: [string, any]) => {
     if (value === null) {
-      acc[key] = null as any;
+      acc[key as string] = null as any;
       return acc;
     }
-    acc[key] = __expectBoolean(value) as any;
+    acc[key as string] = __expectBoolean(value) as any;
     return acc;
-  }, {});
+  }, {} as Record<string, boolean>);
 };
 
 /**
@@ -7884,12 +7967,12 @@ const de_SparseBooleanMap = (output: any, context: __SerdeContext): Record<strin
 const de_SparseNumberMap = (output: any, context: __SerdeContext): Record<string, number> => {
   return Object.entries(output).reduce((acc: Record<string, number>, [key, value]: [string, any]) => {
     if (value === null) {
-      acc[key] = null as any;
+      acc[key as string] = null as any;
       return acc;
     }
-    acc[key] = __expectInt32(value) as any;
+    acc[key as string] = __expectInt32(value) as any;
     return acc;
-  }, {});
+  }, {} as Record<string, number>);
 };
 
 /**
@@ -7898,12 +7981,12 @@ const de_SparseNumberMap = (output: any, context: __SerdeContext): Record<string
 const de_SparseSetMap = (output: any, context: __SerdeContext): Record<string, string[]> => {
   return Object.entries(output).reduce((acc: Record<string, string[]>, [key, value]: [string, any]) => {
     if (value === null) {
-      acc[key] = null as any;
+      acc[key as string] = null as any;
       return acc;
     }
-    acc[key] = de_StringSet(value, context);
+    acc[key as string] = de_StringSet(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, string[]>);
 };
 
 /**
@@ -7912,12 +7995,12 @@ const de_SparseSetMap = (output: any, context: __SerdeContext): Record<string, s
 const de_SparseStructMap = (output: any, context: __SerdeContext): Record<string, GreetingStruct> => {
   return Object.entries(output).reduce((acc: Record<string, GreetingStruct>, [key, value]: [string, any]) => {
     if (value === null) {
-      acc[key] = null as any;
+      acc[key as string] = null as any;
       return acc;
     }
-    acc[key] = de_GreetingStruct(value, context);
+    acc[key as string] = de_GreetingStruct(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, GreetingStruct>);
 };
 
 /**
@@ -7952,6 +8035,16 @@ const de_TestConfig = (output: any, context: __SerdeContext): TestConfig => {
   return take(output, {
     timeout: __expectInt32,
   }) as any;
+};
+
+/**
+ * deserializeAws_restJson1UnionPayload
+ */
+const de_UnionPayload = (output: any, context: __SerdeContext): UnionPayload => {
+  if (__expectString(output.greeting) !== undefined) {
+    return { greeting: __expectString(output.greeting) as any };
+  }
+  return { $unknown: Object.entries(output)[0] };
 };
 
 /**
@@ -7997,7 +8090,7 @@ const de_BooleanList = (output: any, context: __SerdeContext): boolean[] => {
 /**
  * deserializeAws_restJson1FooEnumList
  */
-const de_FooEnumList = (output: any, context: __SerdeContext): (FooEnum | string)[] => {
+const de_FooEnumList = (output: any, context: __SerdeContext): FooEnum[] => {
   const retVal = (output || []).map((entry: any) => {
     if (entry === null) {
       throw new TypeError(
@@ -8012,20 +8105,20 @@ const de_FooEnumList = (output: any, context: __SerdeContext): (FooEnum | string
 /**
  * deserializeAws_restJson1FooEnumMap
  */
-const de_FooEnumMap = (output: any, context: __SerdeContext): Record<string, FooEnum | string> => {
-  return Object.entries(output).reduce((acc: Record<string, FooEnum | string>, [key, value]: [string, any]) => {
+const de_FooEnumMap = (output: any, context: __SerdeContext): Record<string, FooEnum> => {
+  return Object.entries(output).reduce((acc: Record<string, FooEnum>, [key, value]: [string, any]) => {
     if (value === null) {
       return acc;
     }
-    acc[key] = __expectString(value) as any;
+    acc[key as string] = __expectString(value) as any;
     return acc;
-  }, {});
+  }, {} as Record<string, FooEnum>);
 };
 
 /**
  * deserializeAws_restJson1FooEnumSet
  */
-const de_FooEnumSet = (output: any, context: __SerdeContext): (FooEnum | string)[] => {
+const de_FooEnumSet = (output: any, context: __SerdeContext): FooEnum[] => {
   const retVal = (output || []).map((entry: any) => {
     if (entry === null) {
       throw new TypeError(
@@ -8049,7 +8142,7 @@ const de_GreetingStruct = (output: any, context: __SerdeContext): GreetingStruct
 /**
  * deserializeAws_restJson1IntegerEnumList
  */
-const de_IntegerEnumList = (output: any, context: __SerdeContext): (IntegerEnum | number)[] => {
+const de_IntegerEnumList = (output: any, context: __SerdeContext): IntegerEnum[] => {
   const retVal = (output || []).map((entry: any) => {
     if (entry === null) {
       throw new TypeError(
@@ -8064,20 +8157,20 @@ const de_IntegerEnumList = (output: any, context: __SerdeContext): (IntegerEnum 
 /**
  * deserializeAws_restJson1IntegerEnumMap
  */
-const de_IntegerEnumMap = (output: any, context: __SerdeContext): Record<string, IntegerEnum | number> => {
-  return Object.entries(output).reduce((acc: Record<string, IntegerEnum | number>, [key, value]: [string, any]) => {
+const de_IntegerEnumMap = (output: any, context: __SerdeContext): Record<string, IntegerEnum> => {
+  return Object.entries(output).reduce((acc: Record<string, IntegerEnum>, [key, value]: [string, any]) => {
     if (value === null) {
       return acc;
     }
-    acc[key] = __expectInt32(value) as any;
+    acc[key as string] = __expectInt32(value) as any;
     return acc;
-  }, {});
+  }, {} as Record<string, IntegerEnum>);
 };
 
 /**
  * deserializeAws_restJson1IntegerEnumSet
  */
-const de_IntegerEnumSet = (output: any, context: __SerdeContext): (IntegerEnum | number)[] => {
+const de_IntegerEnumSet = (output: any, context: __SerdeContext): IntegerEnum[] => {
   const retVal = (output || []).map((entry: any) => {
     if (entry === null) {
       throw new TypeError(
@@ -8138,12 +8231,12 @@ const de_SparseStringList = (output: any, context: __SerdeContext): string[] => 
 const de_SparseStringMap = (output: any, context: __SerdeContext): Record<string, string> => {
   return Object.entries(output).reduce((acc: Record<string, string>, [key, value]: [string, any]) => {
     if (value === null) {
-      acc[key] = null as any;
+      acc[key as string] = null as any;
       return acc;
     }
-    acc[key] = __expectString(value) as any;
+    acc[key as string] = __expectString(value) as any;
     return acc;
-  }, {});
+  }, {} as Record<string, string>);
 };
 
 /**
@@ -8169,9 +8262,9 @@ const de_StringMap = (output: any, context: __SerdeContext): Record<string, stri
     if (value === null) {
       return acc;
     }
-    acc[key] = __expectString(value) as any;
+    acc[key as string] = __expectString(value) as any;
     return acc;
-  }, {});
+  }, {} as Record<string, string>);
 };
 
 /**

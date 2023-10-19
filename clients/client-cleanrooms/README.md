@@ -7,12 +7,14 @@
 AWS SDK for JavaScript CleanRooms Client for Node.js, Browser and React Native.
 
 <p>Welcome to the <i>Clean Rooms API Reference</i>.</p>
-<p>Clean Rooms  is an Amazon Web Services service that helps multiple parties to join their data
-together in a secure collaboration workspace. In the collaboration, members who can query
-and receive results can get insights into the collective datasets without either party getting
-access to the other party's raw data.</p>
-<p>To learn more about Clean Rooms  concepts, procedures, and best practices, see the
+<p>Clean Rooms is an Amazon Web Services service that helps multiple parties to join
+their data together in a secure collaboration workspace. In the collaboration, members who
+can query and receive results can get insights into the collective datasets without either
+party getting access to the other party's raw data.</p>
+<p>To learn more about Clean Rooms concepts, procedures, and best practices, see the
 <a href="https://docs.aws.amazon.com/clean-rooms/latest/userguide/what-is.html">Clean Rooms User Guide</a>.</p>
+<p>To learn more about SQL commands, functions, and conditions supported in Clean Rooms, see the
+<a href="https://docs.aws.amazon.com/clean-rooms/latest/sql-reference/sql-reference.html">Clean Rooms SQL Reference</a>.</p>
 
 ## Installing
 
@@ -29,16 +31,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `CleanRoomsClient` and
-the commands you need, for example `BatchGetCollaborationAnalysisTemplateCommand`:
+the commands you need, for example `ListMembersCommand`:
 
 ```js
 // ES5 example
-const { CleanRoomsClient, BatchGetCollaborationAnalysisTemplateCommand } = require("@aws-sdk/client-cleanrooms");
+const { CleanRoomsClient, ListMembersCommand } = require("@aws-sdk/client-cleanrooms");
 ```
 
 ```ts
 // ES6+ example
-import { CleanRoomsClient, BatchGetCollaborationAnalysisTemplateCommand } from "@aws-sdk/client-cleanrooms";
+import { CleanRoomsClient, ListMembersCommand } from "@aws-sdk/client-cleanrooms";
 ```
 
 ### Usage
@@ -57,7 +59,7 @@ const client = new CleanRoomsClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new BatchGetCollaborationAnalysisTemplateCommand(params);
+const command = new ListMembersCommand(params);
 ```
 
 #### Async/await
@@ -136,7 +138,7 @@ const client = new AWS.CleanRooms({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.batchGetCollaborationAnalysisTemplate(params);
+  const data = await client.listMembers(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -144,7 +146,7 @@ try {
 
 // Promises.
 client
-  .batchGetCollaborationAnalysisTemplate(params)
+  .listMembers(params)
   .then((data) => {
     // process data.
   })
@@ -153,7 +155,7 @@ client
   });
 
 // callbacks.
-client.batchGetCollaborationAnalysisTemplate(params, (err, data) => {
+client.listMembers(params, (err, data) => {
   // process err and data.
 });
 ```

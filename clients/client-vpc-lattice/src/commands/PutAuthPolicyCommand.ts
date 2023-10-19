@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { PutAuthPolicyRequest, PutAuthPolicyResponse } from "../models/models_0";
@@ -36,8 +37,7 @@ export interface PutAuthPolicyCommandOutput extends PutAuthPolicyResponse, __Met
 
 /**
  * @public
- * <p>Creates or updates the auth policy. The policy string in JSON must not contain newlines or
- *    blank lines.</p>
+ * <p>Creates or updates the auth policy.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -131,6 +131,10 @@ export class PutAuthPolicyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MercuryControlPlane",
+        operation: "PutAuthPolicy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

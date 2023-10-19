@@ -46,9 +46,6 @@ import {
   DataQualityAppSpecification,
   DataQualityBaselineConfig,
   DataQualityJobInput,
-  DefaultSpaceSettings,
-  EdgeOutputConfig,
-  EdgePresetDeploymentType,
   GitConfig,
   HyperParameterTuningJobObjectiveType,
   InferenceSpecification,
@@ -88,6 +85,7 @@ import {
   DebugHookConfig,
   DebugRuleConfiguration,
   DebugRuleEvaluationStatus,
+  DefaultSpaceSettings,
   DeploymentConfig,
   DeviceSelectionConfig,
   DirectInternetAccess,
@@ -95,6 +93,8 @@ import {
   DriftCheckBaselines,
   EdgeDeploymentConfig,
   EdgeDeploymentModelConfig,
+  EdgeOutputConfig,
+  EdgePresetDeploymentType,
   EndpointInfo,
   ExecutionRoleIdentityConfig,
   ExperimentConfig,
@@ -164,6 +164,7 @@ import {
   RuleEvaluationStatus,
   ServiceCatalogProvisioningDetails,
   ShadowModeConfig,
+  SkipModelValidation,
   SourceAlgorithmSpecification,
   SourceIpConfig,
   SpaceSettings,
@@ -175,6 +176,158 @@ import {
   UserSettings,
   VendorGuidance,
 } from "./models_1";
+
+/**
+ * @public
+ */
+export interface DeleteDataQualityJobDefinitionRequest {
+  /**
+   * @public
+   * <p>The name of the data quality monitoring job definition to delete.</p>
+   */
+  JobDefinitionName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DeleteDeviceFleetRequest {
+  /**
+   * @public
+   * <p>The name of the fleet to delete.</p>
+   */
+  DeviceFleetName: string | undefined;
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const RetentionType = {
+  Delete: "Delete",
+  Retain: "Retain",
+} as const;
+
+/**
+ * @public
+ */
+export type RetentionType = (typeof RetentionType)[keyof typeof RetentionType];
+
+/**
+ * @public
+ * <p>The retention policy for data stored on an Amazon Elastic File System (EFS) volume.</p>
+ */
+export interface RetentionPolicy {
+  /**
+   * @public
+   * <p>The default is <code>Retain</code>, which specifies to keep the data stored on the EFS volume.</p>
+   *          <p>Specify <code>Delete</code> to delete the data stored on the EFS volume.</p>
+   */
+  HomeEfsFileSystem?: RetentionType;
+}
+
+/**
+ * @public
+ */
+export interface DeleteDomainRequest {
+  /**
+   * @public
+   * <p>The domain ID.</p>
+   */
+  DomainId: string | undefined;
+
+  /**
+   * @public
+   * <p>The retention policy for this domain, which specifies whether resources will be retained after the Domain is deleted.
+   *            By default, all resources are retained (not automatically deleted).
+   *        </p>
+   */
+  RetentionPolicy?: RetentionPolicy;
+}
+
+/**
+ * @public
+ */
+export interface DeleteEdgeDeploymentPlanRequest {
+  /**
+   * @public
+   * <p>The name of the edge deployment plan to delete.</p>
+   */
+  EdgeDeploymentPlanName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DeleteEdgeDeploymentStageRequest {
+  /**
+   * @public
+   * <p>The name of the edge deployment plan from which the stage will be deleted.</p>
+   */
+  EdgeDeploymentPlanName: string | undefined;
+
+  /**
+   * @public
+   * <p>The name of the stage.</p>
+   */
+  StageName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DeleteEndpointInput {
+  /**
+   * @public
+   * <p>The name of the endpoint that you want to delete.</p>
+   */
+  EndpointName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DeleteEndpointConfigInput {
+  /**
+   * @public
+   * <p>The name of the endpoint configuration that you want to delete.</p>
+   */
+  EndpointConfigName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DeleteExperimentRequest {
+  /**
+   * @public
+   * <p>The name of the experiment to delete.</p>
+   */
+  ExperimentName: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DeleteExperimentResponse {
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the experiment that is being deleted.</p>
+   */
+  ExperimentArn?: string;
+}
+
+/**
+ * @public
+ */
+export interface DeleteFeatureGroupRequest {
+  /**
+   * @public
+   * <p>The name of the <code>FeatureGroup</code> you want to delete. The name must be unique
+   *          within an Amazon Web Services Region in an Amazon Web Services account. </p>
+   */
+  FeatureGroupName: string | undefined;
+}
 
 /**
  * @public
@@ -231,7 +384,7 @@ export interface DeleteHubContentRequest {
    * @public
    * <p>The type of content that you want to delete from a hub.</p>
    */
-  HubContentType: HubContentType | string | undefined;
+  HubContentType: HubContentType | undefined;
 
   /**
    * @public
@@ -689,7 +842,7 @@ export interface RealTimeInferenceRecommendation {
    * @public
    * <p>The recommended instance type for Real-Time Inference.</p>
    */
-  InstanceType: ProductionVariantInstanceType | string | undefined;
+  InstanceType: ProductionVariantInstanceType | undefined;
 
   /**
    * @public
@@ -727,7 +880,7 @@ export interface DeploymentRecommendation {
    *          is unable to provide a default recommendation for the model using the information provided. If the deployment status is <code>IN_PROGRESS</code>,
    *          retry your API call after a few seconds to get a <code>COMPLETED</code> deployment recommendation.</p>
    */
-  RecommendationStatus: RecommendationStatus | string | undefined;
+  RecommendationStatus: RecommendationStatus | undefined;
 
   /**
    * @public
@@ -765,7 +918,7 @@ export interface EdgeDeploymentStatus {
    * @public
    * <p>The general status of the current stage.</p>
    */
-  StageStatus: StageStatus | string | undefined;
+  StageStatus: StageStatus | undefined;
 
   /**
    * @public
@@ -775,7 +928,8 @@ export interface EdgeDeploymentStatus {
 
   /**
    * @public
-   * <p>The number of edge devices yet to pick up the deployment in current stage, or in progress.</p>
+   * <p>The number of edge devices yet to pick up the deployment in current stage, or in
+   *             progress.</p>
    */
   EdgeDeploymentPendingInStage: number | undefined;
 
@@ -847,6 +1001,20 @@ export interface DeregisterDevicesRequest {
 
 /**
  * @public
+ * <p>Information that SageMaker Neo automatically derived about the model.</p>
+ */
+export interface DerivedInformation {
+  /**
+   * @public
+   * <p>The data input configuration that SageMaker Neo automatically derived for the model.
+   *             When SageMaker Neo derives this information, you don't need to specify the data input
+   *             configuration when you create a compilation job.</p>
+   */
+  DerivedDataInputConfig?: string;
+}
+
+/**
+ * @public
  */
 export interface DescribeActionRequest {
   /**
@@ -894,7 +1062,7 @@ export interface DescribeActionResponse {
    * @public
    * <p>The status of the action.</p>
    */
-  Status?: ActionStatus | string;
+  Status?: ActionStatus;
 
   /**
    * @public
@@ -1003,7 +1171,7 @@ export interface DescribeAlgorithmOutput {
    * @public
    * <p>The current status of the algorithm.</p>
    */
-  AlgorithmStatus: AlgorithmStatus | string | undefined;
+  AlgorithmStatus: AlgorithmStatus | undefined;
 
   /**
    * @public
@@ -1045,7 +1213,7 @@ export interface DescribeAppRequest {
    * @public
    * <p>The type of app.</p>
    */
-  AppType: AppType | string | undefined;
+  AppType: AppType | undefined;
 
   /**
    * @public
@@ -1074,7 +1242,7 @@ export interface DescribeAppResponse {
    * @public
    * <p>The type of app.</p>
    */
-  AppType?: AppType | string;
+  AppType?: AppType;
 
   /**
    * @public
@@ -1098,7 +1266,7 @@ export interface DescribeAppResponse {
    * @public
    * <p>The status.</p>
    */
-  Status?: AppStatus | string;
+  Status?: AppStatus;
 
   /**
    * @public
@@ -1308,7 +1476,7 @@ export interface ResolvedAttributes {
    * @public
    * <p>The problem type.</p>
    */
-  ProblemType?: ProblemType | string;
+  ProblemType?: ProblemType;
 
   /**
    * @public
@@ -1363,7 +1531,7 @@ export interface DescribeAutoMLJobResponse {
    * @public
    * <p>Returns the job's problem type.</p>
    */
-  ProblemType?: ProblemType | string;
+  ProblemType?: ProblemType;
 
   /**
    * @public
@@ -1413,13 +1581,13 @@ export interface DescribeAutoMLJobResponse {
    * @public
    * <p>Returns the status of the AutoML job.</p>
    */
-  AutoMLJobStatus: AutoMLJobStatus | string | undefined;
+  AutoMLJobStatus: AutoMLJobStatus | undefined;
 
   /**
    * @public
    * <p>Returns the secondary status of the AutoML job.</p>
    */
-  AutoMLJobSecondaryStatus: AutoMLJobSecondaryStatus | string | undefined;
+  AutoMLJobSecondaryStatus: AutoMLJobSecondaryStatus | undefined;
 
   /**
    * @public
@@ -1556,13 +1724,13 @@ export interface DescribeAutoMLJobV2Response {
    * @public
    * <p>Returns the status of the AutoML job V2.</p>
    */
-  AutoMLJobStatus: AutoMLJobStatus | string | undefined;
+  AutoMLJobStatus: AutoMLJobStatus | undefined;
 
   /**
    * @public
    * <p>Returns the secondary status of the AutoML job V2.</p>
    */
-  AutoMLJobSecondaryStatus: AutoMLJobSecondaryStatus | string | undefined;
+  AutoMLJobSecondaryStatus: AutoMLJobSecondaryStatus | undefined;
 
   /**
    * @public
@@ -1606,7 +1774,7 @@ export interface DescribeAutoMLJobV2Response {
    * @public
    * <p>Returns the name of the problem type configuration set for the AutoML job V2.</p>
    */
-  AutoMLProblemTypeConfigName?: AutoMLProblemTypeConfigName | string;
+  AutoMLProblemTypeConfigName?: AutoMLProblemTypeConfigName;
 }
 
 /**
@@ -1718,15 +1886,16 @@ export interface DescribeCompilationJobResponse {
    * @public
    * <p>The status of the model compilation job.</p>
    */
-  CompilationJobStatus: CompilationJobStatus | string | undefined;
+  CompilationJobStatus: CompilationJobStatus | undefined;
 
   /**
    * @public
    * <p>The time when the model compilation job started the <code>CompilationJob</code>
    *             instances. </p>
-   *          <p>You are billed for the time between this timestamp and the timestamp in the <code>CompilationEndTime</code> field. In Amazon CloudWatch Logs,
-   *             the start time might be later than this time. That's because it takes time to download
-   *             the compilation job, which depends on the size of the compilation job container. </p>
+   *          <p>You are billed for the time between this timestamp and the timestamp in the
+   *                 <code>CompilationEndTime</code> field. In Amazon CloudWatch Logs, the start time might be later
+   *             than this time. That's because it takes time to download the compilation job, which
+   *             depends on the size of the compilation job container. </p>
    */
   CompilationStartTime?: Date;
 
@@ -1748,8 +1917,8 @@ export interface DescribeCompilationJobResponse {
 
   /**
    * @public
-   * <p>The inference image to use when compiling a model.
-   *             Specify an image only if the target device is a cloud instance.</p>
+   * <p>The inference image to use when compiling a model. Specify an image only if the target
+   *             device is a cloud instance.</p>
    */
   InferenceImage?: string;
 
@@ -1789,7 +1958,8 @@ export interface DescribeCompilationJobResponse {
 
   /**
    * @public
-   * <p>Provides a BLAKE2 hash value that identifies the compiled model artifacts in Amazon S3.</p>
+   * <p>Provides a BLAKE2 hash value that identifies the compiled model artifacts in
+   *             Amazon S3.</p>
    */
   ModelDigests?: ModelDigests;
 
@@ -1817,12 +1987,17 @@ export interface DescribeCompilationJobResponse {
 
   /**
    * @public
-   * <p>A <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VpcConfig.html">VpcConfig</a> object that specifies the VPC that you want your
-   *             compilation job to connect to. Control access to your models by
-   *             configuring the VPC. For more information, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/neo-vpc.html">Protect Compilation Jobs by Using an Amazon
-   *                 Virtual Private Cloud</a>.</p>
+   * <p>A <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VpcConfig.html">VpcConfig</a> object that specifies the VPC that you want your compilation job
+   *             to connect to. Control access to your models by configuring the VPC. For more
+   *             information, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/neo-vpc.html">Protect Compilation Jobs by Using an Amazon Virtual Private Cloud</a>.</p>
    */
   VpcConfig?: NeoVpcConfig;
+
+  /**
+   * @public
+   * <p>Information that SageMaker Neo automatically derived about the model.</p>
+   */
+  DerivedInformation?: DerivedInformation;
 }
 
 /**
@@ -1981,8 +2156,8 @@ export interface DescribeDataQualityJobDefinitionResponse {
 
   /**
    * @public
-   * <p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker can assume to
-   *          perform tasks on your behalf.</p>
+   * <p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker can
+   *    assume to perform tasks on your behalf.</p>
    */
   RoleArn: string | undefined;
 
@@ -2249,7 +2424,7 @@ export interface DescribeDomainResponse {
    * @public
    * <p>The status.</p>
    */
-  Status?: DomainStatus | string;
+  Status?: DomainStatus;
 
   /**
    * @public
@@ -2273,7 +2448,7 @@ export interface DescribeDomainResponse {
    * @public
    * <p>The domain's authentication mode.</p>
    */
-  AuthMode?: AuthMode | string;
+  AuthMode?: AuthMode;
 
   /**
    * @public
@@ -2299,7 +2474,7 @@ export interface DescribeDomainResponse {
    *             </li>
    *          </ul>
    */
-  AppNetworkAccessType?: AppNetworkAccessType | string;
+  AppNetworkAccessType?: AppNetworkAccessType;
 
   /**
    * @public
@@ -2348,7 +2523,7 @@ export interface DescribeDomainResponse {
    *                 <code>DomainSettings.RStudioServerProDomainSettings.DomainExecutionRoleArn</code> is
    *             provided.</p>
    */
-  AppSecurityGroupManagement?: AppSecurityGroupManagement | string;
+  AppSecurityGroupManagement?: AppSecurityGroupManagement;
 
   /**
    * @public
@@ -2376,7 +2551,8 @@ export interface DescribeEdgeDeploymentPlanRequest {
 
   /**
    * @public
-   * <p>If the edge deployment plan has enough stages to require tokening, then this is the response from the last list of stages returned.</p>
+   * <p>If the edge deployment plan has enough stages to require tokening, then this is the
+   *             response from the last list of stages returned.</p>
    */
   NextToken?: string;
 
@@ -2511,7 +2687,7 @@ export interface EdgePresetDeploymentOutput {
    * <p>The deployment type created by SageMaker Edge Manager. Currently only
    *      supports Amazon Web Services IoT Greengrass Version 2 components.</p>
    */
-  Type: EdgePresetDeploymentType | string | undefined;
+  Type: EdgePresetDeploymentType | undefined;
 
   /**
    * @public
@@ -2523,7 +2699,7 @@ export interface EdgePresetDeploymentOutput {
    * @public
    * <p>The status of the deployable resource.</p>
    */
-  Status?: EdgePresetDeploymentStatus | string;
+  Status?: EdgePresetDeploymentStatus;
 
   /**
    * @public
@@ -2588,7 +2764,7 @@ export interface DescribeEdgePackagingJobResponse {
    * @public
    * <p>The current status of the packaging job.</p>
    */
-  EdgePackagingJobStatus: EdgePackagingJobStatus | string | undefined;
+  EdgePackagingJobStatus: EdgePackagingJobStatus | undefined;
 
   /**
    * @public
@@ -2712,7 +2888,7 @@ export interface ProductionVariantStatus {
    *             </li>
    *          </ul>
    */
-  Status: VariantStatus | string | undefined;
+  Status: VariantStatus | undefined;
 
   /**
    * @public
@@ -2780,7 +2956,7 @@ export interface PendingProductionVariantSummary {
    * @public
    * <p>The type of instances associated with the variant.</p>
    */
-  InstanceType?: ProductionVariantInstanceType | string;
+  InstanceType?: ProductionVariantInstanceType;
 
   /**
    * @public
@@ -2789,7 +2965,7 @@ export interface PendingProductionVariantSummary {
    *                 <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html">Using Elastic
    *                 Inference in Amazon SageMaker</a>.</p>
    */
-  AcceleratorType?: ProductionVariantAcceleratorType | string;
+  AcceleratorType?: ProductionVariantAcceleratorType;
 
   /**
    * @public
@@ -2998,14 +3174,15 @@ export interface DescribeEndpointOutput {
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>UpdateRollbackFailed</code>: Both the rolling deployment and auto-rollback failed. Your endpoint
-   *                 is in service with a mix of the old and new endpoint configurations. For information about how to remedy
-   *                 this issue and restore the endpoint's status to <code>InService</code>, see
-   *                     <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/deployment-guardrails-rolling.html">Rolling Deployments</a>.</p>
+   *                   <code>UpdateRollbackFailed</code>: Both the rolling deployment and
+   *                     auto-rollback failed. Your endpoint is in service with a mix of the old and new
+   *                     endpoint configurations. For information about how to remedy this issue and
+   *                     restore the endpoint's status to <code>InService</code>, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/deployment-guardrails-rolling.html">Rolling
+   *                         Deployments</a>.</p>
    *             </li>
    *          </ul>
    */
-  EndpointStatus: EndpointStatus | string | undefined;
+  EndpointStatus: EndpointStatus | undefined;
 
   /**
    * @public
@@ -3288,7 +3465,7 @@ export interface LastUpdateStatus {
    * @public
    * <p>A value that indicates whether the update was made successful.</p>
    */
-  Status: LastUpdateStatusValue | string | undefined;
+  Status: LastUpdateStatusValue | undefined;
 
   /**
    * @public
@@ -3321,7 +3498,7 @@ export interface OfflineStoreStatus {
    * @public
    * <p>An <code>OfflineStore</code> status.</p>
    */
-  Status: OfflineStoreStatusValue | string | undefined;
+  Status: OfflineStoreStatusValue | undefined;
 
   /**
    * @public
@@ -3424,7 +3601,7 @@ export interface DescribeFeatureGroupResponse {
    * @public
    * <p>The status of the feature group.</p>
    */
-  FeatureGroupStatus?: FeatureGroupStatus | string;
+  FeatureGroupStatus?: FeatureGroupStatus;
 
   /**
    * @public
@@ -3540,7 +3717,7 @@ export interface DescribeFeatureMetadataResponse {
    * @public
    * <p>The data type of the feature.</p>
    */
-  FeatureType: FeatureType | string | undefined;
+  FeatureType: FeatureType | undefined;
 
   /**
    * @public
@@ -3616,7 +3793,7 @@ export interface DescribeFlowDefinitionResponse {
    * @public
    * <p>The status of the flow definition. Valid values are listed below.</p>
    */
-  FlowDefinitionStatus: FlowDefinitionStatus | string | undefined;
+  FlowDefinitionStatus: FlowDefinitionStatus | undefined;
 
   /**
    * @public
@@ -3736,7 +3913,7 @@ export interface DescribeHubResponse {
    * @public
    * <p>The status of the hub.</p>
    */
-  HubStatus: HubStatus | string | undefined;
+  HubStatus: HubStatus | undefined;
 
   /**
    * @public
@@ -3771,7 +3948,7 @@ export interface DescribeHubContentRequest {
    * @public
    * <p>The type of content in the hub.</p>
    */
-  HubContentType: HubContentType | string | undefined;
+  HubContentType: HubContentType | undefined;
 
   /**
    * @public
@@ -3847,7 +4024,7 @@ export interface DescribeHubContentResponse {
    * @public
    * <p>The type of hub content.</p>
    */
-  HubContentType: HubContentType | string | undefined;
+  HubContentType: HubContentType | undefined;
 
   /**
    * @public
@@ -3907,7 +4084,7 @@ export interface DescribeHubContentResponse {
    * @public
    * <p>The status of the hub content.</p>
    */
-  HubContentStatus: HubContentStatus | string | undefined;
+  HubContentStatus: HubContentStatus | undefined;
 
   /**
    * @public
@@ -3986,7 +4163,7 @@ export interface DescribeHumanTaskUiResponse {
    * @public
    * <p>The status of the human task user interface (worker task template). Valid values are listed below.</p>
    */
-  HumanTaskUiStatus?: HumanTaskUiStatus | string;
+  HumanTaskUiStatus?: HumanTaskUiStatus;
 
   /**
    * @public
@@ -4024,7 +4201,7 @@ export interface FinalHyperParameterTuningJobObjectiveMetric {
    * <p>Select if you want to minimize or maximize the objective metric during hyperparameter
    *             tuning. </p>
    */
-  Type?: HyperParameterTuningJobObjectiveType | string;
+  Type?: HyperParameterTuningJobObjectiveType;
 
   /**
    * @public
@@ -4115,7 +4292,7 @@ export interface HyperParameterTrainingJobSummary {
    *             status
    *             of the training job.</p>
    */
-  TrainingJobStatus: TrainingJobStatus | string | undefined;
+  TrainingJobStatus: TrainingJobStatus | undefined;
 
   /**
    * @public
@@ -4172,7 +4349,7 @@ export interface HyperParameterTrainingJobSummary {
    *             </li>
    *          </ul>
    */
-  ObjectiveStatus?: ObjectiveStatus | string;
+  ObjectiveStatus?: ObjectiveStatus;
 }
 
 /**
@@ -4345,7 +4522,7 @@ export interface DescribeHyperParameterTuningJobResponse {
    * <p>The status of the tuning job: InProgress, Completed, Failed, Stopping, or
    *             Stopped.</p>
    */
-  HyperParameterTuningJobStatus: HyperParameterTuningJobStatus | string | undefined;
+  HyperParameterTuningJobStatus: HyperParameterTuningJobStatus | undefined;
 
   /**
    * @public
@@ -4508,7 +4685,7 @@ export interface DescribeImageResponse {
    * @public
    * <p>The status of the image.</p>
    */
-  ImageStatus?: ImageStatus | string;
+  ImageStatus?: ImageStatus;
 
   /**
    * @public
@@ -4607,7 +4784,7 @@ export interface DescribeImageVersionResponse {
    * @public
    * <p>The status of the version.</p>
    */
-  ImageVersionStatus?: ImageVersionStatus | string;
+  ImageVersionStatus?: ImageVersionStatus;
 
   /**
    * @public
@@ -4643,7 +4820,7 @@ export interface DescribeImageVersionResponse {
    *             </li>
    *          </ul>
    */
-  VendorGuidance?: VendorGuidance | string;
+  VendorGuidance?: VendorGuidance;
 
   /**
    * @public
@@ -4663,7 +4840,7 @@ export interface DescribeImageVersionResponse {
    *             </li>
    *          </ul>
    */
-  JobType?: JobType | string;
+  JobType?: JobType;
 
   /**
    * @public
@@ -4691,7 +4868,7 @@ export interface DescribeImageVersionResponse {
    *             </li>
    *          </ul>
    */
-  Processor?: Processor | string;
+  Processor?: Processor;
 
   /**
    * @public
@@ -4740,7 +4917,7 @@ export interface EndpointMetadata {
    *            The status of the endpoint. For possible values of the status of an endpoint, see <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_EndpointSummary.html">EndpointSummary</a>.
    *        </p>
    */
-  EndpointStatus?: EndpointStatus | string;
+  EndpointStatus?: EndpointStatus;
 
   /**
    * @public
@@ -4824,7 +5001,7 @@ export interface ModelVariantConfigSummary {
    *             </li>
    *          </ul>
    */
-  Status: ModelVariantStatus | string | undefined;
+  Status: ModelVariantStatus | undefined;
 }
 
 /**
@@ -4867,7 +5044,7 @@ export interface DescribeInferenceExperimentResponse {
    * @public
    * <p>The type of the inference experiment.</p>
    */
-  Type: InferenceExperimentType | string | undefined;
+  Type: InferenceExperimentType | undefined;
 
   /**
    * @public
@@ -4926,7 +5103,7 @@ export interface DescribeInferenceExperimentResponse {
    *             </li>
    *          </ul>
    */
-  Status: InferenceExperimentStatus | string | undefined;
+  Status: InferenceExperimentStatus | undefined;
 
   /**
    * @public
@@ -5084,7 +5261,7 @@ export interface EndpointOutputConfiguration {
    * @public
    * <p>The instance type recommended by Amazon SageMaker Inference Recommender.</p>
    */
-  InstanceType?: ProductionVariantInstanceType | string;
+  InstanceType?: ProductionVariantInstanceType;
 
   /**
    * @public
@@ -5284,7 +5461,7 @@ export interface DescribeInferenceRecommendationsJobResponse {
    * @public
    * <p>The job type that you provided when you initiated the job.</p>
    */
-  JobType: RecommendationJobType | string | undefined;
+  JobType: RecommendationJobType | undefined;
 
   /**
    * @public
@@ -5303,7 +5480,7 @@ export interface DescribeInferenceRecommendationsJobResponse {
    * @public
    * <p>The status of the job.</p>
    */
-  Status: RecommendationJobStatus | string | undefined;
+  Status: RecommendationJobStatus | undefined;
 
   /**
    * @public
@@ -5447,7 +5624,7 @@ export interface DescribeLabelingJobResponse {
    * @public
    * <p>The processing status of the labeling job. </p>
    */
-  LabelingJobStatus: LabelingJobStatus | string | undefined;
+  LabelingJobStatus: LabelingJobStatus | undefined;
 
   /**
    * @public
@@ -5772,8 +5949,7 @@ export interface DescribeModelOutput {
 export interface DescribeModelBiasJobDefinitionRequest {
   /**
    * @public
-   * <p>The name of the model bias job definition. The name must be unique within an Amazon Web Services Region
-   *          in the Amazon Web Services account.</p>
+   * <p>The name of the model bias job definition. The name must be unique within an Amazon Web Services Region in the Amazon Web Services account.</p>
    */
   JobDefinitionName: string | undefined;
 }
@@ -5790,8 +5966,8 @@ export interface DescribeModelBiasJobDefinitionResponse {
 
   /**
    * @public
-   * <p>The name of the bias job definition. The name must be unique within an Amazon Web Services Region in the
-   *          Amazon Web Services account.</p>
+   * <p>The name of the bias job definition. The name must be unique within an Amazon Web Services
+   *    Region in the Amazon Web Services account.</p>
    */
   JobDefinitionName: string | undefined;
 
@@ -5839,9 +6015,8 @@ export interface DescribeModelBiasJobDefinitionResponse {
 
   /**
    * @public
-   * <p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that
-   *          has read permission to the input data location and write permission to the output data
-   *          location in Amazon S3.</p>
+   * <p>The Amazon Resource Name (ARN) of the IAM role that has read permission to the
+   *    input data location and write permission to the output data location in Amazon S3.</p>
    */
   RoleArn: string | undefined;
 
@@ -5938,7 +6113,7 @@ export interface DescribeModelCardResponse {
    *             </li>
    *          </ul>
    */
-  ModelCardStatus: ModelCardStatus | string | undefined;
+  ModelCardStatus: ModelCardStatus | undefined;
 
   /**
    * @public
@@ -6002,7 +6177,7 @@ export interface DescribeModelCardResponse {
    *             </li>
    *          </ul>
    */
-  ModelCardProcessingStatus?: ModelCardProcessingStatus | string;
+  ModelCardProcessingStatus?: ModelCardProcessingStatus;
 }
 
 /**
@@ -6079,7 +6254,7 @@ export interface DescribeModelCardExportJobResponse {
    *             </li>
    *          </ul>
    */
-  Status: ModelCardExportJobStatus | string | undefined;
+  Status: ModelCardExportJobStatus | undefined;
 
   /**
    * @public
@@ -6131,7 +6306,7 @@ export interface DescribeModelExplainabilityJobDefinitionRequest {
   /**
    * @public
    * <p>The name of the model explainability job definition. The name must be unique within an
-   *          Amazon Web Services Region in the Amazon Web Services account.</p>
+   *             Amazon Web Services Region in the Amazon Web Services account.</p>
    */
   JobDefinitionName: string | undefined;
 }
@@ -6148,8 +6323,7 @@ export interface DescribeModelExplainabilityJobDefinitionResponse {
 
   /**
    * @public
-   * <p>The name of the explainability job definition. The name must be unique within an Amazon Web Services
-   *          Region in the Amazon Web Services account.</p>
+   * <p>The name of the explainability job definition. The name must be unique within an Amazon Web Services Region in the Amazon Web Services account.</p>
    */
   JobDefinitionName: string | undefined;
 
@@ -6167,8 +6341,7 @@ export interface DescribeModelExplainabilityJobDefinitionResponse {
 
   /**
    * @public
-   * <p>Configures the model explainability job to run a specified Docker container
-   *          image.</p>
+   * <p>Configures the model explainability job to run a specified Docker container image.</p>
    */
   ModelExplainabilityAppSpecification: ModelExplainabilityAppSpecification | undefined;
 
@@ -6198,9 +6371,8 @@ export interface DescribeModelExplainabilityJobDefinitionResponse {
 
   /**
    * @public
-   * <p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that
-   *          has read permission to the input data location and write permission to the output data
-   *          location in Amazon S3.</p>
+   * <p>The Amazon Resource Name (ARN) of the IAM role that has read permission to the
+   *    input data location and write permission to the output data location in Amazon S3.</p>
    */
   RoleArn: string | undefined;
 
@@ -6255,7 +6427,7 @@ export interface ModelPackageStatusItem {
    * @public
    * <p>The current status.</p>
    */
-  Status: DetailedModelPackageStatus | string | undefined;
+  Status: DetailedModelPackageStatus | undefined;
 
   /**
    * @public
@@ -6347,7 +6519,7 @@ export interface DescribeModelPackageOutput {
    * @public
    * <p>The current status of the model package.</p>
    */
-  ModelPackageStatus: ModelPackageStatus | string | undefined;
+  ModelPackageStatus: ModelPackageStatus | undefined;
 
   /**
    * @public
@@ -6365,7 +6537,7 @@ export interface DescribeModelPackageOutput {
    * @public
    * <p>The approval status of the model package.</p>
    */
-  ModelApprovalStatus?: ModelApprovalStatus | string;
+  ModelApprovalStatus?: ModelApprovalStatus;
 
   /**
    * @public
@@ -6422,31 +6594,37 @@ export interface DescribeModelPackageOutput {
   /**
    * @public
    * <p>The machine learning domain of the model package you specified. Common machine
-   *     learning domains include computer vision and natural language processing.</p>
+   *             learning domains include computer vision and natural language processing.</p>
    */
   Domain?: string;
 
   /**
    * @public
    * <p>The machine learning task you specified that your model package accomplishes.
-   *      Common machine learning tasks include object detection and image classification.</p>
+   *             Common machine learning tasks include object detection and image classification.</p>
    */
   Task?: string;
 
   /**
    * @public
    * <p>The Amazon Simple Storage Service (Amazon S3) path where the sample payload are stored. This path points to a single
-   *     gzip compressed tar archive (.tar.gz suffix).</p>
+   *             gzip compressed tar archive (.tar.gz suffix).</p>
    */
   SamplePayloadUrl?: string;
 
   /**
    * @public
    * <p>An array of additional Inference Specification objects. Each additional
-   *     Inference Specification specifies artifacts based on this model package that can
-   *     be used on inference endpoints. Generally used with SageMaker Neo to store the compiled artifacts.</p>
+   *             Inference Specification specifies artifacts based on this model package that can
+   *             be used on inference endpoints. Generally used with SageMaker Neo to store the compiled artifacts.</p>
    */
   AdditionalInferenceSpecifications?: AdditionalInferenceSpecificationDefinition[];
+
+  /**
+   * @public
+   * <p>Indicates if you want to skip model validation.</p>
+   */
+  SkipModelValidation?: SkipModelValidation;
 }
 
 /**
@@ -6517,7 +6695,7 @@ export interface DescribeModelPackageGroupOutput {
    * @public
    * <p>The status of the model group.</p>
    */
-  ModelPackageGroupStatus: ModelPackageGroupStatus | string | undefined;
+  ModelPackageGroupStatus: ModelPackageGroupStatus | undefined;
 }
 
 /**
@@ -6526,8 +6704,8 @@ export interface DescribeModelPackageGroupOutput {
 export interface DescribeModelQualityJobDefinitionRequest {
   /**
    * @public
-   * <p>The name of the model quality job. The name must be unique within an Amazon Web Services Region in the
-   *          Amazon Web Services account.</p>
+   * <p>The name of the model quality job. The name must be unique within an Amazon Web Services
+   *          Region in the Amazon Web Services account.</p>
    */
   JobDefinitionName: string | undefined;
 }
@@ -6544,8 +6722,7 @@ export interface DescribeModelQualityJobDefinitionResponse {
 
   /**
    * @public
-   * <p>The name of the quality job definition. The name must be unique within an Amazon Web Services Region in
-   *          the Amazon Web Services account.</p>
+   * <p>The name of the quality job definition. The name must be unique within an Amazon Web Services Region in the Amazon Web Services account.</p>
    */
   JobDefinitionName: string | undefined;
 
@@ -6593,8 +6770,8 @@ export interface DescribeModelQualityJobDefinitionResponse {
 
   /**
    * @public
-   * <p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker can assume to
-   *          perform tasks on your behalf.</p>
+   * <p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker can
+   *    assume to perform tasks on your behalf.</p>
    */
   RoleArn: string | undefined;
 
@@ -6668,7 +6845,7 @@ export interface MonitoringExecutionSummary {
    * @public
    * <p>The status of the monitoring job.</p>
    */
-  MonitoringExecutionStatus: ExecutionStatus | string | undefined;
+  MonitoringExecutionStatus: ExecutionStatus | undefined;
 
   /**
    * @public
@@ -6698,7 +6875,7 @@ export interface MonitoringExecutionSummary {
    * @public
    * <p>The type of the monitoring job.</p>
    */
-  MonitoringType?: MonitoringType | string;
+  MonitoringType?: MonitoringType;
 }
 
 /**
@@ -6737,7 +6914,7 @@ export interface DescribeMonitoringScheduleResponse {
    * @public
    * <p>The status of an monitoring job.</p>
    */
-  MonitoringScheduleStatus: ScheduleStatus | string | undefined;
+  MonitoringScheduleStatus: ScheduleStatus | undefined;
 
   /**
    * @public
@@ -6765,7 +6942,7 @@ export interface DescribeMonitoringScheduleResponse {
    *             </li>
    *          </ul>
    */
-  MonitoringType?: MonitoringType | string;
+  MonitoringType?: MonitoringType;
 
   /**
    * @public
@@ -6788,8 +6965,8 @@ export interface DescribeMonitoringScheduleResponse {
 
   /**
    * @public
-   * <p>The configuration object that specifies the monitoring schedule and defines the
-   *          monitoring job.</p>
+   * <p>The configuration object that specifies the monitoring schedule and defines the monitoring
+   *    job.</p>
    */
   MonitoringScheduleConfig: MonitoringScheduleConfig | undefined;
 
@@ -6856,7 +7033,7 @@ export interface DescribeNotebookInstanceOutput {
    * @public
    * <p>The status of the notebook instance.</p>
    */
-  NotebookInstanceStatus?: NotebookInstanceStatus | string;
+  NotebookInstanceStatus?: NotebookInstanceStatus;
 
   /**
    * @public
@@ -6875,7 +7052,7 @@ export interface DescribeNotebookInstanceOutput {
    * @public
    * <p>The type of ML compute instance running on the notebook instance.</p>
    */
-  InstanceType?: _InstanceType | string;
+  InstanceType?: _InstanceType;
 
   /**
    * @public
@@ -6940,7 +7117,7 @@ export interface DescribeNotebookInstanceOutput {
    *             internet access, and cannot connect to SageMaker training and endpoint services.</p>
    *          <p>For more information, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/appendix-additional-considerations.html#appendix-notebook-and-internet-access">Notebook Instances Are Internet-Enabled by Default</a>.</p>
    */
-  DirectInternetAccess?: DirectInternetAccess | string;
+  DirectInternetAccess?: DirectInternetAccess;
 
   /**
    * @public
@@ -6955,7 +7132,7 @@ export interface DescribeNotebookInstanceOutput {
    *             instance. For more information, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html">Using Elastic Inference in
    *             Amazon SageMaker</a>.</p>
    */
-  AcceleratorTypes?: (NotebookInstanceAcceleratorType | string)[];
+  AcceleratorTypes?: NotebookInstanceAcceleratorType[];
 
   /**
    * @public
@@ -6989,7 +7166,7 @@ export interface DescribeNotebookInstanceOutput {
    *                 users.</p>
    *          </note>
    */
-  RootAccess?: RootAccess | string;
+  RootAccess?: RootAccess;
 
   /**
    * @public
@@ -7125,7 +7302,7 @@ export interface DescribePipelineResponse {
    * @public
    * <p>The status of the pipeline execution.</p>
    */
-  PipelineStatus?: PipelineStatus | string;
+  PipelineStatus?: PipelineStatus;
 
   /**
    * @public
@@ -7263,8 +7440,12 @@ export interface SelectiveExecutionConfig {
    *         Used to copy input collaterals needed for the selected steps to run.
    *         The execution status of the pipeline can be either <code>Failed</code>
    *         or <code>Success</code>.</p>
+   *          <p>This field is required if the steps you specify for
+   *           <code>SelectedSteps</code> depend on output collaterals from any non-specified pipeline
+   *           steps. For more information, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/pipelines-selective-ex.html">Selective
+   *           Execution for Pipeline Steps</a>.</p>
    */
-  SourcePipelineExecutionArn: string | undefined;
+  SourcePipelineExecutionArn?: string;
 
   /**
    * @public
@@ -7300,7 +7481,7 @@ export interface DescribePipelineExecutionResponse {
    * @public
    * <p>The status of the pipeline execution.</p>
    */
-  PipelineExecutionStatus?: PipelineExecutionStatus | string;
+  PipelineExecutionStatus?: PipelineExecutionStatus;
 
   /**
    * @public
@@ -7465,7 +7646,7 @@ export interface DescribeProcessingJobResponse {
    * @public
    * <p>Provides the status of a processing job.</p>
    */
-  ProcessingJobStatus: ProcessingJobStatus | string | undefined;
+  ProcessingJobStatus: ProcessingJobStatus | undefined;
 
   /**
    * @public
@@ -7645,7 +7826,7 @@ export interface DescribeProjectOutput {
    * @public
    * <p>The status of the project.</p>
    */
-  ProjectStatus: ProjectStatus | string | undefined;
+  ProjectStatus: ProjectStatus | undefined;
 
   /**
    * @public
@@ -7742,7 +7923,7 @@ export interface DescribeSpaceResponse {
    * @public
    * <p>The status.</p>
    */
-  Status?: SpaceStatus | string;
+  Status?: SpaceStatus;
 
   /**
    * @public
@@ -7818,7 +7999,7 @@ export interface DescribeStudioLifecycleConfigResponse {
    * @public
    * <p>The App type that the Lifecycle Configuration is attached to.</p>
    */
-  StudioLifecycleConfigAppType?: StudioLifecycleConfigAppType | string;
+  StudioLifecycleConfigAppType?: StudioLifecycleConfigAppType;
 }
 
 /**
@@ -7935,7 +8116,7 @@ export interface ProfilerRuleEvaluationStatus {
    * @public
    * <p>Status of the rule evaluation.</p>
    */
-  RuleEvaluationStatus?: RuleEvaluationStatus | string;
+  RuleEvaluationStatus?: RuleEvaluationStatus;
 
   /**
    * @public
@@ -8099,7 +8280,7 @@ export interface SecondaryStatusTransition {
    *             </li>
    *          </ul>
    */
-  Status: SecondaryStatus | string | undefined;
+  Status: SecondaryStatus | undefined;
 
   /**
    * @public
@@ -8234,7 +8415,7 @@ export interface WarmPoolStatus {
    *             </li>
    *          </ul>
    */
-  Status: WarmPoolResourceStatus | string | undefined;
+  Status: WarmPoolResourceStatus | undefined;
 
   /**
    * @public
@@ -8327,7 +8508,7 @@ export interface DescribeTrainingJobResponse {
    *          </ul>
    *          <p>For more detailed information, see <code>SecondaryStatus</code>. </p>
    */
-  TrainingJobStatus: TrainingJobStatus | string | undefined;
+  TrainingJobStatus: TrainingJobStatus | undefined;
 
   /**
    * @public
@@ -8438,7 +8619,7 @@ export interface DescribeTrainingJobResponse {
    *             </li>
    *          </ul>
    */
-  SecondaryStatus: SecondaryStatus | string | undefined;
+  SecondaryStatus: SecondaryStatus | undefined;
 
   /**
    * @public
@@ -8682,7 +8863,7 @@ export interface DescribeTrainingJobResponse {
    * @public
    * <p>Profiling status of a training job.</p>
    */
-  ProfilingStatus?: ProfilingStatus | string;
+  ProfilingStatus?: ProfilingStatus;
 
   /**
    * @public
@@ -8754,7 +8935,7 @@ export interface DescribeTransformJobResponse {
    *             status of the transform job. If the transform job failed, the reason
    *             is returned in the <code>FailureReason</code> field.</p>
    */
-  TransformJobStatus: TransformJobStatus | string | undefined;
+  TransformJobStatus: TransformJobStatus | undefined;
 
   /**
    * @public
@@ -8812,7 +8993,7 @@ export interface DescribeTransformJobResponse {
    *                 <code>Line</code>, <code>RecordIO</code>, or
    *             <code>TFRecord</code>.</p>
    */
-  BatchStrategy?: BatchStrategy | string;
+  BatchStrategy?: BatchStrategy;
 
   /**
    * @public
@@ -9302,7 +9483,7 @@ export interface DescribeUserProfileResponse {
    * @public
    * <p>The status.</p>
    */
-  Status?: UserProfileStatus | string;
+  Status?: UserProfileStatus;
 
   /**
    * @public
@@ -9521,7 +9702,7 @@ export interface Workforce {
    * @public
    * <p>The status of your workforce.</p>
    */
-  Status?: WorkforceStatus | string;
+  Status?: WorkforceStatus;
 
   /**
    * @public
@@ -9782,7 +9963,7 @@ export interface DeviceDeploymentSummary {
    * @public
    * <p>The deployment status of the device.</p>
    */
-  DeviceDeploymentStatus?: DeviceDeploymentStatus | string;
+  DeviceDeploymentStatus?: DeviceDeploymentStatus;
 
   /**
    * @public
@@ -10015,7 +10196,7 @@ export interface DomainDetails {
    * @public
    * <p>The status.</p>
    */
-  Status?: DomainStatus | string;
+  Status?: DomainStatus;
 
   /**
    * @public
@@ -10086,7 +10267,7 @@ export interface DomainSettingsForUpdate {
    *                 <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_control-access_monitor.html">sts:SourceIdentity key</a>. This configuration can only be modified if there
    *             are no apps in the <code>InService</code> or <code>Pending</code> state.</p>
    */
-  ExecutionRoleIdentityConfig?: ExecutionRoleIdentityConfig | string;
+  ExecutionRoleIdentityConfig?: ExecutionRoleIdentityConfig;
 
   /**
    * @public
@@ -10279,7 +10460,7 @@ export interface Edge {
    * <p>The type of the Association(Edge) between the source and destination. For example <code>ContributedTo</code>,
    *          <code>Produced</code>, or <code>DerivedFrom</code>.</p>
    */
-  AssociationType?: AssociationEdgeType | string;
+  AssociationType?: AssociationEdgeType;
 }
 
 /**
@@ -10399,7 +10580,7 @@ export interface EdgePackagingJobSummary {
    * @public
    * <p>The status of the edge packaging job.</p>
    */
-  EdgePackagingJobStatus: EdgePackagingJobStatus | string | undefined;
+  EdgePackagingJobStatus: EdgePackagingJobStatus | undefined;
 
   /**
    * @public
@@ -10514,13 +10695,13 @@ export interface MonitoringSchedule {
    *             </li>
    *          </ul>
    */
-  MonitoringScheduleStatus?: ScheduleStatus | string;
+  MonitoringScheduleStatus?: ScheduleStatus;
 
   /**
    * @public
    * <p>The type of the monitoring job definition to schedule.</p>
    */
-  MonitoringType?: MonitoringType | string;
+  MonitoringType?: MonitoringType;
 
   /**
    * @public
@@ -10606,7 +10787,7 @@ export interface Endpoint {
    * @public
    * <p>The status of the endpoint.</p>
    */
-  EndpointStatus: EndpointStatus | string | undefined;
+  EndpointStatus: EndpointStatus | undefined;
 
   /**
    * @public
@@ -10661,742 +10842,6 @@ export const EndpointConfigSortKey = {
  * @public
  */
 export type EndpointConfigSortKey = (typeof EndpointConfigSortKey)[keyof typeof EndpointConfigSortKey];
-
-/**
- * @public
- * <p>Provides summary information for an endpoint configuration.</p>
- */
-export interface EndpointConfigSummary {
-  /**
-   * @public
-   * <p>The name of the endpoint configuration.</p>
-   */
-  EndpointConfigName: string | undefined;
-
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN) of the endpoint configuration.</p>
-   */
-  EndpointConfigArn: string | undefined;
-
-  /**
-   * @public
-   * <p>A timestamp that shows when the endpoint configuration was created.</p>
-   */
-  CreationTime: Date | undefined;
-}
-
-/**
- * @public
- * @enum
- */
-export const EndpointSortKey = {
-  CreationTime: "CreationTime",
-  Name: "Name",
-  Status: "Status",
-} as const;
-
-/**
- * @public
- */
-export type EndpointSortKey = (typeof EndpointSortKey)[keyof typeof EndpointSortKey];
-
-/**
- * @public
- * <p>Provides summary information for an endpoint.</p>
- */
-export interface EndpointSummary {
-  /**
-   * @public
-   * <p>The name of the endpoint.</p>
-   */
-  EndpointName: string | undefined;
-
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN) of the endpoint.</p>
-   */
-  EndpointArn: string | undefined;
-
-  /**
-   * @public
-   * <p>A timestamp that shows when the endpoint was created.</p>
-   */
-  CreationTime: Date | undefined;
-
-  /**
-   * @public
-   * <p>A timestamp that shows when the endpoint was last modified.</p>
-   */
-  LastModifiedTime: Date | undefined;
-
-  /**
-   * @public
-   * <p>The status of the endpoint.</p>
-   *          <ul>
-   *             <li>
-   *                <p>
-   *                   <code>OutOfService</code>: Endpoint is not available to take incoming
-   *                     requests.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>Creating</code>: <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html">CreateEndpoint</a> is executing.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>Updating</code>: <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpoint.html">UpdateEndpoint</a> or <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html">UpdateEndpointWeightsAndCapacities</a> is executing.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>SystemUpdating</code>: Endpoint is undergoing maintenance and cannot be
-   *                     updated or deleted or re-scaled until it has completed. This maintenance
-   *                     operation does not change any customer-specified values such as VPC config, KMS
-   *                     encryption, model, instance type, or instance count.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>RollingBack</code>: Endpoint fails to scale up or down or change its
-   *                     variant weight and is in the process of rolling back to its previous
-   *                     configuration. Once the rollback completes, endpoint returns to an
-   *                         <code>InService</code> status. This transitional status only applies to an
-   *                     endpoint that has autoscaling enabled and is undergoing variant weight or
-   *                     capacity changes as part of an <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html">UpdateEndpointWeightsAndCapacities</a> call or when the <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateEndpointWeightsAndCapacities.html">UpdateEndpointWeightsAndCapacities</a> operation is called
-   *                     explicitly.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>InService</code>: Endpoint is available to process incoming
-   *                     requests.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>Deleting</code>: <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html">DeleteEndpoint</a> is executing.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>Failed</code>: Endpoint could not be created, updated, or re-scaled. Use
-   *                         <code>DescribeEndpointOutput$FailureReason</code> for information about the
-   *                     failure. <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteEndpoint.html">DeleteEndpoint</a> is the only operation that can be performed on a
-   *                     failed endpoint.</p>
-   *             </li>
-   *          </ul>
-   *          <p>To get a list of endpoints with a specified status, use the <code>StatusEquals</code>
-   *             filter with a call to <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListEndpoints.html">ListEndpoints</a>.</p>
-   */
-  EndpointStatus: EndpointStatus | string | undefined;
-}
-
-/**
- * @public
- * <p>The properties of an experiment as returned by the <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html">Search</a> API.</p>
- */
-export interface Experiment {
-  /**
-   * @public
-   * <p>The name of the experiment.</p>
-   */
-  ExperimentName?: string;
-
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN) of the experiment.</p>
-   */
-  ExperimentArn?: string;
-
-  /**
-   * @public
-   * <p>The name of the experiment as displayed. If <code>DisplayName</code> isn't specified,
-   *         <code>ExperimentName</code> is displayed.</p>
-   */
-  DisplayName?: string;
-
-  /**
-   * @public
-   * <p>The source of the experiment.</p>
-   */
-  Source?: ExperimentSource;
-
-  /**
-   * @public
-   * <p>The description of the experiment.</p>
-   */
-  Description?: string;
-
-  /**
-   * @public
-   * <p>When the experiment was created.</p>
-   */
-  CreationTime?: Date;
-
-  /**
-   * @public
-   * <p>Who created the experiment.</p>
-   */
-  CreatedBy?: UserContext;
-
-  /**
-   * @public
-   * <p>When the experiment was last modified.</p>
-   */
-  LastModifiedTime?: Date;
-
-  /**
-   * @public
-   * <p>Information about the user who created or modified an experiment, trial, trial
-   *       component, lineage group, project, or model card.</p>
-   */
-  LastModifiedBy?: UserContext;
-
-  /**
-   * @public
-   * <p>The list of tags that are associated with the experiment. You can use <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html">Search</a> API to search on the tags.</p>
-   */
-  Tags?: Tag[];
-}
-
-/**
- * @public
- * <p>A summary of the properties of an experiment. To get the complete set of properties, call
- *       the <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeExperiment.html">DescribeExperiment</a> API and provide the
- *       <code>ExperimentName</code>.</p>
- */
-export interface ExperimentSummary {
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN) of the experiment.</p>
-   */
-  ExperimentArn?: string;
-
-  /**
-   * @public
-   * <p>The name of the experiment.</p>
-   */
-  ExperimentName?: string;
-
-  /**
-   * @public
-   * <p>The name of the experiment as displayed. If <code>DisplayName</code> isn't specified,
-   *         <code>ExperimentName</code> is displayed.</p>
-   */
-  DisplayName?: string;
-
-  /**
-   * @public
-   * <p>The source of the experiment.</p>
-   */
-  ExperimentSource?: ExperimentSource;
-
-  /**
-   * @public
-   * <p>When the experiment was created.</p>
-   */
-  CreationTime?: Date;
-
-  /**
-   * @public
-   * <p>When the experiment was last modified.</p>
-   */
-  LastModifiedTime?: Date;
-}
-
-/**
- * @public
- * <p>The container for the metadata for Fail step.</p>
- */
-export interface FailStepMetadata {
-  /**
-   * @public
-   * <p>A message that you define and then is processed and rendered by
-   *          the Fail step when the error occurs.</p>
-   */
-  ErrorMessage?: string;
-}
-
-/**
- * @public
- * <p>Amazon SageMaker Feature Store stores features in a collection called Feature Group. A
- *          Feature Group can be visualized as a table which has rows, with a unique identifier for
- *          each row where each column in the table is a feature. In principle, a Feature Group is
- *          composed of features and values per features.</p>
- */
-export interface FeatureGroup {
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN) of a <code>FeatureGroup</code>.</p>
-   */
-  FeatureGroupArn?: string;
-
-  /**
-   * @public
-   * <p>The name of the <code>FeatureGroup</code>.</p>
-   */
-  FeatureGroupName?: string;
-
-  /**
-   * @public
-   * <p>The name of the <code>Feature</code> whose value uniquely identifies a
-   *             <code>Record</code> defined in the <code>FeatureGroup</code>
-   *             <code>FeatureDefinitions</code>.</p>
-   */
-  RecordIdentifierFeatureName?: string;
-
-  /**
-   * @public
-   * <p>The name of the feature that stores the <code>EventTime</code> of a Record in a
-   *             <code>FeatureGroup</code>.</p>
-   *          <p>A <code>EventTime</code> is point in time when a new event occurs that corresponds to
-   *          the creation or update of a <code>Record</code> in <code>FeatureGroup</code>. All
-   *             <code>Records</code> in the <code>FeatureGroup</code> must have a corresponding
-   *             <code>EventTime</code>.</p>
-   */
-  EventTimeFeatureName?: string;
-
-  /**
-   * @public
-   * <p>A list of <code>Feature</code>s. Each <code>Feature</code> must include a
-   *             <code>FeatureName</code> and a <code>FeatureType</code>. </p>
-   *          <p>Valid <code>FeatureType</code>s are <code>Integral</code>, <code>Fractional</code> and
-   *             <code>String</code>. </p>
-   *          <p>
-   *             <code>FeatureName</code>s cannot be any of the following: <code>is_deleted</code>,
-   *             <code>write_time</code>, <code>api_invocation_time</code>.</p>
-   *          <p>You can create up to 2,500 <code>FeatureDefinition</code>s per
-   *          <code>FeatureGroup</code>.</p>
-   */
-  FeatureDefinitions?: FeatureDefinition[];
-
-  /**
-   * @public
-   * <p>The time a <code>FeatureGroup</code> was created.</p>
-   */
-  CreationTime?: Date;
-
-  /**
-   * @public
-   * <p>A timestamp indicating the last time you updated the feature group.</p>
-   */
-  LastModifiedTime?: Date;
-
-  /**
-   * @public
-   * <p>Use this to specify the Amazon Web Services Key Management Service (KMS) Key ID, or
-   *             <code>KMSKeyId</code>, for at rest data encryption. You can turn
-   *             <code>OnlineStore</code> on or off by specifying the <code>EnableOnlineStore</code> flag
-   *          at General Assembly.</p>
-   *          <p>The default value is <code>False</code>.</p>
-   */
-  OnlineStoreConfig?: OnlineStoreConfig;
-
-  /**
-   * @public
-   * <p>The configuration of an <code>OfflineStore</code>.</p>
-   *          <p>Provide an <code>OfflineStoreConfig</code> in a request to
-   *             <code>CreateFeatureGroup</code> to create an <code>OfflineStore</code>.</p>
-   *          <p>To encrypt an <code>OfflineStore</code> using at rest data encryption, specify Amazon Web Services Key Management Service (KMS) key ID, or <code>KMSKeyId</code>, in
-   *             <code>S3StorageConfig</code>.</p>
-   */
-  OfflineStoreConfig?: OfflineStoreConfig;
-
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN) of the IAM execution role used to create the feature
-   *          group.</p>
-   */
-  RoleArn?: string;
-
-  /**
-   * @public
-   * <p>A <code>FeatureGroup</code> status.</p>
-   */
-  FeatureGroupStatus?: FeatureGroupStatus | string;
-
-  /**
-   * @public
-   * <p>The status of <code>OfflineStore</code>.</p>
-   */
-  OfflineStoreStatus?: OfflineStoreStatus;
-
-  /**
-   * @public
-   * <p>A value that indicates whether the feature group was updated successfully.</p>
-   */
-  LastUpdateStatus?: LastUpdateStatus;
-
-  /**
-   * @public
-   * <p>The reason that the <code>FeatureGroup</code> failed to be replicated in the
-   *             <code>OfflineStore</code>. This is failure may be due to a failure to create a
-   *             <code>FeatureGroup</code> in or delete a <code>FeatureGroup</code> from the
-   *             <code>OfflineStore</code>.</p>
-   */
-  FailureReason?: string;
-
-  /**
-   * @public
-   * <p>A free form description of a <code>FeatureGroup</code>.</p>
-   */
-  Description?: string;
-
-  /**
-   * @public
-   * <p>Tags used to define a <code>FeatureGroup</code>.</p>
-   */
-  Tags?: Tag[];
-}
-
-/**
- * @public
- * @enum
- */
-export const FeatureGroupSortBy = {
-  CREATION_TIME: "CreationTime",
-  FEATURE_GROUP_STATUS: "FeatureGroupStatus",
-  NAME: "Name",
-  OFFLINE_STORE_STATUS: "OfflineStoreStatus",
-} as const;
-
-/**
- * @public
- */
-export type FeatureGroupSortBy = (typeof FeatureGroupSortBy)[keyof typeof FeatureGroupSortBy];
-
-/**
- * @public
- * @enum
- */
-export const FeatureGroupSortOrder = {
-  ASCENDING: "Ascending",
-  DESCENDING: "Descending",
-} as const;
-
-/**
- * @public
- */
-export type FeatureGroupSortOrder = (typeof FeatureGroupSortOrder)[keyof typeof FeatureGroupSortOrder];
-
-/**
- * @public
- * <p>The name, ARN, <code>CreationTime</code>, <code>FeatureGroup</code> values,
- *             <code>LastUpdatedTime</code> and <code>EnableOnlineStorage</code> status of a
- *             <code>FeatureGroup</code>.</p>
- */
-export interface FeatureGroupSummary {
-  /**
-   * @public
-   * <p>The name of <code>FeatureGroup</code>.</p>
-   */
-  FeatureGroupName: string | undefined;
-
-  /**
-   * @public
-   * <p>Unique identifier for the <code>FeatureGroup</code>.</p>
-   */
-  FeatureGroupArn: string | undefined;
-
-  /**
-   * @public
-   * <p>A timestamp indicating the time of creation time of the
-   *          <code>FeatureGroup</code>.</p>
-   */
-  CreationTime: Date | undefined;
-
-  /**
-   * @public
-   * <p>The status of a FeatureGroup. The status can be any of the following:
-   *             <code>Creating</code>, <code>Created</code>, <code>CreateFail</code>,
-   *             <code>Deleting</code> or <code>DetailFail</code>. </p>
-   */
-  FeatureGroupStatus?: FeatureGroupStatus | string;
-
-  /**
-   * @public
-   * <p>Notifies you if replicating data into the <code>OfflineStore</code> has failed. Returns
-   *          either: <code>Active</code> or <code>Blocked</code>.</p>
-   */
-  OfflineStoreStatus?: OfflineStoreStatus;
-}
-
-/**
- * @public
- * <p>The metadata for a feature. It can either be metadata that you specify, or metadata that
- *          is updated automatically.</p>
- */
-export interface FeatureMetadata {
-  /**
-   * @public
-   * <p>The Amazon Resource Number (ARN) of the feature group.</p>
-   */
-  FeatureGroupArn?: string;
-
-  /**
-   * @public
-   * <p>The name of the feature group containing the feature.</p>
-   */
-  FeatureGroupName?: string;
-
-  /**
-   * @public
-   * <p>The name of feature.</p>
-   */
-  FeatureName?: string;
-
-  /**
-   * @public
-   * <p>The data type of the feature.</p>
-   */
-  FeatureType?: FeatureType | string;
-
-  /**
-   * @public
-   * <p>A timestamp indicating when the feature was created.</p>
-   */
-  CreationTime?: Date;
-
-  /**
-   * @public
-   * <p>A timestamp indicating when the feature was last modified.</p>
-   */
-  LastModifiedTime?: Date;
-
-  /**
-   * @public
-   * <p>An optional description that you specify to better describe the feature.</p>
-   */
-  Description?: string;
-
-  /**
-   * @public
-   * <p>Optional key-value pairs that you specify to better describe the feature.</p>
-   */
-  Parameters?: FeatureParameter[];
-}
-
-/**
- * @public
- * @enum
- */
-export const Operator = {
-  CONTAINS: "Contains",
-  EQUALS: "Equals",
-  EXISTS: "Exists",
-  GREATER_THAN: "GreaterThan",
-  GREATER_THAN_OR_EQUAL_TO: "GreaterThanOrEqualTo",
-  IN: "In",
-  LESS_THAN: "LessThan",
-  LESS_THAN_OR_EQUAL_TO: "LessThanOrEqualTo",
-  NOT_EQUALS: "NotEquals",
-  NOT_EXISTS: "NotExists",
-} as const;
-
-/**
- * @public
- */
-export type Operator = (typeof Operator)[keyof typeof Operator];
-
-/**
- * @public
- * <p>A conditional statement for a search expression that includes a resource property, a
- *       Boolean operator, and a value. Resources that match the statement are returned in the
- *       results from the <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html">Search</a> API.</p>
- *          <p>If you specify a <code>Value</code>, but not an <code>Operator</code>, SageMaker uses the
- *       equals operator.</p>
- *          <p>In search, there are several property types:</p>
- *          <dl>
- *             <dt>Metrics</dt>
- *             <dd>
- *                <p>To define a metric filter, enter a value using the form
- *             <code>"Metrics.<name>"</code>, where <code><name></code> is
- *             a metric name. For example, the following filter searches for training jobs
- *             with an <code>"accuracy"</code> metric greater than
- *             <code>"0.9"</code>:</p>
- *                <p>
- *                   <code>\{</code>
- *                </p>
- *                <p>
- *                   <code>"Name": "Metrics.accuracy",</code>
- *                </p>
- *                <p>
- *                   <code>"Operator": "GreaterThan",</code>
- *                </p>
- *                <p>
- *                   <code>"Value": "0.9"</code>
- *                </p>
- *                <p>
- *                   <code>\}</code>
- *                </p>
- *             </dd>
- *             <dt>HyperParameters</dt>
- *             <dd>
- *                <p>To define a hyperparameter filter, enter a value with the form
- *             <code>"HyperParameters.<name>"</code>. Decimal hyperparameter
- *             values are treated as a decimal in a comparison if the specified
- *             <code>Value</code> is also a decimal value. If the specified
- *             <code>Value</code> is an integer, the decimal hyperparameter values are
- *             treated as integers. For example, the following filter is satisfied by
- *             training jobs with a <code>"learning_rate"</code> hyperparameter that is
- *             less than <code>"0.5"</code>:</p>
- *                <p>
- *                   <code> \{</code>
- *                </p>
- *                <p>
- *                   <code> "Name": "HyperParameters.learning_rate",</code>
- *                </p>
- *                <p>
- *                   <code> "Operator": "LessThan",</code>
- *                </p>
- *                <p>
- *                   <code> "Value": "0.5"</code>
- *                </p>
- *                <p>
- *                   <code> \}</code>
- *                </p>
- *             </dd>
- *             <dt>Tags</dt>
- *             <dd>
- *                <p>To define a tag filter, enter a value with the form
- *             <code>Tags.<key></code>.</p>
- *             </dd>
- *          </dl>
- */
-export interface Filter {
-  /**
-   * @public
-   * <p>A resource property name. For example, <code>TrainingJobName</code>. For
-   *       valid property names, see <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_SearchRecord.html">SearchRecord</a>.
-   *       You must specify a valid property for the resource.</p>
-   */
-  Name: string | undefined;
-
-  /**
-   * @public
-   * <p>A Boolean binary operator that is used to evaluate the filter. The operator field
-   *       contains one of the following values:</p>
-   *          <dl>
-   *             <dt>Equals</dt>
-   *             <dd>
-   *                <p>The value of <code>Name</code> equals <code>Value</code>.</p>
-   *             </dd>
-   *             <dt>NotEquals</dt>
-   *             <dd>
-   *                <p>The value of <code>Name</code> doesn't equal <code>Value</code>.</p>
-   *             </dd>
-   *             <dt>Exists</dt>
-   *             <dd>
-   *                <p>The <code>Name</code> property exists.</p>
-   *             </dd>
-   *             <dt>NotExists</dt>
-   *             <dd>
-   *                <p>The <code>Name</code> property does not exist.</p>
-   *             </dd>
-   *             <dt>GreaterThan</dt>
-   *             <dd>
-   *                <p>The value of <code>Name</code> is greater than <code>Value</code>.
-   *             Not supported for text properties.</p>
-   *             </dd>
-   *             <dt>GreaterThanOrEqualTo</dt>
-   *             <dd>
-   *                <p>The value of <code>Name</code> is greater than or equal to <code>Value</code>.
-   *             Not supported for text properties.</p>
-   *             </dd>
-   *             <dt>LessThan</dt>
-   *             <dd>
-   *                <p>The value of <code>Name</code> is less than <code>Value</code>.
-   *             Not supported for text properties.</p>
-   *             </dd>
-   *             <dt>LessThanOrEqualTo</dt>
-   *             <dd>
-   *                <p>The value of <code>Name</code> is less than or equal to <code>Value</code>.
-   *             Not supported for text properties.</p>
-   *             </dd>
-   *             <dt>In</dt>
-   *             <dd>
-   *                <p>The value of <code>Name</code> is one of the comma delimited strings in
-   *             <code>Value</code>. Only supported for text properties.</p>
-   *             </dd>
-   *             <dt>Contains</dt>
-   *             <dd>
-   *                <p>The value of <code>Name</code> contains the string <code>Value</code>.
-   *             Only supported for text properties.</p>
-   *                <p>A <code>SearchExpression</code> can include the <code>Contains</code> operator
-   *             multiple times when the value of <code>Name</code> is one of the following:</p>
-   *                <ul>
-   *                   <li>
-   *                      <p>
-   *                         <code>Experiment.DisplayName</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>Experiment.ExperimentName</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>Experiment.Tags</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>Trial.DisplayName</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>Trial.TrialName</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>Trial.Tags</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>TrialComponent.DisplayName</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>TrialComponent.TrialComponentName</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>TrialComponent.Tags</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>TrialComponent.InputArtifacts</code>
-   *                      </p>
-   *                   </li>
-   *                   <li>
-   *                      <p>
-   *                         <code>TrialComponent.OutputArtifacts</code>
-   *                      </p>
-   *                   </li>
-   *                </ul>
-   *                <p>A <code>SearchExpression</code> can include only one <code>Contains</code> operator
-   *             for all other values of <code>Name</code>. In these cases, if you include multiple
-   *             <code>Contains</code> operators in the <code>SearchExpression</code>, the result is
-   *             the following error message: "<code>'CONTAINS' operator usage limit of 1
-   *             exceeded.</code>"</p>
-   *             </dd>
-   *          </dl>
-   */
-  Operator?: Operator | string;
-
-  /**
-   * @public
-   * <p>A value used with <code>Name</code> and <code>Operator</code> to determine which
-   *         resources satisfy the filter's condition. For numerical properties, <code>Value</code>
-   *         must be an integer or floating-point decimal. For timestamp properties,
-   *         <code>Value</code> must be an ISO 8601 date-time string of the following format:
-   *         <code>YYYY-mm-dd'T'HH:MM:SS</code>.</p>
-   */
-  Value?: string;
-}
 
 /**
  * @internal

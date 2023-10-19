@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchLogsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchLogsClient";
@@ -50,6 +51,10 @@ export interface PutRetentionPolicyCommandOutput extends __MetadataBearer {}
  *         retention setting until 72 hours after the previous retention period ends. Alternatively,
  *         wait to change the retention setting until you confirm that the earlier log events are
  *         deleted. </p>
+ *             <p>When log events reach their retention setting they are marked for deletion. After
+ *         they are marked for deletion, they do not add to your archival storage costs anymore, even if
+ *         they are not actually deleted until later. These log events marked for deletion are also not
+ *         included when you use an API to retrieve the <code>storedBytes</code> value to see how many bytes a log group is storing.</p>
  *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -139,6 +144,10 @@ export class PutRetentionPolicyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Logs_20140328",
+        operation: "PutRetentionPolicy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

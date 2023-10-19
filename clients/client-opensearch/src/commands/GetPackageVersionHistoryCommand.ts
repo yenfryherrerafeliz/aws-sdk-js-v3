@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetPackageVersionHistoryRequest, GetPackageVersionHistoryResponse } from "../models/models_0";
@@ -59,6 +60,13 @@ export interface GetPackageVersionHistoryCommandOutput extends GetPackageVersion
  * //       PackageVersion: "STRING_VALUE",
  * //       CommitMessage: "STRING_VALUE",
  * //       CreatedAt: new Date("TIMESTAMP"),
+ * //       PluginProperties: { // PluginProperties
+ * //         Name: "STRING_VALUE",
+ * //         Description: "STRING_VALUE",
+ * //         Version: "STRING_VALUE",
+ * //         ClassName: "STRING_VALUE",
+ * //         UncompressedSizeInBytes: Number("long"),
+ * //       },
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -141,6 +149,10 @@ export class GetPackageVersionHistoryCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonOpenSearchService",
+        operation: "GetPackageVersionHistory",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AddTagsToResourceInput, AddTagsToResourceOutput } from "../models/models_0";
@@ -40,7 +41,6 @@ export interface AddTagsToResourceCommandOutput extends AddTagsToResourceOutput,
  *          resources, which you can use to categorize these resources. For example, you can categorize
  *          resources by purpose, owner, environment, or team. Each tag consists of a key and a value,
  *          which you define. You can add tags to the following Storage Gateway resources:</p>
- *
  *          <ul>
  *             <li>
  *                <p>Storage gateways of all types</p>
@@ -58,7 +58,6 @@ export interface AddTagsToResourceCommandOutput extends AddTagsToResourceOutput,
  *                <p>File System associations</p>
  *             </li>
  *          </ul>
- *
  *          <p>You can create a maximum of 50 tags for each resource. Virtual tapes and storage volumes
  *          that are recovered to a new gateway maintain their tags.</p>
  * @example
@@ -174,6 +173,10 @@ export class AddTagsToResourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "AddTagsToResource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

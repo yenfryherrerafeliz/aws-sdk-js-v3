@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeBuildClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeBuildClient";
@@ -51,8 +52,8 @@ export interface ImportSourceCredentialsCommandOutput extends ImportSourceCreden
  * const input = { // ImportSourceCredentialsInput
  *   username: "STRING_VALUE",
  *   token: "STRING_VALUE", // required
- *   serverType: "STRING_VALUE", // required
- *   authType: "STRING_VALUE", // required
+ *   serverType: "GITHUB" || "BITBUCKET" || "GITHUB_ENTERPRISE", // required
+ *   authType: "OAUTH" || "BASIC_AUTH" || "PERSONAL_ACCESS_TOKEN", // required
  *   shouldOverwrite: true || false,
  * };
  * const command = new ImportSourceCredentialsCommand(input);
@@ -133,6 +134,10 @@ export class ImportSourceCredentialsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: ImportSourceCredentialsInputFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeBuild_20161006",
+        operation: "ImportSourceCredentials",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

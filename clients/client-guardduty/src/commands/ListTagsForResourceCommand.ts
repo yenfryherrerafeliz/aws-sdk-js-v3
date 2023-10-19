@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GuardDutyClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GuardDutyClient";
@@ -37,8 +38,9 @@ export interface ListTagsForResourceCommandOutput extends ListTagsForResourceRes
 /**
  * @public
  * <p>Lists tags for a resource. Tagging is currently supported for detectors, finding filters,
- *       IP sets, threat intel sets, and publishing destination, with a limit of 50 tags per each
- *       resource. When invoked, this operation returns all assigned tags for a given resource.</p>
+ *        IP sets, threat intel sets, and publishing destination, with a limit of 50 tags per resource.
+ *       When invoked, this
+ *       operation returns all assigned tags for a given resource.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -127,6 +129,10 @@ export class ListTagsForResourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "GuardDutyAPIService",
+        operation: "ListTagsForResource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

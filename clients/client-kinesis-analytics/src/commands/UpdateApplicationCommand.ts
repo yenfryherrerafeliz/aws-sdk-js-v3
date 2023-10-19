@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { KinesisAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KinesisAnalyticsClient";
@@ -76,7 +77,7 @@ export interface UpdateApplicationCommandOutput extends UpdateApplicationRespons
  *         },
  *         InputSchemaUpdate: { // InputSchemaUpdate
  *           RecordFormatUpdate: { // RecordFormat
- *             RecordFormatType: "STRING_VALUE", // required
+ *             RecordFormatType: "JSON" || "CSV", // required
  *             MappingParameters: { // MappingParameters
  *               JSONMappingParameters: { // JSONMappingParameters
  *                 RecordRowPath: "STRING_VALUE", // required
@@ -119,7 +120,7 @@ export interface UpdateApplicationCommandOutput extends UpdateApplicationRespons
  *           RoleARNUpdate: "STRING_VALUE",
  *         },
  *         DestinationSchemaUpdate: { // DestinationSchema
- *           RecordFormatType: "STRING_VALUE", // required
+ *           RecordFormatType: "JSON" || "CSV", // required
  *         },
  *       },
  *     ],
@@ -134,7 +135,7 @@ export interface UpdateApplicationCommandOutput extends UpdateApplicationRespons
  *         },
  *         ReferenceSchemaUpdate: { // SourceSchema
  *           RecordFormat: {
- *             RecordFormatType: "STRING_VALUE", // required
+ *             RecordFormatType: "JSON" || "CSV", // required
  *             MappingParameters: {
  *               JSONMappingParameters: {
  *                 RecordRowPath: "STRING_VALUE", // required
@@ -249,6 +250,10 @@ export class UpdateApplicationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "KinesisAnalytics_20150814",
+        operation: "UpdateApplication",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -37,11 +38,10 @@ export interface PutImageCommandOutput extends PutImageResponse, __MetadataBeare
 /**
  * @public
  * <p>Creates or updates the image manifest and tags associated with an image.</p>
- *         <p>When an image is pushed and all new image layers have been uploaded, the PutImage API
+ *          <p>When an image is pushed and all new image layers have been uploaded, the PutImage API
  *             is called once to create or update the image manifest and the tags associated with the
  *             image.</p>
- *
- *         <note>
+ *          <note>
  *             <p>This operation is used by the Amazon ECR proxy and is not generally used by
  *         customers for pulling and pushing images. In most cases, you should use the <code>docker</code> CLI to pull, tag, and push images.</p>
  *          </note>
@@ -168,6 +168,10 @@ export class PutImageCommand extends $Command<PutImageCommandInput, PutImageComm
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "PutImage",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

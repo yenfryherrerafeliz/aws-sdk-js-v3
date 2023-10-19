@@ -1,4 +1,5 @@
 // smithy-typescript generated code
+import { awsExpectUnion as __expectUnion } from "@aws-sdk/core";
 import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
@@ -11,7 +12,6 @@ import {
   expectNumber as __expectNumber,
   expectObject as __expectObject,
   expectString as __expectString,
-  expectUnion as __expectUnion,
   extendedEncodeURIComponent as __extendedEncodeURIComponent,
   limitedParseDouble as __limitedParseDouble,
   map,
@@ -685,11 +685,6 @@ import {
   ArcAxisDisplayRange,
   ArcConfiguration,
   ArcOptions,
-  AssetBundleExportJobAnalysisOverrideProperties,
-  AssetBundleExportJobAnalysisPropertyToOverride,
-  AssetBundleExportJobDashboardOverrideProperties,
-  AssetBundleExportJobDashboardPropertyToOverride,
-  AssetBundleExportJobDataSetPropertyToOverride,
   BinCountOptions,
   BinWidthOptions,
   BoxPlotAggregatedFieldWells,
@@ -782,6 +777,8 @@ import {
   HistogramVisual,
   InsightConfiguration,
   InsightVisual,
+  KPIActualValueConditionalFormatting,
+  KPIComparisonValueConditionalFormatting,
   KPIConditionalFormatting,
   KPIConditionalFormattingOption,
   KPIConfiguration,
@@ -790,7 +787,10 @@ import {
   KPIPrimaryValueConditionalFormatting,
   KPIProgressBarConditionalFormatting,
   KPISortConfiguration,
+  KPISparklineOptions,
   KPIVisual,
+  KPIVisualLayoutOptions,
+  KPIVisualStandardLayout,
   LineChartAggregatedFieldWells,
   LineChartConfiguration,
   LineChartDefaultSeriesSettings,
@@ -923,7 +923,12 @@ import {
 import {
   _Parameters,
   AssetBundleCloudFormationOverridePropertyConfiguration,
+  AssetBundleExportJobAnalysisOverrideProperties,
+  AssetBundleExportJobAnalysisPropertyToOverride,
+  AssetBundleExportJobDashboardOverrideProperties,
+  AssetBundleExportJobDashboardPropertyToOverride,
   AssetBundleExportJobDataSetOverrideProperties,
+  AssetBundleExportJobDataSetPropertyToOverride,
   AssetBundleExportJobDataSourceOverrideProperties,
   AssetBundleExportJobDataSourcePropertyToOverride,
   AssetBundleExportJobRefreshScheduleOverrideProperties,
@@ -988,14 +993,10 @@ import {
   DataPointDrillUpDownOption,
   DataPointMenuLabelOption,
   DataPointTooltipOption,
-  DataSet,
   DataSetConfiguration,
   DatasetMetadata,
   DatasetParameter,
-  DataSetRefreshProperties,
   DataSetSchema,
-  DataSetSearchFilter,
-  DataSetSummary,
   DataSetUsageConfiguration,
   DataSourceCredentials,
   DataSourceParameters,
@@ -1016,7 +1017,6 @@ import {
   Font,
   GeoSpatialColumnGroup,
   GutterStyle,
-  IncrementalRefresh,
   InputColumn,
   IntegerDatasetParameter,
   IntegerDatasetParameterDefaultValues,
@@ -1029,7 +1029,6 @@ import {
   LimitExceededException,
   LogicalTable,
   LogicalTableSource,
-  LookbackWindow,
   ManifestFileLocation,
   MarginStyle,
   MariaDbParameters,
@@ -1047,8 +1046,8 @@ import {
   ProjectOperation,
   RangeConstant,
   RdsParameters,
+  RedshiftIAMParameters,
   RedshiftParameters,
-  RefreshConfiguration,
   RefreshFrequency,
   RefreshSchedule,
   RelationalTable,
@@ -1108,11 +1107,16 @@ import {
   UnsupportedUserEditionException,
   UntagColumnOperation,
   UploadSettings,
+  ValidationStrategy,
   VisualAxisSortOption,
   VisualMenuOption,
   VpcConnectionProperties,
 } from "../models/models_2";
 import {
+  DataSet,
+  DataSetRefreshProperties,
+  DataSetSearchFilter,
+  DataSetSummary,
   DataSource,
   DataSourceSearchFilter,
   DataSourceSummary,
@@ -1122,10 +1126,13 @@ import {
   FolderSummary,
   GroupSearchFilter,
   IdentityTypeNotSupportedException,
+  IncrementalRefresh,
   Ingestion,
   InvalidNextTokenException,
   InvalidRequestException,
+  LookbackWindow,
   QuickSightUserNotFoundException,
+  RefreshConfiguration,
   RegisteredUserConsoleFeatureConfigurations,
   RegisteredUserDashboardEmbeddingConfiguration,
   RegisteredUserDashboardFeatureConfigurations,
@@ -1139,7 +1146,6 @@ import {
   SnapshotConfiguration,
   SnapshotDestinationConfiguration,
   SnapshotFileGroup,
-  SnapshotUserConfiguration,
   StatePersistenceConfigurations,
   Template,
   TemplateSummary,
@@ -1154,6 +1160,7 @@ import {
   VPCConnection,
   VPCConnectionSummary,
 } from "../models/models_3";
+import { SnapshotUserConfiguration } from "../models/models_4";
 import { QuickSightServiceException as __BaseException } from "../models/QuickSightServiceException";
 
 /**
@@ -1316,6 +1323,7 @@ export const se_CreateAnalysisCommand = async (
       SourceEntity: (_) => _json(_),
       Tags: (_) => _json(_),
       ThemeArn: [],
+      ValidationStrategy: (_) => _json(_),
     })
   );
   return new __HttpRequest({
@@ -1363,6 +1371,7 @@ export const se_CreateDashboardCommand = async (
       SourceEntity: (_) => _json(_),
       Tags: (_) => _json(_),
       ThemeArn: [],
+      ValidationStrategy: (_) => _json(_),
       VersionDescription: [],
     })
   );
@@ -1824,6 +1833,7 @@ export const se_CreateTemplateCommand = async (
       Permissions: (_) => _json(_),
       SourceEntity: (_) => _json(_),
       Tags: (_) => _json(_),
+      ValidationStrategy: (_) => _json(_),
       VersionDescription: [],
     })
   );
@@ -5632,6 +5642,7 @@ export const se_RegisterUserCommand = async (
       IamArn: [],
       IdentityType: [],
       SessionName: [],
+      Tags: (_) => _json(_),
       UserName: [],
       UserRole: [],
     })
@@ -6229,6 +6240,7 @@ export const se_UpdateAnalysisCommand = async (
       Parameters: (_) => se__Parameters(_, context),
       SourceEntity: (_) => _json(_),
       ThemeArn: [],
+      ValidationStrategy: (_) => _json(_),
     })
   );
   return new __HttpRequest({
@@ -6315,6 +6327,7 @@ export const se_UpdateDashboardCommand = async (
       Parameters: (_) => se__Parameters(_, context),
       SourceEntity: (_) => _json(_),
       ThemeArn: [],
+      ValidationStrategy: (_) => _json(_),
       VersionDescription: [],
     })
   );
@@ -6922,6 +6935,7 @@ export const se_UpdateTemplateCommand = async (
       Definition: (_) => se_TemplateVersionDefinition(_, context),
       Name: [],
       SourceEntity: (_) => _json(_),
+      ValidationStrategy: (_) => _json(_),
       VersionDescription: [],
     })
   );
@@ -19883,6 +19897,8 @@ const se_DashboardVersionDefinition = (input: DashboardVersionDefinition, contex
 
 // se_DataBarsOptions omitted.
 
+// se_DatabaseGroupList omitted.
+
 // se_DatabricksParameters omitted.
 
 /**
@@ -21228,6 +21244,32 @@ const se_InsightVisual = (input: InsightVisual, context: __SerdeContext): any =>
 // se_JoinKeyProperties omitted.
 
 /**
+ * serializeAws_restJson1KPIActualValueConditionalFormatting
+ */
+const se_KPIActualValueConditionalFormatting = (
+  input: KPIActualValueConditionalFormatting,
+  context: __SerdeContext
+): any => {
+  return take(input, {
+    Icon: _json,
+    TextColor: (_) => se_ConditionalFormattingColor(_, context),
+  });
+};
+
+/**
+ * serializeAws_restJson1KPIComparisonValueConditionalFormatting
+ */
+const se_KPIComparisonValueConditionalFormatting = (
+  input: KPIComparisonValueConditionalFormatting,
+  context: __SerdeContext
+): any => {
+  return take(input, {
+    Icon: _json,
+    TextColor: (_) => se_ConditionalFormattingColor(_, context),
+  });
+};
+
+/**
  * serializeAws_restJson1KPIConditionalFormatting
  */
 const se_KPIConditionalFormatting = (input: KPIConditionalFormatting, context: __SerdeContext): any => {
@@ -21241,6 +21283,8 @@ const se_KPIConditionalFormatting = (input: KPIConditionalFormatting, context: _
  */
 const se_KPIConditionalFormattingOption = (input: KPIConditionalFormattingOption, context: __SerdeContext): any => {
   return take(input, {
+    ActualValue: (_) => se_KPIActualValueConditionalFormatting(_, context),
+    ComparisonValue: (_) => se_KPIComparisonValueConditionalFormatting(_, context),
     PrimaryValue: (_) => se_KPIPrimaryValueConditionalFormatting(_, context),
     ProgressBar: (_) => se_KPIProgressBarConditionalFormatting(_, context),
   });
@@ -21318,6 +21362,8 @@ const se_KPISortConfiguration = (input: KPISortConfiguration, context: __SerdeCo
   });
 };
 
+// se_KPISparklineOptions omitted.
+
 /**
  * serializeAws_restJson1KPIVisual
  */
@@ -21332,6 +21378,10 @@ const se_KPIVisual = (input: KPIVisual, context: __SerdeContext): any => {
     VisualId: [],
   });
 };
+
+// se_KPIVisualLayoutOptions omitted.
+
+// se_KPIVisualStandardLayout omitted.
 
 // se_LabelOptions omitted.
 
@@ -22219,6 +22269,8 @@ const se_RadarChartVisual = (input: RadarChartVisual, context: __SerdeContext): 
 // se_RangeEndsLabelType omitted.
 
 // se_RdsParameters omitted.
+
+// se_RedshiftIAMParameters omitted.
 
 // se_RedshiftParameters omitted.
 
@@ -23308,6 +23360,8 @@ const se_TreeMapVisual = (input: TreeMapVisual, context: __SerdeContext): any =>
 // se_UpdateResourcePermissionList omitted.
 
 // se_UploadSettings omitted.
+
+// se_ValidationStrategy omitted.
 
 /**
  * serializeAws_restJson1VisibleRangeOptions
@@ -24687,6 +24741,8 @@ const de_DashboardVersionSummaryList = (output: any, context: __SerdeContext): D
 // de_DataAggregation omitted.
 
 // de_DataBarsOptions omitted.
+
+// de_DatabaseGroupList omitted.
 
 // de_DatabricksParameters omitted.
 
@@ -26244,6 +26300,32 @@ const de_InsightVisual = (output: any, context: __SerdeContext): InsightVisual =
 // de_JoinKeyProperties omitted.
 
 /**
+ * deserializeAws_restJson1KPIActualValueConditionalFormatting
+ */
+const de_KPIActualValueConditionalFormatting = (
+  output: any,
+  context: __SerdeContext
+): KPIActualValueConditionalFormatting => {
+  return take(output, {
+    Icon: _json,
+    TextColor: (_: any) => de_ConditionalFormattingColor(_, context),
+  }) as any;
+};
+
+/**
+ * deserializeAws_restJson1KPIComparisonValueConditionalFormatting
+ */
+const de_KPIComparisonValueConditionalFormatting = (
+  output: any,
+  context: __SerdeContext
+): KPIComparisonValueConditionalFormatting => {
+  return take(output, {
+    Icon: _json,
+    TextColor: (_: any) => de_ConditionalFormattingColor(_, context),
+  }) as any;
+};
+
+/**
  * deserializeAws_restJson1KPIConditionalFormatting
  */
 const de_KPIConditionalFormatting = (output: any, context: __SerdeContext): KPIConditionalFormatting => {
@@ -26257,6 +26339,8 @@ const de_KPIConditionalFormatting = (output: any, context: __SerdeContext): KPIC
  */
 const de_KPIConditionalFormattingOption = (output: any, context: __SerdeContext): KPIConditionalFormattingOption => {
   return take(output, {
+    ActualValue: (_: any) => de_KPIActualValueConditionalFormatting(_, context),
+    ComparisonValue: (_: any) => de_KPIComparisonValueConditionalFormatting(_, context),
     PrimaryValue: (_: any) => de_KPIPrimaryValueConditionalFormatting(_, context),
     ProgressBar: (_: any) => de_KPIProgressBarConditionalFormatting(_, context),
   }) as any;
@@ -26335,6 +26419,8 @@ const de_KPISortConfiguration = (output: any, context: __SerdeContext): KPISortC
   }) as any;
 };
 
+// de_KPISparklineOptions omitted.
+
 /**
  * deserializeAws_restJson1KPIVisual
  */
@@ -26349,6 +26435,10 @@ const de_KPIVisual = (output: any, context: __SerdeContext): KPIVisual => {
     VisualId: __expectString,
   }) as any;
 };
+
+// de_KPIVisualLayoutOptions omitted.
+
+// de_KPIVisualStandardLayout omitted.
 
 // de_LabelOptions omitted.
 
@@ -26510,9 +26600,9 @@ const de_LogicalTableMap = (output: any, context: __SerdeContext): Record<string
     if (value === null) {
       return acc;
     }
-    acc[key] = de_LogicalTable(value, context);
+    acc[key as string] = de_LogicalTable(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, LogicalTable>);
 };
 
 // de_LogicalTableSource omitted.
@@ -27266,6 +27356,8 @@ const de_RadarChartVisual = (output: any, context: __SerdeContext): RadarChartVi
 // de_RangeEndsLabelType omitted.
 
 // de_RdsParameters omitted.
+
+// de_RedshiftIAMParameters omitted.
 
 // de_RedshiftParameters omitted.
 

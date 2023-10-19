@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { SendHeartbeatRequest } from "../models/models_0";
@@ -82,9 +83,9 @@ export interface SendHeartbeatCommandOutput extends __MetadataBearer {}
  *         ModelHandle: "STRING_VALUE",
  *         ModelName: "STRING_VALUE",
  *         ModelVersion: "STRING_VALUE",
- *         DesiredState: "STRING_VALUE",
- *         State: "STRING_VALUE",
- *         Status: "STRING_VALUE",
+ *         DesiredState: "DEPLOY" || "UNDEPLOY",
+ *         State: "DEPLOY" || "UNDEPLOY",
+ *         Status: "SUCCESS" || "FAIL",
  *         StatusReason: "STRING_VALUE",
  *         RollbackFailureReason: "STRING_VALUE",
  *       },
@@ -159,6 +160,10 @@ export class SendHeartbeatCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonSageMakerEdge",
+        operation: "SendHeartbeat",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

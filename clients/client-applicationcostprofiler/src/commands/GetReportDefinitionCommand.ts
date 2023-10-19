@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -55,8 +56,8 @@ export interface GetReportDefinitionCommandOutput extends GetReportDefinitionRes
  * // { // GetReportDefinitionResult
  * //   reportId: "STRING_VALUE", // required
  * //   reportDescription: "STRING_VALUE", // required
- * //   reportFrequency: "STRING_VALUE", // required
- * //   format: "STRING_VALUE", // required
+ * //   reportFrequency: "MONTHLY" || "DAILY" || "ALL", // required
+ * //   format: "CSV" || "PARQUET", // required
  * //   destinationS3Location: { // S3Location
  * //     bucket: "STRING_VALUE", // required
  * //     prefix: "STRING_VALUE", // required
@@ -139,6 +140,10 @@ export class GetReportDefinitionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSApplicationCostProfiler",
+        operation: "GetReportDefinition",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

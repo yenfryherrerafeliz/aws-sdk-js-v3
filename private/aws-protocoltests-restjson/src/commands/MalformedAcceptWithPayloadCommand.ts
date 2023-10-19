@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 import { Uint8ArrayBlobAdapter } from "@smithy/util-stream";
 
@@ -43,6 +44,34 @@ export interface MalformedAcceptWithPayloadCommandOutput
   extends MalformedAcceptWithPayloadCommandOutputType,
     __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestJsonProtocolClient, MalformedAcceptWithPayloadCommand } from "@aws-sdk/aws-protocoltests-restjson"; // ES Modules import
+ * // const { RestJsonProtocolClient, MalformedAcceptWithPayloadCommand } = require("@aws-sdk/aws-protocoltests-restjson"); // CommonJS import
+ * const client = new RestJsonProtocolClient(config);
+ * const input = {};
+ * const command = new MalformedAcceptWithPayloadCommand(input);
+ * const response = await client.send(command);
+ * // { // MalformedAcceptWithPayloadOutput
+ * //   payload: "BLOB_VALUE",
+ * // };
+ *
+ * ```
+ *
+ * @param MalformedAcceptWithPayloadCommandInput - {@link MalformedAcceptWithPayloadCommandInput}
+ * @returns {@link MalformedAcceptWithPayloadCommandOutput}
+ * @see {@link MalformedAcceptWithPayloadCommandInput} for command's `input` shape.
+ * @see {@link MalformedAcceptWithPayloadCommandOutput} for command's `response` shape.
+ * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
+ *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
+ *
+ */
 export class MalformedAcceptWithPayloadCommand extends $Command<
   MalformedAcceptWithPayloadCommandInput,
   MalformedAcceptWithPayloadCommandOutput,
@@ -81,6 +110,10 @@ export class MalformedAcceptWithPayloadCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "MalformedAcceptWithPayload",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

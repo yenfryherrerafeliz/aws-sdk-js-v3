@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateProtectionGroupRequest, CreateProtectionGroupResponse } from "../models/models_0";
@@ -45,9 +46,9 @@ export interface CreateProtectionGroupCommandOutput extends CreateProtectionGrou
  * const client = new ShieldClient(config);
  * const input = { // CreateProtectionGroupRequest
  *   ProtectionGroupId: "STRING_VALUE", // required
- *   Aggregation: "STRING_VALUE", // required
- *   Pattern: "STRING_VALUE", // required
- *   ResourceType: "STRING_VALUE",
+ *   Aggregation: "SUM" || "MEAN" || "MAX", // required
+ *   Pattern: "ALL" || "ARBITRARY" || "BY_RESOURCE_TYPE", // required
+ *   ResourceType: "CLOUDFRONT_DISTRIBUTION" || "ROUTE_53_HOSTED_ZONE" || "ELASTIC_IP_ALLOCATION" || "CLASSIC_LOAD_BALANCER" || "APPLICATION_LOAD_BALANCER" || "GLOBAL_ACCELERATOR",
  *   Members: [ // ProtectionGroupMembers
  *     "STRING_VALUE",
  *   ],
@@ -143,6 +144,10 @@ export class CreateProtectionGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSShield_20160616",
+        operation: "CreateProtectionGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

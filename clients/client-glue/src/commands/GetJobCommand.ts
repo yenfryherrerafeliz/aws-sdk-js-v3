@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GlueClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GlueClient";
@@ -1098,7 +1099,7 @@ export interface GetJobCommandOutput extends GetJobResponse, __MetadataBearer {}
  * //     },
  * //     ExecutionClass: "FLEX" || "STANDARD",
  * //     SourceControlDetails: { // SourceControlDetails
- * //       Provider: "GITHUB" || "AWS_CODE_COMMIT",
+ * //       Provider: "GITHUB" || "GITLAB" || "BITBUCKET" || "AWS_CODE_COMMIT",
  * //       Repository: "STRING_VALUE",
  * //       Owner: "STRING_VALUE",
  * //       Branch: "STRING_VALUE",
@@ -1178,6 +1179,10 @@ export class GetJobCommand extends $Command<GetJobCommandInput, GetJobCommandOut
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: GetJobResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSGlue",
+        operation: "GetJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

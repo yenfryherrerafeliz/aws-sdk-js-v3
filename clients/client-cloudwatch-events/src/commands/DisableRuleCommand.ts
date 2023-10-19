@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -38,7 +39,6 @@ export interface DisableRuleCommandOutput extends __MetadataBearer {}
  * @public
  * <p>Disables the specified rule. A disabled rule won't match any events, and won't
  *       self-trigger if it has a schedule expression.</p>
- *
  *          <p>When you disable a rule, incoming events might continue to match to the disabled rule.
  *       Allow a short period of time for changes to take effect.</p>
  * @example
@@ -132,6 +132,10 @@ export class DisableRuleCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "DisableRule",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

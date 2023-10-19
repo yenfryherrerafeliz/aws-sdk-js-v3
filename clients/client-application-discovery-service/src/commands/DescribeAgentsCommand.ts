@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -18,7 +19,11 @@ import {
   ServiceInputTypes,
   ServiceOutputTypes,
 } from "../ApplicationDiscoveryServiceClient";
-import { DescribeAgentsRequest, DescribeAgentsResponse } from "../models/models_0";
+import {
+  DescribeAgentsRequest,
+  DescribeAgentsResponse,
+  DescribeAgentsResponseFilterSensitiveLog,
+} from "../models/models_0";
 import { de_DescribeAgentsCommand, se_DescribeAgentsCommand } from "../protocols/Aws_json1_1";
 
 /**
@@ -168,7 +173,11 @@ export class DescribeAgentsCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: DescribeAgentsResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSPoseidonService_V2015_11_01",
+        operation: "DescribeAgents",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -75,7 +76,7 @@ export interface GetUtterancesViewCommandOutput extends GetUtterancesViewRespons
  *   botVersions: [ // BotVersions // required
  *     "STRING_VALUE",
  *   ],
- *   statusType: "STRING_VALUE", // required
+ *   statusType: "Detected" || "Missed", // required
  * };
  * const command = new GetUtterancesViewCommand(input);
  * const response = await client.send(command);
@@ -170,6 +171,10 @@ export class GetUtterancesViewCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "GetUtterancesView",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

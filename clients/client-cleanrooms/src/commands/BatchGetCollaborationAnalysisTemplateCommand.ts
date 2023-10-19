@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CleanRoomsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CleanRoomsClient";
@@ -45,7 +46,8 @@ export interface BatchGetCollaborationAnalysisTemplateCommandOutput
 
 /**
  * @public
- * <p>Retrieves multiple analysis templates within a collaboration by their Amazon Resource Names (ARNs).</p>
+ * <p>Retrieves multiple analysis templates within a collaboration by their Amazon Resource
+ *          Names (ARNs).</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -176,6 +178,10 @@ export class BatchGetCollaborationAnalysisTemplateCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: BatchGetCollaborationAnalysisTemplateOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSBastionControlPlaneServiceLambda",
+        operation: "BatchGetCollaborationAnalysisTemplate",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

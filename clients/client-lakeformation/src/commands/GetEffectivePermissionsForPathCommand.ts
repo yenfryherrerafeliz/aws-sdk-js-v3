@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LakeFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LakeFormationClient";
@@ -129,6 +130,8 @@ export interface GetEffectivePermissionsForPathCommandOutput
  * //           "STRING_VALUE",
  * //         ],
  * //       },
+ * //       LastUpdated: new Date("TIMESTAMP"),
+ * //       LastUpdatedBy: "STRING_VALUE",
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -208,6 +211,10 @@ export class GetEffectivePermissionsForPathCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSLakeFormation",
+        operation: "GetEffectivePermissionsForPath",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

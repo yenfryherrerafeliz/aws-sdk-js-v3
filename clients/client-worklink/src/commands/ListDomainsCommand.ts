@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListDomainsRequest, ListDomainsResponse } from "../models/models_0";
@@ -58,7 +59,7 @@ export interface ListDomainsCommandOutput extends ListDomainsResponse, __Metadat
  * //       DomainName: "STRING_VALUE", // required
  * //       DisplayName: "STRING_VALUE",
  * //       CreatedTime: new Date("TIMESTAMP"), // required
- * //       DomainStatus: "STRING_VALUE", // required
+ * //       DomainStatus: "PENDING_VALIDATION" || "ASSOCIATING" || "ACTIVE" || "INACTIVE" || "DISASSOCIATING" || "DISASSOCIATED" || "FAILED_TO_ASSOCIATE" || "FAILED_TO_DISASSOCIATE", // required
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -139,6 +140,10 @@ export class ListDomainsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkLink",
+        operation: "ListDomains",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

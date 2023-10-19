@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { BillingconductorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../BillingconductorClient";
@@ -81,6 +82,15 @@ export interface ListCustomLineItemsCommandOutput extends ListCustomLineItemsOut
  * //           PercentageValue: Number("double"), // required
  * //         },
  * //         Type: "STRING_VALUE", // required
+ * //         LineItemFilters: [ // LineItemFiltersList
+ * //           { // LineItemFilter
+ * //             Attribute: "STRING_VALUE", // required
+ * //             MatchOption: "STRING_VALUE", // required
+ * //             Values: [ // LineItemFilterValuesList // required
+ * //               "STRING_VALUE",
+ * //             ],
+ * //           },
+ * //         ],
  * //       },
  * //       CurrencyCode: "STRING_VALUE",
  * //       Description: "STRING_VALUE",
@@ -175,6 +185,10 @@ export class ListCustomLineItemsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: ListCustomLineItemsInputFilterSensitiveLog,
       outputFilterSensitiveLog: ListCustomLineItemsOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSBillingConductor",
+        operation: "ListCustomLineItems",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

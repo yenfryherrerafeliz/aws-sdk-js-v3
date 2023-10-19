@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GuardDutyClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GuardDutyClient";
@@ -42,7 +43,7 @@ export interface UpdateOrganizationConfigurationCommandOutput
 /**
  * @public
  * <p>Configures the delegated administrator account with the provided values. You must provide
- *       the value for either <code>autoEnableOrganizationMembers</code> or <code>autoEnable</code>. </p>
+ *       a value for either <code>autoEnableOrganizationMembers</code> or <code>autoEnable</code>, but not both. </p>
  *          <p>There might be regional differences because some data sources might not be
  *       available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more
  *       information, see <a href="https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html">Regions and endpoints</a>.</p>
@@ -158,6 +159,10 @@ export class UpdateOrganizationConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "GuardDutyAPIService",
+        operation: "UpdateOrganizationConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

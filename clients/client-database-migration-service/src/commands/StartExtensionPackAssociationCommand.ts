@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -101,6 +102,22 @@ export interface StartExtensionPackAssociationCommandOutput
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
  *
+ * @example Start Extension Pack Association
+ * ```javascript
+ * // Applies the extension pack to your target database.
+ * const input = {
+ *   "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+ * };
+ * const command = new StartExtensionPackAssociationCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef"
+ * }
+ * *\/
+ * // example id: start-extension-pack-association-1689721897266
+ * ```
+ *
  */
 export class StartExtensionPackAssociationCommand extends $Command<
   StartExtensionPackAssociationCommandInput,
@@ -152,6 +169,10 @@ export class StartExtensionPackAssociationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "StartExtensionPackAssociation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

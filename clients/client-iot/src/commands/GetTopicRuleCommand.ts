@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTClient";
@@ -237,6 +238,12 @@ export interface GetTopicRuleCommandOutput extends GetTopicRuleResponse, __Metad
  * //           clientProperties: { // ClientProperties // required
  * //             "<keys>": "STRING_VALUE",
  * //           },
+ * //           headers: [ // KafkaHeaders
+ * //             { // KafkaActionHeader
+ * //               key: "STRING_VALUE", // required
+ * //               value: "STRING_VALUE", // required
+ * //             },
+ * //           ],
  * //         },
  * //         openSearch: { // OpenSearchAction
  * //           roleArn: "STRING_VALUE", // required
@@ -440,6 +447,12 @@ export interface GetTopicRuleCommandOutput extends GetTopicRuleResponse, __Metad
  * //         clientProperties: { // required
  * //           "<keys>": "STRING_VALUE",
  * //         },
+ * //         headers: [
+ * //           {
+ * //             key: "STRING_VALUE", // required
+ * //             value: "STRING_VALUE", // required
+ * //           },
+ * //         ],
  * //       },
  * //       openSearch: {
  * //         roleArn: "STRING_VALUE", // required
@@ -535,6 +548,10 @@ export class GetTopicRuleCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIotService",
+        operation: "GetTopicRule",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

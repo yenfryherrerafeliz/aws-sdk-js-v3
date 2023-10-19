@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -68,7 +69,7 @@ export interface GetConfigurationSetEventDestinationsCommandOutput
  * //       Name: "STRING_VALUE", // required
  * //       Enabled: true || false,
  * //       MatchingEventTypes: [ // EventTypes // required
- * //         "STRING_VALUE",
+ * //         "SEND" || "REJECT" || "BOUNCE" || "COMPLAINT" || "DELIVERY" || "OPEN" || "CLICK" || "RENDERING_FAILURE",
  * //       ],
  * //       KinesisFirehoseDestination: { // KinesisFirehoseDestination
  * //         IamRoleArn: "STRING_VALUE", // required
@@ -78,7 +79,7 @@ export interface GetConfigurationSetEventDestinationsCommandOutput
  * //         DimensionConfigurations: [ // CloudWatchDimensionConfigurations // required
  * //           { // CloudWatchDimensionConfiguration
  * //             DimensionName: "STRING_VALUE", // required
- * //             DimensionValueSource: "STRING_VALUE", // required
+ * //             DimensionValueSource: "MESSAGE_TAG" || "EMAIL_HEADER" || "LINK_TAG", // required
  * //             DefaultDimensionValue: "STRING_VALUE", // required
  * //           },
  * //         ],
@@ -164,6 +165,10 @@ export class GetConfigurationSetEventDestinationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonPinpointEmailService",
+        operation: "GetConfigurationSetEventDestinations",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

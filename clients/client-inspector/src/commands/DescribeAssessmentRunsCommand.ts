@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { InspectorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../InspectorClient";
@@ -57,7 +58,7 @@ export interface DescribeAssessmentRunsCommandOutput extends DescribeAssessmentR
  * //       arn: "STRING_VALUE", // required
  * //       name: "STRING_VALUE", // required
  * //       assessmentTemplateArn: "STRING_VALUE", // required
- * //       state: "STRING_VALUE", // required
+ * //       state: "CREATED" || "START_DATA_COLLECTION_PENDING" || "START_DATA_COLLECTION_IN_PROGRESS" || "COLLECTING_DATA" || "STOP_DATA_COLLECTION_PENDING" || "DATA_COLLECTED" || "START_EVALUATING_RULES_PENDING" || "EVALUATING_RULES" || "FAILED" || "ERROR" || "COMPLETED" || "COMPLETED_WITH_ERRORS" || "CANCELED", // required
  * //       durationInSeconds: Number("int"), // required
  * //       rulesPackageArns: [ // AssessmentRulesPackageArnList // required
  * //         "STRING_VALUE",
@@ -76,17 +77,17 @@ export interface DescribeAssessmentRunsCommandOutput extends DescribeAssessmentR
  * //       stateChanges: [ // AssessmentRunStateChangeList // required
  * //         { // AssessmentRunStateChange
  * //           stateChangedAt: new Date("TIMESTAMP"), // required
- * //           state: "STRING_VALUE", // required
+ * //           state: "CREATED" || "START_DATA_COLLECTION_PENDING" || "START_DATA_COLLECTION_IN_PROGRESS" || "COLLECTING_DATA" || "STOP_DATA_COLLECTION_PENDING" || "DATA_COLLECTED" || "START_EVALUATING_RULES_PENDING" || "EVALUATING_RULES" || "FAILED" || "ERROR" || "COMPLETED" || "COMPLETED_WITH_ERRORS" || "CANCELED", // required
  * //         },
  * //       ],
  * //       notifications: [ // AssessmentRunNotificationList // required
  * //         { // AssessmentRunNotification
  * //           date: new Date("TIMESTAMP"), // required
- * //           event: "STRING_VALUE", // required
+ * //           event: "ASSESSMENT_RUN_STARTED" || "ASSESSMENT_RUN_COMPLETED" || "ASSESSMENT_RUN_STATE_CHANGED" || "FINDING_REPORTED" || "OTHER", // required
  * //           message: "STRING_VALUE",
  * //           error: true || false, // required
  * //           snsTopicArn: "STRING_VALUE",
- * //           snsPublishStatusCode: "STRING_VALUE",
+ * //           snsPublishStatusCode: "SUCCESS" || "TOPIC_DOES_NOT_EXIST" || "ACCESS_DENIED" || "INTERNAL_ERROR",
  * //         },
  * //       ],
  * //       findingCounts: { // AssessmentRunFindingCounts // required
@@ -96,7 +97,7 @@ export interface DescribeAssessmentRunsCommandOutput extends DescribeAssessmentR
  * //   ],
  * //   failedItems: { // FailedItems // required
  * //     "<keys>": { // FailedItemDetails
- * //       failureCode: "STRING_VALUE", // required
+ * //       failureCode: "INVALID_ARN" || "DUPLICATE_ARN" || "ITEM_DOES_NOT_EXIST" || "ACCESS_DENIED" || "LIMIT_EXCEEDED" || "INTERNAL_ERROR", // required
  * //       retryable: true || false, // required
  * //     },
  * //   },
@@ -249,6 +250,10 @@ export class DescribeAssessmentRunsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "InspectorService",
+        operation: "DescribeAssessmentRuns",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

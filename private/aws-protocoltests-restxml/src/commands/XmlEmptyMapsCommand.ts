@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { XmlMapsInputOutput } from "../models/models_0";
@@ -33,6 +34,44 @@ export interface XmlEmptyMapsCommandInput extends XmlMapsInputOutput {}
  */
 export interface XmlEmptyMapsCommandOutput extends XmlMapsInputOutput, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestXmlProtocolClient, XmlEmptyMapsCommand } from "@aws-sdk/aws-protocoltests-restxml"; // ES Modules import
+ * // const { RestXmlProtocolClient, XmlEmptyMapsCommand } = require("@aws-sdk/aws-protocoltests-restxml"); // CommonJS import
+ * const client = new RestXmlProtocolClient(config);
+ * const input = { // XmlMapsInputOutput
+ *   myMap: { // XmlMapsInputOutputMap
+ *     "<keys>": { // GreetingStruct
+ *       hi: "STRING_VALUE",
+ *     },
+ *   },
+ * };
+ * const command = new XmlEmptyMapsCommand(input);
+ * const response = await client.send(command);
+ * // { // XmlMapsInputOutput
+ * //   myMap: { // XmlMapsInputOutputMap
+ * //     "<keys>": { // GreetingStruct
+ * //       hi: "STRING_VALUE",
+ * //     },
+ * //   },
+ * // };
+ *
+ * ```
+ *
+ * @param XmlEmptyMapsCommandInput - {@link XmlEmptyMapsCommandInput}
+ * @returns {@link XmlEmptyMapsCommandOutput}
+ * @see {@link XmlEmptyMapsCommandInput} for command's `input` shape.
+ * @see {@link XmlEmptyMapsCommandOutput} for command's `response` shape.
+ * @see {@link RestXmlProtocolClientResolvedConfig | config} for RestXmlProtocolClient's `config` shape.
+ *
+ * @throws {@link RestXmlProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestXmlProtocol service.</p>
+ *
+ */
 export class XmlEmptyMapsCommand extends $Command<
   XmlEmptyMapsCommandInput,
   XmlEmptyMapsCommandOutput,
@@ -71,6 +110,10 @@ export class XmlEmptyMapsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestXml",
+        operation: "XmlEmptyMaps",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

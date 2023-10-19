@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { PutBucketWebsiteRequest } from "../models/models_0";
@@ -159,6 +160,7 @@ export interface PutBucketWebsiteCommandOutput extends __MetadataBearer {}
  *          <p>Amazon S3 has a limitation of 50 routing rules per website configuration. If you require more
  *          than 50 routing rules, you can use object redirect. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/how-to-page-redirect.html">Configuring an
  *             Object Redirect</a> in the <i>Amazon S3 User Guide</i>.</p>
+ *          <p>The maximum request length is limited to 128 KB.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -297,6 +299,10 @@ export class PutBucketWebsiteCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonS3",
+        operation: "PutBucketWebsite",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

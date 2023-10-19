@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MachineLearningClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MachineLearningClient";
@@ -44,7 +45,7 @@ export interface DescribeEvaluationsCommandOutput extends DescribeEvaluationsOut
  * // const { MachineLearningClient, DescribeEvaluationsCommand } = require("@aws-sdk/client-machine-learning"); // CommonJS import
  * const client = new MachineLearningClient(config);
  * const input = { // DescribeEvaluationsInput
- *   FilterVariable: "STRING_VALUE",
+ *   FilterVariable: "CreatedAt" || "LastUpdatedAt" || "Status" || "Name" || "IAMUser" || "MLModelId" || "DataSourceId" || "DataURI",
  *   EQ: "STRING_VALUE",
  *   GT: "STRING_VALUE",
  *   LT: "STRING_VALUE",
@@ -52,7 +53,7 @@ export interface DescribeEvaluationsCommandOutput extends DescribeEvaluationsOut
  *   LE: "STRING_VALUE",
  *   NE: "STRING_VALUE",
  *   Prefix: "STRING_VALUE",
- *   SortOrder: "STRING_VALUE",
+ *   SortOrder: "asc" || "dsc",
  *   NextToken: "STRING_VALUE",
  *   Limit: Number("int"),
  * };
@@ -69,7 +70,7 @@ export interface DescribeEvaluationsCommandOutput extends DescribeEvaluationsOut
  * //       CreatedAt: new Date("TIMESTAMP"),
  * //       LastUpdatedAt: new Date("TIMESTAMP"),
  * //       Name: "STRING_VALUE",
- * //       Status: "STRING_VALUE",
+ * //       Status: "PENDING" || "INPROGRESS" || "FAILED" || "COMPLETED" || "DELETED",
  * //       PerformanceMetrics: { // PerformanceMetrics
  * //         Properties: { // PerformanceMetricsProperties
  * //           "<keys>": "STRING_VALUE",
@@ -152,6 +153,10 @@ export class DescribeEvaluationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonML_20141212",
+        operation: "DescribeEvaluations",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

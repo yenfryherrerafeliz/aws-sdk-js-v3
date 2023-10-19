@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeDeviceRequest, DescribeDeviceResponse } from "../models/models_0";
@@ -52,7 +53,7 @@ export interface DescribeDeviceCommandOutput extends DescribeDeviceResponse, __M
  * const command = new DescribeDeviceCommand(input);
  * const response = await client.send(command);
  * // { // DescribeDeviceResponse
- * //   Status: "STRING_VALUE",
+ * //   Status: "ACTIVE" || "SIGNED_OUT",
  * //   Model: "STRING_VALUE",
  * //   Manufacturer: "STRING_VALUE",
  * //   OperatingSystem: "STRING_VALUE",
@@ -140,6 +141,10 @@ export class DescribeDeviceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkLink",
+        operation: "DescribeDevice",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -43,7 +44,7 @@ export interface CloseTunnelCommandOutput extends CloseTunnelResponse, __Metadat
  * <p>Closes a tunnel identified by the unique tunnel id. When a <code>CloseTunnel</code>
  * 			request is received, we close the WebSocket connections between the client and proxy
  * 			server so no data can be transmitted.</p>
- * 		       <p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CloseTunnel</a> action.</p>
+ *          <p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CloseTunnel</a> action.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -121,6 +122,10 @@ export class CloseTunnelCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IoTSecuredTunneling",
+        operation: "CloseTunnel",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

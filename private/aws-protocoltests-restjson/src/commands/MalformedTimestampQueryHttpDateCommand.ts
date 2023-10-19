@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MalformedTimestampQueryHttpDateInput } from "../models/models_0";
@@ -36,6 +37,34 @@ export interface MalformedTimestampQueryHttpDateCommandInput extends MalformedTi
  */
 export interface MalformedTimestampQueryHttpDateCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestJsonProtocolClient, MalformedTimestampQueryHttpDateCommand } from "@aws-sdk/aws-protocoltests-restjson"; // ES Modules import
+ * // const { RestJsonProtocolClient, MalformedTimestampQueryHttpDateCommand } = require("@aws-sdk/aws-protocoltests-restjson"); // CommonJS import
+ * const client = new RestJsonProtocolClient(config);
+ * const input = { // MalformedTimestampQueryHttpDateInput
+ *   timestamp: new Date("TIMESTAMP"), // required
+ * };
+ * const command = new MalformedTimestampQueryHttpDateCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param MalformedTimestampQueryHttpDateCommandInput - {@link MalformedTimestampQueryHttpDateCommandInput}
+ * @returns {@link MalformedTimestampQueryHttpDateCommandOutput}
+ * @see {@link MalformedTimestampQueryHttpDateCommandInput} for command's `input` shape.
+ * @see {@link MalformedTimestampQueryHttpDateCommandOutput} for command's `response` shape.
+ * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
+ *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
+ *
+ */
 export class MalformedTimestampQueryHttpDateCommand extends $Command<
   MalformedTimestampQueryHttpDateCommandInput,
   MalformedTimestampQueryHttpDateCommandOutput,
@@ -74,6 +103,10 @@ export class MalformedTimestampQueryHttpDateCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "MalformedTimestampQueryHttpDate",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -60,7 +61,7 @@ export interface DescribeIdentityProviderConfigurationCommandOutput
  * const command = new DescribeIdentityProviderConfigurationCommand(input);
  * const response = await client.send(command);
  * // { // DescribeIdentityProviderConfigurationResponse
- * //   IdentityProviderType: "STRING_VALUE",
+ * //   IdentityProviderType: "SAML",
  * //   ServiceProviderSamlMetadata: "STRING_VALUE",
  * //   IdentityProviderSamlMetadata: "STRING_VALUE",
  * // };
@@ -142,6 +143,10 @@ export class DescribeIdentityProviderConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkLink",
+        operation: "DescribeIdentityProviderConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

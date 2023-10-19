@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeDatasetRequest, DescribeDatasetResponse } from "../models/models_0";
@@ -36,7 +37,10 @@ export interface DescribeDatasetCommandOutput extends DescribeDatasetResponse, _
 
 /**
  * @public
- * <p>
+ * <note>
+ *             <p>This operation applies only to Amazon Rekognition Custom Labels.</p>
+ *          </note>
+ *          <p>
  * Describes an Amazon Rekognition Custom Labels dataset. You can get information such as the current status of a dataset and
  * statistics about the images and labels in a dataset.
  * </p>
@@ -178,6 +182,10 @@ export class DescribeDatasetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RekognitionService",
+        operation: "DescribeDataset",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

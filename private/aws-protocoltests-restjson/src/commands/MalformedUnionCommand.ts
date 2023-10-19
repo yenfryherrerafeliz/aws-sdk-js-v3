@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MalformedUnionInput } from "../models/models_0";
@@ -33,6 +34,37 @@ export interface MalformedUnionCommandInput extends MalformedUnionInput {}
  */
 export interface MalformedUnionCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestJsonProtocolClient, MalformedUnionCommand } from "@aws-sdk/aws-protocoltests-restjson"; // ES Modules import
+ * // const { RestJsonProtocolClient, MalformedUnionCommand } = require("@aws-sdk/aws-protocoltests-restjson"); // CommonJS import
+ * const client = new RestJsonProtocolClient(config);
+ * const input = { // MalformedUnionInput
+ *   union: { // SimpleUnion Union: only one key present
+ *     int: Number("int"),
+ *     string: "STRING_VALUE",
+ *   },
+ * };
+ * const command = new MalformedUnionCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param MalformedUnionCommandInput - {@link MalformedUnionCommandInput}
+ * @returns {@link MalformedUnionCommandOutput}
+ * @see {@link MalformedUnionCommandInput} for command's `input` shape.
+ * @see {@link MalformedUnionCommandOutput} for command's `response` shape.
+ * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
+ *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
+ *
+ */
 export class MalformedUnionCommand extends $Command<
   MalformedUnionCommandInput,
   MalformedUnionCommandOutput,
@@ -71,6 +103,10 @@ export class MalformedUnionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "MalformedUnion",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

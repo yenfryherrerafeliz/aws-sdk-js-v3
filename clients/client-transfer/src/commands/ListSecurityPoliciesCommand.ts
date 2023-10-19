@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListSecurityPoliciesRequest, ListSecurityPoliciesResponse } from "../models/models_0";
@@ -66,7 +67,7 @@ export interface ListSecurityPoliciesCommandOutput extends ListSecurityPoliciesR
  * @see {@link TransferClientResolvedConfig | config} for TransferClient's `config` shape.
  *
  * @throws {@link InternalServiceError} (server fault)
- *  <p>This exception is thrown when an error occurs in the Amazon Web ServicesTransfer Family service.</p>
+ *  <p>This exception is thrown when an error occurs in the Transfer Family service.</p>
  *
  * @throws {@link InvalidNextTokenException} (client fault)
  *  <p>The <code>NextToken</code> parameter that was passed is invalid.</p>
@@ -131,6 +132,10 @@ export class ListSecurityPoliciesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "TransferService",
+        operation: "ListSecurityPolicies",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

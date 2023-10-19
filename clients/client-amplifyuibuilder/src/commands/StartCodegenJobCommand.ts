@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AmplifyUIBuilderClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AmplifyUIBuilderClient";
@@ -65,6 +66,9 @@ export interface StartCodegenJobCommandOutput extends StartCodegenJobResponse, _
  *           },
  *           dataStoreConfig: {},
  *           noApiConfig: {},
+ *         },
+ *         dependencies: { // ReactCodegenDependencies
+ *           "<keys>": "STRING_VALUE",
  *         },
  *       },
  *     },
@@ -173,6 +177,9 @@ export interface StartCodegenJobCommandOutput extends StartCodegenJobResponse, _
  * //           dataStoreConfig: {},
  * //           noApiConfig: {},
  * //         },
+ * //         dependencies: { // ReactCodegenDependencies
+ * //           "<keys>": "STRING_VALUE",
+ * //         },
  * //       },
  * //     },
  * //     genericDataSchema: { // CodegenJobGenericDataSchema
@@ -260,6 +267,14 @@ export interface StartCodegenJobCommandOutput extends StartCodegenJobResponse, _
  * //     },
  * //     createdAt: new Date("TIMESTAMP"),
  * //     modifiedAt: new Date("TIMESTAMP"),
+ * //     dependencies: [ // CodegenDependencies
+ * //       { // CodegenDependency
+ * //         name: "STRING_VALUE",
+ * //         supportedVersion: "STRING_VALUE",
+ * //         isSemVer: true || false,
+ * //         reason: "STRING_VALUE",
+ * //       },
+ * //     ],
  * //   },
  * // };
  *
@@ -334,6 +349,10 @@ export class StartCodegenJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmplifyUIBuilder",
+        operation: "StartCodegenJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

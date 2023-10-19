@@ -23,13 +23,13 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `Route53RecoveryControlConfigClient` and
-the commands you need, for example `CreateClusterCommand`:
+the commands you need, for example `ListClustersCommand`:
 
 ```js
 // ES5 example
 const {
   Route53RecoveryControlConfigClient,
-  CreateClusterCommand,
+  ListClustersCommand,
 } = require("@aws-sdk/client-route53-recovery-control-config");
 ```
 
@@ -37,7 +37,7 @@ const {
 // ES6+ example
 import {
   Route53RecoveryControlConfigClient,
-  CreateClusterCommand,
+  ListClustersCommand,
 } from "@aws-sdk/client-route53-recovery-control-config";
 ```
 
@@ -57,7 +57,7 @@ const client = new Route53RecoveryControlConfigClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new CreateClusterCommand(params);
+const command = new ListClustersCommand(params);
 ```
 
 #### Async/await
@@ -136,7 +136,7 @@ const client = new AWS.Route53RecoveryControlConfig({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.createCluster(params);
+  const data = await client.listClusters(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -144,7 +144,7 @@ try {
 
 // Promises.
 client
-  .createCluster(params)
+  .listClusters(params)
   .then((data) => {
     // process data.
   })
@@ -153,7 +153,7 @@ client
   });
 
 // callbacks.
-client.createCluster(params, (err, data) => {
+client.listClusters(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -303,6 +303,14 @@ DescribeSafetyRule
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-route53-recovery-control-config/classes/describesafetyrulecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-route53-recovery-control-config/interfaces/describesafetyrulecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-route53-recovery-control-config/interfaces/describesafetyrulecommandoutput.html)
+
+</details>
+<details>
+<summary>
+GetResourcePolicy
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-route53-recovery-control-config/classes/getresourcepolicycommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-route53-recovery-control-config/interfaces/getresourcepolicycommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-route53-recovery-control-config/interfaces/getresourcepolicycommandoutput.html)
 
 </details>
 <details>

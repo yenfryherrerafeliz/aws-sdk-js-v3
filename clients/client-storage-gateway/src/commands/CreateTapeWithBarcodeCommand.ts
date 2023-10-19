@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateTapeWithBarcodeInput, CreateTapeWithBarcodeOutput } from "../models/models_0";
@@ -40,7 +41,6 @@ export interface CreateTapeWithBarcodeCommandOutput extends CreateTapeWithBarcod
  *          then archive the tape. A barcode is unique and cannot be reused if it has already been used
  *          on a tape. This applies to barcodes used on deleted tapes. This operation is only supported
  *          in the tape gateway type.</p>
- *
  *          <note>
  *             <p>Cache storage must be allocated to the gateway before you can create a virtual tape.
  *             Use the <a>AddCache</a> operation to add cache storage to a gateway.</p>
@@ -160,6 +160,10 @@ export class CreateTapeWithBarcodeCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "CreateTapeWithBarcode",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

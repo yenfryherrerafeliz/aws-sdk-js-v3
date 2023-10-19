@@ -11,10 +11,11 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
-import { UpdateUserHierarchyRequest } from "../models/models_1";
+import { UpdateUserHierarchyRequest } from "../models/models_2";
 import { de_UpdateUserHierarchyCommand, se_UpdateUserHierarchyCommand } from "../protocols/Aws_restJson1";
 
 /**
@@ -129,6 +130,10 @@ export class UpdateUserHierarchyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonConnectService",
+        operation: "UpdateUserHierarchy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

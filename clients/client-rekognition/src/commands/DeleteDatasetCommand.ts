@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DeleteDatasetRequest, DeleteDatasetResponse } from "../models/models_0";
@@ -36,7 +37,10 @@ export interface DeleteDatasetCommandOutput extends DeleteDatasetResponse, __Met
 
 /**
  * @public
- * <p>Deletes an existing Amazon Rekognition Custom Labels dataset.
+ * <note>
+ *             <p>This operation applies only to Amazon Rekognition Custom Labels.</p>
+ *          </note>
+ *          <p>Deletes an existing Amazon Rekognition Custom Labels dataset.
  *    Deleting a dataset might take while. Use <a>DescribeDataset</a> to check the
  *    current status. The dataset is still deleting if the value of <code>Status</code> is
  *    <code>DELETE_IN_PROGRESS</code>. If you try to access the dataset after it is deleted, you get
@@ -78,9 +82,11 @@ export interface DeleteDatasetCommandOutput extends DeleteDatasetResponse, __Met
  *       operation again.</p>
  *
  * @throws {@link LimitExceededException} (client fault)
- *  <p>An Amazon Rekognition service limit was exceeded. For example, if you start too many Amazon Rekognition Video jobs concurrently, calls to start operations
- *             (<code>StartLabelDetection</code>, for example) will raise a <code>LimitExceededException</code> exception (HTTP status code: 400) until
- *             the number of concurrently running jobs is below the Amazon Rekognition service limit.  </p>
+ *  <p>An Amazon Rekognition service limit was exceeded. For example, if you start too many jobs
+ *             concurrently, subsequent calls to start operations (ex:
+ *             <code>StartLabelDetection</code>) will raise a <code>LimitExceededException</code>
+ *             exception (HTTP status code: 400) until the number of concurrently running jobs is below
+ *             the Amazon Rekognition service limit. </p>
  *
  * @throws {@link ProvisionedThroughputExceededException} (client fault)
  *  <p>The number of requests exceeded your throughput limit. If you want to increase this
@@ -158,6 +164,10 @@ export class DeleteDatasetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RekognitionService",
+        operation: "DeleteDataset",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

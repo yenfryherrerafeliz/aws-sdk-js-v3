@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -70,6 +71,7 @@ export interface DescribeChangeSetCommandOutput extends DescribeChangeSetRespons
  * //         Identifier: "STRING_VALUE",
  * //       },
  * //       Details: "STRING_VALUE",
+ * //       DetailsDocument: "DOCUMENT_VALUE",
  * //       ErrorDetailList: [ // ErrorDetailList
  * //         { // ErrorDetail
  * //           ErrorCode: "STRING_VALUE",
@@ -163,6 +165,10 @@ export class DescribeChangeSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSMPSeymour",
+        operation: "DescribeChangeSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

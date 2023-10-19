@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECSClient";
@@ -151,7 +152,7 @@ export interface UpdateTaskProtectionCommandOutput extends UpdateTaskProtectionR
  *     {
  *       "expirationDate": "2022-11-02T06:56:32.553Z",
  *       "protectionEnabled": true,
- *       "taskArn": "arn:aws:ecs:us-west-2:012345678910:task/b8b1cf532d0e46ba8d44a40d1de16772"
+ *       "taskArn": "arn:aws:ecs:us-west-2:012345678910:task/default/b8b1cf532d0e46ba8d44a40d1de16772"
  *     }
  *   ]
  * }
@@ -178,7 +179,7 @@ export interface UpdateTaskProtectionCommandOutput extends UpdateTaskProtectionR
  *     {
  *       "expirationDate": "2022-11-02T06:56:32.553Z",
  *       "protectionEnabled": true,
- *       "taskArn": "arn:aws:ecs:us-west-2:012345678910:task/b8b1cf532d0e46ba8d44a40d1de16772"
+ *       "taskArn": "arn:aws:ecs:us-west-2:012345678910:task/default/b8b1cf532d0e46ba8d44a40d1de16772"
  *     }
  *   ]
  * }
@@ -204,7 +205,7 @@ export interface UpdateTaskProtectionCommandOutput extends UpdateTaskProtectionR
  *   "protectedTasks": [
  *     {
  *       "protectionEnabled": false,
- *       "taskArn": "arn:aws:ecs:us-west-2:012345678910:task/b8b1cf532d0e46ba8d44a40d1de16772"
+ *       "taskArn": "arn:aws:ecs:us-west-2:012345678910:task/default/b8b1cf532d0e46ba8d44a40d1de16772"
  *     }
  *   ]
  * }
@@ -263,6 +264,10 @@ export class UpdateTaskProtectionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerServiceV20141113",
+        operation: "UpdateTaskProtection",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

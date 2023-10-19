@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -902,7 +903,7 @@ export interface UpdateDashboardCommandOutput extends UpdateDashboardResponse, _
  *                 },
  *                 TotalOptions: { // TotalOptions
  *                   TotalsVisibility: "HIDDEN" || "VISIBLE",
- *                   Placement: "START" || "END",
+ *                   Placement: "START" || "END" || "AUTO",
  *                   ScrollStatus: "PINNED" || "SCROLLED",
  *                   CustomLabel: "STRING_VALUE",
  *                   TotalCellStyle: {
@@ -1407,7 +1408,7 @@ export interface UpdateDashboardCommandOutput extends UpdateDashboardResponse, _
  *                   },
  *                   RowTotalOptions: { // PivotTotalOptions
  *                     TotalsVisibility: "HIDDEN" || "VISIBLE",
- *                     Placement: "START" || "END",
+ *                     Placement: "START" || "END" || "AUTO",
  *                     ScrollStatus: "PINNED" || "SCROLLED",
  *                     CustomLabel: "STRING_VALUE",
  *                     TotalCellStyle: "<TableCellStyle>",
@@ -1416,7 +1417,7 @@ export interface UpdateDashboardCommandOutput extends UpdateDashboardResponse, _
  *                   },
  *                   ColumnTotalOptions: {
  *                     TotalsVisibility: "HIDDEN" || "VISIBLE",
- *                     Placement: "START" || "END",
+ *                     Placement: "START" || "END" || "AUTO",
  *                     ScrollStatus: "PINNED" || "SCROLLED",
  *                     CustomLabel: "STRING_VALUE",
  *                     TotalCellStyle: "<TableCellStyle>",
@@ -2282,6 +2283,17 @@ export interface UpdateDashboardCommandOutput extends UpdateDashboardResponse, _
  *                   PrimaryValueDisplayType: "HIDDEN" || "COMPARISON" || "ACTUAL",
  *                   PrimaryValueFontConfiguration: "<FontConfiguration>",
  *                   SecondaryValueFontConfiguration: "<FontConfiguration>",
+ *                   Sparkline: { // KPISparklineOptions
+ *                     Visibility: "HIDDEN" || "VISIBLE",
+ *                     Type: "LINE" || "AREA", // required
+ *                     Color: "STRING_VALUE",
+ *                     TooltipVisibility: "HIDDEN" || "VISIBLE",
+ *                   },
+ *                   VisualLayoutOptions: { // KPIVisualLayoutOptions
+ *                     StandardLayout: { // KPIVisualStandardLayout
+ *                       Type: "CLASSIC" || "VERTICAL", // required
+ *                     },
+ *                   },
  *                 },
  *               },
  *               ConditionalFormatting: { // KPIConditionalFormatting
@@ -2309,6 +2321,46 @@ export interface UpdateDashboardCommandOutput extends UpdateDashboardResponse, _
  *                     },
  *                     ProgressBar: { // KPIProgressBarConditionalFormatting
  *                       ForegroundColor: "<ConditionalFormattingColor>",
+ *                     },
+ *                     ActualValue: { // KPIActualValueConditionalFormatting
+ *                       TextColor: "<ConditionalFormattingColor>",
+ *                       Icon: {
+ *                         IconSet: {
+ *                           Expression: "STRING_VALUE", // required
+ *                           IconSetType: "PLUS_MINUS" || "CHECK_X" || "THREE_COLOR_ARROW" || "THREE_GRAY_ARROW" || "CARET_UP_MINUS_DOWN" || "THREE_SHAPE" || "THREE_CIRCLE" || "FLAGS" || "BARS" || "FOUR_COLOR_ARROW" || "FOUR_GRAY_ARROW",
+ *                         },
+ *                         CustomCondition: {
+ *                           Expression: "STRING_VALUE", // required
+ *                           IconOptions: {
+ *                             Icon: "CARET_UP" || "CARET_DOWN" || "PLUS" || "MINUS" || "ARROW_UP" || "ARROW_DOWN" || "ARROW_LEFT" || "ARROW_UP_LEFT" || "ARROW_DOWN_LEFT" || "ARROW_RIGHT" || "ARROW_UP_RIGHT" || "ARROW_DOWN_RIGHT" || "FACE_UP" || "FACE_DOWN" || "FACE_FLAT" || "ONE_BAR" || "TWO_BAR" || "THREE_BAR" || "CIRCLE" || "TRIANGLE" || "SQUARE" || "FLAG" || "THUMBS_UP" || "THUMBS_DOWN" || "CHECKMARK" || "X",
+ *                             UnicodeIcon: "STRING_VALUE",
+ *                           },
+ *                           Color: "STRING_VALUE",
+ *                           DisplayConfiguration: {
+ *                             IconDisplayOption: "ICON_ONLY",
+ *                           },
+ *                         },
+ *                       },
+ *                     },
+ *                     ComparisonValue: { // KPIComparisonValueConditionalFormatting
+ *                       TextColor: "<ConditionalFormattingColor>",
+ *                       Icon: {
+ *                         IconSet: {
+ *                           Expression: "STRING_VALUE", // required
+ *                           IconSetType: "PLUS_MINUS" || "CHECK_X" || "THREE_COLOR_ARROW" || "THREE_GRAY_ARROW" || "CARET_UP_MINUS_DOWN" || "THREE_SHAPE" || "THREE_CIRCLE" || "FLAGS" || "BARS" || "FOUR_COLOR_ARROW" || "FOUR_GRAY_ARROW",
+ *                         },
+ *                         CustomCondition: {
+ *                           Expression: "STRING_VALUE", // required
+ *                           IconOptions: {
+ *                             Icon: "CARET_UP" || "CARET_DOWN" || "PLUS" || "MINUS" || "ARROW_UP" || "ARROW_DOWN" || "ARROW_LEFT" || "ARROW_UP_LEFT" || "ARROW_DOWN_LEFT" || "ARROW_RIGHT" || "ARROW_UP_RIGHT" || "ARROW_DOWN_RIGHT" || "FACE_UP" || "FACE_DOWN" || "FACE_FLAT" || "ONE_BAR" || "TWO_BAR" || "THREE_BAR" || "CIRCLE" || "TRIANGLE" || "SQUARE" || "FLAG" || "THUMBS_UP" || "THUMBS_DOWN" || "CHECKMARK" || "X",
+ *                             UnicodeIcon: "STRING_VALUE",
+ *                           },
+ *                           Color: "STRING_VALUE",
+ *                           DisplayConfiguration: {
+ *                             IconDisplayOption: "ICON_ONLY",
+ *                           },
+ *                         },
+ *                       },
  *                     },
  *                   },
  *                 ],
@@ -2829,23 +2881,7 @@ export interface UpdateDashboardCommandOutput extends UpdateDashboardResponse, _
  *                   { // GaugeChartConditionalFormattingOption
  *                     PrimaryValue: { // GaugeChartPrimaryValueConditionalFormatting
  *                       TextColor: "<ConditionalFormattingColor>",
- *                       Icon: {
- *                         IconSet: {
- *                           Expression: "STRING_VALUE", // required
- *                           IconSetType: "PLUS_MINUS" || "CHECK_X" || "THREE_COLOR_ARROW" || "THREE_GRAY_ARROW" || "CARET_UP_MINUS_DOWN" || "THREE_SHAPE" || "THREE_CIRCLE" || "FLAGS" || "BARS" || "FOUR_COLOR_ARROW" || "FOUR_GRAY_ARROW",
- *                         },
- *                         CustomCondition: {
- *                           Expression: "STRING_VALUE", // required
- *                           IconOptions: {
- *                             Icon: "CARET_UP" || "CARET_DOWN" || "PLUS" || "MINUS" || "ARROW_UP" || "ARROW_DOWN" || "ARROW_LEFT" || "ARROW_UP_LEFT" || "ARROW_DOWN_LEFT" || "ARROW_RIGHT" || "ARROW_UP_RIGHT" || "ARROW_DOWN_RIGHT" || "FACE_UP" || "FACE_DOWN" || "FACE_FLAT" || "ONE_BAR" || "TWO_BAR" || "THREE_BAR" || "CIRCLE" || "TRIANGLE" || "SQUARE" || "FLAG" || "THUMBS_UP" || "THUMBS_DOWN" || "CHECKMARK" || "X",
- *                             UnicodeIcon: "STRING_VALUE",
- *                           },
- *                           Color: "STRING_VALUE",
- *                           DisplayConfiguration: {
- *                             IconDisplayOption: "ICON_ONLY",
- *                           },
- *                         },
- *                       },
+ *                       Icon: "<ConditionalFormattingIcon>",
  *                     },
  *                     Arc: { // GaugeChartArcConditionalFormatting
  *                       ForegroundColor: "<ConditionalFormattingColor>",
@@ -4351,6 +4387,7 @@ export interface UpdateDashboardCommandOutput extends UpdateDashboardResponse, _
  *                   MatchOperator: "EQUALS" || "DOES_NOT_EQUAL" || "CONTAINS" || "DOES_NOT_CONTAIN" || "STARTS_WITH" || "ENDS_WITH", // required
  *                   CategoryValues: "<CategoryValueList>",
  *                   SelectAllOptions: "FILTER_ALL_VALUES",
+ *                   NullOption: "ALL_VALUES" || "NULLS_ONLY" || "NON_NULLS_ONLY",
  *                 },
  *                 CustomFilterListConfiguration: { // CustomFilterListConfiguration
  *                   MatchOperator: "EQUALS" || "DOES_NOT_EQUAL" || "CONTAINS" || "DOES_NOT_CONTAIN" || "STARTS_WITH" || "ENDS_WITH", // required
@@ -4537,6 +4574,9 @@ export interface UpdateDashboardCommandOutput extends UpdateDashboardResponse, _
  *       },
  *     },
  *   },
+ *   ValidationStrategy: { // ValidationStrategy
+ *     Mode: "STRICT" || "LENIENT", // required
+ *   },
  * };
  * const command = new UpdateDashboardCommand(input);
  * const response = await client.send(command);
@@ -4635,6 +4675,10 @@ export class UpdateDashboardCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: UpdateDashboardRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "QuickSight_20180401",
+        operation: "UpdateDashboard",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

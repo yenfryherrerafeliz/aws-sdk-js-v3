@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CleanRoomsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CleanRoomsClient";
@@ -41,7 +42,7 @@ export interface StartProtectedQueryCommandOutput extends StartProtectedQueryOut
 
 /**
  * @public
- * <p>Creates a protected query that is started by Clean Rooms .</p>
+ * <p>Creates a protected query that is started by Clean Rooms.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -101,6 +102,11 @@ export interface StartProtectedQueryCommandOutput extends StartProtectedQueryOut
  * //         s3: { // ProtectedQueryS3Output
  * //           location: "STRING_VALUE", // required
  * //         },
+ * //         memberList: [ // ProtectedQueryMemberOutputList
+ * //           { // ProtectedQuerySingleMemberOutput
+ * //             accountId: "STRING_VALUE", // required
+ * //           },
+ * //         ],
  * //       },
  * //     },
  * //     error: { // ProtectedQueryError
@@ -190,6 +196,10 @@ export class StartProtectedQueryCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: StartProtectedQueryInputFilterSensitiveLog,
       outputFilterSensitiveLog: StartProtectedQueryOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSBastionControlPlaneServiceLambda",
+        operation: "StartProtectedQuery",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

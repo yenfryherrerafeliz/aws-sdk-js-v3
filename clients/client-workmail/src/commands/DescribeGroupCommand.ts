@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeGroupRequest, DescribeGroupResponse } from "../models/models_0";
@@ -56,6 +57,7 @@ export interface DescribeGroupCommandOutput extends DescribeGroupResponse, __Met
  * //   State: "ENABLED" || "DISABLED" || "DELETED",
  * //   EnabledDate: new Date("TIMESTAMP"),
  * //   DisabledDate: new Date("TIMESTAMP"),
+ * //   HiddenFromGlobalAddressList: true || false,
  * // };
  *
  * ```
@@ -133,6 +135,10 @@ export class DescribeGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkMailService",
+        operation: "DescribeGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

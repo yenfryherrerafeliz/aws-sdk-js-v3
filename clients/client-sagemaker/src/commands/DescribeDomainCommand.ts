@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeDomainRequest, DescribeDomainResponse } from "../models/models_2";
@@ -143,6 +144,19 @@ export interface DescribeDomainCommandOutput extends DescribeDomainResponse, __M
  * //         S3ArtifactPath: "STRING_VALUE",
  * //         S3KmsKeyId: "STRING_VALUE",
  * //       },
+ * //       IdentityProviderOAuthSettings: [ // IdentityProviderOAuthSettings
+ * //         { // IdentityProviderOAuthSetting
+ * //           DataSourceName: "SalesforceGenie" || "Snowflake",
+ * //           Status: "ENABLED" || "DISABLED",
+ * //           SecretArn: "STRING_VALUE",
+ * //         },
+ * //       ],
+ * //       KendraSettings: { // KendraSettings
+ * //         Status: "ENABLED" || "DISABLED",
+ * //       },
+ * //       DirectDeploySettings: { // DirectDeploySettings
+ * //         Status: "ENABLED" || "DISABLED",
+ * //       },
  * //     },
  * //   },
  * //   AppNetworkAccessType: "PublicInternetOnly" || "VpcOnly",
@@ -269,6 +283,10 @@ export class DescribeDomainCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "DescribeDomain",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

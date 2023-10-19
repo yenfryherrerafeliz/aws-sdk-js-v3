@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateSchemaRequest, UpdateSchemaResponse } from "../models/models_0";
@@ -49,7 +50,7 @@ export interface UpdateSchemaCommandOutput extends UpdateSchemaResponse, __Metad
  *   Description: "STRING_VALUE",
  *   RegistryName: "STRING_VALUE", // required
  *   SchemaName: "STRING_VALUE", // required
- *   Type: "STRING_VALUE",
+ *   Type: "OpenApi3" || "JSONSchemaDraft4",
  * };
  * const command = new UpdateSchemaCommand(input);
  * const response = await client.send(command);
@@ -136,6 +137,10 @@ export class UpdateSchemaCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "schemas",
+        operation: "UpdateSchema",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

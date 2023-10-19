@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { KinesisVideoClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KinesisVideoClient";
@@ -58,6 +59,8 @@ export interface StartEdgeConfigurationUpdateCommandOutput
  *             If you invoke this API during the syncing process, a <code>ResourceInUseException</code> will be thrown.
  *             The connectivity of the stream’s edge configuration and the Edge Agent will be retried for 15 minutes. After 15 minutes,
  *             the status will transition into the <code>SYNC_FAILED</code> state.</p>
+ *          <p>To move an edge configuration from one device to another, use <a>DeleteEdgeConfiguration</a> to delete
+ *             the current edge configuration. You can then invoke StartEdgeConfigurationUpdate with an updated Hub Device ARN.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -231,6 +234,10 @@ export class StartEdgeConfigurationUpdateCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: StartEdgeConfigurationUpdateInputFilterSensitiveLog,
       outputFilterSensitiveLog: StartEdgeConfigurationUpdateOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "KinesisVideo_20170930",
+        operation: "StartEdgeConfigurationUpdate",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

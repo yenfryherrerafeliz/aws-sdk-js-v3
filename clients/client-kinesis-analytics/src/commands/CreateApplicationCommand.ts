@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { KinesisAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KinesisAnalyticsClient";
@@ -94,7 +95,7 @@ export interface CreateApplicationCommandOutput extends CreateApplicationRespons
  *       },
  *       InputSchema: { // SourceSchema
  *         RecordFormat: { // RecordFormat
- *           RecordFormatType: "STRING_VALUE", // required
+ *           RecordFormatType: "JSON" || "CSV", // required
  *           MappingParameters: { // MappingParameters
  *             JSONMappingParameters: { // JSONMappingParameters
  *               RecordRowPath: "STRING_VALUE", // required
@@ -132,7 +133,7 @@ export interface CreateApplicationCommandOutput extends CreateApplicationRespons
  *         RoleARN: "STRING_VALUE", // required
  *       },
  *       DestinationSchema: { // DestinationSchema
- *         RecordFormatType: "STRING_VALUE", // required
+ *         RecordFormatType: "JSON" || "CSV", // required
  *       },
  *     },
  *   ],
@@ -156,7 +157,7 @@ export interface CreateApplicationCommandOutput extends CreateApplicationRespons
  * //   ApplicationSummary: { // ApplicationSummary
  * //     ApplicationName: "STRING_VALUE", // required
  * //     ApplicationARN: "STRING_VALUE", // required
- * //     ApplicationStatus: "STRING_VALUE", // required
+ * //     ApplicationStatus: "DELETING" || "STARTING" || "STOPPING" || "READY" || "RUNNING" || "UPDATING", // required
  * //   },
  * // };
  *
@@ -240,6 +241,10 @@ export class CreateApplicationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "KinesisAnalytics_20150814",
+        operation: "CreateApplication",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

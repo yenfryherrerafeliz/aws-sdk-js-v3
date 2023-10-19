@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeBuildClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeBuildClient";
@@ -57,14 +58,14 @@ export interface RetryBuildCommandOutput extends RetryBuildOutput, __MetadataBea
  * //     startTime: new Date("TIMESTAMP"),
  * //     endTime: new Date("TIMESTAMP"),
  * //     currentPhase: "STRING_VALUE",
- * //     buildStatus: "STRING_VALUE",
+ * //     buildStatus: "SUCCEEDED" || "FAILED" || "FAULT" || "TIMED_OUT" || "IN_PROGRESS" || "STOPPED",
  * //     sourceVersion: "STRING_VALUE",
  * //     resolvedSourceVersion: "STRING_VALUE",
  * //     projectName: "STRING_VALUE",
  * //     phases: [ // BuildPhases
  * //       { // BuildPhase
- * //         phaseType: "STRING_VALUE",
- * //         phaseStatus: "STRING_VALUE",
+ * //         phaseType: "SUBMITTED" || "QUEUED" || "PROVISIONING" || "DOWNLOAD_SOURCE" || "INSTALL" || "PRE_BUILD" || "BUILD" || "POST_BUILD" || "UPLOAD_ARTIFACTS" || "FINALIZING" || "COMPLETED",
+ * //         phaseStatus: "SUCCEEDED" || "FAILED" || "FAULT" || "TIMED_OUT" || "IN_PROGRESS" || "STOPPED",
  * //         startTime: new Date("TIMESTAMP"),
  * //         endTime: new Date("TIMESTAMP"),
  * //         durationInSeconds: Number("long"),
@@ -77,7 +78,7 @@ export interface RetryBuildCommandOutput extends RetryBuildOutput, __MetadataBea
  * //       },
  * //     ],
  * //     source: { // ProjectSource
- * //       type: "STRING_VALUE", // required
+ * //       type: "CODECOMMIT" || "CODEPIPELINE" || "GITHUB" || "S3" || "BITBUCKET" || "GITHUB_ENTERPRISE" || "NO_SOURCE", // required
  * //       location: "STRING_VALUE",
  * //       gitCloneDepth: Number("int"),
  * //       gitSubmodulesConfig: { // GitSubmodulesConfig
@@ -85,7 +86,7 @@ export interface RetryBuildCommandOutput extends RetryBuildOutput, __MetadataBea
  * //       },
  * //       buildspec: "STRING_VALUE",
  * //       auth: { // SourceAuth
- * //         type: "STRING_VALUE", // required
+ * //         type: "OAUTH", // required
  * //         resource: "STRING_VALUE",
  * //       },
  * //       reportBuildStatus: true || false,
@@ -98,7 +99,7 @@ export interface RetryBuildCommandOutput extends RetryBuildOutput, __MetadataBea
  * //     },
  * //     secondarySources: [ // ProjectSources
  * //       {
- * //         type: "STRING_VALUE", // required
+ * //         type: "CODECOMMIT" || "CODEPIPELINE" || "GITHUB" || "S3" || "BITBUCKET" || "GITHUB_ENTERPRISE" || "NO_SOURCE", // required
  * //         location: "STRING_VALUE",
  * //         gitCloneDepth: Number("int"),
  * //         gitSubmodulesConfig: {
@@ -106,7 +107,7 @@ export interface RetryBuildCommandOutput extends RetryBuildOutput, __MetadataBea
  * //         },
  * //         buildspec: "STRING_VALUE",
  * //         auth: {
- * //           type: "STRING_VALUE", // required
+ * //           type: "OAUTH", // required
  * //           resource: "STRING_VALUE",
  * //         },
  * //         reportBuildStatus: true || false,
@@ -131,7 +132,7 @@ export interface RetryBuildCommandOutput extends RetryBuildOutput, __MetadataBea
  * //       overrideArtifactName: true || false,
  * //       encryptionDisabled: true || false,
  * //       artifactIdentifier: "STRING_VALUE",
- * //       bucketOwnerAccess: "STRING_VALUE",
+ * //       bucketOwnerAccess: "NONE" || "READ_ONLY" || "FULL",
  * //     },
  * //     secondaryArtifacts: [ // BuildArtifactsList
  * //       {
@@ -141,34 +142,34 @@ export interface RetryBuildCommandOutput extends RetryBuildOutput, __MetadataBea
  * //         overrideArtifactName: true || false,
  * //         encryptionDisabled: true || false,
  * //         artifactIdentifier: "STRING_VALUE",
- * //         bucketOwnerAccess: "STRING_VALUE",
+ * //         bucketOwnerAccess: "NONE" || "READ_ONLY" || "FULL",
  * //       },
  * //     ],
  * //     cache: { // ProjectCache
- * //       type: "STRING_VALUE", // required
+ * //       type: "NO_CACHE" || "S3" || "LOCAL", // required
  * //       location: "STRING_VALUE",
  * //       modes: [ // ProjectCacheModes
- * //         "STRING_VALUE",
+ * //         "LOCAL_DOCKER_LAYER_CACHE" || "LOCAL_SOURCE_CACHE" || "LOCAL_CUSTOM_CACHE",
  * //       ],
  * //     },
  * //     environment: { // ProjectEnvironment
- * //       type: "STRING_VALUE", // required
+ * //       type: "WINDOWS_CONTAINER" || "LINUX_CONTAINER" || "LINUX_GPU_CONTAINER" || "ARM_CONTAINER" || "WINDOWS_SERVER_2019_CONTAINER", // required
  * //       image: "STRING_VALUE", // required
- * //       computeType: "STRING_VALUE", // required
+ * //       computeType: "BUILD_GENERAL1_SMALL" || "BUILD_GENERAL1_MEDIUM" || "BUILD_GENERAL1_LARGE" || "BUILD_GENERAL1_2XLARGE", // required
  * //       environmentVariables: [ // EnvironmentVariables
  * //         { // EnvironmentVariable
  * //           name: "STRING_VALUE", // required
  * //           value: "STRING_VALUE", // required
- * //           type: "STRING_VALUE",
+ * //           type: "PLAINTEXT" || "PARAMETER_STORE" || "SECRETS_MANAGER",
  * //         },
  * //       ],
  * //       privilegedMode: true || false,
  * //       certificate: "STRING_VALUE",
  * //       registryCredential: { // RegistryCredential
  * //         credential: "STRING_VALUE", // required
- * //         credentialProvider: "STRING_VALUE", // required
+ * //         credentialProvider: "SECRETS_MANAGER", // required
  * //       },
- * //       imagePullCredentialsType: "STRING_VALUE",
+ * //       imagePullCredentialsType: "CODEBUILD" || "SERVICE_ROLE",
  * //     },
  * //     serviceRole: "STRING_VALUE",
  * //     logs: { // LogsLocation
@@ -179,15 +180,15 @@ export interface RetryBuildCommandOutput extends RetryBuildOutput, __MetadataBea
  * //       cloudWatchLogsArn: "STRING_VALUE",
  * //       s3LogsArn: "STRING_VALUE",
  * //       cloudWatchLogs: { // CloudWatchLogsConfig
- * //         status: "STRING_VALUE", // required
+ * //         status: "ENABLED" || "DISABLED", // required
  * //         groupName: "STRING_VALUE",
  * //         streamName: "STRING_VALUE",
  * //       },
  * //       s3Logs: { // S3LogsConfig
- * //         status: "STRING_VALUE", // required
+ * //         status: "ENABLED" || "DISABLED", // required
  * //         location: "STRING_VALUE",
  * //         encryptionDisabled: true || false,
- * //         bucketOwnerAccess: "STRING_VALUE",
+ * //         bucketOwnerAccess: "NONE" || "READ_ONLY" || "FULL",
  * //       },
  * //     },
  * //     timeoutInMinutes: Number("int"),
@@ -219,7 +220,7 @@ export interface RetryBuildCommandOutput extends RetryBuildOutput, __MetadataBea
  * //     ],
  * //     fileSystemLocations: [ // ProjectFileSystemLocations
  * //       { // ProjectFileSystemLocation
- * //         type: "STRING_VALUE",
+ * //         type: "EFS",
  * //         location: "STRING_VALUE",
  * //         mountPoint: "STRING_VALUE",
  * //         identifier: "STRING_VALUE",
@@ -303,6 +304,10 @@ export class RetryBuildCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeBuild_20161006",
+        operation: "RetryBuild",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

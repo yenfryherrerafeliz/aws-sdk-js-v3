@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeSMBSettingsInput, DescribeSMBSettingsOutput } from "../models/models_0";
@@ -52,9 +53,9 @@ export interface DescribeSMBSettingsCommandOutput extends DescribeSMBSettingsOut
  * // { // DescribeSMBSettingsOutput
  * //   GatewayARN: "STRING_VALUE",
  * //   DomainName: "STRING_VALUE",
- * //   ActiveDirectoryStatus: "STRING_VALUE",
+ * //   ActiveDirectoryStatus: "ACCESS_DENIED" || "DETACHED" || "JOINED" || "JOINING" || "NETWORK_ERROR" || "TIMEOUT" || "UNKNOWN_ERROR",
  * //   SMBGuestPasswordSet: true || false,
- * //   SMBSecurityStrategy: "STRING_VALUE",
+ * //   SMBSecurityStrategy: "ClientSpecified" || "MandatorySigning" || "MandatoryEncryption",
  * //   FileSharesVisible: true || false,
  * //   SMBLocalGroups: { // SMBLocalGroups
  * //     GatewayAdmins: [ // UserList
@@ -133,6 +134,10 @@ export class DescribeSMBSettingsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "DescribeSMBSettings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

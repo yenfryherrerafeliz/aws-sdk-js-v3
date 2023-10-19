@@ -11,9 +11,14 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { ModifyClusterDbRevisionMessage, ModifyClusterDbRevisionResult } from "../models/models_1";
+import {
+  ModifyClusterDbRevisionMessage,
+  ModifyClusterDbRevisionResult,
+  ModifyClusterDbRevisionResultFilterSensitiveLog,
+} from "../models/models_1";
 import { de_ModifyClusterDbRevisionCommand, se_ModifyClusterDbRevisionCommand } from "../protocols/Aws_query";
 import { RedshiftClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RedshiftClient";
 
@@ -224,6 +229,8 @@ export interface ModifyClusterDbRevisionCommandOutput extends ModifyClusterDbRev
  * //     CustomDomainName: "STRING_VALUE",
  * //     CustomDomainCertificateArn: "STRING_VALUE",
  * //     CustomDomainCertificateExpiryDate: new Date("TIMESTAMP"),
+ * //     MasterPasswordSecretArn: "STRING_VALUE",
+ * //     MasterPasswordSecretKmsKeyId: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -298,7 +305,11 @@ export class ModifyClusterDbRevisionCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: ModifyClusterDbRevisionResultFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RedshiftServiceVersion20121201",
+        operation: "ModifyClusterDbRevision",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

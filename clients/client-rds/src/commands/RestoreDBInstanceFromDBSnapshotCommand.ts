@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { RestoreDBInstanceFromDBSnapshotMessage, RestoreDBInstanceFromDBSnapshotResult } from "../models/models_1";
@@ -117,6 +118,7 @@ export interface RestoreDBInstanceFromDBSnapshotCommandOutput
  *   StorageThroughput: Number("int"),
  *   DBClusterSnapshotIdentifier: "STRING_VALUE",
  *   AllocatedStorage: Number("int"),
+ *   DedicatedLogVolume: true || false,
  * };
  * const command = new RestoreDBInstanceFromDBSnapshotCommand(input);
  * const response = await client.send(command);
@@ -213,6 +215,7 @@ export interface RestoreDBInstanceFromDBSnapshotCommandOutput
  * //       ResumeFullAutomationModeTime: new Date("TIMESTAMP"),
  * //       StorageThroughput: Number("int"),
  * //       Engine: "STRING_VALUE",
+ * //       DedicatedLogVolume: true || false,
  * //     },
  * //     LatestRestorableTime: new Date("TIMESTAMP"),
  * //     MultiAZ: true || false,
@@ -338,6 +341,8 @@ export interface RestoreDBInstanceFromDBSnapshotCommandOutput
  * //     },
  * //     ReadReplicaSourceDBClusterIdentifier: "STRING_VALUE",
  * //     PercentProgress: "STRING_VALUE",
+ * //     DedicatedLogVolume: true || false,
+ * //     IsStorageConfigUpgradeAvailable: true || false,
  * //   },
  * // };
  *
@@ -517,6 +522,10 @@ export class RestoreDBInstanceFromDBSnapshotCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "RestoreDBInstanceFromDBSnapshot",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

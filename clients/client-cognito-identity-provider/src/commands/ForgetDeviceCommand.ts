@@ -1,5 +1,4 @@
 // smithy-typescript generated code
-import { getAwsAuthPlugin } from "@aws-sdk/middleware-signing";
 import { EndpointParameterInstructions, getEndpointPlugin } from "@smithy/middleware-endpoint";
 import { getSerdePlugin } from "@smithy/middleware-serde";
 import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
@@ -12,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -144,7 +144,6 @@ export class ForgetDeviceCommand extends $Command<
   ): Handler<ForgetDeviceCommandInput, ForgetDeviceCommandOutput> {
     this.middlewareStack.use(getSerdePlugin(configuration, this.serialize, this.deserialize));
     this.middlewareStack.use(getEndpointPlugin(configuration, ForgetDeviceCommand.getEndpointParameterInstructions()));
-    this.middlewareStack.use(getAwsAuthPlugin(configuration));
 
     const stack = clientStack.concat(this.middlewareStack);
 
@@ -157,6 +156,10 @@ export class ForgetDeviceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: ForgetDeviceRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSCognitoIdentityProviderService",
+        operation: "ForgetDevice",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

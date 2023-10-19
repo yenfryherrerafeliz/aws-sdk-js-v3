@@ -55,6 +55,7 @@ import {
   State,
   SubnetCidrReservation,
   TransitGatewayPrefixListReference,
+  VerifiedAccessGroup,
   Volume,
   VpcEndpoint,
   VpnConnection,
@@ -79,6 +80,67 @@ import {
   VirtualizationType,
 } from "./models_3";
 import { AnalysisStatus, ArchitectureType } from "./models_4";
+
+/**
+ * @public
+ */
+export interface DescribeVerifiedAccessGroupsRequest {
+  /**
+   * @public
+   * <p>The ID of the Verified Access groups.</p>
+   */
+  VerifiedAccessGroupIds?: string[];
+
+  /**
+   * @public
+   * <p>The ID of the Verified Access instance.</p>
+   */
+  VerifiedAccessInstanceId?: string;
+
+  /**
+   * @public
+   * <p>The maximum number of results to return with a single call.
+   * 	To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>
+   */
+  MaxResults?: number;
+
+  /**
+   * @public
+   * <p>The token for the next page of results.</p>
+   */
+  NextToken?: string;
+
+  /**
+   * @public
+   * <p>One or more filters. Filter names and values are case-sensitive.</p>
+   */
+  Filters?: Filter[];
+
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually making the request,
+   *    and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
+   *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface DescribeVerifiedAccessGroupsResult {
+  /**
+   * @public
+   * <p>The ID of the Verified Access group.</p>
+   */
+  VerifiedAccessGroups?: VerifiedAccessGroup[];
+
+  /**
+   * @public
+   * <p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>
+   */
+  NextToken?: string;
+}
 
 /**
  * @public
@@ -142,7 +204,7 @@ export interface VerifiedAccessLogDeliveryStatus {
    * @public
    * <p>The status code.</p>
    */
-  Code?: VerifiedAccessLogDeliveryStatusCode | string;
+  Code?: VerifiedAccessLogDeliveryStatusCode;
 
   /**
    * @public
@@ -442,7 +504,7 @@ export interface DescribeVolumeAttributeRequest {
    * @public
    * <p>The attribute of the volume. This parameter is required.</p>
    */
-  Attribute: VolumeAttributeName | string | undefined;
+  Attribute: VolumeAttributeName | undefined;
 
   /**
    * @public
@@ -746,7 +808,7 @@ export interface VolumeModification {
    * <p>The current modification state. The modification state is null for unmodified
    *       volumes.</p>
    */
-  ModificationState?: VolumeModificationState | string;
+  ModificationState?: VolumeModificationState;
 
   /**
    * @public
@@ -770,7 +832,7 @@ export interface VolumeModification {
    * @public
    * <p>The target EBS volume type of the volume.</p>
    */
-  TargetVolumeType?: VolumeType | string;
+  TargetVolumeType?: VolumeType;
 
   /**
    * @public
@@ -800,7 +862,7 @@ export interface VolumeModification {
    * @public
    * <p>The original EBS volume type of the volume.</p>
    */
-  OriginalVolumeType?: VolumeType | string;
+  OriginalVolumeType?: VolumeType;
 
   /**
    * @public
@@ -1068,7 +1130,7 @@ export interface VolumeStatusDetails {
    * @public
    * <p>The name of the volume status.</p>
    */
-  Name?: VolumeStatusName | string;
+  Name?: VolumeStatusName;
 
   /**
    * @public
@@ -1107,7 +1169,7 @@ export interface VolumeStatusInfo {
    * @public
    * <p>The status of the volume.</p>
    */
-  Status?: VolumeStatusInfoStatus | string;
+  Status?: VolumeStatusInfoStatus;
 }
 
 /**
@@ -1199,7 +1261,7 @@ export interface DescribeVpcAttributeRequest {
    * @public
    * <p>The VPC attribute.</p>
    */
-  Attribute: VpcAttributeName | string | undefined;
+  Attribute: VpcAttributeName | undefined;
 
   /**
    * @public
@@ -1566,7 +1628,7 @@ export interface VpcEndpointConnection {
    * @public
    * <p>The state of the VPC endpoint.</p>
    */
-  VpcEndpointState?: State | string;
+  VpcEndpointState?: State;
 
   /**
    * @public
@@ -1596,7 +1658,7 @@ export interface VpcEndpointConnection {
    * @public
    * <p>The IP address type for the endpoint.</p>
    */
-  IpAddressType?: IpAddressType | string;
+  IpAddressType?: IpAddressType;
 
   /**
    * @public
@@ -2030,7 +2092,7 @@ export interface ServiceDetail {
    * @public
    * <p>The payer responsibility.</p>
    */
-  PayerResponsibility?: PayerResponsibility | string;
+  PayerResponsibility?: PayerResponsibility;
 
   /**
    * @public
@@ -2043,13 +2105,13 @@ export interface ServiceDetail {
    * <p>The verification state of the VPC endpoint service.</p>
    *          <p>Consumers of the endpoint service cannot use the private name when the state is not <code>verified</code>.</p>
    */
-  PrivateDnsNameVerificationState?: DnsNameState | string;
+  PrivateDnsNameVerificationState?: DnsNameState;
 
   /**
    * @public
    * <p>The supported IP address types.</p>
    */
-  SupportedIpAddressTypes?: (ServiceConnectivityType | string)[];
+  SupportedIpAddressTypes?: ServiceConnectivityType[];
 }
 
 /**
@@ -2782,13 +2844,13 @@ export interface DisableAwsNetworkPerformanceMetricSubscriptionRequest {
    * @public
    * <p>The metric used for the disabled subscription.</p>
    */
-  Metric?: MetricType | string;
+  Metric?: MetricType;
 
   /**
    * @public
    * <p>The statistic used for the disabled subscription. </p>
    */
-  Statistic?: StatisticType | string;
+  Statistic?: StatisticType;
 
   /**
    * @public
@@ -2875,7 +2937,7 @@ export interface DisableFastLaunchResult {
    * <p>The pre-provisioning resource type that must be cleaned after turning off faster launching
    * 			for the Windows AMI. Supported values include: <code>snapshot</code>.</p>
    */
-  ResourceType?: FastLaunchResourceType | string;
+  ResourceType?: FastLaunchResourceType;
 
   /**
    * @public
@@ -2907,7 +2969,7 @@ export interface DisableFastLaunchResult {
    * @public
    * <p>The current state of faster launching for the specified Windows AMI.</p>
    */
-  State?: FastLaunchStateCode | string;
+  State?: FastLaunchStateCode;
 
   /**
    * @public
@@ -2968,7 +3030,7 @@ export interface DisableFastSnapshotRestoreSuccessItem {
    * @public
    * <p>The state of fast snapshot restores for the snapshot.</p>
    */
-  State?: FastSnapshotRestoreStateCode | string;
+  State?: FastSnapshotRestoreStateCode;
 
   /**
    * @public
@@ -3100,6 +3162,75 @@ export interface DisableFastSnapshotRestoresResult {
    * <p>Information about the snapshots for which fast snapshot restores could not be disabled.</p>
    */
   Unsuccessful?: DisableFastSnapshotRestoreErrorItem[];
+}
+
+/**
+ * @public
+ */
+export interface DisableImageRequest {
+  /**
+   * @public
+   * <p>The ID of the AMI.</p>
+   */
+  ImageId: string | undefined;
+
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually making the request,
+   * 			and provides an error response. If you have the required permissions, the error response is
+   * 			<code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface DisableImageResult {
+  /**
+   * @public
+   * <p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>
+   */
+  Return?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface DisableImageBlockPublicAccessRequest {
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually making the request,
+   * 			and provides an error response. If you have the required permissions, the error response is
+   * 			<code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const ImageBlockPublicAccessDisabledState = {
+  unblocked: "unblocked",
+} as const;
+
+/**
+ * @public
+ */
+export type ImageBlockPublicAccessDisabledState =
+  (typeof ImageBlockPublicAccessDisabledState)[keyof typeof ImageBlockPublicAccessDisabledState];
+
+/**
+ * @public
+ */
+export interface DisableImageBlockPublicAccessResult {
+  /**
+   * @public
+   * <p>Returns <code>unblocked</code> if the request succeeds; otherwise, it returns an
+   *       error.</p>
+   */
+  ImageBlockPublicAccessState?: ImageBlockPublicAccessDisabledState;
 }
 
 /**
@@ -3255,7 +3386,7 @@ export interface TransitGatewayPropagation {
    * @public
    * <p>The resource type. Note that the <code>tgw-peering</code> resource type has been deprecated.</p>
    */
-  ResourceType?: TransitGatewayAttachmentResourceType | string;
+  ResourceType?: TransitGatewayAttachmentResourceType;
 
   /**
    * @public
@@ -3267,7 +3398,7 @@ export interface TransitGatewayPropagation {
    * @public
    * <p>The state.</p>
    */
-  State?: TransitGatewayPropagationState | string;
+  State?: TransitGatewayPropagationState;
 
   /**
    * @public
@@ -3923,13 +4054,13 @@ export interface EnableAwsNetworkPerformanceMetricSubscriptionRequest {
    * @public
    * <p>The metric used for the enabled subscription.</p>
    */
-  Metric?: MetricType | string;
+  Metric?: MetricType;
 
   /**
    * @public
    * <p>The statistic used for the enabled subscription.</p>
    */
-  Statistic?: StatisticType | string;
+  Statistic?: StatisticType;
 
   /**
    * @public
@@ -4079,7 +4210,7 @@ export interface EnableFastLaunchResult {
    * @public
    * <p>The type of resource that was defined for pre-provisioning the Windows AMI for faster launching.</p>
    */
-  ResourceType?: FastLaunchResourceType | string;
+  ResourceType?: FastLaunchResourceType;
 
   /**
    * @public
@@ -4112,7 +4243,7 @@ export interface EnableFastLaunchResult {
    * @public
    * <p>The current state of faster launching for the specified Windows AMI.</p>
    */
-  State?: FastLaunchStateCode | string;
+  State?: FastLaunchStateCode;
 
   /**
    * @public
@@ -4174,7 +4305,7 @@ export interface EnableFastSnapshotRestoreSuccessItem {
    * @public
    * <p>The state of fast snapshot restores.</p>
    */
-  State?: FastSnapshotRestoreStateCode | string;
+  State?: FastSnapshotRestoreStateCode;
 
   /**
    * @public
@@ -4306,6 +4437,83 @@ export interface EnableFastSnapshotRestoresResult {
    * <p>Information about the snapshots for which fast snapshot restores could not be enabled.</p>
    */
   Unsuccessful?: EnableFastSnapshotRestoreErrorItem[];
+}
+
+/**
+ * @public
+ */
+export interface EnableImageRequest {
+  /**
+   * @public
+   * <p>The ID of the AMI.</p>
+   */
+  ImageId: string | undefined;
+
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually making the request,
+   * 			and provides an error response. If you have the required permissions, the error response is
+   * 			<code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface EnableImageResult {
+  /**
+   * @public
+   * <p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>
+   */
+  Return?: boolean;
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const ImageBlockPublicAccessEnabledState = {
+  block_new_sharing: "block-new-sharing",
+} as const;
+
+/**
+ * @public
+ */
+export type ImageBlockPublicAccessEnabledState =
+  (typeof ImageBlockPublicAccessEnabledState)[keyof typeof ImageBlockPublicAccessEnabledState];
+
+/**
+ * @public
+ */
+export interface EnableImageBlockPublicAccessRequest {
+  /**
+   * @public
+   * <p>Specify <code>block-new-sharing</code> to enable block public access for AMIs at the
+   *       account level in the specified Region. This will block any attempt to publicly share your AMIs
+   *       in the specified Region.</p>
+   */
+  ImageBlockPublicAccessState: ImageBlockPublicAccessEnabledState | undefined;
+
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually making the request,
+   * 			and provides an error response. If you have the required permissions, the error response is
+   * 			<code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface EnableImageBlockPublicAccessResult {
+  /**
+   * @public
+   * <p>Returns <code>block-new-sharing</code> if the request succeeds; otherwise, it returns an
+   *       error.</p>
+   */
+  ImageBlockPublicAccessState?: ImageBlockPublicAccessEnabledState;
 }
 
 /**
@@ -4611,7 +4819,7 @@ export interface ClientCertificateRevocationListStatus {
    * @public
    * <p>The state of the client certificate revocation list.</p>
    */
-  Code?: ClientCertificateRevocationListStatusCode | string;
+  Code?: ClientCertificateRevocationListStatusCode;
 
   /**
    * @public
@@ -4703,7 +4911,7 @@ export interface ExportImageRequest {
    * @public
    * <p>The disk image format.</p>
    */
-  DiskImageFormat: DiskImageFormat | string | undefined;
+  DiskImageFormat: DiskImageFormat | undefined;
 
   /**
    * @public
@@ -4753,7 +4961,7 @@ export interface ExportImageResult {
    * @public
    * <p>The disk image format for the exported image.</p>
    */
-  DiskImageFormat?: DiskImageFormat | string;
+  DiskImageFormat?: DiskImageFormat;
 
   /**
    * @public
@@ -5043,19 +5251,19 @@ export interface DataQuery {
    * @public
    * <p>The metric, <code>aggregation-latency</code>, indicating that network latency is aggregated for the query. This is the only supported metric.</p>
    */
-  Metric?: MetricType | string;
+  Metric?: MetricType;
 
   /**
    * @public
    * <p>The metric data aggregation period, <code>p50</code>, between the specified <code>startDate</code> and <code>endDate</code>. For example, a metric of <code>five_minutes</code> is the median of all the data points gathered within those five minutes. <code>p50</code> is the only supported metric.</p>
    */
-  Statistic?: StatisticType | string;
+  Statistic?: StatisticType;
 
   /**
    * @public
    * <p>The aggregation period used for the data query.</p>
    */
-  Period?: PeriodType | string;
+  Period?: PeriodType;
 }
 
 /**
@@ -5156,19 +5364,19 @@ export interface DataResponse {
    * @public
    * <p>The metric used for the network performance request. Only <code>aggregate-latency</code> is supported, which shows network latency during a specified period. </p>
    */
-  Metric?: MetricType | string;
+  Metric?: MetricType;
 
   /**
    * @public
    * <p>The statistic used for the network performance request.</p>
    */
-  Statistic?: StatisticType | string;
+  Statistic?: StatisticType;
 
   /**
    * @public
    * <p>The period used for the network performance request.</p>
    */
-  Period?: PeriodType | string;
+  Period?: PeriodType;
 
   /**
    * @public
@@ -5307,7 +5515,7 @@ export interface GetCapacityReservationUsageResult {
    *             </li>
    *          </ul>
    */
-  State?: CapacityReservationState | string;
+  State?: CapacityReservationState;
 
   /**
    * @public
@@ -5551,7 +5759,7 @@ export interface GetDefaultCreditSpecificationRequest {
    * @public
    * <p>The instance family.</p>
    */
-  InstanceFamily: UnlimitedSupportedInstanceFamily | string | undefined;
+  InstanceFamily: UnlimitedSupportedInstanceFamily | undefined;
 }
 
 /**
@@ -5564,7 +5772,7 @@ export interface InstanceFamilyCreditSpecification {
    * @public
    * <p>The instance family.</p>
    */
-  InstanceFamily?: UnlimitedSupportedInstanceFamily | string;
+  InstanceFamily?: UnlimitedSupportedInstanceFamily;
 
   /**
    * @public
@@ -5636,7 +5844,7 @@ export interface GetEbsEncryptionByDefaultResult {
    * @public
    * <p>Reserved for future use.</p>
    */
-  SseType?: SSEType | string;
+  SseType?: SSEType;
 }
 
 /**
@@ -5670,7 +5878,7 @@ export interface AthenaIntegration {
    * @public
    * <p>The schedule for adding new partitions to the table.</p>
    */
-  PartitionLoadFrequency: PartitionLoadFrequency | string | undefined;
+  PartitionLoadFrequency: PartitionLoadFrequency | undefined;
 
   /**
    * @public
@@ -5832,7 +6040,7 @@ export interface Purchase {
    *             amounts are specified. At this time, the only supported currency is
    *             <code>USD</code>.</p>
    */
-  CurrencyCode?: CurrencyCodeValues | string;
+  CurrencyCode?: CurrencyCodeValues;
 
   /**
    * @public
@@ -5869,7 +6077,7 @@ export interface Purchase {
    * @public
    * <p>The payment option for the reservation.</p>
    */
-  PaymentOption?: PaymentOption | string;
+  PaymentOption?: PaymentOption;
 
   /**
    * @public
@@ -5888,7 +6096,7 @@ export interface GetHostReservationPurchasePreviewResult {
    *                 <code>totalHourlyPrice</code> amounts are specified. At this time, the only
    *             supported currency is <code>USD</code>.</p>
    */
-  CurrencyCode?: CurrencyCodeValues | string;
+  CurrencyCode?: CurrencyCodeValues;
 
   /**
    * @public
@@ -5913,6 +6121,44 @@ export interface GetHostReservationPurchasePreviewResult {
 /**
  * @public
  */
+export interface GetImageBlockPublicAccessStateRequest {
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually making the request,
+   * 			and provides an error response. If you have the required permissions, the error response is
+   * 			<code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface GetImageBlockPublicAccessStateResult {
+  /**
+   * @public
+   * <p>The current state of block public access for AMIs at the account level in the specified
+   *       Amazon Web Services Region.</p>
+   *          <p>Possible values:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>block-new-sharing</code> - Any attempt to publicly share your AMIs in the
+   *           specified Region is blocked.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>unblocked</code> - Your AMIs in the specified Region can be publicly
+   *           shared.</p>
+   *             </li>
+   *          </ul>
+   */
+  ImageBlockPublicAccessState?: string;
+}
+
+/**
+ * @public
+ */
 export interface GetInstanceTypesFromInstanceRequirementsRequest {
   /**
    * @public
@@ -5926,13 +6172,13 @@ export interface GetInstanceTypesFromInstanceRequirementsRequest {
    * @public
    * <p>The processor architecture type.</p>
    */
-  ArchitectureTypes: (ArchitectureType | string)[] | undefined;
+  ArchitectureTypes: ArchitectureType[] | undefined;
 
   /**
    * @public
    * <p>The virtualization type.</p>
    */
-  VirtualizationTypes: (VirtualizationType | string)[] | undefined;
+  VirtualizationTypes: VirtualizationType[] | undefined;
 
   /**
    * @public
@@ -6148,7 +6394,7 @@ export interface IpamAddressHistoryRecord {
    * @public
    * <p>The type of the resource.</p>
    */
-  ResourceType?: IpamAddressHistoryResourceType | string;
+  ResourceType?: IpamAddressHistoryResourceType;
 
   /**
    * @public
@@ -6172,13 +6418,13 @@ export interface IpamAddressHistoryRecord {
    * @public
    * <p>The compliance status of a resource. For more information on compliance statuses, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/monitor-cidr-compliance-ipam.html">Monitor CIDR usage by resource</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>
    */
-  ResourceComplianceStatus?: IpamComplianceStatus | string;
+  ResourceComplianceStatus?: IpamComplianceStatus;
 
   /**
    * @public
    * <p>The overlap status of an IPAM resource. The overlap status tells you if the CIDR for a resource overlaps with another CIDR in the scope. For more information on overlap statuses, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/monitor-cidr-compliance-ipam.html">Monitor CIDR usage by resource</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>
    */
-  ResourceOverlapStatus?: IpamOverlapStatus | string;
+  ResourceOverlapStatus?: IpamOverlapStatus;
 
   /**
    * @public
@@ -6308,7 +6554,7 @@ export interface IpamDiscoveryFailureReason {
    *             </li>
    *          </ul>
    */
-  Code?: IpamDiscoveryFailureCode | string;
+  Code?: IpamDiscoveryFailureCode;
 
   /**
    * @public
@@ -6470,7 +6716,7 @@ export interface IpamDiscoveredResourceCidr {
    * @public
    * <p>The resource type.</p>
    */
-  ResourceType?: IpamResourceType | string;
+  ResourceType?: IpamResourceType;
 
   /**
    * @public
@@ -6694,7 +6940,7 @@ export interface GetIpamResourceCidrsRequest {
    * @public
    * <p>The resource type.</p>
    */
-  ResourceType?: IpamResourceType | string;
+  ResourceType?: IpamResourceType;
 
   /**
    * @public
@@ -6781,7 +7027,7 @@ export interface IpamResourceCidr {
    * @public
    * <p>The type of IPAM resource.</p>
    */
-  ResourceType?: IpamResourceType | string;
+  ResourceType?: IpamResourceType;
 
   /**
    * @public
@@ -6813,19 +7059,19 @@ export interface IpamResourceCidr {
    * @public
    * <p>The compliance status of the IPAM resource. For more information on compliance statuses, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/monitor-cidr-compliance-ipam.html">Monitor CIDR usage by resource</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>
    */
-  ComplianceStatus?: IpamComplianceStatus | string;
+  ComplianceStatus?: IpamComplianceStatus;
 
   /**
    * @public
    * <p>The management state of the resource. For more information about management states, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/monitor-cidr-compliance-ipam.html">Monitor CIDR usage by resource</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>
    */
-  ManagementState?: IpamManagementState | string;
+  ManagementState?: IpamManagementState;
 
   /**
    * @public
    * <p>The overlap status of an IPAM resource. The overlap status tells you if the CIDR for a resource overlaps with another CIDR in the scope. For more information on overlap statuses, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/monitor-cidr-compliance-ipam.html">Monitor CIDR usage by resource</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>
    */
-  OverlapStatus?: IpamOverlapStatus | string;
+  OverlapStatus?: IpamOverlapStatus;
 
   /**
    * @public
@@ -7068,7 +7314,7 @@ export interface GetNetworkInsightsAccessScopeAnalysisFindingsResult {
    * @public
    * <p>The status of Network Access Scope Analysis.</p>
    */
-  AnalysisStatus?: AnalysisStatus | string;
+  AnalysisStatus?: AnalysisStatus;
 
   /**
    * @public
@@ -7360,13 +7606,13 @@ export interface InstanceRequirementsWithMetadataRequest {
    * @public
    * <p>The architecture type.</p>
    */
-  ArchitectureTypes?: (ArchitectureType | string)[];
+  ArchitectureTypes?: ArchitectureType[];
 
   /**
    * @public
    * <p>The virtualization type.</p>
    */
-  VirtualizationTypes?: (VirtualizationType | string)[];
+  VirtualizationTypes?: VirtualizationType[];
 
   /**
    * @public
@@ -7402,7 +7648,7 @@ export interface GetSpotPlacementScoresRequest {
    * <p>The unit for the target capacity.</p>
    *          <p>Default: <code>units</code> (translates to number of instances)</p>
    */
-  TargetCapacityUnitType?: TargetCapacityUnitType | string;
+  TargetCapacityUnitType?: TargetCapacityUnitType;
 
   /**
    * @public
@@ -7654,7 +7900,7 @@ export interface TransitGatewayAttachmentPropagation {
    * @public
    * <p>The state of the propagation route table.</p>
    */
-  State?: TransitGatewayPropagationState | string;
+  State?: TransitGatewayPropagationState;
 }
 
 /**
@@ -7757,7 +8003,7 @@ export interface TransitGatewayMulticastDomainAssociation {
    * @public
    * <p>The type of resource, for example a VPC attachment.</p>
    */
-  ResourceType?: TransitGatewayAttachmentResourceType | string;
+  ResourceType?: TransitGatewayAttachmentResourceType;
 
   /**
    * @public
@@ -8139,13 +8385,13 @@ export interface TransitGatewayRouteTableAssociation {
    * @public
    * <p>The resource type. Note that the <code>tgw-peering</code> resource type has been deprecated.</p>
    */
-  ResourceType?: TransitGatewayAttachmentResourceType | string;
+  ResourceType?: TransitGatewayAttachmentResourceType;
 
   /**
    * @public
    * <p>The state of the association.</p>
    */
-  State?: TransitGatewayAssociationState | string;
+  State?: TransitGatewayAssociationState;
 }
 
 /**
@@ -8220,357 +8466,6 @@ export interface GetTransitGatewayRouteTablePropagationsRequest {
 }
 
 /**
- * @public
- * <p>Describes a route table propagation.</p>
- */
-export interface TransitGatewayRouteTablePropagation {
-  /**
-   * @public
-   * <p>The ID of the attachment.</p>
-   */
-  TransitGatewayAttachmentId?: string;
-
-  /**
-   * @public
-   * <p>The ID of the resource.</p>
-   */
-  ResourceId?: string;
-
-  /**
-   * @public
-   * <p>The type of resource. Note that the <code>tgw-peering</code> resource type has been deprecated.</p>
-   */
-  ResourceType?: TransitGatewayAttachmentResourceType | string;
-
-  /**
-   * @public
-   * <p>The state of the resource.</p>
-   */
-  State?: TransitGatewayPropagationState | string;
-
-  /**
-   * @public
-   * <p>The ID of the transit gateway route table announcement.</p>
-   */
-  TransitGatewayRouteTableAnnouncementId?: string;
-}
-
-/**
- * @public
- */
-export interface GetTransitGatewayRouteTablePropagationsResult {
-  /**
-   * @public
-   * <p>Information about the route table propagations.</p>
-   */
-  TransitGatewayRouteTablePropagations?: TransitGatewayRouteTablePropagation[];
-
-  /**
-   * @public
-   * <p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>
-   */
-  NextToken?: string;
-}
-
-/**
- * @public
- */
-export interface GetVerifiedAccessEndpointPolicyRequest {
-  /**
-   * @public
-   * <p>The ID of the Verified Access endpoint.</p>
-   */
-  VerifiedAccessEndpointId: string | undefined;
-
-  /**
-   * @public
-   * <p>Checks whether you have the required permissions for the action, without actually making the request,
-   *    and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
-   *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-   */
-  DryRun?: boolean;
-}
-
-/**
- * @public
- */
-export interface GetVerifiedAccessEndpointPolicyResult {
-  /**
-   * @public
-   * <p>The status of the Verified Access policy.</p>
-   */
-  PolicyEnabled?: boolean;
-
-  /**
-   * @public
-   * <p>The Verified Access policy document.</p>
-   */
-  PolicyDocument?: string;
-}
-
-/**
- * @public
- */
-export interface GetVerifiedAccessGroupPolicyRequest {
-  /**
-   * @public
-   * <p>The ID of the Verified Access group.</p>
-   */
-  VerifiedAccessGroupId: string | undefined;
-
-  /**
-   * @public
-   * <p>Checks whether you have the required permissions for the action, without actually making the request,
-   *    and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
-   *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-   */
-  DryRun?: boolean;
-}
-
-/**
- * @public
- */
-export interface GetVerifiedAccessGroupPolicyResult {
-  /**
-   * @public
-   * <p>The status of the Verified Access policy.</p>
-   */
-  PolicyEnabled?: boolean;
-
-  /**
-   * @public
-   * <p>The Verified Access policy document.</p>
-   */
-  PolicyDocument?: string;
-}
-
-/**
- * @public
- */
-export interface GetVpnConnectionDeviceSampleConfigurationRequest {
-  /**
-   * @public
-   * <p>The <code>VpnConnectionId</code> specifies the Site-to-Site VPN connection used for the sample
-   *             configuration.</p>
-   */
-  VpnConnectionId: string | undefined;
-
-  /**
-   * @public
-   * <p>Device identifier provided by the <code>GetVpnConnectionDeviceTypes</code> API.</p>
-   */
-  VpnConnectionDeviceTypeId: string | undefined;
-
-  /**
-   * @public
-   * <p>The IKE version to be used in the sample configuration file for your customer gateway
-   *             device. You can specify one of the following versions: <code>ikev1</code> or
-   *                 <code>ikev2</code>.</p>
-   */
-  InternetKeyExchangeVersion?: string;
-
-  /**
-   * @public
-   * <p>Checks whether you have the required permissions for the action, without actually
-   *             making the request, and provides an error response. If you have the required
-   *             permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is
-   *                 <code>UnauthorizedOperation</code>.</p>
-   */
-  DryRun?: boolean;
-}
-
-/**
- * @public
- */
-export interface GetVpnConnectionDeviceSampleConfigurationResult {
-  /**
-   * @public
-   * <p>Sample configuration file for the specified customer gateway device.</p>
-   */
-  VpnConnectionDeviceSampleConfiguration?: string;
-}
-
-/**
- * @public
- */
-export interface GetVpnConnectionDeviceTypesRequest {
-  /**
-   * @public
-   * <p>The maximum number of results returned by <code>GetVpnConnectionDeviceTypes</code> in
-   *             paginated output. When this parameter is used, <code>GetVpnConnectionDeviceTypes</code>
-   *             only returns <code>MaxResults</code> results in a single page along with a
-   *                 <code>NextToken</code> response element. The remaining results of the initial
-   *             request can be seen by sending another <code>GetVpnConnectionDeviceTypes</code> request
-   *             with the returned <code>NextToken</code> value. This value can be between 200 and 1000.
-   *             If this parameter is not used, then <code>GetVpnConnectionDeviceTypes</code> returns all
-   *             results.</p>
-   */
-  MaxResults?: number;
-
-  /**
-   * @public
-   * <p>The <code>NextToken</code> value returned from a previous paginated
-   *                 <code>GetVpnConnectionDeviceTypes</code> request where <code>MaxResults</code> was
-   *             used and the results exceeded the value of that parameter. Pagination continues from the
-   *             end of the previous results that returned the <code>NextToken</code> value. This value
-   *             is null when there are no more results to return. </p>
-   */
-  NextToken?: string;
-
-  /**
-   * @public
-   * <p>Checks whether you have the required permissions for the action, without actually
-   *             making the request, and provides an error response. If you have the required
-   *             permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is
-   *                 <code>UnauthorizedOperation</code>.</p>
-   */
-  DryRun?: boolean;
-}
-
-/**
- * @public
- * <p>List of customer gateway devices that have a sample configuration file available for
- *             use. You can also see the list of device types with sample configuration files available
- *             under <a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/your-cgw.html">Your customer
- *                 gateway device</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>
- */
-export interface VpnConnectionDeviceType {
-  /**
-   * @public
-   * <p>Customer gateway device identifier.</p>
-   */
-  VpnConnectionDeviceTypeId?: string;
-
-  /**
-   * @public
-   * <p>Customer gateway device vendor.</p>
-   */
-  Vendor?: string;
-
-  /**
-   * @public
-   * <p>Customer gateway device platform.</p>
-   */
-  Platform?: string;
-
-  /**
-   * @public
-   * <p>Customer gateway device software version.</p>
-   */
-  Software?: string;
-}
-
-/**
- * @public
- */
-export interface GetVpnConnectionDeviceTypesResult {
-  /**
-   * @public
-   * <p>List of customer gateway devices that have a sample configuration file available for
-   *             use.</p>
-   */
-  VpnConnectionDeviceTypes?: VpnConnectionDeviceType[];
-
-  /**
-   * @public
-   * <p>The <code>NextToken</code> value to include in a future
-   *                 <code>GetVpnConnectionDeviceTypes</code> request. When the results of a
-   *                 <code>GetVpnConnectionDeviceTypes</code> request exceed <code>MaxResults</code>,
-   *             this value can be used to retrieve the next page of results. This value is null when
-   *             there are no more results to return.</p>
-   */
-  NextToken?: string;
-}
-
-/**
- * @public
- */
-export interface GetVpnTunnelReplacementStatusRequest {
-  /**
-   * @public
-   * <p>The ID of the Site-to-Site VPN connection. </p>
-   */
-  VpnConnectionId: string | undefined;
-
-  /**
-   * @public
-   * <p>The external IP address of the VPN tunnel.</p>
-   */
-  VpnTunnelOutsideIpAddress: string | undefined;
-
-  /**
-   * @public
-   * <p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-   */
-  DryRun?: boolean;
-}
-
-/**
- * @public
- * <p>Details for Site-to-Site VPN tunnel endpoint maintenance events.</p>
- */
-export interface MaintenanceDetails {
-  /**
-   * @public
-   * <p>Verify existence of a pending maintenance.</p>
-   */
-  PendingMaintenance?: string;
-
-  /**
-   * @public
-   * <p>The timestamp after which Amazon Web Services will automatically apply maintenance.</p>
-   */
-  MaintenanceAutoAppliedAfter?: Date;
-
-  /**
-   * @public
-   * <p>Timestamp of last applied maintenance.</p>
-   */
-  LastMaintenanceApplied?: Date;
-}
-
-/**
- * @public
- */
-export interface GetVpnTunnelReplacementStatusResult {
-  /**
-   * @public
-   * <p>The ID of the Site-to-Site VPN connection. </p>
-   */
-  VpnConnectionId?: string;
-
-  /**
-   * @public
-   * <p>The ID of the transit gateway associated with the VPN connection.</p>
-   */
-  TransitGatewayId?: string;
-
-  /**
-   * @public
-   * <p>The ID of the customer gateway.</p>
-   */
-  CustomerGatewayId?: string;
-
-  /**
-   * @public
-   * <p>The ID of the virtual private gateway.</p>
-   */
-  VpnGatewayId?: string;
-
-  /**
-   * @public
-   * <p>The external IP address of the VPN tunnel.</p>
-   */
-  VpnTunnelOutsideIpAddress?: string;
-
-  /**
-   * @public
-   * <p>Get details of pending tunnel endpoint maintenance.</p>
-   */
-  MaintenanceDetails?: MaintenanceDetails;
-}
-
-/**
  * @internal
  */
 export const DescribeVerifiedAccessTrustProvidersResultFilterSensitiveLog = (
@@ -8622,14 +8517,4 @@ export const GetLaunchTemplateDataResultFilterSensitiveLog = (obj: GetLaunchTemp
 export const GetPasswordDataResultFilterSensitiveLog = (obj: GetPasswordDataResult): any => ({
   ...obj,
   ...(obj.PasswordData && { PasswordData: SENSITIVE_STRING }),
-});
-
-/**
- * @internal
- */
-export const GetVpnConnectionDeviceSampleConfigurationResultFilterSensitiveLog = (
-  obj: GetVpnConnectionDeviceSampleConfigurationResult
-): any => ({
-  ...obj,
-  ...(obj.VpnConnectionDeviceSampleConfiguration && { VpnConnectionDeviceSampleConfiguration: SENSITIVE_STRING }),
 });

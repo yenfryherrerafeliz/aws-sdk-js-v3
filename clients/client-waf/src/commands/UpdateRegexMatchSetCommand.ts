@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateRegexMatchSetRequest, UpdateRegexMatchSetResponse } from "../models/models_0";
@@ -89,13 +90,13 @@ export interface UpdateRegexMatchSetCommandOutput extends UpdateRegexMatchSetRes
  *   RegexMatchSetId: "STRING_VALUE", // required
  *   Updates: [ // RegexMatchSetUpdates // required
  *     { // RegexMatchSetUpdate
- *       Action: "STRING_VALUE", // required
+ *       Action: "INSERT" || "DELETE", // required
  *       RegexMatchTuple: { // RegexMatchTuple
  *         FieldToMatch: { // FieldToMatch
- *           Type: "STRING_VALUE", // required
+ *           Type: "URI" || "QUERY_STRING" || "HEADER" || "METHOD" || "BODY" || "SINGLE_QUERY_ARG" || "ALL_QUERY_ARGS", // required
  *           Data: "STRING_VALUE",
  *         },
- *         TextTransformation: "STRING_VALUE", // required
+ *         TextTransformation: "NONE" || "COMPRESS_WHITE_SPACE" || "HTML_ENTITY_DECODE" || "LOWERCASE" || "CMD_LINE" || "URL_DECODE", // required
  *         RegexPatternSetId: "STRING_VALUE", // required
  *       },
  *     },
@@ -231,6 +232,10 @@ export class UpdateRegexMatchSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_20150824",
+        operation: "UpdateRegexMatchSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

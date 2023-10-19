@@ -11,12 +11,13 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
   PutEmailIdentityMailFromAttributesRequest,
   PutEmailIdentityMailFromAttributesResponse,
-} from "../models/models_0";
+} from "../models/models_1";
 import {
   de_PutEmailIdentityMailFromAttributesCommand,
   se_PutEmailIdentityMailFromAttributesCommand,
@@ -132,6 +133,10 @@ export class PutEmailIdentityMailFromAttributesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SimpleEmailService_v2",
+        operation: "PutEmailIdentityMailFromAttributes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

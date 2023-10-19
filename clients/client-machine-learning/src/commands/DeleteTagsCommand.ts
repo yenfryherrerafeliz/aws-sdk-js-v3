@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MachineLearningClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MachineLearningClient";
@@ -49,13 +50,13 @@ export interface DeleteTagsCommandOutput extends DeleteTagsOutput, __MetadataBea
  *     "STRING_VALUE",
  *   ],
  *   ResourceId: "STRING_VALUE", // required
- *   ResourceType: "STRING_VALUE", // required
+ *   ResourceType: "BatchPrediction" || "DataSource" || "Evaluation" || "MLModel", // required
  * };
  * const command = new DeleteTagsCommand(input);
  * const response = await client.send(command);
  * // { // DeleteTagsOutput
  * //   ResourceId: "STRING_VALUE",
- * //   ResourceType: "STRING_VALUE",
+ * //   ResourceType: "BatchPrediction" || "DataSource" || "Evaluation" || "MLModel",
  * // };
  *
  * ```
@@ -129,6 +130,10 @@ export class DeleteTagsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonML_20141212",
+        operation: "DeleteTags",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

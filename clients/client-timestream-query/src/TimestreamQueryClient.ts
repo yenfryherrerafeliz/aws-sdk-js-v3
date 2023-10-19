@@ -257,6 +257,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 
@@ -321,7 +323,7 @@ export interface TimestreamQueryClientResolvedConfig extends TimestreamQueryClie
  * @public
  * <fullname>Amazon Timestream Query
  *         </fullname>
- *         <p></p>
+ *          <p></p>
  */
 export class TimestreamQueryClient extends __Client<
   __HttpHandlerOptions,

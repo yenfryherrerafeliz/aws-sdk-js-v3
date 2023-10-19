@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeBackupsRequest, DescribeBackupsResponse } from "../models/models_0";
@@ -66,7 +67,7 @@ export interface DescribeBackupsCommandOutput extends DescribeBackupsResponse, _
  * //     { // Backup
  * //       BackupArn: "STRING_VALUE",
  * //       BackupId: "STRING_VALUE",
- * //       BackupType: "STRING_VALUE",
+ * //       BackupType: "AUTOMATED" || "MANUAL",
  * //       CreatedAt: new Date("TIMESTAMP"),
  * //       Description: "STRING_VALUE",
  * //       Engine: "STRING_VALUE",
@@ -85,7 +86,7 @@ export interface DescribeBackupsCommandOutput extends DescribeBackupsResponse, _
  * //       ],
  * //       ServerName: "STRING_VALUE",
  * //       ServiceRoleArn: "STRING_VALUE",
- * //       Status: "STRING_VALUE",
+ * //       Status: "IN_PROGRESS" || "OK" || "FAILED" || "DELETING",
  * //       StatusDescription: "STRING_VALUE",
  * //       SubnetIds: [
  * //         "STRING_VALUE",
@@ -171,6 +172,10 @@ export class DescribeBackupsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OpsWorksCM_V2016_11_01",
+        operation: "DescribeBackups",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

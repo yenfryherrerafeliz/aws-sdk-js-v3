@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetBucketAnalyticsConfigurationOutput, GetBucketAnalyticsConfigurationRequest } from "../models/models_0";
@@ -51,7 +52,8 @@ export interface GetBucketAnalyticsConfigurationCommandOutput
  *             <i>Amazon S3 User Guide</i>. </p>
  *          <p>For information about Amazon S3 analytics feature, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/analytics-storage-class.html">Amazon S3 Analytics – Storage Class
  *             Analysis</a> in the <i>Amazon S3 User Guide</i>.</p>
- *          <p>The following operations are related to <code>GetBucketAnalyticsConfiguration</code>:</p>
+ *          <p>The following operations are related to
+ *          <code>GetBucketAnalyticsConfiguration</code>:</p>
  *          <ul>
  *             <li>
  *                <p>
@@ -185,6 +187,10 @@ export class GetBucketAnalyticsConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonS3",
+        operation: "GetBucketAnalyticsConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IdentitystoreClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IdentitystoreClient";
@@ -42,6 +43,11 @@ export interface DescribeGroupCommandOutput extends DescribeGroupResponse, __Met
  * @public
  * <p>Retrieves the group metadata and attributes from <code>GroupId</code> in an identity
  *          store.</p>
+ *          <note>
+ *             <p>If you have administrator access to a member account, you can use this API from the member account.
+ *          Read about <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html">member accounts</a> in the
+ *          <i>Organizations User Guide</i>. </p>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -142,6 +148,10 @@ export class DescribeGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: DescribeGroupResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIdentityStore",
+        operation: "DescribeGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -51,17 +52,17 @@ export interface GetExportCommandOutput extends GetExportResponse, __MetadataBea
  * const input = { // GetExportRequest
  *   name: "STRING_VALUE", // required
  *   version: "STRING_VALUE", // required
- *   resourceType: "STRING_VALUE", // required
- *   exportType: "STRING_VALUE", // required
+ *   resourceType: "BOT" || "INTENT" || "SLOT_TYPE", // required
+ *   exportType: "ALEXA_SKILLS_KIT" || "LEX", // required
  * };
  * const command = new GetExportCommand(input);
  * const response = await client.send(command);
  * // { // GetExportResponse
  * //   name: "STRING_VALUE",
  * //   version: "STRING_VALUE",
- * //   resourceType: "STRING_VALUE",
- * //   exportType: "STRING_VALUE",
- * //   exportStatus: "STRING_VALUE",
+ * //   resourceType: "BOT" || "INTENT" || "SLOT_TYPE",
+ * //   exportType: "ALEXA_SKILLS_KIT" || "LEX",
+ * //   exportStatus: "IN_PROGRESS" || "READY" || "FAILED",
  * //   failureReason: "STRING_VALUE",
  * //   url: "STRING_VALUE",
  * // };
@@ -141,6 +142,10 @@ export class GetExportCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "GetExport",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

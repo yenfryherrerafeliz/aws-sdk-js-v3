@@ -11,9 +11,14 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { DescribeGatewayInformationInput, DescribeGatewayInformationOutput } from "../models/models_0";
+import {
+  DescribeGatewayInformationInput,
+  DescribeGatewayInformationOutput,
+  DescribeGatewayInformationOutputFilterSensitiveLog,
+} from "../models/models_0";
 import { de_DescribeGatewayInformationCommand, se_DescribeGatewayInformationCommand } from "../protocols/Aws_json1_1";
 import { ServiceInputTypes, ServiceOutputTypes, StorageGatewayClientResolvedConfig } from "../StorageGatewayClient";
 
@@ -36,9 +41,9 @@ export interface DescribeGatewayInformationCommandOutput extends DescribeGateway
 
 /**
  * @public
- * <p>Returns metadata about a gateway such as its name, network interfaces, configured time
- *          zone, and the state (whether the gateway is running or not). To specify which gateway to
- *          describe, use the Amazon Resource Name (ARN) of the gateway in your request.</p>
+ * <p>Returns metadata about a gateway such as its name, network interfaces, time zone,
+ *          status, and software version. To specify which gateway to describe, use the Amazon Resource
+ *          Name (ARN) of the gateway in your request.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -76,15 +81,16 @@ export interface DescribeGatewayInformationCommandOutput extends DescribeGateway
  * //   ],
  * //   VPCEndpoint: "STRING_VALUE",
  * //   CloudWatchLogGroupARN: "STRING_VALUE",
- * //   HostEnvironment: "STRING_VALUE",
+ * //   HostEnvironment: "VMWARE" || "HYPER-V" || "EC2" || "KVM" || "OTHER" || "SNOWBALL",
  * //   EndpointType: "STRING_VALUE",
  * //   SoftwareUpdatesEndDate: "STRING_VALUE",
  * //   DeprecationDate: "STRING_VALUE",
- * //   GatewayCapacity: "STRING_VALUE",
+ * //   GatewayCapacity: "Small" || "Medium" || "Large",
  * //   SupportedGatewayCapacities: [ // SupportedGatewayCapacities
- * //     "STRING_VALUE",
+ * //     "Small" || "Medium" || "Large",
  * //   ],
  * //   HostEnvironmentId: "STRING_VALUE",
+ * //   SoftwareVersion: "STRING_VALUE",
  * // };
  *
  * ```
@@ -184,7 +190,11 @@ export class DescribeGatewayInformationCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: DescribeGatewayInformationOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "DescribeGatewayInformation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

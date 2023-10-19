@@ -12,6 +12,7 @@ import {
   MiddlewareStack,
   SdkStreamSerdeContext as __SdkStreamSerdeContext,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
   StreamingBlobPayloadInputTypes,
   StreamingBlobPayloadOutputTypes,
 } from "@smithy/types";
@@ -159,8 +160,8 @@ export interface PostContentCommandOutput extends Omit<PostContentResponse, "aud
  * //   sentimentResponse: "STRING_VALUE",
  * //   message: "STRING_VALUE",
  * //   encodedMessage: "STRING_VALUE",
- * //   messageFormat: "STRING_VALUE",
- * //   dialogState: "STRING_VALUE",
+ * //   messageFormat: "PlainText" || "CustomPayload" || "SSML" || "Composite",
+ * //   dialogState: "ElicitIntent" || "ConfirmIntent" || "ElicitSlot" || "Fulfilled" || "ReadyForFulfillment" || "Failed",
  * //   slotToElicit: "STRING_VALUE",
  * //   inputTranscript: "STRING_VALUE",
  * //   encodedInputTranscript: "STRING_VALUE",
@@ -285,6 +286,10 @@ export class PostContentCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: PostContentRequestFilterSensitiveLog,
       outputFilterSensitiveLog: PostContentResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseRunTimeService",
+        operation: "PostContent",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

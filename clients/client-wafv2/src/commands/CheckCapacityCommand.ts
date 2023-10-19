@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CheckCapacityRequest, CheckCapacityResponse } from "../models/models_0";
@@ -117,6 +118,9 @@ export interface CheckCapacityCommandOutput extends CheckCapacityResponse, __Met
  *             HeaderOrder: { // HeaderOrder
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *             },
+ *             JA3Fingerprint: { // JA3Fingerprint
+ *               FallbackBehavior: "MATCH" || "NO_MATCH", // required
+ *             },
  *           },
  *           TextTransformations: [ // TextTransformations // required
  *             { // TextTransformation
@@ -181,6 +185,9 @@ export interface CheckCapacityCommandOutput extends CheckCapacityResponse, __Met
  *             HeaderOrder: {
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *             },
+ *             JA3Fingerprint: {
+ *               FallbackBehavior: "MATCH" || "NO_MATCH", // required
+ *             },
  *           },
  *           TextTransformations: [ // required
  *             {
@@ -241,6 +248,9 @@ export interface CheckCapacityCommandOutput extends CheckCapacityResponse, __Met
  *             HeaderOrder: {
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *             },
+ *             JA3Fingerprint: {
+ *               FallbackBehavior: "MATCH" || "NO_MATCH", // required
+ *             },
  *           },
  *           TextTransformations: [ // required
  *             {
@@ -295,6 +305,9 @@ export interface CheckCapacityCommandOutput extends CheckCapacityResponse, __Met
  *             },
  *             HeaderOrder: {
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
+ *             },
+ *             JA3Fingerprint: {
+ *               FallbackBehavior: "MATCH" || "NO_MATCH", // required
  *             },
  *           },
  *           ComparisonOperator: "EQ" || "NE" || "LE" || "LT" || "GE" || "GT", // required
@@ -437,6 +450,9 @@ export interface CheckCapacityCommandOutput extends CheckCapacityResponse, __Met
  *             },
  *             HeaderOrder: {
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
+ *             },
+ *             JA3Fingerprint: {
+ *               FallbackBehavior: "MATCH" || "NO_MATCH", // required
  *             },
  *           },
  *           TextTransformations: [ // required
@@ -601,6 +617,7 @@ export interface CheckCapacityCommandOutput extends CheckCapacityResponse, __Met
  *                   },
  *                   AWSManagedRulesBotControlRuleSet: { // AWSManagedRulesBotControlRuleSet
  *                     InspectionLevel: "COMMON" || "TARGETED", // required
+ *                     EnableMachineLearning: true || false,
  *                   },
  *                   AWSManagedRulesATPRuleSet: { // AWSManagedRulesATPRuleSet
  *                     LoginPath: "STRING_VALUE", // required
@@ -817,6 +834,7 @@ export interface CheckCapacityCommandOutput extends CheckCapacityResponse, __Met
  *               PasswordField: "<PasswordField>",
  *               AWSManagedRulesBotControlRuleSet: {
  *                 InspectionLevel: "COMMON" || "TARGETED", // required
+ *                 EnableMachineLearning: true || false,
  *               },
  *               AWSManagedRulesATPRuleSet: {
  *                 LoginPath: "STRING_VALUE", // required
@@ -1115,6 +1133,10 @@ export class CheckCapacityCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_20190729",
+        operation: "CheckCapacity",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

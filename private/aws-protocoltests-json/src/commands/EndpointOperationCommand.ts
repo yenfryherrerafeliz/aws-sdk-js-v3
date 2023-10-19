@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { JsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../JsonProtocolClient";
@@ -32,6 +33,32 @@ export interface EndpointOperationCommandInput {}
  */
 export interface EndpointOperationCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { JsonProtocolClient, EndpointOperationCommand } from "@aws-sdk/aws-protocoltests-json"; // ES Modules import
+ * // const { JsonProtocolClient, EndpointOperationCommand } = require("@aws-sdk/aws-protocoltests-json"); // CommonJS import
+ * const client = new JsonProtocolClient(config);
+ * const input = {};
+ * const command = new EndpointOperationCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param EndpointOperationCommandInput - {@link EndpointOperationCommandInput}
+ * @returns {@link EndpointOperationCommandOutput}
+ * @see {@link EndpointOperationCommandInput} for command's `input` shape.
+ * @see {@link EndpointOperationCommandOutput} for command's `response` shape.
+ * @see {@link JsonProtocolClientResolvedConfig | config} for JsonProtocolClient's `config` shape.
+ *
+ * @throws {@link JsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from JsonProtocol service.</p>
+ *
+ */
 export class EndpointOperationCommand extends $Command<
   EndpointOperationCommandInput,
   EndpointOperationCommandOutput,
@@ -70,6 +97,10 @@ export class EndpointOperationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "JsonProtocol",
+        operation: "EndpointOperation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

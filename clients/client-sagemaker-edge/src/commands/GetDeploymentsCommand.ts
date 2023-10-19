@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetDeploymentsRequest, GetDeploymentsResult } from "../models/models_0";
@@ -53,17 +54,17 @@ export interface GetDeploymentsCommandOutput extends GetDeploymentsResult, __Met
  * //   Deployments: [ // EdgeDeployments
  * //     { // EdgeDeployment
  * //       DeploymentName: "STRING_VALUE",
- * //       Type: "STRING_VALUE",
- * //       FailureHandlingPolicy: "STRING_VALUE",
+ * //       Type: "Model",
+ * //       FailureHandlingPolicy: "ROLLBACK_ON_FAILURE" || "DO_NOTHING",
  * //       Definitions: [ // Definitions
  * //         { // Definition
  * //           ModelHandle: "STRING_VALUE",
  * //           S3Url: "STRING_VALUE",
  * //           Checksum: { // Checksum
- * //             Type: "STRING_VALUE",
+ * //             Type: "SHA1",
  * //             Sum: "STRING_VALUE",
  * //           },
- * //           State: "STRING_VALUE",
+ * //           State: "DEPLOY" || "UNDEPLOY",
  * //         },
  * //       ],
  * //     },
@@ -136,6 +137,10 @@ export class GetDeploymentsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonSageMakerEdge",
+        operation: "GetDeployments",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

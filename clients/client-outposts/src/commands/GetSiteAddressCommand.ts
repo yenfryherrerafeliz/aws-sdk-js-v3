@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetSiteAddressInput, GetSiteAddressOutput } from "../models/models_0";
@@ -36,9 +37,7 @@ export interface GetSiteAddressCommandOutput extends GetSiteAddressOutput, __Met
 
 /**
  * @public
- * <p>
- *       Gets the site address of the specified site.
- *     </p>
+ * <p> Gets the site address of the specified site. </p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -143,6 +142,10 @@ export class GetSiteAddressCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OutpostsOlafService",
+        operation: "GetSiteAddress",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

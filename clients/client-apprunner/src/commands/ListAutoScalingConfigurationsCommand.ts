@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AppRunnerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppRunnerClient";
@@ -66,6 +67,10 @@ export interface ListAutoScalingConfigurationsCommandOutput
  * //       AutoScalingConfigurationArn: "STRING_VALUE",
  * //       AutoScalingConfigurationName: "STRING_VALUE",
  * //       AutoScalingConfigurationRevision: Number("int"),
+ * //       Status: "ACTIVE" || "INACTIVE",
+ * //       CreatedAt: new Date("TIMESTAMP"),
+ * //       HasAssociatedService: true || false,
+ * //       IsDefault: true || false,
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -139,6 +144,10 @@ export class ListAutoScalingConfigurationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AppRunner",
+        operation: "ListAutoScalingConfigurations",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

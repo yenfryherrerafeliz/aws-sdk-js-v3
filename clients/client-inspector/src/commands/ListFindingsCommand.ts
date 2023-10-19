@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { InspectorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../InspectorClient";
@@ -59,7 +60,7 @@ export interface ListFindingsCommandOutput extends ListFindingsResponse, __Metad
  *       "STRING_VALUE",
  *     ],
  *     severities: [ // SeverityList
- *       "STRING_VALUE",
+ *       "Low" || "Medium" || "High" || "Informational" || "Undefined",
  *     ],
  *     rulesPackageArns: [ // FilterRulesPackageArnList
  *       "STRING_VALUE",
@@ -190,6 +191,10 @@ export class ListFindingsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "InspectorService",
+        operation: "ListFindings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

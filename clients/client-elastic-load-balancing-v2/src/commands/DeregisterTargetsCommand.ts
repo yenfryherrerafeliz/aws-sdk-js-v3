@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -42,6 +43,30 @@ export interface DeregisterTargetsCommandOutput extends DeregisterTargetsOutput,
  * @public
  * <p>Deregisters the specified targets from the specified target group. After the targets are
  *       deregistered, they no longer receive traffic from the load balancer.</p>
+ *          <p>The load balancer stops sending requests to targets that are deregistering, but uses
+ *       connection draining to ensure that in-flight traffic completes on the existing connections.
+ *       This deregistration delay is configured by default but can be updated for each target group.</p>
+ *          <p>For more information, see the following:</p>
+ *          <ul>
+ *             <li>
+ *                <p>
+ *                   <a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#deregistration-delay">
+ *           Deregistration delay</a> in the <i>Application Load Balancers User Guide</i>
+ *                </p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html#deregistration-delay">
+ *           Deregistration delay</a> in the <i>Network Load Balancers User Guide</i>
+ *                </p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/target-groups.html#deregistration-delay">
+ *           Deregistration delay</a> in the <i>Gateway Load Balancers User Guide</i>
+ *                </p>
+ *             </li>
+ *          </ul>
  *          <p>Note: If the specified target does not exist, the action returns successfully.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -148,6 +173,10 @@ export class DeregisterTargetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ElasticLoadBalancing_v10",
+        operation: "DeregisterTargets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

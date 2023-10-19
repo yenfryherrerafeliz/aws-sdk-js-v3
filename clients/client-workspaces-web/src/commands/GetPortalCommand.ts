@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetPortalRequest, GetPortalResponse, GetPortalResponseFilterSensitiveLog } from "../models/models_0";
@@ -50,7 +51,7 @@ export interface GetPortalCommandOutput extends GetPortalResponse, __MetadataBea
  * const response = await client.send(command);
  * // { // GetPortalResponse
  * //   portal: { // Portal
- * //     portalArn: "STRING_VALUE",
+ * //     portalArn: "STRING_VALUE", // required
  * //     rendererType: "STRING_VALUE",
  * //     browserType: "STRING_VALUE",
  * //     portalStatus: "STRING_VALUE",
@@ -143,6 +144,10 @@ export class GetPortalCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: GetPortalResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSErmineControlPlaneService",
+        operation: "GetPortal",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

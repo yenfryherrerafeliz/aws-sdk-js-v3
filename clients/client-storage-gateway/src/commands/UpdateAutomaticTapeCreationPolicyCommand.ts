@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateAutomaticTapeCreationPolicyInput, UpdateAutomaticTapeCreationPolicyOutput } from "../models/models_0";
@@ -44,9 +45,7 @@ export interface UpdateAutomaticTapeCreationPolicyCommandOutput
  * <p>Updates the automatic tape creation policy of a gateway. Use this to update the policy
  *          with a new set of automatic tape creation rules. This is only supported for tape
  *          gateways.</p>
- *
  *          <p>By default, there is no automatic tape creation policy.</p>
- *
  *          <note>
  *             <p>A gateway can have only one automatic tape creation policy.</p>
  *          </note>
@@ -144,6 +143,10 @@ export class UpdateAutomaticTapeCreationPolicyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "UpdateAutomaticTapeCreationPolicy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

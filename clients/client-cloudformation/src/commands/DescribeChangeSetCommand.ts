@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudFormationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudFormationClient";
@@ -102,12 +103,12 @@ export interface DescribeChangeSetCommandOutput extends DescribeChangeSetOutput,
  * //         ResourceType: "STRING_VALUE",
  * //         Replacement: "True" || "False" || "Conditional",
  * //         Scope: [ // Scope
- * //           "Properties" || "Metadata" || "CreationPolicy" || "UpdatePolicy" || "DeletionPolicy" || "Tags",
+ * //           "Properties" || "Metadata" || "CreationPolicy" || "UpdatePolicy" || "DeletionPolicy" || "UpdateReplacePolicy" || "Tags",
  * //         ],
  * //         Details: [ // ResourceChangeDetails
  * //           { // ResourceChangeDetail
  * //             Target: { // ResourceTargetDefinition
- * //               Attribute: "Properties" || "Metadata" || "CreationPolicy" || "UpdatePolicy" || "DeletionPolicy" || "Tags",
+ * //               Attribute: "Properties" || "Metadata" || "CreationPolicy" || "UpdatePolicy" || "DeletionPolicy" || "UpdateReplacePolicy" || "Tags",
  * //               Name: "STRING_VALUE",
  * //               RequiresRecreation: "Never" || "Conditionally" || "Always",
  * //             },
@@ -197,6 +198,10 @@ export class DescribeChangeSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CloudFormation",
+        operation: "DescribeChangeSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

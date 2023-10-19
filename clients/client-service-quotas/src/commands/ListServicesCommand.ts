@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListServicesRequest, ListServicesResponse } from "../models/models_0";
@@ -36,7 +37,7 @@ export interface ListServicesCommandOutput extends ListServicesResponse, __Metad
 
 /**
  * @public
- * <p>Lists the names and codes for the services integrated with Service Quotas.</p>
+ * <p>Lists the names and codes for the Amazon Web Services integrated with Service Quotas.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -80,8 +81,8 @@ export interface ListServicesCommandOutput extends ListServicesResponse, __Metad
  *  <p>Something went wrong.</p>
  *
  * @throws {@link TooManyRequestsException} (client fault)
- *  <p>Due to throttling, the request was denied. Slow down the rate of request calls, or request
- *       an increase for this quota.</p>
+ *  <p>Due to throttling, the request was denied. Slow down the rate of request calls, or
+ *             request an increase for this quota.</p>
  *
  * @throws {@link ServiceQuotasServiceException}
  * <p>Base exception class for all service exceptions from ServiceQuotas service.</p>
@@ -135,6 +136,10 @@ export class ListServicesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ServiceQuotasV20190624",
+        operation: "ListServices",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

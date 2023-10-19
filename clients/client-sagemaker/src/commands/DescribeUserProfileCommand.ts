@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeUserProfileRequest, DescribeUserProfileResponse } from "../models/models_2";
@@ -144,6 +145,19 @@ export interface DescribeUserProfileCommandOutput extends DescribeUserProfileRes
  * //         S3ArtifactPath: "STRING_VALUE",
  * //         S3KmsKeyId: "STRING_VALUE",
  * //       },
+ * //       IdentityProviderOAuthSettings: [ // IdentityProviderOAuthSettings
+ * //         { // IdentityProviderOAuthSetting
+ * //           DataSourceName: "SalesforceGenie" || "Snowflake",
+ * //           Status: "ENABLED" || "DISABLED",
+ * //           SecretArn: "STRING_VALUE",
+ * //         },
+ * //       ],
+ * //       KendraSettings: { // KendraSettings
+ * //         Status: "ENABLED" || "DISABLED",
+ * //       },
+ * //       DirectDeploySettings: { // DirectDeploySettings
+ * //         Status: "ENABLED" || "DISABLED",
+ * //       },
  * //     },
  * //   },
  * // };
@@ -213,6 +227,10 @@ export class DescribeUserProfileCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "DescribeUserProfile",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

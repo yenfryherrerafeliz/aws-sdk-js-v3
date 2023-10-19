@@ -92,6 +92,10 @@ import {
   HttpPayloadWithStructureCommandOutput,
 } from "../commands/HttpPayloadWithStructureCommand";
 import {
+  HttpPayloadWithUnionCommandInput,
+  HttpPayloadWithUnionCommandOutput,
+} from "../commands/HttpPayloadWithUnionCommand";
+import {
   HttpPayloadWithXmlNameCommandInput,
   HttpPayloadWithXmlNameCommandOutput,
 } from "../commands/HttpPayloadWithXmlNameCommand";
@@ -181,6 +185,10 @@ import { XmlIntEnumsCommandInput, XmlIntEnumsCommandOutput } from "../commands/X
 import { XmlListsCommandInput, XmlListsCommandOutput } from "../commands/XmlListsCommand";
 import { XmlMapsCommandInput, XmlMapsCommandOutput } from "../commands/XmlMapsCommand";
 import { XmlMapsXmlNameCommandInput, XmlMapsXmlNameCommandOutput } from "../commands/XmlMapsXmlNameCommand";
+import {
+  XmlMapWithXmlNamespaceCommandInput,
+  XmlMapWithXmlNamespaceCommandOutput,
+} from "../commands/XmlMapWithXmlNamespaceCommand";
 import { XmlNamespacesCommandInput, XmlNamespacesCommandOutput } from "../commands/XmlNamespacesCommand";
 import { XmlTimestampsCommandInput, XmlTimestampsCommandOutput } from "../commands/XmlTimestampsCommand";
 import { XmlUnionsCommandInput, XmlUnionsCommandOutput } from "../commands/XmlUnionsCommand";
@@ -198,6 +206,7 @@ import {
   RecursiveShapesInputOutputNested1,
   RecursiveShapesInputOutputNested2,
   StructureListMember,
+  UnionPayload,
   XmlAttributesInputOutput,
   XmlNamespaceNested,
   XmlNestedUnionStruct,
@@ -805,6 +814,39 @@ export const se_HttpPayloadWithStructureCommand = async (
   let contents: any;
   if (input.nested !== undefined) {
     contents = se_NestedPayload(input.nested, context);
+    body = '<?xml version="1.0" encoding="UTF-8"?>';
+    body += contents.toString();
+  }
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "PUT",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
+ * serializeAws_restXmlHttpPayloadWithUnionCommand
+ */
+export const se_HttpPayloadWithUnionCommand = async (
+  input: HttpPayloadWithUnionCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/xml",
+  };
+  const resolvedPath = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/HttpPayloadWithUnion";
+  let body: any;
+  if (input.nested !== undefined) {
+    body = se_UnionPayload(input.nested, context);
+  }
+  let contents: any;
+  if (input.nested !== undefined) {
+    contents = se_UnionPayload(input.nested, context);
     body = '<?xml version="1.0" encoding="UTF-8"?>';
     body += contents.toString();
   }
@@ -2380,6 +2422,43 @@ export const se_XmlMapsXmlNameCommand = async (
 };
 
 /**
+ * serializeAws_restXmlXmlMapWithXmlNamespaceCommand
+ */
+export const se_XmlMapWithXmlNamespaceCommand = async (
+  input: XmlMapWithXmlNamespaceCommandInput,
+  context: __SerdeContext
+): Promise<__HttpRequest> => {
+  const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+  const headers: any = {
+    "content-type": "application/xml",
+  };
+  const resolvedPath =
+    `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + "/XmlMapWithXmlNamespace";
+  let body: any;
+  body = '<?xml version="1.0" encoding="UTF-8"?>';
+  const bodyNode = new __XmlNode("XmlMapWithXmlNamespaceInputOutput");
+  if (input.myMap !== undefined) {
+    const nodes = se_XmlMapWithXmlNamespaceInputOutputMap(input.myMap, context);
+    const containerNode = new __XmlNode("KVP");
+    containerNode.addAttribute("xmlns", "https://the-member.example.com");
+    nodes.map((node: any) => {
+      containerNode.addChildNode(node);
+    });
+    bodyNode.addChildNode(containerNode);
+  }
+  body += bodyNode.toString();
+  return new __HttpRequest({
+    protocol,
+    hostname,
+    port,
+    method: "POST",
+    headers,
+    path: resolvedPath,
+    body,
+  });
+};
+
+/**
  * serializeAws_restXmlXmlNamespacesCommand
  */
 export const se_XmlNamespacesCommand = async (
@@ -2989,9 +3068,6 @@ export const de_FractionalSecondsCommand = async (
   if (data["datetime"] !== undefined) {
     contents.datetime = __expectNonNull(__parseRfc3339DateTimeWithOffset(data["datetime"]));
   }
-  if (data["httpdate"] !== undefined) {
-    contents.httpdate = __expectNonNull(__parseRfc7231DateTime(data["httpdate"]));
-  }
   return contents;
 };
 
@@ -3203,6 +3279,44 @@ const de_HttpPayloadWithStructureCommandError = async (
   output: __HttpResponse,
   context: __SerdeContext
 ): Promise<HttpPayloadWithStructureCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
+  const parsedBody = parsedOutput.body;
+  return throwDefaultError({
+    output,
+    parsedBody: parsedBody.Error,
+    errorCode,
+  });
+};
+
+/**
+ * deserializeAws_restXmlHttpPayloadWithUnionCommand
+ */
+export const de_HttpPayloadWithUnionCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<HttpPayloadWithUnionCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_HttpPayloadWithUnionCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> | undefined = __expectUnion(await parseBody(output.body, context));
+  contents.nested = de_UnionPayload(data, context);
+  return contents;
+};
+
+/**
+ * deserializeAws_restXmlHttpPayloadWithUnionCommandError
+ */
+const de_HttpPayloadWithUnionCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<HttpPayloadWithUnionCommandOutput> => {
   const parsedOutput: any = {
     ...output,
     body: await parseErrorBody(output.body, context),
@@ -4940,6 +5054,48 @@ const de_XmlMapsXmlNameCommandError = async (
 };
 
 /**
+ * deserializeAws_restXmlXmlMapWithXmlNamespaceCommand
+ */
+export const de_XmlMapWithXmlNamespaceCommand = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<XmlMapWithXmlNamespaceCommandOutput> => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_XmlMapWithXmlNamespaceCommandError(output, context);
+  }
+  const contents: any = map({
+    $metadata: deserializeMetadata(output),
+  });
+  const data: Record<string, any> = __expectNonNull(__expectObject(await parseBody(output.body, context)), "body");
+  if (data.KVP === "") {
+    contents.myMap = {};
+  } else if (data["KVP"] !== undefined && data["KVP"]["entry"] !== undefined) {
+    contents.myMap = de_XmlMapWithXmlNamespaceInputOutputMap(__getArrayIfSingleItem(data["KVP"]["entry"]), context);
+  }
+  return contents;
+};
+
+/**
+ * deserializeAws_restXmlXmlMapWithXmlNamespaceCommandError
+ */
+const de_XmlMapWithXmlNamespaceCommandError = async (
+  output: __HttpResponse,
+  context: __SerdeContext
+): Promise<XmlMapWithXmlNamespaceCommandOutput> => {
+  const parsedOutput: any = {
+    ...output,
+    body: await parseErrorBody(output.body, context),
+  };
+  const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
+  const parsedBody = parsedOutput.body;
+  return throwDefaultError({
+    output,
+    parsedBody: parsedBody.Error,
+    errorCode,
+  });
+};
+
+/**
  * deserializeAws_restXmlXmlNamespacesCommand
  */
 export const de_XmlNamespacesCommand = async (
@@ -5122,13 +5278,13 @@ const de_InvalidGreetingRes = async (parsedOutput: any, context: __SerdeContext)
  */
 const se_FlattenedXmlMapWithXmlNameInputOutputMap = (input: Record<string, string>, context: __SerdeContext): any => {
   return Object.keys(input)
-    .filter((key) => input[key] != null)
+    .filter((key) => input[key as keyof typeof input] != null)
     .map((key) => {
       const entryNode = new __XmlNode("entry");
       const keyNode = __XmlNode.of("String", key).withName("K");
       entryNode.addChildNode(keyNode);
       let node;
-      node = __XmlNode.of("String", input[key]);
+      node = __XmlNode.of("String", input[key as keyof typeof input]);
       entryNode.addChildNode(node.withName("V"));
       return entryNode;
     });
@@ -5162,15 +5318,15 @@ const se_ListWithNamespace = (input: string[], context: __SerdeContext): any => 
 /**
  * serializeAws_restXmlNestedMap
  */
-const se_NestedMap = (input: Record<string, Record<string, FooEnum | string>>, context: __SerdeContext): any => {
+const se_NestedMap = (input: Record<string, Record<string, FooEnum>>, context: __SerdeContext): any => {
   return Object.keys(input)
-    .filter((key) => input[key] != null)
+    .filter((key) => input[key as keyof typeof input] != null)
     .map((key) => {
       const entryNode = new __XmlNode("entry");
       const keyNode = __XmlNode.of("String", key).withName("key");
       entryNode.addChildNode(keyNode);
       let node;
-      node = se_FooEnumMap(input[key], context);
+      node = se_FooEnumMap(input[key as keyof typeof input], context);
       entryNode.addChildNode(
         node.reduce((acc: __XmlNode, workingNode: any) => {
           return acc.addChildNode(workingNode);
@@ -5311,6 +5467,26 @@ const se_StructureListMember = (input: StructureListMember, context: __SerdeCont
 };
 
 /**
+ * serializeAws_restXmlUnionPayload
+ */
+const se_UnionPayload = (input: UnionPayload, context: __SerdeContext): any => {
+  const bodyNode = new __XmlNode("UnionPayload");
+  UnionPayload.visit(input, {
+    greeting: (value) => {
+      const node = __XmlNode.of("String", value).withName("greeting");
+      bodyNode.addChildNode(node);
+    },
+    _: (name: string, value: any) => {
+      if (!(value instanceof __XmlNode || value instanceof __XmlText)) {
+        throw new Error("Unable to serialize unknown union members in XML.");
+      }
+      bodyNode.addChildNode(new __XmlNode(name).addChildNode(value));
+    },
+  });
+  return bodyNode;
+};
+
+/**
  * serializeAws_restXmlXmlAttributesInputOutput
  */
 const se_XmlAttributesInputOutput = (input: XmlAttributesInputOutput, context: __SerdeContext): any => {
@@ -5330,13 +5506,13 @@ const se_XmlAttributesInputOutput = (input: XmlAttributesInputOutput, context: _
  */
 const se_XmlMapsInputOutputMap = (input: Record<string, GreetingStruct>, context: __SerdeContext): any => {
   return Object.keys(input)
-    .filter((key) => input[key] != null)
+    .filter((key) => input[key as keyof typeof input] != null)
     .map((key) => {
       const entryNode = new __XmlNode("entry");
       const keyNode = __XmlNode.of("String", key).withName("key");
       entryNode.addChildNode(keyNode);
       let node;
-      node = se_GreetingStruct(input[key], context);
+      node = se_GreetingStruct(input[key as keyof typeof input], context);
       entryNode.addChildNode(node.withName("value"));
       return entryNode;
     });
@@ -5347,14 +5523,33 @@ const se_XmlMapsInputOutputMap = (input: Record<string, GreetingStruct>, context
  */
 const se_XmlMapsXmlNameInputOutputMap = (input: Record<string, GreetingStruct>, context: __SerdeContext): any => {
   return Object.keys(input)
-    .filter((key) => input[key] != null)
+    .filter((key) => input[key as keyof typeof input] != null)
     .map((key) => {
       const entryNode = new __XmlNode("entry");
       const keyNode = __XmlNode.of("String", key).withName("Attribute");
       entryNode.addChildNode(keyNode);
       let node;
-      node = se_GreetingStruct(input[key], context);
+      node = se_GreetingStruct(input[key as keyof typeof input], context);
       entryNode.addChildNode(node.withName("Setting"));
+      return entryNode;
+    });
+};
+
+/**
+ * serializeAws_restXmlXmlMapWithXmlNamespaceInputOutputMap
+ */
+const se_XmlMapWithXmlNamespaceInputOutputMap = (input: Record<string, string>, context: __SerdeContext): any => {
+  return Object.keys(input)
+    .filter((key) => input[key as keyof typeof input] != null)
+    .map((key) => {
+      const entryNode = new __XmlNode("entry");
+      const keyNode = __XmlNode.of("String", key).withName("K");
+      keyNode.addAttribute("xmlns", "https://the-key.example.com");
+      entryNode.addChildNode(keyNode);
+      let node;
+      node = __XmlNode.of("String", input[key as keyof typeof input]);
+      node.addAttribute("xmlns", "https://the-value.example.com");
+      entryNode.addChildNode(node.withName("V"));
       return entryNode;
     });
 };
@@ -5505,7 +5700,7 @@ const se_BooleanList = (input: boolean[], context: __SerdeContext): any => {
 /**
  * serializeAws_restXmlFooEnumList
  */
-const se_FooEnumList = (input: (FooEnum | string)[], context: __SerdeContext): any => {
+const se_FooEnumList = (input: FooEnum[], context: __SerdeContext): any => {
   return input
     .filter((e: any) => e != null)
     .map((entry) => {
@@ -5517,15 +5712,15 @@ const se_FooEnumList = (input: (FooEnum | string)[], context: __SerdeContext): a
 /**
  * serializeAws_restXmlFooEnumMap
  */
-const se_FooEnumMap = (input: Record<string, FooEnum | string>, context: __SerdeContext): any => {
+const se_FooEnumMap = (input: Record<string, FooEnum>, context: __SerdeContext): any => {
   return Object.keys(input)
-    .filter((key) => input[key] != null)
+    .filter((key) => input[key as keyof typeof input] != null)
     .map((key) => {
       const entryNode = new __XmlNode("entry");
       const keyNode = __XmlNode.of("String", key).withName("key");
       entryNode.addChildNode(keyNode);
       let node;
-      node = __XmlNode.of("FooEnum", input[key]);
+      node = __XmlNode.of("FooEnum", input[key as keyof typeof input]);
       entryNode.addChildNode(node.withName("value"));
       return entryNode;
     });
@@ -5534,7 +5729,7 @@ const se_FooEnumMap = (input: Record<string, FooEnum | string>, context: __Serde
 /**
  * serializeAws_restXmlFooEnumSet
  */
-const se_FooEnumSet = (input: (FooEnum | string)[], context: __SerdeContext): any => {
+const se_FooEnumSet = (input: FooEnum[], context: __SerdeContext): any => {
   return input
     .filter((e: any) => e != null)
     .map((entry) => {
@@ -5558,7 +5753,7 @@ const se_GreetingStruct = (input: GreetingStruct, context: __SerdeContext): any 
 /**
  * serializeAws_restXmlIntegerEnumList
  */
-const se_IntegerEnumList = (input: (IntegerEnum | number)[], context: __SerdeContext): any => {
+const se_IntegerEnumList = (input: IntegerEnum[], context: __SerdeContext): any => {
   return input
     .filter((e: any) => e != null)
     .map((entry) => {
@@ -5570,15 +5765,15 @@ const se_IntegerEnumList = (input: (IntegerEnum | number)[], context: __SerdeCon
 /**
  * serializeAws_restXmlIntegerEnumMap
  */
-const se_IntegerEnumMap = (input: Record<string, IntegerEnum | number>, context: __SerdeContext): any => {
+const se_IntegerEnumMap = (input: Record<string, IntegerEnum>, context: __SerdeContext): any => {
   return Object.keys(input)
-    .filter((key) => input[key] != null)
+    .filter((key) => input[key as keyof typeof input] != null)
     .map((key) => {
       const entryNode = new __XmlNode("entry");
       const keyNode = __XmlNode.of("String", key).withName("key");
       entryNode.addChildNode(keyNode);
       let node;
-      node = __XmlNode.of("IntegerEnum", String(input[key]));
+      node = __XmlNode.of("IntegerEnum", String(input[key as keyof typeof input]));
       entryNode.addChildNode(node.withName("value"));
       return entryNode;
     });
@@ -5587,7 +5782,7 @@ const se_IntegerEnumMap = (input: Record<string, IntegerEnum | number>, context:
 /**
  * serializeAws_restXmlIntegerEnumSet
  */
-const se_IntegerEnumSet = (input: (IntegerEnum | number)[], context: __SerdeContext): any => {
+const se_IntegerEnumSet = (input: IntegerEnum[], context: __SerdeContext): any => {
   return input
     .filter((e: any) => e != null)
     .map((entry) => {
@@ -5720,7 +5915,7 @@ const de_ListWithNamespace = (output: any, context: __SerdeContext): string[] =>
 /**
  * deserializeAws_restXmlNestedMap
  */
-const de_NestedMap = (output: any, context: __SerdeContext): Record<string, Record<string, FooEnum | string>> => {
+const de_NestedMap = (output: any, context: __SerdeContext): Record<string, Record<string, FooEnum>> => {
   return output.reduce((acc: any, pair: any) => {
     if (__getArrayIfSingleItem(pair["value"]["entry"]) === null) {
       return acc;
@@ -5851,6 +6046,18 @@ const de_StructureListMember = (output: any, context: __SerdeContext): Structure
 };
 
 /**
+ * deserializeAws_restXmlUnionPayload
+ */
+const de_UnionPayload = (output: any, context: __SerdeContext): UnionPayload => {
+  if (output["greeting"] !== undefined) {
+    return {
+      greeting: __expectString(output["greeting"]) as any,
+    };
+  }
+  return { $unknown: Object.entries(output)[0] };
+};
+
+/**
  * deserializeAws_restXmlXmlAttributesInputOutput
  */
 const de_XmlAttributesInputOutput = (output: any, context: __SerdeContext): XmlAttributesInputOutput => {
@@ -5886,6 +6093,19 @@ const de_XmlMapsXmlNameInputOutputMap = (output: any, context: __SerdeContext): 
       return acc;
     }
     acc[pair["Attribute"]] = de_GreetingStruct(pair["Setting"], context);
+    return acc;
+  }, {});
+};
+
+/**
+ * deserializeAws_restXmlXmlMapWithXmlNamespaceInputOutputMap
+ */
+const de_XmlMapWithXmlNamespaceInputOutputMap = (output: any, context: __SerdeContext): Record<string, string> => {
+  return output.reduce((acc: any, pair: any) => {
+    if (pair["V"] === null) {
+      return acc;
+    }
+    acc[pair["K"]] = __expectString(pair["V"]) as any;
     return acc;
   }, {});
 };
@@ -6022,7 +6242,7 @@ const de_BooleanList = (output: any, context: __SerdeContext): boolean[] => {
 /**
  * deserializeAws_restXmlFooEnumList
  */
-const de_FooEnumList = (output: any, context: __SerdeContext): (FooEnum | string)[] => {
+const de_FooEnumList = (output: any, context: __SerdeContext): FooEnum[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -6033,7 +6253,7 @@ const de_FooEnumList = (output: any, context: __SerdeContext): (FooEnum | string
 /**
  * deserializeAws_restXmlFooEnumMap
  */
-const de_FooEnumMap = (output: any, context: __SerdeContext): Record<string, FooEnum | string> => {
+const de_FooEnumMap = (output: any, context: __SerdeContext): Record<string, FooEnum> => {
   return output.reduce((acc: any, pair: any) => {
     if (pair["value"] === null) {
       return acc;
@@ -6046,7 +6266,7 @@ const de_FooEnumMap = (output: any, context: __SerdeContext): Record<string, Foo
 /**
  * deserializeAws_restXmlFooEnumSet
  */
-const de_FooEnumSet = (output: any, context: __SerdeContext): (FooEnum | string)[] => {
+const de_FooEnumSet = (output: any, context: __SerdeContext): FooEnum[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -6068,7 +6288,7 @@ const de_GreetingStruct = (output: any, context: __SerdeContext): GreetingStruct
 /**
  * deserializeAws_restXmlIntegerEnumList
  */
-const de_IntegerEnumList = (output: any, context: __SerdeContext): (IntegerEnum | number)[] => {
+const de_IntegerEnumList = (output: any, context: __SerdeContext): IntegerEnum[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {
@@ -6079,7 +6299,7 @@ const de_IntegerEnumList = (output: any, context: __SerdeContext): (IntegerEnum 
 /**
  * deserializeAws_restXmlIntegerEnumMap
  */
-const de_IntegerEnumMap = (output: any, context: __SerdeContext): Record<string, IntegerEnum | number> => {
+const de_IntegerEnumMap = (output: any, context: __SerdeContext): Record<string, IntegerEnum> => {
   return output.reduce((acc: any, pair: any) => {
     if (pair["value"] === null) {
       return acc;
@@ -6092,7 +6312,7 @@ const de_IntegerEnumMap = (output: any, context: __SerdeContext): Record<string,
 /**
  * deserializeAws_restXmlIntegerEnumSet
  */
-const de_IntegerEnumSet = (output: any, context: __SerdeContext): (IntegerEnum | number)[] => {
+const de_IntegerEnumSet = (output: any, context: __SerdeContext): IntegerEnum[] => {
   return (output || [])
     .filter((e: any) => e != null)
     .map((entry: any) => {

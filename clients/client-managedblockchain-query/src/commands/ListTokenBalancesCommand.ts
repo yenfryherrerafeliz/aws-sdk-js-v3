@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -40,10 +41,10 @@ export interface ListTokenBalancesCommandOutput extends ListTokenBalancesOutput,
 
 /**
  * @public
- * <p>This action returns the following for a given a blockchain network:</p>
+ * <p>This action returns the following for a given blockchain network:</p>
  *          <ul>
  *             <li>
- *                <p>Lists all token balances owned by an address (either a contact
+ *                <p>Lists all token balances owned by an address (either a contract
  *           address or a wallet address).</p>
  *             </li>
  *             <li>
@@ -180,6 +181,10 @@ export class ListTokenBalancesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "TietonChainQueryService",
+        operation: "ListTokenBalances",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

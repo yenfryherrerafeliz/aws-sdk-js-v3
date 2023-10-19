@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
@@ -88,6 +89,10 @@ export interface DetachVerifiedAccessTrustProviderCommandOutput
  * //         Value: "STRING_VALUE",
  * //       },
  * //     ],
+ * //     SseSpecification: { // VerifiedAccessSseSpecificationResponse
+ * //       CustomerManagedKeyEnabled: true || false,
+ * //       KmsKeyArn: "STRING_VALUE",
+ * //     },
  * //   },
  * //   VerifiedAccessInstance: { // VerifiedAccessInstance
  * //     VerifiedAccessInstanceId: "STRING_VALUE",
@@ -109,6 +114,7 @@ export interface DetachVerifiedAccessTrustProviderCommandOutput
  * //         Value: "STRING_VALUE",
  * //       },
  * //     ],
+ * //     FipsEnabled: true || false,
  * //   },
  * // };
  *
@@ -174,6 +180,10 @@ export class DetachVerifiedAccessTrustProviderCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: DetachVerifiedAccessTrustProviderResultFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2",
+        operation: "DetachVerifiedAccessTrustProvider",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

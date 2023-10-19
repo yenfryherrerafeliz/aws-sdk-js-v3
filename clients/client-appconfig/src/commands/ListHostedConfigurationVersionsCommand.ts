@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AppConfigClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppConfigClient";
@@ -65,6 +66,7 @@ export interface ListHostedConfigurationVersionsCommandOutput extends HostedConf
  * //       Description: "STRING_VALUE",
  * //       ContentType: "STRING_VALUE",
  * //       VersionLabel: "STRING_VALUE",
+ * //       KmsKeyArn: "STRING_VALUE",
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -165,6 +167,10 @@ export class ListHostedConfigurationVersionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonAppConfig",
+        operation: "ListHostedConfigurationVersions",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

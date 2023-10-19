@@ -11,10 +11,12 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
-import { CreatePlacementGroupRequest, CreatePlacementGroupResult } from "../models/models_1";
+import { CreatePlacementGroupRequest } from "../models/models_1";
+import { CreatePlacementGroupResult } from "../models/models_2";
 import { de_CreatePlacementGroupCommand, se_CreatePlacementGroupCommand } from "../protocols/Aws_ec2";
 
 /**
@@ -164,6 +166,10 @@ export class CreatePlacementGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2",
+        operation: "CreatePlacementGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

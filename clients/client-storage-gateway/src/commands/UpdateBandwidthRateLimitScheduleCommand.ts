@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateBandwidthRateLimitScheduleInput, UpdateBandwidthRateLimitScheduleOutput } from "../models/models_0";
@@ -44,8 +45,9 @@ export interface UpdateBandwidthRateLimitScheduleCommandOutput
  * <p> Updates the bandwidth rate limit schedule for a specified gateway. By default, gateways
  *          do not have bandwidth rate limit schedules, which means no bandwidth rate limiting is in
  *          effect. Use this to initiate or update a gateway's bandwidth rate limit schedule. This
- *          operation is supported only for volume, tape and S3 file gateways. FSx file gateways do not
- *          support bandwidth rate limits.</p>
+ *          operation is supported for volume, tape, and S3 file gateways. S3 file gateways support
+ *          bandwidth rate limits for upload only. FSx file gateways do not support bandwidth rate
+ *          limits.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -144,6 +146,10 @@ export class UpdateBandwidthRateLimitScheduleCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "UpdateBandwidthRateLimitSchedule",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

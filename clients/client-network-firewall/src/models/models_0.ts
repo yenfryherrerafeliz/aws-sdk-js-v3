@@ -326,7 +326,7 @@ export interface SubnetMapping {
    * @public
    * <p>The subnet's IP address type. You can't change the IP address type after you create the subnet.</p>
    */
-  IPAddressType?: IPAddressType | string;
+  IPAddressType?: IPAddressType;
 }
 
 /**
@@ -464,7 +464,7 @@ export interface Attachment {
    *          available for traffic, this value will reflect its state, for example
    *          <code>CREATING</code> or <code>DELETING</code>.</p>
    */
-  Status?: AttachmentStatus | string;
+  Status?: AttachmentStatus;
 
   /**
    * @public
@@ -595,7 +595,7 @@ export interface EncryptionConfiguration {
    * @public
    * <p>The type of Amazon Web Services KMS key to use for encryption of your Network Firewall resources.</p>
    */
-  Type: EncryptionType | string | undefined;
+  Type: EncryptionType | undefined;
 }
 
 /**
@@ -830,7 +830,7 @@ export interface PerObjectStatus {
    * @public
    * <p>Indicates whether this object is in sync with the version indicated in the update token.</p>
    */
-  SyncStatus?: PerObjectSyncStatus | string;
+  SyncStatus?: PerObjectSyncStatus;
 
   /**
    * @public
@@ -891,7 +891,7 @@ export interface FirewallStatus {
    *             <code>Status</code> values for all of the configured subnets are <code>READY</code>.
    *       </p>
    */
-  Status: FirewallStatusValue | string | undefined;
+  Status: FirewallStatusValue | undefined;
 
   /**
    * @public
@@ -906,7 +906,7 @@ export interface FirewallStatus {
    *          doesn't indicate that the firewall is ready. The <code>Status</code> setting indicates
    *          firewall readiness.</p>
    */
-  ConfigurationSyncStateSummary: ConfigurationSyncState | string | undefined;
+  ConfigurationSyncStateSummary: ConfigurationSyncState | undefined;
 
   /**
    * @public
@@ -1032,7 +1032,7 @@ export interface StatefulEngineOptions {
    *          <a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/suricata-rule-evaluation-order.html">Evaluation order for stateful rules</a> in the <i>Network Firewall Developer Guide</i>.
    *       </p>
    */
-  RuleOrder?: RuleOrder | string;
+  RuleOrder?: RuleOrder;
 
   /**
    * @public
@@ -1052,7 +1052,7 @@ export interface StatefulEngineOptions {
    *             </li>
    *          </ul>
    */
-  StreamExceptionPolicy?: StreamExceptionPolicy | string;
+  StreamExceptionPolicy?: StreamExceptionPolicy;
 }
 
 /**
@@ -1078,7 +1078,7 @@ export interface StatefulRuleGroupOverride {
    * <p>The action that changes the rule group from <code>DROP</code> to <code>ALERT</code>. This only applies to
    *       managed rule groups.</p>
    */
-  Action?: OverrideAction | string;
+  Action?: OverrideAction;
 }
 
 /**
@@ -1379,7 +1379,7 @@ export interface FirewallPolicyResponse {
    *          by calling <a>DescribeFirewallPolicy</a> and providing the firewall policy's
    *          name or ARN.</p>
    */
-  FirewallPolicyStatus?: ResourceStatus | string;
+  FirewallPolicyStatus?: ResourceStatus;
 
   /**
    * @public
@@ -1516,13 +1516,13 @@ export interface RulesSourceList {
    * @public
    * <p>The protocols you want to inspect. Specify <code>TLS_SNI</code> for <code>HTTPS</code>. Specify <code>HTTP_HOST</code> for <code>HTTP</code>. You can specify either or both. </p>
    */
-  TargetTypes: (TargetType | string)[] | undefined;
+  TargetTypes: TargetType[] | undefined;
 
   /**
    * @public
    * <p>Whether you want to allow or deny access to the domains in your target list.</p>
    */
-  GeneratedRulesType: GeneratedRulesType | string | undefined;
+  GeneratedRulesType: GeneratedRulesType | undefined;
 }
 
 /**
@@ -1597,7 +1597,7 @@ export interface Header {
    * @public
    * <p>The protocol to inspect for. To specify all, you can use <code>IP</code>, because all traffic on Amazon Web Services and on the internet is IP.</p>
    */
-  Protocol: StatefulRuleProtocol | string | undefined;
+  Protocol: StatefulRuleProtocol | undefined;
 
   /**
    * @public
@@ -1640,7 +1640,7 @@ export interface Header {
    *          destination to the source. If set to <code>FORWARD</code>, the inspection only matches
    *          traffic going from the source to the destination. </p>
    */
-  Direction: StatefulRuleDirection | string | undefined;
+  Direction: StatefulRuleDirection | undefined;
 
   /**
    * @public
@@ -1684,13 +1684,13 @@ export interface Header {
 export interface RuleOption {
   /**
    * @public
-   * <p></p>
+   * <p>The keyword for the Suricata compatible rule option. You must include a <code>sid</code> (signature ID), and can optionally include other keywords. For information about Suricata compatible keywords, see <a href="https://suricata.readthedocs.io/en/suricata-6.0.9/rules/intro.html#rule-options">Rule options</a> in the Suricata documentation.</p>
    */
   Keyword: string | undefined;
 
   /**
    * @public
-   * <p></p>
+   * <p>The settings of the Suricata compatible rule option. Rule options have zero or more setting values, and the number of possible and required settings depends on the <code>Keyword</code>. For more information about the settings for specific options, see <a href="https://suricata.readthedocs.io/en/suricata-6.0.9/rules/intro.html#rule-options">Rule options</a>.</p>
    */
   Settings?: string[];
 }
@@ -1700,7 +1700,7 @@ export interface RuleOption {
  * <p>A single Suricata rules specification, for use in a stateful rule group.
  *        Use this option to specify a simple Suricata rule with protocol, source and destination, ports, direction, and rule options.
  *        For information about the Suricata <code>Rules</code> format, see
- *                                         <a href="https://suricata.readthedocs.iorules/intro.html#">Rules Format</a>. </p>
+ *                                         <a href="https://suricata.readthedocs.io/en/suricata-6.0.9/rules/intro.html">Rules Format</a>. </p>
  */
 export interface StatefulRule {
   /**
@@ -1730,16 +1730,9 @@ export interface StatefulRule {
    *                can enable the rule with <code>ALERT</code> action, verify in the logs that the rule
    *                is filtering as you want, then change the action to <code>DROP</code>.</p>
    *             </li>
-   *             <li>
-   *                <p>
-   *                   <b>REJECT</b> - Drops TCP traffic that matches the conditions of the stateful rule, and sends a TCP reset packet back to sender of the packet. A TCP reset packet is a packet with no payload and a <code>RST</code> bit contained in the TCP header flags. Also sends an alert log mesage if alert logging is configured in the <a>Firewall</a>
-   *                   <a>LoggingConfiguration</a>.</p>
-   *                <p>
-   *                   <code>REJECT</code> isn't currently available for use with IMAP and FTP protocols.</p>
-   *             </li>
    *          </ul>
    */
-  Action: StatefulAction | string | undefined;
+  Action: StatefulAction | undefined;
 
   /**
    * @public
@@ -1815,13 +1808,13 @@ export interface TCPFlagField {
    *             </li>
    *          </ul>
    */
-  Flags: (TCPFlag | string)[] | undefined;
+  Flags: TCPFlag[] | undefined;
 
   /**
    * @public
    * <p>The set of flags to consider in the inspection. To inspect all flags in the valid values list, leave this with no setting.</p>
    */
-  Masks?: (TCPFlag | string)[];
+  Masks?: TCPFlag[];
 }
 
 /**
@@ -2014,7 +2007,7 @@ export interface RulesSource {
    * <p>An array of individual stateful rules inspection criteria to be used together in a stateful rule group.
    *        Use this option to specify simple Suricata rules with protocol, source and destination, ports, direction, and rule options.
    *        For information about the Suricata <code>Rules</code> format, see
-   *                                         <a href="https://suricata.readthedocs.iorules/intro.html#">Rules Format</a>. </p>
+   *                                         <a href="https://suricata.readthedocs.io/en/suricata-6.0.9/rules/intro.html">Rules Format</a>. </p>
    */
   StatefulRules?: StatefulRule[];
 
@@ -2070,7 +2063,7 @@ export interface StatefulRuleOptions {
    *          <a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/suricata-rule-evaluation-order.html">Evaluation order for stateful rules</a> in the <i>Network Firewall Developer Guide</i>.
    *       </p>
    */
-  RuleOrder?: RuleOrder | string;
+  RuleOrder?: RuleOrder;
 }
 
 /**
@@ -2178,7 +2171,7 @@ export interface CreateRuleGroupRequest {
    * <p>Indicates whether the rule group is stateless or stateful. If the rule group is stateless, it contains
    * stateless rules. If it is stateful, it contains stateful rules. </p>
    */
-  Type: RuleGroupType | string | undefined;
+  Type: RuleGroupType | undefined;
 
   /**
    * @public
@@ -2301,7 +2294,7 @@ export interface RuleGroupResponse {
    * <p>Indicates whether the rule group is stateless or stateful. If the rule group is stateless, it contains
    * stateless rules. If it is stateful, it contains stateful rules. </p>
    */
-  Type?: RuleGroupType | string;
+  Type?: RuleGroupType;
 
   /**
    * @public
@@ -2317,7 +2310,7 @@ export interface RuleGroupResponse {
    * @public
    * <p>Detailed information about the current status of a rule group. </p>
    */
-  RuleGroupStatus?: ResourceStatus | string;
+  RuleGroupStatus?: ResourceStatus;
 
   /**
    * @public
@@ -2461,7 +2454,7 @@ export interface ServerCertificateConfiguration {
  * @public
  * <p>The object that defines a TLS inspection configuration. This, along with <a>TLSInspectionConfigurationResponse</a>, define the TLS inspection configuration. You can retrieve all objects for a TLS inspection configuration by calling <a>DescribeTLSInspectionConfiguration</a>. </p>
  *          <p>Network Firewall uses a TLS inspection configuration to decrypt traffic. Network Firewall re-encrypts the traffic before sending it to its destination.</p>
- *          <p>To use a TLS inspection configuration, you add it to a Network Firewall firewall policy, then you apply the firewall policy to a firewall. Network Firewall acts as a proxy service to decrypt and inspect inbound traffic. You can reference a TLS inspection configuration from more than one firewall policy, and you can use a firewall policy in more than one firewall. For more information about using TLS inspection configurations, see <a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/tls-inspection.html">Decrypting SSL/TLS traffic with TLS
+ *          <p>To use a TLS inspection configuration, you add it to a new Network Firewall firewall policy, then you apply the firewall policy to a firewall. Network Firewall acts as a proxy service to decrypt and inspect inbound traffic. You can reference a TLS inspection configuration from more than one firewall policy, and you can use a firewall policy in more than one firewall. For more information about using TLS inspection configurations, see <a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/tls-inspection.html">Decrypting SSL/TLS traffic with TLS
  * inspection configurations</a> in the <i>Network Firewall Developer Guide</i>.</p>
  */
 export interface TLSInspectionConfiguration {
@@ -2486,7 +2479,7 @@ export interface CreateTLSInspectionConfigurationRequest {
    * @public
    * <p>The object that defines a TLS inspection configuration. This, along with <a>TLSInspectionConfigurationResponse</a>, define the TLS inspection configuration. You can retrieve all objects for a TLS inspection configuration by calling <a>DescribeTLSInspectionConfiguration</a>. </p>
    *          <p>Network Firewall uses a TLS inspection configuration to decrypt traffic. Network Firewall re-encrypts the traffic before sending it to its destination.</p>
-   *          <p>To use a TLS inspection configuration, you add it to a Network Firewall firewall policy, then you apply the firewall policy to a firewall. Network Firewall acts as a proxy service to decrypt and inspect inbound traffic. You can reference a TLS inspection configuration from more than one firewall policy, and you can use a firewall policy in more than one firewall. For more information about using TLS inspection configurations, see <a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/tls-inspection.html">Decrypting SSL/TLS traffic with TLS
+   *          <p>To use a TLS inspection configuration, you add it to a new Network Firewall firewall policy, then you apply the firewall policy to a firewall. Network Firewall acts as a proxy service to decrypt and inspect inbound traffic. You can reference a TLS inspection configuration from more than one firewall policy, and you can use a firewall policy in more than one firewall. For more information about using TLS inspection configurations, see <a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/tls-inspection.html">Decrypting SSL/TLS traffic with TLS
    * inspection configurations</a> in the <i>Network Firewall Developer Guide</i>.</p>
    */
   TLSInspectionConfiguration: TLSInspectionConfiguration | undefined;
@@ -2537,7 +2530,7 @@ export interface TLSInspectionConfigurationResponse {
    * @public
    * <p>Detailed information about the current status of a <a>TLSInspectionConfiguration</a>. You can retrieve this for a TLS inspection configuration by calling <a>DescribeTLSInspectionConfiguration</a> and providing the TLS inspection configuration name and ARN.</p>
    */
-  TLSInspectionConfigurationStatus?: ResourceStatus | string;
+  TLSInspectionConfigurationStatus?: ResourceStatus;
 
   /**
    * @public
@@ -2750,7 +2743,7 @@ export interface DeleteRuleGroupRequest {
    *             <p>This setting is required for requests that do not include the <code>RuleGroupARN</code>.</p>
    *          </note>
    */
-  Type?: RuleGroupType | string;
+  Type?: RuleGroupType;
 }
 
 /**
@@ -2944,14 +2937,14 @@ export interface LogDestinationConfig {
    * <p>The type of log to send. Alert logs report traffic that matches a <a>StatefulRule</a> with an action setting that sends an alert log message. Flow logs are
    *          standard network traffic flow logs. </p>
    */
-  LogType: LogType | string | undefined;
+  LogType: LogType | undefined;
 
   /**
    * @public
    * <p>The type of storage destination to send these logs to. You can send logs to an Amazon S3 bucket,
    *          a CloudWatch log group, or a Kinesis Data Firehose delivery stream.</p>
    */
-  LogDestinationType: LogDestinationType | string | undefined;
+  LogDestinationType: LogDestinationType | undefined;
 
   /**
    * @public
@@ -3068,7 +3061,7 @@ export interface DescribeRuleGroupRequest {
    *             <p>This setting is required for requests that do not include the <code>RuleGroupARN</code>.</p>
    *          </note>
    */
-  Type?: RuleGroupType | string;
+  Type?: RuleGroupType;
 }
 
 /**
@@ -3126,7 +3119,7 @@ export interface DescribeRuleGroupMetadataRequest {
    *             <p>This setting is required for requests that do not include the <code>RuleGroupARN</code>.</p>
    *          </note>
    */
-  Type?: RuleGroupType | string;
+  Type?: RuleGroupType;
 }
 
 /**
@@ -3162,7 +3155,7 @@ export interface DescribeRuleGroupMetadataResponse {
    *             <p>This setting is required for requests that do not include the <code>RuleGroupARN</code>.</p>
    *          </note>
    */
-  Type?: RuleGroupType | string;
+  Type?: RuleGroupType;
 
   /**
    * @public
@@ -3221,7 +3214,7 @@ export interface DescribeTLSInspectionConfigurationResponse {
    * @public
    * <p>The object that defines a TLS inspection configuration. This, along with <a>TLSInspectionConfigurationResponse</a>, define the TLS inspection configuration. You can retrieve all objects for a TLS inspection configuration by calling <a>DescribeTLSInspectionConfiguration</a>. </p>
    *          <p>Network Firewall uses a TLS inspection configuration to decrypt traffic. Network Firewall re-encrypts the traffic before sending it to its destination.</p>
-   *          <p>To use a TLS inspection configuration, you add it to a Network Firewall firewall policy, then you apply the firewall policy to a firewall. Network Firewall acts as a proxy service to decrypt and inspect inbound traffic. You can reference a TLS inspection configuration from more than one firewall policy, and you can use a firewall policy in more than one firewall. For more information about using TLS inspection configurations, see <a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/tls-inspection.html">Decrypting SSL/TLS traffic with TLS
+   *          <p>To use a TLS inspection configuration, you add it to a new Network Firewall firewall policy, then you apply the firewall policy to a firewall. Network Firewall acts as a proxy service to decrypt and inspect inbound traffic. You can reference a TLS inspection configuration from more than one firewall policy, and you can use a firewall policy in more than one firewall. For more information about using TLS inspection configurations, see <a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/tls-inspection.html">Decrypting SSL/TLS traffic with TLS
    * inspection configurations</a> in the <i>Network Firewall Developer Guide</i>.</p>
    */
   TLSInspectionConfiguration?: TLSInspectionConfiguration;
@@ -3481,19 +3474,19 @@ export interface ListRuleGroupsRequest {
    *          <code>NULL</code> returns all of the rule groups in your account. A setting of
    *          <code>MANAGED</code> returns all available managed rule groups.</p>
    */
-  Scope?: ResourceManagedStatus | string;
+  Scope?: ResourceManagedStatus;
 
   /**
    * @public
    * <p>Indicates the general category of the Amazon Web Services managed rule group.</p>
    */
-  ManagedType?: ResourceManagedType | string;
+  ManagedType?: ResourceManagedType;
 
   /**
    * @public
    * <p>Indicates whether the rule group is stateless or stateful. If the rule group is stateless, it contains stateless rules. If it is stateful, it contains stateful rules.</p>
    */
-  Type?: RuleGroupType | string;
+  Type?: RuleGroupType;
 }
 
 /**
@@ -3995,7 +3988,7 @@ export interface UpdateFirewallPolicyRequest {
 
   /**
    * @public
-   * <p>The updated firewall policy to use for the firewall. </p>
+   * <p>The updated firewall policy to use for the firewall. You can't add or remove a <a>TLSInspectionConfiguration</a> after you create a firewall policy. However, you can replace an existing TLS inspection configuration with another <code>TLSInspectionConfiguration</code>.</p>
    */
   FirewallPolicy: FirewallPolicy | undefined;
 
@@ -4212,7 +4205,7 @@ export interface UpdateRuleGroupRequest {
    *             <p>This setting is required for requests that do not include the <code>RuleGroupARN</code>.</p>
    *          </note>
    */
-  Type?: RuleGroupType | string;
+  Type?: RuleGroupType;
 
   /**
    * @public
@@ -4350,7 +4343,7 @@ export interface UpdateTLSInspectionConfigurationRequest {
    * @public
    * <p>The object that defines a TLS inspection configuration. This, along with <a>TLSInspectionConfigurationResponse</a>, define the TLS inspection configuration. You can retrieve all objects for a TLS inspection configuration by calling <a>DescribeTLSInspectionConfiguration</a>. </p>
    *          <p>Network Firewall uses a TLS inspection configuration to decrypt traffic. Network Firewall re-encrypts the traffic before sending it to its destination.</p>
-   *          <p>To use a TLS inspection configuration, you add it to a Network Firewall firewall policy, then you apply the firewall policy to a firewall. Network Firewall acts as a proxy service to decrypt and inspect inbound traffic. You can reference a TLS inspection configuration from more than one firewall policy, and you can use a firewall policy in more than one firewall. For more information about using TLS inspection configurations, see <a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/tls-inspection.html">Decrypting SSL/TLS traffic with TLS
+   *          <p>To use a TLS inspection configuration, you add it to a new Network Firewall firewall policy, then you apply the firewall policy to a firewall. Network Firewall acts as a proxy service to decrypt and inspect inbound traffic. You can reference a TLS inspection configuration from more than one firewall policy, and you can use a firewall policy in more than one firewall. For more information about using TLS inspection configurations, see <a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/tls-inspection.html">Decrypting SSL/TLS traffic with TLS
    * inspection configurations</a> in the <i>Network Firewall Developer Guide</i>.</p>
    */
   TLSInspectionConfiguration: TLSInspectionConfiguration | undefined;

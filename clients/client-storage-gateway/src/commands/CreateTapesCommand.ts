@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateTapesInput, CreateTapesOutput } from "../models/models_0";
@@ -38,7 +39,6 @@ export interface CreateTapesCommandOutput extends CreateTapesOutput, __MetadataB
  * @public
  * <p>Creates one or more virtual tapes. You write data to the virtual tapes and then archive
  *          the tapes. This operation is only supported in the tape gateway type.</p>
- *
  *          <note>
  *             <p>Cache storage must be allocated to the gateway before you can create virtual tapes.
  *             Use the <a>AddCache</a> operation to add cache storage to a gateway.</p>
@@ -166,6 +166,10 @@ export class CreateTapesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "CreateTapes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

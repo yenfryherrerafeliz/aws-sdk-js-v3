@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { BatchGetRecordRequest, BatchGetRecordResponse } from "../models/models_0";
@@ -71,7 +72,10 @@ export interface BatchGetRecordCommandOutput extends BatchGetRecordResponse, __M
  * //       Record: [ // Record // required
  * //         { // FeatureValue
  * //           FeatureName: "STRING_VALUE", // required
- * //           ValueAsString: "STRING_VALUE", // required
+ * //           ValueAsString: "STRING_VALUE",
+ * //           ValueAsStringList: [ // ValueAsStringList
+ * //             "STRING_VALUE",
+ * //           ],
  * //         },
  * //       ],
  * //       ExpiresAt: "STRING_VALUE",
@@ -173,6 +177,10 @@ export class BatchGetRecordCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonSageMakerFeatureStoreRuntime",
+        operation: "BatchGetRecord",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

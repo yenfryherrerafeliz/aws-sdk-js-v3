@@ -23,16 +23,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `MgnClient` and
-the commands you need, for example `ArchiveApplicationCommand`:
+the commands you need, for example `ListExportsCommand`:
 
 ```js
 // ES5 example
-const { MgnClient, ArchiveApplicationCommand } = require("@aws-sdk/client-mgn");
+const { MgnClient, ListExportsCommand } = require("@aws-sdk/client-mgn");
 ```
 
 ```ts
 // ES6+ example
-import { MgnClient, ArchiveApplicationCommand } from "@aws-sdk/client-mgn";
+import { MgnClient, ListExportsCommand } from "@aws-sdk/client-mgn";
 ```
 
 ### Usage
@@ -51,7 +51,7 @@ const client = new MgnClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new ArchiveApplicationCommand(params);
+const command = new ListExportsCommand(params);
 ```
 
 #### Async/await
@@ -130,7 +130,7 @@ const client = new AWS.Mgn({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.archiveApplication(params);
+  const data = await client.listExports(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -138,7 +138,7 @@ try {
 
 // Promises.
 client
-  .archiveApplication(params)
+  .listExports(params)
   .then((data) => {
     // process data.
   })
@@ -147,7 +147,7 @@ client
   });
 
 // callbacks.
-client.archiveApplication(params, (err, data) => {
+client.listExports(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -253,6 +253,14 @@ CreateApplication
 </details>
 <details>
 <summary>
+CreateConnector
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/classes/createconnectorcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/createconnectorcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/createconnectorcommandoutput.html)
+
+</details>
+<details>
+<summary>
 CreateLaunchConfigurationTemplate
 </summary>
 
@@ -281,6 +289,14 @@ DeleteApplication
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/classes/deleteapplicationcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/deleteapplicationcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/deleteapplicationcommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteConnector
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/classes/deleteconnectorcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/deleteconnectorcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/deleteconnectorcommandoutput.html)
 
 </details>
 <details>
@@ -441,6 +457,14 @@ ListApplications
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/classes/listapplicationscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/listapplicationscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/listapplicationscommandoutput.html)
+
+</details>
+<details>
+<summary>
+ListConnectors
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/classes/listconnectorscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/listconnectorscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/listconnectorscommandoutput.html)
 
 </details>
 <details>
@@ -677,6 +701,14 @@ UpdateApplication
 </details>
 <details>
 <summary>
+UpdateConnector
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/classes/updateconnectorcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/updateconnectorcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/updateconnectorcommandoutput.html)
+
+</details>
+<details>
+<summary>
 UpdateLaunchConfiguration
 </summary>
 
@@ -705,6 +737,14 @@ UpdateReplicationConfigurationTemplate
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/classes/updatereplicationconfigurationtemplatecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/updatereplicationconfigurationtemplatecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/updatereplicationconfigurationtemplatecommandoutput.html)
+
+</details>
+<details>
+<summary>
+UpdateSourceServer
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/classes/updatesourceservercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/updatesourceservercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-mgn/interfaces/updatesourceservercommandoutput.html)
 
 </details>
 <details>

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudSearchClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudSearchClient";
@@ -51,7 +52,7 @@ export interface DescribeScalingParametersCommandOutput extends DescribeScalingP
  * // { // DescribeScalingParametersResponse
  * //   ScalingParameters: { // ScalingParametersStatus
  * //     Options: { // ScalingParameters
- * //       DesiredInstanceType: "STRING_VALUE",
+ * //       DesiredInstanceType: "search.m1.small" || "search.m1.large" || "search.m2.xlarge" || "search.m2.2xlarge" || "search.m3.medium" || "search.m3.large" || "search.m3.xlarge" || "search.m3.2xlarge" || "search.small" || "search.medium" || "search.large" || "search.xlarge" || "search.2xlarge" || "search.previousgeneration.small" || "search.previousgeneration.large" || "search.previousgeneration.xlarge" || "search.previousgeneration.2xlarge",
  * //       DesiredReplicationCount: Number("int"),
  * //       DesiredPartitionCount: Number("int"),
  * //     },
@@ -59,7 +60,7 @@ export interface DescribeScalingParametersCommandOutput extends DescribeScalingP
  * //       CreationDate: new Date("TIMESTAMP"), // required
  * //       UpdateDate: new Date("TIMESTAMP"), // required
  * //       UpdateVersion: Number("int"),
- * //       State: "STRING_VALUE", // required
+ * //       State: "RequiresIndexDocuments" || "Processing" || "Active" || "FailedToValidate", // required
  * //       PendingDeletion: true || false,
  * //     },
  * //   },
@@ -137,6 +138,10 @@ export class DescribeScalingParametersCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "A9SearchCloudConfigService2013",
+        operation: "DescribeScalingParameters",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

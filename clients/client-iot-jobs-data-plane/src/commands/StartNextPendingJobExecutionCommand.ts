@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTJobsDataPlaneClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTJobsDataPlaneClient";
@@ -61,7 +62,7 @@ export interface StartNextPendingJobExecutionCommandOutput
  * //   execution: { // JobExecution
  * //     jobId: "STRING_VALUE",
  * //     thingName: "STRING_VALUE",
- * //     status: "STRING_VALUE",
+ * //     status: "QUEUED" || "IN_PROGRESS" || "SUCCEEDED" || "FAILED" || "TIMED_OUT" || "REJECTED" || "REMOVED" || "CANCELED",
  * //     statusDetails: { // DetailsMap
  * //       "<keys>": "STRING_VALUE",
  * //     },
@@ -152,6 +153,10 @@ export class StartNextPendingJobExecutionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotLaserThingJobManagerExternalService",
+        operation: "StartNextPendingJobExecution",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

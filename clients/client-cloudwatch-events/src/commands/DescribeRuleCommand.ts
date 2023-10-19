@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -56,7 +57,7 @@ export interface DescribeRuleCommandOutput extends DescribeRuleResponse, __Metad
  * //   Arn: "STRING_VALUE",
  * //   EventPattern: "STRING_VALUE",
  * //   ScheduleExpression: "STRING_VALUE",
- * //   State: "STRING_VALUE",
+ * //   State: "ENABLED" || "DISABLED",
  * //   Description: "STRING_VALUE",
  * //   RoleArn: "STRING_VALUE",
  * //   ManagedBy: "STRING_VALUE",
@@ -130,6 +131,10 @@ export class DescribeRuleCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "DescribeRule",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

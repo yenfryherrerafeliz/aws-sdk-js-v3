@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetRoutingControlStateRequest, GetRoutingControlStateResponse } from "../models/models_0";
@@ -41,23 +42,23 @@ export interface GetRoutingControlStateCommandOutput extends GetRoutingControlSt
 /**
  * @public
  * <p>Get the state for a routing control. A routing control is a simple on/off switch that you
- * 				can use to route traffic to cells. When a routing control state is On, traffic flows to a cell. When
- * 				the state is Off, traffic does not flow. </p>
- * 			      <p>Before you can create a routing control, you must first create a cluster, and then host the control
+ * 				can use to route traffic to cells. When a routing control state is set to ON, traffic flows to a cell. When
+ * 				the state is set to OFF, traffic does not flow. </p>
+ *          <p>Before you can create a routing control, you must first create a cluster, and then host the control
  * 				in a control panel on the cluster. For more information, see <a href="https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html">
  * 					Create routing control structures</a> in the Amazon Route 53 Application Recovery Controller Developer Guide.
  * 				You access one of the endpoints for the cluster to get or update the routing control state to
  * 				redirect traffic for your application. </p>
- * 			      <p>
+ *          <p>
  *             <i>You must specify Regional endpoints when you work with API cluster operations
  * 				to get or update routing control states in Route 53 ARC.</i>
  *          </p>
- * 			      <p>To see a code example for getting a routing control state, including accessing Regional cluster endpoints
+ *          <p>To see a code example for getting a routing control state, including accessing Regional cluster endpoints
  * 				in sequence, see <a href="https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html">API examples</a>
  * 				in the Amazon Route 53 Application Recovery Controller Developer Guide.</p>
- * 			      <p>Learn more about working with routing controls in the following topics in the
+ *          <p>Learn more about working with routing controls in the following topics in the
  * 				Amazon Route 53 Application Recovery Controller Developer Guide:</p>
- * 			      <ul>
+ *          <ul>
  *             <li>
  *                <p>
  *                   <a href="https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html">
@@ -84,7 +85,7 @@ export interface GetRoutingControlStateCommandOutput extends GetRoutingControlSt
  * const response = await client.send(command);
  * // { // GetRoutingControlStateResponse
  * //   RoutingControlArn: "STRING_VALUE", // required
- * //   RoutingControlState: "STRING_VALUE", // required
+ * //   RoutingControlState: "On" || "Off", // required
  * //   RoutingControlName: "STRING_VALUE",
  * // };
  *
@@ -168,6 +169,10 @@ export class GetRoutingControlStateCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ToggleCustomerAPI",
+        operation: "GetRoutingControlState",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

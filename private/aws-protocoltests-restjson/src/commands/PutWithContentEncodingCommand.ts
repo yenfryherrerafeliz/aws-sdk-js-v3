@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { PutWithContentEncodingInput } from "../models/models_0";
@@ -33,6 +34,35 @@ export interface PutWithContentEncodingCommandInput extends PutWithContentEncodi
  */
 export interface PutWithContentEncodingCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestJsonProtocolClient, PutWithContentEncodingCommand } from "@aws-sdk/aws-protocoltests-restjson"; // ES Modules import
+ * // const { RestJsonProtocolClient, PutWithContentEncodingCommand } = require("@aws-sdk/aws-protocoltests-restjson"); // CommonJS import
+ * const client = new RestJsonProtocolClient(config);
+ * const input = { // PutWithContentEncodingInput
+ *   encoding: "STRING_VALUE",
+ *   data: "STRING_VALUE",
+ * };
+ * const command = new PutWithContentEncodingCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param PutWithContentEncodingCommandInput - {@link PutWithContentEncodingCommandInput}
+ * @returns {@link PutWithContentEncodingCommandOutput}
+ * @see {@link PutWithContentEncodingCommandInput} for command's `input` shape.
+ * @see {@link PutWithContentEncodingCommandOutput} for command's `response` shape.
+ * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
+ *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
+ *
+ */
 export class PutWithContentEncodingCommand extends $Command<
   PutWithContentEncodingCommandInput,
   PutWithContentEncodingCommandOutput,
@@ -71,6 +101,10 @@ export class PutWithContentEncodingCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "PutWithContentEncoding",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

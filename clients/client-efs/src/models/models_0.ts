@@ -237,7 +237,7 @@ export interface AccessPointDescription {
    * @public
    * <p>Identifies the lifecycle phase of the access point.</p>
    */
-  LifeCycleState?: LifeCycleState | string;
+  LifeCycleState?: LifeCycleState;
 }
 
 /**
@@ -411,7 +411,7 @@ export interface BackupPolicy {
    *             </li>
    *          </ul>
    */
-  Status: Status | string | undefined;
+  Status: Status | undefined;
 }
 
 /**
@@ -718,8 +718,9 @@ export interface CreateFileSystemRequest {
    *          <note>
    *             <p>The <code>maxIO</code> mode is not supported on file systems using One Zone storage classes.</p>
    *          </note>
+   *          <p>Default is <code>generalPurpose</code>.</p>
    */
-  PerformanceMode?: PerformanceMode | string;
+  PerformanceMode?: PerformanceMode;
 
   /**
    * @public
@@ -775,16 +776,16 @@ export interface CreateFileSystemRequest {
    *         Guide</i>. </p>
    *          <p>Default is <code>bursting</code>.</p>
    */
-  ThroughputMode?: ThroughputMode | string;
+  ThroughputMode?: ThroughputMode;
 
   /**
    * @public
-   * <p>The throughput, measured in
-   *       MiB/s,
-   *       that you want to provision for a file system that you're creating. Valid values are
-   *       1-1024. Required if <code>ThroughputMode</code> is set to <code>provisioned</code>. The upper
-   *       limit for throughput is 1024 MiB/s. To increase this limit, contact Amazon Web Services Support. For
-   *       more information, see <a href="https://docs.aws.amazon.com/efs/latest/ug/limits.html#soft-limits">Amazon EFS quotas that you can increase</a> in the <i>Amazon EFS User Guide</i>.</p>
+   * <p>The throughput, measured in mebibytes per second (MiBps), that you want to provision for a
+   *       file system that you're creating. Required if <code>ThroughputMode</code> is set to
+   *         <code>provisioned</code>. Valid values are 1-3414 MiBps, with the upper limit depending on
+   *       Region. To increase this limit, contact Amazon Web Services Support. For more information, see <a href="https://docs.aws.amazon.com/efs/latest/ug/limits.html#soft-limits">Amazon EFS quotas
+   *         that you can increase</a> in the <i>Amazon EFS User
+   *       Guide</i>.</p>
    */
   ProvisionedThroughputInMibps?: number;
 
@@ -952,7 +953,7 @@ export interface FileSystemDescription {
    * @public
    * <p>The lifecycle phase of the file system.</p>
    */
-  LifeCycleState: LifeCycleState | string | undefined;
+  LifeCycleState: LifeCycleState | undefined;
 
   /**
    * @public
@@ -986,7 +987,7 @@ export interface FileSystemDescription {
    * @public
    * <p>The performance mode of the file system.</p>
    */
-  PerformanceMode: PerformanceMode | string | undefined;
+  PerformanceMode: PerformanceMode | undefined;
 
   /**
    * @public
@@ -1007,11 +1008,11 @@ export interface FileSystemDescription {
    *       in the <i>Amazon EFS User Guide</i>.
    *     </p>
    */
-  ThroughputMode?: ThroughputMode | string;
+  ThroughputMode?: ThroughputMode;
 
   /**
    * @public
-   * <p>The amount of provisioned throughput, measured in MiB/s, for the file system. Valid for
+   * <p>The amount of provisioned throughput, measured in MiBps, for the file system. Valid for
    *       file systems using <code>ThroughputMode</code> set to <code>provisioned</code>.</p>
    */
   ProvisionedThroughputInMibps?: number;
@@ -1341,7 +1342,7 @@ export interface MountTargetDescription {
    * @public
    * <p>Lifecycle state of the mount target.</p>
    */
-  LifeCycleState: LifeCycleState | string | undefined;
+  LifeCycleState: LifeCycleState | undefined;
 
   /**
    * @public
@@ -1685,7 +1686,7 @@ export interface Destination {
    *             </li>
    *          </ul>
    */
-  Status: ReplicationStatus | string | undefined;
+  Status: ReplicationStatus | undefined;
 
   /**
    * @public
@@ -1711,6 +1712,7 @@ export interface Destination {
 
 /**
  * @public
+ * <p>Describes the replication configuration for a specific file system.</p>
  */
 export interface ReplicationConfigurationDescription {
   /**
@@ -2146,13 +2148,13 @@ export interface ResourceIdPreference {
    * @public
    * <p>Identifies the EFS resource ID preference, either <code>LONG_ID</code> (17 characters) or <code>SHORT_ID</code> (8 characters).</p>
    */
-  ResourceIdType?: ResourceIdType | string;
+  ResourceIdType?: ResourceIdType;
 
   /**
    * @public
    * <p>Identifies the Amazon EFS resources to which the ID preference setting applies, <code>FILE_SYSTEM</code> and <code>MOUNT_TARGET</code>.</p>
    */
-  Resources?: (Resource | string)[];
+  Resources?: Resource[];
 }
 
 /**
@@ -2378,7 +2380,7 @@ export interface LifecyclePolicy {
    *       operations such as listing the contents of a directory don't count as file access
    *       events.</p>
    */
-  TransitionToIA?: TransitionToIARules | string;
+  TransitionToIA?: TransitionToIARules;
 
   /**
    * @public
@@ -2386,7 +2388,7 @@ export interface LifecyclePolicy {
    *       operations such as listing the contents of a directory don't count as file access
    *       events.</p>
    */
-  TransitionToPrimaryStorageClass?: TransitionToPrimaryStorageClassRules | string;
+  TransitionToPrimaryStorageClass?: TransitionToPrimaryStorageClassRules;
 }
 
 /**
@@ -2750,7 +2752,7 @@ export interface PutAccountPreferencesRequest {
    *         use short IDs for file system and mount target resources.</p>
    *          </note>
    */
-  ResourceIdType: ResourceIdType | string | undefined;
+  ResourceIdType: ResourceIdType | undefined;
 }
 
 /**
@@ -2942,14 +2944,17 @@ export interface UpdateFileSystemRequest {
    *       request. If you are changing the <code>ThroughputMode</code> to <code>provisioned</code>,
    *       you must also set a value for <code>ProvisionedThroughputInMibps</code>.</p>
    */
-  ThroughputMode?: ThroughputMode | string;
+  ThroughputMode?: ThroughputMode;
 
   /**
    * @public
-   * <p>(Optional) Sets the amount of provisioned throughput, in MiB/s, for the file
-   *       system. Valid values are 1-1024. If you are changing the throughput mode to provisioned, you must also
-   *       provide the amount of provisioned throughput. Required if <code>ThroughputMode</code> is changed
-   *       to <code>provisioned</code> on update.</p>
+   * <p>(Optional) The throughput, measured in mebibytes per second (MiBps), that you want to
+   *       provision for a file system that you're creating. Required if <code>ThroughputMode</code>
+   *       is set to <code>provisioned</code>. Valid values are 1-3414 MiBps, with the upper limit
+   *       depending on Region. To increase this limit, contact Amazon Web Services Support. For more information,
+   *       see <a href="https://docs.aws.amazon.com/efs/latest/ug/limits.html#soft-limits">Amazon EFS
+   *         quotas that you can increase</a> in the <i>Amazon EFS User
+   *         Guide</i>.</p>
    */
   ProvisionedThroughputInMibps?: number;
 }

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FirehoseClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FirehoseClient";
@@ -78,7 +79,7 @@ export interface DescribeDeliveryStreamCommandOutput extends DescribeDeliveryStr
  * //         Details: "STRING_VALUE", // required
  * //       },
  * //     },
- * //     DeliveryStreamType: "DirectPut" || "KinesisStreamAsSource", // required
+ * //     DeliveryStreamType: "DirectPut" || "KinesisStreamAsSource" || "MSKAsSource", // required
  * //     VersionId: "STRING_VALUE", // required
  * //     CreateTimestamp: new Date("TIMESTAMP"),
  * //     LastUpdateTimestamp: new Date("TIMESTAMP"),
@@ -86,6 +87,15 @@ export interface DescribeDeliveryStreamCommandOutput extends DescribeDeliveryStr
  * //       KinesisStreamSourceDescription: { // KinesisStreamSourceDescription
  * //         KinesisStreamARN: "STRING_VALUE",
  * //         RoleARN: "STRING_VALUE",
+ * //         DeliveryStartTimestamp: new Date("TIMESTAMP"),
+ * //       },
+ * //       MSKSourceDescription: { // MSKSourceDescription
+ * //         MSKClusterARN: "STRING_VALUE",
+ * //         TopicName: "STRING_VALUE",
+ * //         AuthenticationConfiguration: { // AuthenticationConfiguration
+ * //           RoleARN: "STRING_VALUE", // required
+ * //           Connectivity: "PUBLIC" || "PRIVATE", // required
+ * //         },
  * //         DeliveryStartTimestamp: new Date("TIMESTAMP"),
  * //       },
  * //     },
@@ -139,10 +149,10 @@ export interface DescribeDeliveryStreamCommandOutput extends DescribeDeliveryStr
  * //             Enabled: true || false,
  * //             Processors: [ // ProcessorList
  * //               { // Processor
- * //                 Type: "RecordDeAggregation" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
+ * //                 Type: "RecordDeAggregation" || "Decompression" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
  * //                 Parameters: [ // ProcessorParameterList
  * //                   { // ProcessorParameter
- * //                     ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter", // required
+ * //                     ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter" || "CompressionFormat", // required
  * //                     ParameterValue: "STRING_VALUE", // required
  * //                   },
  * //                 ],
@@ -270,10 +280,10 @@ export interface DescribeDeliveryStreamCommandOutput extends DescribeDeliveryStr
  * //             Enabled: true || false,
  * //             Processors: [
  * //               {
- * //                 Type: "RecordDeAggregation" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
+ * //                 Type: "RecordDeAggregation" || "Decompression" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
  * //                 Parameters: [
  * //                   {
- * //                     ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter", // required
+ * //                     ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter" || "CompressionFormat", // required
  * //                     ParameterValue: "STRING_VALUE", // required
  * //                   },
  * //                 ],
@@ -334,10 +344,10 @@ export interface DescribeDeliveryStreamCommandOutput extends DescribeDeliveryStr
  * //             Enabled: true || false,
  * //             Processors: [
  * //               {
- * //                 Type: "RecordDeAggregation" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
+ * //                 Type: "RecordDeAggregation" || "Decompression" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
  * //                 Parameters: [
  * //                   {
- * //                     ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter", // required
+ * //                     ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter" || "CompressionFormat", // required
  * //                     ParameterValue: "STRING_VALUE", // required
  * //                   },
  * //                 ],
@@ -354,6 +364,9 @@ export interface DescribeDeliveryStreamCommandOutput extends DescribeDeliveryStr
  * //               "STRING_VALUE",
  * //             ],
  * //             VpcId: "STRING_VALUE", // required
+ * //           },
+ * //           DocumentIdOptions: { // DocumentIdOptions
+ * //             DefaultDocumentIdFormat: "FIREHOSE_DEFAULT" || "NO_DOCUMENT_ID", // required
  * //           },
  * //         },
  * //         AmazonopensearchserviceDestinationDescription: { // AmazonopensearchserviceDestinationDescription
@@ -376,10 +389,10 @@ export interface DescribeDeliveryStreamCommandOutput extends DescribeDeliveryStr
  * //             Enabled: true || false,
  * //             Processors: [
  * //               {
- * //                 Type: "RecordDeAggregation" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
+ * //                 Type: "RecordDeAggregation" || "Decompression" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
  * //                 Parameters: [
  * //                   {
- * //                     ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter", // required
+ * //                     ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter" || "CompressionFormat", // required
  * //                     ParameterValue: "STRING_VALUE", // required
  * //                   },
  * //                 ],
@@ -397,6 +410,9 @@ export interface DescribeDeliveryStreamCommandOutput extends DescribeDeliveryStr
  * //             ],
  * //             VpcId: "STRING_VALUE", // required
  * //           },
+ * //           DocumentIdOptions: {
+ * //             DefaultDocumentIdFormat: "FIREHOSE_DEFAULT" || "NO_DOCUMENT_ID", // required
+ * //           },
  * //         },
  * //         SplunkDestinationDescription: { // SplunkDestinationDescription
  * //           HECEndpoint: "STRING_VALUE",
@@ -412,10 +428,10 @@ export interface DescribeDeliveryStreamCommandOutput extends DescribeDeliveryStr
  * //             Enabled: true || false,
  * //             Processors: [
  * //               {
- * //                 Type: "RecordDeAggregation" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
+ * //                 Type: "RecordDeAggregation" || "Decompression" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
  * //                 Parameters: [
  * //                   {
- * //                     ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter", // required
+ * //                     ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter" || "CompressionFormat", // required
  * //                     ParameterValue: "STRING_VALUE", // required
  * //                   },
  * //                 ],
@@ -548,6 +564,10 @@ export class DescribeDeliveryStreamCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: DescribeDeliveryStreamOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Firehose_20150804",
+        operation: "DescribeDeliveryStream",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

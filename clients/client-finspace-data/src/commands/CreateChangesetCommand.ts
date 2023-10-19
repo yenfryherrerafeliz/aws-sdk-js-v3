@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -46,7 +47,7 @@ export interface CreateChangesetCommandOutput extends CreateChangesetResponse, _
  * const input = { // CreateChangesetRequest
  *   clientToken: "STRING_VALUE",
  *   datasetId: "STRING_VALUE", // required
- *   changeType: "STRING_VALUE", // required
+ *   changeType: "REPLACE" || "APPEND" || "MODIFY", // required
  *   sourceParams: { // SourceParams // required
  *     "<keys>": "STRING_VALUE",
  *   },
@@ -145,6 +146,10 @@ export class CreateChangesetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "CreateChangeset",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -1,4 +1,5 @@
 // smithy-typescript generated code
+import { awsExpectUnion as __expectUnion } from "@aws-sdk/core";
 import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
@@ -10,7 +11,6 @@ import {
   expectNonNull as __expectNonNull,
   expectObject as __expectObject,
   expectString as __expectString,
-  expectUnion as __expectUnion,
   extendedEncodeURIComponent as __extendedEncodeURIComponent,
   map,
   parseRfc3339DateTimeWithOffset as __parseRfc3339DateTimeWithOffset,
@@ -2454,6 +2454,9 @@ const de_CreateServiceNetworkServiceAssociationCommandError = async (
   };
   const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.vpclattice#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
     case "ConflictException":
     case "com.amazonaws.vpclattice#ConflictException":
       throw await de_ConflictExceptionRes(parsedOutput, context);
@@ -3922,6 +3925,9 @@ const de_GetTargetGroupCommandError = async (
   };
   const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.vpclattice#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
     case "InternalServerException":
     case "com.amazonaws.vpclattice#InternalServerException":
       throw await de_InternalServerExceptionRes(parsedOutput, context);
@@ -3979,6 +3985,9 @@ const de_ListAccessLogSubscriptionsCommandError = async (
   };
   const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.vpclattice#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
     case "InternalServerException":
     case "com.amazonaws.vpclattice#InternalServerException":
       throw await de_InternalServerExceptionRes(parsedOutput, context);
@@ -4380,6 +4389,9 @@ const de_ListTagsForResourceCommandError = async (
   };
   const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.vpclattice#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
     case "InternalServerException":
     case "com.amazonaws.vpclattice#InternalServerException":
       throw await de_InternalServerExceptionRes(parsedOutput, context);
@@ -4782,6 +4794,9 @@ const de_UntagResourceCommandError = async (
   };
   const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.vpclattice#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
     case "InternalServerException":
     case "com.amazonaws.vpclattice#InternalServerException":
       throw await de_InternalServerExceptionRes(parsedOutput, context);
@@ -5241,6 +5256,9 @@ const de_UpdateTargetGroupCommandError = async (
   };
   const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.vpclattice#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
     case "ConflictException":
     case "com.amazonaws.vpclattice#ConflictException":
       throw await de_ConflictExceptionRes(parsedOutput, context);
@@ -5742,6 +5760,7 @@ const de_TargetGroupSummary = (output: any, context: __SerdeContext): TargetGrou
     createdAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     id: __expectString,
     ipAddressType: __expectString,
+    lambdaEventStructureVersion: __expectString,
     lastUpdatedAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     name: __expectString,
     port: __expectInt32,

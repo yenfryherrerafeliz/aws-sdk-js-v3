@@ -23,16 +23,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `RestJsonProtocolClient` and
-the commands you need, for example `AllQueryStringTypesCommand`:
+the commands you need, for example `JsonBlobsCommand`:
 
 ```js
 // ES5 example
-const { RestJsonProtocolClient, AllQueryStringTypesCommand } = require("@aws-sdk/aws-protocoltests-restjson");
+const { RestJsonProtocolClient, JsonBlobsCommand } = require("@aws-sdk/aws-protocoltests-restjson");
 ```
 
 ```ts
 // ES6+ example
-import { RestJsonProtocolClient, AllQueryStringTypesCommand } from "@aws-sdk/aws-protocoltests-restjson";
+import { RestJsonProtocolClient, JsonBlobsCommand } from "@aws-sdk/aws-protocoltests-restjson";
 ```
 
 ### Usage
@@ -51,7 +51,7 @@ const client = new RestJsonProtocolClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new AllQueryStringTypesCommand(params);
+const command = new JsonBlobsCommand(params);
 ```
 
 #### Async/await
@@ -130,7 +130,7 @@ const client = new AWS.RestJsonProtocol({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.allQueryStringTypes(params);
+  const data = await client.jsonBlobs(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -138,7 +138,7 @@ try {
 
 // Promises.
 client
-  .allQueryStringTypes(params)
+  .jsonBlobs(params)
   .then((data) => {
     // process data.
   })
@@ -147,7 +147,7 @@ client
   });
 
 // callbacks.
-client.allQueryStringTypes(params, (err, data) => {
+client.jsonBlobs(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -1021,6 +1021,14 @@ HttpPayloadWithStructure
 </details>
 <details>
 <summary>
+HttpPayloadWithUnion
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/classes/httppayloadwithunioncommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/interfaces/httppayloadwithunioncommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/interfaces/httppayloadwithunioncommandoutput.html)
+
+</details>
+<details>
+<summary>
 HttpPrefixHeaders
 </summary>
 
@@ -1877,6 +1885,14 @@ HttpPayloadWithStructure
 </details>
 <details>
 <summary>
+HttpPayloadWithUnion
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/classes/httppayloadwithunioncommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/interfaces/httppayloadwithunioncommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/interfaces/httppayloadwithunioncommandoutput.html)
+
+</details>
+<details>
+<summary>
 HttpPayloadWithXmlName
 </summary>
 
@@ -2161,6 +2177,14 @@ XmlMapsXmlName
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/classes/xmlmapsxmlnamecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/interfaces/xmlmapsxmlnamecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/interfaces/xmlmapsxmlnamecommandoutput.html)
+
+</details>
+<details>
+<summary>
+XmlMapWithXmlNamespace
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/classes/xmlmapwithxmlnamespacecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/interfaces/xmlmapwithxmlnamespacecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-rest-json-protocol/interfaces/xmlmapwithxmlnamespacecommandoutput.html)
 
 </details>
 <details>

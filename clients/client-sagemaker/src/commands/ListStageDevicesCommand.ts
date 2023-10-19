@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListStageDevicesRequest, ListStageDevicesResponse } from "../models/models_3";
@@ -36,7 +37,8 @@ export interface ListStageDevicesCommandOutput extends ListStageDevicesResponse,
 
 /**
  * @public
- * <p>Lists devices allocated to the stage, containing detailed device information and deployment status.</p>
+ * <p>Lists devices allocated to the stage, containing detailed device information and
+ *             deployment status.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -133,6 +135,10 @@ export class ListStageDevicesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "ListStageDevices",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

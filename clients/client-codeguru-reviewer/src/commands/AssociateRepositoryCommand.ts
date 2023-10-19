@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeGuruReviewerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeGuruReviewerClient";
@@ -43,15 +44,12 @@ export interface AssociateRepositoryCommandOutput extends AssociateRepositoryRes
  *          information, see <a href="https://docs.aws.amazon.com/codeguru/latest/reviewer-ug/recommendations.html">Recommendations in
  *             Amazon CodeGuru Reviewer</a> in the <i>Amazon CodeGuru Reviewer User Guide.</i>
  *          </p>
- *
  *          <p>If you associate a CodeCommit or S3 repository, it must be in the same Amazon Web Services Region and
  *          Amazon Web Services account where its CodeGuru Reviewer code reviews are configured.</p>
- *
  *          <p>Bitbucket and GitHub Enterprise Server repositories are managed by Amazon Web Services CodeStar
  *          Connections to connect to CodeGuru Reviewer. For more information, see <a href="https://docs.aws.amazon.com/codeguru/latest/reviewer-ug/getting-started-associate-repository.html">Associate a
  *             repository</a> in the <i>Amazon CodeGuru Reviewer User Guide.</i>
  *          </p>
- *
  *          <note>
  *             <p>You cannot use the CodeGuru Reviewer SDK or the Amazon Web Services CLI to associate a GitHub repository with
  *             Amazon CodeGuru Reviewer. To associate a GitHub repository, use the console. For more information, see
@@ -204,6 +202,10 @@ export class AssociateRepositoryCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSGuruFrontendService",
+        operation: "AssociateRepository",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

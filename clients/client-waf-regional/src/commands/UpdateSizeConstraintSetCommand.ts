@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateSizeConstraintSetRequest, UpdateSizeConstraintSetResponse } from "../models/models_0";
@@ -98,14 +99,14 @@ export interface UpdateSizeConstraintSetCommandOutput extends UpdateSizeConstrai
  *   ChangeToken: "STRING_VALUE", // required
  *   Updates: [ // SizeConstraintSetUpdates // required
  *     { // SizeConstraintSetUpdate
- *       Action: "STRING_VALUE", // required
+ *       Action: "INSERT" || "DELETE", // required
  *       SizeConstraint: { // SizeConstraint
  *         FieldToMatch: { // FieldToMatch
- *           Type: "STRING_VALUE", // required
+ *           Type: "URI" || "QUERY_STRING" || "HEADER" || "METHOD" || "BODY" || "SINGLE_QUERY_ARG" || "ALL_QUERY_ARGS", // required
  *           Data: "STRING_VALUE",
  *         },
- *         TextTransformation: "STRING_VALUE", // required
- *         ComparisonOperator: "STRING_VALUE", // required
+ *         TextTransformation: "NONE" || "COMPRESS_WHITE_SPACE" || "HTML_ENTITY_DECODE" || "LOWERCASE" || "CMD_LINE" || "URL_DECODE", // required
+ *         ComparisonOperator: "EQ" || "NE" || "LE" || "LT" || "GE" || "GT", // required
  *         Size: Number("long"), // required
  *       },
  *     },
@@ -318,6 +319,10 @@ export class UpdateSizeConstraintSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_Regional_20161128",
+        operation: "UpdateSizeConstraintSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

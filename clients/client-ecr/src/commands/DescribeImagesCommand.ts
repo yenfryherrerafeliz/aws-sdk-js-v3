@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -37,12 +38,12 @@ export interface DescribeImagesCommandOutput extends DescribeImagesResponse, __M
 /**
  * @public
  * <p>Returns metadata about the images in a repository.</p>
- *         <note>
+ *          <note>
  *             <p>Beginning with Docker version 1.9, the Docker client compresses image layers
  *                 before pushing them to a V2 Docker registry. The output of the <code>docker
  *                     images</code> command shows the uncompressed image size, so it may return a
  *                 larger image size than the image sizes returned by <a>DescribeImages</a>.</p>
- *         </note>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -61,7 +62,7 @@ export interface DescribeImagesCommandOutput extends DescribeImagesResponse, __M
  *   nextToken: "STRING_VALUE",
  *   maxResults: Number("int"),
  *   filter: { // DescribeImagesFilter
- *     tagStatus: "STRING_VALUE",
+ *     tagStatus: "TAGGED" || "UNTAGGED" || "ANY",
  *   },
  * };
  * const command = new DescribeImagesCommand(input);
@@ -78,7 +79,7 @@ export interface DescribeImagesCommandOutput extends DescribeImagesResponse, __M
  * //       imageSizeInBytes: Number("long"),
  * //       imagePushedAt: new Date("TIMESTAMP"),
  * //       imageScanStatus: { // ImageScanStatus
- * //         status: "STRING_VALUE",
+ * //         status: "IN_PROGRESS" || "COMPLETE" || "FAILED" || "UNSUPPORTED_IMAGE" || "ACTIVE" || "PENDING" || "SCAN_ELIGIBILITY_EXPIRED" || "FINDINGS_UNAVAILABLE",
  * //         description: "STRING_VALUE",
  * //       },
  * //       imageScanFindingsSummary: { // ImageScanFindingsSummary
@@ -172,6 +173,10 @@ export class DescribeImagesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "DescribeImages",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -36,7 +37,7 @@ export interface UpdateUserCommandOutput extends UpdateUserResponse, __MetadataB
 
 /**
  * @public
- * <p>Modifies the details of the specified user account. You cannot update the <code>userId</code> for a user.</p>
+ * <p>Modifies the details of the specified user. You cannot update the <code>userId</code> for a user.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -45,10 +46,10 @@ export interface UpdateUserCommandOutput extends UpdateUserResponse, __MetadataB
  * const client = new FinspaceDataClient(config);
  * const input = { // UpdateUserRequest
  *   userId: "STRING_VALUE", // required
- *   type: "STRING_VALUE",
+ *   type: "SUPER_USER" || "APP_USER",
  *   firstName: "STRING_VALUE",
  *   lastName: "STRING_VALUE",
- *   apiAccess: "STRING_VALUE",
+ *   apiAccess: "ENABLED" || "DISABLED",
  *   apiAccessPrincipalArn: "STRING_VALUE",
  *   clientToken: "STRING_VALUE",
  * };
@@ -137,6 +138,10 @@ export class UpdateUserCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: UpdateUserRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "UpdateUser",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

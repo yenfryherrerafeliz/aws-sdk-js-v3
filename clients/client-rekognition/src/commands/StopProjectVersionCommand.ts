@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { StopProjectVersionRequest, StopProjectVersionResponse } from "../models/models_1";
@@ -36,8 +37,12 @@ export interface StopProjectVersionCommandOutput extends StopProjectVersionRespo
 
 /**
  * @public
- * <p>Stops a running model. The operation might take a while to complete. To
- *          check the current status, call <a>DescribeProjectVersions</a>. </p>
+ * <note>
+ *             <p>This operation applies only to Amazon Rekognition Custom Labels.</p>
+ *          </note>
+ *          <p>Stops a running model. The operation might take a while to complete. To check the
+ *          current status, call <a>DescribeProjectVersions</a>. Only applies to Custom
+ *          Labels projects.</p>
  *          <p>This operation requires permissions to perform the <code>rekognition:StopProjectVersion</code> action.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -51,7 +56,7 @@ export interface StopProjectVersionCommandOutput extends StopProjectVersionRespo
  * const command = new StopProjectVersionCommand(input);
  * const response = await client.send(command);
  * // { // StopProjectVersionResponse
- * //   Status: "TRAINING_IN_PROGRESS" || "TRAINING_COMPLETED" || "TRAINING_FAILED" || "STARTING" || "RUNNING" || "FAILED" || "STOPPING" || "STOPPED" || "DELETING" || "COPYING_IN_PROGRESS" || "COPYING_COMPLETED" || "COPYING_FAILED",
+ * //   Status: "TRAINING_IN_PROGRESS" || "TRAINING_COMPLETED" || "TRAINING_FAILED" || "STARTING" || "RUNNING" || "FAILED" || "STOPPING" || "STOPPED" || "DELETING" || "COPYING_IN_PROGRESS" || "COPYING_COMPLETED" || "COPYING_FAILED" || "DEPRECATED" || "EXPIRED",
  * // };
  *
  * ```
@@ -155,6 +160,10 @@ export class StopProjectVersionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RekognitionService",
+        operation: "StopProjectVersion",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

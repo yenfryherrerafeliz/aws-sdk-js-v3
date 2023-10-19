@@ -49,16 +49,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `EC2Client` and
-the commands you need, for example `AcceptAddressTransferCommand`:
+the commands you need, for example `ListImagesInRecycleBinCommand`:
 
 ```js
 // ES5 example
-const { EC2Client, AcceptAddressTransferCommand } = require("@aws-sdk/client-ec2");
+const { EC2Client, ListImagesInRecycleBinCommand } = require("@aws-sdk/client-ec2");
 ```
 
 ```ts
 // ES6+ example
-import { EC2Client, AcceptAddressTransferCommand } from "@aws-sdk/client-ec2";
+import { EC2Client, ListImagesInRecycleBinCommand } from "@aws-sdk/client-ec2";
 ```
 
 ### Usage
@@ -77,7 +77,7 @@ const client = new EC2Client({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new AcceptAddressTransferCommand(params);
+const command = new ListImagesInRecycleBinCommand(params);
 ```
 
 #### Async/await
@@ -156,7 +156,7 @@ const client = new AWS.EC2({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.acceptAddressTransfer(params);
+  const data = await client.listImagesInRecycleBin(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -164,7 +164,7 @@ try {
 
 // Promises.
 client
-  .acceptAddressTransfer(params)
+  .listImagesInRecycleBin(params)
   .then((data) => {
     // process data.
   })
@@ -173,7 +173,7 @@ client
   });
 
 // callbacks.
-client.acceptAddressTransfer(params, (err, data) => {
+client.listImagesInRecycleBin(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -3215,6 +3215,22 @@ DisableFastSnapshotRestores
 </details>
 <details>
 <summary>
+DisableImage
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/classes/disableimagecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/disableimagecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/disableimagecommandoutput.html)
+
+</details>
+<details>
+<summary>
+DisableImageBlockPublicAccess
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/classes/disableimageblockpublicaccesscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/disableimageblockpublicaccesscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/disableimageblockpublicaccesscommandoutput.html)
+
+</details>
+<details>
+<summary>
 DisableImageDeprecation
 </summary>
 
@@ -3423,6 +3439,22 @@ EnableFastSnapshotRestores
 </details>
 <details>
 <summary>
+EnableImage
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/classes/enableimagecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/enableimagecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/enableimagecommandoutput.html)
+
+</details>
+<details>
+<summary>
+EnableImageBlockPublicAccess
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/classes/enableimageblockpublicaccesscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/enableimageblockpublicaccesscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/enableimageblockpublicaccesscommandoutput.html)
+
+</details>
+<details>
+<summary>
 EnableImageDeprecation
 </summary>
 
@@ -3627,6 +3659,14 @@ GetHostReservationPurchasePreview
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/classes/gethostreservationpurchasepreviewcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/gethostreservationpurchasepreviewcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/gethostreservationpurchasepreviewcommandoutput.html)
+
+</details>
+<details>
+<summary>
+GetImageBlockPublicAccessState
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/classes/getimageblockpublicaccessstatecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/getimageblockpublicaccessstatecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-ec2/interfaces/getimageblockpublicaccessstatecommandoutput.html)
 
 </details>
 <details>

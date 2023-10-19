@@ -22,6 +22,7 @@ import {
   UnsuccessfulItem,
   UserTrustProviderType,
   VerifiedAccessInstance,
+  VerifiedAccessSseSpecificationResponse,
   VerifiedAccessTrustProvider,
   VerifiedAccessTrustProviderFilterSensitiveLog,
   VolumeAttachment,
@@ -45,11 +46,23 @@ import {
   LocalGatewayRouteTableVirtualInterfaceGroupAssociation,
   LocalGatewayRouteTableVpcAssociation,
   ManagedPrefixList,
+  PlacementGroup,
   Subnet,
   Tenancy,
   VolumeType,
   Vpc,
 } from "./models_1";
+
+/**
+ * @public
+ */
+export interface CreatePlacementGroupResult {
+  /**
+   * @public
+   * <p>Information about the placement group.</p>
+   */
+  PlacementGroup?: PlacementGroup;
+}
 
 /**
  * @public
@@ -219,7 +232,7 @@ export interface ReplaceRootVolumeTask {
    *             </li>
    *          </ul>
    */
-  TaskState?: ReplaceRootVolumeTaskState | string;
+  TaskState?: ReplaceRootVolumeTaskState;
 
   /**
    * @public
@@ -280,7 +293,7 @@ export interface PriceScheduleSpecification {
    * <p>The currency for transacting the Reserved Instance resale.
    * 				At this time, the only supported currency is <code>USD</code>.</p>
    */
-  CurrencyCode?: CurrencyCodeValues | string;
+  CurrencyCode?: CurrencyCodeValues;
 
   /**
    * @public
@@ -719,7 +732,7 @@ export interface Route {
    *             </li>
    *          </ul>
    */
-  Origin?: RouteOrigin | string;
+  Origin?: RouteOrigin;
 
   /**
    * @public
@@ -727,7 +740,7 @@ export interface Route {
    * 				route's target isn't available (for example, the specified gateway isn't attached to the
    * 				VPC, or the specified NAT instance has been terminated).</p>
    */
-  State?: RouteState | string;
+  State?: RouteState;
 
   /**
    * @public
@@ -1023,7 +1036,7 @@ export interface Snapshot {
    * @public
    * <p>The snapshot state.</p>
    */
-  State?: SnapshotState | string;
+  State?: SnapshotState;
 
   /**
    * @public
@@ -1074,7 +1087,7 @@ export interface Snapshot {
    *       for use. <code>archive</code> indicates that the snapshot is currently archived and that
    *       it must be restored before it can be used.</p>
    */
-  StorageTier?: StorageTier | string;
+  StorageTier?: StorageTier;
 
   /**
    * @public
@@ -1087,7 +1100,7 @@ export interface Snapshot {
    * @public
    * <p>Reserved for future use.</p>
    */
-  SseType?: SSEType | string;
+  SseType?: SSEType;
 }
 
 /**
@@ -1190,7 +1203,7 @@ export interface CreateSnapshotsRequest {
    * @public
    * <p>Copies the tags from the specified volume to corresponding snapshot.</p>
    */
-  CopyTagsFromSource?: CopyTagsFromSource | string;
+  CopyTagsFromSource?: CopyTagsFromSource;
 }
 
 /**
@@ -1227,7 +1240,7 @@ export interface SnapshotInfo {
    * @public
    * <p>Current state of the snapshot.</p>
    */
-  State?: SnapshotState | string;
+  State?: SnapshotState;
 
   /**
    * @public
@@ -1271,7 +1284,7 @@ export interface SnapshotInfo {
    * @public
    * <p>Reserved for future use.</p>
    */
-  SseType?: SSEType | string;
+  SseType?: SSEType;
 }
 
 /**
@@ -1379,7 +1392,7 @@ export interface SpotDatafeedSubscription {
    * @public
    * <p>The state of the Spot Instance data feed subscription.</p>
    */
-  State?: DatafeedSubscriptionState | string;
+  State?: DatafeedSubscriptionState;
 }
 
 /**
@@ -1593,7 +1606,7 @@ export interface CreateSubnetCidrReservationRequest {
    *             </li>
    *          </ul>
    */
-  ReservationType: SubnetCidrReservationType | string | undefined;
+  ReservationType: SubnetCidrReservationType | undefined;
 
   /**
    * @public
@@ -1643,7 +1656,7 @@ export interface SubnetCidrReservation {
    * @public
    * <p>The type of reservation. </p>
    */
-  ReservationType?: SubnetCidrReservationType | string;
+  ReservationType?: SubnetCidrReservationType;
 
   /**
    * @public
@@ -1800,7 +1813,7 @@ export interface TrafficMirrorFilterRule {
    * @public
    * <p>The traffic direction assigned to the Traffic Mirror rule.</p>
    */
-  TrafficDirection?: TrafficDirection | string;
+  TrafficDirection?: TrafficDirection;
 
   /**
    * @public
@@ -1812,7 +1825,7 @@ export interface TrafficMirrorFilterRule {
    * @public
    * <p>The action assigned to the Traffic Mirror rule.</p>
    */
-  RuleAction?: TrafficMirrorRuleAction | string;
+  RuleAction?: TrafficMirrorRuleAction;
 
   /**
    * @public
@@ -1892,7 +1905,7 @@ export interface TrafficMirrorFilter {
    * @public
    * <p>The network service traffic that is associated with the Traffic Mirror filter.</p>
    */
-  NetworkServices?: (TrafficMirrorNetworkService | string)[];
+  NetworkServices?: TrafficMirrorNetworkService[];
 
   /**
    * @public
@@ -1956,7 +1969,7 @@ export interface CreateTrafficMirrorFilterRuleRequest {
    * @public
    * <p>The type of traffic.</p>
    */
-  TrafficDirection: TrafficDirection | string | undefined;
+  TrafficDirection: TrafficDirection | undefined;
 
   /**
    * @public
@@ -1969,7 +1982,7 @@ export interface CreateTrafficMirrorFilterRuleRequest {
    * @public
    * <p>The action to take on the filtered traffic.</p>
    */
-  RuleAction: TrafficMirrorRuleAction | string | undefined;
+  RuleAction: TrafficMirrorRuleAction | undefined;
 
   /**
    * @public
@@ -2292,7 +2305,7 @@ export interface TrafficMirrorTarget {
    * @public
    * <p>The type of Traffic Mirror target.</p>
    */
-  Type?: TrafficMirrorTargetType | string;
+  Type?: TrafficMirrorTargetType;
 
   /**
    * @public
@@ -2425,37 +2438,37 @@ export interface TransitGatewayRequestOptions {
    * @public
    * <p>Enable or disable automatic acceptance of attachment requests. Disabled by default.</p>
    */
-  AutoAcceptSharedAttachments?: AutoAcceptSharedAttachmentsValue | string;
+  AutoAcceptSharedAttachments?: AutoAcceptSharedAttachmentsValue;
 
   /**
    * @public
    * <p>Enable or disable automatic association with the default association route table. Enabled by default.</p>
    */
-  DefaultRouteTableAssociation?: DefaultRouteTableAssociationValue | string;
+  DefaultRouteTableAssociation?: DefaultRouteTableAssociationValue;
 
   /**
    * @public
    * <p>Enable or disable automatic propagation of routes to the default propagation route table. Enabled by default.</p>
    */
-  DefaultRouteTablePropagation?: DefaultRouteTablePropagationValue | string;
+  DefaultRouteTablePropagation?: DefaultRouteTablePropagationValue;
 
   /**
    * @public
    * <p>Enable or disable Equal Cost Multipath Protocol support. Enabled by default.</p>
    */
-  VpnEcmpSupport?: VpnEcmpSupportValue | string;
+  VpnEcmpSupport?: VpnEcmpSupportValue;
 
   /**
    * @public
    * <p>Enable or disable DNS support. Enabled by default.</p>
    */
-  DnsSupport?: DnsSupportValue | string;
+  DnsSupport?: DnsSupportValue;
 
   /**
    * @public
    * <p>Indicates whether multicast is enabled on the transit gateway</p>
    */
-  MulticastSupport?: MulticastSupportValue | string;
+  MulticastSupport?: MulticastSupportValue;
 
   /**
    * @public
@@ -2517,13 +2530,13 @@ export interface TransitGatewayOptions {
    * @public
    * <p>Indicates whether attachment requests are automatically accepted.</p>
    */
-  AutoAcceptSharedAttachments?: AutoAcceptSharedAttachmentsValue | string;
+  AutoAcceptSharedAttachments?: AutoAcceptSharedAttachmentsValue;
 
   /**
    * @public
    * <p>Indicates whether resource attachments are automatically associated with the default association route table.</p>
    */
-  DefaultRouteTableAssociation?: DefaultRouteTableAssociationValue | string;
+  DefaultRouteTableAssociation?: DefaultRouteTableAssociationValue;
 
   /**
    * @public
@@ -2535,7 +2548,7 @@ export interface TransitGatewayOptions {
    * @public
    * <p>Indicates whether resource attachments automatically propagate routes to the default propagation route table.</p>
    */
-  DefaultRouteTablePropagation?: DefaultRouteTablePropagationValue | string;
+  DefaultRouteTablePropagation?: DefaultRouteTablePropagationValue;
 
   /**
    * @public
@@ -2547,19 +2560,19 @@ export interface TransitGatewayOptions {
    * @public
    * <p>Indicates whether Equal Cost Multipath Protocol support is enabled.</p>
    */
-  VpnEcmpSupport?: VpnEcmpSupportValue | string;
+  VpnEcmpSupport?: VpnEcmpSupportValue;
 
   /**
    * @public
    * <p>Indicates whether DNS support is enabled.</p>
    */
-  DnsSupport?: DnsSupportValue | string;
+  DnsSupport?: DnsSupportValue;
 
   /**
    * @public
    * <p>Indicates whether multicast is enabled on the transit gateway</p>
    */
-  MulticastSupport?: MulticastSupportValue | string;
+  MulticastSupport?: MulticastSupportValue;
 }
 
 /**
@@ -2600,7 +2613,7 @@ export interface TransitGateway {
    * @public
    * <p>The state of the transit gateway.</p>
    */
-  State?: TransitGatewayState | string;
+  State?: TransitGatewayState;
 
   /**
    * @public
@@ -2666,7 +2679,7 @@ export interface CreateTransitGatewayConnectRequestOptions {
    * @public
    * <p>The tunnel protocol.</p>
    */
-  Protocol: ProtocolValue | string | undefined;
+  Protocol: ProtocolValue | undefined;
 }
 
 /**
@@ -2709,7 +2722,7 @@ export interface TransitGatewayConnectOptions {
    * @public
    * <p>The tunnel protocol.</p>
    */
-  Protocol?: ProtocolValue | string;
+  Protocol?: ProtocolValue;
 }
 
 /**
@@ -2739,7 +2752,7 @@ export interface TransitGatewayConnect {
    * @public
    * <p>The state of the attachment.</p>
    */
-  State?: TransitGatewayAttachmentState | string;
+  State?: TransitGatewayAttachmentState;
 
   /**
    * @public
@@ -2885,7 +2898,7 @@ export interface TransitGatewayAttachmentBgpConfiguration {
    * @public
    * <p>The BGP status.</p>
    */
-  BgpStatus?: BgpStatus | string;
+  BgpStatus?: BgpStatus;
 }
 
 /**
@@ -2915,7 +2928,7 @@ export interface TransitGatewayConnectPeerConfiguration {
    * @public
    * <p>The tunnel protocol.</p>
    */
-  Protocol?: ProtocolValue | string;
+  Protocol?: ProtocolValue;
 
   /**
    * @public
@@ -2962,7 +2975,7 @@ export interface TransitGatewayConnectPeer {
    * @public
    * <p>The state of the Connect peer.</p>
    */
-  State?: TransitGatewayConnectPeerState | string;
+  State?: TransitGatewayConnectPeerState;
 
   /**
    * @public
@@ -3046,19 +3059,19 @@ export interface CreateTransitGatewayMulticastDomainRequestOptions {
    * @public
    * <p>Specify whether to enable Internet Group Management Protocol (IGMP) version 2 for the transit gateway multicast domain.</p>
    */
-  Igmpv2Support?: Igmpv2SupportValue | string;
+  Igmpv2Support?: Igmpv2SupportValue;
 
   /**
    * @public
    * <p>Specify whether to enable support for statically configuring multicast group sources for a domain.</p>
    */
-  StaticSourcesSupport?: StaticSourcesSupportValue | string;
+  StaticSourcesSupport?: StaticSourcesSupportValue;
 
   /**
    * @public
    * <p>Indicates whether to automatically accept cross-account subnet associations that are associated with the transit gateway multicast domain.</p>
    */
-  AutoAcceptSharedAssociations?: AutoAcceptSharedAssociationsValue | string;
+  AutoAcceptSharedAssociations?: AutoAcceptSharedAssociationsValue;
 }
 
 /**
@@ -3101,19 +3114,19 @@ export interface TransitGatewayMulticastDomainOptions {
    * @public
    * <p>Indicates whether Internet Group Management Protocol (IGMP) version 2 is turned on for the transit gateway multicast domain.</p>
    */
-  Igmpv2Support?: Igmpv2SupportValue | string;
+  Igmpv2Support?: Igmpv2SupportValue;
 
   /**
    * @public
    * <p>Indicates whether support for statically configuring transit gateway multicast group sources is turned on.</p>
    */
-  StaticSourcesSupport?: StaticSourcesSupportValue | string;
+  StaticSourcesSupport?: StaticSourcesSupportValue;
 
   /**
    * @public
    * <p>Indicates whether to automatically cross-account subnet associations that are associated with the transit gateway multicast domain.</p>
    */
-  AutoAcceptSharedAssociations?: AutoAcceptSharedAssociationsValue | string;
+  AutoAcceptSharedAssociations?: AutoAcceptSharedAssociationsValue;
 }
 
 /**
@@ -3172,7 +3185,7 @@ export interface TransitGatewayMulticastDomain {
    * @public
    * <p>The state of the transit gateway multicast domain.</p>
    */
-  State?: TransitGatewayMulticastDomainState | string;
+  State?: TransitGatewayMulticastDomainState;
 
   /**
    * @public
@@ -3207,7 +3220,7 @@ export interface CreateTransitGatewayPeeringAttachmentRequestOptions {
    * @public
    * <p>Indicates whether dynamic routing is enabled or disabled.</p>
    */
-  DynamicRouting?: DynamicRoutingValue | string;
+  DynamicRouting?: DynamicRoutingValue;
 }
 
 /**
@@ -3333,7 +3346,7 @@ export interface TransitGatewayPolicyTable {
    * @public
    * <p>The state of the transit gateway policy table</p>
    */
-  State?: TransitGatewayPolicyTableState | string;
+  State?: TransitGatewayPolicyTableState;
 
   /**
    * @public
@@ -3428,7 +3441,7 @@ export interface TransitGatewayPrefixListAttachment {
    * @public
    * <p>The resource type. Note that the <code>tgw-peering</code> resource type has been deprecated.</p>
    */
-  ResourceType?: TransitGatewayAttachmentResourceType | string;
+  ResourceType?: TransitGatewayAttachmentResourceType;
 
   /**
    * @public
@@ -3464,7 +3477,7 @@ export interface TransitGatewayPrefixListReference {
    * @public
    * <p>The state of the prefix list reference.</p>
    */
-  State?: TransitGatewayPrefixListReferenceState | string;
+  State?: TransitGatewayPrefixListReferenceState;
 
   /**
    * @public
@@ -3566,7 +3579,7 @@ export interface TransitGatewayRouteAttachment {
    * @public
    * <p>The resource type. Note that the <code>tgw-peering</code> resource type has been deprecated. </p>
    */
-  ResourceType?: TransitGatewayAttachmentResourceType | string;
+  ResourceType?: TransitGatewayAttachmentResourceType;
 }
 
 /**
@@ -3616,13 +3629,13 @@ export interface TransitGatewayRoute {
    * @public
    * <p>The route type.</p>
    */
-  Type?: TransitGatewayRouteType | string;
+  Type?: TransitGatewayRouteType;
 
   /**
    * @public
    * <p>The state of the route.</p>
    */
-  State?: TransitGatewayRouteState | string;
+  State?: TransitGatewayRouteState;
 }
 
 /**
@@ -3699,7 +3712,7 @@ export interface TransitGatewayRouteTable {
    * @public
    * <p>The state of the transit gateway route table.</p>
    */
-  State?: TransitGatewayRouteTableState | string;
+  State?: TransitGatewayRouteTableState;
 
   /**
    * @public
@@ -3847,7 +3860,7 @@ export interface TransitGatewayRouteTableAnnouncement {
    * @public
    * <p>The direction for the route table announcement.</p>
    */
-  AnnouncementDirection?: TransitGatewayRouteTableAnnouncementDirection | string;
+  AnnouncementDirection?: TransitGatewayRouteTableAnnouncementDirection;
 
   /**
    * @public
@@ -3859,7 +3872,7 @@ export interface TransitGatewayRouteTableAnnouncement {
    * @public
    * <p>The state of the transit gateway announcement.</p>
    */
-  State?: TransitGatewayRouteTableAnnouncementState | string;
+  State?: TransitGatewayRouteTableAnnouncementState;
 
   /**
    * @public
@@ -3894,19 +3907,19 @@ export interface CreateTransitGatewayVpcAttachmentRequestOptions {
    * @public
    * <p>Enable or disable DNS support. The default is <code>enable</code>.</p>
    */
-  DnsSupport?: DnsSupportValue | string;
+  DnsSupport?: DnsSupportValue;
 
   /**
    * @public
    * <p>Enable or disable IPv6 support.  The default is <code>disable</code>.</p>
    */
-  Ipv6Support?: Ipv6SupportValue | string;
+  Ipv6Support?: Ipv6SupportValue;
 
   /**
    * @public
    * <p>Enable or disable support for appliance mode. If enabled, a traffic flow between a source and destination uses the same Availability Zone for the VPC attachment for the lifetime of that flow. The default is <code>disable</code>.</p>
    */
-  ApplianceModeSupport?: ApplianceModeSupportValue | string;
+  ApplianceModeSupport?: ApplianceModeSupportValue;
 }
 
 /**
@@ -4018,7 +4031,7 @@ export interface CreateVerifiedAccessEndpointLoadBalancerOptions {
    * @public
    * <p>The IP protocol.</p>
    */
-  Protocol?: VerifiedAccessEndpointProtocol | string;
+  Protocol?: VerifiedAccessEndpointProtocol;
 
   /**
    * @public
@@ -4055,13 +4068,39 @@ export interface CreateVerifiedAccessEndpointEniOptions {
    * @public
    * <p>The IP protocol.</p>
    */
-  Protocol?: VerifiedAccessEndpointProtocol | string;
+  Protocol?: VerifiedAccessEndpointProtocol;
 
   /**
    * @public
    * <p>The IP port number.</p>
    */
   Port?: number;
+}
+
+/**
+ * @public
+ * <p>
+ *          Verified Access provides server side encryption by default to data at rest using Amazon Web Services-owned KMS keys. You also have the option of using customer managed KMS keys, which can be specified using the options below.
+ *       </p>
+ */
+export interface VerifiedAccessSseSpecificationRequest {
+  /**
+   * @public
+   * <p>
+   *          Enable or disable the use of customer managed KMS keys for server side encryption.
+   *       </p>
+   *          <p>Valid values: <code>True</code> | <code>False</code>
+   *          </p>
+   */
+  CustomerManagedKeyEnabled?: boolean;
+
+  /**
+   * @public
+   * <p>
+   *          The ARN of the KMS key.
+   *       </p>
+   */
+  KmsKeyArn?: string;
 }
 
 /**
@@ -4078,13 +4117,13 @@ export interface CreateVerifiedAccessEndpointRequest {
    * @public
    * <p>The type of Verified Access endpoint to create.</p>
    */
-  EndpointType: VerifiedAccessEndpointType | string | undefined;
+  EndpointType: VerifiedAccessEndpointType | undefined;
 
   /**
    * @public
    * <p>The type of attachment.</p>
    */
-  AttachmentType: VerifiedAccessEndpointAttachmentType | string | undefined;
+  AttachmentType: VerifiedAccessEndpointAttachmentType | undefined;
 
   /**
    * @public
@@ -4159,6 +4198,14 @@ export interface CreateVerifiedAccessEndpointRequest {
    *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
    */
   DryRun?: boolean;
+
+  /**
+   * @public
+   * <p>
+   *          Options for server side encryption.
+   *       </p>
+   */
+  SseSpecification?: VerifiedAccessSseSpecificationRequest;
 }
 
 /**
@@ -4171,7 +4218,7 @@ export interface VerifiedAccessEndpointLoadBalancerOptions {
    * @public
    * <p>The IP protocol.</p>
    */
-  Protocol?: VerifiedAccessEndpointProtocol | string;
+  Protocol?: VerifiedAccessEndpointProtocol;
 
   /**
    * @public
@@ -4207,7 +4254,7 @@ export interface VerifiedAccessEndpointEniOptions {
    * @public
    * <p>The IP protocol.</p>
    */
-  Protocol?: VerifiedAccessEndpointProtocol | string;
+  Protocol?: VerifiedAccessEndpointProtocol;
 
   /**
    * @public
@@ -4243,7 +4290,7 @@ export interface VerifiedAccessEndpointStatus {
    * @public
    * <p>The status code of the Verified Access endpoint.</p>
    */
-  Code?: VerifiedAccessEndpointStatusCode | string;
+  Code?: VerifiedAccessEndpointStatusCode;
 
   /**
    * @public
@@ -4289,14 +4336,14 @@ export interface VerifiedAccessEndpoint {
    *          address, load balancer or a network interface depending on the endpoint type
    *          specified.</p>
    */
-  EndpointType?: VerifiedAccessEndpointType | string;
+  EndpointType?: VerifiedAccessEndpointType;
 
   /**
    * @public
    * <p>The type of attachment used to provide connectivity between the Amazon Web Services Verified Access endpoint and the
    *          application.</p>
    */
-  AttachmentType?: VerifiedAccessEndpointAttachmentType | string;
+  AttachmentType?: VerifiedAccessEndpointAttachmentType;
 
   /**
    * @public
@@ -4370,6 +4417,14 @@ export interface VerifiedAccessEndpoint {
    * <p>The tags.</p>
    */
   Tags?: Tag[];
+
+  /**
+   * @public
+   * <p>
+   *          Describes the options in use for server side encryption.
+   *       </p>
+   */
+  SseSpecification?: VerifiedAccessSseSpecificationResponse;
 }
 
 /**
@@ -4425,6 +4480,14 @@ export interface CreateVerifiedAccessGroupRequest {
    *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
    */
   DryRun?: boolean;
+
+  /**
+   * @public
+   * <p>
+   *          Options for server side encryption.
+   *       </p>
+   */
+  SseSpecification?: VerifiedAccessSseSpecificationRequest;
 }
 
 /**
@@ -4485,6 +4548,14 @@ export interface VerifiedAccessGroup {
    * <p>The tags.</p>
    */
   Tags?: Tag[];
+
+  /**
+   * @public
+   * <p>
+   *          Describes the options in use for server side encryption.
+   *       </p>
+   */
+  SseSpecification?: VerifiedAccessSseSpecificationResponse;
 }
 
 /**
@@ -4528,6 +4599,12 @@ export interface CreateVerifiedAccessInstanceRequest {
    *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
    */
   DryRun?: boolean;
+
+  /**
+   * @public
+   * <p>Enable or disable support for Federal Information Processing Standards (FIPS) on the instance.</p>
+   */
+  FIPSEnabled?: boolean;
 }
 
 /**
@@ -4611,21 +4688,21 @@ export interface CreateVerifiedAccessTrustProviderRequest {
    * @public
    * <p>The type of trust provider.</p>
    */
-  TrustProviderType: TrustProviderType | string | undefined;
+  TrustProviderType: TrustProviderType | undefined;
 
   /**
    * @public
    * <p>The type of user-based trust provider. This parameter is required when the provider type
    *          is <code>user</code>.</p>
    */
-  UserTrustProviderType?: UserTrustProviderType | string;
+  UserTrustProviderType?: UserTrustProviderType;
 
   /**
    * @public
    * <p>The type of device-based trust provider. This parameter is required when the provider
    *          type is <code>device</code>.</p>
    */
-  DeviceTrustProviderType?: DeviceTrustProviderType | string;
+  DeviceTrustProviderType?: DeviceTrustProviderType;
 
   /**
    * @public
@@ -4673,6 +4750,14 @@ export interface CreateVerifiedAccessTrustProviderRequest {
    *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
    */
   DryRun?: boolean;
+
+  /**
+   * @public
+   * <p>
+   *          Options for server side encryption.
+   *       </p>
+   */
+  SseSpecification?: VerifiedAccessSseSpecificationRequest;
 }
 
 /**
@@ -4836,7 +4921,7 @@ export interface CreateVolumeRequest {
    *          <p>Default: <code>gp2</code>
    *          </p>
    */
-  VolumeType?: VolumeType | string;
+  VolumeType?: VolumeType;
 
   /**
    * @public
@@ -4955,7 +5040,7 @@ export interface Volume {
    * @public
    * <p>The volume state.</p>
    */
-  State?: VolumeState | string;
+  State?: VolumeState;
 
   /**
    * @public
@@ -4981,7 +5066,7 @@ export interface Volume {
    * @public
    * <p>The volume type.</p>
    */
-  VolumeType?: VolumeType | string;
+  VolumeType?: VolumeType;
 
   /**
    * @public
@@ -5005,7 +5090,7 @@ export interface Volume {
    * @public
    * <p>Reserved for future use.</p>
    */
-  SseType?: SSEType | string;
+  SseType?: SSEType;
 }
 
 /**
@@ -5085,7 +5170,7 @@ export interface CreateVpcRequest {
    *          <p>Default: <code>default</code>
    *          </p>
    */
-  InstanceTenancy?: Tenancy | string;
+  InstanceTenancy?: Tenancy;
 
   /**
    * @public
@@ -5137,7 +5222,7 @@ export interface DnsOptionsSpecification {
    * @public
    * <p>The DNS records created for the endpoint.</p>
    */
-  DnsRecordIpType?: DnsRecordIpType | string;
+  DnsRecordIpType?: DnsRecordIpType;
 
   /**
    * @public
@@ -5228,7 +5313,7 @@ export interface CreateVpcEndpointRequest {
    * <p>The type of endpoint.</p>
    *          <p>Default: Gateway</p>
    */
-  VpcEndpointType?: VpcEndpointType | string;
+  VpcEndpointType?: VpcEndpointType;
 
   /**
    * @public
@@ -5275,7 +5360,7 @@ export interface CreateVpcEndpointRequest {
    * @public
    * <p>The IP address type for the endpoint.</p>
    */
-  IpAddressType?: IpAddressType | string;
+  IpAddressType?: IpAddressType;
 
   /**
    * @public
@@ -5349,7 +5434,7 @@ export interface DnsOptions {
    * @public
    * <p>The DNS records created for the endpoint.</p>
    */
-  DnsRecordIpType?: DnsRecordIpType | string;
+  DnsRecordIpType?: DnsRecordIpType;
 
   /**
    * @public
@@ -5429,7 +5514,7 @@ export interface VpcEndpoint {
    * @public
    * <p>The type of endpoint.</p>
    */
-  VpcEndpointType?: VpcEndpointType | string;
+  VpcEndpointType?: VpcEndpointType;
 
   /**
    * @public
@@ -5447,7 +5532,7 @@ export interface VpcEndpoint {
    * @public
    * <p>The state of the endpoint.</p>
    */
-  State?: State | string;
+  State?: State;
 
   /**
    * @public
@@ -5478,7 +5563,7 @@ export interface VpcEndpoint {
    * @public
    * <p>The IP address type for the endpoint.</p>
    */
-  IpAddressType?: IpAddressType | string;
+  IpAddressType?: IpAddressType;
 
   /**
    * @public
@@ -5656,7 +5741,7 @@ export interface ConnectionNotification {
    * @public
    * <p>The type of notification.</p>
    */
-  ConnectionNotificationType?: ConnectionNotificationType | string;
+  ConnectionNotificationType?: ConnectionNotificationType;
 
   /**
    * @public
@@ -5675,7 +5760,7 @@ export interface ConnectionNotification {
    * @public
    * <p>The state of the notification.</p>
    */
-  ConnectionNotificationState?: ConnectionNotificationState | string;
+  ConnectionNotificationState?: ConnectionNotificationState;
 }
 
 /**
@@ -5794,7 +5879,7 @@ export interface PrivateDnsNameConfiguration {
    *             of the endpoint service can use the private name only when the state is
    *                 <code>verified</code>.</p>
    */
-  State?: DnsNameState | string;
+  State?: DnsNameState;
 
   /**
    * @public
@@ -5856,7 +5941,7 @@ export interface ServiceTypeDetail {
    * @public
    * <p>The type of service.</p>
    */
-  ServiceType?: ServiceType | string;
+  ServiceType?: ServiceType;
 }
 
 /**
@@ -5900,7 +5985,7 @@ export interface ServiceConfiguration {
    * @public
    * <p>The service state.</p>
    */
-  ServiceState?: ServiceState | string;
+  ServiceState?: ServiceState;
 
   /**
    * @public
@@ -5937,7 +6022,7 @@ export interface ServiceConfiguration {
    * @public
    * <p>The supported IP address types.</p>
    */
-  SupportedIpAddressTypes?: (ServiceConnectivityType | string)[];
+  SupportedIpAddressTypes?: ServiceConnectivityType[];
 
   /**
    * @public
@@ -5961,7 +6046,7 @@ export interface ServiceConfiguration {
    * @public
    * <p>The payer responsibility.</p>
    */
-  PayerResponsibility?: PayerResponsibility | string;
+  PayerResponsibility?: PayerResponsibility;
 
   /**
    * @public
@@ -6456,7 +6541,7 @@ export interface VpnConnectionOptionsSpecification {
    *          <p>Default: <code>ipv4</code>
    *          </p>
    */
-  TunnelInsideIpVersion?: TunnelInsideIpVersion | string;
+  TunnelInsideIpVersion?: TunnelInsideIpVersion;
 
   /**
    * @public
@@ -6910,7 +6995,7 @@ export interface VpnConnectionOptions {
    * @public
    * <p>Indicates whether the VPN tunnels process IPv4 or IPv6 traffic.</p>
    */
-  TunnelInsideIpVersion?: TunnelInsideIpVersion | string;
+  TunnelInsideIpVersion?: TunnelInsideIpVersion;
 
   /**
    * @public
@@ -6963,13 +7048,13 @@ export interface VpnStaticRoute {
    * @public
    * <p>Indicates how the routes were provided.</p>
    */
-  Source?: VpnStaticRouteSource | string;
+  Source?: VpnStaticRouteSource;
 
   /**
    * @public
    * <p>The current state of the static route.</p>
    */
-  State?: VpnState | string;
+  State?: VpnState;
 }
 
 /**
@@ -7014,7 +7099,7 @@ export interface VgwTelemetry {
    * @public
    * <p>The status of the VPN tunnel.</p>
    */
-  Status?: TelemetryStatus | string;
+  Status?: TelemetryStatus;
 
   /**
    * @public
@@ -7060,13 +7145,13 @@ export interface VpnConnection {
    * @public
    * <p>The current state of the VPN connection.</p>
    */
-  State?: VpnState | string;
+  State?: VpnState;
 
   /**
    * @public
    * <p>The type of VPN connection.</p>
    */
-  Type?: GatewayType | string;
+  Type?: GatewayType;
 
   /**
    * @public
@@ -7103,7 +7188,7 @@ export interface VpnConnection {
    * @public
    * <p>The current state of the gateway association.</p>
    */
-  GatewayAssociationState?: GatewayAssociationState | string;
+  GatewayAssociationState?: GatewayAssociationState;
 
   /**
    * @public
@@ -7175,7 +7260,7 @@ export interface CreateVpnGatewayRequest {
    * @public
    * <p>The type of VPN connection this virtual private gateway supports.</p>
    */
-  Type: GatewayType | string | undefined;
+  Type: GatewayType | undefined;
 
   /**
    * @public
@@ -7218,13 +7303,13 @@ export interface VpnGateway {
    * @public
    * <p>The current state of the virtual private gateway.</p>
    */
-  State?: VpnState | string;
+  State?: VpnState;
 
   /**
    * @public
    * <p>The type of VPN connection the virtual private gateway supports.</p>
    */
-  Type?: GatewayType | string;
+  Type?: GatewayType;
 
   /**
    * @public
@@ -7561,13 +7646,13 @@ export interface DeleteFleetSuccessItem {
    * @public
    * <p>The current state of the EC2 Fleet.</p>
    */
-  CurrentFleetState?: FleetStateCode | string;
+  CurrentFleetState?: FleetStateCode;
 
   /**
    * @public
    * <p>The previous state of the EC2 Fleet.</p>
    */
-  PreviousFleetState?: FleetStateCode | string;
+  PreviousFleetState?: FleetStateCode;
 
   /**
    * @public
@@ -7601,7 +7686,7 @@ export interface DeleteFleetError {
    * @public
    * <p>The error code.</p>
    */
-  Code?: DeleteFleetErrorCode | string;
+  Code?: DeleteFleetErrorCode;
 
   /**
    * @public
@@ -7777,7 +7862,7 @@ export interface InstanceEventWindowStateChange {
    * @public
    * <p>The current state of the event window.</p>
    */
-  State?: InstanceEventWindowState | string;
+  State?: InstanceEventWindowState;
 }
 
 /**
@@ -8129,7 +8214,7 @@ export interface ResponseError {
    * @public
    * <p>The error code.</p>
    */
-  Code?: LaunchTemplateErrorCode | string;
+  Code?: LaunchTemplateErrorCode;
 
   /**
    * @public
@@ -8649,36 +8734,6 @@ export interface DeletePublicIpv4PoolRequest {
    * <p>The ID of the public IPv4 pool you want to delete.</p>
    */
   PoolId: string | undefined;
-}
-
-/**
- * @public
- */
-export interface DeletePublicIpv4PoolResult {
-  /**
-   * @public
-   * <p>Information about the result of deleting the public IPv4 pool.</p>
-   */
-  ReturnValue?: boolean;
-}
-
-/**
- * @public
- */
-export interface DeleteQueuedReservedInstancesRequest {
-  /**
-   * @public
-   * <p>Checks whether you have the required permissions for the action, without actually making the request,
-   *       and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
-   *       Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-   */
-  DryRun?: boolean;
-
-  /**
-   * @public
-   * <p>The IDs of the Reserved Instances.</p>
-   */
-  ReservedInstancesIds: string[] | undefined;
 }
 
 /**

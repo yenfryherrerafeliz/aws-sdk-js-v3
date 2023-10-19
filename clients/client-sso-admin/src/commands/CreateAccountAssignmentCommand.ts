@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateAccountAssignmentRequest, CreateAccountAssignmentResponse } from "../models/models_0";
@@ -36,7 +37,7 @@ export interface CreateAccountAssignmentCommandOutput extends CreateAccountAssig
 
 /**
  * @public
- * <p>Assigns access to a principal for a specified AWS account using a specified
+ * <p>Assigns access to a principal for a specified Amazon Web Services account using a specified
  *       permission set.</p>
  *          <note>
  *             <p>The term <i>principal</i> here refers to a user or group that is defined
@@ -175,6 +176,10 @@ export class CreateAccountAssignmentCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SWBExternalService",
+        operation: "CreateAccountAssignment",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

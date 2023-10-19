@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListTrustStoreCertificatesRequest, ListTrustStoreCertificatesResponse } from "../models/models_0";
@@ -60,7 +61,7 @@ export interface ListTrustStoreCertificatesCommandOutput extends ListTrustStoreC
  * //       notValidAfter: new Date("TIMESTAMP"),
  * //     },
  * //   ],
- * //   trustStoreArn: "STRING_VALUE",
+ * //   trustStoreArn: "STRING_VALUE", // required
  * //   nextToken: "STRING_VALUE",
  * // };
  *
@@ -141,6 +142,10 @@ export class ListTrustStoreCertificatesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSErmineControlPlaneService",
+        operation: "ListTrustStoreCertificates",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

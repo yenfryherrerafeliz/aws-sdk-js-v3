@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { HoneycodeClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../HoneycodeClient";
@@ -66,7 +67,7 @@ export interface ListTableRowsCommandOutput extends ListTableRowsResult, __Metad
  * //       cells: [ // Cells // required
  * //         { // Cell
  * //           formula: "STRING_VALUE",
- * //           format: "STRING_VALUE",
+ * //           format: "AUTO" || "NUMBER" || "CURRENCY" || "DATE" || "TIME" || "DATE_TIME" || "PERCENTAGE" || "TEXT" || "ACCOUNTING" || "CONTACT" || "ROWLINK" || "ROWSET",
  * //           rawValue: "STRING_VALUE",
  * //           formattedValue: "STRING_VALUE",
  * //           formattedValues: [ // FormattedValuesList
@@ -169,6 +170,10 @@ export class ListTableRowsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: ListTableRowsResultFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SheetsPublicApiService",
+        operation: "ListTableRows",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

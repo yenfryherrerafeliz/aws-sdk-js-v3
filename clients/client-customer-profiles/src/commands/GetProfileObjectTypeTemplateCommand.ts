@@ -11,10 +11,15 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CustomerProfilesClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CustomerProfilesClient";
-import { GetProfileObjectTypeTemplateRequest, GetProfileObjectTypeTemplateResponse } from "../models/models_0";
+import {
+  GetProfileObjectTypeTemplateRequest,
+  GetProfileObjectTypeTemplateResponse,
+  GetProfileObjectTypeTemplateResponseFilterSensitiveLog,
+} from "../models/models_0";
 import {
   de_GetProfileObjectTypeTemplateCommand,
   se_GetProfileObjectTypeTemplateCommand,
@@ -160,7 +165,11 @@ export class GetProfileObjectTypeTemplateCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: GetProfileObjectTypeTemplateResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CustomerProfiles_20200815",
+        operation: "GetProfileObjectTypeTemplate",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

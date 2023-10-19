@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UntagResourceInput, UntagResourceOutput } from "../models/models_0";
@@ -38,7 +39,7 @@ export interface UntagResourceCommandOutput extends UntagResourceOutput, __Metad
  * @public
  * <p>Deletes specified tags from a resource.</p>
  *          <note>
- *             <p>The WorkloadArn parameter can be a workload ARN, a custom lens ARN, or a profile ARN.</p>
+ *             <p>The WorkloadArn parameter can be a workload ARN, a custom lens ARN, a profile ARN, or review template ARN.</p>
  *          </note>
  *          <p>To specify multiple tags, use separate <b>tagKeys</b> parameters, for example:</p>
  *          <p>
@@ -126,6 +127,10 @@ export class UntagResourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WellArchitectedApiServiceLambda",
+        operation: "UntagResource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

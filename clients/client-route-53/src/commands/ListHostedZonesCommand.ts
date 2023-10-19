@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListHostedZonesRequest, ListHostedZonesResponse } from "../models/models_0";
@@ -53,6 +54,7 @@ export interface ListHostedZonesCommandOutput extends ListHostedZonesResponse, _
  *   Marker: "STRING_VALUE",
  *   MaxItems: Number("int"),
  *   DelegationSetId: "STRING_VALUE",
+ *   HostedZoneType: "PrivateHostedZone",
  * };
  * const command = new ListHostedZonesCommand(input);
  * const response = await client.send(command);
@@ -151,6 +153,10 @@ export class ListHostedZonesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDnsV20130401",
+        operation: "ListHostedZones",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

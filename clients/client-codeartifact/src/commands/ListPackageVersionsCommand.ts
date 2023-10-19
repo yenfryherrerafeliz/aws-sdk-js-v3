@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeartifactClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeartifactClient";
@@ -51,7 +52,7 @@ export interface ListPackageVersionsCommandOutput extends ListPackageVersionsRes
  *   domain: "STRING_VALUE", // required
  *   domainOwner: "STRING_VALUE",
  *   repository: "STRING_VALUE", // required
- *   format: "npm" || "pypi" || "maven" || "nuget" || "generic", // required
+ *   format: "npm" || "pypi" || "maven" || "nuget" || "generic" || "swift", // required
  *   namespace: "STRING_VALUE",
  *   package: "STRING_VALUE", // required
  *   status: "Published" || "Unfinished" || "Unlisted" || "Archived" || "Disposed" || "Deleted",
@@ -64,7 +65,7 @@ export interface ListPackageVersionsCommandOutput extends ListPackageVersionsRes
  * const response = await client.send(command);
  * // { // ListPackageVersionsResult
  * //   defaultDisplayVersion: "STRING_VALUE",
- * //   format: "npm" || "pypi" || "maven" || "nuget" || "generic",
+ * //   format: "npm" || "pypi" || "maven" || "nuget" || "generic" || "swift",
  * //   namespace: "STRING_VALUE",
  * //   package: "STRING_VALUE",
  * //   versions: [ // PackageVersionSummaryList
@@ -169,6 +170,10 @@ export class ListPackageVersionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeArtifactControlPlaneService",
+        operation: "ListPackageVersions",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

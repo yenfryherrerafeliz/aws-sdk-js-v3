@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AppRunnerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppRunnerClient";
@@ -83,6 +84,7 @@ export interface PauseServiceCommandOutput extends PauseServiceResponse, __Metad
  * //             },
  * //           },
  * //         },
+ * //         SourceDirectory: "STRING_VALUE",
  * //       },
  * //       ImageRepository: { // ImageRepository
  * //         ImageIdentifier: "STRING_VALUE", // required
@@ -124,6 +126,10 @@ export interface PauseServiceCommandOutput extends PauseServiceResponse, __Metad
  * //       AutoScalingConfigurationArn: "STRING_VALUE",
  * //       AutoScalingConfigurationName: "STRING_VALUE",
  * //       AutoScalingConfigurationRevision: Number("int"),
+ * //       Status: "ACTIVE" || "INACTIVE",
+ * //       CreatedAt: new Date("TIMESTAMP"),
+ * //       HasAssociatedService: true || false,
+ * //       IsDefault: true || false,
  * //     },
  * //     NetworkConfiguration: { // NetworkConfiguration
  * //       EgressConfiguration: { // EgressConfiguration
@@ -214,6 +220,10 @@ export class PauseServiceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: PauseServiceResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AppRunner",
+        operation: "PauseService",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateCanaryRequest, UpdateCanaryResponse } from "../models/models_0";
@@ -94,7 +95,7 @@ export interface UpdateCanaryCommandOutput extends UpdateCanaryResponse, __Metad
  *   ArtifactS3Location: "STRING_VALUE",
  *   ArtifactConfig: { // ArtifactConfigInput
  *     S3Encryption: { // S3EncryptionConfig
- *       EncryptionMode: "STRING_VALUE",
+ *       EncryptionMode: "SSE_S3" || "SSE_KMS",
  *       KmsKeyArn: "STRING_VALUE",
  *     },
  *   },
@@ -178,6 +179,10 @@ export class UpdateCanaryCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Synthetics",
+        operation: "UpdateCanary",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

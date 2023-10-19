@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { InspectorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../InspectorClient";
@@ -46,13 +47,13 @@ export interface GetAssessmentReportCommandOutput extends GetAssessmentReportRes
  * const client = new InspectorClient(config);
  * const input = { // GetAssessmentReportRequest
  *   assessmentRunArn: "STRING_VALUE", // required
- *   reportFileFormat: "STRING_VALUE", // required
- *   reportType: "STRING_VALUE", // required
+ *   reportFileFormat: "HTML" || "PDF", // required
+ *   reportType: "FINDING" || "FULL", // required
  * };
  * const command = new GetAssessmentReportCommand(input);
  * const response = await client.send(command);
  * // { // GetAssessmentReportResponse
- * //   status: "STRING_VALUE", // required
+ * //   status: "WORK_IN_PROGRESS" || "FAILED" || "COMPLETED", // required
  * //   url: "STRING_VALUE",
  * // };
  *
@@ -146,6 +147,10 @@ export class GetAssessmentReportCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "InspectorService",
+        operation: "GetAssessmentReport",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

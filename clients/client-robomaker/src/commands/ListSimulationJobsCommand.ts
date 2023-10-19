@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListSimulationJobsRequest, ListSimulationJobsResponse } from "../models/models_0";
@@ -64,7 +65,7 @@ export interface ListSimulationJobsCommandOutput extends ListSimulationJobsRespo
  * //       arn: "STRING_VALUE",
  * //       lastUpdatedAt: new Date("TIMESTAMP"),
  * //       name: "STRING_VALUE",
- * //       status: "STRING_VALUE",
+ * //       status: "Pending" || "Preparing" || "Running" || "Restarting" || "Completed" || "Failed" || "RunningFailed" || "Terminating" || "Terminated" || "Canceled",
  * //       simulationApplicationNames: [ // SimulationApplicationNames
  * //         "STRING_VALUE",
  * //       ],
@@ -74,7 +75,7 @@ export interface ListSimulationJobsCommandOutput extends ListSimulationJobsRespo
  * //       dataSourceNames: [ // DataSourceNames
  * //         "STRING_VALUE",
  * //       ],
- * //       computeType: "STRING_VALUE",
+ * //       computeType: "CPU" || "GPU_AND_CPU",
  * //     },
  * //   ],
  * //   nextToken: "STRING_VALUE",
@@ -152,6 +153,10 @@ export class ListSimulationJobsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "ListSimulationJobs",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

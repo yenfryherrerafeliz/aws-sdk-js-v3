@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreatePermissionSetRequest, CreatePermissionSetResponse } from "../models/models_0";
@@ -38,7 +39,7 @@ export interface CreatePermissionSetCommandOutput extends CreatePermissionSetRes
  * @public
  * <p>Creates a permission set within a specified IAM Identity Center instance.</p>
  *          <note>
- *             <p>To grant users and groups access to AWS account resources, use <code>
+ *             <p>To grant users and groups access to Amazon Web Services account resources, use <code>
  *                   <a>CreateAccountAssignment</a>
  *                </code>.</p>
  *          </note>
@@ -163,6 +164,10 @@ export class CreatePermissionSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SWBExternalService",
+        operation: "CreatePermissionSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -48,10 +49,10 @@ export interface GetMigrationsCommandOutput extends GetMigrationsResponse, __Met
  * // const { LexModelBuildingServiceClient, GetMigrationsCommand } = require("@aws-sdk/client-lex-model-building-service"); // CommonJS import
  * const client = new LexModelBuildingServiceClient(config);
  * const input = { // GetMigrationsRequest
- *   sortByAttribute: "STRING_VALUE",
- *   sortByOrder: "STRING_VALUE",
+ *   sortByAttribute: "V1_BOT_NAME" || "MIGRATION_DATE_TIME",
+ *   sortByOrder: "ASCENDING" || "DESCENDING",
  *   v1BotNameContains: "STRING_VALUE",
- *   migrationStatusEquals: "STRING_VALUE",
+ *   migrationStatusEquals: "IN_PROGRESS" || "COMPLETED" || "FAILED",
  *   maxResults: Number("int"),
  *   nextToken: "STRING_VALUE",
  * };
@@ -63,11 +64,11 @@ export interface GetMigrationsCommandOutput extends GetMigrationsResponse, __Met
  * //       migrationId: "STRING_VALUE",
  * //       v1BotName: "STRING_VALUE",
  * //       v1BotVersion: "STRING_VALUE",
- * //       v1BotLocale: "STRING_VALUE",
+ * //       v1BotLocale: "de-DE" || "en-AU" || "en-GB" || "en-IN" || "en-US" || "es-419" || "es-ES" || "es-US" || "fr-FR" || "fr-CA" || "it-IT" || "ja-JP" || "ko-KR",
  * //       v2BotId: "STRING_VALUE",
  * //       v2BotRole: "STRING_VALUE",
- * //       migrationStatus: "STRING_VALUE",
- * //       migrationStrategy: "STRING_VALUE",
+ * //       migrationStatus: "IN_PROGRESS" || "COMPLETED" || "FAILED",
+ * //       migrationStrategy: "CREATE_NEW" || "UPDATE_EXISTING",
  * //       migrationTimestamp: new Date("TIMESTAMP"),
  * //     },
  * //   ],
@@ -145,6 +146,10 @@ export class GetMigrationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "GetMigrations",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

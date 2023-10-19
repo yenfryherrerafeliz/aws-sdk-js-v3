@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListBrowserSettingsRequest, ListBrowserSettingsResponse } from "../models/models_0";
@@ -52,7 +53,7 @@ export interface ListBrowserSettingsCommandOutput extends ListBrowserSettingsRes
  * // { // ListBrowserSettingsResponse
  * //   browserSettings: [ // BrowserSettingsList
  * //     { // BrowserSettingsSummary
- * //       browserSettingsArn: "STRING_VALUE",
+ * //       browserSettingsArn: "STRING_VALUE", // required
  * //     },
  * //   ],
  * //   nextToken: "STRING_VALUE",
@@ -132,6 +133,10 @@ export class ListBrowserSettingsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSErmineControlPlaneService",
+        operation: "ListBrowserSettings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -172,6 +173,14 @@ export interface DescribeAssetBundleImportJobCommandOutput
  * //             Port: Number("int"),
  * //             Database: "STRING_VALUE", // required
  * //             ClusterId: "STRING_VALUE",
+ * //             IAMParameters: { // RedshiftIAMParameters
+ * //               RoleArn: "STRING_VALUE", // required
+ * //               DatabaseUser: "STRING_VALUE", // required
+ * //               DatabaseGroups: [ // DatabaseGroupList
+ * //                 "STRING_VALUE",
+ * //               ],
+ * //               AutoCreateDatabaseUser: true || false,
+ * //             },
  * //           },
  * //           S3Parameters: { // S3Parameters
  * //             ManifestFileLocation: { // ManifestFileLocation
@@ -338,6 +347,10 @@ export class DescribeAssetBundleImportJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: DescribeAssetBundleImportJobResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "QuickSight_20180401",
+        operation: "DescribeAssetBundleImportJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,10 +11,15 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CustomerProfilesClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CustomerProfilesClient";
-import { PutIntegrationRequest, PutIntegrationResponse } from "../models/models_0";
+import {
+  PutIntegrationRequest,
+  PutIntegrationRequestFilterSensitiveLog,
+  PutIntegrationResponse,
+} from "../models/models_0";
 import { de_PutIntegrationCommand, se_PutIntegrationCommand } from "../protocols/Aws_restJson1";
 
 /**
@@ -217,8 +222,12 @@ export class PutIntegrationCommand extends $Command<
       logger,
       clientName,
       commandName,
-      inputFilterSensitiveLog: (_: any) => _,
+      inputFilterSensitiveLog: PutIntegrationRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CustomerProfiles_20200815",
+        operation: "PutIntegration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

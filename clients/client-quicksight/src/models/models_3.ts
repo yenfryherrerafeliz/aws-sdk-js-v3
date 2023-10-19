@@ -17,7 +17,6 @@ import {
   AnalysisSearchFilter,
   AnalysisSummary,
   AnonymousUserEmbeddingExperienceConfiguration,
-  AnonymousUserSnapshotJobResult,
   DashboardVisualId,
   FilterOperator,
   SnapshotFile,
@@ -26,6 +25,7 @@ import {
 import {
   _Parameters,
   _ParametersFilterSensitiveLog,
+  AnonymousUserSnapshotJobResult,
   AssetBundleCloudFormationOverridePropertyConfiguration,
   AssetBundleExportFormat,
   AssetBundleExportJobError,
@@ -41,6 +41,8 @@ import {
   AssetBundleImportSourceFilterSensitiveLog,
   AssignmentStatus,
   BookmarksConfigurations,
+  ColumnGroup,
+  ColumnLevelPermissionRule,
   Dashboard,
   DashboardError,
   DashboardPublishOptions,
@@ -48,24 +50,29 @@ import {
   DashboardSummary,
   DashboardVersionDefinition,
   DashboardVersionSummary,
-  DataSet,
   DataSetConfiguration,
-  DataSetFilterSensitiveLog,
-  DataSetRefreshProperties,
-  DataSetSearchFilter,
-  DataSetSummary,
-  DataSourceErrorInfoType,
+  DataSetImportMode,
+  DatasetParameter,
+  DataSetUsageConfiguration,
   DataSourceParameters,
   DataSourceType,
+  FieldFolder,
   FolderType,
   Group,
   GroupMember,
   IdentityStore,
   IngestionStatus,
+  LogicalTable,
+  LogicalTableFilterSensitiveLog,
   MemberType,
   NamespaceStatus,
+  OutputColumn,
+  PhysicalTable,
   RefreshSchedule,
   ResourcePermission,
+  RowLevelPermissionDataSet,
+  RowLevelPermissionTagConfiguration,
+  RowLevelPermissionTagConfigurationFilterSensitiveLog,
   SharingModel,
   SslProperties,
   Tag,
@@ -83,6 +90,349 @@ import { QuickSightServiceException as __BaseException } from "./QuickSightServi
 
 /**
  * @public
+ * <p>Dataset.</p>
+ */
+export interface DataSet {
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the resource.</p>
+   */
+  Arn?: string;
+
+  /**
+   * @public
+   * <p>The ID of the dataset.</p>
+   */
+  DataSetId?: string;
+
+  /**
+   * @public
+   * <p>A display name for the dataset.</p>
+   */
+  Name?: string;
+
+  /**
+   * @public
+   * <p>The time that this dataset was created.</p>
+   */
+  CreatedTime?: Date;
+
+  /**
+   * @public
+   * <p>The last time that this dataset was updated.</p>
+   */
+  LastUpdatedTime?: Date;
+
+  /**
+   * @public
+   * <p>Declares the physical tables that are available in the underlying data sources.</p>
+   */
+  PhysicalTableMap?: Record<string, PhysicalTable>;
+
+  /**
+   * @public
+   * <p>Configures the combination and transformation of the data from the physical
+   *             tables.</p>
+   */
+  LogicalTableMap?: Record<string, LogicalTable>;
+
+  /**
+   * @public
+   * <p>The list of columns after all transforms. These columns are available in templates,
+   *             analyses, and dashboards.</p>
+   */
+  OutputColumns?: OutputColumn[];
+
+  /**
+   * @public
+   * <p>A value that indicates whether you want to import the data into SPICE.</p>
+   */
+  ImportMode?: DataSetImportMode;
+
+  /**
+   * @public
+   * <p>The amount of SPICE capacity used by this dataset. This is 0 if the dataset isn't
+   *             imported into SPICE.</p>
+   */
+  ConsumedSpiceCapacityInBytes?: number;
+
+  /**
+   * @public
+   * <p>Groupings of columns that work together in certain Amazon QuickSight features.
+   *             Currently, only geospatial hierarchy is supported.</p>
+   */
+  ColumnGroups?: ColumnGroup[];
+
+  /**
+   * @public
+   * <p>The folder that contains fields and nested subfolders for your dataset.</p>
+   */
+  FieldFolders?: Record<string, FieldFolder>;
+
+  /**
+   * @public
+   * <p>The row-level security configuration for the dataset.</p>
+   */
+  RowLevelPermissionDataSet?: RowLevelPermissionDataSet;
+
+  /**
+   * @public
+   * <p>The element you can use to define tags for row-level security.</p>
+   */
+  RowLevelPermissionTagConfiguration?: RowLevelPermissionTagConfiguration;
+
+  /**
+   * @public
+   * <p>A set of one or more definitions of a <code>
+   *                <a href="https://docs.aws.amazon.com/quicksight/latest/APIReference/API_ColumnLevelPermissionRule.html">ColumnLevelPermissionRule</a>
+   *             </code>.</p>
+   */
+  ColumnLevelPermissionRules?: ColumnLevelPermissionRule[];
+
+  /**
+   * @public
+   * <p>The usage configuration to apply to child datasets that reference this dataset as a source.</p>
+   */
+  DataSetUsageConfiguration?: DataSetUsageConfiguration;
+
+  /**
+   * @public
+   * <p>The parameters that are declared in a dataset.</p>
+   */
+  DatasetParameters?: DatasetParameter[];
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const DataSetFilterAttribute = {
+  DATASET_NAME: "DATASET_NAME",
+  DIRECT_QUICKSIGHT_OWNER: "DIRECT_QUICKSIGHT_OWNER",
+  DIRECT_QUICKSIGHT_SOLE_OWNER: "DIRECT_QUICKSIGHT_SOLE_OWNER",
+  DIRECT_QUICKSIGHT_VIEWER_OR_OWNER: "DIRECT_QUICKSIGHT_VIEWER_OR_OWNER",
+  QUICKSIGHT_OWNER: "QUICKSIGHT_OWNER",
+  QUICKSIGHT_VIEWER_OR_OWNER: "QUICKSIGHT_VIEWER_OR_OWNER",
+} as const;
+
+/**
+ * @public
+ */
+export type DataSetFilterAttribute = (typeof DataSetFilterAttribute)[keyof typeof DataSetFilterAttribute];
+
+/**
+ * @public
+ * @enum
+ */
+export const LookbackWindowSizeUnit = {
+  DAY: "DAY",
+  HOUR: "HOUR",
+  WEEK: "WEEK",
+} as const;
+
+/**
+ * @public
+ */
+export type LookbackWindowSizeUnit = (typeof LookbackWindowSizeUnit)[keyof typeof LookbackWindowSizeUnit];
+
+/**
+ * @public
+ * <p>The lookback window setup of an incremental refresh configuration.</p>
+ */
+export interface LookbackWindow {
+  /**
+   * @public
+   * <p>The name of the lookback window column.</p>
+   */
+  ColumnName: string | undefined;
+
+  /**
+   * @public
+   * <p>The lookback window column size.</p>
+   */
+  Size: number | undefined;
+
+  /**
+   * @public
+   * <p>The size unit that is used for the lookback window column. Valid values for this structure are <code>HOUR</code>, <code>DAY</code>, and <code>WEEK</code>.</p>
+   */
+  SizeUnit: LookbackWindowSizeUnit | undefined;
+}
+
+/**
+ * @public
+ * <p>The incremental refresh configuration for a dataset.</p>
+ */
+export interface IncrementalRefresh {
+  /**
+   * @public
+   * <p>The lookback window setup for an incremental refresh configuration.</p>
+   */
+  LookbackWindow: LookbackWindow | undefined;
+}
+
+/**
+ * @public
+ * <p>The refresh configuration of a dataset.</p>
+ */
+export interface RefreshConfiguration {
+  /**
+   * @public
+   * <p>The incremental refresh for the dataset.</p>
+   */
+  IncrementalRefresh: IncrementalRefresh | undefined;
+}
+
+/**
+ * @public
+ * <p>The refresh properties of a dataset.</p>
+ */
+export interface DataSetRefreshProperties {
+  /**
+   * @public
+   * <p>The refresh configuration for a dataset.</p>
+   */
+  RefreshConfiguration: RefreshConfiguration | undefined;
+}
+
+/**
+ * @public
+ * <p>A filter that you apply when searching for datasets.</p>
+ */
+export interface DataSetSearchFilter {
+  /**
+   * @public
+   * <p>The comparison operator that you want to use as a filter, for example <code>"Operator": "StringEquals"</code>. Valid values are <code>"StringEquals"</code> and <code>"StringLike"</code>.</p>
+   *          <p>If you set the operator value to <code>"StringEquals"</code>, you need to provide an ownership related filter in the <code>"NAME"</code> field and the arn of the user or group whose datasets you want to search in the <code>"Value"</code> field. For example, <code>"Name":"QUICKSIGHT_OWNER", "Operator": "StringEquals", "Value": "arn:aws:quicksight:us-east- 1:1:user/default/UserName1"</code>.</p>
+   *          <p>If you set the value to <code>"StringLike"</code>, you need to provide the name of the datasets you are searching for. For example, <code>"Name":"DATASET_NAME", "Operator": "StringLike", "Value": "Test"</code>. The <code>"StringLike"</code> operator only supports the <code>NAME</code> value <code>DATASET_NAME</code>.</p>
+   */
+  Operator: FilterOperator | undefined;
+
+  /**
+   * @public
+   * <p>The name of the value that you want to use as a filter, for example, <code>"Name":
+   *             "QUICKSIGHT_OWNER"</code>.</p>
+   *          <p>Valid values are defined as follows:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>QUICKSIGHT_VIEWER_OR_OWNER</code>: Provide an ARN of a user or group, and any datasets with that ARN listed as one of the dataset owners or viewers are returned. Implicit permissions from folders or groups are considered.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>QUICKSIGHT_OWNER</code>: Provide an ARN of a user or group, and any datasets with that ARN listed as one of the owners of the dataset are returned. Implicit permissions from folders or groups are considered.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>DIRECT_QUICKSIGHT_SOLE_OWNER</code>: Provide an ARN of a user or group, and any datasets with that ARN listed as the only owner of the dataset are returned. Implicit permissions from folders or groups are not considered.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>DIRECT_QUICKSIGHT_OWNER</code>: Provide an ARN of a user or group, and any datasets with that ARN listed as one of the owners if the dataset are returned. Implicit permissions from folders or groups are not considered.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>DIRECT_QUICKSIGHT_VIEWER_OR_OWNER</code>: Provide an ARN of a user or group, and any datasets with that ARN listed as one of the owners or viewers of the dataset are returned. Implicit permissions from folders or groups are not considered.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>DATASET_NAME</code>: Any datasets whose names have a substring match to this value will be returned.</p>
+   *             </li>
+   *          </ul>
+   */
+  Name: DataSetFilterAttribute | undefined;
+
+  /**
+   * @public
+   * <p>The value of the named item, in this case <code>QUICKSIGHT_OWNER</code>, that you want
+   *             to use as a filter, for example, <code>"Value":
+   *             "arn:aws:quicksight:us-east-1:1:user/default/UserName1"</code>.</p>
+   */
+  Value: string | undefined;
+}
+
+/**
+ * @public
+ * <p>Dataset summary.</p>
+ */
+export interface DataSetSummary {
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the dataset.</p>
+   */
+  Arn?: string;
+
+  /**
+   * @public
+   * <p>The ID of the dataset.</p>
+   */
+  DataSetId?: string;
+
+  /**
+   * @public
+   * <p>A display name for the dataset.</p>
+   */
+  Name?: string;
+
+  /**
+   * @public
+   * <p>The time that this dataset was created.</p>
+   */
+  CreatedTime?: Date;
+
+  /**
+   * @public
+   * <p>The last time that this dataset was updated.</p>
+   */
+  LastUpdatedTime?: Date;
+
+  /**
+   * @public
+   * <p>A value that indicates whether you want to import the data into SPICE.</p>
+   */
+  ImportMode?: DataSetImportMode;
+
+  /**
+   * @public
+   * <p>The row-level security configuration for the dataset.</p>
+   */
+  RowLevelPermissionDataSet?: RowLevelPermissionDataSet;
+
+  /**
+   * @public
+   * <p>Whether or not the row level permission tags are applied.</p>
+   */
+  RowLevelPermissionTagConfigurationApplied?: boolean;
+
+  /**
+   * @public
+   * <p>A value that indicates if the dataset has column level permission configured.</p>
+   */
+  ColumnLevelPermissionRulesApplied?: boolean;
+}
+
+/**
+ * @public
+ * @enum
+ */
+export const DataSourceErrorInfoType = {
+  ACCESS_DENIED: "ACCESS_DENIED",
+  CONFLICT: "CONFLICT",
+  COPY_SOURCE_NOT_FOUND: "COPY_SOURCE_NOT_FOUND",
+  ENGINE_VERSION_NOT_SUPPORTED: "ENGINE_VERSION_NOT_SUPPORTED",
+  GENERIC_SQL_FAILURE: "GENERIC_SQL_FAILURE",
+  TIMEOUT: "TIMEOUT",
+  UNKNOWN: "UNKNOWN",
+  UNKNOWN_HOST: "UNKNOWN_HOST",
+} as const;
+
+/**
+ * @public
+ */
+export type DataSourceErrorInfoType = (typeof DataSourceErrorInfoType)[keyof typeof DataSourceErrorInfoType];
+
+/**
+ * @public
  * <p>Error information for the data source creation or update.</p>
  */
 export interface DataSourceErrorInfo {
@@ -90,7 +440,7 @@ export interface DataSourceErrorInfo {
    * @public
    * <p>Error type.</p>
    */
-  Type?: DataSourceErrorInfoType | string;
+  Type?: DataSourceErrorInfoType;
 
   /**
    * @public
@@ -128,13 +478,13 @@ export interface DataSource {
    * <p>The type of the data source. This type indicates which database engine the data source
    *             connects to.</p>
    */
-  Type?: DataSourceType | string;
+  Type?: DataSourceType;
 
   /**
    * @public
    * <p>The HTTP status of the request.</p>
    */
-  Status?: ResourceStatus | string;
+  Status?: ResourceStatus;
 
   /**
    * @public
@@ -224,7 +574,7 @@ export interface DataSourceSearchFilter {
    *          <p>If you set the operator value to <code>"StringEquals"</code>, you need to provide an ownership related filter in the <code>"NAME"</code> field and the arn of the user or group whose data sources you want to search in the <code>"Value"</code> field. For example, <code>"Name":"DIRECT_QUICKSIGHT_OWNER", "Operator": "StringEquals", "Value": "arn:aws:quicksight:us-east-1:1:user/default/UserName1"</code>.</p>
    *          <p>If you set the value to <code>"StringLike"</code>, you need to provide the name of the data sources you are searching for. For example, <code>"Name":"DATASOURCE_NAME", "Operator": "StringLike", "Value": "Test"</code>. The <code>"StringLike"</code> operator only supports the <code>NAME</code> value <code>DATASOURCE_NAME</code>.</p>
    */
-  Operator: FilterOperator | string | undefined;
+  Operator: FilterOperator | undefined;
 
   /**
    * @public
@@ -250,7 +600,7 @@ export interface DataSourceSearchFilter {
    *             </li>
    *          </ul>
    */
-  Name: DataSourceFilterAttribute | string | undefined;
+  Name: DataSourceFilterAttribute | undefined;
 
   /**
    * @public
@@ -288,7 +638,7 @@ export interface DataSourceSummary {
    * @public
    * <p>The type of the data source.</p>
    */
-  Type?: DataSourceType | string;
+  Type?: DataSourceType;
 
   /**
    * @public
@@ -686,7 +1036,7 @@ export interface DeleteFolderMembershipRequest {
    * @public
    * <p>The member type of the asset that you want to delete from a folder.</p>
    */
-  MemberType: MemberType | string | undefined;
+  MemberType: MemberType | undefined;
 }
 
 /**
@@ -1384,13 +1734,13 @@ export interface DeleteVPCConnectionResponse {
    * @public
    * <p>The deletion status of the VPC connection.</p>
    */
-  DeletionStatus?: VPCConnectionResourceStatus | string;
+  DeletionStatus?: VPCConnectionResourceStatus;
 
   /**
    * @public
    * <p>The availability status of the VPC connection.</p>
    */
-  AvailabilityStatus?: VPCConnectionAvailabilityStatus | string;
+  AvailabilityStatus?: VPCConnectionAvailabilityStatus;
 
   /**
    * @public
@@ -1693,7 +2043,7 @@ export interface DescribeAnalysisDefinitionResponse {
    *             </li>
    *          </ul>
    */
-  ResourceStatus?: ResourceStatus | string;
+  ResourceStatus?: ResourceStatus;
 
   /**
    * @public
@@ -1803,7 +2153,7 @@ export interface DescribeAssetBundleExportJobResponse {
    * <p>Indicates the status of a job through its queuing and execution.</p>
    *          <p>Poll this <code>DescribeAssetBundleExportApi</code> until <code>JobStatus</code> is either <code>SUCCESSFUL</code> or <code>FAILED</code>.</p>
    */
-  JobStatus?: AssetBundleExportJobStatus | string;
+  JobStatus?: AssetBundleExportJobStatus;
 
   /**
    * @public
@@ -1861,7 +2211,7 @@ export interface DescribeAssetBundleExportJobResponse {
    * @public
    * <p>The format of the exported asset bundle. A <code>QUICKSIGHT_JSON</code> formatted file can be used to make a <code>StartAssetBundleImportJob</code> API call. A <code>CLOUDFORMATION_JSON</code> formatted file can be used in the CloudFormation console and with the CloudFormation APIs.</p>
    */
-  ExportFormat?: AssetBundleExportFormat | string;
+  ExportFormat?: AssetBundleExportFormat;
 
   /**
    * @public
@@ -1930,7 +2280,7 @@ export interface DescribeAssetBundleImportJobResponse {
    *             </li>
    *          </ul>
    */
-  JobStatus?: AssetBundleImportJobStatus | string;
+  JobStatus?: AssetBundleImportJobStatus;
 
   /**
    * @public
@@ -1986,7 +2336,7 @@ export interface DescribeAssetBundleImportJobResponse {
    * @public
    * <p>The failure action for the import job.</p>
    */
-  FailureAction?: AssetBundleImportFailureAction | string;
+  FailureAction?: AssetBundleImportFailureAction;
 
   /**
    * @public
@@ -2149,7 +2499,7 @@ export interface DescribeDashboardDefinitionResponse {
    *             </li>
    *          </ul>
    */
-  ResourceStatus?: ResourceStatus | string;
+  ResourceStatus?: ResourceStatus;
 
   /**
    * @public
@@ -2460,7 +2810,7 @@ export interface DescribeDashboardSnapshotJobResponse {
    *             </li>
    *          </ul>
    */
-  JobStatus?: SnapshotJobStatus | string;
+  JobStatus?: SnapshotJobStatus;
 
   /**
    * @public
@@ -2560,7 +2910,7 @@ export interface DescribeDashboardSnapshotJobResultResponse {
    * @public
    * <p>Indicates the status of a job after it has reached a terminal state. A finished snapshot job will retuen a <code>COMPLETED</code> or <code>FAILED</code> status.</p>
    */
-  JobStatus?: SnapshotJobStatus | string;
+  JobStatus?: SnapshotJobStatus;
 
   /**
    * @public
@@ -2867,7 +3217,7 @@ export interface Folder {
    * @public
    * <p>The type of folder it is.</p>
    */
-  FolderType?: FolderType | string;
+  FolderType?: FolderType;
 
   /**
    * @public
@@ -2891,7 +3241,7 @@ export interface Folder {
    * @public
    * <p>The sharing scope of the folder.</p>
    */
-  SharingModel?: SharingModel | string;
+  SharingModel?: SharingModel;
 }
 
 /**
@@ -3261,7 +3611,7 @@ export interface IAMPolicyAssignment {
    * @public
    * <p>Assignment status.</p>
    */
-  AssignmentStatus?: AssignmentStatus | string;
+  AssignmentStatus?: AssignmentStatus;
 }
 
 /**
@@ -3376,7 +3726,7 @@ export interface ErrorInfo {
    * @public
    * <p>Error type.</p>
    */
-  Type?: IngestionErrorType | string;
+  Type?: IngestionErrorType;
 
   /**
    * @public
@@ -3479,7 +3829,7 @@ export interface Ingestion {
    * @public
    * <p>Ingestion status.</p>
    */
-  IngestionStatus: IngestionStatus | string | undefined;
+  IngestionStatus: IngestionStatus | undefined;
 
   /**
    * @public
@@ -3521,13 +3871,13 @@ export interface Ingestion {
    * @public
    * <p>Event source for this ingestion.</p>
    */
-  RequestSource?: IngestionRequestSource | string;
+  RequestSource?: IngestionRequestSource;
 
   /**
    * @public
    * <p>Type of this ingestion.</p>
    */
-  RequestType?: IngestionRequestType | string;
+  RequestType?: IngestionRequestType;
 }
 
 /**
@@ -3640,7 +3990,7 @@ export interface NamespaceError {
    * @public
    * <p>The error type.</p>
    */
-  Type?: NamespaceErrorType | string;
+  Type?: NamespaceErrorType;
 
   /**
    * @public
@@ -3676,13 +4026,13 @@ export interface NamespaceInfoV2 {
    * @public
    * <p>The creation status of a namespace that is not yet completely created.</p>
    */
-  CreationStatus?: NamespaceStatus | string;
+  CreationStatus?: NamespaceStatus;
 
   /**
    * @public
    * <p>The identity store used for the namespace.</p>
    */
-  IdentityStore?: IdentityStore | string;
+  IdentityStore?: IdentityStore;
 
   /**
    * @public
@@ -3827,7 +4177,7 @@ export interface TemplateError {
    * @public
    * <p>Type of error.</p>
    */
-  Type?: TemplateErrorType | string;
+  Type?: TemplateErrorType;
 
   /**
    * @public
@@ -3906,7 +4256,7 @@ export interface TemplateVersion {
    *             </li>
    *          </ul>
    */
-  Status?: ResourceStatus | string;
+  Status?: ResourceStatus;
 
   /**
    * @public
@@ -4160,7 +4510,7 @@ export interface DescribeTemplateDefinitionResponse {
    *             </li>
    *          </ul>
    */
-  ResourceStatus?: ResourceStatus | string;
+  ResourceStatus?: ResourceStatus;
 
   /**
    * @public
@@ -4310,7 +4660,7 @@ export interface ThemeError {
    * @public
    * <p>The type of error.</p>
    */
-  Type?: ThemeErrorType | string;
+  Type?: ThemeErrorType;
 
   /**
    * @public
@@ -4371,7 +4721,7 @@ export interface ThemeVersion {
    * @public
    * <p>The status of the theme version.</p>
    */
-  Status?: ResourceStatus | string;
+  Status?: ResourceStatus;
 }
 
 /**
@@ -4420,7 +4770,7 @@ export interface Theme {
    * <p>The type of theme, based on how it was created. Valid values include:
    *             <code>QUICKSIGHT</code> and <code>CUSTOM</code>.</p>
    */
-  Type?: ThemeType | string;
+  Type?: ThemeType;
 }
 
 /**
@@ -4712,7 +5062,7 @@ export interface TopicRefreshDetails {
    * @public
    * <p>The status of the refresh job that indicates whether the job is still running, completed successfully, or failed.</p>
    */
-  RefreshStatus?: TopicRefreshStatus | string;
+  RefreshStatus?: TopicRefreshStatus;
 }
 
 /**
@@ -4916,13 +5266,13 @@ export interface User {
    *             </li>
    *          </ul>
    */
-  Role?: UserRole | string;
+  Role?: UserRole;
 
   /**
    * @public
    * <p>The type of identity authentication used by the user.</p>
    */
-  IdentityType?: IdentityType | string;
+  IdentityType?: IdentityType;
 
   /**
    * @public
@@ -5064,7 +5414,7 @@ export interface NetworkInterface {
    * @public
    * <p>The status of the network interface.</p>
    */
-  Status?: NetworkInterfaceStatus | string;
+  Status?: NetworkInterfaceStatus;
 
   /**
    * @public
@@ -5119,13 +5469,13 @@ export interface VPCConnection {
    * @public
    * <p>The status of the VPC connection.</p>
    */
-  Status?: VPCConnectionResourceStatus | string;
+  Status?: VPCConnectionResourceStatus;
 
   /**
    * @public
    * <p>The availability status of the VPC connection.</p>
    */
-  AvailabilityStatus?: VPCConnectionAvailabilityStatus | string;
+  AvailabilityStatus?: VPCConnectionAvailabilityStatus;
 
   /**
    * @public
@@ -5269,7 +5619,7 @@ export interface FolderSearchFilter {
    *          <p>If you set the operator value to <code>"StringEquals"</code>, you need to provide an ownership related filter in the <code>"NAME"</code> field and the arn of the user or group whose folders you want to search in the <code>"Value"</code> field. For example,  <code>"Name":"DIRECT_QUICKSIGHT_OWNER", "Operator": "StringEquals", "Value": "arn:aws:quicksight:us-east-1:1:user/default/UserName1"</code>.</p>
    *          <p>If you set the value to <code>"StringLike"</code>, you need to provide the name of the folders you are searching for. For example, <code>"Name":"FOLDER_NAME", "Operator": "StringLike", "Value": "Test"</code>. The <code>"StringLike"</code> operator only supports the <code>NAME</code> value <code>FOLDER_NAME</code>.</p>
    */
-  Operator?: FilterOperator | string;
+  Operator?: FilterOperator;
 
   /**
    * @public
@@ -5306,7 +5656,7 @@ export interface FolderSearchFilter {
    *             </li>
    *          </ul>
    */
-  Name?: FolderFilterAttribute | string;
+  Name?: FolderFilterAttribute;
 
   /**
    * @public
@@ -5342,7 +5692,7 @@ export interface FolderSummary {
    * @public
    * <p>The type of folder.</p>
    */
-  FolderType?: FolderType | string;
+  FolderType?: FolderType;
 
   /**
    * @public
@@ -5360,7 +5710,7 @@ export interface FolderSummary {
    * @public
    * <p>The sharing scope of the folder.</p>
    */
-  SharingModel?: SharingModel | string;
+  SharingModel?: SharingModel;
 }
 
 /**
@@ -5856,7 +6206,7 @@ export interface GetDashboardEmbedUrlRequest {
    * @public
    * <p>The authentication method that the user uses to sign in.</p>
    */
-  IdentityType: EmbeddingIdentityType | string | undefined;
+  IdentityType: EmbeddingIdentityType | undefined;
 
   /**
    * @public
@@ -6124,7 +6474,7 @@ export interface GroupSearchFilter {
    *                 "StartsWith"</code>. Currently, the only supported operator is
    *                 <code>StartsWith</code>.</p>
    */
-  Operator: GroupFilterOperator | string | undefined;
+  Operator: GroupFilterOperator | undefined;
 
   /**
    * @public
@@ -6132,7 +6482,7 @@ export interface GroupSearchFilter {
    *                 "GROUP_NAME"</code>. Currently, the only supported name is
    *             <code>GROUP_NAME</code>.</p>
    */
-  Name: GroupFilterAttribute | string | undefined;
+  Name: GroupFilterAttribute | undefined;
 
   /**
    * @public
@@ -6156,7 +6506,7 @@ export interface IAMPolicyAssignmentSummary {
    * @public
    * <p>Assignment status.</p>
    */
-  AssignmentStatus?: AssignmentStatus | string;
+  AssignmentStatus?: AssignmentStatus;
 }
 
 /**
@@ -6809,7 +7159,7 @@ export interface ListIAMPolicyAssignmentsRequest {
    * @public
    * <p>The status of the assignments.</p>
    */
-  AssignmentStatus?: AssignmentStatus | string;
+  AssignmentStatus?: AssignmentStatus;
 
   /**
    * @public
@@ -7318,7 +7668,7 @@ export interface TemplateVersionSummary {
    * @public
    * <p>The status of the template version.</p>
    */
-  Status?: ResourceStatus | string;
+  Status?: ResourceStatus;
 
   /**
    * @public
@@ -7454,7 +7804,7 @@ export interface ListThemesRequest {
    *             </li>
    *          </ul>
    */
-  Type?: ThemeType | string;
+  Type?: ThemeType;
 }
 
 /**
@@ -7590,7 +7940,7 @@ export interface ThemeVersionSummary {
    * @public
    * <p>The status of the theme version.</p>
    */
-  Status?: ResourceStatus | string;
+  Status?: ResourceStatus;
 }
 
 /**
@@ -7978,13 +8328,13 @@ export interface VPCConnectionSummary {
    * @public
    * <p>The status of the VPC connection.</p>
    */
-  Status?: VPCConnectionResourceStatus | string;
+  Status?: VPCConnectionResourceStatus;
 
   /**
    * @public
    * <p>The availability status of the VPC connection.</p>
    */
-  AvailabilityStatus?: VPCConnectionAvailabilityStatus | string;
+  AvailabilityStatus?: VPCConnectionAvailabilityStatus;
 
   /**
    * @public
@@ -8104,7 +8454,7 @@ export interface RegisterUserRequest {
    *             </li>
    *          </ul>
    */
-  IdentityType: IdentityType | string | undefined;
+  IdentityType: IdentityType | undefined;
 
   /**
    * @public
@@ -8143,7 +8493,7 @@ export interface RegisterUserRequest {
    *             </li>
    *          </ul>
    */
-  UserRole: UserRole | string | undefined;
+  UserRole: UserRole | undefined;
 
   /**
    * @public
@@ -8246,6 +8596,12 @@ export interface RegisterUserRequest {
    * <p>The identity ID for a user in the external login provider.</p>
    */
   ExternalLoginId?: string;
+
+  /**
+   * @public
+   * <p>The tags to associate with the user.</p>
+   */
+  Tags?: Tag[];
 }
 
 /**
@@ -8761,7 +9117,7 @@ export interface StartAssetBundleExportJobRequest {
    * @public
    * <p>The export data format.</p>
    */
-  ExportFormat: AssetBundleExportFormat | string | undefined;
+  ExportFormat: AssetBundleExportFormat | undefined;
 
   /**
    * @public
@@ -8836,7 +9192,7 @@ export interface StartAssetBundleImportJobRequest {
    *          <p>If you choose <code>DO_NOTHING</code>, failed import jobs will not attempt to roll back
    *          any asset changes caused by the failed job, possibly keeping the Amazon QuickSight account in an inconsistent state.</p>
    */
-  FailureAction?: AssetBundleImportFailureAction | string;
+  FailureAction?: AssetBundleImportFailureAction;
 }
 
 /**
@@ -8882,253 +9238,28 @@ export interface SnapshotAnonymousUser {
 }
 
 /**
- * @public
- * <p>A structure that contains information about the users that the dashboard snapshot is generated for.</p>
+ * @internal
  */
-export interface SnapshotUserConfiguration {
-  /**
-   * @public
-   * <p>An array of records that describe the anonymous users that the dashboard snapshot is generated for.</p>
-   */
-  AnonymousUsers?: SnapshotAnonymousUser[];
-}
-
-/**
- * @public
- */
-export interface StartDashboardSnapshotJobRequest {
-  /**
-   * @public
-   * <p>The ID of the Amazon Web Services account that the dashboard snapshot job is executed in.</p>
-   */
-  AwsAccountId: string | undefined;
-
-  /**
-   * @public
-   * <p>The ID of the dashboard that you want to start a snapshot job for.
-   *         </p>
-   */
-  DashboardId: string | undefined;
-
-  /**
-   * @public
-   * <p>An ID for the dashboard snapshot job. This ID is unique to the dashboard while the job is running. This ID can be used to poll the status of a job with a <code>DescribeDashboardSnapshotJob</code> while the job runs. You can reuse this ID for another job 24 hours after the current job is completed.</p>
-   */
-  SnapshotJobId: string | undefined;
-
-  /**
-   * @public
-   * <p>
-   *             A structure that contains information about the anonymous users that the generated snapshot is for. This API will not return information about registered Amazon QuickSight.</p>
-   */
-  UserConfiguration: SnapshotUserConfiguration | undefined;
-
-  /**
-   * @public
-   * <p>A structure that describes the configuration of the dashboard snapshot.</p>
-   */
-  SnapshotConfiguration: SnapshotConfiguration | undefined;
-}
-
-/**
- * @public
- */
-export interface StartDashboardSnapshotJobResponse {
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN) for the dashboard snapshot job.</p>
-   */
-  Arn?: string;
-
-  /**
-   * @public
-   * <p>The ID of the job. The job ID is set when you start a new job with a <code>StartDashboardSnapshotJob</code> API call.</p>
-   */
-  SnapshotJobId?: string;
-
-  /**
-   * @public
-   * <p>
-   *             The Amazon Web Services request ID for this operation.
-   *         </p>
-   */
-  RequestId?: string;
-
-  /**
-   * @public
-   * <p>The HTTP status of the request</p>
-   */
-  Status?: number;
-}
-
-/**
- * @public
- */
-export interface TagResourceRequest {
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN) of the resource that you want to tag.</p>
-   */
-  ResourceArn: string | undefined;
-
-  /**
-   * @public
-   * <p>Contains a map of the key-value pairs for the resource tag or tags assigned to the resource.</p>
-   */
-  Tags: Tag[] | undefined;
-}
-
-/**
- * @public
- */
-export interface TagResourceResponse {
-  /**
-   * @public
-   * <p>The Amazon Web Services request ID for this operation.</p>
-   */
-  RequestId?: string;
-
-  /**
-   * @public
-   * <p>The HTTP status of the request.</p>
-   */
-  Status?: number;
-}
-
-/**
- * @public
- */
-export interface UntagResourceRequest {
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN) of the resource that you want to untag.</p>
-   */
-  ResourceArn: string | undefined;
-
-  /**
-   * @public
-   * <p>The keys of the key-value pairs for the resource tag or tags assigned to the resource.</p>
-   */
-  TagKeys: string[] | undefined;
-}
-
-/**
- * @public
- */
-export interface UntagResourceResponse {
-  /**
-   * @public
-   * <p>The Amazon Web Services request ID for this operation.</p>
-   */
-  RequestId?: string;
-
-  /**
-   * @public
-   * <p>The HTTP status of the request.</p>
-   */
-  Status?: number;
-}
-
-/**
- * @public
- */
-export interface UpdateAccountCustomizationRequest {
-  /**
-   * @public
-   * <p>The ID for the Amazon Web Services account that you want to update Amazon QuickSight customizations
-   *             for.</p>
-   */
-  AwsAccountId: string | undefined;
-
-  /**
-   * @public
-   * <p>The namespace that you want to update Amazon QuickSight customizations for.</p>
-   */
-  Namespace?: string;
-
-  /**
-   * @public
-   * <p>The Amazon QuickSight customizations you're updating in the current Amazon Web Services Region. </p>
-   */
-  AccountCustomization: AccountCustomization | undefined;
-}
-
-/**
- * @public
- */
-export interface UpdateAccountCustomizationResponse {
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN) for the updated customization for this Amazon Web Services account.</p>
-   */
-  Arn?: string;
-
-  /**
-   * @public
-   * <p>The ID for the Amazon Web Services account that you want to update Amazon QuickSight customizations
-   *             for.</p>
-   */
-  AwsAccountId?: string;
-
-  /**
-   * @public
-   * <p>The namespace associated with the customization that you're updating.</p>
-   */
-  Namespace?: string;
-
-  /**
-   * @public
-   * <p>The Amazon QuickSight customizations you're updating in the current Amazon Web Services Region. </p>
-   */
-  AccountCustomization?: AccountCustomization;
-
-  /**
-   * @public
-   * <p>The Amazon Web Services request ID for this operation.</p>
-   */
-  RequestId?: string;
-
-  /**
-   * @public
-   * <p>The HTTP status of the request.</p>
-   */
-  Status?: number;
-}
-
-/**
- * @public
- */
-export interface UpdateAccountSettingsRequest {
-  /**
-   * @public
-   * <p>The ID for the Amazon Web Services account that contains the Amazon QuickSight settings that you want to
-   *             list.</p>
-   */
-  AwsAccountId: string | undefined;
-
-  /**
-   * @public
-   * <p>The default namespace for this Amazon Web Services account. Currently, the default is
-   *                 <code>default</code>. IAM users that
-   *             register for the first time with Amazon QuickSight provide an email address that becomes
-   *             associated with the default namespace.
-   *         </p>
-   */
-  DefaultNamespace: string | undefined;
-
-  /**
-   * @public
-   * <p>The email address that you want Amazon QuickSight to send notifications to regarding your
-   *             Amazon Web Services account or Amazon QuickSight subscription.</p>
-   */
-  NotificationEmail?: string;
-
-  /**
-   * @public
-   * <p>A boolean value that determines whether or not an Amazon QuickSight account can be deleted. A <code>True</code> value doesn't allow the account to be deleted and results in an error message if a user tries to make a <code>DeleteAccountSubscription</code> request. A <code>False</code> value will allow the account to be deleted.</p>
-   */
-  TerminationProtectionEnabled?: boolean;
-}
+export const DataSetFilterSensitiveLog = (obj: DataSet): any => ({
+  ...obj,
+  ...(obj.PhysicalTableMap && {
+    PhysicalTableMap: Object.entries(obj.PhysicalTableMap).reduce(
+      (acc: any, [key, value]: [string, PhysicalTable]) => ((acc[key] = value), acc),
+      {}
+    ),
+  }),
+  ...(obj.LogicalTableMap && {
+    LogicalTableMap: Object.entries(obj.LogicalTableMap).reduce(
+      (acc: any, [key, value]: [string, LogicalTable]) => ((acc[key] = LogicalTableFilterSensitiveLog(value)), acc),
+      {}
+    ),
+  }),
+  ...(obj.RowLevelPermissionTagConfiguration && {
+    RowLevelPermissionTagConfiguration: RowLevelPermissionTagConfigurationFilterSensitiveLog(
+      obj.RowLevelPermissionTagConfiguration
+    ),
+  }),
+});
 
 /**
  * @internal
@@ -9282,18 +9413,4 @@ export const SnapshotAnonymousUserFilterSensitiveLog = (obj: SnapshotAnonymousUs
   ...(obj.RowLevelPermissionTags && {
     RowLevelPermissionTags: obj.RowLevelPermissionTags.map((item) => SessionTagFilterSensitiveLog(item)),
   }),
-});
-
-/**
- * @internal
- */
-export const SnapshotUserConfigurationFilterSensitiveLog = (obj: SnapshotUserConfiguration): any => ({
-  ...obj,
-});
-
-/**
- * @internal
- */
-export const StartDashboardSnapshotJobRequestFilterSensitiveLog = (obj: StartDashboardSnapshotJobRequest): any => ({
-  ...obj,
 });

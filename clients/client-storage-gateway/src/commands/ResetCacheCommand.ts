@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ResetCacheInput, ResetCacheOutput } from "../models/models_0";
@@ -42,7 +43,6 @@ export interface ResetCacheCommandOutput extends ResetCacheOutput, __MetadataBea
  *          can occur when a disk is corrupted or removed from the gateway. When a cache is reset, the
  *          gateway loses its cache storage. At this point, you can reconfigure the disks as cache
  *          disks. This operation is only supported in the cached volume and tape types.</p>
- *
  *          <important>
  *             <p>If the cache disk you are resetting contains data that has not been uploaded to
  *                Amazon S3 yet, that data can be lost. After you reset cache disks, there will
@@ -148,6 +148,10 @@ export class ResetCacheCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "ResetCache",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

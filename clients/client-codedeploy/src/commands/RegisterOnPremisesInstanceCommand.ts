@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -37,9 +38,9 @@ export interface RegisterOnPremisesInstanceCommandOutput extends __MetadataBeare
 /**
  * @public
  * <p>Registers an on-premises instance.</p>
- *         <note>
+ *          <note>
  *             <p>Only one IAM ARN (an IAM session ARN or IAM user ARN) is supported in the request. You cannot use both.</p>
- *         </note>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -64,18 +65,17 @@ export interface RegisterOnPremisesInstanceCommandOutput extends __MetadataBeare
  * @see {@link CodeDeployClientResolvedConfig | config} for CodeDeployClient's `config` shape.
  *
  * @throws {@link IamArnRequiredException} (client fault)
- *  <p>No IAM ARN was included in the request. You must use an IAM session ARN or IAM user ARN in the request.</p>
+ *  <p>No IAM ARN was included in the request. You must use an IAM session ARN or user ARN in the request.</p>
  *
  * @throws {@link IamSessionArnAlreadyRegisteredException} (client fault)
  *  <p>The request included an IAM session ARN that has already been used to
  *             register a different instance.</p>
  *
  * @throws {@link IamUserArnAlreadyRegisteredException} (client fault)
- *  <p>The specified IAM user ARN is already registered with an on-premises
- *             instance.</p>
+ *  <p>The specified user ARN is already registered with an on-premises instance.</p>
  *
  * @throws {@link IamUserArnRequiredException} (client fault)
- *  <p>An IAM user ARN was not specified.</p>
+ *  <p>An user ARN was not specified.</p>
  *
  * @throws {@link InstanceNameAlreadyRegisteredException} (client fault)
  *  <p>The specified on-premises instance name is already registered.</p>
@@ -87,14 +87,14 @@ export interface RegisterOnPremisesInstanceCommandOutput extends __MetadataBeare
  *  <p>The IAM session ARN was specified in an invalid format.</p>
  *
  * @throws {@link InvalidIamUserArnException} (client fault)
- *  <p>The IAM user ARN was specified in an invalid format.</p>
+ *  <p>The user ARN was specified in an invalid format.</p>
  *
  * @throws {@link InvalidInstanceNameException} (client fault)
  *  <p>The on-premises instance name was specified in an invalid format.</p>
  *
  * @throws {@link MultipleIamArnsProvidedException} (client fault)
- *  <p>Both an IAM user ARN and an IAM session ARN were
- *             included in the request. Use only one ARN type.</p>
+ *  <p>Both an user ARN and an IAM session ARN were included in the request.
+ *             Use only one ARN type.</p>
  *
  * @throws {@link CodeDeployServiceException}
  * <p>Base exception class for all service exceptions from CodeDeploy service.</p>
@@ -150,6 +150,10 @@ export class RegisterOnPremisesInstanceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "RegisterOnPremisesInstance",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

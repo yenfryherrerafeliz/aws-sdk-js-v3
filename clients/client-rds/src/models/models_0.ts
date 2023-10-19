@@ -711,7 +711,7 @@ export interface ApplyPendingMaintenanceActionMessage {
   /**
    * @public
    * <p>The pending maintenance action to apply to this resource.</p>
-   *          <p>Valid values: <code>system-update</code>, <code>db-upgrade</code>,
+   *          <p>Valid Values: <code>system-update</code>, <code>db-upgrade</code>,
    *           <code>hardware-maintenance</code>, <code>ca-certificate-rotation</code>
    *          </p>
    */
@@ -721,7 +721,7 @@ export interface ApplyPendingMaintenanceActionMessage {
    * @public
    * <p>A value that specifies the type of opt-in request, or undoes an opt-in request. An opt-in
    *            request of type <code>immediate</code> can't be undone.</p>
-   *          <p>Valid values:</p>
+   *          <p>Valid Values:</p>
    *          <ul>
    *             <li>
    *                <p>
@@ -986,13 +986,13 @@ export interface EC2SecurityGroup {
 export interface IPRange {
   /**
    * @public
-   * <p>Specifies the status of the IP range. Status can be "authorizing", "authorized", "revoking", and "revoked".</p>
+   * <p>The status of the IP range. Status can be "authorizing", "authorized", "revoking", and "revoked".</p>
    */
   Status?: string;
 
   /**
    * @public
-   * <p>Specifies the IP range.</p>
+   * <p>The IP range.</p>
    */
   CIDRIP?: string;
 }
@@ -1153,14 +1153,14 @@ export interface BacktrackDBClusterMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether to force the DB cluster to backtrack when binary logging is
+   * <p>Specifies whether to force the DB cluster to backtrack when binary logging is
    *             enabled. Otherwise, an error occurs when binary logging is enabled.</p>
    */
   Force?: boolean;
 
   /**
    * @public
-   * <p>A value that indicates whether to backtrack the DB cluster to the earliest possible
+   * <p>Specifies whether to backtrack the DB cluster to the earliest possible
    *             backtrack time when <i>BacktrackTo</i> is set to a timestamp earlier than the earliest
    *             backtrack time. When this parameter is disabled and <i>BacktrackTo</i> is set to a timestamp earlier than the earliest
    *             backtrack time, an error occurs.</p>
@@ -1257,7 +1257,7 @@ export type ExportSourceType = (typeof ExportSourceType)[keyof typeof ExportSour
 /**
  * @public
  * <p>Contains the details of a snapshot or cluster export to Amazon S3.</p>
- *          <p>This data type is used as a response element in the <code>DescribeExportTasks</code> action.</p>
+ *          <p>This data type is used as a response element in the <code>DescribeExportTasks</code> operation.</p>
  */
 export interface ExportTask {
   /**
@@ -1275,7 +1275,8 @@ export interface ExportTask {
 
   /**
    * @public
-   * <p>The data exported from the snapshot or cluster. Valid values are the following:</p>
+   * <p>The data exported from the snapshot or cluster.</p>
+   *          <p>Valid Values:</p>
    *          <ul>
    *             <li>
    *                <p>
@@ -1305,25 +1306,25 @@ export interface ExportTask {
 
   /**
    * @public
-   * <p>The time that the snapshot was created.</p>
+   * <p>The time when the snapshot was created.</p>
    */
   SnapshotTime?: Date;
 
   /**
    * @public
-   * <p>The time that the snapshot or cluster export task started.</p>
+   * <p>The time when the snapshot or cluster export task started.</p>
    */
   TaskStartTime?: Date;
 
   /**
    * @public
-   * <p>The time that the snapshot or cluster export task ended.</p>
+   * <p>The time when the snapshot or cluster export task ended.</p>
    */
   TaskEndTime?: Date;
 
   /**
    * @public
-   * <p>The Amazon S3 bucket that the snapshot or cluster is exported to.</p>
+   * <p>The Amazon S3 bucket where the snapshot or cluster is exported to.</p>
    */
   S3Bucket?: string;
 
@@ -1413,7 +1414,7 @@ export interface ExportTask {
    * @public
    * <p>The type of source for the export.</p>
    */
-  SourceType?: ExportSourceType | string;
+  SourceType?: ExportSourceType;
 }
 
 /**
@@ -1740,7 +1741,7 @@ export interface CopyDBClusterSnapshotMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether to copy all tags from the source DB cluster snapshot to the target DB cluster snapshot.
+   * <p>Specifies whether to copy all tags from the source DB cluster snapshot to the target DB cluster snapshot.
    *             By default, tags are not copied.</p>
    */
   CopyTags?: boolean;
@@ -1763,49 +1764,49 @@ export interface CopyDBClusterSnapshotMessage {
 export interface DBClusterSnapshot {
   /**
    * @public
-   * <p>Provides the list of Availability Zones (AZs) where instances in the DB cluster snapshot can be restored.</p>
+   * <p>The list of Availability Zones (AZs) where instances in the DB cluster snapshot can be restored.</p>
    */
   AvailabilityZones?: string[];
 
   /**
    * @public
-   * <p>Specifies the identifier for the DB cluster snapshot.</p>
+   * <p>The identifier for the DB cluster snapshot.</p>
    */
   DBClusterSnapshotIdentifier?: string;
 
   /**
    * @public
-   * <p>Specifies the DB cluster identifier of the DB cluster that this DB cluster snapshot was created from.</p>
+   * <p>The DB cluster identifier of the DB cluster that this DB cluster snapshot was created from.</p>
    */
   DBClusterIdentifier?: string;
 
   /**
    * @public
-   * <p>Provides the time when the snapshot was taken, in Universal Coordinated Time (UTC).</p>
+   * <p>The time when the snapshot was taken, in Universal Coordinated Time (UTC).</p>
    */
   SnapshotCreateTime?: Date;
 
   /**
    * @public
-   * <p>Specifies the name of the database engine for this DB cluster snapshot.</p>
+   * <p>The name of the database engine for this DB cluster snapshot.</p>
    */
   Engine?: string;
 
   /**
    * @public
-   * <p>Provides the engine mode of the database engine for this DB cluster snapshot.</p>
+   * <p>The engine mode of the database engine for this DB cluster snapshot.</p>
    */
   EngineMode?: string;
 
   /**
    * @public
-   * <p>Specifies the allocated storage size in gibibytes (GiB).</p>
+   * <p>The allocated storage size of the DB cluster snapshot in gibibytes (GiB).</p>
    */
   AllocatedStorage?: number;
 
   /**
    * @public
-   * <p>Specifies the status of this DB cluster snapshot. Valid statuses are the following:</p>
+   * <p>The status of this DB cluster snapshot. Valid statuses are the following:</p>
    *          <ul>
    *             <li>
    *                <p>
@@ -1828,55 +1829,55 @@ export interface DBClusterSnapshot {
 
   /**
    * @public
-   * <p>Specifies the port that the DB cluster was listening on at the time of the snapshot.</p>
+   * <p>The port that the DB cluster was listening on at the time of the snapshot.</p>
    */
   Port?: number;
 
   /**
    * @public
-   * <p>Provides the VPC ID associated with the DB cluster snapshot.</p>
+   * <p>The VPC ID associated with the DB cluster snapshot.</p>
    */
   VpcId?: string;
 
   /**
    * @public
-   * <p>Specifies the time when the DB cluster was created, in Universal Coordinated Time (UTC).</p>
+   * <p>The time when the DB cluster was created, in Universal Coordinated Time (UTC).</p>
    */
   ClusterCreateTime?: Date;
 
   /**
    * @public
-   * <p>Provides the master username for this DB cluster snapshot.</p>
+   * <p>The master username for this DB cluster snapshot.</p>
    */
   MasterUsername?: string;
 
   /**
    * @public
-   * <p>Provides the version of the database engine for this DB cluster snapshot.</p>
+   * <p>The version of the database engine for this DB cluster snapshot.</p>
    */
   EngineVersion?: string;
 
   /**
    * @public
-   * <p>Provides the license model information for this DB cluster snapshot.</p>
+   * <p>The license model information for this DB cluster snapshot.</p>
    */
   LicenseModel?: string;
 
   /**
    * @public
-   * <p>Provides the type of the DB cluster snapshot.</p>
+   * <p>The type of the DB cluster snapshot.</p>
    */
   SnapshotType?: string;
 
   /**
    * @public
-   * <p>Specifies the percentage of the estimated data that has been transferred.</p>
+   * <p>The percentage of the estimated data that has been transferred.</p>
    */
   PercentProgress?: number;
 
   /**
    * @public
-   * <p>Specifies whether the DB cluster snapshot is encrypted.</p>
+   * <p>Indicates whether the DB cluster snapshot is encrypted.</p>
    */
   StorageEncrypted?: boolean;
 
@@ -1889,7 +1890,7 @@ export interface DBClusterSnapshot {
 
   /**
    * @public
-   * <p>Specifies the Amazon Resource Name (ARN) for the DB cluster snapshot.</p>
+   * <p>The Amazon Resource Name (ARN) for the DB cluster snapshot.</p>
    */
   DBClusterSnapshotArn?: string;
 
@@ -1902,7 +1903,7 @@ export interface DBClusterSnapshot {
 
   /**
    * @public
-   * <p>True if mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled, and otherwise false.</p>
+   * <p>Indicates whether mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled.</p>
    */
   IAMDatabaseAuthenticationEnabled?: boolean;
 
@@ -1929,7 +1930,7 @@ export interface DBClusterSnapshot {
 
   /**
    * @public
-   * <p>Specifies the resource ID of the DB cluster that this DB cluster snapshot was created from.</p>
+   * <p>The resource ID of the DB cluster that this DB cluster snapshot was created from.</p>
    */
   DbClusterResourceId?: string;
 }
@@ -2233,7 +2234,7 @@ export interface CopyDBSnapshotMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether to copy all tags from the source DB snapshot to the target DB snapshot.
+   * <p>Specifies whether to copy all tags from the source DB snapshot to the target DB snapshot.
    *             By default, tags aren't copied.</p>
    */
   CopyTags?: boolean;
@@ -2317,7 +2318,7 @@ export interface CopyDBSnapshotMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether to copy the DB option group associated with the source DB snapshot to the target
+   * <p>Specifies whether to copy the DB option group associated with the source DB snapshot to the target
    *             Amazon Web Services account and associate with the target DB snapshot. The associated option group can be copied only with
    *             cross-account snapshot copy calls.</p>
    */
@@ -2548,7 +2549,7 @@ export interface DBSnapshot {
 
   /**
    * @public
-   * <p>Specifies whether the DB snapshot is encrypted.</p>
+   * <p>Indicates whether the DB snapshot is encrypted.</p>
    */
   Encrypted?: boolean;
 
@@ -2579,7 +2580,7 @@ export interface DBSnapshot {
 
   /**
    * @public
-   * <p>True if mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled, and otherwise false.</p>
+   * <p>Indicates whether mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled.</p>
    */
   IAMDatabaseAuthenticationEnabled?: boolean;
 
@@ -2639,6 +2640,12 @@ export interface DBSnapshot {
    *             manages your database files. The Oracle SID is also the name of your CDB.</p>
    */
   DBSystemId?: string;
+
+  /**
+   * @public
+   * <p>Indicates whether the DB instance has a dedicated log volume (DLV) enabled.</p>
+   */
+  DedicatedLogVolume?: boolean;
 }
 
 /**
@@ -2861,13 +2868,13 @@ export interface OptionSetting {
 
   /**
    * @public
-   * <p>A Boolean value that, when true, indicates the option setting can be modified from the default.</p>
+   * <p>Indicates whether the option setting can be modified from the default.</p>
    */
   IsModifiable?: boolean;
 
   /**
    * @public
-   * <p>Indicates if the option setting is part of a collection.</p>
+   * <p>Indicates whether the option setting is part of a collection.</p>
    */
   IsCollection?: boolean;
 }
@@ -2893,7 +2900,7 @@ export interface VpcSecurityGroupMembership {
 
 /**
  * @public
- * <p>Option details.</p>
+ * <p>The details of an option.</p>
  */
 export interface Option {
   /**
@@ -2910,13 +2917,13 @@ export interface Option {
 
   /**
    * @public
-   * <p>Indicate if this option is persistent.</p>
+   * <p>Indicates whether this option is persistent.</p>
    */
   Persistent?: boolean;
 
   /**
    * @public
-   * <p>Indicate if this option is permanent.</p>
+   * <p>Indicates whether this option is permanent.</p>
    */
   Permanent?: boolean;
 
@@ -3174,6 +3181,20 @@ export interface CreateBlueGreenDeploymentRequest {
    * <p>Tags to assign to the blue/green deployment.</p>
    */
   Tags?: Tag[];
+
+  /**
+   * @public
+   * <p>Specify the DB instance class for the databases in the green environment.</p>
+   */
+  TargetDBInstanceClass?: string;
+
+  /**
+   * @public
+   * <p>Whether to upgrade the storage file system configuration on the green database. This
+   *             option migrates the green DB instance from the older 32-bit file system to the preferred
+   *             configuration. For more information, see <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html#USER_PIOPS.UpgradeFileSystem">Upgrading the storage file system for a DB instance</a>.</p>
+   */
+  UpgradeTargetStorageConfig?: boolean;
 }
 
 /**
@@ -3774,13 +3795,13 @@ export interface UpgradeTarget {
 
   /**
    * @public
-   * <p>A value that indicates whether the target version is applied to any source DB instances that have <code>AutoMinorVersionUpgrade</code> set to true.</p>
+   * <p>Indicates whether the target version is applied to any source DB instances that have <code>AutoMinorVersionUpgrade</code> set to true.</p>
    */
   AutoUpgrade?: boolean;
 
   /**
    * @public
-   * <p>A value that indicates whether upgrading to the target version requires upgrading the major version of the database engine.</p>
+   * <p>Indicates whether upgrading to the target version requires upgrading the major version of the database engine.</p>
    */
   IsMajorVersionUpgrade?: boolean;
 
@@ -3792,25 +3813,25 @@ export interface UpgradeTarget {
 
   /**
    * @public
-   * <p>A value that indicates whether you can use Aurora parallel query with the target engine version.</p>
+   * <p>Indicates whether you can use Aurora parallel query with the target engine version.</p>
    */
   SupportsParallelQuery?: boolean;
 
   /**
    * @public
-   * <p>A value that indicates whether you can use Aurora global databases with the target engine version.</p>
+   * <p>Indicates whether you can use Aurora global databases with the target engine version.</p>
    */
   SupportsGlobalDatabases?: boolean;
 
   /**
    * @public
-   * <p>A value that indicates whether you can use Babelfish for Aurora PostgreSQL with the target engine version.</p>
+   * <p>Indicates whether you can use Babelfish for Aurora PostgreSQL with the target engine version.</p>
    */
   SupportsBabelfish?: boolean;
 
   /**
    * @public
-   * <p>A value that indicates whether the target engine version supports forwarding write operations from reader DB instances
+   * <p>Indicates whether the target engine version supports forwarding write operations from reader DB instances
    *             to the writer DB instance in the DB cluster. By default, write operations aren't allowed on reader DB instances.</p>
    *          <p>Valid for: Aurora DB clusters only</p>
    */
@@ -3905,7 +3926,7 @@ export interface DBEngineVersion {
 
   /**
    * @public
-   * <p>A value that indicates whether the engine version supports exporting the log types specified by ExportableLogTypes to CloudWatch Logs.</p>
+   * <p>Indicates whether the engine version supports exporting the log types specified by ExportableLogTypes to CloudWatch Logs.</p>
    */
   SupportsLogExportsToCloudwatchLogs?: boolean;
 
@@ -3947,13 +3968,13 @@ export interface DBEngineVersion {
 
   /**
    * @public
-   * <p>A value that indicates whether you can use Aurora parallel query with a specific DB engine version.</p>
+   * <p>Indicates whether you can use Aurora parallel query with a specific DB engine version.</p>
    */
   SupportsParallelQuery?: boolean;
 
   /**
    * @public
-   * <p>A value that indicates whether you can use Aurora global databases with a specific DB engine version.</p>
+   * <p>Indicates whether you can use Aurora global databases with a specific DB engine version.</p>
    */
   SupportsGlobalDatabases?: boolean;
 
@@ -4005,7 +4026,7 @@ export interface DBEngineVersion {
 
   /**
    * @public
-   * <p>A value that indicates whether the engine version supports Babelfish for Aurora PostgreSQL.</p>
+   * <p>Indicates whether the engine version supports Babelfish for Aurora PostgreSQL.</p>
    */
   SupportsBabelfish?: boolean;
 
@@ -4021,7 +4042,7 @@ export interface DBEngineVersion {
 
   /**
    * @public
-   * <p>A value that indicates whether the engine version supports rotating the server certificate without
+   * <p>Indicates whether the engine version supports rotating the server certificate without
    *               rebooting the DB instance.</p>
    */
   SupportsCertificateRotationWithoutRestart?: boolean;
@@ -4039,7 +4060,7 @@ export interface DBEngineVersion {
 
   /**
    * @public
-   * <p>A value that indicates whether the DB engine version supports forwarding write operations from reader DB instances
+   * <p>Indicates whether the DB engine version supports forwarding write operations from reader DB instances
    *             to the writer DB instance in the DB cluster. By default, write operations aren't allowed on reader DB instances.</p>
    *          <p>Valid for: Aurora DB clusters only</p>
    */
@@ -4093,7 +4114,7 @@ export interface ScalingConfiguration {
 
   /**
    * @public
-   * <p>A value that indicates whether to allow or disallow automatic pause for an Aurora DB cluster in <code>serverless</code> DB engine mode.
+   * <p>Indicates whether to allow or disallow automatic pause for an Aurora DB cluster in <code>serverless</code> DB engine mode.
    *             A DB cluster can be paused only when it's idle (it has no connections).</p>
    *          <note>
    *             <p>If a DB cluster is paused for more than seven days, the DB cluster might be backed up with a snapshot.
@@ -5007,7 +5028,7 @@ export interface DBClusterMember {
 
   /**
    * @public
-   * <p>Value that is <code>true</code> if the cluster member is the primary instance for the DB cluster and <code>false</code> otherwise.</p>
+   * <p>Indicates whether the cluster member is the primary DB instance for the DB cluster.</p>
    */
   IsClusterWriter?: boolean;
 
@@ -5225,7 +5246,7 @@ export interface ClusterPendingModifiedValues {
 
   /**
    * @public
-   * <p>A value that indicates whether mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled.</p>
+   * <p>Indicates whether mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled.</p>
    */
   IAMDatabaseAuthenticationEnabled?: boolean;
 
@@ -5283,7 +5304,7 @@ export interface ScalingConfigurationInfo {
 
   /**
    * @public
-   * <p>A value that indicates whether automatic pause is allowed for the Aurora DB cluster
+   * <p>Indicates whether automatic pause is allowed for the Aurora DB cluster
    *             in <code>serverless</code> DB engine mode.</p>
    *          <p>When the value is set to false for an Aurora Serverless v1 DB cluster, the DB cluster automatically resumes.</p>
    */
@@ -5680,13 +5701,13 @@ export interface DBCluster {
    *            Database events such as a change or access generate an activity stream event.
    *            The database session can handle these events either synchronously or asynchronously.</p>
    */
-  ActivityStreamMode?: ActivityStreamMode | string;
+  ActivityStreamMode?: ActivityStreamMode;
 
   /**
    * @public
    * <p>The status of the database activity stream.</p>
    */
-  ActivityStreamStatus?: ActivityStreamStatus | string;
+  ActivityStreamStatus?: ActivityStreamStatus;
 
   /**
    * @public
@@ -5731,11 +5752,11 @@ export interface DBCluster {
    * @public
    * <p>The status of write forwarding for a secondary cluster in an Aurora global database.</p>
    */
-  GlobalWriteForwardingStatus?: WriteForwardingStatus | string;
+  GlobalWriteForwardingStatus?: WriteForwardingStatus;
 
   /**
    * @public
-   * <p>Specifies whether write forwarding is enabled for a secondary cluster
+   * <p>Indicates whether write forwarding is enabled for a secondary cluster
    *       in an Aurora global database. Because write forwarding takes time to enable, check the
    *       value of <code>GlobalWriteForwardingStatus</code> to confirm that the request has completed
    *       before using the write forwarding feature for this cluster.</p>
@@ -5894,10 +5915,16 @@ export interface DBCluster {
 
   /**
    * @public
-   * <p>Specifies whether an Aurora DB cluster has in-cluster write forwarding enabled, not enabled, requested, or is in the process
+   * <p>Indicates whether an Aurora DB cluster has in-cluster write forwarding enabled, not enabled, requested, or is in the process
    *             of enabling it.</p>
    */
-  LocalWriteForwardingStatus?: LocalWriteForwardingStatus | string;
+  LocalWriteForwardingStatus?: LocalWriteForwardingStatus;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the recovery point in Amazon Web Services Backup.</p>
+   */
+  AwsBackupRecoveryPointArn?: string;
 }
 
 /**
@@ -6980,7 +7007,7 @@ export interface CreateDBInstanceMessage {
    *                <p>Can't be specified if <code>ManageMasterUserPassword</code> is turned on.</p>
    *             </li>
    *             <li>
-   *                <p>Can include any printable ASCII character except "/", """, or "@".</p>
+   *                <p>Can include any printable ASCII character except "/", """, or "@". For RDS for Oracle, can't include the "&" (ampersand) or  the "'" (single quotes) character.</p>
    *             </li>
    *          </ul>
    *          <p>Length Constraints:</p>
@@ -7876,11 +7903,17 @@ export interface CreateDBInstanceMessage {
    *             the value defaults to <code>RDSCDB</code>. The Oracle SID is also the name of your CDB.</p>
    */
   DBSystemId?: string;
+
+  /**
+   * @public
+   * <p>Indicates whether the DB instance has a dedicated log volume (DLV) enabled.</p>
+   */
+  DedicatedLogVolume?: boolean;
 }
 
 /**
  * @public
- * <p>Describes an Amazon Web Services Identity and Access Management (IAM) role that is associated with a DB instance.</p>
+ * <p>Information about an Amazon Web Services Identity and Access Management (IAM) role that is associated with a DB instance.</p>
  */
 export interface DBInstanceRole {
   /**
@@ -7899,7 +7932,7 @@ export interface DBInstanceRole {
 
   /**
    * @public
-   * <p>Describes the state of association between the IAM role and the DB instance. The Status property returns one of the following
+   * <p>Information about the state of association between the IAM role and the DB instance. The Status property returns one of the following
    *             values:</p>
    *          <ul>
    *             <li>
@@ -8262,7 +8295,7 @@ export interface PendingModifiedValues {
 
   /**
    * @public
-   * <p>A value that indicates that the Single-AZ DB instance will change to a Multi-AZ deployment.</p>
+   * <p>Indicates whether the Single-AZ DB instance will change to a Multi-AZ deployment.</p>
    */
   MultiAZ?: boolean;
 
@@ -8331,7 +8364,7 @@ export interface PendingModifiedValues {
 
   /**
    * @public
-   * <p>Whether mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled.</p>
+   * <p>Indicates whether mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled.</p>
    */
   IAMDatabaseAuthenticationEnabled?: boolean;
 
@@ -8342,7 +8375,7 @@ export interface PendingModifiedValues {
    *             <code>all-paused</code>, the instance pauses automation for the duration set by
    *             <code>--resume-full-automation-mode-minutes</code>.</p>
    */
-  AutomationMode?: AutomationMode | string;
+  AutomationMode?: AutomationMode;
 
   /**
    * @public
@@ -8362,6 +8395,12 @@ export interface PendingModifiedValues {
    * <p>The database engine of the DB instance.</p>
    */
   Engine?: string;
+
+  /**
+   * @public
+   * <p>Indicates whether the DB instance has a dedicated log volume (DLV) enabled.></p>
+   */
+  DedicatedLogVolume?: boolean;
 }
 
 /**
@@ -8391,13 +8430,13 @@ export interface DBInstanceStatusInfo {
 
   /**
    * @public
-   * <p>Boolean value that is true if the instance is operating normally, or false if the instance is in an error state.</p>
+   * <p>A Boolean value that is true if the instance is operating normally, or false if the instance is in an error state.</p>
    */
   Normal?: boolean;
 
   /**
    * @public
-   * <p>Status of the DB instance. For a StatusType of read replica, the values can be
+   * <p>The status of the DB instance. For a StatusType of read replica, the values can be
    *             replicating, replication stop point set, replication stop point reached, error, stopped,
    *             or terminated.</p>
    */
@@ -8606,7 +8645,7 @@ export interface DBInstance {
    *             <p>This attribute is only supported in RDS for Oracle.</p>
    *          </note>
    */
-  ReplicaMode?: ReplicaMode | string;
+  ReplicaMode?: ReplicaMode;
 
   /**
    * @public
@@ -8909,7 +8948,7 @@ export interface DBInstance {
    * @public
    * <p>The status of the database activity stream.</p>
    */
-  ActivityStreamStatus?: ActivityStreamStatus | string;
+  ActivityStreamStatus?: ActivityStreamStatus;
 
   /**
    * @public
@@ -8929,7 +8968,7 @@ export interface DBInstance {
    * <p>The mode of the database activity stream. Database events such as a change or access generate
    *             an activity stream event. RDS for Oracle always handles these events asynchronously.</p>
    */
-  ActivityStreamMode?: ActivityStreamMode | string;
+  ActivityStreamMode?: ActivityStreamMode;
 
   /**
    * @public
@@ -8944,7 +8983,7 @@ export interface DBInstance {
    *             <code>all paused</code>, the instance pauses automation for the duration set by
    *             <code>--resume-full-automation-mode-minutes</code>.</p>
    */
-  AutomationMode?: AutomationMode | string;
+  AutomationMode?: AutomationMode;
 
   /**
    * @public
@@ -9002,7 +9041,7 @@ export interface DBInstance {
    * @public
    * <p>The status of the policy state of the activity stream.</p>
    */
-  ActivityStreamPolicyStatus?: ActivityStreamPolicyStatus | string;
+  ActivityStreamPolicyStatus?: ActivityStreamPolicyStatus;
 
   /**
    * @public
@@ -9045,6 +9084,21 @@ export interface DBInstance {
    * <p>The progress of the storage optimization operation as a percentage.</p>
    */
   PercentProgress?: string;
+
+  /**
+   * @public
+   * <p>Indicates whether the DB instance has a dedicated log volume (DLV) enabled.</p>
+   */
+  DedicatedLogVolume?: boolean;
+
+  /**
+   * @public
+   * <p>Indicates whether an upgrade is recommended for the storage file system configuration
+   *             on the DB instance. To migrate to the preferred configuration, you can either create a
+   *             blue/green deployment, or create a read replica from the DB instance. For more
+   *             information, see <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html#USER_PIOPS.UpgradeFileSystem">Upgrading the storage file system for a DB instance</a>.</p>
+   */
+  IsStorageConfigUpgradeAvailable?: boolean;
 }
 
 /**
@@ -9220,9 +9274,8 @@ export interface CreateDBInstanceReadReplicaMessage {
    * <p>The compute and memory capacity of the read replica, for example
    *                 db.m4.large. Not all DB instance classes are available in all Amazon Web Services
    *             Regions, or for all database engines. For the full list of DB instance classes, and
-   *             availability for your engine, see <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html">DB Instance
-   *                 Class</a> in the <i>Amazon RDS User Guide</i>.</p>
-   *          <p>Default: Inherits from the source DB instance.</p>
+   *             availability for your engine, see <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html">DB Instance Class</a> in the <i>Amazon RDS User Guide</i>.</p>
+   *          <p>Default: Inherits the value from the source DB instance.</p>
    */
   DBInstanceClass?: string;
 
@@ -9238,68 +9291,67 @@ export interface CreateDBInstanceReadReplicaMessage {
   /**
    * @public
    * <p>The port number that the DB instance uses for connections.</p>
-   *          <p>Default: Inherits from the source DB instance</p>
    *          <p>Valid Values: <code>1150-65535</code>
    *          </p>
+   *          <p>Default: Inherits the value from the source DB instance.</p>
    */
   Port?: number;
 
   /**
    * @public
-   * <p>A value that indicates whether the read replica is in a Multi-AZ deployment.</p>
+   * <p>Specifies whether the read replica is in a Multi-AZ deployment.</p>
    *          <p>You can create a read replica as a Multi-AZ DB instance. RDS creates a standby of your
    *             replica in another Availability Zone for failover support for the replica. Creating your
    *             read replica as a Multi-AZ DB instance is independent of whether the source is a
    *             Multi-AZ DB instance or a Multi-AZ DB cluster.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   MultiAZ?: boolean;
 
   /**
    * @public
-   * <p>A value that indicates whether minor engine upgrades are applied automatically to the
+   * <p>Specifies whether to automatically apply minor engine upgrades to the
    *             read replica during the maintenance window.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
-   *          <p>Default: Inherits from the source DB instance</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
+   *          <p>Default: Inherits the value from the source DB instance.</p>
    */
   AutoMinorVersionUpgrade?: boolean;
 
   /**
    * @public
-   * <p>The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB instance.</p>
+   * <p>The amount of Provisioned IOPS (input/output operations per second) to initially allocate for the DB instance.</p>
    */
   Iops?: number;
 
   /**
    * @public
-   * <p>The option group the DB instance is associated with. If omitted, the option group
-   *             associated with the source instance or cluster is used.</p>
+   * <p>The option group to associate the DB instance with. If not specified, RDS uses the option group
+   *             associated with the source DB instance or cluster.</p>
    *          <note>
    *             <p>For SQL Server, you must use the option group associated with the source.</p>
    *          </note>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   OptionGroupName?: string;
 
   /**
    * @public
    * <p>The name of the DB parameter group to associate with this DB instance.</p>
-   *          <p>If you do not specify a value for <code>DBParameterGroupName</code>, then Amazon RDS
-   *             uses the <code>DBParameterGroup</code> of source DB instance for a same Region read
+   *          <p>If you don't specify a value for <code>DBParameterGroupName</code>, then Amazon RDS
+   *             uses the <code>DBParameterGroup</code> of the source DB instance for a same Region read
    *             replica, or the default <code>DBParameterGroup</code> for the specified DB engine for a
    *             cross-Region read replica.</p>
-   *          <p>Specifying a parameter group for this operation is only supported for MySQL and Oracle DB instances.
-   *             It isn't supported for RDS Custom.</p>
+   *          <p>Specifying a parameter group for this operation is only supported for MySQL DB instances for cross-Region read replicas and for Oracle DB instances. It isn't supported for MySQL DB instances for same Region read replicas or for RDS Custom.</p>
    *          <p>Constraints:</p>
    *          <ul>
    *             <li>
    *                <p>Must be 1 to 255 letters, numbers, or hyphens.</p>
    *             </li>
    *             <li>
-   *                <p>First character must be a letter</p>
+   *                <p>First character must be a letter.</p>
    *             </li>
    *             <li>
-   *                <p>Can't end with a hyphen or contain two consecutive hyphens</p>
+   *                <p>Can't end with a hyphen or contain two consecutive hyphens.</p>
    *             </li>
    *          </ul>
    */
@@ -9307,7 +9359,7 @@ export interface CreateDBInstanceReadReplicaMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether the DB instance is publicly accessible.</p>
+   * <p>Specifies whether the DB instance is publicly accessible.</p>
    *          <p>When the DB cluster is publicly accessible, its Domain Name System (DNS) endpoint
    *           resolves to the private IP address from within the DB cluster's virtual private cloud
    *           (VPC). It resolves to the public IP address from outside of the DB cluster's VPC. Access
@@ -9329,18 +9381,18 @@ export interface CreateDBInstanceReadReplicaMessage {
 
   /**
    * @public
-   * <p>Specifies a DB subnet group for the DB instance. The new DB instance is created in the VPC associated with the DB subnet group. If no DB subnet group is specified, then the new DB instance isn't created in a VPC.</p>
+   * <p>A DB subnet group for the DB instance. The new DB instance is created in the VPC associated with the DB subnet group. If no DB subnet group is specified, then the new DB instance isn't created in a VPC.</p>
    *          <p>Constraints:</p>
    *          <ul>
    *             <li>
-   *                <p>If supplied, must match the name of an existing DBSubnetGroup.</p>
+   *                <p>If supplied, must match the name of an existing DB subnet group.</p>
    *             </li>
    *             <li>
    *                <p>The specified DB subnet group must be in the same Amazon Web Services Region in which the operation is running.</p>
    *             </li>
    *             <li>
    *                <p>All read replicas in one Amazon Web Services Region that are created from the same source DB
-   *                     instance must either:></p>
+   *                     instance must either:</p>
    *                <ul>
    *                   <li>
    *                      <p>Specify DB subnet groups from the same VPC. All these read replicas are created in the same
@@ -9361,40 +9413,41 @@ export interface CreateDBInstanceReadReplicaMessage {
   /**
    * @public
    * <p>A list of Amazon EC2 VPC security groups to associate with the read replica.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    *          <p>Default: The default EC2 VPC security group for the DB subnet group's VPC.</p>
    */
   VpcSecurityGroupIds?: string[];
 
   /**
    * @public
-   * <p>Specifies the storage type to be associated with the read replica.</p>
-   *          <p>Valid values: <code>gp2 | gp3 | io1 | standard</code>
-   *          </p>
+   * <p>The storage type to associate with the read replica.</p>
    *          <p>If you specify <code>io1</code> or <code>gp3</code>, you must also include a value for the
    *             <code>Iops</code> parameter.</p>
-   *          <p>Default: <code>io1</code> if the <code>Iops</code> parameter
-   *             is specified, otherwise <code>gp2</code>
+   *          <p>Valid Values: <code>gp2 | gp3 | io1 | standard</code>
    *          </p>
+   *          <p>Default: <code>io1</code> if the <code>Iops</code> parameter
+   *             is specified. Otherwise, <code>gp2</code>.</p>
    */
   StorageType?: string;
 
   /**
    * @public
-   * <p>A value that indicates whether to copy all tags from the read replica to snapshots of
-   *             the read replica. By default, tags are not copied.</p>
+   * <p>Specifies whether to copy all tags from the read replica to snapshots of
+   *             the read replica. By default, tags aren't copied.</p>
    */
   CopyTagsToSnapshot?: boolean;
 
   /**
    * @public
    * <p>The interval, in seconds, between points when Enhanced Monitoring metrics are
-   *             collected for the read replica. To disable collecting Enhanced Monitoring metrics,
-   *             specify 0. The default is 0.</p>
-   *          <p>If <code>MonitoringRoleArn</code> is specified, then you must also set <code>MonitoringInterval</code>
-   *       to a value other than 0.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *             collected for the read replica. To disable collection of Enhanced Monitoring metrics,
+   *             specify <code>0</code>. The default is <code>0</code>.</p>
+   *          <p>If <code>MonitoringRoleArn</code> is specified, then you must set <code>MonitoringInterval</code>
+   *       to a value other than <code>0</code>.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    *          <p>Valid Values: <code>0, 1, 5, 10, 15, 30, 60</code>
+   *          </p>
+   *          <p>Default: <code>0</code>
    *          </p>
    */
   MonitoringInterval?: number;
@@ -9407,7 +9460,7 @@ export interface CreateDBInstanceReadReplicaMessage {
    *           create an IAM role for Amazon RDS Enhanced Monitoring</a> in the <i>Amazon RDS User Guide</i>.</p>
    *          <p>If <code>MonitoringInterval</code> is set to a value other than 0, then you must
    *           supply a <code>MonitoringRoleArn</code> value.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   MonitoringRoleArn?: string;
 
@@ -9495,27 +9548,27 @@ export interface CreateDBInstanceReadReplicaMessage {
    *                <code>SourceRegion</code> isn't supported for SQL Server, because Amazon RDS for SQL Server
    *                 doesn't support cross-Region read replicas.</p>
    *          </note>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   PreSignedUrl?: string;
 
   /**
    * @public
-   * <p>A value that indicates whether to enable mapping of Amazon Web Services Identity and Access Management
+   * <p>Specifies whether to enable mapping of Amazon Web Services Identity and Access Management
    *             (IAM) accounts to database accounts. By default, mapping isn't enabled.</p>
    *          <p>For more information about IAM database authentication, see
    *           <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html">
    *               IAM Database Authentication for MySQL and PostgreSQL</a> in the <i>Amazon RDS User Guide</i>.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   EnableIAMDatabaseAuthentication?: boolean;
 
   /**
    * @public
-   * <p>A value that indicates whether to enable Performance Insights for the read replica.</p>
+   * <p>Specifies whether to enable Performance Insights for the read replica.</p>
    *          <p>For more information, see <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights.html">Using
    *             Amazon Performance Insights</a> in the <i>Amazon RDS User Guide</i>.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   EnablePerformanceInsights?: boolean;
 
@@ -9526,42 +9579,34 @@ export interface CreateDBInstanceReadReplicaMessage {
    *          <p>If you do not specify a value for <code>PerformanceInsightsKMSKeyId</code>, then Amazon RDS
    *             uses your default KMS key. There is a default KMS key for your Amazon Web Services account.
    *             Your Amazon Web Services account has a different default KMS key for each Amazon Web Services Region.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   PerformanceInsightsKMSKeyId?: string;
 
   /**
    * @public
-   * <p>The number of days to retain Performance Insights data. The default is 7 days. The following values are valid:</p>
+   * <p>The number of days to retain Performance Insights data.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
+   *          <p>Valid Values:</p>
    *          <ul>
    *             <li>
-   *                <p>7</p>
+   *                <p>
+   *                   <code>7</code>
+   *                </p>
    *             </li>
    *             <li>
    *                <p>
-   *                   <i>month</i> * 31, where <i>month</i> is a number of months from 1-23</p>
+   *                   <i>month</i> * 31, where <i>month</i> is a number of months from 1-23.
+   *                 Examples: <code>93</code> (3 months * 31), <code>341</code> (11 months * 31), <code>589</code> (19 months * 31)</p>
    *             </li>
    *             <li>
-   *                <p>731</p>
+   *                <p>
+   *                   <code>731</code>
+   *                </p>
    *             </li>
    *          </ul>
-   *          <p>For example, the following values are valid:</p>
-   *          <ul>
-   *             <li>
-   *                <p>93 (3 months * 31)</p>
-   *             </li>
-   *             <li>
-   *                <p>341 (11 months * 31)</p>
-   *             </li>
-   *             <li>
-   *                <p>589 (19 months * 31)</p>
-   *             </li>
-   *             <li>
-   *                <p>731</p>
-   *             </li>
-   *          </ul>
-   *          <p>If you specify a retention period such as 94, which isn't a valid value, RDS issues an error.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>Default: <code>7</code> days</p>
+   *          <p>If you specify a retention period that isn't valid, such as <code>94</code>,  Amazon RDS returns an error.</p>
    */
   PerformanceInsightsRetentionPeriod?: number;
 
@@ -9571,28 +9616,28 @@ export interface CreateDBInstanceReadReplicaMessage {
    *             in the list depend on the DB engine being used. For more information, see
    *             <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_LogAccess.html#USER_LogAccess.Procedural.UploadtoCloudWatch">Publishing
    *                 Database Logs to Amazon CloudWatch Logs </a> in the <i>Amazon RDS User Guide</i>.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   EnableCloudwatchLogsExports?: string[];
 
   /**
    * @public
    * <p>The number of CPU cores and the number of threads per core for the DB instance class of the DB instance.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   ProcessorFeatures?: ProcessorFeature[];
 
   /**
    * @public
-   * <p>A value that indicates whether the DB instance class of the DB instance uses its default
+   * <p>Specifies whether the DB instance class of the DB instance uses its default
    *             processor features.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   UseDefaultProcessorFeatures?: boolean;
 
   /**
    * @public
-   * <p>A value that indicates whether the DB instance has deletion protection enabled.
+   * <p>Specifies whether to enable deletion protection for the DB instance.
    *             The database can't be deleted when deletion protection is enabled. By default,
    *             deletion protection isn't enabled. For more information, see
    *             <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_DeleteInstance.html">
@@ -9606,15 +9651,15 @@ export interface CreateDBInstanceReadReplicaMessage {
    *             Server, Oracle, and PostgreSQL DB instances can be created in an Active Directory Domain.</p>
    *          <p>For more information, see <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/kerberos-authentication.html">
    *             Kerberos Authentication</a> in the <i>Amazon RDS User Guide</i>.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   Domain?: string;
 
   /**
    * @public
-   * <p>The name of the IAM role to be used when making API calls to the Directory
+   * <p>The name of the IAM role to use when making API calls to the Directory
    *             Service.</p>
-   *          <p>This setting doesn't apply to RDS Custom.</p>
+   *          <p>This setting doesn't apply to RDS Custom DB instances.</p>
    */
   DomainIAMRoleName?: string;
 
@@ -9687,7 +9732,7 @@ export interface CreateDBInstanceReadReplicaMessage {
    *          <p>For RDS Custom, you must specify this parameter and set it to <code>mounted</code>. The value won't be set by default.
    *             After replica creation, you can manage the open mode manually.</p>
    */
-  ReplicaMode?: ReplicaMode | string;
+  ReplicaMode?: ReplicaMode;
 
   /**
    * @public
@@ -9717,14 +9762,14 @@ export interface CreateDBInstanceReadReplicaMessage {
    *          <p>For the list of permissions required for the IAM role, see
    *             <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-setup-orcl.html#custom-setup-orcl.iam-vpc">
    *                 Configure IAM and your VPC</a> in the <i>Amazon RDS User Guide</i>.</p>
-   *          <p>This setting is required for RDS Custom.</p>
+   *          <p>This setting is required for RDS Custom DB instances.</p>
    */
   CustomIamInstanceProfile?: string;
 
   /**
    * @public
    * <p>The network type of the DB instance.</p>
-   *          <p>Valid values:</p>
+   *          <p>Valid Values:</p>
    *          <ul>
    *             <li>
    *                <p>
@@ -9750,13 +9795,13 @@ export interface CreateDBInstanceReadReplicaMessage {
   /**
    * @public
    * <p>Specifies the storage throughput value for the read replica.</p>
-   *          <p>This setting doesn't apply to RDS Custom or Amazon Aurora.</p>
+   *          <p>This setting doesn't apply to RDS Custom or Amazon Aurora DB instances.</p>
    */
   StorageThroughput?: number;
 
   /**
    * @public
-   * <p>A value that indicates whether to enable a customer-owned IP address (CoIP) for an RDS
+   * <p>Specifies whether to enable a customer-owned IP address (CoIP) for an RDS
    *             on Outposts read replica.</p>
    *          <p>A <i>CoIP</i> provides local or external connectivity to resources in
    *             your Outpost subnets through your on-premises network. For some use cases, a CoIP can
@@ -9804,6 +9849,19 @@ export interface CreateDBInstanceReadReplicaMessage {
    *          </ul>
    */
   SourceDBClusterIdentifier?: string;
+
+  /**
+   * @public
+   * <p>Indicates whether the DB instance has a dedicated log volume (DLV) enabled.</p>
+   */
+  DedicatedLogVolume?: boolean;
+
+  /**
+   * @public
+   * <p>Whether to upgrade the storage file system configuration on the read replica. This option
+   *             migrates the read replica from the old storage file system layout to the preferred layout.</p>
+   */
+  UpgradeStorageConfig?: boolean;
 }
 
 /**
@@ -10065,7 +10123,7 @@ export interface UserAuthConfig {
    * @public
    * <p>The type of authentication that the proxy uses for connections from the proxy to the underlying database.</p>
    */
-  AuthScheme?: AuthScheme | string;
+  AuthScheme?: AuthScheme;
 
   /**
    * @public
@@ -10076,16 +10134,16 @@ export interface UserAuthConfig {
 
   /**
    * @public
-   * <p>Whether to require or disallow Amazon Web Services Identity and Access Management (IAM) authentication for connections to the proxy.
+   * <p>A value that indicates whether to require or disallow Amazon Web Services Identity and Access Management (IAM) authentication for connections to the proxy.
    *         The <code>ENABLED</code> value is valid only for proxies with RDS for Microsoft SQL Server.</p>
    */
-  IAMAuth?: IAMAuthMode | string;
+  IAMAuth?: IAMAuthMode;
 
   /**
    * @public
    * <p>The type of authentication the proxy uses for connections from clients.</p>
    */
-  ClientPasswordAuthType?: ClientPasswordAuthType | string;
+  ClientPasswordAuthType?: ClientPasswordAuthType;
 }
 
 /**
@@ -10121,7 +10179,7 @@ export interface CreateDBProxyRequest {
    *         For Aurora PostgreSQL and RDS for PostgreSQL databases, specify <code>POSTGRESQL</code>. For RDS for Microsoft SQL Server, specify
    *         <code>SQLSERVER</code>.</p>
    */
-  EngineFamily: EngineFamily | string | undefined;
+  EngineFamily: EngineFamily | undefined;
 
   /**
    * @public
@@ -10149,7 +10207,7 @@ export interface CreateDBProxyRequest {
 
   /**
    * @public
-   * <p>A Boolean parameter that specifies whether Transport Layer Security (TLS) encryption is required for connections to the proxy.
+   * <p>Specifies whether Transport Layer Security (TLS) encryption is required for connections to the proxy.
    *         By enabling this setting, you can enforce encrypted TLS connections to the proxy.</p>
    */
   RequireTLS?: boolean;
@@ -10163,7 +10221,7 @@ export interface CreateDBProxyRequest {
 
   /**
    * @public
-   * <p>Whether the proxy includes detailed information about SQL statements in its logs.
+   * <p>Specifies whether the proxy includes detailed information about SQL statements in its logs.
    *         This information helps you to debug issues involving SQL behavior or the performance
    *         and scalability of the proxy connections. The debug information includes the text of
    *         SQL statements that you submit through the proxy. Thus, only enable this setting
@@ -10200,7 +10258,7 @@ export interface UserAuthConfigInfo {
    * @public
    * <p>The type of authentication that the proxy uses for connections from the proxy to the underlying database.</p>
    */
-  AuthScheme?: AuthScheme | string;
+  AuthScheme?: AuthScheme;
 
   /**
    * @public
@@ -10214,13 +10272,13 @@ export interface UserAuthConfigInfo {
    * <p>Whether to require or disallow Amazon Web Services Identity and Access Management (IAM) authentication for connections to the proxy.
    *         The <code>ENABLED</code> value is valid only for proxies with RDS for Microsoft SQL Server.</p>
    */
-  IAMAuth?: IAMAuthMode | string;
+  IAMAuth?: IAMAuthMode;
 
   /**
    * @public
    * <p>The type of authentication the proxy uses for connections from clients.</p>
    */
-  ClientPasswordAuthType?: ClientPasswordAuthType | string;
+  ClientPasswordAuthType?: ClientPasswordAuthType;
 }
 
 /**
@@ -10268,7 +10326,7 @@ export interface DBProxy {
    *         proxy is ready to handle requests. Other values indicate that you must wait for
    *         the proxy to be ready, or take some action to resolve an issue.</p>
    */
-  Status?: DBProxyStatus | string;
+  Status?: DBProxyStatus;
 
   /**
    * @public
@@ -10335,7 +10393,7 @@ export interface DBProxy {
 
   /**
    * @public
-   * <p>Whether the proxy includes detailed information about SQL statements in its logs.
+   * <p>Indicates whether the proxy includes detailed information about SQL statements in its logs.
    *         This information helps you to debug issues involving SQL behavior or the performance
    *         and scalability of the proxy connections. The debug information includes the text of
    *         SQL statements that you submit through the proxy. Thus, only enable this setting
@@ -10455,11 +10513,11 @@ export interface CreateDBProxyEndpointRequest {
 
   /**
    * @public
-   * <p>A value that indicates whether the DB proxy endpoint can be used for read/write
-   *         or read-only operations. The default is <code>READ_WRITE</code>. The only role that proxies for RDS for Microsoft SQL Server
+   * <p>The role of the DB proxy endpoint. The role determines whether the endpoint can be used for read/write
+   *         or only read operations. The default is <code>READ_WRITE</code>. The only role that proxies for RDS for Microsoft SQL Server
    *         support is <code>READ_WRITE</code>.</p>
    */
-  TargetRole?: DBProxyEndpointTargetRole | string;
+  TargetRole?: DBProxyEndpointTargetRole;
 
   /**
    * @public
@@ -10523,7 +10581,7 @@ export interface DBProxyEndpoint {
    *         endpoint is ready to handle requests. Other values indicate that you must wait for
    *         the endpoint to be ready, or take some action to resolve an issue.</p>
    */
-  Status?: DBProxyEndpointStatus | string;
+  Status?: DBProxyEndpointStatus;
 
   /**
    * @public
@@ -10560,11 +10618,11 @@ export interface DBProxyEndpoint {
    * @public
    * <p>A value that indicates whether the DB proxy endpoint can be used for read/write or read-only operations.</p>
    */
-  TargetRole?: DBProxyEndpointTargetRole | string;
+  TargetRole?: DBProxyEndpointTargetRole;
 
   /**
    * @public
-   * <p>A value that indicates whether this endpoint is the default endpoint for the associated DB proxy.
+   * <p>Indicates whether this endpoint is the default endpoint for the associated DB proxy.
    *         Default DB proxy endpoints always have read/write capability. Other endpoints that you associate with the
    *         DB proxy can be either read/write or read-only.</p>
    */
@@ -10966,7 +11024,7 @@ export interface CreateEventSubscriptionMessage {
    *             notified of events generated by a DB instance, you set this parameter to
    *                 <code>db-instance</code>. For RDS Proxy events, specify <code>db-proxy</code>. If this value isn't specified, all events are
    *             returned.</p>
-   *          <p>Valid values: <code>db-instance</code> | <code>db-cluster</code> | <code>db-parameter-group</code> | <code>db-security-group</code> | <code>db-snapshot</code> | <code>db-cluster-snapshot</code> | <code>db-proxy</code>
+   *          <p>Valid Values: <code>db-instance</code> | <code>db-cluster</code> | <code>db-parameter-group</code> | <code>db-security-group</code> | <code>db-snapshot</code> | <code>db-cluster-snapshot</code> | <code>db-proxy</code>
    *          </p>
    */
   SourceType?: string;
@@ -11020,7 +11078,7 @@ export interface CreateEventSubscriptionMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether to activate the subscription. If the event notification subscription isn't activated, the subscription is created but not active.</p>
+   * <p>Specifies whether to activate the subscription. If the event notification subscription isn't activated, the subscription is created but not active.</p>
    */
   Enabled?: boolean;
 
@@ -11303,7 +11361,7 @@ export interface FailoverState {
    *             </li>
    *          </ul>
    */
-  Status?: FailoverStatus | string;
+  Status?: FailoverStatus;
 
   /**
    * @public
@@ -11363,7 +11421,7 @@ export interface GlobalClusterMember {
 
   /**
    * @public
-   * <p>Specifies whether the Aurora DB cluster is the primary cluster
+   * <p>Indicates whether the Aurora DB cluster is the primary cluster
    *         (that is, has read-write capability) for the global
    *         cluster with which it is associated.</p>
    */
@@ -11371,16 +11429,15 @@ export interface GlobalClusterMember {
 
   /**
    * @public
-   * <p>Specifies whether a secondary cluster in the global cluster has
-   *         write forwarding enabled, not enabled, or is in the process of enabling it.</p>
+   * <p>The status of write forwarding for a secondary cluster in the global cluster.</p>
    */
-  GlobalWriteForwardingStatus?: WriteForwardingStatus | string;
+  GlobalWriteForwardingStatus?: WriteForwardingStatus;
 
   /**
    * @public
    * <p>The status of synchronization of each Aurora DB cluster in the global cluster.</p>
    */
-  SynchronizationStatus?: GlobalClusterMemberSynchronizationStatus | string;
+  SynchronizationStatus?: GlobalClusterMemberSynchronizationStatus;
 }
 
 /**
@@ -11791,7 +11848,7 @@ export interface DeleteDBClusterMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether to skip the creation of a final DB cluster snapshot before the DB cluster is deleted.
+   * <p>Specifies whether to skip the creation of a final DB cluster snapshot before the DB cluster is deleted.
    *           If skip is specified, no DB cluster snapshot is created. If skip isn't specified, a DB cluster snapshot
    *           is created before the DB cluster is deleted. By default, skip isn't specified, and the DB cluster snapshot is created.
    *           By default, this parameter is disabled.</p>
@@ -11826,7 +11883,7 @@ export interface DeleteDBClusterMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether to remove automated backups immediately after the DB
+   * <p>Specifies whether to remove automated backups immediately after the DB
    *             cluster is deleted. This parameter isn't case-sensitive. The default is to remove
    *             automated backups immediately after the DB cluster is deleted.</p>
    */
@@ -11984,8 +12041,7 @@ export interface DBClusterAutomatedBackup {
 
   /**
    * @public
-   * <p>True if mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled, and
-   *             otherwise false.</p>
+   * <p>Indicates whether mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled.</p>
    */
   IAMDatabaseAuthenticationEnabled?: boolean;
 
@@ -11997,7 +12053,7 @@ export interface DBClusterAutomatedBackup {
 
   /**
    * @public
-   * <p>Specifies whether the source DB cluster is encrypted.</p>
+   * <p>Indicates whether the source DB cluster is encrypted.</p>
    */
   StorageEncrypted?: boolean;
 
@@ -12071,6 +12127,12 @@ export interface DBClusterAutomatedBackup {
    *          <p>This setting is only for non-Aurora Multi-AZ DB clusters.</p>
    */
   Iops?: number;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the recovery point in Amazon Web Services Backup.</p>
+   */
+  AwsBackupRecoveryPointArn?: string;
 }
 
 /**
@@ -12270,7 +12332,7 @@ export interface DeleteDBInstanceMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether to skip the creation of a final DB snapshot before deleting the instance.
+   * <p>Specifies whether to skip the creation of a final DB snapshot before deleting the instance.
    *           If you enable this parameter, RDS doesn't create a DB snapshot. If you don't enable this parameter,
    *           RDS creates a DB snapshot before the DB instance is deleted. By default, skip isn't enabled,
    *           and the DB snapshot is created.</p>
@@ -12312,7 +12374,7 @@ export interface DeleteDBInstanceMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether to remove automated backups immediately after the DB
+   * <p>Specifies whether to remove automated backups immediately after the DB
    *             instance is deleted. This parameter isn't case-sensitive. The default is to remove
    *             automated backups immediately after the DB instance is deleted.</p>
    */
@@ -12407,19 +12469,19 @@ export interface DBInstanceAutomatedBackup {
 
   /**
    * @public
-   * <p>Earliest and latest time an instance can be restored to.</p>
+   * <p>The earliest and latest time a DB instance can be restored to.</p>
    */
   RestoreWindow?: RestoreWindow;
 
   /**
    * @public
-   * <p>Specifies the allocated storage size in gibibytes (GiB).</p>
+   * <p>The allocated storage size for the the automated backup in gibibytes (GiB).</p>
    */
   AllocatedStorage?: number;
 
   /**
    * @public
-   * <p>Provides a list of status information for an automated backup:</p>
+   * <p>A list of status information for an automated backup:</p>
    *          <ul>
    *             <li>
    *                <p>
@@ -12457,13 +12519,13 @@ export interface DBInstanceAutomatedBackup {
 
   /**
    * @public
-   * <p>Provides the VPC ID associated with the DB instance.</p>
+   * <p>The VPC ID associated with the DB instance.</p>
    */
   VpcId?: string;
 
   /**
    * @public
-   * <p>Provides the date and time that the DB instance was created.</p>
+   * <p>The date and time when the DB instance was created.</p>
    */
   InstanceCreateTime?: Date;
 
@@ -12487,7 +12549,7 @@ export interface DBInstanceAutomatedBackup {
 
   /**
    * @public
-   * <p>License model information for the automated backup.</p>
+   * <p>The license model information for the automated backup.</p>
    */
   LicenseModel?: string;
 
@@ -12511,13 +12573,13 @@ export interface DBInstanceAutomatedBackup {
 
   /**
    * @public
-   * <p>Specifies whether the automated backup is encrypted.</p>
+   * <p>Indicates whether the automated backup is encrypted.</p>
    */
   Encrypted?: boolean;
 
   /**
    * @public
-   * <p>Specifies the storage type associated with the automated backup.</p>
+   * <p>The storage type associated with the automated backup.</p>
    */
   StorageType?: string;
 
@@ -12563,15 +12625,27 @@ export interface DBInstanceAutomatedBackup {
 
   /**
    * @public
-   * <p>Specifies where automated backups are stored: Amazon Web Services Outposts or the Amazon Web Services Region.</p>
+   * <p>The location where automated backups are stored: Amazon Web Services Outposts or the Amazon Web Services Region.</p>
    */
   BackupTarget?: string;
 
   /**
    * @public
-   * <p>Specifies the storage throughput for the automated backup.</p>
+   * <p>The storage throughput for the automated backup.</p>
    */
   StorageThroughput?: number;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) of the recovery point in Amazon Web Services Backup.</p>
+   */
+  AwsBackupRecoveryPointArn?: string;
+
+  /**
+   * @public
+   * <p>Indicates whether the DB instance has a dedicated log volume (DLV) enabled.</p>
+   */
+  DedicatedLogVolume?: boolean;
 }
 
 /**
@@ -13167,7 +13241,7 @@ export interface Certificate {
 
   /**
    * @public
-   * <p>Whether there is an override for the default certificate identifier.</p>
+   * <p>Indicates whether there is an override for the default certificate identifier.</p>
    */
   CustomerOverride?: boolean;
 
@@ -13184,6 +13258,14 @@ export interface Certificate {
  * <p>Data returned by the <b>DescribeCertificates</b> action.</p>
  */
 export interface CertificateMessage {
+  /**
+   * @public
+   * <p>The default root CA for new databases created by your Amazon Web Services account. This is either the root CA override
+   *             set on your Amazon Web Services account or the system default CA for the Region if no override exists. To override the default CA, use the
+   *             <code>ModifyCertificates</code> operation.</p>
+   */
+  DefaultCertificateForNewLaunches?: string;
+
   /**
    * @public
    * <p>The list of <code>Certificate</code> objects for the Amazon Web Services account.</p>
@@ -13635,13 +13717,13 @@ export type ApplyMethod = (typeof ApplyMethod)[keyof typeof ApplyMethod];
 export interface Parameter {
   /**
    * @public
-   * <p>Specifies the name of the parameter.</p>
+   * <p>The name of the parameter.</p>
    */
   ParameterName?: string;
 
   /**
    * @public
-   * <p>Specifies the value of the parameter.</p>
+   * <p>The value of the parameter.</p>
    */
   ParameterValue?: string;
 
@@ -13653,7 +13735,7 @@ export interface Parameter {
 
   /**
    * @public
-   * <p>Indicates the source of the parameter value.</p>
+   * <p>The source of the parameter value.</p>
    */
   Source?: string;
 
@@ -13693,7 +13775,7 @@ export interface Parameter {
    * @public
    * <p>Indicates when to apply parameter updates.</p>
    */
-  ApplyMethod?: ApplyMethod | string;
+  ApplyMethod?: ApplyMethod;
 
   /**
    * @public
@@ -13743,9 +13825,25 @@ export interface DescribeDBClusterParametersMessage {
 
   /**
    * @public
-   * <p>A value that indicates to return only parameters for a specific source.
-   *       Parameter sources can be <code>engine</code>, <code>service</code>,
-   *       or <code>customer</code>.</p>
+   * <p>A specific source to return parameters for.</p>
+   *          <p>Valid Values:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>customer</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>engine</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>service</code>
+   *                </p>
+   *             </li>
+   *          </ul>
    */
   Source?: string;
 
@@ -14098,7 +14196,7 @@ export interface DescribeDBClusterSnapshotsMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether to include shared manual DB cluster snapshots
+   * <p>Specifies whether to include shared manual DB cluster snapshots
    *             from other Amazon Web Services accounts that this Amazon Web Services account has been given
    *             permission to copy or restore. By default, these snapshots are not included.</p>
    *          <p>You can give an Amazon Web Services account permission to restore a manual DB cluster snapshot from
@@ -14108,7 +14206,7 @@ export interface DescribeDBClusterSnapshotsMessage {
 
   /**
    * @public
-   * <p>A value that indicates whether to include manual DB cluster snapshots that are public and can be copied
+   * <p>Specifies whether to include manual DB cluster snapshots that are public and can be copied
    *             or restored by any Amazon Web Services account. By default, the public snapshots are not included.</p>
    *          <p>You can share a manual DB cluster snapshot  as public by using the <a>ModifyDBClusterSnapshotAttribute</a> API action.</p>
    */

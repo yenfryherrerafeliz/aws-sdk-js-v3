@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListServiceQuotasRequest, ListServiceQuotasResponse } from "../models/models_0";
@@ -36,9 +37,9 @@ export interface ListServiceQuotasCommandOutput extends ListServiceQuotasRespons
 
 /**
  * @public
- * <p>Lists the applied quota values for the specified AWS service. For some quotas, only the
- *       default values are available. If the applied quota value is not available for a quota, the
- *       quota is not retrieved.</p>
+ * <p>Lists the applied quota values for the specified Amazon Web Service. For some quotas, only
+ *             the default values are available. If the applied quota value is not available for a
+ *             quota, the quota is not retrieved.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -49,6 +50,8 @@ export interface ListServiceQuotasCommandOutput extends ListServiceQuotasRespons
  *   ServiceCode: "STRING_VALUE", // required
  *   NextToken: "STRING_VALUE",
  *   MaxResults: Number("int"),
+ *   QuotaCode: "STRING_VALUE",
+ *   QuotaAppliedAtLevel: "ACCOUNT" || "RESOURCE" || "ALL",
  * };
  * const command = new ListServiceQuotasCommand(input);
  * const response = await client.send(command);
@@ -75,11 +78,17 @@ export interface ListServiceQuotasCommandOutput extends ListServiceQuotasRespons
  * //       },
  * //       Period: { // QuotaPeriod
  * //         PeriodValue: Number("int"),
- * //         PeriodUnit: "STRING_VALUE",
+ * //         PeriodUnit: "MICROSECOND" || "MILLISECOND" || "SECOND" || "MINUTE" || "HOUR" || "DAY" || "WEEK",
  * //       },
  * //       ErrorReason: { // ErrorReason
- * //         ErrorCode: "STRING_VALUE",
+ * //         ErrorCode: "DEPENDENCY_ACCESS_DENIED_ERROR" || "DEPENDENCY_THROTTLING_ERROR" || "DEPENDENCY_SERVICE_ERROR" || "SERVICE_QUOTA_NOT_AVAILABLE_ERROR",
  * //         ErrorMessage: "STRING_VALUE",
+ * //       },
+ * //       QuotaAppliedAtLevel: "ACCOUNT" || "RESOURCE" || "ALL",
+ * //       QuotaContext: { // QuotaContextInfo
+ * //         ContextScope: "RESOURCE" || "ACCOUNT",
+ * //         ContextScopeType: "STRING_VALUE",
+ * //         ContextId: "STRING_VALUE",
  * //       },
  * //     },
  * //   ],
@@ -109,8 +118,8 @@ export interface ListServiceQuotasCommandOutput extends ListServiceQuotasRespons
  *  <p>Something went wrong.</p>
  *
  * @throws {@link TooManyRequestsException} (client fault)
- *  <p>Due to throttling, the request was denied. Slow down the rate of request calls, or request
- *       an increase for this quota.</p>
+ *  <p>Due to throttling, the request was denied. Slow down the rate of request calls, or
+ *             request an increase for this quota.</p>
  *
  * @throws {@link ServiceQuotasServiceException}
  * <p>Base exception class for all service exceptions from ServiceQuotas service.</p>
@@ -166,6 +175,10 @@ export class ListServiceQuotasCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ServiceQuotasV20190624",
+        operation: "ListServiceQuotas",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

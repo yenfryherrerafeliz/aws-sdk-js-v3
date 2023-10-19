@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CognitoIdentityClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CognitoIdentityClient";
@@ -57,7 +58,7 @@ export interface DeleteIdentitiesCommandOutput extends DeleteIdentitiesResponse,
  * //   UnprocessedIdentityIds: [ // UnprocessedIdentityIdList
  * //     { // UnprocessedIdentityId
  * //       IdentityId: "STRING_VALUE",
- * //       ErrorCode: "STRING_VALUE",
+ * //       ErrorCode: "AccessDenied" || "InternalServerError",
  * //     },
  * //   ],
  * // };
@@ -134,6 +135,10 @@ export class DeleteIdentitiesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSCognitoIdentityService",
+        operation: "DeleteIdentities",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

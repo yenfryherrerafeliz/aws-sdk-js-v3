@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTAnalyticsClient";
@@ -56,7 +57,7 @@ export interface ListPipelinesCommandOutput extends ListPipelinesResponse, __Met
  * //       reprocessingSummaries: [ // ReprocessingSummaries
  * //         { // ReprocessingSummary
  * //           id: "STRING_VALUE",
- * //           status: "STRING_VALUE",
+ * //           status: "RUNNING" || "SUCCEEDED" || "CANCELLED" || "FAILED",
  * //           creationTime: new Date("TIMESTAMP"),
  * //         },
  * //       ],
@@ -139,6 +140,10 @@ export class ListPipelinesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIoTAnalytics",
+        operation: "ListPipelines",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

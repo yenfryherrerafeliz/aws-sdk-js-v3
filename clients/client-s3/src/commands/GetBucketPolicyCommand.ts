@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetBucketPolicyOutput, GetBucketPolicyRequest } from "../models/models_0";
@@ -47,10 +48,11 @@ export interface GetBucketPolicyCommandOutput extends GetBucketPolicyOutput, __M
  *          <important>
  *             <p>To ensure that bucket owners don't inadvertently lock themselves out of their own
  *             buckets, the root principal in a bucket owner's Amazon Web Services account can perform the
- *             <code>GetBucketPolicy</code>, <code>PutBucketPolicy</code>, and
- *             <code>DeleteBucketPolicy</code> API actions, even if their bucket policy explicitly
- *             denies the root principal's access. Bucket owner root principals can only be blocked from performing
- *             these API actions by VPC endpoint policies and Amazon Web Services Organizations policies.</p>
+ *                <code>GetBucketPolicy</code>, <code>PutBucketPolicy</code>, and
+ *                <code>DeleteBucketPolicy</code> API actions, even if their bucket policy explicitly
+ *             denies the root principal's access. Bucket owner root principals can only be blocked
+ *             from performing these API actions by VPC endpoint policies and Amazon Web Services Organizations
+ *             policies.</p>
  *          </important>
  *          <p>To use this API operation against an access point, provide the alias of the access point in place of the bucket name.</p>
  *          <p>To use this API operation against an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name.
@@ -167,6 +169,10 @@ export class GetBucketPolicyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonS3",
+        operation: "GetBucketPolicy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

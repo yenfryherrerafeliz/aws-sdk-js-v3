@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -37,12 +38,12 @@ export interface GetDeploymentCommandOutput extends GetDeploymentOutput, __Metad
 /**
  * @public
  * <p>Gets information about a deployment.</p>
- *         <note>
+ *          <note>
  *             <p> The <code>content</code> property of the <code>appSpecContent</code> object in
  *                 the returned revision is always null. Use <code>GetApplicationRevision</code> and
  *                 the <code>sha256</code> property of the returned <code>appSpecContent</code> object
  *                 to get the content of the deployment’s AppSpec file. </p>
- *         </note>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -241,8 +242,7 @@ export interface GetDeploymentCommandOutput extends GetDeploymentOutput, __Metad
  * @see {@link CodeDeployClientResolvedConfig | config} for CodeDeployClient's `config` shape.
  *
  * @throws {@link DeploymentDoesNotExistException} (client fault)
- *  <p>The deployment with the IAM user or Amazon Web Services account does not
- *             exist.</p>
+ *  <p>The deployment with the user or Amazon Web Services account does not exist.</p>
  *
  * @throws {@link DeploymentIdRequiredException} (client fault)
  *  <p>At least one deployment ID must be specified.</p>
@@ -302,6 +302,10 @@ export class GetDeploymentCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "GetDeployment",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

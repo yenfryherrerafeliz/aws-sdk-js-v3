@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CognitoSyncClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CognitoSyncClient";
@@ -52,7 +53,7 @@ export interface GetBulkPublishDetailsCommandOutput extends GetBulkPublishDetail
  * //   IdentityPoolId: "STRING_VALUE",
  * //   BulkPublishStartTime: new Date("TIMESTAMP"),
  * //   BulkPublishCompleteTime: new Date("TIMESTAMP"),
- * //   BulkPublishStatus: "STRING_VALUE",
+ * //   BulkPublishStatus: "NOT_STARTED" || "IN_PROGRESS" || "FAILED" || "SUCCEEDED",
  * //   FailureMessage: "STRING_VALUE",
  * // };
  *
@@ -134,6 +135,10 @@ export class GetBulkPublishDetailsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSCognitoSyncService",
+        operation: "GetBulkPublishDetails",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

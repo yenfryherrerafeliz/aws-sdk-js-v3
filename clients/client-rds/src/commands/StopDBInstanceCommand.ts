@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { StopDBInstanceMessage, StopDBInstanceResult } from "../models/models_1";
@@ -153,6 +154,7 @@ export interface StopDBInstanceCommandOutput extends StopDBInstanceResult, __Met
  * //       ResumeFullAutomationModeTime: new Date("TIMESTAMP"),
  * //       StorageThroughput: Number("int"),
  * //       Engine: "STRING_VALUE",
+ * //       DedicatedLogVolume: true || false,
  * //     },
  * //     LatestRestorableTime: new Date("TIMESTAMP"),
  * //     MultiAZ: true || false,
@@ -278,6 +280,8 @@ export interface StopDBInstanceCommandOutput extends StopDBInstanceResult, __Met
  * //     },
  * //     ReadReplicaSourceDBClusterIdentifier: "STRING_VALUE",
  * //     PercentProgress: "STRING_VALUE",
+ * //     DedicatedLogVolume: true || false,
+ * //     IsStorageConfigUpgradeAvailable: true || false,
  * //   },
  * // };
  *
@@ -379,6 +383,10 @@ export class StopDBInstanceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "StopDBInstance",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

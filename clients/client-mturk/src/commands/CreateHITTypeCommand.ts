@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateHITTypeRequest, CreateHITTypeResponse } from "../models/models_0";
@@ -58,7 +59,7 @@ export interface CreateHITTypeCommandOutput extends CreateHITTypeResponse, __Met
  *   QualificationRequirements: [ // QualificationRequirementList
  *     { // QualificationRequirement
  *       QualificationTypeId: "STRING_VALUE", // required
- *       Comparator: "STRING_VALUE", // required
+ *       Comparator: "LessThan" || "LessThanOrEqualTo" || "GreaterThan" || "GreaterThanOrEqualTo" || "EqualTo" || "NotEqualTo" || "Exists" || "DoesNotExist" || "In" || "NotIn", // required
  *       IntegerValues: [ // IntegerList
  *         Number("int"),
  *       ],
@@ -69,7 +70,7 @@ export interface CreateHITTypeCommandOutput extends CreateHITTypeResponse, __Met
  *         },
  *       ],
  *       RequiredToPreview: true || false,
- *       ActionsGuarded: "STRING_VALUE",
+ *       ActionsGuarded: "Accept" || "PreviewAndAccept" || "DiscoverPreviewAndAccept",
  *     },
  *   ],
  * };
@@ -145,6 +146,10 @@ export class CreateHITTypeCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MTurkRequesterServiceV20170117",
+        operation: "CreateHITType",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

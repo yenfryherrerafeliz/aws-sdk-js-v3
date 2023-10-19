@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -40,24 +41,24 @@ export interface BatchGetDeploymentTargetsCommandOutput extends BatchGetDeployme
  *             works with all compute types and should be used instead of the deprecated
  *                 <code>BatchGetDeploymentInstances</code>. The maximum number of targets that can be
  *             returned is 25.</p>
- *         <p> The type of targets returned depends on the deployment's compute platform or
+ *          <p> The type of targets returned depends on the deployment's compute platform or
  *             deployment method: </p>
- *         <ul>
+ *          <ul>
  *             <li>
- *                 <p>
- *                     <b>EC2/On-premises</b>: Information about Amazon EC2 instance targets. </p>
+ *                <p>
+ *                   <b>EC2/On-premises</b>: Information about Amazon EC2 instance targets. </p>
  *             </li>
  *             <li>
- *                 <p>
- *                     <b>Lambda</b>: Information about
+ *                <p>
+ *                   <b>Lambda</b>: Information about
  *                         Lambda functions targets. </p>
  *             </li>
  *             <li>
- *                 <p>
- *                     <b>Amazon ECS</b>: Information about Amazon ECS service targets. </p>
+ *                <p>
+ *                   <b>Amazon ECS</b>: Information about Amazon ECS service targets. </p>
  *             </li>
  *             <li>
- *                 <p>
+ *                <p>
  *                   <b>CloudFormation</b>: Information about
  *                     targets of blue/green deployments initiated by a CloudFormation stack
  *                     update.</p>
@@ -201,8 +202,7 @@ export interface BatchGetDeploymentTargetsCommandOutput extends BatchGetDeployme
  * @see {@link CodeDeployClientResolvedConfig | config} for CodeDeployClient's `config` shape.
  *
  * @throws {@link DeploymentDoesNotExistException} (client fault)
- *  <p>The deployment with the IAM user or Amazon Web Services account does not
- *             exist.</p>
+ *  <p>The deployment with the user or Amazon Web Services account does not exist.</p>
  *
  * @throws {@link DeploymentIdRequiredException} (client fault)
  *  <p>At least one deployment ID must be specified.</p>
@@ -285,6 +285,10 @@ export class BatchGetDeploymentTargetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "BatchGetDeploymentTargets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

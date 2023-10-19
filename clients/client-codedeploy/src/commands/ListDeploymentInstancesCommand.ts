@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -43,9 +44,8 @@ export interface ListDeploymentInstancesCommandOutput extends ListDeploymentInst
  *                 it works with all compute types. <code>ListDeploymentInstances</code> throws an
  *                 exception if it is used with a compute platform other than EC2/On-premises or
  *                     Lambda. </p>
- *         </note>
- *         <p> Lists the instance for a deployment associated with the IAM user or
- *                 Amazon Web Services account. </p>
+ *          </note>
+ *          <p> Lists the instance for a deployment associated with the user or Amazon Web Services account. </p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -80,8 +80,7 @@ export interface ListDeploymentInstancesCommandOutput extends ListDeploymentInst
  * @see {@link CodeDeployClientResolvedConfig | config} for CodeDeployClient's `config` shape.
  *
  * @throws {@link DeploymentDoesNotExistException} (client fault)
- *  <p>The deployment with the IAM user or Amazon Web Services account does not
- *             exist.</p>
+ *  <p>The deployment with the user or Amazon Web Services account does not exist.</p>
  *
  * @throws {@link DeploymentIdRequiredException} (client fault)
  *  <p>At least one deployment ID must be specified.</p>
@@ -167,6 +166,10 @@ export class ListDeploymentInstancesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "ListDeploymentInstances",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

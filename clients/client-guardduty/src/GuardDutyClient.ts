@@ -481,6 +481,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 
@@ -557,8 +559,8 @@ export interface GuardDutyClientResolvedConfig extends GuardDutyClientResolvedCo
  *          <p>GuardDuty informs you about the status of your Amazon Web Services environment by producing security
  *       findings that you can view in the GuardDuty console or through Amazon EventBridge. For more
  *       information, see the <i>
- *                <a href="https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html">Amazon GuardDuty User
- *         Guide</a>
+ *                <a href="https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html">Amazon
+ *           GuardDuty User Guide</a>
  *             </i>. </p>
  */
 export class GuardDutyClient extends __Client<

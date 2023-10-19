@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -106,6 +107,7 @@ export interface DescribeValidDBInstanceModificationsCommandOutput
  * //         AllowedValues: "STRING_VALUE",
  * //       },
  * //     ],
+ * //     SupportsDedicatedLogVolume: true || false,
  * //   },
  * // };
  *
@@ -212,6 +214,10 @@ export class DescribeValidDBInstanceModificationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "DescribeValidDBInstanceModifications",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

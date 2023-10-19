@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListAssetsInput, ListAssetsOutput } from "../models/models_0";
@@ -68,6 +69,9 @@ export interface ListAssetsCommandOutput extends ListAssetsOutput, __MetadataBea
  * //       ComputeAttributes: { // ComputeAttributes
  * //         HostId: "STRING_VALUE",
  * //         State: "ACTIVE" || "ISOLATED" || "RETIRING",
+ * //         InstanceFamilies: [ // InstanceFamilies
+ * //           "STRING_VALUE",
+ * //         ],
  * //       },
  * //       AssetLocation: { // AssetLocation
  * //         RackElevation: Number("float"),
@@ -149,6 +153,10 @@ export class ListAssetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OutpostsOlafService",
+        operation: "ListAssets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

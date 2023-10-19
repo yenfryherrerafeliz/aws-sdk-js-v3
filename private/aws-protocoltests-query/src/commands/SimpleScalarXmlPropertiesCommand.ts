@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { SimpleScalarXmlPropertiesOutput } from "../models/models_0";
@@ -33,6 +34,43 @@ export interface SimpleScalarXmlPropertiesCommandInput {}
  */
 export interface SimpleScalarXmlPropertiesCommandOutput extends SimpleScalarXmlPropertiesOutput, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { QueryProtocolClient, SimpleScalarXmlPropertiesCommand } from "@aws-sdk/aws-protocoltests-query"; // ES Modules import
+ * // const { QueryProtocolClient, SimpleScalarXmlPropertiesCommand } = require("@aws-sdk/aws-protocoltests-query"); // CommonJS import
+ * const client = new QueryProtocolClient(config);
+ * const input = {};
+ * const command = new SimpleScalarXmlPropertiesCommand(input);
+ * const response = await client.send(command);
+ * // { // SimpleScalarXmlPropertiesOutput
+ * //   stringValue: "STRING_VALUE",
+ * //   emptyStringValue: "STRING_VALUE",
+ * //   trueBooleanValue: true || false,
+ * //   falseBooleanValue: true || false,
+ * //   byteValue: "BYTE_VALUE",
+ * //   shortValue: Number("short"),
+ * //   integerValue: Number("int"),
+ * //   longValue: Number("long"),
+ * //   floatValue: Number("float"),
+ * //   doubleValue: Number("double"),
+ * // };
+ *
+ * ```
+ *
+ * @param SimpleScalarXmlPropertiesCommandInput - {@link SimpleScalarXmlPropertiesCommandInput}
+ * @returns {@link SimpleScalarXmlPropertiesCommandOutput}
+ * @see {@link SimpleScalarXmlPropertiesCommandInput} for command's `input` shape.
+ * @see {@link SimpleScalarXmlPropertiesCommandOutput} for command's `response` shape.
+ * @see {@link QueryProtocolClientResolvedConfig | config} for QueryProtocolClient's `config` shape.
+ *
+ * @throws {@link QueryProtocolServiceException}
+ * <p>Base exception class for all service exceptions from QueryProtocol service.</p>
+ *
+ */
 export class SimpleScalarXmlPropertiesCommand extends $Command<
   SimpleScalarXmlPropertiesCommandInput,
   SimpleScalarXmlPropertiesCommandOutput,
@@ -71,6 +109,10 @@ export class SimpleScalarXmlPropertiesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AwsQuery",
+        operation: "SimpleScalarXmlProperties",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

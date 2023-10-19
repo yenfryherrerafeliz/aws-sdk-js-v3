@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -36,7 +37,7 @@ export interface ListUsersCommandOutput extends ListUsersResponse, __MetadataBea
 
 /**
  * @public
- * <p>Lists all available user accounts in FinSpace.</p>
+ * <p>Lists all available users in FinSpace.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -53,12 +54,12 @@ export interface ListUsersCommandOutput extends ListUsersResponse, __MetadataBea
  * //   users: [ // UserList
  * //     { // User
  * //       userId: "STRING_VALUE",
- * //       status: "STRING_VALUE",
+ * //       status: "CREATING" || "ENABLED" || "DISABLED",
  * //       firstName: "STRING_VALUE",
  * //       lastName: "STRING_VALUE",
  * //       emailAddress: "STRING_VALUE",
- * //       type: "STRING_VALUE",
- * //       apiAccess: "STRING_VALUE",
+ * //       type: "SUPER_USER" || "APP_USER",
+ * //       apiAccess: "ENABLED" || "DISABLED",
  * //       apiAccessPrincipalArn: "STRING_VALUE",
  * //       createTime: Number("long"),
  * //       lastEnabledTime: Number("long"),
@@ -143,6 +144,10 @@ export class ListUsersCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: ListUsersResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "ListUsers",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

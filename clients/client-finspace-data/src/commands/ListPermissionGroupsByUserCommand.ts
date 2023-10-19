@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -40,7 +41,7 @@ export interface ListPermissionGroupsByUserCommandOutput extends ListPermissionG
 
 /**
  * @public
- * <p>Lists all the permission groups that are associated with a specific user account.</p>
+ * <p>Lists all the permission groups that are associated with a specific user.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -59,7 +60,7 @@ export interface ListPermissionGroupsByUserCommandOutput extends ListPermissionG
  * //     { // PermissionGroupByUser
  * //       permissionGroupId: "STRING_VALUE",
  * //       name: "STRING_VALUE",
- * //       membershipStatus: "STRING_VALUE",
+ * //       membershipStatus: "ADDITION_IN_PROGRESS" || "ADDITION_SUCCESS" || "REMOVAL_IN_PROGRESS",
  * //     },
  * //   ],
  * //   nextToken: "STRING_VALUE",
@@ -143,6 +144,10 @@ export class ListPermissionGroupsByUserCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: ListPermissionGroupsByUserResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "ListPermissionGroupsByUser",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

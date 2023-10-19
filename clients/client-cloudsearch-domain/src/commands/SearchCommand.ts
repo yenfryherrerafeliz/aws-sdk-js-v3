@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -64,7 +65,7 @@ export interface SearchCommandOutput extends SearchResponse, __MetadataBearer {}
  *   partial: true || false,
  *   query: "STRING_VALUE", // required
  *   queryOptions: "STRING_VALUE",
- *   queryParser: "STRING_VALUE",
+ *   queryParser: "simple" || "structured" || "lucene" || "dismax",
  *   return: "STRING_VALUE",
  *   size: Number("long"),
  *   sort: "STRING_VALUE",
@@ -186,6 +187,10 @@ export class SearchCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonCloudSearch2013",
+        operation: "Search",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

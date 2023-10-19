@@ -11,12 +11,15 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CustomerProfilesClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CustomerProfilesClient";
 import {
   UpdateCalculatedAttributeDefinitionRequest,
+  UpdateCalculatedAttributeDefinitionRequestFilterSensitiveLog,
   UpdateCalculatedAttributeDefinitionResponse,
+  UpdateCalculatedAttributeDefinitionResponseFilterSensitiveLog,
 } from "../models/models_0";
 import {
   de_UpdateCalculatedAttributeDefinitionCommand,
@@ -178,8 +181,12 @@ export class UpdateCalculatedAttributeDefinitionCommand extends $Command<
       logger,
       clientName,
       commandName,
-      inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      inputFilterSensitiveLog: UpdateCalculatedAttributeDefinitionRequestFilterSensitiveLog,
+      outputFilterSensitiveLog: UpdateCalculatedAttributeDefinitionResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CustomerProfiles_20200815",
+        operation: "UpdateCalculatedAttributeDefinition",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

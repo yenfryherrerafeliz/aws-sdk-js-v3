@@ -9,6 +9,7 @@ import {
 import { getLoggerPlugin } from "@aws-sdk/middleware-logger";
 import { getRecursionDetectionPlugin } from "@aws-sdk/middleware-recursion-detection";
 import {
+  getRegionRedirectMiddlewarePlugin,
   getValidateBucketNamePlugin,
   resolveS3Config,
   S3InputConfig,
@@ -668,6 +669,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 
@@ -778,6 +781,7 @@ export class S3Client extends __Client<
     this.middlewareStack.use(getAwsAuthPlugin(this.config));
     this.middlewareStack.use(getValidateBucketNamePlugin(this.config));
     this.middlewareStack.use(getAddExpectContinuePlugin(this.config));
+    this.middlewareStack.use(getRegionRedirectMiddlewarePlugin(this.config));
     this.middlewareStack.use(getUserAgentPlugin(this.config));
   }
 

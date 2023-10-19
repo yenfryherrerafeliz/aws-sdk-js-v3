@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeCachediSCSIVolumesInput, DescribeCachediSCSIVolumesOutput } from "../models/models_0";
@@ -38,7 +39,6 @@ export interface DescribeCachediSCSIVolumesCommandOutput extends DescribeCachedi
  * @public
  * <p>Returns a description of the gateway volumes specified in the request. This operation is
  *          only supported in the cached volume gateway types.</p>
- *
  *          <p>The list of gateway volumes in the request must be from one gateway. In the response,
  *             Storage Gateway returns volume information sorted by volume Amazon Resource Name
  *          (ARN).</p>
@@ -184,6 +184,10 @@ export class DescribeCachediSCSIVolumesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "DescribeCachediSCSIVolumes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

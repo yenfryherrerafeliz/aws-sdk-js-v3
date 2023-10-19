@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MediaStoreClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaStoreClient";
@@ -46,7 +47,7 @@ export interface PutMetricPolicyCommandOutput extends PutMetricPolicyOutput, __M
  * const input = { // PutMetricPolicyInput
  *   ContainerName: "STRING_VALUE", // required
  *   MetricPolicy: { // MetricPolicy
- *     ContainerLevelMetrics: "STRING_VALUE", // required
+ *     ContainerLevelMetrics: "ENABLED" || "DISABLED", // required
  *     MetricPolicyRules: [ // MetricPolicyRules
  *       { // MetricPolicyRule
  *         ObjectGroup: "STRING_VALUE", // required
@@ -131,6 +132,10 @@ export class PutMetricPolicyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaStore_20170901",
+        operation: "PutMetricPolicy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

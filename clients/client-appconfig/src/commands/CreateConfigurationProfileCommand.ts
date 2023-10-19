@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AppConfigClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppConfigClient";
@@ -103,6 +104,7 @@ export interface CreateConfigurationProfileCommandOutput extends ConfigurationPr
  *     "<keys>": "STRING_VALUE",
  *   },
  *   Type: "STRING_VALUE",
+ *   KmsKeyIdentifier: "STRING_VALUE",
  * };
  * const command = new CreateConfigurationProfileCommand(input);
  * const response = await client.send(command);
@@ -120,6 +122,8 @@ export interface CreateConfigurationProfileCommandOutput extends ConfigurationPr
  * //     },
  * //   ],
  * //   Type: "STRING_VALUE",
+ * //   KmsKeyArn: "STRING_VALUE",
+ * //   KmsKeyIdentifier: "STRING_VALUE",
  * // };
  *
  * ```
@@ -138,6 +142,17 @@ export interface CreateConfigurationProfileCommandOutput extends ConfigurationPr
  *
  * @throws {@link ResourceNotFoundException} (client fault)
  *  <p>The requested resource could not be found.</p>
+ *
+ * @throws {@link ServiceQuotaExceededException} (client fault)
+ *  <p>The number of one more AppConfig resources exceeds the maximum allowed. Verify that your
+ *          environment doesn't exceed the following service quotas:</p>
+ *          <p>Applications: 100 max</p>
+ *          <p>Deployment strategies: 20 max</p>
+ *          <p>Configuration profiles: 100 max per application</p>
+ *          <p>Environments: 20 max per application</p>
+ *          <p>To resolve this issue, you can delete one or more resources and try again. Or, you can
+ *          request a quota increase. For more information about quotas and to request an increase, see
+ *             <a href="https://docs.aws.amazon.com/general/latest/gr/appconfig.html#limits_appconfig">Service quotas for AppConfig</a> in the Amazon Web Services General Reference.</p>
  *
  * @throws {@link AppConfigServiceException}
  * <p>Base exception class for all service exceptions from AppConfig service.</p>
@@ -216,6 +231,10 @@ export class CreateConfigurationProfileCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateConfigurationProfileRequestFilterSensitiveLog,
       outputFilterSensitiveLog: ConfigurationProfileFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonAppConfig",
+        operation: "CreateConfigurationProfile",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

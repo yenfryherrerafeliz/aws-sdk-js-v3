@@ -11,10 +11,15 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
-import { DescribeConnectionRequest, DescribeConnectionResponse } from "../models/models_0";
+import {
+  DescribeConnectionRequest,
+  DescribeConnectionResponse,
+  DescribeConnectionResponseFilterSensitiveLog,
+} from "../models/models_0";
 import { de_DescribeConnectionCommand, se_DescribeConnectionCommand } from "../protocols/Aws_json1_1";
 
 /**
@@ -52,9 +57,9 @@ export interface DescribeConnectionCommandOutput extends DescribeConnectionRespo
  * //   ConnectionArn: "STRING_VALUE",
  * //   Name: "STRING_VALUE",
  * //   Description: "STRING_VALUE",
- * //   ConnectionState: "STRING_VALUE",
+ * //   ConnectionState: "CREATING" || "UPDATING" || "DELETING" || "AUTHORIZED" || "DEAUTHORIZED" || "AUTHORIZING" || "DEAUTHORIZING",
  * //   StateReason: "STRING_VALUE",
- * //   AuthorizationType: "STRING_VALUE",
+ * //   AuthorizationType: "BASIC" || "OAUTH_CLIENT_CREDENTIALS" || "API_KEY",
  * //   SecretArn: "STRING_VALUE",
  * //   AuthParameters: { // ConnectionAuthResponseParameters
  * //     BasicAuthParameters: { // ConnectionBasicAuthResponseParameters
@@ -65,7 +70,7 @@ export interface DescribeConnectionCommandOutput extends DescribeConnectionRespo
  * //         ClientID: "STRING_VALUE",
  * //       },
  * //       AuthorizationEndpoint: "STRING_VALUE",
- * //       HttpMethod: "STRING_VALUE",
+ * //       HttpMethod: "GET" || "POST" || "PUT",
  * //       OAuthHttpParameters: { // ConnectionHttpParameters
  * //         HeaderParameters: [ // ConnectionHeaderParametersList
  * //           { // ConnectionHeaderParameter
@@ -189,7 +194,11 @@ export class DescribeConnectionCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: DescribeConnectionResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "DescribeConnection",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

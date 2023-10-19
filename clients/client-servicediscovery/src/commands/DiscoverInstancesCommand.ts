@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DiscoverInstancesRequest, DiscoverInstancesResponse } from "../models/models_0";
@@ -37,8 +38,10 @@ export interface DiscoverInstancesCommandOutput extends DiscoverInstancesRespons
 /**
  * @public
  * <p>Discovers registered instances for a specified namespace and service. You can use
- *     <code>DiscoverInstances</code> to discover instances for any type of namespace. For public and
- *    private DNS namespaces, you can also use DNS queries to discover instances.</p>
+ *     <code>DiscoverInstances</code> to discover instances for any type of namespace.
+ *     <code>DiscoverInstances</code> returns a randomized list of instances allowing customers to
+ *    distribute traffic evenly across instances. For public and private DNS namespaces, you can also
+ *    use DNS queries to discover instances.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -71,6 +74,7 @@ export interface DiscoverInstancesCommandOutput extends DiscoverInstancesRespons
  * //       },
  * //     },
  * //   ],
+ * //   InstancesRevision: Number("long"),
  * // };
  *
  * ```
@@ -181,6 +185,10 @@ export class DiscoverInstancesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Route53AutoNaming_v20170314",
+        operation: "DiscoverInstances",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

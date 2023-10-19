@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LocationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LocationClient";
@@ -55,6 +56,7 @@ export interface CreateTrackerCommandOutput extends CreateTrackerResponse, __Met
  *   },
  *   PositionFiltering: "STRING_VALUE",
  *   EventBridgeEnabled: true || false,
+ *   KmsKeyEnableGeospatialQueries: true || false,
  * };
  * const command = new CreateTrackerCommand(input);
  * const response = await client.send(command);
@@ -144,6 +146,10 @@ export class CreateTrackerCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LocationService",
+        operation: "CreateTracker",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

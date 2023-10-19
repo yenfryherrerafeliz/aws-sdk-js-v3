@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AppRunnerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppRunnerClient";
@@ -41,8 +42,9 @@ export interface DeleteAutoScalingConfigurationCommandOutput
 
 /**
  * @public
- * <p>Delete an App Runner automatic scaling configuration resource. You can delete a specific revision or the latest active revision. You can't delete a
- *       configuration that's used by one or more App Runner services.</p>
+ * <p>Delete an App Runner automatic scaling configuration resource. You can delete a top level auto scaling configuration, a specific revision of one, or all
+ *       revisions associated with the top level configuration. You can't delete the default auto scaling configuration or a configuration that's used by one or
+ *       more App Runner services.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -51,6 +53,7 @@ export interface DeleteAutoScalingConfigurationCommandOutput
  * const client = new AppRunnerClient(config);
  * const input = { // DeleteAutoScalingConfigurationRequest
  *   AutoScalingConfigurationArn: "STRING_VALUE", // required
+ *   DeleteAllRevisions: true || false,
  * };
  * const command = new DeleteAutoScalingConfigurationCommand(input);
  * const response = await client.send(command);
@@ -66,6 +69,8 @@ export interface DeleteAutoScalingConfigurationCommandOutput
  * //     MaxSize: Number("int"),
  * //     CreatedAt: new Date("TIMESTAMP"),
  * //     DeletedAt: new Date("TIMESTAMP"),
+ * //     HasAssociatedService: true || false,
+ * //     IsDefault: true || false,
  * //   },
  * // };
  *
@@ -140,6 +145,10 @@ export class DeleteAutoScalingConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AppRunner",
+        operation: "DeleteAutoScalingConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

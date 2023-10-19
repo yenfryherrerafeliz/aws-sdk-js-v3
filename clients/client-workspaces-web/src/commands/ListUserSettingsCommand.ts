@@ -11,9 +11,14 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { ListUserSettingsRequest, ListUserSettingsResponse } from "../models/models_0";
+import {
+  ListUserSettingsRequest,
+  ListUserSettingsResponse,
+  ListUserSettingsResponseFilterSensitiveLog,
+} from "../models/models_0";
 import { de_ListUserSettingsCommand, se_ListUserSettingsCommand } from "../protocols/Aws_restJson1";
 import { ServiceInputTypes, ServiceOutputTypes, WorkSpacesWebClientResolvedConfig } from "../WorkSpacesWebClient";
 
@@ -52,7 +57,7 @@ export interface ListUserSettingsCommandOutput extends ListUserSettingsResponse,
  * // { // ListUserSettingsResponse
  * //   userSettings: [ // UserSettingsList
  * //     { // UserSettingsSummary
- * //       userSettingsArn: "STRING_VALUE",
+ * //       userSettingsArn: "STRING_VALUE", // required
  * //       copyAllowed: "STRING_VALUE",
  * //       pasteAllowed: "STRING_VALUE",
  * //       downloadAllowed: "STRING_VALUE",
@@ -60,6 +65,22 @@ export interface ListUserSettingsCommandOutput extends ListUserSettingsResponse,
  * //       printAllowed: "STRING_VALUE",
  * //       disconnectTimeoutInMinutes: Number("int"),
  * //       idleDisconnectTimeoutInMinutes: Number("int"),
+ * //       cookieSynchronizationConfiguration: { // CookieSynchronizationConfiguration
+ * //         allowlist: [ // CookieSpecifications // required
+ * //           { // CookieSpecification
+ * //             domain: "STRING_VALUE", // required
+ * //             name: "STRING_VALUE",
+ * //             path: "STRING_VALUE",
+ * //           },
+ * //         ],
+ * //         blocklist: [
+ * //           {
+ * //             domain: "STRING_VALUE", // required
+ * //             name: "STRING_VALUE",
+ * //             path: "STRING_VALUE",
+ * //           },
+ * //         ],
+ * //       },
  * //     },
  * //   ],
  * //   nextToken: "STRING_VALUE",
@@ -138,7 +159,11 @@ export class ListUserSettingsCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: ListUserSettingsResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSErmineControlPlaneService",
+        operation: "ListUserSettings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

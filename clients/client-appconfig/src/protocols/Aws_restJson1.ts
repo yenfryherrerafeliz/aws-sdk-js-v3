@@ -1,4 +1,5 @@
 // smithy-typescript generated code
+import { awsExpectUnion as __expectUnion } from "@aws-sdk/core";
 import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
@@ -8,7 +9,6 @@ import {
   expectNonNull as __expectNonNull,
   expectObject as __expectObject,
   expectString as __expectString,
-  expectUnion as __expectUnion,
   extendedEncodeURIComponent as __extendedEncodeURIComponent,
   limitedParseFloat32 as __limitedParseFloat32,
   map,
@@ -134,6 +134,7 @@ import {
 import { AppConfigServiceException as __BaseException } from "../models/AppConfigServiceException";
 import {
   Action,
+  ActionPoint,
   BadRequestException,
   ConflictException,
   DeploymentEvent,
@@ -205,6 +206,7 @@ export const se_CreateConfigurationProfileCommand = async (
   body = JSON.stringify(
     take(input, {
       Description: [],
+      KmsKeyIdentifier: [],
       LocationUri: [],
       Name: [],
       RetrievalRoleArn: [],
@@ -1563,6 +1565,7 @@ export const se_UpdateConfigurationProfileCommand = async (
   body = JSON.stringify(
     take(input, {
       Description: [],
+      KmsKeyIdentifier: [],
       Name: [],
       RetrievalRoleArn: [],
       Validators: (_) => _json(_),
@@ -1837,6 +1840,9 @@ const de_CreateApplicationCommandError = async (
     case "InternalServerException":
     case "com.amazonaws.appconfig#InternalServerException":
       throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ServiceQuotaExceededException":
+    case "com.amazonaws.appconfig#ServiceQuotaExceededException":
+      throw await de_ServiceQuotaExceededExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -1865,6 +1871,8 @@ export const de_CreateConfigurationProfileCommand = async (
     ApplicationId: __expectString,
     Description: __expectString,
     Id: __expectString,
+    KmsKeyArn: __expectString,
+    KmsKeyIdentifier: __expectString,
     LocationUri: __expectString,
     Name: __expectString,
     RetrievalRoleArn: __expectString,
@@ -1897,6 +1905,9 @@ const de_CreateConfigurationProfileCommandError = async (
     case "ResourceNotFoundException":
     case "com.amazonaws.appconfig#ResourceNotFoundException":
       throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ServiceQuotaExceededException":
+    case "com.amazonaws.appconfig#ServiceQuotaExceededException":
+      throw await de_ServiceQuotaExceededExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -1954,6 +1965,9 @@ const de_CreateDeploymentStrategyCommandError = async (
     case "InternalServerException":
     case "com.amazonaws.appconfig#InternalServerException":
       throw await de_InternalServerExceptionRes(parsedOutput, context);
+    case "ServiceQuotaExceededException":
+    case "com.amazonaws.appconfig#ServiceQuotaExceededException":
+      throw await de_ServiceQuotaExceededExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -2012,6 +2026,9 @@ const de_CreateEnvironmentCommandError = async (
     case "ResourceNotFoundException":
     case "com.amazonaws.appconfig#ResourceNotFoundException":
       throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
+    case "ServiceQuotaExceededException":
+    case "com.amazonaws.appconfig#ServiceQuotaExceededException":
+      throw await de_ServiceQuotaExceededExceptionRes(parsedOutput, context);
     default:
       const parsedBody = parsedOutput.body;
       return throwDefaultError({
@@ -2166,6 +2183,7 @@ export const de_CreateHostedConfigurationVersionCommand = async (
     Description: [, output.headers["description"]],
     ContentType: [, output.headers["content-type"]],
     VersionLabel: [, output.headers["versionlabel"]],
+    KmsKeyArn: [, output.headers["kmskeyarn"]],
   });
   const data: any = await collectBody(output.body, context);
   contents.Content = data;
@@ -2687,6 +2705,8 @@ export const de_GetConfigurationProfileCommand = async (
     ApplicationId: __expectString,
     Description: __expectString,
     Id: __expectString,
+    KmsKeyArn: __expectString,
+    KmsKeyIdentifier: __expectString,
     LocationUri: __expectString,
     Name: __expectString,
     RetrievalRoleArn: __expectString,
@@ -2765,6 +2785,7 @@ export const de_GetDeploymentCommand = async (
     PercentageComplete: __limitedParseFloat32,
     StartedAt: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     State: __expectString,
+    VersionLabel: __expectString,
   });
   Object.assign(contents, doc);
   return contents;
@@ -3058,6 +3079,7 @@ export const de_GetHostedConfigurationVersionCommand = async (
     Description: [, output.headers["description"]],
     ContentType: [, output.headers["content-type"]],
     VersionLabel: [, output.headers["versionlabel"]],
+    KmsKeyArn: [, output.headers["kmskeyarn"]],
   });
   const data: any = await collectBody(output.body, context);
   contents.Content = data;
@@ -3605,6 +3627,7 @@ export const de_StartDeploymentCommand = async (
     PercentageComplete: __limitedParseFloat32,
     StartedAt: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     State: __expectString,
+    VersionLabel: __expectString,
   });
   Object.assign(contents, doc);
   return contents;
@@ -3681,6 +3704,7 @@ export const de_StopDeploymentCommand = async (
     PercentageComplete: __limitedParseFloat32,
     StartedAt: (_) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     State: __expectString,
+    VersionLabel: __expectString,
   });
   Object.assign(contents, doc);
   return contents;
@@ -3889,6 +3913,8 @@ export const de_UpdateConfigurationProfileCommand = async (
     ApplicationId: __expectString,
     Description: __expectString,
     Id: __expectString,
+    KmsKeyArn: __expectString,
+    KmsKeyIdentifier: __expectString,
     LocationUri: __expectString,
     Name: __expectString,
     RetrievalRoleArn: __expectString,
@@ -4466,6 +4492,7 @@ const de_DeploymentSummary = (output: any, context: __SerdeContext): DeploymentS
     PercentageComplete: __limitedParseFloat32,
     StartedAt: (_: any) => __expectNonNull(__parseRfc3339DateTimeWithOffset(_)),
     State: __expectString,
+    VersionLabel: __expectString,
   }) as any;
 };
 

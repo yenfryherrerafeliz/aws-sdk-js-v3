@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DeleteObjectsOutput, DeleteObjectsRequest } from "../models/models_0";
@@ -58,7 +59,8 @@ export interface DeleteObjectsCommandOutput extends DeleteObjectsOutput, __Metad
  *          provide an invalid token, whether there are versioned keys in the request or not, the
  *          entire Multi-Object Delete request will fail. For information about MFA Delete, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html#MultiFactorAuthenticationDelete"> MFA
  *             Delete</a>.</p>
- *          <p>Finally, the Content-MD5 header is required for all Multi-Object Delete requests. Amazon S3 uses the header value to ensure that your request body has not been altered in
+ *          <p>Finally, the Content-MD5 header is required for all Multi-Object Delete requests. Amazon S3
+ *          uses the header value to ensure that your request body has not been altered in
  *          transit.</p>
  *          <p>The following operations are related to <code>DeleteObjects</code>:</p>
  *          <ul>
@@ -144,44 +146,6 @@ export interface DeleteObjectsCommandOutput extends DeleteObjectsOutput, __Metad
  * @throws {@link S3ServiceException}
  * <p>Base exception class for all service exceptions from S3 service.</p>
  *
- * @example To delete multiple objects from a versioned bucket
- * ```javascript
- * // The following example deletes objects from a bucket. The bucket is versioned, and the request does not specify the object version to delete. In this case, all versions remain in the bucket and S3 adds a delete marker.
- * const input = {
- *   "Bucket": "examplebucket",
- *   "Delete": {
- *     "Objects": [
- *       {
- *         "Key": "objectkey1"
- *       },
- *       {
- *         "Key": "objectkey2"
- *       }
- *     ],
- *     "Quiet": false
- *   }
- * };
- * const command = new DeleteObjectsCommand(input);
- * const response = await client.send(command);
- * /* response ==
- * {
- *   "Deleted": [
- *     {
- *       "DeleteMarker": "true",
- *       "DeleteMarkerVersionId": "A._w1z6EFiCF5uhtQMDal9JDkID9tQ7F",
- *       "Key": "objectkey1"
- *     },
- *     {
- *       "DeleteMarker": "true",
- *       "DeleteMarkerVersionId": "iOd_ORxhkKe_e8G8_oSGxt2PjsCZKlkt",
- *       "Key": "objectkey2"
- *     }
- *   ]
- * }
- * *\/
- * // example id: to-delete-multiple-objects-from-a-versioned-bucket-1483146248805
- * ```
- *
  * @example To delete multiple object versions from a versioned bucket
  * ```javascript
  * // The following example deletes objects from a bucket. The request specifies object versions. S3 deletes specific object versions and returns the key and versions of deleted objects in the response.
@@ -218,6 +182,44 @@ export interface DeleteObjectsCommandOutput extends DeleteObjectsOutput, __Metad
  * }
  * *\/
  * // example id: to-delete-multiple-object-versions-from-a-versioned-bucket-1483147087737
+ * ```
+ *
+ * @example To delete multiple objects from a versioned bucket
+ * ```javascript
+ * // The following example deletes objects from a bucket. The bucket is versioned, and the request does not specify the object version to delete. In this case, all versions remain in the bucket and S3 adds a delete marker.
+ * const input = {
+ *   "Bucket": "examplebucket",
+ *   "Delete": {
+ *     "Objects": [
+ *       {
+ *         "Key": "objectkey1"
+ *       },
+ *       {
+ *         "Key": "objectkey2"
+ *       }
+ *     ],
+ *     "Quiet": false
+ *   }
+ * };
+ * const command = new DeleteObjectsCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "Deleted": [
+ *     {
+ *       "DeleteMarker": "true",
+ *       "DeleteMarkerVersionId": "A._w1z6EFiCF5uhtQMDal9JDkID9tQ7F",
+ *       "Key": "objectkey1"
+ *     },
+ *     {
+ *       "DeleteMarker": "true",
+ *       "DeleteMarkerVersionId": "iOd_ORxhkKe_e8G8_oSGxt2PjsCZKlkt",
+ *       "Key": "objectkey2"
+ *     }
+ *   ]
+ * }
+ * *\/
+ * // example id: to-delete-multiple-objects-from-a-versioned-bucket-1483146248805
  * ```
  *
  */
@@ -282,6 +284,10 @@ export class DeleteObjectsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonS3",
+        operation: "DeleteObjects",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

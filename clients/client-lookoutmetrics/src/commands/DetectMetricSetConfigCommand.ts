@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutMetricsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutMetricsClient";
@@ -75,7 +76,7 @@ export interface DetectMetricSetConfigCommandOutput extends DetectMetricSetConfi
  * //           "STRING_VALUE",
  * //         ],
  * //       },
- * //       Confidence: "STRING_VALUE",
+ * //       Confidence: "HIGH" || "LOW" || "NONE",
  * //       Message: "STRING_VALUE",
  * //     },
  * //     MetricSetFrequency: {
@@ -93,7 +94,7 @@ export interface DetectMetricSetConfigCommandOutput extends DetectMetricSetConfi
  * //           "STRING_VALUE",
  * //         ],
  * //       },
- * //       Confidence: "STRING_VALUE",
+ * //       Confidence: "HIGH" || "LOW" || "NONE",
  * //       Message: "STRING_VALUE",
  * //     },
  * //     MetricSource: { // DetectedMetricSource
@@ -115,7 +116,7 @@ export interface DetectMetricSetConfigCommandOutput extends DetectMetricSetConfi
  * //                   "STRING_VALUE",
  * //                 ],
  * //               },
- * //               Confidence: "STRING_VALUE",
+ * //               Confidence: "HIGH" || "LOW" || "NONE",
  * //               Message: "STRING_VALUE",
  * //             },
  * //             Charset: {
@@ -133,7 +134,7 @@ export interface DetectMetricSetConfigCommandOutput extends DetectMetricSetConfi
  * //                   "STRING_VALUE",
  * //                 ],
  * //               },
- * //               Confidence: "STRING_VALUE",
+ * //               Confidence: "HIGH" || "LOW" || "NONE",
  * //               Message: "STRING_VALUE",
  * //             },
  * //             ContainsHeader: {
@@ -151,7 +152,7 @@ export interface DetectMetricSetConfigCommandOutput extends DetectMetricSetConfi
  * //                   "STRING_VALUE",
  * //                 ],
  * //               },
- * //               Confidence: "STRING_VALUE",
+ * //               Confidence: "HIGH" || "LOW" || "NONE",
  * //               Message: "STRING_VALUE",
  * //             },
  * //             Delimiter: "<DetectedField>",
@@ -246,6 +247,10 @@ export class DetectMetricSetConfigCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutMetrics",
+        operation: "DetectMetricSetConfig",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

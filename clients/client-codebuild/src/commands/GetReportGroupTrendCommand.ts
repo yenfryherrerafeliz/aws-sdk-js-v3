@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeBuildClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeBuildClient";
@@ -46,7 +47,7 @@ export interface GetReportGroupTrendCommandOutput extends GetReportGroupTrendOut
  * const input = { // GetReportGroupTrendInput
  *   reportGroupArn: "STRING_VALUE", // required
  *   numOfReports: Number("int"),
- *   trendField: "STRING_VALUE", // required
+ *   trendField: "PASS_RATE" || "DURATION" || "TOTAL" || "LINE_COVERAGE" || "LINES_COVERED" || "LINES_MISSED" || "BRANCH_COVERAGE" || "BRANCHES_COVERED" || "BRANCHES_MISSED", // required
  * };
  * const command = new GetReportGroupTrendCommand(input);
  * const response = await client.send(command);
@@ -132,6 +133,10 @@ export class GetReportGroupTrendCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeBuild_20161006",
+        operation: "GetReportGroupTrend",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

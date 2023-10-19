@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -53,6 +54,11 @@ export interface CreateDataProviderCommandOutput extends CreateDataProviderRespo
  *   Description: "STRING_VALUE",
  *   Engine: "STRING_VALUE", // required
  *   Settings: { // DataProviderSettings Union: only one key present
+ *     RedshiftSettings: { // RedshiftDataProviderSettings
+ *       ServerName: "STRING_VALUE",
+ *       Port: Number("int"),
+ *       DatabaseName: "STRING_VALUE",
+ *     },
  *     PostgreSqlSettings: { // PostgreSqlDataProviderSettings
  *       ServerName: "STRING_VALUE",
  *       Port: Number("int"),
@@ -85,6 +91,29 @@ export interface CreateDataProviderCommandOutput extends CreateDataProviderRespo
  *       SslMode: "none" || "require" || "verify-ca" || "verify-full",
  *       CertificateArn: "STRING_VALUE",
  *     },
+ *     DocDbSettings: { // DocDbDataProviderSettings
+ *       ServerName: "STRING_VALUE",
+ *       Port: Number("int"),
+ *       DatabaseName: "STRING_VALUE",
+ *       SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ *       CertificateArn: "STRING_VALUE",
+ *     },
+ *     MariaDbSettings: { // MariaDbDataProviderSettings
+ *       ServerName: "STRING_VALUE",
+ *       Port: Number("int"),
+ *       SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ *       CertificateArn: "STRING_VALUE",
+ *     },
+ *     MongoDbSettings: { // MongoDbDataProviderSettings
+ *       ServerName: "STRING_VALUE",
+ *       Port: Number("int"),
+ *       DatabaseName: "STRING_VALUE",
+ *       SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ *       CertificateArn: "STRING_VALUE",
+ *       AuthType: "no" || "password",
+ *       AuthSource: "STRING_VALUE",
+ *       AuthMechanism: "default" || "mongodb_cr" || "scram_sha_1",
+ *     },
  *   },
  *   Tags: [ // TagList
  *     { // Tag
@@ -104,6 +133,11 @@ export interface CreateDataProviderCommandOutput extends CreateDataProviderRespo
  * //     Description: "STRING_VALUE",
  * //     Engine: "STRING_VALUE",
  * //     Settings: { // DataProviderSettings Union: only one key present
+ * //       RedshiftSettings: { // RedshiftDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         DatabaseName: "STRING_VALUE",
+ * //       },
  * //       PostgreSqlSettings: { // PostgreSqlDataProviderSettings
  * //         ServerName: "STRING_VALUE",
  * //         Port: Number("int"),
@@ -136,6 +170,29 @@ export interface CreateDataProviderCommandOutput extends CreateDataProviderRespo
  * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
  * //         CertificateArn: "STRING_VALUE",
  * //       },
+ * //       DocDbSettings: { // DocDbDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         DatabaseName: "STRING_VALUE",
+ * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //         CertificateArn: "STRING_VALUE",
+ * //       },
+ * //       MariaDbSettings: { // MariaDbDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //         CertificateArn: "STRING_VALUE",
+ * //       },
+ * //       MongoDbSettings: { // MongoDbDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         DatabaseName: "STRING_VALUE",
+ * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //         CertificateArn: "STRING_VALUE",
+ * //         AuthType: "no" || "password",
+ * //         AuthSource: "STRING_VALUE",
+ * //         AuthMechanism: "default" || "mongodb_cr" || "scram_sha_1",
+ * //       },
  * //     },
  * //   },
  * // };
@@ -160,6 +217,51 @@ export interface CreateDataProviderCommandOutput extends CreateDataProviderRespo
  *
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
+ *
+ * @example Create Data Provider
+ * ```javascript
+ * // Creates the data provider with the specified parameters.
+ * const input = {
+ *   "DataProviderName": "sqlServer-dev",
+ *   "Description": "description",
+ *   "Engine": "sqlserver",
+ *   "Settings": {
+ *     "MicrosoftSqlServerSettings": {
+ *       "DatabaseName": "DatabaseName",
+ *       "Port": 11112,
+ *       "ServerName": "ServerName2",
+ *       "SslMode": "none"
+ *     }
+ *   },
+ *   "Tags": [
+ *     {
+ *       "Key": "access",
+ *       "Value": "authorizedusers"
+ *     }
+ *   ]
+ * };
+ * const command = new CreateDataProviderCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "DataProvider": {
+ *     "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:my-target-dataprovider",
+ *     "DataProviderCreationTime": "2023-05-12T10:50:41.988561Z",
+ *     "DataProviderName": "my-target-dataprovider",
+ *     "Engine": "postgres",
+ *     "Settings": {
+ *       "PostgreSqlSettings": {
+ *         "DatabaseName": "target",
+ *         "Port": 5432,
+ *         "ServerName": "postrgesql.a1b2c3d4e5f6.us-east-1.rds.amazonaws.com",
+ *         "SslMode": "none"
+ *       }
+ *     }
+ *   }
+ * }
+ * *\/
+ * // example id: create-data-provider-1689726511871
+ * ```
  *
  */
 export class CreateDataProviderCommand extends $Command<
@@ -212,6 +314,10 @@ export class CreateDataProviderCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "CreateDataProvider",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

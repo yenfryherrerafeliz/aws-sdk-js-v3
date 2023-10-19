@@ -11,10 +11,12 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MediaLiveClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaLiveClient";
-import { ListMultiplexesRequest, ListMultiplexesResponse } from "../models/models_1";
+import { ListMultiplexesRequest } from "../models/models_1";
+import { ListMultiplexesResponse } from "../models/models_2";
 import { de_ListMultiplexesCommand, se_ListMultiplexesCommand } from "../protocols/Aws_restJson1";
 
 /**
@@ -152,6 +154,10 @@ export class ListMultiplexesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaLive",
+        operation: "ListMultiplexes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

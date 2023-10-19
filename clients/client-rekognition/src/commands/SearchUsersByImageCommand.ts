@@ -11,9 +11,11 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { SearchUsersByImageRequest, SearchUsersByImageResponse } from "../models/models_0";
+import { SearchUsersByImageRequest } from "../models/models_0";
+import { SearchUsersByImageResponse } from "../models/models_1";
 import { de_SearchUsersByImageCommand, se_SearchUsersByImageCommand } from "../protocols/Aws_json1_1";
 import { RekognitionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RekognitionClient";
 
@@ -407,6 +409,10 @@ export class SearchUsersByImageCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RekognitionService",
+        operation: "SearchUsersByImage",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

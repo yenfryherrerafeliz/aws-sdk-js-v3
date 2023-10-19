@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -45,7 +46,7 @@ export interface PutPermissionsBoundaryToPermissionSetCommandOutput
 
 /**
  * @public
- * <p>Attaches an AWS managed or customer managed policy to the specified <a>PermissionSet</a> as a permissions boundary.</p>
+ * <p>Attaches an Amazon Web Services managed or customer managed policy to the specified <a>PermissionSet</a> as a permissions boundary.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -152,6 +153,10 @@ export class PutPermissionsBoundaryToPermissionSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SWBExternalService",
+        operation: "PutPermissionsBoundaryToPermissionSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

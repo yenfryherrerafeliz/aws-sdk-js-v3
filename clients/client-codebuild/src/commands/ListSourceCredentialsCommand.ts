@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeBuildClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeBuildClient";
@@ -50,8 +51,8 @@ export interface ListSourceCredentialsCommandOutput extends ListSourceCredential
  * //   sourceCredentialsInfos: [ // SourceCredentialsInfos
  * //     { // SourceCredentialsInfo
  * //       arn: "STRING_VALUE",
- * //       serverType: "STRING_VALUE",
- * //       authType: "STRING_VALUE",
+ * //       serverType: "GITHUB" || "BITBUCKET" || "GITHUB_ENTERPRISE",
+ * //       authType: "OAUTH" || "BASIC_AUTH" || "PERSONAL_ACCESS_TOKEN",
  * //     },
  * //   ],
  * // };
@@ -121,6 +122,10 @@ export class ListSourceCredentialsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeBuild_20161006",
+        operation: "ListSourceCredentials",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

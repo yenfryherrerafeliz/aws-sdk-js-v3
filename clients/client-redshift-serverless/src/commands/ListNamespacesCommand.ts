@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -76,6 +77,8 @@ export interface ListNamespacesCommandOutput extends ListNamespacesResponse, __M
  * //       ],
  * //       status: "STRING_VALUE",
  * //       creationDate: new Date("TIMESTAMP"),
+ * //       adminPasswordSecretArn: "STRING_VALUE",
+ * //       adminPasswordSecretKmsKeyId: "STRING_VALUE",
  * //     },
  * //   ],
  * // };
@@ -148,6 +151,10 @@ export class ListNamespacesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: ListNamespacesResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RedshiftServerless",
+        operation: "ListNamespaces",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

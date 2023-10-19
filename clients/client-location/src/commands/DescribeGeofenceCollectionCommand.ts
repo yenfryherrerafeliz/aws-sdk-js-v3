@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LocationClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LocationClient";
@@ -60,6 +61,7 @@ export interface DescribeGeofenceCollectionCommandOutput extends DescribeGeofenc
  * //   },
  * //   CreateTime: new Date("TIMESTAMP"), // required
  * //   UpdateTime: new Date("TIMESTAMP"), // required
+ * //   GeofenceCount: Number("int"),
  * // };
  *
  * ```
@@ -140,6 +142,10 @@ export class DescribeGeofenceCollectionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LocationService",
+        operation: "DescribeGeofenceCollection",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

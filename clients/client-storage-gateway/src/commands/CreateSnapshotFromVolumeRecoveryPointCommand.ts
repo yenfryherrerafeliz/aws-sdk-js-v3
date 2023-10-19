@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -46,11 +47,9 @@ export interface CreateSnapshotFromVolumeRecoveryPointCommandOutput
  * @public
  * <p>Initiates a snapshot of a gateway from a volume recovery point. This operation is only
  *          supported in the cached volume gateway type.</p>
- *
  *          <p>A volume recovery point is a point in time at which all data of the volume is consistent
  *          and from which you can create a snapshot. To get a list of volume recovery point for cached
  *          volume gateway, use <a>ListVolumeRecoveryPoints</a>.</p>
- *
  *          <p>In the <code>CreateSnapshotFromVolumeRecoveryPoint</code> request, you identify the
  *          volume by providing its Amazon Resource Name (ARN). You must also provide a description for
  *          the snapshot. When the gateway takes a snapshot of the specified volume, the snapshot and
@@ -58,7 +57,6 @@ export interface CreateSnapshotFromVolumeRecoveryPointCommandOutput
  *           In response, the gateway returns
  *          you a snapshot ID. You can use this snapshot ID to check the snapshot progress or later use
  *          it when you want to create a volume from a snapshot.</p>
- *
  *          <note>
  *             <p>To list or delete a snapshot, you must use the Amazon EC2 API. For more information,
  *             see <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSnapshots.html">DescribeSnapshots</a>
@@ -182,6 +180,10 @@ export class CreateSnapshotFromVolumeRecoveryPointCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "CreateSnapshotFromVolumeRecoveryPoint",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

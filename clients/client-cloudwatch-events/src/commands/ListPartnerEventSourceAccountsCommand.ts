@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -63,7 +64,7 @@ export interface ListPartnerEventSourceAccountsCommandOutput
  * //       Account: "STRING_VALUE",
  * //       CreationTime: new Date("TIMESTAMP"),
  * //       ExpirationTime: new Date("TIMESTAMP"),
- * //       State: "STRING_VALUE",
+ * //       State: "PENDING" || "ACTIVE" || "DELETED",
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -140,6 +141,10 @@ export class ListPartnerEventSourceAccountsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "ListPartnerEventSourceAccounts",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

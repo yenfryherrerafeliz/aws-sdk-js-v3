@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateUserRequest, CreateUserRequestFilterSensitiveLog, CreateUserResponse } from "../models/models_0";
@@ -47,7 +48,11 @@ export interface CreateUserCommandOutput extends CreateUserResponse, __MetadataB
  *   OrganizationId: "STRING_VALUE", // required
  *   Name: "STRING_VALUE", // required
  *   DisplayName: "STRING_VALUE", // required
- *   Password: "STRING_VALUE", // required
+ *   Password: "STRING_VALUE",
+ *   Role: "USER" || "RESOURCE" || "SYSTEM_USER" || "REMOTE_USER",
+ *   FirstName: "STRING_VALUE",
+ *   LastName: "STRING_VALUE",
+ *   HiddenFromGlobalAddressList: true || false,
  * };
  * const command = new CreateUserCommand(input);
  * const response = await client.send(command);
@@ -145,6 +150,10 @@ export class CreateUserCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateUserRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkMailService",
+        operation: "CreateUser",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

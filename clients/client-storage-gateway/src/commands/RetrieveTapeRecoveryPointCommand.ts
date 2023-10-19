@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { RetrieveTapeRecoveryPointInput, RetrieveTapeRecoveryPointOutput } from "../models/models_0";
@@ -38,11 +39,9 @@ export interface RetrieveTapeRecoveryPointCommandOutput extends RetrieveTapeReco
  * @public
  * <p>Retrieves the recovery point for the specified virtual tape. This operation is only
  *          supported in the tape gateway type.</p>
- *
  *          <p>A recovery point is a point in time view of a virtual tape at which all the data on the
  *          tape is consistent. If your gateway crashes, virtual tapes that have recovery points can be
  *          recovered to a new gateway.</p>
- *
  *          <note>
  *             <p>The virtual tape can be retrieved to only one gateway. The retrieved tape is
  *             read-only. The virtual tape can be retrieved to only a tape gateway. There is no charge
@@ -151,6 +150,10 @@ export class RetrieveTapeRecoveryPointCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "RetrieveTapeRecoveryPoint",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

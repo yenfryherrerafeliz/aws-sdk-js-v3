@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DynamoDBClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DynamoDBClient";
@@ -264,6 +265,13 @@ export interface TransactGetItemsCommandOutput extends TransactGetItemsOutput, _
  *             </li>
  *             <li>
  *                <p>There is a user error, such as an invalid data format.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                     There is an ongoing <code>TransactWriteItems</code> operation that conflicts with a concurrent
+ *                     <code>TransactWriteItems</code> request. In this case the <code>TransactWriteItems</code> operation
+ *                     fails with a <code>TransactionCanceledException</code>.
+ *                 </p>
  *             </li>
  *          </ul>
  *          <p>DynamoDB cancels a <code>TransactGetItems</code> request under the
@@ -524,6 +532,10 @@ export class TransactGetItemsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "DynamoDB_20120810",
+        operation: "TransactGetItems",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -172,7 +172,7 @@ export interface Snapshot {
    * @public
    * <p>The status of the snapshot.</p>
    */
-  status?: SnapshotStatus | string;
+  status?: SnapshotStatus;
 
   /**
    * @public
@@ -258,6 +258,18 @@ export interface Snapshot {
    * <p>All of the Amazon Web Services accounts that have access to restore a snapshot to a provisioned cluster.</p>
    */
   accountsWithProvisionedRestoreAccess?: string[];
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) for the namespace's admin user credentials secret.</p>
+   */
+  adminPasswordSecretArn?: string;
+
+  /**
+   * @public
+   * <p>The ID of the Key Management Service (KMS) key used to encrypt and store the namespace's admin credentials secret.</p>
+   */
+  adminPasswordSecretKmsKeyId?: string;
 }
 
 /**
@@ -605,6 +617,7 @@ export interface CreateNamespaceRequest {
   /**
    * @public
    * <p>The password of the administrator for the first database created in the namespace.</p>
+   *          <p>You can't use <code>adminUserPassword</code> if <code>manageAdminPassword</code> is true. </p>
    */
   adminUserPassword?: string;
 
@@ -637,13 +650,30 @@ export interface CreateNamespaceRequest {
    * <p>The types of logs the namespace can export.
    *          Available export types are <code>userlog</code>, <code>connectionlog</code>, and <code>useractivitylog</code>.</p>
    */
-  logExports?: (LogExport | string)[];
+  logExports?: LogExport[];
 
   /**
    * @public
    * <p>A list of tag instances.</p>
    */
   tags?: Tag[];
+
+  /**
+   * @public
+   * <p>If <code>true</code>, Amazon Redshift uses Secrets Manager to manage the namespace's admin credentials.
+   *          You can't use <code>adminUserPassword</code> if <code>manageAdminPassword</code> is true.
+   *          If <code>manageAdminPassword</code> is false or not set, Amazon Redshift uses
+   *          <code>adminUserPassword</code> for the admin user account's password.
+   *       </p>
+   */
+  manageAdminPassword?: boolean;
+
+  /**
+   * @public
+   * <p>The ID of the Key Management Service (KMS) key used to encrypt and store the namespace's admin credentials secret.
+   *          You can only use this parameter if <code>manageAdminPassword</code> is true.</p>
+   */
+  adminPasswordSecretKmsKeyId?: string;
 }
 
 /**
@@ -721,19 +751,31 @@ export interface Namespace {
    * @public
    * <p>The types of logs the namespace can export. Available export types are User log, Connection log, and User activity log.</p>
    */
-  logExports?: (LogExport | string)[];
+  logExports?: LogExport[];
 
   /**
    * @public
    * <p>The status of the namespace.</p>
    */
-  status?: NamespaceStatus | string;
+  status?: NamespaceStatus;
 
   /**
    * @public
    * <p>The date of when the namespace was created.</p>
    */
   creationDate?: Date;
+
+  /**
+   * @public
+   * <p>The Amazon Resource Name (ARN) for the namespace's admin user credentials secret.</p>
+   */
+  adminPasswordSecretArn?: string;
+
+  /**
+   * @public
+   * <p>The ID of the Key Management Service (KMS) key used to encrypt and store the namespace's admin credentials secret.</p>
+   */
+  adminPasswordSecretKmsKeyId?: string;
 }
 
 /**
@@ -845,7 +887,7 @@ export interface CreateUsageLimitRequest {
    * @public
    * <p>The type of Amazon Redshift Serverless usage to create a usage limit for.</p>
    */
-  usageType: UsageLimitUsageType | string | undefined;
+  usageType: UsageLimitUsageType | undefined;
 
   /**
    * @public
@@ -858,13 +900,13 @@ export interface CreateUsageLimitRequest {
    * @public
    * <p>The time period that the amount applies to. A weekly period begins on Sunday. The default is monthly.</p>
    */
-  period?: UsageLimitPeriod | string;
+  period?: UsageLimitPeriod;
 
   /**
    * @public
    * <p>The action that Amazon Redshift Serverless takes when the limit is reached. The default is log.</p>
    */
-  breachAction?: UsageLimitBreachAction | string;
+  breachAction?: UsageLimitBreachAction;
 }
 
 /**
@@ -894,7 +936,7 @@ export interface UsageLimit {
    * @public
    * <p>The Amazon Redshift Serverless feature to limit.</p>
    */
-  usageType?: UsageLimitUsageType | string;
+  usageType?: UsageLimitUsageType;
 
   /**
    * @public
@@ -906,13 +948,13 @@ export interface UsageLimit {
    * @public
    * <p>The time period that the amount applies to. A weekly period begins on Sunday. The default is monthly.</p>
    */
-  period?: UsageLimitPeriod | string;
+  period?: UsageLimitPeriod;
 
   /**
    * @public
    * <p>The action that Amazon Redshift Serverless takes when the limit is reached.</p>
    */
-  breachAction?: UsageLimitBreachAction | string;
+  breachAction?: UsageLimitBreachAction;
 }
 
 /**
@@ -1103,7 +1145,7 @@ export interface Workgroup {
    * @public
    * <p>The status of the workgroup.</p>
    */
-  status?: WorkgroupStatus | string;
+  status?: WorkgroupStatus;
 
   /**
    * @public
@@ -2108,7 +2150,7 @@ export interface ListUsageLimitsRequest {
    * @public
    * <p>The Amazon Redshift Serverless feature whose limits you want to see.</p>
    */
-  usageType?: UsageLimitUsageType | string;
+  usageType?: UsageLimitUsageType;
 
   /**
    * @public
@@ -2200,6 +2242,7 @@ export interface UpdateNamespaceRequest {
    * @public
    * <p>The password of the administrator for the first database created in the namespace. This parameter must be updated together
    *       with <code>adminUsername</code>.</p>
+   *          <p>You can't use <code>adminUserPassword</code> if <code>manageAdminPassword</code> is true. </p>
    */
   adminUserPassword?: string;
 
@@ -2233,7 +2276,24 @@ export interface UpdateNamespaceRequest {
    * @public
    * <p>The types of logs the namespace can export. The export types are <code>userlog</code>, <code>connectionlog</code>, and <code>useractivitylog</code>.</p>
    */
-  logExports?: (LogExport | string)[];
+  logExports?: LogExport[];
+
+  /**
+   * @public
+   * <p>If <code>true</code>, Amazon Redshift uses Secrets Manager to manage the namespace's admin credentials.
+   *          You can't use <code>adminUserPassword</code> if <code>manageAdminPassword</code> is true.
+   *          If <code>manageAdminPassword</code> is false or not set, Amazon Redshift uses
+   *          <code>adminUserPassword</code> for the admin user account's password.
+   *       </p>
+   */
+  manageAdminPassword?: boolean;
+
+  /**
+   * @public
+   * <p>The ID of the Key Management Service (KMS) key used to encrypt and store the namespace's admin credentials secret.
+   *          You can only use this parameter if <code>manageAdminPassword</code> is true.</p>
+   */
+  adminPasswordSecretKmsKeyId?: string;
 }
 
 /**
@@ -2356,6 +2416,21 @@ export interface RestoreFromSnapshotRequest {
    * <p>The Amazon Web Services account that owns the snapshot.</p>
    */
   ownerAccount?: string;
+
+  /**
+   * @public
+   * <p>If <code>true</code>, Amazon Redshift uses Secrets Manager to manage the restored
+   *          snapshot's admin credentials. If <code>MmanageAdminPassword</code> is false or not set,
+   *          Amazon Redshift uses the admin credentials that the namespace or cluster
+   *          had at the time the snapshot was taken.</p>
+   */
+  manageAdminPassword?: boolean;
+
+  /**
+   * @public
+   * <p>The ID of the Key Management Service (KMS) key used to encrypt and store the namespace's admin credentials secret.</p>
+   */
+  adminPasswordSecretKmsKeyId?: string;
 }
 
 /**
@@ -2553,7 +2628,7 @@ export interface UpdateUsageLimitRequest {
    * @public
    * <p>The new action that Amazon Redshift Serverless takes when the limit is reached.</p>
    */
-  breachAction?: UsageLimitBreachAction | string;
+  breachAction?: UsageLimitBreachAction;
 }
 
 /**

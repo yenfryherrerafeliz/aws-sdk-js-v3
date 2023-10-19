@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -70,7 +71,7 @@ export interface GetBotCommandOutput extends GetBotResponse, __MetadataBearer {}
  * //   clarificationPrompt: { // Prompt
  * //     messages: [ // MessageList // required
  * //       { // Message
- * //         contentType: "STRING_VALUE", // required
+ * //         contentType: "PlainText" || "SSML" || "CustomPayload", // required
  * //         content: "STRING_VALUE", // required
  * //         groupNumber: Number("int"),
  * //       },
@@ -81,14 +82,14 @@ export interface GetBotCommandOutput extends GetBotResponse, __MetadataBearer {}
  * //   abortStatement: { // Statement
  * //     messages: [ // required
  * //       {
- * //         contentType: "STRING_VALUE", // required
+ * //         contentType: "PlainText" || "SSML" || "CustomPayload", // required
  * //         content: "STRING_VALUE", // required
  * //         groupNumber: Number("int"),
  * //       },
  * //     ],
  * //     responseCard: "STRING_VALUE",
  * //   },
- * //   status: "STRING_VALUE",
+ * //   status: "BUILDING" || "READY" || "READY_BASIC_TESTING" || "FAILED" || "NOT_BUILT",
  * //   failureReason: "STRING_VALUE",
  * //   lastUpdatedDate: new Date("TIMESTAMP"),
  * //   createdDate: new Date("TIMESTAMP"),
@@ -96,7 +97,7 @@ export interface GetBotCommandOutput extends GetBotResponse, __MetadataBearer {}
  * //   voiceId: "STRING_VALUE",
  * //   checksum: "STRING_VALUE",
  * //   version: "STRING_VALUE",
- * //   locale: "STRING_VALUE",
+ * //   locale: "de-DE" || "en-AU" || "en-GB" || "en-IN" || "en-US" || "es-419" || "es-ES" || "es-US" || "fr-FR" || "fr-CA" || "it-IT" || "ja-JP" || "ko-KR",
  * //   childDirected: true || false,
  * //   detectSentiment: true || false,
  * // };
@@ -233,6 +234,10 @@ export class GetBotCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "GetBot",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

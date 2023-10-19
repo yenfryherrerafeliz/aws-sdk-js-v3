@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -45,7 +46,7 @@ export interface ListAccountsForProvisionedPermissionSetCommandOutput
 
 /**
  * @public
- * <p>Lists all the AWS accounts where the specified permission set is provisioned.</p>
+ * <p>Lists all the Amazon Web Services accounts where the specified permission set is provisioned.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -153,6 +154,10 @@ export class ListAccountsForProvisionedPermissionSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SWBExternalService",
+        operation: "ListAccountsForProvisionedPermissionSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

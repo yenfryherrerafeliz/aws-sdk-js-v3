@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeBuildClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeBuildClient";
@@ -45,8 +46,8 @@ export interface ListSharedReportGroupsCommandOutput extends ListSharedReportGro
  * // const { CodeBuildClient, ListSharedReportGroupsCommand } = require("@aws-sdk/client-codebuild"); // CommonJS import
  * const client = new CodeBuildClient(config);
  * const input = { // ListSharedReportGroupsInput
- *   sortOrder: "STRING_VALUE",
- *   sortBy: "STRING_VALUE",
+ *   sortOrder: "ASCENDING" || "DESCENDING",
+ *   sortBy: "ARN" || "MODIFIED_TIME",
  *   nextToken: "STRING_VALUE",
  *   maxResults: Number("int"),
  * };
@@ -124,6 +125,10 @@ export class ListSharedReportGroupsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeBuild_20161006",
+        operation: "ListSharedReportGroups",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { BackupClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../BackupClient";
@@ -78,6 +79,7 @@ export interface GetBackupPlanCommandOutput extends GetBackupPlanOutput, __Metad
  * //           },
  * //         ],
  * //         EnableContinuousBackup: true || false,
+ * //         ScheduleExpressionTimezone: "STRING_VALUE",
  * //       },
  * //     ],
  * //     AdvancedBackupSettings: [ // AdvancedBackupSettings
@@ -179,6 +181,10 @@ export class GetBackupPlanCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: GetBackupPlanOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CryoControllerUserManager",
+        operation: "GetBackupPlan",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

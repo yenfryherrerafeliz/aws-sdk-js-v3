@@ -11,9 +11,10 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { DeleteDomainRequest } from "../models/models_1";
+import { DeleteDomainRequest } from "../models/models_2";
 import { de_DeleteDomainCommand, se_DeleteDomainCommand } from "../protocols/Aws_json1_1";
 import { SageMakerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../SageMakerClient";
 
@@ -123,6 +124,10 @@ export class DeleteDomainCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "DeleteDomain",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

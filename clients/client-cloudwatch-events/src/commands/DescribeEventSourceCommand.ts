@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -55,7 +56,7 @@ export interface DescribeEventSourceCommandOutput extends DescribeEventSourceRes
  * //   CreationTime: new Date("TIMESTAMP"),
  * //   ExpirationTime: new Date("TIMESTAMP"),
  * //   Name: "STRING_VALUE",
- * //   State: "STRING_VALUE",
+ * //   State: "PENDING" || "ACTIVE" || "DELETED",
  * // };
  *
  * ```
@@ -129,6 +130,10 @@ export class DescribeEventSourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "DescribeEventSource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

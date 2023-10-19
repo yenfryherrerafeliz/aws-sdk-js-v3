@@ -23,16 +23,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `KafkaClient` and
-the commands you need, for example `BatchAssociateScramSecretCommand`:
+the commands you need, for example `ListClustersCommand`:
 
 ```js
 // ES5 example
-const { KafkaClient, BatchAssociateScramSecretCommand } = require("@aws-sdk/client-kafka");
+const { KafkaClient, ListClustersCommand } = require("@aws-sdk/client-kafka");
 ```
 
 ```ts
 // ES6+ example
-import { KafkaClient, BatchAssociateScramSecretCommand } from "@aws-sdk/client-kafka";
+import { KafkaClient, ListClustersCommand } from "@aws-sdk/client-kafka";
 ```
 
 ### Usage
@@ -51,7 +51,7 @@ const client = new KafkaClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new BatchAssociateScramSecretCommand(params);
+const command = new ListClustersCommand(params);
 ```
 
 #### Async/await
@@ -130,7 +130,7 @@ const client = new AWS.Kafka({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.batchAssociateScramSecret(params);
+  const data = await client.listClusters(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -138,7 +138,7 @@ try {
 
 // Promises.
 client
-  .batchAssociateScramSecret(params)
+  .listClusters(params)
   .then((data) => {
     // process data.
   })
@@ -147,7 +147,7 @@ client
   });
 
 // callbacks.
-client.batchAssociateScramSecret(params, (err, data) => {
+client.listClusters(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -245,6 +245,14 @@ CreateConfiguration
 </details>
 <details>
 <summary>
+CreateReplicator
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/classes/createreplicatorcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/createreplicatorcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/createreplicatorcommandoutput.html)
+
+</details>
+<details>
+<summary>
 CreateVpcConnection
 </summary>
 
@@ -273,6 +281,14 @@ DeleteConfiguration
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/classes/deleteconfigurationcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/deleteconfigurationcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/deleteconfigurationcommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteReplicator
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/classes/deletereplicatorcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/deletereplicatorcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/deletereplicatorcommandoutput.html)
 
 </details>
 <details>
@@ -329,6 +345,14 @@ DescribeConfigurationRevision
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/classes/describeconfigurationrevisioncommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/describeconfigurationrevisioncommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/describeconfigurationrevisioncommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeReplicator
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/classes/describereplicatorcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/describereplicatorcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/describereplicatorcommandoutput.html)
 
 </details>
 <details>
@@ -433,6 +457,14 @@ ListNodes
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/classes/listnodescommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/listnodescommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/listnodescommandoutput.html)
+
+</details>
+<details>
+<summary>
+ListReplicators
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/classes/listreplicatorscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/listreplicatorscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/listreplicatorscommandoutput.html)
 
 </details>
 <details>
@@ -561,6 +593,14 @@ UpdateMonitoring
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/classes/updatemonitoringcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/updatemonitoringcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/updatemonitoringcommandoutput.html)
+
+</details>
+<details>
+<summary>
+UpdateReplicationInfo
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/classes/updatereplicationinfocommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/updatereplicationinfocommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-kafka/interfaces/updatereplicationinfocommandoutput.html)
 
 </details>
 <details>

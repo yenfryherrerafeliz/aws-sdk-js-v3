@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IdentitystoreClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IdentitystoreClient";
@@ -41,6 +42,11 @@ export interface IsMemberInGroupsCommandOutput extends IsMemberInGroupsResponse,
 /**
  * @public
  * <p>Checks the user's membership in all requested groups and returns if the member exists in all queried groups.</p>
+ *          <note>
+ *             <p>If you have administrator access to a member account, you can use this API from the member account.
+ *          Read about <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html">member accounts</a> in the
+ *          <i>Organizations User Guide</i>. </p>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -147,6 +153,10 @@ export class IsMemberInGroupsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: IsMemberInGroupsResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIdentityStore",
+        operation: "IsMemberInGroups",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutMetricsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutMetricsClient";
@@ -52,7 +53,7 @@ export interface ListAnomalyGroupRelatedMetricsCommandOutput
  * const input = { // ListAnomalyGroupRelatedMetricsRequest
  *   AnomalyDetectorArn: "STRING_VALUE", // required
  *   AnomalyGroupId: "STRING_VALUE", // required
- *   RelationshipTypeFilter: "STRING_VALUE",
+ *   RelationshipTypeFilter: "CAUSE_OF_INPUT_ANOMALY_GROUP" || "EFFECT_OF_INPUT_ANOMALY_GROUP",
  *   MaxResults: Number("int"),
  *   NextToken: "STRING_VALUE",
  * };
@@ -63,7 +64,7 @@ export interface ListAnomalyGroupRelatedMetricsCommandOutput
  * //     { // InterMetricImpactDetails
  * //       MetricName: "STRING_VALUE",
  * //       AnomalyGroupId: "STRING_VALUE",
- * //       RelationshipType: "STRING_VALUE",
+ * //       RelationshipType: "CAUSE_OF_INPUT_ANOMALY_GROUP" || "EFFECT_OF_INPUT_ANOMALY_GROUP",
  * //       ContributionPercentage: Number("double"),
  * //     },
  * //   ],
@@ -148,6 +149,10 @@ export class ListAnomalyGroupRelatedMetricsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutMetrics",
+        operation: "ListAnomalyGroupRelatedMetrics",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

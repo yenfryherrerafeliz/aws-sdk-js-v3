@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListReadSetsRequest, ListReadSetsResponse } from "../models/models_0";
@@ -84,6 +85,11 @@ export interface ListReadSetsCommandOutput extends ListReadSetsResponse, __Metad
  * //       creationTime: new Date("TIMESTAMP"), // required
  * //       statusMessage: "STRING_VALUE",
  * //       creationType: "STRING_VALUE",
+ * //       etag: { // ETag
+ * //         algorithm: "STRING_VALUE",
+ * //         source1: "STRING_VALUE",
+ * //         source2: "STRING_VALUE",
+ * //       },
  * //     },
  * //   ],
  * // };
@@ -166,6 +172,10 @@ export class ListReadSetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Omics",
+        operation: "ListReadSets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -36,7 +37,14 @@ export interface DeleteResourcesByExternalIdCommandOutput extends DeleteResource
 
 /**
  * @public
- * <p>Deletes resources linked to an external ID.</p>
+ * <p>Deletes resources linked to an external ID. This action only applies if you have
+ *             configured blue/green deployments through CloudFormation. </p>
+ *          <note>
+ *             <p>It is not necessary to call this action directly. CloudFormation calls it
+ *                 on your behalf when it needs to delete stack resources. This action is offered
+ *                 publicly in case you need to delete resources to comply with General Data Protection
+ *                 Regulation (GDPR) requirements.</p>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -112,6 +120,10 @@ export class DeleteResourcesByExternalIdCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "DeleteResourcesByExternalId",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

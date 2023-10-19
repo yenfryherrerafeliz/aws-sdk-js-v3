@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeBandwidthRateLimitInput, DescribeBandwidthRateLimitOutput } from "../models/models_0";
@@ -40,7 +41,6 @@ export interface DescribeBandwidthRateLimitCommandOutput extends DescribeBandwid
  *          which means no bandwidth rate limiting is in effect. This operation is supported only for
  *          the stored volume, cached volume, and tape gateway types. To describe bandwidth rate limits
  *          for S3 file gateways, use <a>DescribeBandwidthRateLimitSchedule</a>.</p>
- *
  *          <p>This operation returns a value for a bandwidth rate limit only if the limit is set. If
  *          no limits are set for the gateway, then this operation returns only the gateway ARN in the
  *          response body. To specify which gateway to describe, use the Amazon Resource Name (ARN) of
@@ -150,6 +150,10 @@ export class DescribeBandwidthRateLimitCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "DescribeBandwidthRateLimit",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

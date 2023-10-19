@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { BraketClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../BraketClient";
@@ -45,6 +46,9 @@ export interface GetQuantumTaskCommandOutput extends GetQuantumTaskResponse, __M
  * const client = new BraketClient(config);
  * const input = { // GetQuantumTaskRequest
  *   quantumTaskArn: "STRING_VALUE", // required
+ *   additionalAttributeNames: [ // QuantumTaskAdditionalAttributeNamesList
+ *     "STRING_VALUE",
+ *   ],
  * };
  * const command = new GetQuantumTaskCommand(input);
  * const response = await client.send(command);
@@ -63,6 +67,12 @@ export interface GetQuantumTaskCommandOutput extends GetQuantumTaskResponse, __M
  * //     "<keys>": "STRING_VALUE",
  * //   },
  * //   jobArn: "STRING_VALUE",
+ * //   queueInfo: { // QuantumTaskQueueInfo
+ * //     queue: "STRING_VALUE", // required
+ * //     position: "STRING_VALUE", // required
+ * //     queuePriority: "STRING_VALUE",
+ * //     message: "STRING_VALUE",
+ * //   },
  * // };
  *
  * ```
@@ -143,6 +153,10 @@ export class GetQuantumTaskCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Braket",
+        operation: "GetQuantumTask",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

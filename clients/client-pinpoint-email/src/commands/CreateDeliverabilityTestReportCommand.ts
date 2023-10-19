@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateDeliverabilityTestReportRequest, CreateDeliverabilityTestReportResponse } from "../models/models_0";
@@ -93,7 +94,7 @@ export interface CreateDeliverabilityTestReportCommandOutput
  * const response = await client.send(command);
  * // { // CreateDeliverabilityTestReportResponse
  * //   ReportId: "STRING_VALUE", // required
- * //   DeliverabilityTestStatus: "STRING_VALUE", // required
+ * //   DeliverabilityTestStatus: "IN_PROGRESS" || "COMPLETED", // required
  * // };
  *
  * ```
@@ -187,6 +188,10 @@ export class CreateDeliverabilityTestReportCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonPinpointEmailService",
+        operation: "CreateDeliverabilityTestReport",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateDomainRequest, UpdateDomainResponse } from "../models/models_4";
@@ -128,6 +129,19 @@ export interface UpdateDomainCommandOutput extends UpdateDomainResponse, __Metad
  *       WorkspaceSettings: { // WorkspaceSettings
  *         S3ArtifactPath: "STRING_VALUE",
  *         S3KmsKeyId: "STRING_VALUE",
+ *       },
+ *       IdentityProviderOAuthSettings: [ // IdentityProviderOAuthSettings
+ *         { // IdentityProviderOAuthSetting
+ *           DataSourceName: "SalesforceGenie" || "Snowflake",
+ *           Status: "ENABLED" || "DISABLED",
+ *           SecretArn: "STRING_VALUE",
+ *         },
+ *       ],
+ *       KendraSettings: { // KendraSettings
+ *         Status: "ENABLED" || "DISABLED",
+ *       },
+ *       DirectDeploySettings: { // DirectDeploySettings
+ *         Status: "ENABLED" || "DISABLED",
  *       },
  *     },
  *   },
@@ -256,6 +270,10 @@ export class UpdateDomainCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "UpdateDomain",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

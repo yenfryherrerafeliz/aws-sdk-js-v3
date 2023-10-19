@@ -1,6 +1,6 @@
 {
   "name": "@aws-sdk/middleware-token",
-  "version": "3.398.0",
+  "version": "3.431.0",
   "description": "Middleware and Plugin for setting token authentication",
   "main": "./dist-cjs/index.js",
   "module": "./dist-es/index.js",
@@ -29,9 +29,9 @@
     "@aws-sdk/token-providers": "*",
     "@aws-sdk/types": "*",
     "@smithy/property-provider": "^2.0.0",
-    "@smithy/protocol-http": "^2.0.5",
-    "@smithy/types": "^2.2.2",
-    "@smithy/util-middleware": "^2.0.0",
+    "@smithy/protocol-http": "^3.0.7",
+    "@smithy/types": "^2.3.5",
+    "@smithy/util-middleware": "^2.0.4",
     "tslib": "^2.5.0"
   },
   "devDependencies": {

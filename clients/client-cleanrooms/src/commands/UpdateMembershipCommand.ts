@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CleanRoomsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CleanRoomsClient";
@@ -46,6 +47,16 @@ export interface UpdateMembershipCommandOutput extends UpdateMembershipOutput, _
  * const input = { // UpdateMembershipInput
  *   membershipIdentifier: "STRING_VALUE", // required
  *   queryLogStatus: "STRING_VALUE",
+ *   defaultResultConfiguration: { // MembershipProtectedQueryResultConfiguration
+ *     outputConfiguration: { // MembershipProtectedQueryOutputConfiguration Union: only one key present
+ *       s3: { // ProtectedQueryS3OutputConfiguration
+ *         resultFormat: "STRING_VALUE", // required
+ *         bucket: "STRING_VALUE", // required
+ *         keyPrefix: "STRING_VALUE",
+ *       },
+ *     },
+ *     roleArn: "STRING_VALUE",
+ *   },
  * };
  * const command = new UpdateMembershipCommand(input);
  * const response = await client.send(command);
@@ -65,6 +76,16 @@ export interface UpdateMembershipCommandOutput extends UpdateMembershipOutput, _
  * //       "STRING_VALUE",
  * //     ],
  * //     queryLogStatus: "STRING_VALUE", // required
+ * //     defaultResultConfiguration: { // MembershipProtectedQueryResultConfiguration
+ * //       outputConfiguration: { // MembershipProtectedQueryOutputConfiguration Union: only one key present
+ * //         s3: { // ProtectedQueryS3OutputConfiguration
+ * //           resultFormat: "STRING_VALUE", // required
+ * //           bucket: "STRING_VALUE", // required
+ * //           keyPrefix: "STRING_VALUE",
+ * //         },
+ * //       },
+ * //       roleArn: "STRING_VALUE",
+ * //     },
  * //   },
  * // };
  *
@@ -148,6 +169,10 @@ export class UpdateMembershipCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSBastionControlPlaneServiceLambda",
+        operation: "UpdateMembership",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

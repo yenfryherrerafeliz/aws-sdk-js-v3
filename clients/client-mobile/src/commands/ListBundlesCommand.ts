@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MobileClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MobileClient";
@@ -60,7 +61,7 @@ export interface ListBundlesCommandOutput extends ListBundlesResult, __MetadataB
  * //       description: "STRING_VALUE",
  * //       iconUrl: "STRING_VALUE",
  * //       availablePlatforms: [ // Platforms
- * //         "STRING_VALUE",
+ * //         "OSX" || "WINDOWS" || "LINUX" || "OBJC" || "SWIFT" || "ANDROID" || "JAVASCRIPT",
  * //       ],
  * //     },
  * //   ],
@@ -156,6 +157,10 @@ export class ListBundlesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSMobileService",
+        operation: "ListBundles",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

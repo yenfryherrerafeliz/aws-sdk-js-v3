@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeFleetRequest, DescribeFleetResponse } from "../models/models_0";
@@ -61,16 +62,16 @@ export interface DescribeFleetCommandOutput extends DescribeFleetResponse, __Met
  * //       arn: "STRING_VALUE",
  * //       name: "STRING_VALUE",
  * //       fleetArn: "STRING_VALUE",
- * //       status: "STRING_VALUE",
+ * //       status: "Available" || "Registered" || "PendingNewDeployment" || "Deploying" || "Failed" || "InSync" || "NoResponse",
  * //       greenGrassGroupId: "STRING_VALUE",
  * //       createdAt: new Date("TIMESTAMP"),
- * //       architecture: "STRING_VALUE",
+ * //       architecture: "X86_64" || "ARM64" || "ARMHF",
  * //       lastDeploymentJob: "STRING_VALUE",
  * //       lastDeploymentTime: new Date("TIMESTAMP"),
  * //     },
  * //   ],
  * //   createdAt: new Date("TIMESTAMP"),
- * //   lastDeploymentStatus: "STRING_VALUE",
+ * //   lastDeploymentStatus: "Pending" || "Preparing" || "InProgress" || "Failed" || "Succeeded" || "Canceled",
  * //   lastDeploymentJob: "STRING_VALUE",
  * //   lastDeploymentTime: new Date("TIMESTAMP"),
  * //   tags: { // TagMap
@@ -151,6 +152,10 @@ export class DescribeFleetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "DescribeFleet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

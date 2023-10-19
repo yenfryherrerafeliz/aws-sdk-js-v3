@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MigrationHubClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MigrationHubClient";
@@ -73,7 +74,7 @@ export interface PutResourceAttributesCommandOutput extends PutResourceAttribute
  *   MigrationTaskName: "STRING_VALUE", // required
  *   ResourceAttributeList: [ // ResourceAttributeList // required
  *     { // ResourceAttribute
- *       Type: "STRING_VALUE", // required
+ *       Type: "IPV4_ADDRESS" || "IPV6_ADDRESS" || "MAC_ADDRESS" || "FQDN" || "VM_MANAGER_ID" || "VM_MANAGED_OBJECT_REFERENCE" || "VM_NAME" || "VM_PATH" || "BIOS_ID" || "MOTHERBOARD_SERIAL_NUMBER", // required
  *       Value: "STRING_VALUE", // required
  *     },
  *   ],
@@ -179,6 +180,10 @@ export class PutResourceAttributesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSMigrationHub",
+        operation: "PutResourceAttributes",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { BillingconductorClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../BillingconductorClient";
@@ -61,6 +62,15 @@ export interface UpdateCustomLineItemCommandOutput extends UpdateCustomLineItemO
  *     Percentage: { // UpdateCustomLineItemPercentageChargeDetails
  *       PercentageValue: Number("double"), // required
  *     },
+ *     LineItemFilters: [ // LineItemFiltersList
+ *       { // LineItemFilter
+ *         Attribute: "STRING_VALUE", // required
+ *         MatchOption: "STRING_VALUE", // required
+ *         Values: [ // LineItemFilterValuesList // required
+ *           "STRING_VALUE",
+ *         ],
+ *       },
+ *     ],
  *   },
  *   BillingPeriodRange: { // CustomLineItemBillingPeriodRange
  *     InclusiveStartBillingPeriod: "STRING_VALUE", // required
@@ -82,6 +92,15 @@ export interface UpdateCustomLineItemCommandOutput extends UpdateCustomLineItemO
  * //       PercentageValue: Number("double"), // required
  * //     },
  * //     Type: "STRING_VALUE", // required
+ * //     LineItemFilters: [ // LineItemFiltersList
+ * //       { // LineItemFilter
+ * //         Attribute: "STRING_VALUE", // required
+ * //         MatchOption: "STRING_VALUE", // required
+ * //         Values: [ // LineItemFilterValuesList // required
+ * //           "STRING_VALUE",
+ * //         ],
+ * //       },
+ * //     ],
  * //   },
  * //   LastModifiedTime: Number("long"),
  * //   AssociationSize: Number("long"),
@@ -168,6 +187,10 @@ export class UpdateCustomLineItemCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: UpdateCustomLineItemInputFilterSensitiveLog,
       outputFilterSensitiveLog: UpdateCustomLineItemOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSBillingConductor",
+        operation: "UpdateCustomLineItem",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DeleteDBInstanceAutomatedBackupMessage, DeleteDBInstanceAutomatedBackupResult } from "../models/models_0";
@@ -91,6 +92,8 @@ export interface DeleteDBInstanceAutomatedBackupCommandOutput
  * //     ],
  * //     BackupTarget: "STRING_VALUE",
  * //     StorageThroughput: Number("int"),
+ * //     AwsBackupRecoveryPointArn: "STRING_VALUE",
+ * //     DedicatedLogVolume: true || false,
  * //   },
  * // };
  *
@@ -201,6 +204,10 @@ export class DeleteDBInstanceAutomatedBackupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "DeleteDBInstanceAutomatedBackup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

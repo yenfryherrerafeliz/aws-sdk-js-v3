@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -54,7 +55,7 @@ export interface ImportApplicationUsageCommandOutput extends ImportApplicationUs
  *   sourceS3Location: { // SourceS3Location
  *     bucket: "STRING_VALUE", // required
  *     key: "STRING_VALUE", // required
- *     region: "STRING_VALUE",
+ *     region: "ap-east-1" || "me-south-1" || "eu-south-1" || "af-south-1",
  *   },
  * };
  * const command = new ImportApplicationUsageCommand(input);
@@ -137,6 +138,10 @@ export class ImportApplicationUsageCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSApplicationCostProfiler",
+        operation: "ImportApplicationUsage",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

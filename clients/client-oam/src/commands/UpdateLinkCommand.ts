@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateLinkInput, UpdateLinkOutput } from "../models/models_0";
@@ -38,7 +39,7 @@ export interface UpdateLinkCommandOutput extends UpdateLinkOutput, __MetadataBea
  * @public
  * <p>Use this operation to change what types of data are shared from a source account to its linked
  *             monitoring account sink. You can't change the sink or change the monitoring account with this operation.</p>
- *         <p>To update the list of tags associated with the sink, use
+ *          <p>To update the list of tags associated with the sink, use
  *             <a href="https://docs.aws.amazon.com/OAM/latest/APIReference/API_TagResource.html">TagResource</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -49,7 +50,7 @@ export interface UpdateLinkCommandOutput extends UpdateLinkOutput, __MetadataBea
  * const input = { // UpdateLinkInput
  *   Identifier: "STRING_VALUE", // required
  *   ResourceTypes: [ // ResourceTypesInput // required
- *     "AWS::CloudWatch::Metric" || "AWS::Logs::LogGroup" || "AWS::XRay::Trace",
+ *     "AWS::CloudWatch::Metric" || "AWS::Logs::LogGroup" || "AWS::XRay::Trace" || "AWS::ApplicationInsights::Application",
  *   ],
  * };
  * const command = new UpdateLinkCommand(input);
@@ -140,6 +141,10 @@ export class UpdateLinkCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "oamservice",
+        operation: "UpdateLink",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

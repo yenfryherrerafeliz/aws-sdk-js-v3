@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -44,7 +45,7 @@ export interface ListAccountAssignmentDeletionStatusCommandOutput
 
 /**
  * @public
- * <p>Lists the status of the AWS account assignment deletion requests for a specified IAM Identity Center
+ * <p>Lists the status of the Amazon Web Services account assignment deletion requests for a specified IAM Identity Center
  *       instance.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -152,6 +153,10 @@ export class ListAccountAssignmentDeletionStatusCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SWBExternalService",
+        operation: "ListAccountAssignmentDeletionStatus",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

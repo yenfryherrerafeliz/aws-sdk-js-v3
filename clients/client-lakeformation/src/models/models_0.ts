@@ -164,6 +164,8 @@ export interface LFTag {
   /**
    * @public
    * <p>A list of possible values an attribute can take.</p>
+   *          <p>The maximum number of values that can be defined for a LF-Tag is 1000. A single API call
+   *       supports 50 values. You can use multiple API calls to add more values.</p>
    */
   TagValues: string[] | undefined;
 }
@@ -197,7 +199,7 @@ export interface LFTagPolicyResource {
    * @public
    * <p>The resource type for which the LF-tag policy applies.</p>
    */
-  ResourceType: ResourceType | string | undefined;
+  ResourceType: ResourceType | undefined;
 
   /**
    * @public
@@ -744,13 +746,13 @@ export interface BatchPermissionsRequestEntry {
    * @public
    * <p>The permissions to be granted.</p>
    */
-  Permissions?: (Permission | string)[];
+  Permissions?: Permission[];
 
   /**
    * @public
    * <p>Indicates if the option to pass permissions is granted.</p>
    */
-  PermissionsWithGrantOption?: (Permission | string)[];
+  PermissionsWithGrantOption?: Permission[];
 }
 
 /**
@@ -930,7 +932,7 @@ export interface CommitTransactionResponse {
    * @public
    * <p>The status of the transaction.</p>
    */
-  TransactionStatus?: TransactionStatus | string;
+  TransactionStatus?: TransactionStatus;
 }
 
 /**
@@ -1078,6 +1080,29 @@ export class ResourceNumberLimitExceededException extends __BaseException {
 /**
  * @public
  */
+export interface CreateLakeFormationOptInRequest {
+  /**
+   * @public
+   * <p>The Lake Formation principal. Supported principals are IAM users
+   *       or IAM roles.</p>
+   */
+  Principal: DataLakePrincipal | undefined;
+
+  /**
+   * @public
+   * <p>A structure for the resource.</p>
+   */
+  Resource: Resource | undefined;
+}
+
+/**
+ * @public
+ */
+export interface CreateLakeFormationOptInResponse {}
+
+/**
+ * @public
+ */
 export interface CreateLFTagRequest {
   /**
    * @public
@@ -1136,6 +1161,29 @@ export interface DeleteDataCellsFilterRequest {
  * @public
  */
 export interface DeleteDataCellsFilterResponse {}
+
+/**
+ * @public
+ */
+export interface DeleteLakeFormationOptInRequest {
+  /**
+   * @public
+   * <p>The Lake Formation principal. Supported principals are IAM users
+   *       or IAM roles.</p>
+   */
+  Principal: DataLakePrincipal | undefined;
+
+  /**
+   * @public
+   * <p>A structure for the resource.</p>
+   */
+  Resource: Resource | undefined;
+}
+
+/**
+ * @public
+ */
+export interface DeleteLakeFormationOptInResponse {}
 
 /**
  * @public
@@ -1299,6 +1347,14 @@ export interface ResourceInfo {
    * <p>Whether or not the resource is a federated resource.</p>
    */
   WithFederation?: boolean;
+
+  /**
+   * @public
+   * <p>
+   *       Indicates whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies.
+   *     </p>
+   */
+  HybridAccessEnabled?: boolean;
 }
 
 /**
@@ -1338,7 +1394,7 @@ export interface TransactionDescription {
    * @public
    * <p>A status of ACTIVE, COMMITTED, or ABORTED.</p>
    */
-  TransactionStatus?: TransactionStatus | string;
+  TransactionStatus?: TransactionStatus;
 
   /**
    * @public
@@ -1446,7 +1502,7 @@ export interface PrincipalPermissions {
    * @public
    * <p>The permissions that are granted to the principal.</p>
    */
-  Permissions?: (Permission | string)[];
+  Permissions?: Permission[];
 }
 
 /**
@@ -1599,19 +1655,31 @@ export interface PrincipalResourcePermissions {
    * @public
    * <p>The permissions to be granted or revoked on the resource.</p>
    */
-  Permissions?: (Permission | string)[];
+  Permissions?: Permission[];
 
   /**
    * @public
    * <p>Indicates whether to grant the ability to grant permissions (as a subset of permissions granted).</p>
    */
-  PermissionsWithGrantOption?: (Permission | string)[];
+  PermissionsWithGrantOption?: Permission[];
 
   /**
    * @public
    * <p>This attribute can be used to return any additional details of <code>PrincipalResourcePermissions</code>. Currently returns only as a RAM resource share ARN.</p>
    */
   AdditionalDetails?: DetailsMap;
+
+  /**
+   * @public
+   * <p>The date and time when the resource was last updated.</p>
+   */
+  LastUpdated?: Date;
+
+  /**
+   * @public
+   * <p>The user who updated the record.</p>
+   */
+  LastUpdatedBy?: string;
 }
 
 /**
@@ -1728,7 +1796,7 @@ export interface GetQueryStateResponse {
    *             </li>
    *          </ul>
    */
-  State: QueryStateString | string | undefined;
+  State: QueryStateString | undefined;
 }
 
 /**
@@ -2161,7 +2229,7 @@ export interface GetTemporaryGluePartitionCredentialsRequest {
    * @public
    * <p>Filters the request based on the user having been granted a list of specified permissions on the requested resource(s).</p>
    */
-  Permissions?: (Permission | string)[];
+  Permissions?: Permission[];
 
   /**
    * @public
@@ -2179,7 +2247,7 @@ export interface GetTemporaryGluePartitionCredentialsRequest {
    * @public
    * <p>A list of supported permission types for the partition. Valid values are <code>COLUMN_PERMISSION</code> and <code>CELL_FILTER_PERMISSION</code>.</p>
    */
-  SupportedPermissionTypes?: (PermissionType | string)[];
+  SupportedPermissionTypes?: PermissionType[];
 }
 
 /**
@@ -2251,7 +2319,7 @@ export interface GetTemporaryGlueTableCredentialsRequest {
    * @public
    * <p>Filters the request based on the user having been granted a list of specified permissions on the requested resource(s).</p>
    */
-  Permissions?: (Permission | string)[];
+  Permissions?: Permission[];
 
   /**
    * @public
@@ -2269,7 +2337,7 @@ export interface GetTemporaryGlueTableCredentialsRequest {
    * @public
    * <p>A list of supported permission types for the table. Valid values are <code>COLUMN_PERMISSION</code> and <code>CELL_FILTER_PERMISSION</code>.</p>
    */
-  SupportedPermissionTypes?: (PermissionType | string)[];
+  SupportedPermissionTypes?: PermissionType[];
 }
 
 /**
@@ -2460,13 +2528,13 @@ export interface GrantPermissionsRequest {
    * @public
    * <p>The permissions granted to the principal on the resource. Lake Formation defines privileges to grant and revoke access to metadata in the Data Catalog and data organized in underlying data storage such as Amazon S3. Lake Formation requires that each principal be authorized to perform a specific task on Lake Formation resources. </p>
    */
-  Permissions: (Permission | string)[] | undefined;
+  Permissions: Permission[] | undefined;
 
   /**
    * @public
    * <p>Indicates a list of the granted permissions that the principal may pass to other users. These permissions may only be a subset of the permissions granted in the <code>Privileges</code>.</p>
    */
-  PermissionsWithGrantOption?: (Permission | string)[];
+  PermissionsWithGrantOption?: Permission[];
 }
 
 /**
@@ -2516,6 +2584,84 @@ export interface ListDataCellsFilterResponse {
 
 /**
  * @public
+ */
+export interface ListLakeFormationOptInsRequest {
+  /**
+   * @public
+   * <p>The Lake Formation principal. Supported principals are IAM users
+   *       or IAM roles.</p>
+   */
+  Principal?: DataLakePrincipal;
+
+  /**
+   * @public
+   * <p>A structure for the resource.</p>
+   */
+  Resource?: Resource;
+
+  /**
+   * @public
+   * <p>The maximum number of results to return.</p>
+   */
+  MaxResults?: number;
+
+  /**
+   * @public
+   * <p>A continuation token, if this is not the first call to retrieve this list.</p>
+   */
+  NextToken?: string;
+}
+
+/**
+ * @public
+ * <p>A single principal-resource pair that has Lake Formation permissins enforced.</p>
+ */
+export interface LakeFormationOptInsInfo {
+  /**
+   * @public
+   * <p>A structure for the resource.</p>
+   */
+  Resource?: Resource;
+
+  /**
+   * @public
+   * <p>The Lake Formation principal. Supported principals are IAM users
+   *       or IAM roles.</p>
+   */
+  Principal?: DataLakePrincipal;
+
+  /**
+   * @public
+   * <p>The last modified date and time of the record.</p>
+   */
+  LastModified?: Date;
+
+  /**
+   * @public
+   * <p>The user who updated the record.</p>
+   */
+  LastUpdatedBy?: string;
+}
+
+/**
+ * @public
+ */
+export interface ListLakeFormationOptInsResponse {
+  /**
+   * @public
+   * <p>A list of principal-resource pairs that have Lake Formation permissins enforced.</p>
+   */
+  LakeFormationOptInsInfoList?: LakeFormationOptInsInfo[];
+
+  /**
+   * @public
+   * <p>A continuation token, if this is not the first call to retrieve this list.</p>
+   */
+  NextToken?: string;
+}
+
+/**
+ * @public
  * @enum
  */
 export const ResourceShareType = {
@@ -2542,7 +2688,7 @@ export interface ListLFTagsRequest {
    * @public
    * <p>If resource share type is <code>ALL</code>, returns both in-account LF-tags and shared LF-tags that the requester has permission to view. If resource share type is <code>FOREIGN</code>, returns all share LF-tags that the requester can view. If no resource share type is passed, lists LF-tags in the given catalog ID that the requester has permission to view.</p>
    */
-  ResourceShareType?: ResourceShareType | string;
+  ResourceShareType?: ResourceShareType;
 
   /**
    * @public
@@ -2614,7 +2760,7 @@ export interface ListPermissionsRequest {
    * @public
    * <p>Specifies a resource type to filter the permissions returned.</p>
    */
-  ResourceType?: DataLakeResourceType | string;
+  ResourceType?: DataLakeResourceType;
 
   /**
    * @public
@@ -2706,13 +2852,13 @@ export interface FilterCondition {
    * @public
    * <p>The field to filter in the filter condition.</p>
    */
-  Field?: FieldNameString | string;
+  Field?: FieldNameString;
 
   /**
    * @public
    * <p>The comparison operator used in the filter condition.</p>
    */
-  ComparisonOperator?: ComparisonOperator | string;
+  ComparisonOperator?: ComparisonOperator;
 
   /**
    * @public
@@ -2802,7 +2948,7 @@ export interface ListTableStorageOptimizersRequest {
    * @public
    * <p>The specific type of storage optimizers to list. The supported value is <code>compaction</code>.</p>
    */
-  StorageOptimizerType?: OptimizerType | string;
+  StorageOptimizerType?: OptimizerType;
 
   /**
    * @public
@@ -2826,7 +2972,7 @@ export interface StorageOptimizer {
    * @public
    * <p>The specific type of storage optimizer. The supported value is <code>compaction</code>.</p>
    */
-  StorageOptimizerType?: OptimizerType | string;
+  StorageOptimizerType?: OptimizerType;
 
   /**
    * @public
@@ -2903,7 +3049,7 @@ export interface ListTransactionsRequest {
    * @public
    * <p> A filter indicating the status of transactions to return. Options are ALL | COMPLETED | COMMITTED | ABORTED | ACTIVE. The default is <code>ALL</code>.</p>
    */
-  StatusFilter?: TransactionStatusFilter | string;
+  StatusFilter?: TransactionStatusFilter;
 
   /**
    * @public
@@ -2985,6 +3131,14 @@ export interface RegisterResourceRequest {
    * <p>Whether or not the resource is a federated resource.</p>
    */
   WithFederation?: boolean;
+
+  /**
+   * @public
+   * <p>
+   *     Specifies whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies.
+   *   </p>
+   */
+  HybridAccessEnabled?: boolean;
 }
 
 /**
@@ -3053,13 +3207,13 @@ export interface RevokePermissionsRequest {
    * <p>The permissions revoked to the principal on the resource. For information about permissions, see <a href="https://docs.aws.amazon.com/lake-formation/latest/dg/security-data-access.html">Security
    *       and Access Control to Metadata and Data</a>.</p>
    */
-  Permissions: (Permission | string)[] | undefined;
+  Permissions: Permission[] | undefined;
 
   /**
    * @public
    * <p>Indicates a list of permissions for which to revoke the grant option allowing the principal to pass permissions to other principals.</p>
    */
-  PermissionsWithGrantOption?: (Permission | string)[];
+  PermissionsWithGrantOption?: Permission[];
 }
 
 /**
@@ -3294,7 +3448,7 @@ export interface StartTransactionRequest {
    * @public
    * <p>Indicates whether this transaction should be read only or read and write. Writes made using a read-only transaction ID will be rejected. Read-only transactions do not need to be committed. </p>
    */
-  TransactionType?: TransactionType | string;
+  TransactionType?: TransactionType;
 }
 
 /**
@@ -3379,6 +3533,14 @@ export interface UpdateResourceRequest {
    * <p>Whether or not the resource is a federated resource.</p>
    */
   WithFederation?: boolean;
+
+  /**
+   * @public
+   * <p>
+   *       Specifies whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies.
+   *     </p>
+   */
+  HybridAccessEnabled?: boolean;
 }
 
 /**
@@ -3494,7 +3656,7 @@ export interface UpdateTableStorageOptimizerRequest {
    * @public
    * <p>Name of the table for which to enable the storage optimizer.</p>
    */
-  StorageOptimizerConfig: Record<string, Record<string, string>> | undefined;
+  StorageOptimizerConfig: Record<OptimizerType, Record<string, string>> | undefined;
 }
 
 /**

@@ -83,12 +83,15 @@ export interface CreateParticipantTokenRequest {
    * <p>Set of capabilities that the user is allowed to perform in the stage. Default:
    *             <code>PUBLISH, SUBSCRIBE</code>.</p>
    */
-  capabilities?: (ParticipantTokenCapability | string)[];
+  capabilities?: ParticipantTokenCapability[];
 }
 
 /**
  * @public
  * <p>Object specifying a participant token in a stage.</p>
+ *          <p>
+ *             <b>Important</b>: Treat tokens as opaque; i.e., do not build functionality
+ *          based on token contents. The format of tokens could change in the future.</p>
  */
 export interface ParticipantToken {
   /**
@@ -124,7 +127,8 @@ export interface ParticipantToken {
 
   /**
    * @public
-   * <p>Duration (in minutes), after which the participant token expires. Default:  720 (12 hours).</p>
+   * <p>Duration (in minutes), after which the participant token expires. Default: 720 (12
+   *          hours).</p>
    */
   duration?: number;
 
@@ -132,7 +136,7 @@ export interface ParticipantToken {
    * @public
    * <p>Set of capabilities that the user is allowed to perform in the stage.</p>
    */
-  capabilities?: (ParticipantTokenCapability | string)[];
+  capabilities?: ParticipantTokenCapability[];
 
   /**
    * @public
@@ -293,7 +297,7 @@ export interface ParticipantTokenConfiguration {
    * @public
    * <p>Set of capabilities that the user is allowed to perform in the stage.</p>
    */
-  capabilities?: (ParticipantTokenCapability | string)[];
+  capabilities?: ParticipantTokenCapability[];
 }
 
 /**
@@ -507,7 +511,7 @@ export interface Participant {
    * @public
    * <p>Whether the participant is connected to or disconnected from the stage.</p>
    */
-  state?: ParticipantState | string;
+  state?: ParticipantState;
 
   /**
    * @public
@@ -530,6 +534,42 @@ export interface Participant {
    * <p>Whether the participant ever published to the stage session.</p>
    */
   published?: boolean;
+
+  /**
+   * @public
+   * <p>The participant’s Internet Service Provider.</p>
+   */
+  ispName?: string;
+
+  /**
+   * @public
+   * <p>The participant’s operating system.</p>
+   */
+  osName?: string;
+
+  /**
+   * @public
+   * <p>The participant’s operating system version.</p>
+   */
+  osVersion?: string;
+
+  /**
+   * @public
+   * <p>The participant’s browser.</p>
+   */
+  browserName?: string;
+
+  /**
+   * @public
+   * <p>The participant’s browser version.</p>
+   */
+  browserVersion?: string;
+
+  /**
+   * @public
+   * <p>The participant’s SDK version.</p>
+   */
+  sdkVersion?: string;
 }
 
 /**
@@ -702,7 +742,7 @@ export interface Event {
    * @public
    * <p>The name of the event.</p>
    */
-  name?: EventName | string;
+  name?: EventName;
 
   /**
    * @public
@@ -728,16 +768,15 @@ export interface Event {
    * @public
    * <p>If the event is an error event, the error code is provided to give insight into the
    *          specific error that occurred. If the event is not an error event, this field is null.
-   *          <code>INSUFFICIENT_CAPABILITIES</code> indicates that the participant tried to take an action that the
-   *          participant’s token is not allowed to do. For more information about participant
-   *          capabilities, see the <code>capabilities</code> field in <a>CreateParticipantToken</a>.
-   * 		 <code>QUOTA_EXCEEDED</code> indicates that the number of participants who want to publish/subscribe to a
-   * 		 stage exceeds the quota; for more information, see <a href="https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html">Service Quotas</a>.
-   * 		 <code>PUBLISHER_NOT_FOUND</code> indicates that the participant tried to subscribe to a publisher
-   * 		 that doesn’t exist.
-   * </p>
+   *             <code>INSUFFICIENT_CAPABILITIES</code> indicates that the participant tried to take an
+   *          action that the participant’s token is not allowed to do. For more information about
+   *          participant capabilities, see the <code>capabilities</code> field in <a>CreateParticipantToken</a>. <code>QUOTA_EXCEEDED</code> indicates that the
+   *          number of participants who want to publish/subscribe to a stage exceeds the quota; for more
+   *          information, see <a href="https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html">Service Quotas</a>.
+   *             <code>PUBLISHER_NOT_FOUND</code> indicates that the participant tried to subscribe to a
+   *          publisher that doesn’t exist. </p>
    */
-  errorCode?: EventErrorCode | string;
+  errorCode?: EventErrorCode;
 }
 
 /**
@@ -798,7 +837,7 @@ export interface ListParticipantsRequest {
    *             <code>filterByUserId</code>, <code>filterByPublished</code>, or
    *             <code>filterByState</code> can be provided per request.</p>
    */
-  filterByState?: ParticipantState | string;
+  filterByState?: ParticipantState;
 
   /**
    * @public
@@ -838,7 +877,7 @@ export interface ParticipantSummary {
    * @public
    * <p>Whether the participant is connected to or disconnected from the stage.</p>
    */
-  state?: ParticipantState | string;
+  state?: ParticipantState;
 
   /**
    * @public

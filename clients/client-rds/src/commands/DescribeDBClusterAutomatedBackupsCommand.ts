@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DBClusterAutomatedBackupMessage, DescribeDBClusterAutomatedBackupsMessage } from "../models/models_0";
@@ -99,6 +100,7 @@ export interface DescribeDBClusterAutomatedBackupsCommandOutput
  * //       KmsKeyId: "STRING_VALUE",
  * //       StorageType: "STRING_VALUE",
  * //       Iops: Number("int"),
+ * //       AwsBackupRecoveryPointArn: "STRING_VALUE",
  * //     },
  * //   ],
  * // };
@@ -168,6 +170,10 @@ export class DescribeDBClusterAutomatedBackupsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "DescribeDBClusterAutomatedBackups",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

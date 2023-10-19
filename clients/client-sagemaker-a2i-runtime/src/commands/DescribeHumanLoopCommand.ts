@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeHumanLoopRequest, DescribeHumanLoopResponse } from "../models/models_0";
@@ -57,7 +58,7 @@ export interface DescribeHumanLoopCommandOutput extends DescribeHumanLoopRespons
  * //   CreationTime: new Date("TIMESTAMP"), // required
  * //   FailureReason: "STRING_VALUE",
  * //   FailureCode: "STRING_VALUE",
- * //   HumanLoopStatus: "STRING_VALUE", // required
+ * //   HumanLoopStatus: "InProgress" || "Failed" || "Completed" || "Stopped" || "Stopping", // required
  * //   HumanLoopName: "STRING_VALUE", // required
  * //   HumanLoopArn: "STRING_VALUE", // required
  * //   FlowDefinitionArn: "STRING_VALUE", // required
@@ -145,6 +146,10 @@ export class DescribeHumanLoopCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonSageMakerA2IRuntime",
+        operation: "DescribeHumanLoop",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

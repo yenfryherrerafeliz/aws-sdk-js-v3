@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeBuildClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeBuildClient";
@@ -54,13 +55,13 @@ export interface UpdateWebhookCommandOutput extends UpdateWebhookOutput, __Metad
  *   filterGroups: [ // FilterGroups
  *     [ // FilterGroup
  *       { // WebhookFilter
- *         type: "STRING_VALUE", // required
+ *         type: "EVENT" || "BASE_REF" || "HEAD_REF" || "ACTOR_ACCOUNT_ID" || "FILE_PATH" || "COMMIT_MESSAGE", // required
  *         pattern: "STRING_VALUE", // required
  *         excludeMatchedPattern: true || false,
  *       },
  *     ],
  *   ],
- *   buildType: "STRING_VALUE",
+ *   buildType: "BUILD" || "BUILD_BATCH",
  * };
  * const command = new UpdateWebhookCommand(input);
  * const response = await client.send(command);
@@ -73,13 +74,13 @@ export interface UpdateWebhookCommandOutput extends UpdateWebhookOutput, __Metad
  * //     filterGroups: [ // FilterGroups
  * //       [ // FilterGroup
  * //         { // WebhookFilter
- * //           type: "STRING_VALUE", // required
+ * //           type: "EVENT" || "BASE_REF" || "HEAD_REF" || "ACTOR_ACCOUNT_ID" || "FILE_PATH" || "COMMIT_MESSAGE", // required
  * //           pattern: "STRING_VALUE", // required
  * //           excludeMatchedPattern: true || false,
  * //         },
  * //       ],
  * //     ],
- * //     buildType: "STRING_VALUE",
+ * //     buildType: "BUILD" || "BUILD_BATCH",
  * //     lastModifiedSecret: new Date("TIMESTAMP"),
  * //   },
  * // };
@@ -153,6 +154,10 @@ export class UpdateWebhookCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeBuild_20161006",
+        operation: "UpdateWebhook",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

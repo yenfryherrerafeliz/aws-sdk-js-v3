@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
   StreamingBlobPayloadInputTypes,
 } from "@smithy/types";
 
@@ -52,15 +53,15 @@ export interface PutObjectCommandOutput extends PutObjectResponse, __MetadataBea
  *   Path: "STRING_VALUE", // required
  *   ContentType: "STRING_VALUE",
  *   CacheControl: "STRING_VALUE",
- *   StorageClass: "STRING_VALUE",
- *   UploadAvailability: "STRING_VALUE",
+ *   StorageClass: "TEMPORAL",
+ *   UploadAvailability: "STANDARD" || "STREAMING",
  * };
  * const command = new PutObjectCommand(input);
  * const response = await client.send(command);
  * // { // PutObjectResponse
  * //   ContentSHA256: "STRING_VALUE",
  * //   ETag: "STRING_VALUE",
- * //   StorageClass: "STRING_VALUE",
+ * //   StorageClass: "TEMPORAL",
  * // };
  *
  * ```
@@ -129,6 +130,10 @@ export class PutObjectCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: PutObjectRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaStoreObject_20170901",
+        operation: "PutObject",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

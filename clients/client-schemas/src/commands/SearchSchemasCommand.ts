@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { SearchSchemasRequest, SearchSchemasResponse } from "../models/models_0";
@@ -62,7 +63,7 @@ export interface SearchSchemasCommandOutput extends SearchSchemasResponse, __Met
  * //         { // SearchSchemaVersionSummary
  * //           CreatedDate: new Date("TIMESTAMP"),
  * //           SchemaVersion: "STRING_VALUE",
- * //           Type: "STRING_VALUE",
+ * //           Type: "OpenApi3" || "JSONSchemaDraft4",
  * //         },
  * //       ],
  * //     },
@@ -139,6 +140,10 @@ export class SearchSchemasCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "schemas",
+        operation: "SearchSchemas",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

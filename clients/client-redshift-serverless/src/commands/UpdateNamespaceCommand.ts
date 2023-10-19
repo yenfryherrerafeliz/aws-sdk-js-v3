@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -66,6 +67,8 @@ export interface UpdateNamespaceCommandOutput extends UpdateNamespaceResponse, _
  *   logExports: [ // LogExportList
  *     "STRING_VALUE",
  *   ],
+ *   manageAdminPassword: true || false,
+ *   adminPasswordSecretKmsKeyId: "STRING_VALUE",
  * };
  * const command = new UpdateNamespaceCommand(input);
  * const response = await client.send(command);
@@ -86,6 +89,8 @@ export interface UpdateNamespaceCommandOutput extends UpdateNamespaceResponse, _
  * //     ],
  * //     status: "STRING_VALUE",
  * //     creationDate: new Date("TIMESTAMP"),
+ * //     adminPasswordSecretArn: "STRING_VALUE",
+ * //     adminPasswordSecretKmsKeyId: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -163,6 +168,10 @@ export class UpdateNamespaceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: UpdateNamespaceRequestFilterSensitiveLog,
       outputFilterSensitiveLog: UpdateNamespaceResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RedshiftServerless",
+        operation: "UpdateNamespace",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

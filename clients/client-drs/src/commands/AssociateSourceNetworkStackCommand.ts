@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DrsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DrsClient";
@@ -73,6 +74,34 @@ export interface AssociateSourceNetworkStackCommandOutput
  * //         sourceServerID: "STRING_VALUE",
  * //         recoveryInstanceID: "STRING_VALUE",
  * //         launchStatus: "STRING_VALUE",
+ * //         launchActionsStatus: { // LaunchActionsStatus
+ * //           ssmAgentDiscoveryDatetime: "STRING_VALUE",
+ * //           runs: [ // LaunchActionRuns
+ * //             { // LaunchActionRun
+ * //               action: { // LaunchAction
+ * //                 actionId: "STRING_VALUE",
+ * //                 actionCode: "STRING_VALUE",
+ * //                 type: "STRING_VALUE",
+ * //                 name: "STRING_VALUE",
+ * //                 active: true || false,
+ * //                 order: Number("int"),
+ * //                 actionVersion: "STRING_VALUE",
+ * //                 optional: true || false,
+ * //                 parameters: { // LaunchActionParameters
+ * //                   "<keys>": { // LaunchActionParameter
+ * //                     value: "STRING_VALUE",
+ * //                     type: "STRING_VALUE",
+ * //                   },
+ * //                 },
+ * //                 description: "STRING_VALUE",
+ * //                 category: "STRING_VALUE",
+ * //               },
+ * //               runId: "STRING_VALUE",
+ * //               status: "STRING_VALUE",
+ * //               failureReason: "STRING_VALUE",
+ * //             },
+ * //           ],
+ * //         },
  * //       },
  * //     ],
  * //     tags: { // TagsMap
@@ -172,6 +201,10 @@ export class AssociateSourceNetworkStackCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: AssociateSourceNetworkStackRequestFilterSensitiveLog,
       outputFilterSensitiveLog: AssociateSourceNetworkStackResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ElasticDisasterRecoveryService",
+        operation: "AssociateSourceNetworkStack",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

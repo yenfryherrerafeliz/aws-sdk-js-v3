@@ -25,16 +25,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `LakeFormationClient` and
-the commands you need, for example `AddLFTagsToResourceCommand`:
+the commands you need, for example `ListLFTagsCommand`:
 
 ```js
 // ES5 example
-const { LakeFormationClient, AddLFTagsToResourceCommand } = require("@aws-sdk/client-lakeformation");
+const { LakeFormationClient, ListLFTagsCommand } = require("@aws-sdk/client-lakeformation");
 ```
 
 ```ts
 // ES6+ example
-import { LakeFormationClient, AddLFTagsToResourceCommand } from "@aws-sdk/client-lakeformation";
+import { LakeFormationClient, ListLFTagsCommand } from "@aws-sdk/client-lakeformation";
 ```
 
 ### Usage
@@ -53,7 +53,7 @@ const client = new LakeFormationClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new AddLFTagsToResourceCommand(params);
+const command = new ListLFTagsCommand(params);
 ```
 
 #### Async/await
@@ -132,7 +132,7 @@ const client = new AWS.LakeFormation({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.addLFTagsToResource(params);
+  const data = await client.listLFTags(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -140,7 +140,7 @@ try {
 
 // Promises.
 client
-  .addLFTagsToResource(params)
+  .listLFTags(params)
   .then((data) => {
     // process data.
   })
@@ -149,7 +149,7 @@ client
   });
 
 // callbacks.
-client.addLFTagsToResource(params, (err, data) => {
+client.listLFTags(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -263,6 +263,14 @@ CreateDataCellsFilter
 </details>
 <details>
 <summary>
+CreateLakeFormationOptIn
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/classes/createlakeformationoptincommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/interfaces/createlakeformationoptincommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/interfaces/createlakeformationoptincommandoutput.html)
+
+</details>
+<details>
+<summary>
 CreateLFTag
 </summary>
 
@@ -275,6 +283,14 @@ DeleteDataCellsFilter
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/classes/deletedatacellsfiltercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/interfaces/deletedatacellsfiltercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/interfaces/deletedatacellsfiltercommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteLakeFormationOptIn
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/classes/deletelakeformationoptincommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/interfaces/deletelakeformationoptincommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/interfaces/deletelakeformationoptincommandoutput.html)
 
 </details>
 <details>
@@ -435,6 +451,14 @@ ListDataCellsFilter
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/classes/listdatacellsfiltercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/interfaces/listdatacellsfiltercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/interfaces/listdatacellsfiltercommandoutput.html)
+
+</details>
+<details>
+<summary>
+ListLakeFormationOptIns
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/classes/listlakeformationoptinscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/interfaces/listlakeformationoptinscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-lakeformation/interfaces/listlakeformationoptinscommandoutput.html)
 
 </details>
 <details>

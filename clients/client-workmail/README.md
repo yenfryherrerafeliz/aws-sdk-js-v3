@@ -58,16 +58,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `WorkMailClient` and
-the commands you need, for example `AssociateDelegateToResourceCommand`:
+the commands you need, for example `ListGroupsCommand`:
 
 ```js
 // ES5 example
-const { WorkMailClient, AssociateDelegateToResourceCommand } = require("@aws-sdk/client-workmail");
+const { WorkMailClient, ListGroupsCommand } = require("@aws-sdk/client-workmail");
 ```
 
 ```ts
 // ES6+ example
-import { WorkMailClient, AssociateDelegateToResourceCommand } from "@aws-sdk/client-workmail";
+import { WorkMailClient, ListGroupsCommand } from "@aws-sdk/client-workmail";
 ```
 
 ### Usage
@@ -86,7 +86,7 @@ const client = new WorkMailClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new AssociateDelegateToResourceCommand(params);
+const command = new ListGroupsCommand(params);
 ```
 
 #### Async/await
@@ -165,7 +165,7 @@ const client = new AWS.WorkMail({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.associateDelegateToResource(params);
+  const data = await client.listGroups(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -173,7 +173,7 @@ try {
 
 // Promises.
 client
-  .associateDelegateToResource(params)
+  .listGroups(params)
   .then((data) => {
     // process data.
   })
@@ -182,7 +182,7 @@ client
   });
 
 // callbacks.
-client.associateDelegateToResource(params, (err, data) => {
+client.listGroups(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -464,6 +464,14 @@ DescribeEmailMonitoringConfiguration
 </details>
 <details>
 <summary>
+DescribeEntity
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/classes/describeentitycommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/describeentitycommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/describeentitycommandoutput.html)
+
+</details>
+<details>
+<summary>
 DescribeGroup
 </summary>
 
@@ -628,6 +636,14 @@ ListGroups
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/classes/listgroupscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/listgroupscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/listgroupscommandoutput.html)
+
+</details>
+<details>
+<summary>
+ListGroupsForEntity
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/classes/listgroupsforentitycommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/listgroupsforentitycommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/listgroupsforentitycommandoutput.html)
 
 </details>
 <details>
@@ -840,6 +856,14 @@ UpdateDefaultMailDomain
 </details>
 <details>
 <summary>
+UpdateGroup
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/classes/updategroupcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/updategroupcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/updategroupcommandoutput.html)
+
+</details>
+<details>
+<summary>
 UpdateImpersonationRole
 </summary>
 
@@ -876,5 +900,13 @@ UpdateResource
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/classes/updateresourcecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/updateresourcecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/updateresourcecommandoutput.html)
+
+</details>
+<details>
+<summary>
+UpdateUser
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/classes/updateusercommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/updateusercommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-workmail/interfaces/updateusercommandoutput.html)
 
 </details>

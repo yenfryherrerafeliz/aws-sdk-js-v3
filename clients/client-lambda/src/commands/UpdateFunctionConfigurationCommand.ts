@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LambdaClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LambdaClient";
@@ -76,6 +77,7 @@ export interface UpdateFunctionConfigurationCommandOutput extends FunctionConfig
  *     SecurityGroupIds: [ // SecurityGroupIds
  *       "STRING_VALUE",
  *     ],
+ *     Ipv6AllowedForDualStack: true || false,
  *   },
  *   Environment: { // Environment
  *     Variables: { // EnvironmentVariables
@@ -139,6 +141,7 @@ export interface UpdateFunctionConfigurationCommandOutput extends FunctionConfig
  * //       "STRING_VALUE",
  * //     ],
  * //     VpcId: "STRING_VALUE",
+ * //     Ipv6AllowedForDualStack: true || false,
  * //   },
  * //   DeadLetterConfig: { // DeadLetterConfig
  * //     TargetArn: "STRING_VALUE",
@@ -307,6 +310,10 @@ export class UpdateFunctionConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: UpdateFunctionConfigurationRequestFilterSensitiveLog,
       outputFilterSensitiveLog: FunctionConfigurationFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSGirApiService",
+        operation: "UpdateFunctionConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

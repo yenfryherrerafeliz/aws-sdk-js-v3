@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FirehoseClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FirehoseClient";
@@ -41,7 +42,6 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
 /**
  * @public
  * <p>Creates a Kinesis Data Firehose delivery stream.</p>
- *
  *          <p>By default, you can create up to 50 delivery streams per Amazon Web Services
  *          Region.</p>
  *          <p>This is an asynchronous operation that immediately returns. The initial status of the
@@ -64,9 +64,12 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *          <p>To create a delivery stream with server-side encryption (SSE) enabled, include <a>DeliveryStreamEncryptionConfigurationInput</a> in your request. This is
  *          optional. You can also invoke <a>StartDeliveryStreamEncryption</a> to turn on
  *          SSE for an existing delivery stream that doesn't have SSE enabled.</p>
- *          <p>A delivery stream is configured with a single destination: Amazon S3, Amazon ES,
- *          Amazon Redshift, or Splunk. You must specify only one of the following destination
- *          configuration parameters: <code>ExtendedS3DestinationConfiguration</code>,
+ *          <p>A delivery stream is configured with a single destination, such as Amazon Simple
+ *          Storage Service (Amazon S3), Amazon Redshift, Amazon OpenSearch Service, Amazon OpenSearch
+ *          Serverless, Splunk, and any custom HTTP endpoint or HTTP endpoints owned by or supported by
+ *          third-party service providers, including Datadog, Dynatrace, LogicMonitor, MongoDB, New
+ *          Relic, and Sumo Logic. You must specify only one of the following destination configuration
+ *          parameters: <code>ExtendedS3DestinationConfiguration</code>,
  *             <code>S3DestinationConfiguration</code>,
  *             <code>ElasticsearchDestinationConfiguration</code>,
  *             <code>RedshiftDestinationConfiguration</code>, or
@@ -80,7 +83,6 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *          boundaries might be such that the size is a little over or under the configured buffering
  *          size. By default, no encryption is performed. We strongly recommend that you enable
  *          encryption to ensure secure data storage in Amazon S3.</p>
- *
  *          <p>A few notes about Amazon Redshift as a destination:</p>
  *          <ul>
  *             <li>
@@ -89,7 +91,6 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *                   <code>COPY</code> syntax to load data into an Amazon Redshift table. This is
  *                specified in the <code>RedshiftDestinationConfiguration.S3Configuration</code>
  *                parameter.</p>
- *
  *             </li>
  *             <li>
  *                <p>The compression formats <code>SNAPPY</code> or <code>ZIP</code> cannot be
@@ -101,7 +102,6 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *                <p>We strongly recommend that you use the user name and password you provide
  *                exclusively with Kinesis Data Firehose, and that the permissions for the account are
  *                restricted for Amazon Redshift <code>INSERT</code> permissions.</p>
- *
  *             </li>
  *          </ul>
  *          <p>Kinesis Data Firehose assumes the IAM role that is configured as part of the
@@ -118,7 +118,7 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  * const client = new FirehoseClient(config);
  * const input = { // CreateDeliveryStreamInput
  *   DeliveryStreamName: "STRING_VALUE", // required
- *   DeliveryStreamType: "DirectPut" || "KinesisStreamAsSource",
+ *   DeliveryStreamType: "DirectPut" || "KinesisStreamAsSource" || "MSKAsSource",
  *   KinesisStreamSourceConfiguration: { // KinesisStreamSourceConfiguration
  *     KinesisStreamARN: "STRING_VALUE", // required
  *     RoleARN: "STRING_VALUE", // required
@@ -174,10 +174,10 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *       Enabled: true || false,
  *       Processors: [ // ProcessorList
  *         { // Processor
- *           Type: "RecordDeAggregation" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
+ *           Type: "RecordDeAggregation" || "Decompression" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
  *           Parameters: [ // ProcessorParameterList
  *             { // ProcessorParameter
- *               ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter", // required
+ *               ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter" || "CompressionFormat", // required
  *               ParameterValue: "STRING_VALUE", // required
  *             },
  *           ],
@@ -306,10 +306,10 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *       Enabled: true || false,
  *       Processors: [
  *         {
- *           Type: "RecordDeAggregation" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
+ *           Type: "RecordDeAggregation" || "Decompression" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
  *           Parameters: [
  *             {
- *               ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter", // required
+ *               ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter" || "CompressionFormat", // required
  *               ParameterValue: "STRING_VALUE", // required
  *             },
  *           ],
@@ -370,10 +370,10 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *       Enabled: true || false,
  *       Processors: [
  *         {
- *           Type: "RecordDeAggregation" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
+ *           Type: "RecordDeAggregation" || "Decompression" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
  *           Parameters: [
  *             {
- *               ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter", // required
+ *               ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter" || "CompressionFormat", // required
  *               ParameterValue: "STRING_VALUE", // required
  *             },
  *           ],
@@ -389,6 +389,9 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *       SecurityGroupIds: [ // SecurityGroupIdList // required
  *         "STRING_VALUE",
  *       ],
+ *     },
+ *     DocumentIdOptions: { // DocumentIdOptions
+ *       DefaultDocumentIdFormat: "FIREHOSE_DEFAULT" || "NO_DOCUMENT_ID", // required
  *     },
  *   },
  *   AmazonopensearchserviceDestinationConfiguration: { // AmazonopensearchserviceDestinationConfiguration
@@ -411,10 +414,10 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *       Enabled: true || false,
  *       Processors: [
  *         {
- *           Type: "RecordDeAggregation" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
+ *           Type: "RecordDeAggregation" || "Decompression" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
  *           Parameters: [
  *             {
- *               ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter", // required
+ *               ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter" || "CompressionFormat", // required
  *               ParameterValue: "STRING_VALUE", // required
  *             },
  *           ],
@@ -431,6 +434,9 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *         "STRING_VALUE",
  *       ],
  *     },
+ *     DocumentIdOptions: {
+ *       DefaultDocumentIdFormat: "FIREHOSE_DEFAULT" || "NO_DOCUMENT_ID", // required
+ *     },
  *   },
  *   SplunkDestinationConfiguration: { // SplunkDestinationConfiguration
  *     HECEndpoint: "STRING_VALUE", // required
@@ -446,10 +452,10 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *       Enabled: true || false,
  *       Processors: [
  *         {
- *           Type: "RecordDeAggregation" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
+ *           Type: "RecordDeAggregation" || "Decompression" || "Lambda" || "MetadataExtraction" || "AppendDelimiterToRecord", // required
  *           Parameters: [
  *             {
- *               ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter", // required
+ *               ParameterName: "LambdaArn" || "NumberOfRetries" || "MetadataExtractionQuery" || "JsonParsingEngine" || "RoleArn" || "BufferSizeInMBs" || "BufferIntervalInSeconds" || "SubRecordType" || "Delimiter" || "CompressionFormat", // required
  *               ParameterValue: "STRING_VALUE", // required
  *             },
  *           ],
@@ -515,6 +521,14 @@ export interface CreateDeliveryStreamCommandOutput extends CreateDeliveryStreamO
  *       SecurityGroupIds: [ // required
  *         "STRING_VALUE",
  *       ],
+ *     },
+ *   },
+ *   MSKSourceConfiguration: { // MSKSourceConfiguration
+ *     MSKClusterARN: "STRING_VALUE", // required
+ *     TopicName: "STRING_VALUE", // required
+ *     AuthenticationConfiguration: { // AuthenticationConfiguration
+ *       RoleARN: "STRING_VALUE", // required
+ *       Connectivity: "PUBLIC" || "PRIVATE", // required
  *     },
  *   },
  * };
@@ -602,6 +616,10 @@ export class CreateDeliveryStreamCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateDeliveryStreamInputFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Firehose_20150804",
+        operation: "CreateDeliveryStream",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

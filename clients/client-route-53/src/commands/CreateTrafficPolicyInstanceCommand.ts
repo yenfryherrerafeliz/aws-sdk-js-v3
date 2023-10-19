@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateTrafficPolicyInstanceRequest, CreateTrafficPolicyInstanceResponse } from "../models/models_0";
@@ -45,6 +46,14 @@ export interface CreateTrafficPolicyInstanceCommandOutput
  * 			or subdomain name (such as www.example.com). Amazon Route 53 responds to DNS queries for
  * 			the domain or subdomain name by using the resource record sets that
  * 				<code>CreateTrafficPolicyInstance</code> created.</p>
+ *          <note>
+ *             <p>After you submit an <code>CreateTrafficPolicyInstance</code> request, there's a
+ * 				brief delay while Amazon Route 53 creates the resource record sets that are
+ * 				specified in the traffic policy definition.
+ * 				Use <code>GetTrafficPolicyInstance</code> with the <code>id</code> of new traffic policy instance to confirm that the <code>CreateTrafficPolicyInstance</code>
+ * 				request completed successfully. For more information, see the
+ * 				<code>State</code> response element.</p>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -159,6 +168,10 @@ export class CreateTrafficPolicyInstanceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDnsV20130401",
+        operation: "CreateTrafficPolicyInstance",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

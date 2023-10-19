@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -58,11 +59,11 @@ export interface GetPermissionGroupCommandOutput extends GetPermissionGroupRespo
  * //     name: "STRING_VALUE",
  * //     description: "STRING_VALUE",
  * //     applicationPermissions: [ // ApplicationPermissionList
- * //       "STRING_VALUE",
+ * //       "CreateDataset" || "ManageClusters" || "ManageUsersAndGroups" || "ManageAttributeSets" || "ViewAuditData" || "AccessNotebooks" || "GetTemporaryCredentials",
  * //     ],
  * //     createTime: Number("long"),
  * //     lastModifiedTime: Number("long"),
- * //     membershipStatus: "STRING_VALUE",
+ * //     membershipStatus: "ADDITION_IN_PROGRESS" || "ADDITION_SUCCESS" || "REMOVAL_IN_PROGRESS",
  * //   },
  * // };
  *
@@ -144,6 +145,10 @@ export class GetPermissionGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: GetPermissionGroupResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "GetPermissionGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

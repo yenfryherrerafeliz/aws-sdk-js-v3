@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AppflowClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppflowClient";
@@ -121,6 +122,12 @@ export interface UpdateFlowCommandOutput extends UpdateFlowResponse, __MetadataB
  *       },
  *       SAPOData: { // SAPODataSourceProperties
  *         objectPath: "STRING_VALUE",
+ *         parallelismConfig: { // SAPODataParallelismConfig
+ *           maxParallelism: Number("int"), // required
+ *         },
+ *         paginationConfig: { // SAPODataPaginationConfig
+ *           maxPageSize: Number("int"), // required
+ *         },
  *       },
  *       CustomConnector: { // CustomConnectorSourceProperties
  *         entityName: "STRING_VALUE", // required
@@ -329,6 +336,9 @@ export interface UpdateFlowCommandOutput extends UpdateFlowResponse, __MetadataB
  * @see {@link UpdateFlowCommandOutput} for command's `response` shape.
  * @see {@link AppflowClientResolvedConfig | config} for AppflowClient's `config` shape.
  *
+ * @throws {@link AccessDeniedException} (client fault)
+ *  <p>AppFlow/Requester has invalid or missing permissions.</p>
+ *
  * @throws {@link ConflictException} (client fault)
  *  <p> There was a conflict when processing the request (for example, a flow with the given name
  *       already exists within the account. Check for conflicting resource names and try again. </p>
@@ -406,6 +416,10 @@ export class UpdateFlowCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SandstoneConfigurationServiceLambda",
+        operation: "UpdateFlow",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

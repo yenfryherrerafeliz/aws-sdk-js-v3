@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -73,7 +74,7 @@ export interface ListRealtimeContactAnalysisSegmentsCommandOutput
  * //         Content: "STRING_VALUE", // required
  * //         BeginOffsetMillis: Number("int"), // required
  * //         EndOffsetMillis: Number("int"), // required
- * //         Sentiment: "STRING_VALUE", // required
+ * //         Sentiment: "POSITIVE" || "NEUTRAL" || "NEGATIVE", // required
  * //         IssuesDetected: [ // IssuesDetected
  * //           { // IssueDetected
  * //             CharacterOffsets: { // CharacterOffsets
@@ -180,6 +181,10 @@ export class ListRealtimeContactAnalysisSegmentsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonConnectContactLens",
+        operation: "ListRealtimeContactAnalysisSegments",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeSimulationInput, DescribeSimulationOutput } from "../models/models_0";
@@ -58,8 +59,8 @@ export interface DescribeSimulationCommandOutput extends DescribeSimulationOutpu
  * //   Status: "STRING_VALUE",
  * //   TargetStatus: "STRING_VALUE",
  * //   SchemaS3Location: { // S3Location
- * //     BucketName: "STRING_VALUE",
- * //     ObjectKey: "STRING_VALUE",
+ * //     BucketName: "STRING_VALUE", // required
+ * //     ObjectKey: "STRING_VALUE", // required
  * //   },
  * //   SchemaError: "STRING_VALUE",
  * //   LoggingConfiguration: { // LoggingConfiguration
@@ -87,8 +88,8 @@ export interface DescribeSimulationCommandOutput extends DescribeSimulationOutpu
  * //   },
  * //   MaximumDuration: "STRING_VALUE",
  * //   SnapshotS3Location: {
- * //     BucketName: "STRING_VALUE",
- * //     ObjectKey: "STRING_VALUE",
+ * //     BucketName: "STRING_VALUE", // required
+ * //     ObjectKey: "STRING_VALUE", // required
  * //   },
  * //   StartError: "STRING_VALUE",
  * // };
@@ -167,6 +168,10 @@ export class DescribeSimulationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SimSpaceWeaver",
+        operation: "DescribeSimulation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -92,7 +92,7 @@ export interface ManagedScaling {
    * @public
    * <p>Determines whether to use managed scaling for the capacity provider.</p>
    */
-  status?: ManagedScalingStatus | string;
+  status?: ManagedScalingStatus;
 
   /**
    * @public
@@ -165,7 +165,7 @@ export interface AutoScalingGroupProvider {
 
   /**
    * @public
-   * <p>he managed scaling settings for the Auto Scaling group capacity provider.</p>
+   * <p>The managed scaling settings for the Auto Scaling group capacity provider.</p>
    */
   managedScaling?: ManagedScaling;
 
@@ -185,7 +185,7 @@ export interface AutoScalingGroupProvider {
    *          <p>When managed termination protection is off, your Amazon EC2 instances aren't protected from
    * 			termination when the Auto Scaling group scales in.</p>
    */
-  managedTerminationProtection?: ManagedTerminationProtection | string;
+  managedTerminationProtection?: ManagedTerminationProtection;
 }
 
 /**
@@ -355,7 +355,7 @@ export interface CapacityProvider {
    * 				<code>ACTIVE</code> state can be used in a cluster. When a capacity provider is
    * 			successfully deleted, it has an <code>INACTIVE</code> status.</p>
    */
-  status?: CapacityProviderStatus | string;
+  status?: CapacityProviderStatus;
 
   /**
    * @public
@@ -384,7 +384,7 @@ export interface CapacityProvider {
    *             </dd>
    *          </dl>
    */
-  updateStatus?: CapacityProviderUpdateStatus | string;
+  updateStatus?: CapacityProviderUpdateStatus;
 
   /**
    * @public
@@ -624,7 +624,7 @@ export interface ExecuteCommandConfiguration {
    *             </li>
    *          </ul>
    */
-  logging?: ExecuteCommandLogging | string;
+  logging?: ExecuteCommandLogging;
 
   /**
    * @public
@@ -735,7 +735,7 @@ export interface ClusterServiceConnectDefaultsRequest {
    * 			Cloud Map namespace with the "API calls" method of instance discovery only. This instance
    * 			discovery method is the "HTTP" namespace type in the Command Line Interface. Other types of instance
    * 			discovery aren't used by Service Connect.</p>
-   *          <p>If you update the service with an empty string <code>""</code> for the namespace name,
+   *          <p>If you update the cluster with an empty string <code>""</code> for the namespace name,
    * 			the cluster configuration for Service Connect is removed. Note that the namespace will
    * 			remain in Cloud Map and must be deleted separately.</p>
    *          <p>For more information about Cloud Map, see <a href="https://docs.aws.amazon.com/cloud-map/latest/dg/working-with-services.html">Working
@@ -767,7 +767,7 @@ export interface ClusterSetting {
    * @public
    * <p>The name of the cluster setting. The value is <code>containerInsights</code> .</p>
    */
-  name?: ClusterSettingName | string;
+  name?: ClusterSettingName;
 
   /**
    * @public
@@ -1483,7 +1483,7 @@ export interface DeploymentController {
    *             </dd>
    *          </dl>
    */
-  type: DeploymentControllerType | string | undefined;
+  type: DeploymentControllerType | undefined;
 }
 
 /**
@@ -1608,7 +1608,7 @@ export interface AwsVpcConfiguration {
    * <p>Whether the task's elastic network interface receives a public IP address. The default
    * 			value is <code>DISABLED</code>.</p>
    */
-  assignPublicIp?: AssignPublicIp | string;
+  assignPublicIp?: AssignPublicIp;
 }
 
 /**
@@ -1658,7 +1658,7 @@ export interface PlacementConstraint {
    * 				<code>memberOf</code> to restrict the selection to a group of valid
    * 			candidates.</p>
    */
-  type?: PlacementConstraintType | string;
+  type?: PlacementConstraintType;
 
   /**
    * @public
@@ -1700,7 +1700,7 @@ export interface PlacementStrategy {
    * 			parameter. For example, if you binpack on memory, a task is placed on the instance with
    * 			the least amount of remaining memory but still enough to run the task.</p>
    */
-  type?: PlacementStrategyType | string;
+  type?: PlacementStrategyType;
 
   /**
    * @public
@@ -1875,7 +1875,7 @@ export interface LogConfiguration {
    * 				don't currently provide support for running modified copies of this software.</p>
    *          </note>
    */
-  logDriver: LogDriver | string | undefined;
+  logDriver: LogDriver | undefined;
 
   /**
    * @public
@@ -2242,7 +2242,7 @@ export interface CreateServiceRequest {
    * 				<code>launchType</code> is specified, the <code>capacityProviderStrategy</code>
    * 			parameter must be omitted.</p>
    */
-  launchType?: LaunchType | string;
+  launchType?: LaunchType;
 
   /**
    * @public
@@ -2372,7 +2372,7 @@ export interface CreateServiceRequest {
    *             </li>
    *          </ul>
    */
-  schedulingStrategy?: SchedulingStrategy | string;
+  schedulingStrategy?: SchedulingStrategy;
 
   /**
    * @public
@@ -2437,7 +2437,7 @@ export interface CreateServiceRequest {
    * 			during task creation. To add tags to a task after task creation, use the <a href="https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_TagResource.html">TagResource</a> API action.</p>
    *          <p>The default is <code>NONE</code>.</p>
    */
-  propagateTags?: PropagateTags | string;
+  propagateTags?: PropagateTags;
 
   /**
    * @public
@@ -2603,7 +2603,7 @@ export interface Deployment {
    * <p>The launch type the tasks in the service are using. For more information, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html">Amazon ECS
    * 				Launch Types</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>
    */
-  launchType?: LaunchType | string;
+  launchType?: LaunchType;
 
   /**
    * @public
@@ -2644,7 +2644,7 @@ export interface Deployment {
    * 				<code>FAILED</code> state. A deployment in <code>FAILED</code> state doesn't launch
    * 			any new tasks. For more information, see <a>DeploymentCircuitBreaker</a>.</p>
    */
-  rolloutState?: DeploymentRolloutState | string;
+  rolloutState?: DeploymentRolloutState;
 
   /**
    * @public
@@ -2730,7 +2730,7 @@ export interface Scale {
    * @public
    * <p>The unit of measure for the scale value.</p>
    */
-  unit?: ScaleUnit | string;
+  unit?: ScaleUnit;
 }
 
 /**
@@ -2869,7 +2869,7 @@ export interface TaskSet {
    * <p>The launch type the tasks in the task set are using. For more information, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html">Amazon ECS
    * 				launch types</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>
    */
-  launchType?: LaunchType | string;
+  launchType?: LaunchType;
 
   /**
    * @public
@@ -2944,7 +2944,7 @@ export interface TaskSet {
    *          <p>If any of those conditions aren't met, the stability status returns
    * 				<code>STABILIZING</code>.</p>
    */
-  stabilityStatus?: StabilityStatus | string;
+  stabilityStatus?: StabilityStatus;
 
   /**
    * @public
@@ -3065,7 +3065,7 @@ export interface Service {
    * <p>The launch type the service is using. When using the DescribeServices API, this field
    * 			is omitted if the service was created using a capacity provider strategy.</p>
    */
-  launchType?: LaunchType | string;
+  launchType?: LaunchType;
 
   /**
    * @public
@@ -3195,7 +3195,7 @@ export interface Service {
    *             </li>
    *          </ul>
    */
-  schedulingStrategy?: SchedulingStrategy | string;
+  schedulingStrategy?: SchedulingStrategy;
 
   /**
    * @public
@@ -3261,7 +3261,7 @@ export interface Service {
    * <p>Determines whether to propagate the tags from the task definition or the service to
    * 			the task. If no value is specified, the tags aren't propagated.</p>
    */
-  propagateTags?: PropagateTags | string;
+  propagateTags?: PropagateTags;
 
   /**
    * @public
@@ -3415,7 +3415,7 @@ export interface CreateTaskSetRequest {
    *          <p>If a <code>launchType</code> is specified, the <code>capacityProviderStrategy</code>
    * 			parameter must be omitted.</p>
    */
-  launchType?: LaunchType | string;
+  launchType?: LaunchType;
 
   /**
    * @public
@@ -3568,6 +3568,7 @@ export const SettingName = {
   CONTAINER_INSIGHTS: "containerInsights",
   CONTAINER_INSTANCE_LONG_ARN_FORMAT: "containerInstanceLongArnFormat",
   FARGATE_FIPS_MODE: "fargateFIPSMode",
+  FARGATE_TASK_RETIREMENT_WAIT_PERIOD: "fargateTaskRetirementWaitPeriod",
   SERVICE_LONG_ARN_FORMAT: "serviceLongArnFormat",
   TAG_RESOURCE_AUTHORIZATION: "tagResourceAuthorization",
   TASK_LONG_ARN_FORMAT: "taskLongArnFormat",
@@ -3592,7 +3593,7 @@ export interface DeleteAccountSettingRequest {
    * 				<code>awsvpcTrunking</code> is specified, the ENI limit for your Amazon ECS container
    * 			instances is affected.</p>
    */
-  name: SettingName | string | undefined;
+  name: SettingName | undefined;
 
   /**
    * @public
@@ -3613,7 +3614,7 @@ export interface Setting {
    * @public
    * <p>The Amazon ECS resource name.</p>
    */
-  name?: SettingName | string;
+  name?: SettingName;
 
   /**
    * @public
@@ -3682,7 +3683,7 @@ export interface Attribute {
    * <p>The type of the target to attach the attribute with. This parameter is required if you
    * 			use the short form ID for a resource instead of the full ARN.</p>
    */
-  targetType?: TargetType | string;
+  targetType?: TargetType;
 
   /**
    * @public
@@ -4030,7 +4031,7 @@ export interface ContainerDependency {
    *             </li>
    *          </ul>
    */
-  condition: ContainerCondition | string | undefined;
+  condition: ContainerCondition | undefined;
 }
 
 /**
@@ -4048,13 +4049,11 @@ export type EnvironmentFileType = (typeof EnvironmentFileType)[keyof typeof Envi
 
 /**
  * @public
- * <p>A list of files containing the environment variables to pass to a container. You can
- * 			specify up to ten environment files. The file must have a <code>.env</code> file
- * 			extension. Each line in an environment file should contain an environment variable in
+ * <p>A list of files containing the environment variables to pass to a container. You can specify
+ * 			up to ten environment files. The file must have a <code>.env</code> file extension. Each
+ * 			line in an environment file should contain an environment variable in
  * 				<code>VARIABLE=VALUE</code> format. Lines beginning with <code>#</code> are treated
- * 			as comments and are ignored. For more information about the environment variable file
- * 			syntax, see <a href="https://docs.docker.com/compose/env-file/">Declare default
- * 				environment variables in file</a>.</p>
+ * 			as comments and are ignored.</p>
  *          <p>If there are environment variables specified using the <code>environment</code>
  * 			parameter in a container definition, they take precedence over the variables contained
  * 			within an environment file. If multiple environment files are specified that contain the
@@ -4070,6 +4069,18 @@ export type EnvironmentFileType = (typeof EnvironmentFileType)[keyof typeof Envi
  *                <p>Windows platform version <code>1.0.0</code> or later.</p>
  *             </li>
  *          </ul>
+ *          <p>Consider the following when using the Fargate launch type:</p>
+ *          <ul>
+ *             <li>
+ *                <p>The file is handled like a native Docker env-file.</p>
+ *             </li>
+ *             <li>
+ *                <p>There is no support for shell escape handling.</p>
+ *             </li>
+ *             <li>
+ *                <p>The container entry point interperts the <code>VARIABLE</code> values.</p>
+ *             </li>
+ *          </ul>
  */
 export interface EnvironmentFile {
   /**
@@ -4083,7 +4094,7 @@ export interface EnvironmentFile {
    * @public
    * <p>The file type to use. The only supported value is <code>s3</code>.</p>
    */
-  type: EnvironmentFileType | string | undefined;
+  type: EnvironmentFileType | undefined;
 }
 
 /**
@@ -4131,7 +4142,7 @@ export interface FirelensConfiguration {
    * <p>The log router to use. The valid values are <code>fluentd</code> or
    * 				<code>fluentbit</code>.</p>
    */
-  type: FirelensConfigurationType | string | undefined;
+  type: FirelensConfigurationType | undefined;
 
   /**
    * @public
@@ -4166,8 +4177,8 @@ export interface FirelensConfiguration {
  *          </note>
  *          <p>You can view the health status of both individual containers and a task with the
  * 			DescribeTasks API operation or when viewing the task details in the console.</p>
- *          <p>The health check is designed to make sure that your containers survive
- * 			agent restarts, upgrades, or temporary unavailability.</p>
+ *          <p>The health check is designed to make sure that your containers survive agent restarts,
+ * 			upgrades, or temporary unavailability.</p>
  *          <p>The following describes the possible <code>healthStatus</code> values for a
  * 			container:</p>
  *          <ul>
@@ -4182,19 +4193,15 @@ export interface FirelensConfiguration {
  *             </li>
  *             <li>
  *                <p>
- *                   <code>UNKNOWN</code>-The container health check is being evaluated or
- * 					there's no container health check defined.</p>
+ *                   <code>UNKNOWN</code>-The container health check is being evaluated,
+ * 					there's no container health check defined, or Amazon ECS doesn't have the health
+ * 					status of the container.</p>
  *             </li>
  *          </ul>
- *          <p>The following describes the possible <code>healthStatus</code> values for a task. The
- * 			container health check status of
- * 			non-essential containers don't have an effect on the health status of a task.</p>
+ *          <p>The following describes the possible <code>healthStatus</code> values based on the
+ * 			container health checker status of essential containers in the task with the following
+ * 			priority order (high to low):</p>
  *          <ul>
- *             <li>
- *                <p>
- *                   <code>HEALTHY</code>-All essential containers within the task have
- * 					passed their health checks.</p>
- *             </li>
  *             <li>
  *                <p>
  *                   <code>UNHEALTHY</code>-One or more essential containers have failed
@@ -4202,10 +4209,62 @@ export interface FirelensConfiguration {
  *             </li>
  *             <li>
  *                <p>
- *                   <code>UNKNOWN</code>-The essential containers within the task are still
- * 					having their health checks evaluated, there are only nonessential containers
- * 					with health checks defined, or there are no container health checks
- * 					defined.</p>
+ *                   <code>UNKNOWN</code>-Any essential container running within the task is
+ * 					in an <code>UNKNOWN</code> state and no other essential containers have an
+ * 						<code>UNHEALTHY</code> state.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <code>HEALTHY</code>-All essential containers within the task have
+ * 					passed their health checks.</p>
+ *             </li>
+ *          </ul>
+ *          <p>Consider the following task health example with 2 containers.</p>
+ *          <ul>
+ *             <li>
+ *                <p>If Container1 is <code>UNHEALTHY</code> and Container2 is
+ * 					<code>UNKNOWN</code>, the task health is <code>UNHEALTHY</code>.</p>
+ *             </li>
+ *             <li>
+ *                <p>If Container1 is <code>UNHEALTHY</code> and Container2 is
+ * 					<code>HEALTHY</code>, the task health is <code>UNHEALTHY</code>.</p>
+ *             </li>
+ *             <li>
+ *                <p>If Container1 is <code>HEALTHY</code> and Container2 is <code>UNKNOWN</code>,
+ * 					the task health is <code>UNKNOWN</code>.</p>
+ *             </li>
+ *             <li>
+ *                <p>If Container1 is <code>HEALTHY</code> and Container2 is <code>HEALTHY</code>,
+ * 					the task health is <code>HEALTHY</code>.</p>
+ *             </li>
+ *          </ul>
+ *          <p>Consider the following task health example with 3 containers.</p>
+ *          <ul>
+ *             <li>
+ *                <p>If Container1 is <code>UNHEALTHY</code> and Container2 is <code>UNKNOWN</code>, and Container3
+ * 					is <code>UNKNOWN</code>, the task health is <code>UNHEALTHY</code>.</p>
+ *             </li>
+ *             <li>
+ *                <p>If Container1 is <code>UNHEALTHY</code> and Container2 is <code>UNKNOWN</code>, and Container3
+ * 					is <code>HEALTHY</code>, the task health is <code>UNHEALTHY</code>.</p>
+ *             </li>
+ *             <li>
+ *                <p>If Container1 is <code>UNHEALTHY</code> and Container2 is <code>HEALTHY</code>, and Container3
+ * 					is <code>HEALTHY</code>, the task health is <code>UNHEALTHY</code>.</p>
+ *             </li>
+ *             <li>
+ *                <p>If Container1 is <code>HEALTHY</code> and Container2 is <code>UNKNOWN</code>, and Container3
+ * 					is <code>HEALTHY</code>, the task health is <code>UNKNOWN</code>.</p>
+ *             </li>
+ *             <li>
+ *                <p>If Container1 is <code>HEALTHY</code> and Container2 is <code>UNKNOWN</code>,
+ * 					and Container3 is <code>UNKNOWN</code>, the task health is
+ * 					<code>UNKNOWN</code>.</p>
+ *             </li>
+ *             <li>
+ *                <p>If Container1 is <code>HEALTHY</code> and Container2 is <code>HEALTHY</code>,
+ * 					and Container3 is <code>HEALTHY</code>, the task health is
+ * 					<code>HEALTHY</code>.</p>
  *             </li>
  *          </ul>
  *          <p>If a task is run manually, and not as part of a service, the task will continue its
@@ -4215,12 +4274,13 @@ export interface FirelensConfiguration {
  *          <p>The following are notes about container health check support:</p>
  *          <ul>
  *             <li>
- *                <p>When the Amazon ECS agent cannot connect to the Amazon ECS service,  the
- * 					service reports the container as <code>UNHEALTHY</code>. </p>
+ *                <p>When the Amazon ECS agent cannot connect to the Amazon ECS service, the service reports
+ * 					the container as <code>UNHEALTHY</code>. </p>
  *             </li>
  *             <li>
- *                <p>The health check statuses are the "last heard from" response from the Amazon ECS agent. There
- * 					are no assumptions made about the status of the container health checks.</p>
+ *                <p>The health check statuses are the "last heard from" response from the Amazon ECS
+ * 					agent. There are no assumptions made about the status of the container health
+ * 					checks.</p>
  *             </li>
  *             <li>
  *                <p>Container health checks require version 1.17.0 or greater of the Amazon ECS
@@ -4387,7 +4447,7 @@ export interface Device {
    * 			container has permissions for <code>read</code>, <code>write</code>, and
    * 				<code>mknod</code> for the device.</p>
    */
-  permissions?: (DeviceCgroupPermission | string)[];
+  permissions?: DeviceCgroupPermission[];
 }
 
 /**
@@ -4664,7 +4724,7 @@ export interface PortMapping {
    * <p>The protocol used for the port mapping. Valid values are <code>tcp</code> and
    * 				<code>udp</code>. The default is <code>tcp</code>.</p>
    */
-  protocol?: TransportProtocol | string;
+  protocol?: TransportProtocol;
 
   /**
    * @public
@@ -4693,7 +4753,7 @@ export interface PortMapping {
    * 	Only the tasks that Amazon ECS services create are supported with Service Connect.
    * 	For more information, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-connect.html">Service Connect</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>
    */
-  appProtocol?: ApplicationProtocol | string;
+  appProtocol?: ApplicationProtocol;
 
   /**
    * @public
@@ -4724,8 +4784,8 @@ export interface PortMapping {
    *                <ul>
    *                   <li>
    *                      <p>For containers in a task with the <code>awsvpc</code> network mode,
-   * 							the <code>hostPort</code> is set to the same value as the
-   * 								<code>containerPort</code>. This is a static mapping
+   * 							the <code>hostPortRange</code> is set to the same value as the
+   * 								<code>containerPortRange</code>. This is a static mapping
    * 							strategy.</p>
    *                   </li>
    *                   <li>
@@ -4820,7 +4880,7 @@ export interface ResourceRequirement {
    * <p>The type of resource to assign to a container. The supported values are
    * 				<code>GPU</code> or <code>InferenceAccelerator</code>.</p>
    */
-  type: ResourceType | string | undefined;
+  type: ResourceType | undefined;
 }
 
 /**
@@ -4857,8 +4917,18 @@ export interface SystemControl {
 
   /**
    * @public
-   * <p>The value for the namespaced kernel parameter that's specified in
-   * 				<code>namespace</code>.</p>
+   * <p>The namespaced kernel parameter to set a
+   * 			<code>value</code> for.</p>
+   *          <p>Valid IPC namespace values: <code>"kernel.msgmax" | "kernel.msgmnb" | "kernel.msgmni"
+   * 			| "kernel.sem" | "kernel.shmall" | "kernel.shmmax" |
+   * 			"kernel.shmmni" | "kernel.shm_rmid_forced"</code>, and
+   * 			<code>Sysctls</code> that start with
+   * 			<code>"fs.mqueue.*"</code>
+   *          </p>
+   *          <p>Valid network namespace values: <code>Sysctls</code> that start with
+   * 			<code>"net.*"</code>
+   *          </p>
+   *          <p>All of these values are supported by Fargate.</p>
    */
   value?: string;
 }
@@ -4908,7 +4978,7 @@ export interface Ulimit {
    * @public
    * <p>The <code>type</code> of the <code>ulimit</code>.</p>
    */
-  name: UlimitName | string | undefined;
+  name: UlimitName | undefined;
 
   /**
    * @public
@@ -5641,7 +5711,9 @@ export interface ContainerDefinition {
    * @public
    * <p>A list of namespaced kernel parameters to set in the container. This parameter maps to
    * 				<code>Sysctls</code> in the <a href="https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate">Create a container</a> section of the
-   * 			<a href="https://docs.docker.com/engine/api/v1.35/">Docker Remote API</a> and the <code>--sysctl</code> option to <a href="https://docs.docker.com/engine/reference/run/#security-configuration">docker run</a>.</p>
+   * 			<a href="https://docs.docker.com/engine/api/v1.35/">Docker Remote API</a> and the <code>--sysctl</code> option to <a href="https://docs.docker.com/engine/reference/run/#security-configuration">docker run</a>.  For example, you can
+   * 			configure <code>net.ipv4.tcp_keepalive_time</code> setting to maintain
+   * 			longer lived connections.</p>
    *          <note>
    *             <p>We don't recommended that you specify network-related <code>systemControls</code>
    * 				parameters for multiple containers in a single task that also uses either the
@@ -5650,6 +5722,15 @@ export interface ContainerDefinition {
    * 				which <code>systemControls</code> parameters take effect. For tasks that use the
    * 					<code>host</code> network mode, it changes the container instance's namespaced
    * 				kernel parameters as well as the containers.</p>
+   *          </note>
+   *          <note>
+   *             <p>This parameter is not supported for Windows containers.</p>
+   *          </note>
+   *          <note>
+   *             <p>This parameter is only supported for tasks that are hosted on
+   *         Fargate if the tasks are using platform version <code>1.4.0</code> or later
+   *         (Linux). This isn't supported for Windows containers on
+   *         Fargate.</p>
    *          </note>
    */
   systemControls?: SystemControl[];
@@ -5834,7 +5915,7 @@ export interface TaskDefinitionPlacementConstraint {
    * <p>The type of constraint. The <code>MemberOf</code> constraint restricts selection to be
    * 			from a group of valid candidates.</p>
    */
-  type?: TaskDefinitionPlacementConstraintType | string;
+  type?: TaskDefinitionPlacementConstraintType;
 
   /**
    * @public
@@ -5873,7 +5954,7 @@ export interface ProxyConfiguration {
    * @public
    * <p>The proxy type. The only supported value is <code>APPMESH</code>.</p>
    */
-  type?: ProxyConfigurationType | string;
+  type?: ProxyConfigurationType;
 
   /**
    * @public
@@ -5980,13 +6061,13 @@ export interface RuntimePlatform {
    * 				<code>ARM64</code>. This option is available for tasks that run on Linux Amazon EC2
    * 			instance or Linux containers on Fargate.</p>
    */
-  cpuArchitecture?: CPUArchitecture | string;
+  cpuArchitecture?: CPUArchitecture;
 
   /**
    * @public
    * <p>The operating system.</p>
    */
-  operatingSystemFamily?: OSFamily | string;
+  operatingSystemFamily?: OSFamily;
 }
 
 /**
@@ -6033,7 +6114,7 @@ export interface DockerVolumeConfiguration {
    * 			destroyed when the task stops. Docker volumes that are scoped as <code>shared</code>
    * 			persist after the task stops.</p>
    */
-  scope?: Scope | string;
+  scope?: Scope;
 
   /**
    * @public
@@ -6116,7 +6197,7 @@ export interface EFSAuthorizationConfig {
    * 			of <code>DISABLED</code> is used. For more information, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-volumes.html#efs-volume-accesspoints">Using
    * 				Amazon EFS access points</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>
    */
-  iam?: EFSAuthorizationConfigIAM | string;
+  iam?: EFSAuthorizationConfigIAM;
 }
 
 /**
@@ -6167,7 +6248,7 @@ export interface EFSVolumeConfiguration {
    * 			For more information, see <a href="https://docs.aws.amazon.com/efs/latest/ug/encryption-in-transit.html">Encrypting data in transit</a> in
    * 			the <i>Amazon Elastic File System User Guide</i>.</p>
    */
-  transitEncryption?: EFSTransitEncryption | string;
+  transitEncryption?: EFSTransitEncryption;
 
   /**
    * @public
@@ -6407,7 +6488,7 @@ export interface TaskDefinition {
    *          <p>For more information, see <a href="https://docs.docker.com/engine/reference/run/#network-settings">Network
    *                 settings</a> in the <i>Docker run reference</i>.</p>
    */
-  networkMode?: NetworkMode | string;
+  networkMode?: NetworkMode;
 
   /**
    * @public
@@ -6433,7 +6514,7 @@ export interface TaskDefinition {
    * @public
    * <p>The status of the task definition.</p>
    */
-  status?: TaskDefinitionStatus | string;
+  status?: TaskDefinitionStatus;
 
   /**
    * @public
@@ -6464,7 +6545,7 @@ export interface TaskDefinition {
    * 			registration. For more information, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html">Amazon ECS launch types</a>
    * 			in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>
    */
-  compatibilities?: (Compatibility | string)[];
+  compatibilities?: Compatibility[];
 
   /**
    * @public
@@ -6482,7 +6563,7 @@ export interface TaskDefinition {
    * 			information, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html">Amazon ECS launch types</a>
    * 			in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>
    */
-  requiresCompatibilities?: (Compatibility | string)[];
+  requiresCompatibilities?: Compatibility[];
 
   /**
    * @public
@@ -6572,23 +6653,34 @@ export interface TaskDefinition {
   /**
    * @public
    * <p>The process namespace to use for the containers in the task. The valid
-   *                             values are <code>host</code> or <code>task</code>. If <code>host</code>
-   *                             is specified, then all containers within the tasks that specified the
-   *                                 <code>host</code> PID mode on the same container instance share the
-   *                             same process namespace with the host Amazon EC2 instance. If <code>task</code> is
-   *                             specified, all containers within the specified task share the same
-   *                             process namespace. If no value is specified, the default is a private
-   *                             namespace. For more information, see <a href="https://docs.docker.com/engine/reference/run/#pid-settings---pid">PID settings</a> in the <i>Docker run
+   *                             values are <code>host</code> or <code>task</code>. On Fargate for
+   *                             Linux containers, the only valid value is <code>task</code>. For
+   *                             example, monitoring sidecars might need <code>pidMode</code> to access
+   *                             information about other containers running in the same task.</p>
+   *          <p>If <code>host</code> is specified, all containers within the tasks
+   *                             that specified the <code>host</code> PID mode on the same container
+   *                             instance share the same process namespace with the host Amazon EC2
+   *                             instance.</p>
+   *          <p>If <code>task</code> is specified, all containers within the specified
+   *                             task share the same process namespace.</p>
+   *          <p>If no value is specified, the
+   *                             default is a private namespace for each container. For more information,
+   *                             see <a href="https://docs.docker.com/engine/reference/run/#pid-settings---pid">PID settings</a> in the <i>Docker run
    *                                 reference</i>.</p>
-   *          <p>If the <code>host</code> PID mode is used, be aware that there is a
-   *                             heightened risk of undesired process namespace expose. For more
-   *                             information, see <a href="https://docs.docker.com/engine/security/security/">Docker
-   *                                 security</a>.</p>
+   *          <p>If the <code>host</code> PID mode is used, there's a heightened risk
+   *                             of undesired process namespace exposure. For more information, see
+   *                                 <a href="https://docs.docker.com/engine/security/security/">Docker security</a>.</p>
    *          <note>
-   *             <p>This parameter is not supported for Windows containers or tasks run on Fargate.</p>
+   *             <p>This parameter is not supported for Windows containers.</p>
+   *          </note>
+   *          <note>
+   *             <p>This parameter is only supported for tasks that are hosted on
+   *         Fargate if the tasks are using platform version <code>1.4.0</code> or later
+   *         (Linux). This isn't supported for Windows containers on
+   *         Fargate.</p>
    *          </note>
    */
-  pidMode?: PidMode | string;
+  pidMode?: PidMode;
 
   /**
    * @public
@@ -6625,7 +6717,7 @@ export interface TaskDefinition {
    *             <p>This parameter is not supported for Windows containers or tasks run on Fargate.</p>
    *          </note>
    */
-  ipcMode?: IpcMode | string;
+  ipcMode?: IpcMode;
 
   /**
    * @public
@@ -6816,13 +6908,13 @@ export interface InstanceHealthCheckResult {
    * @public
    * <p>The type of container instance health status that was verified.</p>
    */
-  type?: InstanceHealthCheckType | string;
+  type?: InstanceHealthCheckType;
 
   /**
    * @public
    * <p>The container instance health status.</p>
    */
-  status?: InstanceHealthCheckState | string;
+  status?: InstanceHealthCheckState;
 
   /**
    * @public
@@ -6848,7 +6940,7 @@ export interface ContainerInstanceHealthStatus {
    * <p>The overall health status of the container instance. This is an aggregate status of
    * 			all container instance health checks.</p>
    */
-  overallStatus?: InstanceHealthCheckState | string;
+  overallStatus?: InstanceHealthCheckState;
 
   /**
    * @public
@@ -7037,8 +7129,7 @@ export interface ContainerInstance {
 
   /**
    * @public
-   * <p>The number of tasks on the container instance that are in the <code>RUNNING</code>
-   * 			status.</p>
+   * <p>The number of tasks on the container instance that have a desired status (<code>desiredStatus</code>) of <code>RUNNING</code>.</p>
    */
   runningTasksCount?: number;
 
@@ -7054,7 +7145,7 @@ export interface ContainerInstance {
    * <p>The status of the most recent agent update. If an update wasn't ever requested, this
    * 			value is <code>NULL</code>.</p>
    */
-  agentUpdateStatus?: AgentUpdateStatus | string;
+  agentUpdateStatus?: AgentUpdateStatus;
 
   /**
    * @public
@@ -7187,7 +7278,7 @@ export interface DescribeCapacityProvidersRequest {
    * 			If <code>TAGS</code> is specified, the tags are included in the response. If this field
    * 			is omitted, tags aren't included in the response.</p>
    */
-  include?: (CapacityProviderField | string)[];
+  include?: CapacityProviderField[];
 
   /**
    * @public
@@ -7289,7 +7380,7 @@ export interface DescribeClustersRequest {
    *          <p>If <code>TAGS</code> is specified, the metadata tags associated with the cluster are
    * 			included.</p>
    */
-  include?: (ClusterField | string)[];
+  include?: ClusterField[];
 }
 
 /**
@@ -7350,7 +7441,7 @@ export interface DescribeContainerInstancesRequest {
    * 			is included in the response. If this field is omitted, tags and container instance
    * 			health status aren't included in the response.</p>
    */
-  include?: (ContainerInstanceField | string)[];
+  include?: ContainerInstanceField[];
 }
 
 /**
@@ -7408,7 +7499,7 @@ export interface DescribeServicesRequest {
    * 				<code>TAGS</code> is specified, the tags are included in the response. If this field
    * 			is omitted, tags aren't included in the response.</p>
    */
-  include?: (ServiceField | string)[];
+  include?: ServiceField[];
 }
 
 /**
@@ -7460,7 +7551,7 @@ export interface DescribeTaskDefinitionRequest {
    * 				<code>TAGS</code> is specified, the tags are included in the response. If this field
    * 			is omitted, tags aren't included in the response.</p>
    */
-  include?: (TaskDefinitionField | string)[];
+  include?: TaskDefinitionField[];
 }
 
 /**
@@ -7549,7 +7640,7 @@ export interface DescribeTasksRequest {
    * 			is specified, the tags are included in the response. If this field is omitted, tags
    * 			aren't included in the response.</p>
    */
-  include?: (TaskField | string)[];
+  include?: TaskField[];
 }
 
 /**
@@ -7610,7 +7701,7 @@ export interface ManagedAgent {
    * <p>The name of the managed agent. When the execute command feature is turned on, the
    * 			managed agent name is <code>ExecuteCommandAgent</code>.</p>
    */
-  name?: ManagedAgentName | string;
+  name?: ManagedAgentName;
 
   /**
    * @public
@@ -7655,7 +7746,7 @@ export interface NetworkBinding {
    * @public
    * <p>The protocol used for the network binding.</p>
    */
-  protocol?: TransportProtocol | string;
+  protocol?: TransportProtocol;
 
   /**
    * @public
@@ -7686,8 +7777,8 @@ export interface NetworkBinding {
    *                <ul>
    *                   <li>
    *                      <p>For containers in a task with the <code>awsvpc</code> network mode,
-   * 							the <code>hostPort</code> is set to the same value as the
-   * 								<code>containerPort</code>. This is a static mapping
+   * 							the <code>hostPortRange</code> is set to the same value as the
+   * 								<code>containerPortRange</code>. This is a static mapping
    * 							strategy.</p>
    *                   </li>
    *                   <li>
@@ -7832,7 +7923,7 @@ export interface Container {
    * 			container in its task definition, then it reports the health status as
    * 				<code>UNKNOWN</code>.</p>
    */
-  healthStatus?: HealthStatus | string;
+  healthStatus?: HealthStatus;
 
   /**
    * @public
@@ -8082,7 +8173,7 @@ export interface Task {
    * @public
    * <p>The connectivity status of a task.</p>
    */
-  connectivity?: Connectivity | string;
+  connectivity?: Connectivity;
 
   /**
    * @public
@@ -8198,7 +8289,7 @@ export interface Task {
    * 				override any Docker health checks that are found in the container image.</p>
    *          </note>
    */
-  healthStatus?: HealthStatus | string;
+  healthStatus?: HealthStatus;
 
   /**
    * @public
@@ -8218,7 +8309,7 @@ export interface Task {
    * <p>The infrastructure where your task runs on. For more information, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html">Amazon ECS
    * 				launch types</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>
    */
-  launchType?: LaunchType | string;
+  launchType?: LaunchType;
 
   /**
    * @public
@@ -8351,7 +8442,7 @@ export interface Task {
    *             </li>
    *          </ul>
    */
-  stopCode?: TaskStopCode | string;
+  stopCode?: TaskStopCode;
 
   /**
    * @public
@@ -8504,7 +8595,7 @@ export interface DescribeTaskSetsRequest {
    * 			specified, the tags are included in the response. If this field is omitted, tags aren't
    * 			included in the response.</p>
    */
-  include?: (TaskSetField | string)[];
+  include?: TaskSetField[];
 }
 
 /**
@@ -8816,7 +8907,7 @@ export interface ListAccountSettingsRequest {
    * @public
    * <p>The name of the account setting you want to list the settings for.</p>
    */
-  name?: SettingName | string;
+  name?: SettingName;
 
   /**
    * @public
@@ -8911,7 +9002,7 @@ export interface ListAttributesRequest {
    * @public
    * <p>The type of the target to list attributes with.</p>
    */
-  targetType: TargetType | string | undefined;
+  targetType: TargetType | undefined;
 
   /**
    * @public
@@ -9098,7 +9189,7 @@ export interface ListContainerInstancesRequest {
    * 			If you don't specify this parameter, the default is to include container instances set
    * 			to all states other than <code>INACTIVE</code>.</p>
    */
-  status?: ContainerInstanceStatus | string;
+  status?: ContainerInstanceStatus;
 }
 
 /**
@@ -9165,14 +9256,14 @@ export interface ListServicesRequest {
    * @public
    * <p>The launch type to use when filtering the <code>ListServices</code> results.</p>
    */
-  launchType?: LaunchType | string;
+  launchType?: LaunchType;
 
   /**
    * @public
    * <p>The scheduling strategy to use when filtering the <code>ListServices</code>
    * 			results.</p>
    */
-  schedulingStrategy?: SchedulingStrategy | string;
+  schedulingStrategy?: SchedulingStrategy;
 }
 
 /**
@@ -9326,7 +9417,7 @@ export interface ListTaskDefinitionFamiliesRequest {
    * 			resulting output, be sure to keep the <code>status</code> value constant in each
    * 			subsequent request.</p>
    */
-  status?: TaskDefinitionFamilyStatus | string;
+  status?: TaskDefinitionFamilyStatus;
 
   /**
    * @public
@@ -9415,7 +9506,7 @@ export interface ListTaskDefinitionsRequest {
    * 			you paginate the resulting output, be sure to keep the <code>status</code> value
    * 			constant in each subsequent request.</p>
    */
-  status?: TaskDefinitionStatus | string;
+  status?: TaskDefinitionStatus;
 
   /**
    * @public
@@ -9426,7 +9517,7 @@ export interface ListTaskDefinitionsRequest {
    * 				<code>DESC</code> reverses the sort order on family name and revision. This is so
    * 			that the newest task definitions in a family are listed first.</p>
    */
-  sort?: SortOrder | string;
+  sort?: SortOrder;
 
   /**
    * @public
@@ -9580,13 +9671,13 @@ export interface ListTasksRequest {
    * 					<code>PENDING</code>).</p>
    *          </note>
    */
-  desiredStatus?: DesiredStatus | string;
+  desiredStatus?: DesiredStatus;
 
   /**
    * @public
    * <p>The launch type to use when filtering the <code>ListTasks</code> results.</p>
    */
-  launchType?: LaunchType | string;
+  launchType?: LaunchType;
 }
 
 /**
@@ -9616,27 +9707,43 @@ export interface ListTasksResponse {
 export interface PutAccountSettingRequest {
   /**
    * @public
-   * <p>The Amazon ECS resource name for which to modify the account setting. If
-   * 				<code>serviceLongArnFormat</code> is specified, the ARN for your Amazon ECS services is
-   * 			affected. If <code>taskLongArnFormat</code> is specified, the ARN and resource ID for
-   * 			your Amazon ECS tasks is affected. If <code>containerInstanceLongArnFormat</code> is
-   * 			specified, the ARN and resource ID for your Amazon ECS container instances is affected. If
-   * 				<code>awsvpcTrunking</code> is specified, the elastic network interface (ENI) limit
-   * 			for your Amazon ECS container instances is affected. If <code>containerInsights</code> is
-   * 			specified, the default setting for Amazon Web Services CloudWatch Container Insights for your clusters is
-   * 			affected. If <code>fargateFIPSMode</code> is specified, Fargate FIPS 140 compliance is
-   * 			affected.  If <code>tagResourceAuthorization</code> is specified, the opt-in option for
-   * 			tagging resources on creation is affected. For information about the opt-in timeline,
-   * 			see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#tag-resources">Tagging authorization timeline</a> in the <i>Amazon ECS Developer
-   * 					Guide</i>.</p>
+   * <p>The Amazon ECS resource name for which to modify the account setting. If you specify
+   * 				<code>serviceLongArnFormat</code>, the ARN for your Amazon ECS services is affected. If
+   * 			you specify <code>taskLongArnFormat</code>, the ARN and resource ID for your Amazon ECS
+   * 			tasks is affected. If you specify <code>containerInstanceLongArnFormat</code>, the ARN
+   * 			and resource ID for your Amazon ECS container instances is affected. If you specify
+   * 				<code>awsvpcTrunking</code>, the elastic network interface (ENI) limit for your
+   * 			Amazon ECS container instances is affected. If you specify <code>containerInsights</code>,
+   * 			the default setting for Amazon Web Services CloudWatch Container Insights for your clusters is affected. If
+   * 			you specify <code>fargateFIPSMode</code>, Fargate FIPS 140 compliance is affected. If
+   * 			you specify <code>tagResourceAuthorization</code>, the opt-in option for tagging
+   * 			resources on creation is affected. For information about the opt-in timeline, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#tag-resources">Tagging authorization timeline</a> in the <i>Amazon ECS Developer
+   * 				Guide</i>. If you specify <code>fargateTaskRetirementWaitPeriod</code>, the
+   * 			wait time to retire a Fargate task is affected.</p>
    */
-  name: SettingName | string | undefined;
+  name: SettingName | undefined;
 
   /**
    * @public
    * <p>The account setting value for the specified principal ARN. Accepted values are
    * 				<code>enabled</code>, <code>disabled</code>, <code>on</code>, and
    * 			<code>off</code>.</p>
+   *          <p>When you specify <code>fargateTaskRetirementWaitPeriod</code> for the <code>name</code>, the
+   * 			following are the valid values:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>0</code> - Amazon Web Services sends the notification, and immediately retires the affected tasks.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>7</code> - Amazon Web Services sends the notification, and waits 7 calendar days to retire the tasks.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>14</code> -  Amazon Web Services sends the notification, and waits 14 calendar days to retire the tasks.</p>
+   *             </li>
+   *          </ul>
    */
   value: string | undefined;
 
@@ -9648,6 +9755,8 @@ export interface PutAccountSettingRequest {
    * 			settings. If this field is omitted, the setting is changed only for the authenticated
    * 			user.</p>
    *          <note>
+   *             <p>You must use the root user when you set the Fargate wait time
+   * 					(<code>fargateTaskRetirementWaitPeriod</code>). </p>
    *             <p>Federated users assume the account setting of the root user and can't have
    * 				explicit account settings set for them.</p>
    *          </note>
@@ -9672,30 +9781,54 @@ export interface PutAccountSettingResponse {
 export interface PutAccountSettingDefaultRequest {
   /**
    * @public
-   * <p>The resource name for which to modify the account setting. If
-   * 				<code>serviceLongArnFormat</code> is specified, the ARN for your Amazon ECS services is
-   * 			affected. If <code>taskLongArnFormat</code> is specified, the ARN and resource ID for
-   * 			your Amazon ECS tasks is affected. If <code>containerInstanceLongArnFormat</code> is
-   * 			specified, the ARN and resource ID for your Amazon ECS container instances is affected. If
-   * 				<code>awsvpcTrunking</code> is specified, the ENI limit for your Amazon ECS container
-   * 			instances is affected. If <code>containerInsights</code> is specified, the default
-   * 			setting for Amazon Web Services CloudWatch Container Insights for your clusters is affected. If
-   * 				<code>tagResourceAuthorization</code> is specified, the opt-in option for tagging
-   * 			resources on creation is affected. For information about the opt-in timeline, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#tag-resources">Tagging authorization timeline</a> in the <i>Amazon ECS Developer
-   * 				Guide</i>.</p>
+   * <p>The resource name for which to modify the account setting. If you specify
+   * 				<code>serviceLongArnFormat</code>, the ARN for your Amazon ECS services is affected. If
+   * 			you specify <code>taskLongArnFormat</code>, the ARN and resource ID for your Amazon ECS
+   * 			tasks is affected. If you specify <code>containerInstanceLongArnFormat</code>, the ARN
+   * 			and resource ID for your Amazon ECS container instances is affected. If you specify
+   * 				<code>awsvpcTrunking</code>, the ENI limit for your Amazon ECS container instances is
+   * 			affected. If you specify <code>containerInsights</code>, the default setting for Amazon Web Services
+   * 			CloudWatch Container Insights for your clusters is affected. If you specify
+   * 				<code>tagResourceAuthorization</code>, the opt-in option for tagging resources on
+   * 			creation is affected. For information about the opt-in timeline, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#tag-resources">Tagging authorization timeline</a> in the <i>Amazon ECS Developer
+   * 				Guide</i>. If you specify <code>fargateTaskRetirementWaitPeriod</code>, the
+   * 			default wait time to retire a Fargate task due to required maintenance is
+   * 			affected.</p>
    *          <p>When you specify <code>fargateFIPSMode</code> for the <code>name</code> and
    * 			<code>enabled</code> for the <code>value</code>, Fargate uses FIPS-140 compliant
    * 			cryptographic algorithms on your tasks. For more information about FIPS-140 compliance
    * 			with Fargate, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-fips-compliance.html"> Amazon Web Services Fargate Federal Information Processing Standard (FIPS) 140-2
    * 				compliance</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>
+   *          <p>When Amazon Web Services determines that a security or infrastructure update is needed for an Amazon ECS task
+   * 			hosted on Fargate, the tasks need to be stopped and new tasks launched to replace
+   * 			them. Use <code>fargateTaskRetirementWaitPeriod</code> to set the wait time to retire a
+   * 			Fargate task to the default. For information about the Fargate tasks maintenance,
+   * 			see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-maintenance.html">Amazon Web Services Fargate task
+   * 				maintenance</a> in the <i>Amazon ECS Developer Guide</i>.</p>
    */
-  name: SettingName | string | undefined;
+  name: SettingName | undefined;
 
   /**
    * @public
    * <p>The account setting value for the specified principal ARN. Accepted values are
    * 				<code>enabled</code>, <code>disabled</code>, <code>on</code>, and
    * 			<code>off</code>.</p>
+   *          <p>When you specify <code>fargateTaskRetirementWaitPeriod</code> for the
+   * 				<code>name</code>, the following are the valid values:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>0</code> - Amazon Web Services sends the notification, and immediately retires the affected tasks.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>7</code> - Amazon Web Services sends the notification, and waits 7 calendar days to retire the tasks.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>14</code> -  Amazon Web Services sends the notification, and waits 14 calendar days to retire the tasks.</p>
+   *             </li>
+   *          </ul>
    */
   value: string | undefined;
 }
@@ -9871,7 +10004,7 @@ export interface PlatformDevice {
    * <p>The type of device that's available on the container instance. The only supported
    * 			value is <code>GPU</code>.</p>
    */
-  type: PlatformDeviceType | string | undefined;
+  type: PlatformDeviceType | undefined;
 }
 
 /**
@@ -10046,7 +10179,7 @@ export interface RegisterTaskDefinitionRequest {
    *          <p>For more information, see <a href="https://docs.docker.com/engine/reference/run/#network-settings">Network
    *                 settings</a> in the <i>Docker run reference</i>.</p>
    */
-  networkMode?: NetworkMode | string;
+  networkMode?: NetworkMode;
 
   /**
    * @public
@@ -10077,7 +10210,7 @@ export interface RegisterTaskDefinitionRequest {
    * 			compatibilities specified. If no value is specified, the parameter is omitted from the
    * 			response.</p>
    */
-  requiresCompatibilities?: (Compatibility | string)[];
+  requiresCompatibilities?: Compatibility[];
 
   /**
    * @public
@@ -10217,23 +10350,34 @@ export interface RegisterTaskDefinitionRequest {
   /**
    * @public
    * <p>The process namespace to use for the containers in the task. The valid
-   *                             values are <code>host</code> or <code>task</code>. If <code>host</code>
-   *                             is specified, then all containers within the tasks that specified the
-   *                                 <code>host</code> PID mode on the same container instance share the
-   *                             same process namespace with the host Amazon EC2 instance. If <code>task</code> is
-   *                             specified, all containers within the specified task share the same
-   *                             process namespace. If no value is specified, the default is a private
-   *                             namespace. For more information, see <a href="https://docs.docker.com/engine/reference/run/#pid-settings---pid">PID settings</a> in the <i>Docker run
+   *                             values are <code>host</code> or <code>task</code>. On Fargate for
+   *                             Linux containers, the only valid value is <code>task</code>. For
+   *                             example, monitoring sidecars might need <code>pidMode</code> to access
+   *                             information about other containers running in the same task.</p>
+   *          <p>If <code>host</code> is specified, all containers within the tasks
+   *                             that specified the <code>host</code> PID mode on the same container
+   *                             instance share the same process namespace with the host Amazon EC2
+   *                             instance.</p>
+   *          <p>If <code>task</code> is specified, all containers within the specified
+   *                             task share the same process namespace.</p>
+   *          <p>If no value is specified, the
+   *                             default is a private namespace for each container. For more information,
+   *                             see <a href="https://docs.docker.com/engine/reference/run/#pid-settings---pid">PID settings</a> in the <i>Docker run
    *                                 reference</i>.</p>
-   *          <p>If the <code>host</code> PID mode is used, be aware that there is a
-   *                             heightened risk of undesired process namespace expose. For more
-   *                             information, see <a href="https://docs.docker.com/engine/security/security/">Docker
-   *                                 security</a>.</p>
+   *          <p>If the <code>host</code> PID mode is used, there's a heightened risk
+   *                             of undesired process namespace exposure. For more information, see
+   *                                 <a href="https://docs.docker.com/engine/security/security/">Docker security</a>.</p>
    *          <note>
-   *             <p>This parameter is not supported for Windows containers or tasks run on Fargate.</p>
+   *             <p>This parameter is not supported for Windows containers.</p>
+   *          </note>
+   *          <note>
+   *             <p>This parameter is only supported for tasks that are hosted on
+   *         Fargate if the tasks are using platform version <code>1.4.0</code> or later
+   *         (Linux). This isn't supported for Windows containers on
+   *         Fargate.</p>
    *          </note>
    */
-  pidMode?: PidMode | string;
+  pidMode?: PidMode;
 
   /**
    * @public
@@ -10270,7 +10414,7 @@ export interface RegisterTaskDefinitionRequest {
    *             <p>This parameter is not supported for Windows containers or tasks run on Fargate.</p>
    *          </note>
    */
-  ipcMode?: IpcMode | string;
+  ipcMode?: IpcMode;
 
   /**
    * @public
@@ -10436,7 +10580,7 @@ export interface RunTaskRequest {
    *          <p>When you use cluster auto scaling, you must specify
    * 				<code>capacityProviderStrategy</code> and not <code>launchType</code>. </p>
    */
-  launchType?: LaunchType | string;
+  launchType?: LaunchType;
 
   /**
    * @public
@@ -10495,7 +10639,7 @@ export interface RunTaskRequest {
    * 				running a task.</p>
    *          </note>
    */
-  propagateTags?: PropagateTags | string;
+  propagateTags?: PropagateTags;
 
   /**
    * @public
@@ -10666,7 +10810,7 @@ export interface StartTaskRequest {
    * <p>Specifies whether to propagate the tags from the task definition or the service to the
    * 			task. If no value is specified, the tags aren't propagated.</p>
    */
-  propagateTags?: PropagateTags | string;
+  propagateTags?: PropagateTags;
 
   /**
    * @public
@@ -10965,7 +11109,7 @@ export interface ManagedAgentStateChange {
    * @public
    * <p>The name of the managed agent.</p>
    */
-  managedAgentName: ManagedAgentName | string | undefined;
+  managedAgentName: ManagedAgentName | undefined;
 
   /**
    * @public
@@ -11162,7 +11306,7 @@ export interface AutoScalingGroupProviderUpdate {
    *          <p>When managed termination protection is off, your Amazon EC2 instances aren't protected from
    * 			termination when the Auto Scaling group scales in.</p>
    */
-  managedTerminationProtection?: ManagedTerminationProtection | string;
+  managedTerminationProtection?: ManagedTerminationProtection;
 }
 
 /**
@@ -11384,7 +11528,7 @@ export interface UpdateContainerInstancesStateRequest {
    * 				<code>DEREGISTERING</code>, or <code>REGISTRATION_FAILED</code> state you can
    * 			describe the container instance but can't update the container instance state.</p>
    */
-  status: ContainerInstanceStatus | string | undefined;
+  status: ContainerInstanceStatus | undefined;
 }
 
 /**
@@ -11586,7 +11730,7 @@ export interface UpdateServiceRequest {
    * 			all tasks, set <code>forceNewDeployment</code> to <code>true</code>, so that Amazon ECS
    * 			starts new tasks with the updated tags.</p>
    */
-  propagateTags?: PropagateTags | string;
+  propagateTags?: PropagateTags;
 
   /**
    * @public

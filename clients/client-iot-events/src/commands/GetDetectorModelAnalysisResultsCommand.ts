@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTEventsClient";
@@ -62,7 +63,7 @@ export interface GetDetectorModelAnalysisResultsCommandOutput
  * //   analysisResults: [ // AnalysisResults
  * //     { // AnalysisResult
  * //       type: "STRING_VALUE",
- * //       level: "STRING_VALUE",
+ * //       level: "INFO" || "WARNING" || "ERROR",
  * //       message: "STRING_VALUE",
  * //       locations: [ // AnalysisResultLocations
  * //         { // AnalysisResultLocation
@@ -151,6 +152,10 @@ export class GetDetectorModelAnalysisResultsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotColumboService",
+        operation: "GetDetectorModelAnalysisResults",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

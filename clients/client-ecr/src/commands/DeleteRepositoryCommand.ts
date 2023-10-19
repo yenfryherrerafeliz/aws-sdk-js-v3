@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -59,12 +60,12 @@ export interface DeleteRepositoryCommandOutput extends DeleteRepositoryResponse,
  * //     repositoryName: "STRING_VALUE",
  * //     repositoryUri: "STRING_VALUE",
  * //     createdAt: new Date("TIMESTAMP"),
- * //     imageTagMutability: "STRING_VALUE",
+ * //     imageTagMutability: "MUTABLE" || "IMMUTABLE",
  * //     imageScanningConfiguration: { // ImageScanningConfiguration
  * //       scanOnPush: true || false,
  * //     },
  * //     encryptionConfiguration: { // EncryptionConfiguration
- * //       encryptionType: "STRING_VALUE", // required
+ * //       encryptionType: "AES256" || "KMS", // required
  * //       kmsKey: "STRING_VALUE",
  * //     },
  * //   },
@@ -171,6 +172,10 @@ export class DeleteRepositoryCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "DeleteRepository",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

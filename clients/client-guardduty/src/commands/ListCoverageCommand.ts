@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GuardDutyClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GuardDutyClient";
@@ -53,7 +54,7 @@ export interface ListCoverageCommandOutput extends ListCoverageResponse, __Metad
  *   FilterCriteria: { // CoverageFilterCriteria
  *     FilterCriterion: [ // CoverageFilterCriterionList
  *       { // CoverageFilterCriterion
- *         CriterionKey: "ACCOUNT_ID" || "CLUSTER_NAME" || "RESOURCE_TYPE" || "COVERAGE_STATUS" || "ADDON_VERSION",
+ *         CriterionKey: "ACCOUNT_ID" || "CLUSTER_NAME" || "RESOURCE_TYPE" || "COVERAGE_STATUS" || "ADDON_VERSION" || "MANAGEMENT_TYPE" || "EKS_CLUSTER_NAME",
  *         FilterCondition: { // CoverageFilterCondition
  *           Equals: [ // Equals
  *             "STRING_VALUE",
@@ -66,7 +67,7 @@ export interface ListCoverageCommandOutput extends ListCoverageResponse, __Metad
  *     ],
  *   },
  *   SortCriteria: { // CoverageSortCriteria
- *     AttributeName: "ACCOUNT_ID" || "CLUSTER_NAME" || "COVERAGE_STATUS" || "ISSUE" || "ADDON_VERSION" || "UPDATED_AT",
+ *     AttributeName: "ACCOUNT_ID" || "CLUSTER_NAME" || "COVERAGE_STATUS" || "ISSUE" || "ADDON_VERSION" || "UPDATED_AT" || "EKS_CLUSTER_NAME",
  *     OrderBy: "ASC" || "DESC",
  *   },
  * };
@@ -87,6 +88,7 @@ export interface ListCoverageCommandOutput extends ListCoverageResponse, __Metad
  * //             AddonVersion: "STRING_VALUE",
  * //             AddonStatus: "STRING_VALUE",
  * //           },
+ * //           ManagementType: "AUTO_MANAGED" || "MANUAL",
  * //         },
  * //         ResourceType: "EKS",
  * //       },
@@ -164,6 +166,10 @@ export class ListCoverageCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "GuardDutyAPIService",
+        operation: "ListCoverage",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

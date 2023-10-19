@@ -154,6 +154,7 @@ import {
   OAuth2Properties,
   OAuthCredentials,
   OAuthProperties,
+  OperatorPropertiesKeys,
   PardotConnectorProfileCredentials,
   PardotConnectorProfileProperties,
   PardotSourceProperties,
@@ -175,6 +176,8 @@ import {
   SAPODataConnectorProfileCredentials,
   SAPODataConnectorProfileProperties,
   SAPODataDestinationProperties,
+  SAPODataPaginationConfig,
+  SAPODataParallelismConfig,
   SAPODataSourceProperties,
   ScheduledTriggerProperties,
   ServiceNowConnectorProfileCredentials,
@@ -1158,6 +1161,9 @@ const de_CreateFlowCommandError = async (
   };
   const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.appflow#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
     case "ConflictException":
     case "com.amazonaws.appflow#ConflictException":
       throw await de_ConflictExceptionRes(parsedOutput, context);
@@ -2388,6 +2394,9 @@ const de_UpdateFlowCommandError = async (
   };
   const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
   switch (errorCode) {
+    case "AccessDeniedException":
+    case "com.amazonaws.appflow#AccessDeniedException":
+      throw await de_AccessDeniedExceptionRes(parsedOutput, context);
     case "ConflictException":
     case "com.amazonaws.appflow#ConflictException":
       throw await de_ConflictExceptionRes(parsedOutput, context);
@@ -2769,6 +2778,10 @@ const de_ValidationExceptionRes = async (parsedOutput: any, context: __SerdeCont
 
 // se_SAPODataDestinationProperties omitted.
 
+// se_SAPODataPaginationConfig omitted.
+
+// se_SAPODataParallelismConfig omitted.
+
 // se_SAPODataSourceProperties omitted.
 
 /**
@@ -2930,16 +2943,16 @@ const de_ConnectorConfiguration = (output: any, context: __SerdeContext): Connec
 const de_ConnectorConfigurationsMap = (
   output: any,
   context: __SerdeContext
-): Record<string, ConnectorConfiguration> => {
+): Record<ConnectorType, ConnectorConfiguration> => {
   return Object.entries(output).reduce(
-    (acc: Record<string, ConnectorConfiguration>, [key, value]: [ConnectorType | string, any]) => {
+    (acc: Record<ConnectorType, ConnectorConfiguration>, [key, value]: [string, any]) => {
       if (value === null) {
         return acc;
       }
-      acc[key] = de_ConnectorConfiguration(value, context);
+      acc[key as ConnectorType] = de_ConnectorConfiguration(value, context);
       return acc;
     },
-    {}
+    {} as Record<ConnectorType, ConnectorConfiguration>
   );
 };
 
@@ -3318,6 +3331,10 @@ const de_Range = (output: any, context: __SerdeContext): Range => {
 // de_SAPODataDestinationProperties omitted.
 
 // de_SAPODataMetadata omitted.
+
+// de_SAPODataPaginationConfig omitted.
+
+// de_SAPODataParallelismConfig omitted.
 
 // de_SAPODataSourceProperties omitted.
 

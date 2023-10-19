@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AuthorizeSnapshotAccessMessage, AuthorizeSnapshotAccessResult } from "../models/models_0";
@@ -104,6 +105,8 @@ export interface AuthorizeSnapshotAccessCommandOutput extends AuthorizeSnapshotA
  * //     ManualSnapshotRetentionPeriod: Number("int"),
  * //     ManualSnapshotRemainingDays: Number("int"),
  * //     SnapshotRetentionStartTime: new Date("TIMESTAMP"),
+ * //     MasterPasswordSecretArn: "STRING_VALUE",
+ * //     MasterPasswordSecretKmsKeyId: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -193,6 +196,10 @@ export class AuthorizeSnapshotAccessCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RedshiftServiceVersion20121201",
+        operation: "AuthorizeSnapshotAccess",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

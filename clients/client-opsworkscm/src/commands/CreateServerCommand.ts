@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -136,14 +137,14 @@ export interface CreateServerCommandOutput extends CreateServerResponse, __Metad
  * //     InstanceProfileArn: "STRING_VALUE",
  * //     InstanceType: "STRING_VALUE",
  * //     KeyPair: "STRING_VALUE",
- * //     MaintenanceStatus: "STRING_VALUE",
+ * //     MaintenanceStatus: "SUCCESS" || "FAILED",
  * //     PreferredMaintenanceWindow: "STRING_VALUE",
  * //     PreferredBackupWindow: "STRING_VALUE",
  * //     SecurityGroupIds: [ // Strings
  * //       "STRING_VALUE",
  * //     ],
  * //     ServiceRoleArn: "STRING_VALUE",
- * //     Status: "STRING_VALUE",
+ * //     Status: "BACKING_UP" || "CONNECTION_LOST" || "CREATING" || "DELETING" || "MODIFYING" || "FAILED" || "HEALTHY" || "RUNNING" || "RESTORING" || "SETUP" || "UNDER_MAINTENANCE" || "UNHEALTHY" || "TERMINATED",
  * //     StatusReason: "STRING_VALUE",
  * //     SubnetIds: [
  * //       "STRING_VALUE",
@@ -228,6 +229,10 @@ export class CreateServerCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateServerRequestFilterSensitiveLog,
       outputFilterSensitiveLog: CreateServerResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OpsWorksCM_V2016_11_01",
+        operation: "CreateServer",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -44,7 +45,7 @@ export interface AttachManagedPolicyToPermissionSetCommandOutput
 
 /**
  * @public
- * <p>Attaches an AWS managed policy ARN to a permission set.</p>
+ * <p>Attaches an Amazon Web Services managed policy ARN to a permission set.</p>
  *          <note>
  *             <p>If the permission set is already referenced by one or more account assignments, you will
  *         need to call <code>
@@ -157,6 +158,10 @@ export class AttachManagedPolicyToPermissionSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SWBExternalService",
+        operation: "AttachManagedPolicyToPermissionSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

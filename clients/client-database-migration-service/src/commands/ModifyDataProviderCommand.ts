@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -18,7 +19,7 @@ import {
   ServiceInputTypes,
   ServiceOutputTypes,
 } from "../DatabaseMigrationServiceClient";
-import { ModifyDataProviderMessage, ModifyDataProviderResponse } from "../models/models_0";
+import { ModifyDataProviderMessage, ModifyDataProviderResponse } from "../models/models_1";
 import { de_ModifyDataProviderCommand, se_ModifyDataProviderCommand } from "../protocols/Aws_json1_1";
 
 /**
@@ -57,6 +58,11 @@ export interface ModifyDataProviderCommandOutput extends ModifyDataProviderRespo
  *   Engine: "STRING_VALUE",
  *   ExactSettings: true || false,
  *   Settings: { // DataProviderSettings Union: only one key present
+ *     RedshiftSettings: { // RedshiftDataProviderSettings
+ *       ServerName: "STRING_VALUE",
+ *       Port: Number("int"),
+ *       DatabaseName: "STRING_VALUE",
+ *     },
  *     PostgreSqlSettings: { // PostgreSqlDataProviderSettings
  *       ServerName: "STRING_VALUE",
  *       Port: Number("int"),
@@ -89,6 +95,29 @@ export interface ModifyDataProviderCommandOutput extends ModifyDataProviderRespo
  *       SslMode: "none" || "require" || "verify-ca" || "verify-full",
  *       CertificateArn: "STRING_VALUE",
  *     },
+ *     DocDbSettings: { // DocDbDataProviderSettings
+ *       ServerName: "STRING_VALUE",
+ *       Port: Number("int"),
+ *       DatabaseName: "STRING_VALUE",
+ *       SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ *       CertificateArn: "STRING_VALUE",
+ *     },
+ *     MariaDbSettings: { // MariaDbDataProviderSettings
+ *       ServerName: "STRING_VALUE",
+ *       Port: Number("int"),
+ *       SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ *       CertificateArn: "STRING_VALUE",
+ *     },
+ *     MongoDbSettings: { // MongoDbDataProviderSettings
+ *       ServerName: "STRING_VALUE",
+ *       Port: Number("int"),
+ *       DatabaseName: "STRING_VALUE",
+ *       SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ *       CertificateArn: "STRING_VALUE",
+ *       AuthType: "no" || "password",
+ *       AuthSource: "STRING_VALUE",
+ *       AuthMechanism: "default" || "mongodb_cr" || "scram_sha_1",
+ *     },
  *   },
  * };
  * const command = new ModifyDataProviderCommand(input);
@@ -101,6 +130,11 @@ export interface ModifyDataProviderCommandOutput extends ModifyDataProviderRespo
  * //     Description: "STRING_VALUE",
  * //     Engine: "STRING_VALUE",
  * //     Settings: { // DataProviderSettings Union: only one key present
+ * //       RedshiftSettings: { // RedshiftDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         DatabaseName: "STRING_VALUE",
+ * //       },
  * //       PostgreSqlSettings: { // PostgreSqlDataProviderSettings
  * //         ServerName: "STRING_VALUE",
  * //         Port: Number("int"),
@@ -133,6 +167,29 @@ export interface ModifyDataProviderCommandOutput extends ModifyDataProviderRespo
  * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
  * //         CertificateArn: "STRING_VALUE",
  * //       },
+ * //       DocDbSettings: { // DocDbDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         DatabaseName: "STRING_VALUE",
+ * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //         CertificateArn: "STRING_VALUE",
+ * //       },
+ * //       MariaDbSettings: { // MariaDbDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //         CertificateArn: "STRING_VALUE",
+ * //       },
+ * //       MongoDbSettings: { // MongoDbDataProviderSettings
+ * //         ServerName: "STRING_VALUE",
+ * //         Port: Number("int"),
+ * //         DatabaseName: "STRING_VALUE",
+ * //         SslMode: "none" || "require" || "verify-ca" || "verify-full",
+ * //         CertificateArn: "STRING_VALUE",
+ * //         AuthType: "no" || "password",
+ * //         AuthSource: "STRING_VALUE",
+ * //         AuthMechanism: "default" || "mongodb_cr" || "scram_sha_1",
+ * //       },
  * //     },
  * //   },
  * // };
@@ -157,6 +214,46 @@ export interface ModifyDataProviderCommandOutput extends ModifyDataProviderRespo
  *
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
+ *
+ * @example Modify Data Provider
+ * ```javascript
+ * // Modifies the specified data provider using the provided settings.
+ * const input = {
+ *   "DataProviderIdentifier": "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
+ *   "DataProviderName": "new-name",
+ *   "Description": "description",
+ *   "Engine": "sqlserver",
+ *   "Settings": {
+ *     "MicrosoftSqlServerSettings": {
+ *       "DatabaseName": "DatabaseName",
+ *       "Port": 11112,
+ *       "ServerName": "ServerName2",
+ *       "SslMode": "none"
+ *     }
+ *   }
+ * };
+ * const command = new ModifyDataProviderCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "DataProvider": {
+ *     "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:my-target-data-provider",
+ *     "DataProviderCreationTime": "2023-05-12T10:50:41.988561Z",
+ *     "DataProviderName": "my-target-data-provider",
+ *     "Engine": "postgres",
+ *     "Settings": {
+ *       "PostgreSqlSettings": {
+ *         "DatabaseName": "target",
+ *         "Port": 5432,
+ *         "ServerName": "postrgesql.0a1b2c3d4e5f.us-east-1.rds.amazonaws.com",
+ *         "SslMode": "none"
+ *       }
+ *     }
+ *   }
+ * }
+ * *\/
+ * // example id: modify-data-provider-1689720700567
+ * ```
  *
  */
 export class ModifyDataProviderCommand extends $Command<
@@ -209,6 +306,10 @@ export class ModifyDataProviderCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "ModifyDataProvider",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

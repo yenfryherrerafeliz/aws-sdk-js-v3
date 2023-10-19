@@ -20,6 +20,24 @@ import {
 /**
  * @public
  */
+export interface StartMonitoringMembersRequest {
+  /**
+   * @public
+   * <p>The unique ID of the detector of the GuardDuty administrator account associated with the
+   *       member accounts to monitor.</p>
+   */
+  DetectorId: string | undefined;
+
+  /**
+   * @public
+   * <p>A list of account IDs of the GuardDuty member accounts to start monitoring.</p>
+   */
+  AccountIds: string[] | undefined;
+}
+
+/**
+ * @public
+ */
 export interface StartMonitoringMembersResponse {
   /**
    * @public
@@ -146,7 +164,7 @@ export interface UpdateDetectorRequest {
    * <p>An enum value that specifies how frequently findings are exported, such as to CloudWatch
    *       Events.</p>
    */
-  FindingPublishingFrequency?: FindingPublishingFrequency | string;
+  FindingPublishingFrequency?: FindingPublishingFrequency;
 
   /**
    * @public
@@ -201,7 +219,7 @@ export interface UpdateFilterRequest {
    * @public
    * <p>Specifies the action that is to be applied to the findings that match the filter.</p>
    */
-  Action?: FilterAction | string;
+  Action?: FilterAction;
 
   /**
    * @public
@@ -248,7 +266,7 @@ export interface UpdateFindingsFeedbackRequest {
    * @public
    * <p>The feedback for the finding.</p>
    */
-  Feedback: Feedback | string | undefined;
+  Feedback: Feedback | undefined;
 
   /**
    * @public
@@ -323,7 +341,7 @@ export interface UpdateMalwareScanSettingsRequest {
    * @public
    * <p>An enum value representing possible snapshot preservation settings.</p>
    */
-  EbsSnapshotPreservation?: EbsSnapshotPreservation | string;
+  EbsSnapshotPreservation?: EbsSnapshotPreservation;
 }
 
 /**
@@ -340,13 +358,13 @@ export interface MemberAdditionalConfiguration {
    * @public
    * <p>Name of the additional configuration.</p>
    */
-  Name?: OrgFeatureAdditionalConfiguration | string;
+  Name?: OrgFeatureAdditionalConfiguration;
 
   /**
    * @public
    * <p>Status of the additional configuration.</p>
    */
-  Status?: FeatureStatus | string;
+  Status?: FeatureStatus;
 }
 
 /**
@@ -358,13 +376,13 @@ export interface MemberFeaturesConfiguration {
    * @public
    * <p>The name of the feature.</p>
    */
-  Name?: OrgFeature | string;
+  Name?: OrgFeature;
 
   /**
    * @public
    * <p>The status of the feature.</p>
    */
-  Status?: FeatureStatus | string;
+  Status?: FeatureStatus;
 
   /**
    * @public
@@ -525,7 +543,7 @@ export interface OrganizationDataSourceConfigurations {
 
 /**
  * @public
- * <p>A list of additional configurations which will be configured for the organization.</p>
+ * <p>A list of additional configurations which will be configured for the organization. </p>
  */
 export interface OrganizationAdditionalConfiguration {
   /**
@@ -533,14 +551,38 @@ export interface OrganizationAdditionalConfiguration {
    * <p>The name of the additional configuration that will be configured for the
    *       organization.</p>
    */
-  Name?: OrgFeatureAdditionalConfiguration | string;
+  Name?: OrgFeatureAdditionalConfiguration;
 
   /**
    * @public
    * <p>The status of the additional configuration that will be configured for the
-   *       organization.</p>
+   *       organization. Use one of the following
+   *       values to configure the feature status for the entire organization:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>NEW</code>: Indicates that when a new account joins the organization, they will
+   *           have the additional configuration enabled automatically. </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>ALL</code>: Indicates that all accounts in the organization have
+   *           the additional configuration
+   *           enabled automatically. This includes <code>NEW</code> accounts that join the organization
+   *           and accounts that may have been suspended or removed from the organization in
+   *           GuardDuty.</p>
+   *                <p>It may take up to 24 hours to update the configuration for all the member accounts.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>NONE</code>: Indicates that the additional configuration will not be
+   *           automatically enabled for any
+   *           account in the organization. The administrator must manage the additional configuration
+   *           for each account individually.</p>
+   *             </li>
+   *          </ul>
    */
-  AutoEnable?: OrgFeatureStatus | string;
+  AutoEnable?: OrgFeatureStatus;
 }
 
 /**
@@ -552,13 +594,37 @@ export interface OrganizationFeatureConfiguration {
    * @public
    * <p>The name of the feature that will be configured for the organization.</p>
    */
-  Name?: OrgFeature | string;
+  Name?: OrgFeature;
 
   /**
    * @public
-   * <p>The status of the feature that will be configured for the organization.</p>
+   * <p>Describes the status of the feature that is configured for the
+   *       member accounts within the organization. One of the following
+   *       values is the status for the entire organization:</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>NEW</code>: Indicates that when a new account joins the organization, they will
+   *           have the feature enabled automatically. </p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>ALL</code>: Indicates that all accounts in the organization have the feature
+   *           enabled automatically. This includes <code>NEW</code> accounts that join the organization
+   *           and accounts that may have been suspended or removed from the organization in
+   *           GuardDuty.</p>
+   *                <p>It may take up to 24 hours to update the configuration for all the member accounts.</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>NONE</code>: Indicates that the feature will not be
+   *           automatically enabled for any
+   *           account in the organization. The administrator must manage the feature
+   *           for each account individually.</p>
+   *             </li>
+   *          </ul>
    */
-  AutoEnable?: OrgFeatureStatus | string;
+  AutoEnable?: OrgFeatureStatus;
 
   /**
    * @public
@@ -581,9 +647,10 @@ export interface UpdateOrganizationConfigurationRequest {
    * @public
    * @deprecated
    *
-   * <p>Indicates whether to automatically enable member accounts in the organization.</p>
+   * <p>Represents whether or not to automatically enable member accounts in the organization.</p>
    *          <p>Even though this is still supported, we recommend using
-   *         <code>AutoEnableOrganizationMembers</code> to achieve the similar results.</p>
+   *    <code>AutoEnableOrganizationMembers</code> to achieve the similar results. You must provide a
+   *     value for either <code>autoEnableOrganizationMembers</code> or <code>autoEnable</code>.</p>
    */
   AutoEnable?: boolean;
 
@@ -604,7 +671,9 @@ export interface UpdateOrganizationConfigurationRequest {
   /**
    * @public
    * <p>Indicates the auto-enablement configuration of GuardDuty for the member accounts in the
-   *       organization. </p>
+   *       organization. You must provide a value for either <code>autoEnableOrganizationMembers</code> or <code>autoEnable</code>. </p>
+   *          <p>Use one of the
+   *     following configuration values for <code>autoEnableOrganizationMembers</code>:</p>
    *          <ul>
    *             <li>
    *                <p>
@@ -613,20 +682,20 @@ export interface UpdateOrganizationConfigurationRequest {
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>ALL</code>: Indicates that all accounts in the Amazon Web Services Organization have GuardDuty
+   *                   <code>ALL</code>: Indicates that all accounts in the organization have GuardDuty
    *           enabled automatically. This includes <code>NEW</code> accounts that join the organization
    *           and accounts that may have been suspended or removed from the organization in
    *           GuardDuty.</p>
+   *                <p>It may take up to 24 hours to update the configuration for all the member accounts.</p>
    *             </li>
    *             <li>
    *                <p>
    *                   <code>NONE</code>: Indicates that GuardDuty will not be automatically enabled for any
-   *           accounts in the organization. GuardDuty must be managed for each account individually by the
-   *           administrator.</p>
+   *           account in the organization. The administrator must manage GuardDuty for each account in the organization individually.</p>
    *             </li>
    *          </ul>
    */
-  AutoEnableOrganizationMembers?: AutoEnableMembers | string;
+  AutoEnableOrganizationMembers?: AutoEnableMembers;
 }
 
 /**

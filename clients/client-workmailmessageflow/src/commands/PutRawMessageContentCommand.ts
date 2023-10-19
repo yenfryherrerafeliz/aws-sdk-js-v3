@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { PutRawMessageContentRequest, PutRawMessageContentResponse } from "../models/models_0";
@@ -44,8 +45,6 @@ export interface PutRawMessageContentCommandOutput extends PutRawMessageContentR
  *          <p>This example describes how to update in-transit email message. For more information and examples for using this API, see
  *       <a href="https://docs.aws.amazon.com/workmail/latest/adminguide/update-with-lambda.html">
  *         Updating message content with AWS Lambda</a>.</p>
- *
- *
  *          <note>
  *             <p>Updates to an in-transit message only appear when you call <code>PutRawMessageContent</code> from an AWS Lambda function
  *       configured with a  synchronous <a href="https://docs.aws.amazon.com/workmail/latest/adminguide/lambda.html#synchronous-rules">
@@ -165,6 +164,10 @@ export class PutRawMessageContentCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "GiraffeMessageInTransitService",
+        operation: "PutRawMessageContent",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

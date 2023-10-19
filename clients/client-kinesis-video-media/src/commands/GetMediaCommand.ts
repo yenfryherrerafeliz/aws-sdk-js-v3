@@ -12,6 +12,7 @@ import {
   MiddlewareStack,
   SdkStreamSerdeContext as __SdkStreamSerdeContext,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
   StreamingBlobPayloadOutputTypes,
 } from "@smithy/types";
 
@@ -100,7 +101,7 @@ export interface GetMediaCommandOutput extends Omit<GetMediaOutput, "Payload">, 
  *   StreamName: "STRING_VALUE",
  *   StreamARN: "STRING_VALUE",
  *   StartSelector: { // StartSelector
- *     StartSelectorType: "STRING_VALUE", // required
+ *     StartSelectorType: "FRAGMENT_NUMBER" || "SERVER_TIMESTAMP" || "PRODUCER_TIMESTAMP" || "NOW" || "EARLIEST" || "CONTINUATION_TOKEN", // required
  *     AfterFragmentNumber: "STRING_VALUE",
  *     StartTimestamp: new Date("TIMESTAMP"),
  *     ContinuationToken: "STRING_VALUE",
@@ -197,6 +198,10 @@ export class GetMediaCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: GetMediaOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSAcuityInletService",
+        operation: "GetMedia",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

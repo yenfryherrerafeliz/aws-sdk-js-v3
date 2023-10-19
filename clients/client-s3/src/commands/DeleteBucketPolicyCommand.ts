@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DeleteBucketPolicyRequest } from "../models/models_0";
@@ -50,8 +51,9 @@ export interface DeleteBucketPolicyCommandOutput extends __MetadataBearer {}
  *             buckets, the root principal in a bucket owner's Amazon Web Services account can perform the
  *                <code>GetBucketPolicy</code>, <code>PutBucketPolicy</code>, and
  *                <code>DeleteBucketPolicy</code> API actions, even if their bucket policy explicitly
- *             denies the root principal's access. Bucket owner root principals can only be blocked from performing
- *             these API actions by VPC endpoint policies and Amazon Web Services Organizations policies.</p>
+ *             denies the root principal's access. Bucket owner root principals can only be blocked
+ *             from performing these API actions by VPC endpoint policies and Amazon Web Services Organizations
+ *             policies.</p>
  *          </important>
  *          <p>For more information about bucket policies, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html">Using Bucket Policies and
  *             UserPolicies</a>. </p>
@@ -162,6 +164,10 @@ export class DeleteBucketPolicyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonS3",
+        operation: "DeleteBucketPolicy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

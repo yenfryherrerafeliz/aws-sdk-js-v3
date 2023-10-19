@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CognitoSyncClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CognitoSyncClient";
@@ -90,7 +91,7 @@ export interface RegisterDeviceCommandOutput extends RegisterDeviceResponse, __M
  * const input = { // RegisterDeviceRequest
  *   IdentityPoolId: "STRING_VALUE", // required
  *   IdentityId: "STRING_VALUE", // required
- *   Platform: "STRING_VALUE", // required
+ *   Platform: "APNS" || "APNS_SANDBOX" || "GCM" || "ADM", // required
  *   Token: "STRING_VALUE", // required
  * };
  * const command = new RegisterDeviceCommand(input);
@@ -183,6 +184,10 @@ export class RegisterDeviceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSCognitoSyncService",
+        operation: "RegisterDevice",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

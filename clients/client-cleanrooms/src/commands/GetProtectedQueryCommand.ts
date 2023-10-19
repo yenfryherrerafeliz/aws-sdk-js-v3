@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CleanRoomsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CleanRoomsClient";
@@ -84,6 +85,11 @@ export interface GetProtectedQueryCommandOutput extends GetProtectedQueryOutput,
  * //         s3: { // ProtectedQueryS3Output
  * //           location: "STRING_VALUE", // required
  * //         },
+ * //         memberList: [ // ProtectedQueryMemberOutputList
+ * //           { // ProtectedQuerySingleMemberOutput
+ * //             accountId: "STRING_VALUE", // required
+ * //           },
+ * //         ],
  * //       },
  * //     },
  * //     error: { // ProtectedQueryError
@@ -170,6 +176,10 @@ export class GetProtectedQueryCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: GetProtectedQueryOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSBastionControlPlaneServiceLambda",
+        operation: "GetProtectedQuery",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

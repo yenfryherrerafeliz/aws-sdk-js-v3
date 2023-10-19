@@ -28,11 +28,13 @@ import {
   RouteTableAssociationState,
   Tag,
   TagSpecification,
+  TransitGatewayAttachmentResourceType,
   TransitGatewayMulticastDomainAssociations,
   TransitGatewayPeeringAttachment,
   TransitGatewayVpcAttachment,
   UnsuccessfulItem,
   VerifiedAccessInstance,
+  VerifiedAccessSseSpecificationResponse,
   VerifiedAccessTrustProvider,
   VerifiedAccessTrustProviderFilterSensitiveLog,
 } from "./models_0";
@@ -45,16 +47,13 @@ import {
   ClientConnectOptions,
   ClientLoginBannerOptions,
   ConnectionLogOptions,
-  CreditSpecificationRequest,
   DiskImageFormat,
-  ElasticGpuSpecification,
   FleetExcessCapacityTerminationPolicy,
   FleetLaunchTemplateConfigRequest,
   HostnameType,
   IcmpTypeCode,
   InstanceEventWindowTimeRangeRequest,
   InstanceInterruptionBehavior,
-  InstanceIpv6Address,
   Ipam,
   IpamPool,
   IpamResourceDiscovery,
@@ -62,7 +61,6 @@ import {
   LaunchTemplate,
   LocalGatewayRoute,
   ManagedPrefixList,
-  MarketType,
   Placement,
   PlatformValues,
   RequestIpamResourceTag,
@@ -103,6 +101,7 @@ import {
   VerifiedAccessEndpoint,
   VerifiedAccessEndpointProtocol,
   VerifiedAccessGroup,
+  VerifiedAccessSseSpecificationRequest,
   VpnConnection,
   VpnConnectionFilterSensitiveLog,
   VpnEcmpSupportValue,
@@ -157,10 +156,362 @@ import {
   InstanceFamilyCreditSpecification,
   IpamResourceCidr,
   Purchase,
+  TransitGatewayPropagationState,
   UnlimitedSupportedInstanceFamily,
   VerifiedAccessInstanceLoggingConfiguration,
   VolumeModification,
 } from "./models_5";
+
+/**
+ * @public
+ * <p>Describes a route table propagation.</p>
+ */
+export interface TransitGatewayRouteTablePropagation {
+  /**
+   * @public
+   * <p>The ID of the attachment.</p>
+   */
+  TransitGatewayAttachmentId?: string;
+
+  /**
+   * @public
+   * <p>The ID of the resource.</p>
+   */
+  ResourceId?: string;
+
+  /**
+   * @public
+   * <p>The type of resource. Note that the <code>tgw-peering</code> resource type has been deprecated.</p>
+   */
+  ResourceType?: TransitGatewayAttachmentResourceType;
+
+  /**
+   * @public
+   * <p>The state of the resource.</p>
+   */
+  State?: TransitGatewayPropagationState;
+
+  /**
+   * @public
+   * <p>The ID of the transit gateway route table announcement.</p>
+   */
+  TransitGatewayRouteTableAnnouncementId?: string;
+}
+
+/**
+ * @public
+ */
+export interface GetTransitGatewayRouteTablePropagationsResult {
+  /**
+   * @public
+   * <p>Information about the route table propagations.</p>
+   */
+  TransitGatewayRouteTablePropagations?: TransitGatewayRouteTablePropagation[];
+
+  /**
+   * @public
+   * <p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>
+   */
+  NextToken?: string;
+}
+
+/**
+ * @public
+ */
+export interface GetVerifiedAccessEndpointPolicyRequest {
+  /**
+   * @public
+   * <p>The ID of the Verified Access endpoint.</p>
+   */
+  VerifiedAccessEndpointId: string | undefined;
+
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually making the request,
+   *    and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
+   *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface GetVerifiedAccessEndpointPolicyResult {
+  /**
+   * @public
+   * <p>The status of the Verified Access policy.</p>
+   */
+  PolicyEnabled?: boolean;
+
+  /**
+   * @public
+   * <p>The Verified Access policy document.</p>
+   */
+  PolicyDocument?: string;
+}
+
+/**
+ * @public
+ */
+export interface GetVerifiedAccessGroupPolicyRequest {
+  /**
+   * @public
+   * <p>The ID of the Verified Access group.</p>
+   */
+  VerifiedAccessGroupId: string | undefined;
+
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually making the request,
+   *    and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
+   *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface GetVerifiedAccessGroupPolicyResult {
+  /**
+   * @public
+   * <p>The status of the Verified Access policy.</p>
+   */
+  PolicyEnabled?: boolean;
+
+  /**
+   * @public
+   * <p>The Verified Access policy document.</p>
+   */
+  PolicyDocument?: string;
+}
+
+/**
+ * @public
+ */
+export interface GetVpnConnectionDeviceSampleConfigurationRequest {
+  /**
+   * @public
+   * <p>The <code>VpnConnectionId</code> specifies the Site-to-Site VPN connection used for the sample
+   *             configuration.</p>
+   */
+  VpnConnectionId: string | undefined;
+
+  /**
+   * @public
+   * <p>Device identifier provided by the <code>GetVpnConnectionDeviceTypes</code> API.</p>
+   */
+  VpnConnectionDeviceTypeId: string | undefined;
+
+  /**
+   * @public
+   * <p>The IKE version to be used in the sample configuration file for your customer gateway
+   *             device. You can specify one of the following versions: <code>ikev1</code> or
+   *                 <code>ikev2</code>.</p>
+   */
+  InternetKeyExchangeVersion?: string;
+
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually
+   *             making the request, and provides an error response. If you have the required
+   *             permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is
+   *                 <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface GetVpnConnectionDeviceSampleConfigurationResult {
+  /**
+   * @public
+   * <p>Sample configuration file for the specified customer gateway device.</p>
+   */
+  VpnConnectionDeviceSampleConfiguration?: string;
+}
+
+/**
+ * @public
+ */
+export interface GetVpnConnectionDeviceTypesRequest {
+  /**
+   * @public
+   * <p>The maximum number of results returned by <code>GetVpnConnectionDeviceTypes</code> in
+   *             paginated output. When this parameter is used, <code>GetVpnConnectionDeviceTypes</code>
+   *             only returns <code>MaxResults</code> results in a single page along with a
+   *                 <code>NextToken</code> response element. The remaining results of the initial
+   *             request can be seen by sending another <code>GetVpnConnectionDeviceTypes</code> request
+   *             with the returned <code>NextToken</code> value. This value can be between 200 and 1000.
+   *             If this parameter is not used, then <code>GetVpnConnectionDeviceTypes</code> returns all
+   *             results.</p>
+   */
+  MaxResults?: number;
+
+  /**
+   * @public
+   * <p>The <code>NextToken</code> value returned from a previous paginated
+   *                 <code>GetVpnConnectionDeviceTypes</code> request where <code>MaxResults</code> was
+   *             used and the results exceeded the value of that parameter. Pagination continues from the
+   *             end of the previous results that returned the <code>NextToken</code> value. This value
+   *             is null when there are no more results to return. </p>
+   */
+  NextToken?: string;
+
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually
+   *             making the request, and provides an error response. If you have the required
+   *             permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is
+   *                 <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+}
+
+/**
+ * @public
+ * <p>List of customer gateway devices that have a sample configuration file available for
+ *             use. You can also see the list of device types with sample configuration files available
+ *             under <a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/your-cgw.html">Your customer
+ *                 gateway device</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>
+ */
+export interface VpnConnectionDeviceType {
+  /**
+   * @public
+   * <p>Customer gateway device identifier.</p>
+   */
+  VpnConnectionDeviceTypeId?: string;
+
+  /**
+   * @public
+   * <p>Customer gateway device vendor.</p>
+   */
+  Vendor?: string;
+
+  /**
+   * @public
+   * <p>Customer gateway device platform.</p>
+   */
+  Platform?: string;
+
+  /**
+   * @public
+   * <p>Customer gateway device software version.</p>
+   */
+  Software?: string;
+}
+
+/**
+ * @public
+ */
+export interface GetVpnConnectionDeviceTypesResult {
+  /**
+   * @public
+   * <p>List of customer gateway devices that have a sample configuration file available for
+   *             use.</p>
+   */
+  VpnConnectionDeviceTypes?: VpnConnectionDeviceType[];
+
+  /**
+   * @public
+   * <p>The <code>NextToken</code> value to include in a future
+   *                 <code>GetVpnConnectionDeviceTypes</code> request. When the results of a
+   *                 <code>GetVpnConnectionDeviceTypes</code> request exceed <code>MaxResults</code>,
+   *             this value can be used to retrieve the next page of results. This value is null when
+   *             there are no more results to return.</p>
+   */
+  NextToken?: string;
+}
+
+/**
+ * @public
+ */
+export interface GetVpnTunnelReplacementStatusRequest {
+  /**
+   * @public
+   * <p>The ID of the Site-to-Site VPN connection. </p>
+   */
+  VpnConnectionId: string | undefined;
+
+  /**
+   * @public
+   * <p>The external IP address of the VPN tunnel.</p>
+   */
+  VpnTunnelOutsideIpAddress: string | undefined;
+
+  /**
+   * @public
+   * <p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  DryRun?: boolean;
+}
+
+/**
+ * @public
+ * <p>Details for Site-to-Site VPN tunnel endpoint maintenance events.</p>
+ */
+export interface MaintenanceDetails {
+  /**
+   * @public
+   * <p>Verify existence of a pending maintenance.</p>
+   */
+  PendingMaintenance?: string;
+
+  /**
+   * @public
+   * <p>The timestamp after which Amazon Web Services will automatically apply maintenance.</p>
+   */
+  MaintenanceAutoAppliedAfter?: Date;
+
+  /**
+   * @public
+   * <p>Timestamp of last applied maintenance.</p>
+   */
+  LastMaintenanceApplied?: Date;
+}
+
+/**
+ * @public
+ */
+export interface GetVpnTunnelReplacementStatusResult {
+  /**
+   * @public
+   * <p>The ID of the Site-to-Site VPN connection. </p>
+   */
+  VpnConnectionId?: string;
+
+  /**
+   * @public
+   * <p>The ID of the transit gateway associated with the VPN connection.</p>
+   */
+  TransitGatewayId?: string;
+
+  /**
+   * @public
+   * <p>The ID of the customer gateway.</p>
+   */
+  CustomerGatewayId?: string;
+
+  /**
+   * @public
+   * <p>The ID of the virtual private gateway.</p>
+   */
+  VpnGatewayId?: string;
+
+  /**
+   * @public
+   * <p>The external IP address of the VPN tunnel.</p>
+   */
+  VpnTunnelOutsideIpAddress?: string;
+
+  /**
+   * @public
+   * <p>Get details of pending tunnel endpoint maintenance.</p>
+   */
+  MaintenanceDetails?: MaintenanceDetails;
+}
 
 /**
  * @public
@@ -441,8 +792,13 @@ export interface ImportImageRequest {
   /**
    * @public
    * <p>The boot mode of the virtual machine.</p>
+   *          <note>
+   *             <p>The <code>uefi-preferred</code> boot mode isn't supported for importing images. For more
+   *     information, see <a href="https://docs.aws.amazon.com/vm-import/latest/userguide/prerequisites.html#vmimport-boot-modes">Boot modes</a> in
+   *     the <i>VM Import/Export User Guide</i>.</p>
+   *          </note>
    */
-  BootMode?: BootModeValues | string;
+  BootMode?: BootModeValues;
 }
 
 /**
@@ -561,7 +917,7 @@ export interface DiskImageDetail {
    * @public
    * <p>The disk image format.</p>
    */
-  Format: DiskImageFormat | string | undefined;
+  Format: DiskImageFormat | undefined;
 
   /**
    * @public
@@ -638,7 +994,7 @@ export interface ImportInstanceLaunchSpecification {
    * @public
    * <p>The architecture of the instance.</p>
    */
-  Architecture?: ArchitectureValues | string;
+  Architecture?: ArchitectureValues;
 
   /**
    * @public
@@ -657,14 +1013,14 @@ export interface ImportInstanceLaunchSpecification {
    * <p>Indicates whether an instance stops or terminates when you initiate shutdown from the instance (using the
    *    operating system command for system shutdown).</p>
    */
-  InstanceInitiatedShutdownBehavior?: ShutdownBehavior | string;
+  InstanceInitiatedShutdownBehavior?: ShutdownBehavior;
 
   /**
    * @public
    * <p>The instance type. For more information about the instance types that you can import, see <a href="https://docs.aws.amazon.com/vm-import/latest/userguide/vmie_prereqs.html#vmimport-instance-types">Instance Types</a> in the
    *    VM Import/Export User Guide.</p>
    */
-  InstanceType?: _InstanceType | string;
+  InstanceType?: _InstanceType;
 
   /**
    * @public
@@ -731,7 +1087,7 @@ export interface ImportInstanceRequest {
    * @public
    * <p>The instance operating system.</p>
    */
-  Platform: PlatformValues | string | undefined;
+  Platform: PlatformValues | undefined;
 }
 
 /**
@@ -1251,7 +1607,7 @@ export interface ModifyAvailabilityZoneGroupRequest {
    * <p>Indicates whether you are opted in to the Local Zone group or Wavelength Zone group. The
    *       only valid value is <code>opted-in</code>. You must contact <a href="https://console.aws.amazon.com/support/home#/case/create%3FissueType=customer-service%26serviceCode=general-info%26getting-started%26categoryCode=using-aws%26services">Amazon Web Services Support</a> to opt out of a Local Zone or Wavelength Zone group.</p>
    */
-  OptInStatus: ModifyAvailabilityZoneOptInStatus | string | undefined;
+  OptInStatus: ModifyAvailabilityZoneOptInStatus | undefined;
 
   /**
    * @public
@@ -1322,7 +1678,7 @@ export interface ModifyCapacityReservationRequest {
    *             </li>
    *          </ul>
    */
-  EndDateType?: EndDateType | string;
+  EndDateType?: EndDateType;
 
   /**
    * @public
@@ -1528,7 +1884,7 @@ export interface ModifyClientVpnEndpointRequest {
    * @public
    * <p>Specify whether to enable the self-service portal for the Client VPN endpoint.</p>
    */
-  SelfServicePortal?: SelfServicePortal | string;
+  SelfServicePortal?: SelfServicePortal;
 
   /**
    * @public
@@ -1581,7 +1937,7 @@ export interface ModifyDefaultCreditSpecificationRequest {
    * @public
    * <p>The instance family.</p>
    */
-  InstanceFamily: UnlimitedSupportedInstanceFamily | string | undefined;
+  InstanceFamily: UnlimitedSupportedInstanceFamily | undefined;
 
   /**
    * @public
@@ -1671,7 +2027,7 @@ export interface ModifyFleetRequest {
    *          the EC2 Fleet is decreased below the current size of the EC2 Fleet.</p>
    *          <p>Supported only for fleets of type <code>maintain</code>.</p>
    */
-  ExcessCapacityTerminationPolicy?: FleetExcessCapacityTerminationPolicy | string;
+  ExcessCapacityTerminationPolicy?: FleetExcessCapacityTerminationPolicy;
 
   /**
    * @public
@@ -1719,7 +2075,7 @@ export interface LoadPermissionRequest {
    * @public
    * <p>The name of the group.</p>
    */
-  Group?: PermissionGroup | string;
+  Group?: PermissionGroup;
 
   /**
    * @public
@@ -1782,13 +2138,13 @@ export interface ModifyFpgaImageAttributeRequest {
    * @public
    * <p>The name of the attribute.</p>
    */
-  Attribute?: FpgaImageAttributeName | string;
+  Attribute?: FpgaImageAttributeName;
 
   /**
    * @public
    * <p>The operation type.</p>
    */
-  OperationType?: OperationType | string;
+  OperationType?: OperationType;
 
   /**
    * @public
@@ -1847,7 +2203,7 @@ export interface ModifyHostsRequest {
    * @public
    * <p>Specify whether to enable or disable auto-placement.</p>
    */
-  AutoPlacement?: AutoPlacement | string;
+  AutoPlacement?: AutoPlacement;
 
   /**
    * @public
@@ -1861,7 +2217,7 @@ export interface ModifyHostsRequest {
    *             information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-recovery.html"> Host recovery</a>
    *             in the <i>Amazon EC2 User Guide</i>.</p>
    */
-  HostRecovery?: HostRecovery | string;
+  HostRecovery?: HostRecovery;
 
   /**
    * @public
@@ -1890,7 +2246,7 @@ export interface ModifyHostsRequest {
    *             more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-maintenance.html"> Host
    *                 maintenance</a> in the <i>Amazon EC2 User Guide</i>.</p>
    */
-  HostMaintenance?: HostMaintenance | string;
+  HostMaintenance?: HostMaintenance;
 }
 
 /**
@@ -2029,7 +2385,7 @@ export interface ModifyImageAttributeRequest {
    * <p>The operation type.
    *        This parameter can be used only when the <code>Attribute</code> parameter is <code>launchPermission</code>.</p>
    */
-  OperationType?: OperationType | string;
+  OperationType?: OperationType;
 
   /**
    * @public
@@ -2180,7 +2536,7 @@ export interface ModifyInstanceAttributeRequest {
    *             </p>
    *          </important>
    */
-  Attribute?: InstanceAttributeName | string;
+  Attribute?: InstanceAttributeName;
 
   /**
    * @public
@@ -2335,7 +2691,7 @@ export interface CapacityReservationSpecification {
    *             </li>
    *          </ul>
    */
-  CapacityReservationPreference?: CapacityReservationPreference | string;
+  CapacityReservationPreference?: CapacityReservationPreference;
 
   /**
    * @public
@@ -2467,7 +2823,7 @@ export interface UnsuccessfulInstanceCreditSpecificationItemError {
    * @public
    * <p>The error code.</p>
    */
-  Code?: UnsuccessfulInstanceCreditSpecificationErrorCode | string;
+  Code?: UnsuccessfulInstanceCreditSpecificationErrorCode;
 
   /**
    * @public
@@ -2648,7 +3004,7 @@ export interface ModifyInstanceMaintenanceOptionsRequest {
    * <p>Disables the automatic recovery behavior of your instance or sets it to
    *             default.</p>
    */
-  AutoRecovery?: InstanceAutoRecoveryState | string;
+  AutoRecovery?: InstanceAutoRecoveryState;
 
   /**
    * @public
@@ -2675,7 +3031,7 @@ export interface ModifyInstanceMaintenanceOptionsResult {
    * <p>Provides information on the current automatic recovery behavior of your
    *             instance.</p>
    */
-  AutoRecovery?: InstanceAutoRecoveryState | string;
+  AutoRecovery?: InstanceAutoRecoveryState;
 }
 
 /**
@@ -2712,7 +3068,7 @@ export interface ModifyInstanceMetadataOptionsRequest {
    *          <p>Default: <code>optional</code>
    *          </p>
    */
-  HttpTokens?: HttpTokensState | string;
+  HttpTokens?: HttpTokensState;
 
   /**
    * @public
@@ -2730,7 +3086,7 @@ export interface ModifyInstanceMetadataOptionsRequest {
    *          <p>If you specify a value of <code>disabled</code>, you cannot access your instance
    *             metadata.</p>
    */
-  HttpEndpoint?: InstanceMetadataEndpointState | string;
+  HttpEndpoint?: InstanceMetadataEndpointState;
 
   /**
    * @public
@@ -2746,7 +3102,7 @@ export interface ModifyInstanceMetadataOptionsRequest {
    * <p>Enables or disables the IPv6 endpoint for the instance metadata service.
    *             Applies only if you enabled the HTTP metadata endpoint.</p>
    */
-  HttpProtocolIpv6?: InstanceMetadataProtocolState | string;
+  HttpProtocolIpv6?: InstanceMetadataProtocolState;
 
   /**
    * @public
@@ -2757,7 +3113,7 @@ export interface ModifyInstanceMetadataOptionsRequest {
    *          <p>Default: <code>disabled</code>
    *          </p>
    */
-  InstanceMetadataTags?: InstanceMetadataTagsState | string;
+  InstanceMetadataTags?: InstanceMetadataTagsState;
 }
 
 /**
@@ -2799,7 +3155,7 @@ export interface ModifyInstancePlacementRequest {
    * @public
    * <p>The affinity setting for the instance.</p>
    */
-  Affinity?: Affinity | string;
+  Affinity?: Affinity;
 
   /**
    * @public
@@ -2834,7 +3190,7 @@ export interface ModifyInstancePlacementRequest {
    *                 <code>InvalidRequest</code> error code.</p>
    *          </note>
    */
-  Tenancy?: HostTenancy | string;
+  Tenancy?: HostTenancy;
 
   /**
    * @public
@@ -3475,7 +3831,7 @@ export interface ModifyPrivateDnsNameOptionsRequest {
    *             must be based on the instance ID. For dual-stack subnets, you can specify whether DNS
    *             names use the instance IPv4 address or the instance ID.</p>
    */
-  PrivateDnsHostnameType?: HostnameType | string;
+  PrivateDnsHostnameType?: HostnameType;
 
   /**
    * @public
@@ -3699,7 +4055,7 @@ export interface ModifySnapshotAttributeRequest {
    * @public
    * <p>The snapshot attribute to modify. Only volume creation permissions can be modified.</p>
    */
-  Attribute?: SnapshotAttributeName | string;
+  Attribute?: SnapshotAttributeName;
 
   /**
    * @public
@@ -3717,7 +4073,7 @@ export interface ModifySnapshotAttributeRequest {
    * @public
    * <p>The type of operation to perform to the attribute.</p>
    */
-  OperationType?: OperationType | string;
+  OperationType?: OperationType;
 
   /**
    * @public
@@ -3767,7 +4123,7 @@ export interface ModifySnapshotTierRequest {
    * @public
    * <p>The name of the storage tier. You must specify <code>archive</code>.</p>
    */
-  StorageTier?: TargetStorageTier | string;
+  StorageTier?: TargetStorageTier;
 
   /**
    * @public
@@ -3806,7 +4162,7 @@ export interface ModifySpotFleetRequestRequest {
    *             of the Spot Fleet request is decreased below the current size of the Spot Fleet.</p>
    *          <p>Supported only for fleets of type <code>maintain</code>.</p>
    */
-  ExcessCapacityTerminationPolicy?: ExcessCapacityTerminationPolicy | string;
+  ExcessCapacityTerminationPolicy?: ExcessCapacityTerminationPolicy;
 
   /**
    * @public
@@ -3912,7 +4268,7 @@ export interface ModifySubnetAttributeRequest {
    *             instance DNS name can be based on the instance IPv4 address (ip-name) or the instance ID (resource-name). For IPv6 only subnets, an instance
    *             DNS name must be based on the instance ID (resource-name).</p>
    */
-  PrivateDnsHostnameTypeOnLaunch?: HostnameType | string;
+  PrivateDnsHostnameTypeOnLaunch?: HostnameType;
 
   /**
    * @public
@@ -3961,13 +4317,13 @@ export interface ModifyTrafficMirrorFilterNetworkServicesRequest {
    * @public
    * <p>The network service, for example Amazon DNS, that you want to mirror.</p>
    */
-  AddNetworkServices?: (TrafficMirrorNetworkService | string)[];
+  AddNetworkServices?: TrafficMirrorNetworkService[];
 
   /**
    * @public
    * <p>The network service, for example Amazon DNS, that you no longer want to mirror.</p>
    */
-  RemoveNetworkServices?: (TrafficMirrorNetworkService | string)[];
+  RemoveNetworkServices?: TrafficMirrorNetworkService[];
 
   /**
    * @public
@@ -4020,7 +4376,7 @@ export interface ModifyTrafficMirrorFilterRuleRequest {
    * @public
    * <p>The type of traffic to assign to the rule.</p>
    */
-  TrafficDirection?: TrafficDirection | string;
+  TrafficDirection?: TrafficDirection;
 
   /**
    * @public
@@ -4033,7 +4389,7 @@ export interface ModifyTrafficMirrorFilterRuleRequest {
    * @public
    * <p>The action to assign to the rule.</p>
    */
-  RuleAction?: TrafficMirrorRuleAction | string;
+  RuleAction?: TrafficMirrorRuleAction;
 
   /**
    * @public
@@ -4076,7 +4432,7 @@ export interface ModifyTrafficMirrorFilterRuleRequest {
    * <p>The properties that you want to remove from the Traffic Mirror filter rule.</p>
    *          <p>When you remove a property from a Traffic Mirror filter rule, the property is set to the default.</p>
    */
-  RemoveFields?: (TrafficMirrorFilterRuleField | string)[];
+  RemoveFields?: TrafficMirrorFilterRuleField[];
 
   /**
    * @public
@@ -4166,7 +4522,7 @@ export interface ModifyTrafficMirrorSessionRequest {
    * <p>The properties that you want to remove from the Traffic Mirror session.</p>
    *          <p>When you remove a property from a Traffic Mirror session, the property is set to the default.</p>
    */
-  RemoveFields?: (TrafficMirrorSessionField | string)[];
+  RemoveFields?: TrafficMirrorSessionField[];
 
   /**
    * @public
@@ -4209,25 +4565,25 @@ export interface ModifyTransitGatewayOptions {
    * @public
    * <p>Enable or disable Equal Cost Multipath Protocol support.</p>
    */
-  VpnEcmpSupport?: VpnEcmpSupportValue | string;
+  VpnEcmpSupport?: VpnEcmpSupportValue;
 
   /**
    * @public
    * <p>Enable or disable DNS support.</p>
    */
-  DnsSupport?: DnsSupportValue | string;
+  DnsSupport?: DnsSupportValue;
 
   /**
    * @public
    * <p>Enable or disable automatic acceptance of attachment requests.</p>
    */
-  AutoAcceptSharedAttachments?: AutoAcceptSharedAttachmentsValue | string;
+  AutoAcceptSharedAttachments?: AutoAcceptSharedAttachmentsValue;
 
   /**
    * @public
    * <p>Enable or disable automatic association with the default association route table.</p>
    */
-  DefaultRouteTableAssociation?: DefaultRouteTableAssociationValue | string;
+  DefaultRouteTableAssociation?: DefaultRouteTableAssociationValue;
 
   /**
    * @public
@@ -4239,7 +4595,7 @@ export interface ModifyTransitGatewayOptions {
    * @public
    * <p>Enable or disable automatic propagation of routes to the default propagation route table.</p>
    */
-  DefaultRouteTablePropagation?: DefaultRouteTablePropagationValue | string;
+  DefaultRouteTablePropagation?: DefaultRouteTablePropagationValue;
 
   /**
    * @public
@@ -4355,19 +4711,19 @@ export interface ModifyTransitGatewayVpcAttachmentRequestOptions {
    * @public
    * <p>Enable or disable DNS support. The default is <code>enable</code>.</p>
    */
-  DnsSupport?: DnsSupportValue | string;
+  DnsSupport?: DnsSupportValue;
 
   /**
    * @public
    * <p>Enable or disable IPv6 support. The default is <code>enable</code>.</p>
    */
-  Ipv6Support?: Ipv6SupportValue | string;
+  Ipv6Support?: Ipv6SupportValue;
 
   /**
    * @public
    * <p>Enable or disable support for appliance mode. If enabled, a traffic flow between a source and destination uses the same Availability Zone for the VPC attachment for the lifetime of that flow. The default is <code>disable</code>.</p>
    */
-  ApplianceModeSupport?: ApplianceModeSupportValue | string;
+  ApplianceModeSupport?: ApplianceModeSupportValue;
 }
 
 /**
@@ -4434,7 +4790,7 @@ export interface ModifyVerifiedAccessEndpointLoadBalancerOptions {
    * @public
    * <p>The IP protocol.</p>
    */
-  Protocol?: VerifiedAccessEndpointProtocol | string;
+  Protocol?: VerifiedAccessEndpointProtocol;
 
   /**
    * @public
@@ -4453,7 +4809,7 @@ export interface ModifyVerifiedAccessEndpointEniOptions {
    * @public
    * <p>The IP protocol.</p>
    */
-  Protocol?: VerifiedAccessEndpointProtocol | string;
+  Protocol?: VerifiedAccessEndpointProtocol;
 
   /**
    * @public
@@ -4538,7 +4894,7 @@ export interface ModifyVerifiedAccessEndpointPolicyRequest {
    * @public
    * <p>The status of the Verified Access policy.</p>
    */
-  PolicyEnabled: boolean | undefined;
+  PolicyEnabled?: boolean;
 
   /**
    * @public
@@ -4560,6 +4916,14 @@ export interface ModifyVerifiedAccessEndpointPolicyRequest {
    *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
    */
   DryRun?: boolean;
+
+  /**
+   * @public
+   * <p>
+   *          Options for server side encryption.
+   *       </p>
+   */
+  SseSpecification?: VerifiedAccessSseSpecificationRequest;
 }
 
 /**
@@ -4577,6 +4941,14 @@ export interface ModifyVerifiedAccessEndpointPolicyResult {
    * <p>The Verified Access policy document.</p>
    */
   PolicyDocument?: string;
+
+  /**
+   * @public
+   * <p>
+   *          Describes the options in use for server side encryption.
+   *       </p>
+   */
+  SseSpecification?: VerifiedAccessSseSpecificationResponse;
 }
 
 /**
@@ -4642,7 +5014,7 @@ export interface ModifyVerifiedAccessGroupPolicyRequest {
    * @public
    * <p>The status of the Verified Access policy.</p>
    */
-  PolicyEnabled: boolean | undefined;
+  PolicyEnabled?: boolean;
 
   /**
    * @public
@@ -4664,6 +5036,14 @@ export interface ModifyVerifiedAccessGroupPolicyRequest {
    *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
    */
   DryRun?: boolean;
+
+  /**
+   * @public
+   * <p>
+   *          Options for server side encryption.
+   *       </p>
+   */
+  SseSpecification?: VerifiedAccessSseSpecificationRequest;
 }
 
 /**
@@ -4681,6 +5061,14 @@ export interface ModifyVerifiedAccessGroupPolicyResult {
    * <p>The Verified Access policy document.</p>
    */
   PolicyDocument?: string;
+
+  /**
+   * @public
+   * <p>
+   *          Describes the options in use for server side encryption.
+   *       </p>
+   */
+  SseSpecification?: VerifiedAccessSseSpecificationResponse;
 }
 
 /**
@@ -4961,6 +5349,14 @@ export interface ModifyVerifiedAccessTrustProviderRequest {
    *             modification request. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring Idempotency</a>.</p>
    */
   ClientToken?: string;
+
+  /**
+   * @public
+   * <p>
+   *          Options for server side encryption.
+   *       </p>
+   */
+  SseSpecification?: VerifiedAccessSseSpecificationRequest;
 }
 
 /**
@@ -5024,7 +5420,7 @@ export interface ModifyVolumeRequest {
    * <p>The target EBS volume type of the volume. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html">Amazon EBS volume types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
    *          <p>Default: The existing type is retained.</p>
    */
-  VolumeType?: VolumeType | string;
+  VolumeType?: VolumeType;
 
   /**
    * @public
@@ -5215,7 +5611,7 @@ export interface ModifyVpcEndpointRequest {
    * @public
    * <p>The IP address type for the endpoint.</p>
    */
-  IpAddressType?: IpAddressType | string;
+  IpAddressType?: IpAddressType;
 
   /**
    * @public
@@ -5402,7 +5798,7 @@ export interface ModifyVpcEndpointServicePayerResponsibilityRequest {
    *             If you set the payer responsibility to the service owner, you cannot set it back to the
    *             endpoint owner.</p>
    */
-  PayerResponsibility: PayerResponsibility | string | undefined;
+  PayerResponsibility: PayerResponsibility | undefined;
 }
 
 /**
@@ -5592,7 +5988,7 @@ export interface ModifyVpcTenancyRequest {
    * @public
    * <p>The instance tenancy attribute for the VPC. </p>
    */
-  InstanceTenancy: VpcTenancy | string | undefined;
+  InstanceTenancy: VpcTenancy | undefined;
 
   /**
    * @public
@@ -6145,7 +6541,7 @@ export interface MoveAddressToVpcResult {
    * @public
    * <p>The status of the move of the IP address.</p>
    */
-  Status?: Status | string;
+  Status?: Status;
 }
 
 /**
@@ -6410,7 +6806,7 @@ export interface PurchaseHostReservationRequest {
    *                 <code>totalHourlyPrice</code> amounts are specified. At this time, the only
    *             supported currency is <code>USD</code>.</p>
    */
-  CurrencyCode?: CurrencyCodeValues | string;
+  CurrencyCode?: CurrencyCodeValues;
 
   /**
    * @public
@@ -6458,7 +6854,7 @@ export interface PurchaseHostReservationResult {
    *                 <code>totalHourlyPrice</code> amounts are specified. At this time, the only
    *             supported currency is <code>USD</code>.</p>
    */
-  CurrencyCode?: CurrencyCodeValues | string;
+  CurrencyCode?: CurrencyCodeValues;
 
   /**
    * @public
@@ -6495,7 +6891,7 @@ export interface ReservedInstanceLimitPrice {
    * <p>The currency in which the <code>limitPrice</code> amount is specified.
    * 				At this time, the only supported currency is <code>USD</code>.</p>
    */
-  CurrencyCode?: CurrencyCodeValues | string;
+  CurrencyCode?: CurrencyCodeValues;
 }
 
 /**
@@ -6646,7 +7042,7 @@ export interface RegisterImageRequest {
    *          <p>Default: For Amazon EBS-backed AMIs, <code>i386</code>.
    *         For instance store-backed AMIs, the architecture specified in the manifest file.</p>
    */
-  Architecture?: ArchitectureValues | string;
+  Architecture?: ArchitectureValues;
 
   /**
    * @public
@@ -6741,14 +7137,14 @@ export interface RegisterImageRequest {
    *          <p>For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-boot.html">Boot modes</a> in the
    *         <i>Amazon EC2 User Guide</i>.</p>
    */
-  BootMode?: BootModeValues | string;
+  BootMode?: BootModeValues;
 
   /**
    * @public
    * <p>Set to <code>v2.0</code> to enable Trusted Platform Module (TPM) support. For more
    *       information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitrotpm.html">NitroTPM</a> in the <i>Amazon EC2 User Guide</i>.</p>
    */
-  TpmSupport?: TpmSupportValues | string;
+  TpmSupport?: TpmSupportValues;
 
   /**
    * @public
@@ -6772,7 +7168,7 @@ export interface RegisterImageRequest {
    *             <p>If you set the value to <code>v2.0</code>, make sure that your AMI software can support IMDSv2.</p>
    *          </note>
    */
-  ImdsSupport?: ImdsSupportValues | string;
+  ImdsSupport?: ImdsSupportValues;
 }
 
 /**
@@ -7159,8 +7555,6 @@ export interface ReleaseAddressRequest {
    * <p>The set of Availability Zones, Local Zones, or Wavelength Zones from which Amazon Web Services advertises
    *       IP addresses.</p>
    *          <p>If you provide an incorrect network border group, you receive an <code>InvalidAddress.NotFound</code> error.</p>
-   *          <p>You cannot use a network border group with EC2 Classic. If you attempt this operation on EC2 classic, you
-   *       receive an <code>InvalidParameterCombination</code> error.</p>
    */
   NetworkBorderGroup?: string;
 
@@ -7376,7 +7770,7 @@ export interface ReplaceNetworkAclEntryRequest {
    * @public
    * <p>Indicates whether to allow or deny the traffic that matches the rule.</p>
    */
-  RuleAction: RuleAction | string | undefined;
+  RuleAction: RuleAction | undefined;
 
   /**
    * @public
@@ -7739,7 +8133,7 @@ export interface ReportInstanceStatusRequest {
    *             </li>
    *          </ul>
    */
-  ReasonCodes: (ReportInstanceReasonCodes | string)[] | undefined;
+  ReasonCodes: ReportInstanceReasonCodes[] | undefined;
 
   /**
    * @public
@@ -7751,7 +8145,7 @@ export interface ReportInstanceStatusRequest {
    * @public
    * <p>The status of all instances listed.</p>
    */
-  Status: ReportStatusType | string | undefined;
+  Status: ReportStatusType | undefined;
 }
 
 /**
@@ -7842,7 +8236,7 @@ export interface RequestSpotLaunchSpecification {
    * @public
    * <p>The instance type. Only one instance type can be specified.</p>
    */
-  InstanceType?: _InstanceType | string;
+  InstanceType?: _InstanceType;
 
   /**
    * @public
@@ -7980,7 +8374,7 @@ export interface RequestSpotInstancesRequest {
    *          <p>Default: <code>one-time</code>
    *          </p>
    */
-  Type?: SpotInstanceType | string;
+  Type?: SpotInstanceType;
 
   /**
    * @public
@@ -8026,7 +8420,7 @@ export interface RequestSpotInstancesRequest {
    * @public
    * <p>The behavior when a Spot Instance is interrupted. The default is <code>terminate</code>.</p>
    */
-  InstanceInterruptionBehavior?: InstanceInterruptionBehavior | string;
+  InstanceInterruptionBehavior?: InstanceInterruptionBehavior;
 }
 
 /**
@@ -8055,7 +8449,7 @@ export interface ResetAddressAttributeRequest {
    * @public
    * <p>The attribute of the IP address.</p>
    */
-  Attribute: AddressAttributeName | string | undefined;
+  Attribute: AddressAttributeName | undefined;
 
   /**
    * @public
@@ -8137,7 +8531,7 @@ export interface ResetFpgaImageAttributeRequest {
    * @public
    * <p>The attribute.</p>
    */
-  Attribute?: ResetFpgaImageAttributeName | string;
+  Attribute?: ResetFpgaImageAttributeName;
 }
 
 /**
@@ -8173,7 +8567,7 @@ export interface ResetImageAttributeRequest {
    * @public
    * <p>The attribute to reset (currently you can only reset the launch permission attribute).</p>
    */
-  Attribute: ResetImageAttributeName | string | undefined;
+  Attribute: ResetImageAttributeName | undefined;
 
   /**
    * @public
@@ -8202,7 +8596,7 @@ export interface ResetInstanceAttributeRequest {
    *                     <code>ramdisk</code> | <code>sourceDestCheck</code>.</p>
    *          </important>
    */
-  Attribute: InstanceAttributeName | string | undefined;
+  Attribute: InstanceAttributeName | undefined;
 
   /**
    * @public
@@ -8254,7 +8648,7 @@ export interface ResetSnapshotAttributeRequest {
    * <p>The attribute to reset. Currently, only the attribute for permission to create volumes can
    *       be reset.</p>
    */
-  Attribute: SnapshotAttributeName | string | undefined;
+  Attribute: SnapshotAttributeName | undefined;
 
   /**
    * @public
@@ -8304,7 +8698,7 @@ export interface RestoreAddressToClassicResult {
    * @public
    * <p>The move status for the IP address.</p>
    */
-  Status?: Status | string;
+  Status?: Status;
 }
 
 /**
@@ -8449,7 +8843,7 @@ export interface RestoreSnapshotFromRecycleBinResult {
    * @public
    * <p>The state of the snapshot.</p>
    */
-  State?: SnapshotState | string;
+  State?: SnapshotState;
 
   /**
    * @public
@@ -8467,7 +8861,7 @@ export interface RestoreSnapshotFromRecycleBinResult {
    * @public
    * <p>Reserved for future use.</p>
    */
-  SseType?: SSEType | string;
+  SseType?: SSEType;
 }
 
 /**
@@ -8801,7 +9195,7 @@ export interface CpuOptionsRequest {
    *             with M6a, R6a, and C6a instance types only. For more information, see
    *             <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/sev-snp.html">AMD SEV-SNP</a>.</p>
    */
-  AmdSevSnp?: AmdSevSnpSpecification | string;
+  AmdSevSnp?: AmdSevSnpSpecification;
 }
 
 /**
@@ -8830,805 +9224,14 @@ export interface ElasticInferenceAccelerator {
 }
 
 /**
- * @public
- * <p>Indicates whether the instance is enabled for Amazon Web Services Nitro Enclaves. For
- *             more information, see <a href="https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html"> What is Amazon Web Services Nitro
- *                 Enclaves?</a> in the <i>Amazon Web Services Nitro Enclaves User
- *                 Guide</i>.</p>
+ * @internal
  */
-export interface EnclaveOptionsRequest {
-  /**
-   * @public
-   * <p>To enable the instance for Amazon Web Services Nitro Enclaves, set this parameter to
-   *                 <code>true</code>.</p>
-   */
-  Enabled?: boolean;
-}
-
-/**
- * @public
- * <p>Indicates whether your instance is configured for hibernation. This parameter is valid
- *             only if the instance meets the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html">hibernation
- *                 prerequisites</a>. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html">Hibernate your instance</a> in the
- *                 <i>Amazon EC2 User Guide</i>.</p>
- */
-export interface HibernationOptionsRequest {
-  /**
-   * @public
-   * <p>Set to <code>true</code> to enable your instance for hibernation.</p>
-   *          <p>Default: <code>false</code>
-   *          </p>
-   */
-  Configured?: boolean;
-}
-
-/**
- * @public
- * <p>The options for Spot Instances.</p>
- */
-export interface SpotMarketOptions {
-  /**
-   * @public
-   * <p>The maximum hourly price that you're willing to pay for a Spot Instance. We do not
-   *             recommend using this parameter because it can lead to increased interruptions. If you do
-   *             not specify this parameter, you will pay the current Spot price.</p>
-   *          <important>
-   *             <p>If you specify a maximum price, your Spot Instances will be interrupted more
-   *                 frequently than if you do not specify this parameter.</p>
-   *          </important>
-   */
-  MaxPrice?: string;
-
-  /**
-   * @public
-   * <p>The Spot Instance request type. For <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances">RunInstances</a>, persistent
-   *             Spot Instance requests are only supported when the instance interruption behavior is
-   *             either <code>hibernate</code> or <code>stop</code>.</p>
-   */
-  SpotInstanceType?: SpotInstanceType | string;
-
-  /**
-   * @public
-   * <p>Deprecated.</p>
-   */
-  BlockDurationMinutes?: number;
-
-  /**
-   * @public
-   * <p>The end date of the request, in UTC format
-   *                 (<i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z).
-   *             Supported only for persistent requests.</p>
-   *          <ul>
-   *             <li>
-   *                <p>For a persistent request, the request remains active until the
-   *                         <code>ValidUntil</code> date and time is reached. Otherwise, the request
-   *                     remains active until you cancel it.</p>
-   *             </li>
-   *             <li>
-   *                <p>For a one-time request, <code>ValidUntil</code> is not supported. The request
-   *                     remains active until all instances launch or you cancel the request.</p>
-   *             </li>
-   *          </ul>
-   */
-  ValidUntil?: Date;
-
-  /**
-   * @public
-   * <p>The behavior when a Spot Instance is interrupted. The default is
-   *                 <code>terminate</code>.</p>
-   */
-  InstanceInterruptionBehavior?: InstanceInterruptionBehavior | string;
-}
-
-/**
- * @public
- * <p>Describes the market (purchasing) option for the instances.</p>
- */
-export interface InstanceMarketOptionsRequest {
-  /**
-   * @public
-   * <p>The market type.</p>
-   */
-  MarketType?: MarketType | string;
-
-  /**
-   * @public
-   * <p>The options for Spot Instances.</p>
-   */
-  SpotOptions?: SpotMarketOptions;
-}
-
-/**
- * @public
- * <p>The launch template to use. You must specify either the launch template ID or launch
- *             template name in the request, but not both.</p>
- */
-export interface LaunchTemplateSpecification {
-  /**
-   * @public
-   * <p>The ID of the launch template.</p>
-   *          <p>You must specify the <code>LaunchTemplateId</code> or the
-   *                 <code>LaunchTemplateName</code>, but not both.</p>
-   */
-  LaunchTemplateId?: string;
-
-  /**
-   * @public
-   * <p>The name of the launch template.</p>
-   *          <p>You must specify the <code>LaunchTemplateName</code> or the
-   *                 <code>LaunchTemplateId</code>, but not both.</p>
-   */
-  LaunchTemplateName?: string;
-
-  /**
-   * @public
-   * <p>The launch template version number, <code>$Latest</code>, or
-   *             <code>$Default</code>.</p>
-   *          <p>If the value is <code>$Latest</code>, Amazon EC2 uses the latest version of the launch
-   *             template.</p>
-   *          <p>If the value is <code>$Default</code>, Amazon EC2 uses the default version of the
-   *             launch template.</p>
-   *          <p>Default: The default version of the launch template.</p>
-   */
-  Version?: string;
-}
-
-/**
- * @public
- * <p>Describes a license configuration.</p>
- */
-export interface LicenseConfigurationRequest {
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN) of the license configuration.</p>
-   */
-  LicenseConfigurationArn?: string;
-}
-
-/**
- * @public
- * <p>The maintenance options for the instance.</p>
- */
-export interface InstanceMaintenanceOptionsRequest {
-  /**
-   * @public
-   * <p>Disables the automatic recovery behavior of your instance or sets it to default. For
-   *             more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-recover.html#instance-configuration-recovery">Simplified automatic recovery</a>.</p>
-   */
-  AutoRecovery?: InstanceAutoRecoveryState | string;
-}
-
-/**
- * @public
- * <p>The metadata options for the instance.</p>
- */
-export interface InstanceMetadataOptionsRequest {
-  /**
-   * @public
-   * <p>IMDSv2 uses token-backed sessions. Set the use of HTTP tokens to <code>optional</code>
-   *             (in other words, set the use of IMDSv2 to <code>optional</code>) or
-   *                 <code>required</code> (in other words, set the use of IMDSv2 to
-   *                 <code>required</code>).</p>
-   *          <ul>
-   *             <li>
-   *                <p>
-   *                   <code>optional</code> - When IMDSv2 is optional, you can choose to retrieve instance metadata with or without
-   *             a session token in your request. If you retrieve the IAM role credentials
-   *             without a token, the IMDSv1 role credentials are returned. If you retrieve the IAM role credentials
-   *             using a valid session token, the IMDSv2 role credentials are returned.</p>
-   *             </li>
-   *             <li>
-   *                <p>
-   *                   <code>required</code> - When IMDSv2 is required, you must send a session token
-   *             with any instance metadata retrieval requests. In this state, retrieving the IAM role
-   *             credentials always returns IMDSv2 credentials; IMDSv1 credentials are not available.</p>
-   *             </li>
-   *          </ul>
-   *          <p>Default: <code>optional</code>
-   *          </p>
-   */
-  HttpTokens?: HttpTokensState | string;
-
-  /**
-   * @public
-   * <p>The desired HTTP PUT response hop limit for instance metadata requests. The larger the
-   *             number, the further instance metadata requests can travel.</p>
-   *          <p>Default: 1</p>
-   *          <p>Possible values: Integers from 1 to 64</p>
-   */
-  HttpPutResponseHopLimit?: number;
-
-  /**
-   * @public
-   * <p>Enables or disables the HTTP metadata endpoint on your instances.</p>
-   *          <p>If you specify a value of <code>disabled</code>, you cannot access your instance
-   *             metadata.</p>
-   *          <p>Default: <code>enabled</code>
-   *          </p>
-   */
-  HttpEndpoint?: InstanceMetadataEndpointState | string;
-
-  /**
-   * @public
-   * <p>Enables or disables the IPv6 endpoint for the instance metadata service.</p>
-   */
-  HttpProtocolIpv6?: InstanceMetadataProtocolState | string;
-
-  /**
-   * @public
-   * <p>Set to <code>enabled</code> to allow access to instance tags from the instance
-   *             metadata. Set to <code>disabled</code> to turn off access to instance tags from the
-   *             instance metadata. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS">Work with
-   *                 instance tags using the instance metadata</a>.</p>
-   *          <p>Default: <code>disabled</code>
-   *          </p>
-   */
-  InstanceMetadataTags?: InstanceMetadataTagsState | string;
-}
-
-/**
- * @public
- * <p>Describes the options for instance hostnames.</p>
- */
-export interface PrivateDnsNameOptionsRequest {
-  /**
-   * @public
-   * <p>The type of hostname for EC2 instances. For IPv4 only subnets, an instance DNS name
-   *             must be based on the instance IPv4 address. For IPv6 only subnets, an instance DNS name
-   *             must be based on the instance ID. For dual-stack subnets, you can specify whether DNS
-   *             names use the instance IPv4 address or the instance ID.</p>
-   */
-  HostnameType?: HostnameType | string;
-
-  /**
-   * @public
-   * <p>Indicates whether to respond to DNS queries for instance hostnames with DNS A
-   *             records.</p>
-   */
-  EnableResourceNameDnsARecord?: boolean;
-
-  /**
-   * @public
-   * <p>Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA
-   *             records.</p>
-   */
-  EnableResourceNameDnsAAAARecord?: boolean;
-}
-
-/**
- * @public
- */
-export interface RunInstancesRequest {
-  /**
-   * @public
-   * <p>The block device mapping, which defines the EBS volumes and instance store volumes to
-   *             attach to the instance at launch. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html">Block device
-   *                 mappings</a> in the <i>Amazon EC2 User Guide</i>.</p>
-   */
-  BlockDeviceMappings?: BlockDeviceMapping[];
-
-  /**
-   * @public
-   * <p>The ID of the AMI. An AMI ID is required to launch an instance and must be specified
-   *             here or in a launch template.</p>
-   */
-  ImageId?: string;
-
-  /**
-   * @public
-   * <p>The instance type. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html">Instance types</a> in the
-   *                 <i>Amazon EC2 User Guide</i>.</p>
-   */
-  InstanceType?: _InstanceType | string;
-
-  /**
-   * @public
-   * <p>The number of IPv6 addresses to associate with the primary network
-   *             interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet. You
-   *             cannot specify this option and the option to assign specific IPv6 addresses in the same
-   *             request. You can specify this option if you've specified a minimum number of instances
-   *             to launch.</p>
-   *          <p>You cannot specify this option and the network interfaces option in the same
-   *             request.</p>
-   */
-  Ipv6AddressCount?: number;
-
-  /**
-   * @public
-   * <p>The IPv6 addresses from the range of the subnet to associate with the
-   *             primary network interface. You cannot specify this option and the option to assign a
-   *             number of IPv6 addresses in the same request. You cannot specify this option if you've
-   *             specified a minimum number of instances to launch.</p>
-   *          <p>You cannot specify this option and the network interfaces option in the same
-   *             request.</p>
-   */
-  Ipv6Addresses?: InstanceIpv6Address[];
-
-  /**
-   * @public
-   * <p>The ID of the kernel.</p>
-   *          <important>
-   *             <p>We recommend that you use PV-GRUB instead of kernels and RAM disks. For more
-   *                 information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UserProvidedkernels.html">PV-GRUB</a> in the
-   *                     <i>Amazon EC2 User Guide</i>.</p>
-   *          </important>
-   */
-  KernelId?: string;
-
-  /**
-   * @public
-   * <p>The name of the key pair. You can create a key pair using <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateKeyPair.html">CreateKeyPair</a> or
-   *                 <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ImportKeyPair.html">ImportKeyPair</a>.</p>
-   *          <important>
-   *             <p>If you do not specify a key pair, you can't connect to the instance unless you
-   *                 choose an AMI that is configured to allow users another way to log in.</p>
-   *          </important>
-   */
-  KeyName?: string;
-
-  /**
-   * @public
-   * <p>The maximum number of instances to launch. If you specify more instances than Amazon
-   *             EC2 can launch in the target Availability Zone, Amazon EC2 launches the largest possible
-   *             number of instances above <code>MinCount</code>.</p>
-   *          <p>Constraints: Between 1 and the maximum number you're allowed for the specified
-   *             instance type. For more information about the default limits, and how to request an
-   *             increase, see <a href="http://aws.amazon.com/ec2/faqs/#How_many_instances_can_I_run_in_Amazon_EC2">How many instances can I
-   *                 run in Amazon EC2</a> in the Amazon EC2 FAQ.</p>
-   */
-  MaxCount: number | undefined;
-
-  /**
-   * @public
-   * <p>The minimum number of instances to launch. If you specify a minimum that is more
-   *             instances than Amazon EC2 can launch in the target Availability Zone, Amazon EC2
-   *             launches no instances.</p>
-   *          <p>Constraints: Between 1 and the maximum number you're allowed for the specified
-   *             instance type. For more information about the default limits, and how to request an
-   *             increase, see <a href="http://aws.amazon.com/ec2/faqs/#How_many_instances_can_I_run_in_Amazon_EC2">How many instances can I
-   *                 run in Amazon EC2</a> in the Amazon EC2 General FAQ.</p>
-   */
-  MinCount: number | undefined;
-
-  /**
-   * @public
-   * <p>Specifies whether detailed monitoring is enabled for the instance.</p>
-   */
-  Monitoring?: RunInstancesMonitoringEnabled;
-
-  /**
-   * @public
-   * <p>The placement for the instance.</p>
-   */
-  Placement?: Placement;
-
-  /**
-   * @public
-   * <p>The ID of the RAM disk to select. Some kernels require additional drivers at launch.
-   *             Check the kernel requirements for information about whether you need to specify a RAM
-   *             disk. To find kernel requirements, go to the Amazon Web Services Resource Center and
-   *             search for the kernel ID.</p>
-   *          <important>
-   *             <p>We recommend that you use PV-GRUB instead of kernels and RAM disks. For more
-   *                 information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UserProvidedkernels.html">PV-GRUB</a> in the
-   *                     <i>Amazon EC2 User Guide</i>.</p>
-   *          </important>
-   */
-  RamdiskId?: string;
-
-  /**
-   * @public
-   * <p>The IDs of the security groups. You can create a security group using <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateSecurityGroup.html">CreateSecurityGroup</a>.</p>
-   *          <p>If you specify a network interface, you must specify any security groups as part of
-   *             the network interface.</p>
-   */
-  SecurityGroupIds?: string[];
-
-  /**
-   * @public
-   * <p>[Default VPC] The names of the security groups.</p>
-   *          <p>If you specify a network interface, you must specify any security groups as part of
-   *             the network interface.</p>
-   *          <p>Default: Amazon EC2 uses the default security group.</p>
-   */
-  SecurityGroups?: string[];
-
-  /**
-   * @public
-   * <p>The ID of the subnet to launch the instance into.</p>
-   *          <p>If you specify a network interface, you must specify any subnets as part of the
-   *             network interface.</p>
-   */
-  SubnetId?: string;
-
-  /**
-   * @public
-   * <p>The user data script to make available to the instance. For more information, see
-   *                 <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html">Run
-   *                 commands on your Linux instance at launch</a> and <a href="https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2-windows-user-data.html">Run commands on your
-   *                 Windows instance at launch</a>. If you are using a command line tool,
-   *             base64-encoding is performed for you, and you can load the text from a file. Otherwise,
-   *             you must provide base64-encoded text. User data is limited to 16 KB.</p>
-   */
-  UserData?: string;
-
-  /**
-   * @public
-   * <p>Reserved.</p>
-   */
-  AdditionalInfo?: string;
-
-  /**
-   * @public
-   * <p>Unique, case-sensitive identifier you provide to ensure the idempotency of the
-   *             request. If you do not specify a client token, a randomly generated token is used for
-   *             the request to ensure idempotency.</p>
-   *          <p>For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
-   *                 Idempotency</a>.</p>
-   *          <p>Constraints: Maximum 64 ASCII characters</p>
-   */
-  ClientToken?: string;
-
-  /**
-   * @public
-   * <p>If you set this parameter to <code>true</code>, you can't terminate the instance using
-   *             the Amazon EC2 console, CLI, or API; otherwise, you can. To change this attribute after
-   *             launch, use <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyInstanceAttribute.html">ModifyInstanceAttribute</a>. Alternatively, if you set
-   *                 <code>InstanceInitiatedShutdownBehavior</code> to <code>terminate</code>, you can
-   *             terminate the instance by running the shutdown command from the instance.</p>
-   *          <p>Default: <code>false</code>
-   *          </p>
-   */
-  DisableApiTermination?: boolean;
-
-  /**
-   * @public
-   * <p>Checks whether you have the required permissions for the action, without actually making the request,
-   *    and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>.
-   *    Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-   */
-  DryRun?: boolean;
-
-  /**
-   * @public
-   * <p>Indicates whether the instance is optimized for Amazon EBS I/O. This optimization
-   *             provides dedicated throughput to Amazon EBS and an optimized configuration stack to
-   *             provide optimal Amazon EBS I/O performance. This optimization isn't available with all
-   *             instance types. Additional usage charges apply when using an EBS-optimized
-   *             instance.</p>
-   *          <p>Default: <code>false</code>
-   *          </p>
-   */
-  EbsOptimized?: boolean;
-
-  /**
-   * @public
-   * <p>The name or Amazon Resource Name (ARN) of an IAM instance
-   *             profile.</p>
-   */
-  IamInstanceProfile?: IamInstanceProfileSpecification;
-
-  /**
-   * @public
-   * <p>Indicates whether an instance stops or terminates when you initiate shutdown from the
-   *             instance (using the operating system command for system shutdown).</p>
-   *          <p>Default: <code>stop</code>
-   *          </p>
-   */
-  InstanceInitiatedShutdownBehavior?: ShutdownBehavior | string;
-
-  /**
-   * @public
-   * <p>The network interfaces to associate with the instance. If you specify a network
-   *             interface, you must specify any security groups and subnets as part of the network
-   *             interface.</p>
-   */
-  NetworkInterfaces?: InstanceNetworkInterfaceSpecification[];
-
-  /**
-   * @public
-   * <p>The primary IPv4 address. You must specify a value from the IPv4 address
-   *             range of the subnet.</p>
-   *          <p>Only one private IP address can be designated as primary. You can't specify this
-   *             option if you've specified the option to designate a private IP address as the primary
-   *             IP address in a network interface specification. You cannot specify this option if
-   *             you're launching more than one instance in the request.</p>
-   *          <p>You cannot specify this option and the network interfaces option in the same
-   *             request.</p>
-   */
-  PrivateIpAddress?: string;
-
-  /**
-   * @public
-   * <p>An elastic GPU to associate with the instance. An Elastic GPU is a GPU resource that
-   *             you can attach to your Windows instance to accelerate the graphics performance of your
-   *             applications. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/elastic-graphics.html">Amazon EC2 Elastic GPUs</a> in
-   *             the <i>Amazon EC2 User Guide</i>.</p>
-   */
-  ElasticGpuSpecification?: ElasticGpuSpecification[];
-
-  /**
-   * @public
-   * <p>An elastic inference accelerator to associate with the instance. Elastic inference
-   *             accelerators are a resource you can attach to your Amazon EC2 instances to accelerate
-   *             your Deep Learning (DL) inference workloads.</p>
-   *          <p>You cannot specify accelerators from different generations in the same request.</p>
-   *          <note>
-   *             <p>Starting April 15, 2023, Amazon Web Services will not onboard new customers to Amazon
-   *             Elastic Inference (EI), and will help current customers migrate their workloads to
-   *             options that offer better price and performance. After April 15, 2023, new customers
-   *             will not be able to launch instances with Amazon EI accelerators in Amazon SageMaker,
-   *             Amazon ECS, or Amazon EC2. However, customers who have used Amazon EI at least once during
-   *             the past 30-day period are considered current customers and will be able to continue
-   *             using the service.</p>
-   *          </note>
-   */
-  ElasticInferenceAccelerators?: ElasticInferenceAccelerator[];
-
-  /**
-   * @public
-   * <p>The tags to apply to the resources that are created during instance launch.</p>
-   *          <p>You can specify tags for the following resources only:</p>
-   *          <ul>
-   *             <li>
-   *                <p>Instances</p>
-   *             </li>
-   *             <li>
-   *                <p>Volumes</p>
-   *             </li>
-   *             <li>
-   *                <p>Elastic graphics</p>
-   *             </li>
-   *             <li>
-   *                <p>Spot Instance requests</p>
-   *             </li>
-   *             <li>
-   *                <p>Network interfaces</p>
-   *             </li>
-   *          </ul>
-   *          <p>To tag a resource after it has been created, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html">CreateTags</a>.</p>
-   */
-  TagSpecifications?: TagSpecification[];
-
-  /**
-   * @public
-   * <p>The launch template to use to launch the instances. Any parameters that you specify in
-   *                 <a>RunInstances</a> override the same parameters in the launch template.
-   *             You can specify either the name or ID of a launch template, but not both.</p>
-   */
-  LaunchTemplate?: LaunchTemplateSpecification;
-
-  /**
-   * @public
-   * <p>The market (purchasing) option for the instances.</p>
-   *          <p>For <a>RunInstances</a>, persistent Spot Instance requests are
-   *             only supported when <b>InstanceInterruptionBehavior</b> is set
-   *             to either <code>hibernate</code> or <code>stop</code>.</p>
-   */
-  InstanceMarketOptions?: InstanceMarketOptionsRequest;
-
-  /**
-   * @public
-   * <p>The credit option for CPU usage of the burstable performance instance. Valid values
-   *             are <code>standard</code> and <code>unlimited</code>. To change this attribute after
-   *             launch, use <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyInstanceCreditSpecification.html">
-   *                 ModifyInstanceCreditSpecification</a>. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html">Burstable
-   *                 performance instances</a> in the <i>Amazon EC2 User Guide</i>.</p>
-   *          <p>Default: <code>standard</code> (T2 instances) or <code>unlimited</code> (T3/T3a/T4g
-   *             instances)</p>
-   *          <p>For T3 instances with <code>host</code> tenancy, only <code>standard</code> is
-   *             supported.</p>
-   */
-  CreditSpecification?: CreditSpecificationRequest;
-
-  /**
-   * @public
-   * <p>The CPU options for the instance. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html">Optimize CPU options</a> in the <i>Amazon EC2 User Guide</i>.</p>
-   */
-  CpuOptions?: CpuOptionsRequest;
-
-  /**
-   * @public
-   * <p>Information about the Capacity Reservation targeting option. If you do not specify this parameter, the
-   *             instance's Capacity Reservation preference defaults to <code>open</code>, which enables
-   *             it to run in any open Capacity Reservation that has matching attributes (instance type,
-   *             platform, Availability Zone).</p>
-   */
-  CapacityReservationSpecification?: CapacityReservationSpecification;
-
-  /**
-   * @public
-   * <p>Indicates whether an instance is enabled for hibernation. This parameter is valid only
-   *             if the instance meets the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html">hibernation
-   *                 prerequisites</a>. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html">Hibernate your instance</a> in the
-   *                 <i>Amazon EC2 User Guide</i>.</p>
-   *          <p>You can't enable hibernation and Amazon Web Services Nitro Enclaves on the same
-   *             instance.</p>
-   */
-  HibernationOptions?: HibernationOptionsRequest;
-
-  /**
-   * @public
-   * <p>The license configurations.</p>
-   */
-  LicenseSpecifications?: LicenseConfigurationRequest[];
-
-  /**
-   * @public
-   * <p>The metadata options for the instance. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html">Instance metadata and user data</a>.</p>
-   */
-  MetadataOptions?: InstanceMetadataOptionsRequest;
-
-  /**
-   * @public
-   * <p>Indicates whether the instance is enabled for Amazon Web Services Nitro Enclaves. For
-   *             more information, see <a href="https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html">What is Amazon Web Services Nitro
-   *                 Enclaves?</a> in the <i>Amazon Web Services Nitro Enclaves User
-   *                 Guide</i>.</p>
-   *          <p>You can't enable Amazon Web Services Nitro Enclaves and hibernation on the same
-   *             instance.</p>
-   */
-  EnclaveOptions?: EnclaveOptionsRequest;
-
-  /**
-   * @public
-   * <p>The options for the instance hostname.
-   *             The default values are inherited from the subnet.
-   *             Applies only if creating a network interface, not attaching an existing one.</p>
-   */
-  PrivateDnsNameOptions?: PrivateDnsNameOptionsRequest;
-
-  /**
-   * @public
-   * <p>The maintenance and recovery options for the instance.</p>
-   */
-  MaintenanceOptions?: InstanceMaintenanceOptionsRequest;
-
-  /**
-   * @public
-   * <p>Indicates whether an instance is enabled for stop protection. For more information,
-   *             see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html#Using_StopProtection">Stop
-   *                 protection</a>. </p>
-   */
-  DisableApiStop?: boolean;
-
-  /**
-   * @public
-   * <p>If you’re launching an instance into a dual-stack or IPv6-only subnet, you can enable
-   *             assigning a primary IPv6 address. A primary IPv6 address is an IPv6 GUA address
-   *             associated with an ENI that you have enabled to use a primary IPv6 address. Use this
-   *             option if an instance relies on its IPv6 address not changing. When you launch the
-   *             instance, Amazon Web Services will automatically assign an IPv6 address associated with
-   *             the ENI attached to your instance to be the primary IPv6 address. Once you enable an
-   *             IPv6 GUA address to be a primary IPv6, you cannot disable it. When you enable an IPv6
-   *             GUA address to be a primary IPv6, the first IPv6 GUA will be made the primary IPv6
-   *             address until the instance is terminated or the network interface is detached. If you
-   *             have multiple IPv6 addresses associated with an ENI attached to your instance and you
-   *             enable a primary IPv6 address, the first IPv6 GUA address associated with the ENI
-   *             becomes the primary IPv6 address.</p>
-   */
-  EnablePrimaryIpv6?: boolean;
-}
-
-/**
- * @public
- * <p>Describes an EBS volume for a Scheduled Instance.</p>
- */
-export interface ScheduledInstancesEbs {
-  /**
-   * @public
-   * <p>Indicates whether the volume is deleted on instance termination.</p>
-   */
-  DeleteOnTermination?: boolean;
-
-  /**
-   * @public
-   * <p>Indicates whether the volume is encrypted. You can attached encrypted volumes only to instances that support them.</p>
-   */
-  Encrypted?: boolean;
-
-  /**
-   * @public
-   * <p>The number of I/O operations per second (IOPS) to provision for an <code>io1</code> or <code>io2</code> volume, with a maximum
-   *    		ratio of 50 IOPS/GiB for <code>io1</code>, and 500 IOPS/GiB for <code>io2</code>. Range is 100 to 64,000 IOPS for
-   *    		volumes in most Regions. Maximum IOPS of 64,000 is guaranteed only on
-   *    		<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances">instances built on the Nitro System</a>. Other instance families guarantee performance up to
-   *    		32,000 IOPS. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html">Amazon EBS volume types</a> in the
-   *    		<i>Amazon EC2 User Guide</i>.</p>
-   *          <p>This parameter is valid only for Provisioned IOPS SSD (<code>io1</code> and <code>io2</code>) volumes.</p>
-   */
-  Iops?: number;
-
-  /**
-   * @public
-   * <p>The ID of the snapshot.</p>
-   */
-  SnapshotId?: string;
-
-  /**
-   * @public
-   * <p>The size of the volume, in GiB.</p>
-   *          <p>Default: If you're creating the volume from a snapshot and don't specify a volume size, the default is the snapshot size.</p>
-   */
-  VolumeSize?: number;
-
-  /**
-   * @public
-   * <p>The volume type. <code>gp2</code> for General Purpose SSD, <code>io1</code> or <code> io2</code> for Provisioned IOPS SSD, Throughput Optimized HDD
-   *          for <code>st1</code>, Cold HDD for <code>sc1</code>, or <code>standard</code> for
-   *          Magnetic.</p>
-   *          <p>Default: <code>gp2</code>
-   *          </p>
-   */
-  VolumeType?: string;
-}
-
-/**
- * @public
- * <p>Describes a block device mapping for a Scheduled Instance.</p>
- */
-export interface ScheduledInstancesBlockDeviceMapping {
-  /**
-   * @public
-   * <p>The device name (for example, <code>/dev/sdh</code> or <code>xvdh</code>).</p>
-   */
-  DeviceName?: string;
-
-  /**
-   * @public
-   * <p>Parameters used to set up EBS volumes automatically when the instance is launched.</p>
-   */
-  Ebs?: ScheduledInstancesEbs;
-
-  /**
-   * @public
-   * <p>To omit the device from the block device mapping, specify an empty string.</p>
-   */
-  NoDevice?: string;
-
-  /**
-   * @public
-   * <p>The virtual device name (<code>ephemeral</code>N). Instance store volumes are numbered
-   *          starting from 0. An instance type with two available instance store volumes can specify mappings
-   *          for <code>ephemeral0</code> and <code>ephemeral1</code>. The number of available instance store
-   *          volumes depends on the instance type. After you connect to the instance, you must mount the
-   *          volume.</p>
-   *          <p>Constraints: For M3 instances, you must specify instance store volumes in the block device
-   *          mapping for the instance. When you launch an M3 instance, we ignore any instance store volumes
-   *          specified in the block device mapping for the AMI.</p>
-   */
-  VirtualName?: string;
-}
-
-/**
- * @public
- * <p>Describes an IAM instance profile for a Scheduled Instance.</p>
- */
-export interface ScheduledInstancesIamInstanceProfile {
-  /**
-   * @public
-   * <p>The Amazon Resource Name (ARN).</p>
-   */
-  Arn?: string;
-
-  /**
-   * @public
-   * <p>The name.</p>
-   */
-  Name?: string;
-}
-
-/**
- * @public
- * <p>Describes whether monitoring is enabled for a Scheduled Instance.</p>
- */
-export interface ScheduledInstancesMonitoring {
-  /**
-   * @public
-   * <p>Indicates whether monitoring is enabled.</p>
-   */
-  Enabled?: boolean;
-}
+export const GetVpnConnectionDeviceSampleConfigurationResultFilterSensitiveLog = (
+  obj: GetVpnConnectionDeviceSampleConfigurationResult
+): any => ({
+  ...obj,
+  ...(obj.VpnConnectionDeviceSampleConfiguration && { VpnConnectionDeviceSampleConfiguration: SENSITIVE_STRING }),
+});
 
 /**
  * @internal
@@ -9868,12 +9471,4 @@ export const RequestSpotInstancesResultFilterSensitiveLog = (obj: RequestSpotIns
   ...(obj.SpotInstanceRequests && {
     SpotInstanceRequests: obj.SpotInstanceRequests.map((item) => SpotInstanceRequestFilterSensitiveLog(item)),
   }),
-});
-
-/**
- * @internal
- */
-export const RunInstancesRequestFilterSensitiveLog = (obj: RunInstancesRequest): any => ({
-  ...obj,
-  ...(obj.UserData && { UserData: SENSITIVE_STRING }),
 });

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DataSyncClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DataSyncClient";
@@ -97,6 +98,32 @@ export interface DescribeTaskCommandOutput extends DescribeTaskResponse, __Metad
  * //       Value: "STRING_VALUE",
  * //     },
  * //   ],
+ * //   TaskReportConfig: { // TaskReportConfig
+ * //     Destination: { // ReportDestination
+ * //       S3: { // ReportDestinationS3
+ * //         Subdirectory: "STRING_VALUE",
+ * //         S3BucketArn: "STRING_VALUE", // required
+ * //         BucketAccessRoleArn: "STRING_VALUE", // required
+ * //       },
+ * //     },
+ * //     OutputType: "SUMMARY_ONLY" || "STANDARD",
+ * //     ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ * //     ObjectVersionIds: "INCLUDE" || "NONE",
+ * //     Overrides: { // ReportOverrides
+ * //       Transferred: { // ReportOverride
+ * //         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ * //       },
+ * //       Verified: {
+ * //         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ * //       },
+ * //       Deleted: {
+ * //         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ * //       },
+ * //       Skipped: {
+ * //         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ * //       },
+ * //     },
+ * //   },
  * // };
  *
  * ```
@@ -166,6 +193,10 @@ export class DescribeTaskCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "FmrsService",
+        operation: "DescribeTask",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

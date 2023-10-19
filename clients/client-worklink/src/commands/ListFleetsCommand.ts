@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListFleetsRequest, ListFleetsResponse } from "../models/models_0";
@@ -60,7 +61,7 @@ export interface ListFleetsCommandOutput extends ListFleetsResponse, __MetadataB
  * //       FleetName: "STRING_VALUE",
  * //       DisplayName: "STRING_VALUE",
  * //       CompanyCode: "STRING_VALUE",
- * //       FleetStatus: "STRING_VALUE",
+ * //       FleetStatus: "CREATING" || "ACTIVE" || "DELETING" || "DELETED" || "FAILED_TO_CREATE" || "FAILED_TO_DELETE",
  * //       Tags: { // TagMap
  * //         "<keys>": "STRING_VALUE",
  * //       },
@@ -141,6 +142,10 @@ export class ListFleetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkLink",
+        operation: "ListFleets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

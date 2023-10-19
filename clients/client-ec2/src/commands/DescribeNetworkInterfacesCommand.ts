@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
@@ -37,6 +38,10 @@ export interface DescribeNetworkInterfacesCommandOutput extends DescribeNetworkI
 /**
  * @public
  * <p>Describes one or more of your network interfaces.</p>
+ *          <p>If you have a large number of network interfaces, the operation fails unless
+ *            you use pagination or one of the following filters: <code>group-id</code>,
+ *            <code>mac-address</code>, <code>private-dns-name</code>, <code>private-ip-address</code>,
+ *            <code>private-dns-name</code>, <code>subnet-id</code>, or <code>vpc-id</code>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -286,6 +291,10 @@ export class DescribeNetworkInterfacesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2",
+        operation: "DescribeNetworkInterfaces",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

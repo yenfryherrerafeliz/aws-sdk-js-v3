@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LambdaClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LambdaClient";
@@ -73,6 +74,7 @@ export interface GetFunctionCommandOutput extends GetFunctionResponse, __Metadat
  * //         "STRING_VALUE",
  * //       ],
  * //       VpcId: "STRING_VALUE",
+ * //       Ipv6AllowedForDualStack: true || false,
  * //     },
  * //     DeadLetterConfig: { // DeadLetterConfig
  * //       TargetArn: "STRING_VALUE",
@@ -234,6 +236,10 @@ export class GetFunctionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: GetFunctionResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSGirApiService",
+        operation: "GetFunction",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

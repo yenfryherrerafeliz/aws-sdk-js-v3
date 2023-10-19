@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -48,14 +49,14 @@ export interface PutImageTagMutabilityCommandOutput extends PutImageTagMutabilit
  * const input = { // PutImageTagMutabilityRequest
  *   registryId: "STRING_VALUE",
  *   repositoryName: "STRING_VALUE", // required
- *   imageTagMutability: "STRING_VALUE", // required
+ *   imageTagMutability: "MUTABLE" || "IMMUTABLE", // required
  * };
  * const command = new PutImageTagMutabilityCommand(input);
  * const response = await client.send(command);
  * // { // PutImageTagMutabilityResponse
  * //   registryId: "STRING_VALUE",
  * //   repositoryName: "STRING_VALUE",
- * //   imageTagMutability: "STRING_VALUE",
+ * //   imageTagMutability: "MUTABLE" || "IMMUTABLE",
  * // };
  *
  * ```
@@ -131,6 +132,10 @@ export class PutImageTagMutabilityCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "PutImageTagMutability",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AppRunnerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppRunnerClient";
@@ -73,6 +74,7 @@ export interface CreateServiceCommandOutput extends CreateServiceResponse, __Met
  *           },
  *         },
  *       },
+ *       SourceDirectory: "STRING_VALUE",
  *     },
  *     ImageRepository: { // ImageRepository
  *       ImageIdentifier: "STRING_VALUE", // required
@@ -165,6 +167,7 @@ export interface CreateServiceCommandOutput extends CreateServiceResponse, __Met
  * //             },
  * //           },
  * //         },
+ * //         SourceDirectory: "STRING_VALUE",
  * //       },
  * //       ImageRepository: { // ImageRepository
  * //         ImageIdentifier: "STRING_VALUE", // required
@@ -206,6 +209,10 @@ export interface CreateServiceCommandOutput extends CreateServiceResponse, __Met
  * //       AutoScalingConfigurationArn: "STRING_VALUE",
  * //       AutoScalingConfigurationName: "STRING_VALUE",
  * //       AutoScalingConfigurationRevision: Number("int"),
+ * //       Status: "ACTIVE" || "INACTIVE",
+ * //       CreatedAt: new Date("TIMESTAMP"),
+ * //       HasAssociatedService: true || false,
+ * //       IsDefault: true || false,
  * //     },
  * //     NetworkConfiguration: { // NetworkConfiguration
  * //       EgressConfiguration: { // EgressConfiguration
@@ -295,6 +302,10 @@ export class CreateServiceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateServiceRequestFilterSensitiveLog,
       outputFilterSensitiveLog: CreateServiceResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AppRunner",
+        operation: "CreateService",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

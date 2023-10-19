@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DAXClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DAXClient";
@@ -49,7 +50,7 @@ export interface DescribeEventsCommandOutput extends DescribeEventsResponse, __M
  * const client = new DAXClient(config);
  * const input = { // DescribeEventsRequest
  *   SourceName: "STRING_VALUE",
- *   SourceType: "STRING_VALUE",
+ *   SourceType: "CLUSTER" || "PARAMETER_GROUP" || "SUBNET_GROUP",
  *   StartTime: new Date("TIMESTAMP"),
  *   EndTime: new Date("TIMESTAMP"),
  *   Duration: Number("int"),
@@ -63,7 +64,7 @@ export interface DescribeEventsCommandOutput extends DescribeEventsResponse, __M
  * //   Events: [ // EventList
  * //     { // Event
  * //       SourceName: "STRING_VALUE",
- * //       SourceType: "STRING_VALUE",
+ * //       SourceType: "CLUSTER" || "PARAMETER_GROUP" || "SUBNET_GROUP",
  * //       Message: "STRING_VALUE",
  * //       Date: new Date("TIMESTAMP"),
  * //     },
@@ -141,6 +142,10 @@ export class DescribeEventsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDAXV3",
+        operation: "DescribeEvents",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

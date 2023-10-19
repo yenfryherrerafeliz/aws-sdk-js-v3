@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -56,7 +57,7 @@ export interface CreateDataViewCommandOutput extends CreateDataViewResponse, __M
  *   asOfTimestamp: Number("long"),
  *   destinationTypeParams: { // DataViewDestinationTypeParams
  *     destinationType: "STRING_VALUE", // required
- *     s3DestinationExportFileFormat: "STRING_VALUE",
+ *     s3DestinationExportFileFormat: "PARQUET" || "DELIMITED_TEXT",
  *     s3DestinationExportFileFormatOptions: { // S3DestinationFormatOptions
  *       "<keys>": "STRING_VALUE",
  *     },
@@ -150,6 +151,10 @@ export class CreateDataViewCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "CreateDataView",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
   StreamingBlobPayloadInputTypes,
 } from "@smithy/types";
 
@@ -54,13 +55,13 @@ export interface PutChunkCommandOutput extends PutChunkOutput, __MetadataBearer 
  *   Data: "STREAMING_BLOB_VALUE", // required
  *   Length: Number("long"), // required
  *   Checksum: "STRING_VALUE", // required
- *   ChecksumAlgorithm: "STRING_VALUE", // required
+ *   ChecksumAlgorithm: "SHA256", // required
  * };
  * const command = new PutChunkCommand(input);
  * const response = await client.send(command);
  * // { // PutChunkOutput
  * //   ChunkChecksum: "STRING_VALUE", // required
- * //   ChunkChecksumAlgorithm: "STRING_VALUE", // required
+ * //   ChunkChecksumAlgorithm: "SHA256", // required
  * // };
  *
  * ```
@@ -147,6 +148,10 @@ export class PutChunkCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: PutChunkInputFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CryoStorageFrontendService",
+        operation: "PutChunk",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

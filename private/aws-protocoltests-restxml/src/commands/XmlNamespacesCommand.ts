@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { XmlNamespacesInputOutput } from "../models/models_0";
@@ -33,6 +34,46 @@ export interface XmlNamespacesCommandInput extends XmlNamespacesInputOutput {}
  */
 export interface XmlNamespacesCommandOutput extends XmlNamespacesInputOutput, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestXmlProtocolClient, XmlNamespacesCommand } from "@aws-sdk/aws-protocoltests-restxml"; // ES Modules import
+ * // const { RestXmlProtocolClient, XmlNamespacesCommand } = require("@aws-sdk/aws-protocoltests-restxml"); // CommonJS import
+ * const client = new RestXmlProtocolClient(config);
+ * const input = { // XmlNamespacesInputOutput
+ *   nested: { // XmlNamespaceNested
+ *     foo: "STRING_VALUE",
+ *     values: [ // XmlNamespacedList
+ *       "STRING_VALUE",
+ *     ],
+ *   },
+ * };
+ * const command = new XmlNamespacesCommand(input);
+ * const response = await client.send(command);
+ * // { // XmlNamespacesInputOutput
+ * //   nested: { // XmlNamespaceNested
+ * //     foo: "STRING_VALUE",
+ * //     values: [ // XmlNamespacedList
+ * //       "STRING_VALUE",
+ * //     ],
+ * //   },
+ * // };
+ *
+ * ```
+ *
+ * @param XmlNamespacesCommandInput - {@link XmlNamespacesCommandInput}
+ * @returns {@link XmlNamespacesCommandOutput}
+ * @see {@link XmlNamespacesCommandInput} for command's `input` shape.
+ * @see {@link XmlNamespacesCommandOutput} for command's `response` shape.
+ * @see {@link RestXmlProtocolClientResolvedConfig | config} for RestXmlProtocolClient's `config` shape.
+ *
+ * @throws {@link RestXmlProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestXmlProtocol service.</p>
+ *
+ */
 export class XmlNamespacesCommand extends $Command<
   XmlNamespacesCommandInput,
   XmlNamespacesCommandOutput,
@@ -71,6 +112,10 @@ export class XmlNamespacesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestXml",
+        operation: "XmlNamespaces",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListDevicesRequest, ListDevicesResponse } from "../models/models_0";
@@ -56,7 +57,7 @@ export interface ListDevicesCommandOutput extends ListDevicesResponse, __Metadat
  * //   Devices: [ // DeviceSummaryList
  * //     { // DeviceSummary
  * //       DeviceId: "STRING_VALUE",
- * //       DeviceStatus: "STRING_VALUE",
+ * //       DeviceStatus: "ACTIVE" || "SIGNED_OUT",
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -137,6 +138,10 @@ export class ListDevicesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkLink",
+        operation: "ListDevices",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

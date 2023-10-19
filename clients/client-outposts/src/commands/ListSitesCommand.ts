@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListSitesInput, ListSitesOutput } from "../models/models_0";
@@ -36,7 +37,8 @@ export interface ListSitesCommandOutput extends ListSitesOutput, __MetadataBeare
 
 /**
  * @public
- * <p>Lists the Outpost sites for your Amazon Web Services account. Use filters to return specific results.</p>
+ * <p>Lists the Outpost sites for your Amazon Web Services account. Use filters to return specific
+ *       results.</p>
  *          <p>Use filters to return specific results. If you specify multiple filters, the results include only the resources that match
  *  all of the specified filters. For a filter where you can specify multiple values, the results include
  *  items that match any of the values that you specify for the filter.</p>
@@ -161,6 +163,10 @@ export class ListSitesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OutpostsOlafService",
+        operation: "ListSites",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

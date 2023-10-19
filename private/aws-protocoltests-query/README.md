@@ -23,16 +23,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `QueryProtocolClient` and
-the commands you need, for example `DatetimeOffsetsCommand`:
+the commands you need, for example `QueryListsCommand`:
 
 ```js
 // ES5 example
-const { QueryProtocolClient, DatetimeOffsetsCommand } = require("@aws-sdk/aws-protocoltests-query");
+const { QueryProtocolClient, QueryListsCommand } = require("@aws-sdk/aws-protocoltests-query");
 ```
 
 ```ts
 // ES6+ example
-import { QueryProtocolClient, DatetimeOffsetsCommand } from "@aws-sdk/aws-protocoltests-query";
+import { QueryProtocolClient, QueryListsCommand } from "@aws-sdk/aws-protocoltests-query";
 ```
 
 ### Usage
@@ -51,7 +51,7 @@ const client = new QueryProtocolClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new DatetimeOffsetsCommand(params);
+const command = new QueryListsCommand(params);
 ```
 
 #### Async/await
@@ -130,7 +130,7 @@ const client = new AWS.QueryProtocol({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.datetimeOffsets(params);
+  const data = await client.queryLists(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -138,7 +138,7 @@ try {
 
 // Promises.
 client
-  .datetimeOffsets(params)
+  .queryLists(params)
   .then((data) => {
     // process data.
   })
@@ -147,7 +147,7 @@ client
   });
 
 // callbacks.
-client.datetimeOffsets(params, (err, data) => {
+client.queryLists(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -1021,6 +1021,14 @@ HttpPayloadWithStructure
 </details>
 <details>
 <summary>
+HttpPayloadWithUnion
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/httppayloadwithunioncommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/httppayloadwithunioncommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/httppayloadwithunioncommandoutput.html)
+
+</details>
+<details>
+<summary>
 HttpPrefixHeaders
 </summary>
 
@@ -1877,6 +1885,14 @@ HttpPayloadWithStructure
 </details>
 <details>
 <summary>
+HttpPayloadWithUnion
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/httppayloadwithunioncommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/httppayloadwithunioncommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/httppayloadwithunioncommandoutput.html)
+
+</details>
+<details>
+<summary>
 HttpPayloadWithXmlName
 </summary>
 
@@ -2161,6 +2177,14 @@ XmlMapsXmlName
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/xmlmapsxmlnamecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/xmlmapsxmlnamecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/xmlmapsxmlnamecommandoutput.html)
+
+</details>
+<details>
+<summary>
+XmlMapWithXmlNamespace
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/classes/xmlmapwithxmlnamespacecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/xmlmapwithxmlnamespacecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-query-protocol/interfaces/xmlmapwithxmlnamespacecommandoutput.html)
 
 </details>
 <details>

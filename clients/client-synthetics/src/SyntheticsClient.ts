@@ -259,6 +259,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 
@@ -331,7 +333,6 @@ export interface SyntheticsClientResolvedConfig extends SyntheticsClientResolved
  *          information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ServiceLens.html">Using ServiceLens to Monitor
  *             the Health of Your Applications</a> in the <i>Amazon CloudWatch User
  *             Guide</i>.</p>
- *
  *          <p>Before you create and manage canaries, be aware of the security considerations. For more
  *          information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/servicelens_canaries_security.html">Security
  *             Considerations for Synthetics Canaries</a>.</p>

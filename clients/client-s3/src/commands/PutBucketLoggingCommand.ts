@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { PutBucketLoggingRequest } from "../models/models_0";
@@ -55,15 +56,15 @@ export interface PutBucketLoggingCommandOutput extends __MetadataBearer {}
  *          <dl>
  *             <dt>Grantee Values</dt>
  *             <dd>
- *                <p>You can specify the person (grantee) to whom you're assigning access rights (by using
- *                   request elements) in the following ways:</p>
+ *                <p>You can specify the person (grantee) to whom you're assigning access rights (by
+ *                   using request elements) in the following ways:</p>
  *                <ul>
  *                   <li>
  *                      <p>By the person's ID:</p>
  *                      <p>
  *                         <code><Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- *                         xsi:type="CanonicalUser"><ID><>ID<></ID><DisplayName><>GranteesEmail<></DisplayName>
- *                         </Grantee></code>
+ *                            xsi:type="CanonicalUser"><ID><>ID<></ID><DisplayName><>GranteesEmail<></DisplayName>
+ *                            </Grantee></code>
  *                      </p>
  *                      <p>
  *                         <code>DisplayName</code> is optional and ignored in the request.</p>
@@ -72,23 +73,25 @@ export interface PutBucketLoggingCommandOutput extends __MetadataBearer {}
  *                      <p>By Email address:</p>
  *                      <p>
  *                         <code> <Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- *                         xsi:type="AmazonCustomerByEmail"><EmailAddress><>Grantees@email.com<></EmailAddress></Grantee></code>
+ *                            xsi:type="AmazonCustomerByEmail"><EmailAddress><>Grantees@email.com<></EmailAddress></Grantee></code>
  *                      </p>
- *                      <p>The grantee is resolved to the <code>CanonicalUser</code> and, in a response to a <code>GETObjectAcl</code>
- *                          request, appears as the CanonicalUser.</p>
+ *                      <p>The grantee is resolved to the <code>CanonicalUser</code> and, in a
+ *                         response to a <code>GETObjectAcl</code> request, appears as the
+ *                         CanonicalUser.</p>
  *                   </li>
  *                   <li>
  *                      <p>By URI:</p>
  *                      <p>
  *                         <code><Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- *                         xsi:type="Group"><URI><>http://acs.amazonaws.com/groups/global/AuthenticatedUsers<></URI></Grantee></code>
+ *                            xsi:type="Group"><URI><>http://acs.amazonaws.com/groups/global/AuthenticatedUsers<></URI></Grantee></code>
  *                      </p>
  *                   </li>
  *                </ul>
  *             </dd>
  *          </dl>
- *          <p>To enable logging, you use <code>LoggingEnabled</code> and its children request elements. To disable
- *          logging, you use an empty <code>BucketLoggingStatus</code> request element:</p>
+ *          <p>To enable logging, you use <code>LoggingEnabled</code> and its children request
+ *          elements. To disable logging, you use an empty <code>BucketLoggingStatus</code> request
+ *          element:</p>
  *          <p>
  *             <code><BucketLoggingStatus xmlns="http://doc.s3.amazonaws.com/2006-03-01"
  *             /></code>
@@ -255,6 +258,10 @@ export class PutBucketLoggingCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonS3",
+        operation: "PutBucketLogging",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

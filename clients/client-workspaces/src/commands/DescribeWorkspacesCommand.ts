@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeWorkspacesRequest, DescribeWorkspacesResult } from "../models/models_0";
@@ -82,6 +83,7 @@ export interface DescribeWorkspacesCommandOutput extends DescribeWorkspacesResul
  * //         Protocols: [ // ProtocolList
  * //           "PCOIP" || "WSP",
  * //         ],
+ * //         OperatingSystemName: "AMAZON_LINUX_2" || "UBUNTU_18_04" || "UBUNTU_20_04" || "UBUNTU_22_04" || "UNKNOWN" || "WINDOWS_10" || "WINDOWS_11" || "WINDOWS_7" || "WINDOWS_SERVER_2016" || "WINDOWS_SERVER_2019" || "WINDOWS_SERVER_2022",
  * //       },
  * //       ModificationStates: [ // ModificationStateList
  * //         { // ModificationState
@@ -170,6 +172,10 @@ export class DescribeWorkspacesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkspacesService",
+        operation: "DescribeWorkspaces",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

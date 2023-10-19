@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeCanariesLastRunRequest, DescribeCanariesLastRunResponse } from "../models/models_0";
@@ -37,7 +38,6 @@ export interface DescribeCanariesLastRunCommandOutput extends DescribeCanariesLa
 /**
  * @public
  * <p>Use this operation to see information from the most recent run of each canary that you have created.</p>
- *
  *          <p>This operation supports resource-level authorization using an IAM policy and
  *          the <code>Names</code> parameter. If you specify the <code>Names</code> parameter, the operation is successful only if you have authorization to view
  *          all the canaries that you specify in your request. If you do not have permission to view any of
@@ -69,9 +69,9 @@ export interface DescribeCanariesLastRunCommandOutput extends DescribeCanariesLa
  * //         Id: "STRING_VALUE",
  * //         Name: "STRING_VALUE",
  * //         Status: { // CanaryRunStatus
- * //           State: "STRING_VALUE",
+ * //           State: "RUNNING" || "PASSED" || "FAILED",
  * //           StateReason: "STRING_VALUE",
- * //           StateReasonCode: "STRING_VALUE",
+ * //           StateReasonCode: "CANARY_FAILURE" || "EXECUTION_FAILURE",
  * //         },
  * //         Timeline: { // CanaryRunTimeline
  * //           Started: new Date("TIMESTAMP"),
@@ -152,6 +152,10 @@ export class DescribeCanariesLastRunCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Synthetics",
+        operation: "DescribeCanariesLastRun",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

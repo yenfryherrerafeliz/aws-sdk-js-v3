@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { BackupStorageClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../BackupStorageClient";
@@ -57,7 +58,7 @@ export interface ListChunksCommandOutput extends ListChunksOutput, __MetadataBea
  * //       Index: Number("long"), // required
  * //       Length: Number("long"), // required
  * //       Checksum: "STRING_VALUE", // required
- * //       ChecksumAlgorithm: "STRING_VALUE", // required
+ * //       ChecksumAlgorithm: "SHA256", // required
  * //       ChunkToken: "STRING_VALUE", // required
  * //     },
  * //   ],
@@ -142,6 +143,10 @@ export class ListChunksCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CryoStorageFrontendService",
+        operation: "ListChunks",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

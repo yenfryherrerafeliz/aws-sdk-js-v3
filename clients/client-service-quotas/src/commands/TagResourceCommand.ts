@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { TagResourceRequest, TagResourceResponse } from "../models/models_0";
@@ -36,8 +37,8 @@ export interface TagResourceCommandOutput extends TagResourceResponse, __Metadat
 
 /**
  * @public
- * <p>Adds tags to the specified applied quota. You can include one or more tags to add to the
- *       quota.</p>
+ * <p>Adds tags to the specified applied quota. You can include one or more tags to add to
+ *             the quota.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -81,13 +82,13 @@ export interface TagResourceCommandOutput extends TagResourceResponse, __Metadat
  *  <p>The specified tag is a reserved word and cannot be used.</p>
  *
  * @throws {@link TooManyRequestsException} (client fault)
- *  <p>Due to throttling, the request was denied. Slow down the rate of request calls, or request
- *       an increase for this quota.</p>
+ *  <p>Due to throttling, the request was denied. Slow down the rate of request calls, or
+ *             request an increase for this quota.</p>
  *
  * @throws {@link TooManyTagsException} (client fault)
  *  <p>You've exceeded the number of tags allowed for a resource. For more information, see
- *         <a href="https://docs.aws.amazon.com/servicequotas/latest/userguide/sq-tagging.html#sq-tagging-restrictions">Tag
- *         restrictions</a> in the <i>Service Quotas User Guide</i>.</p>
+ *                 <a href="https://docs.aws.amazon.com/servicequotas/latest/userguide/sq-tagging.html#sq-tagging-restrictions">Tag
+ *                 restrictions</a> in the <i>Service Quotas User Guide</i>.</p>
  *
  * @throws {@link ServiceQuotasServiceException}
  * <p>Base exception class for all service exceptions from ServiceQuotas service.</p>
@@ -141,6 +142,10 @@ export class TagResourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ServiceQuotasV20190624",
+        operation: "TagResource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

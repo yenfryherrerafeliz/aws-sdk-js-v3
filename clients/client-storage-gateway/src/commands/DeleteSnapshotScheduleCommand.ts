@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DeleteSnapshotScheduleInput, DeleteSnapshotScheduleOutput } from "../models/models_0";
@@ -37,16 +38,13 @@ export interface DeleteSnapshotScheduleCommandOutput extends DeleteSnapshotSched
 /**
  * @public
  * <p>Deletes a snapshot of a volume.</p>
- *
  *          <p>You can take snapshots of your gateway volumes on a scheduled or ad hoc basis. This API
  *          action enables you to delete a snapshot schedule for a volume. For more information, see
  *             <a href="https://docs.aws.amazon.com/storagegateway/latest/userguide/backing-up-volumes.html">Backing up your
  *             volumes</a>. In the <code>DeleteSnapshotSchedule</code> request, you identify the
  *          volume by providing its Amazon Resource Name (ARN). This operation is only supported for
  *          cached volume gateway types.</p>
- *
  *          <note>
- *
  *             <p>To list or delete a snapshot, you must use the Amazon EC2 API. For more information,
  *             go to <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSnapshots.html">DescribeSnapshots</a>
  *             in the <i>Amazon Elastic Compute Cloud API Reference</i>.</p>
@@ -152,6 +150,10 @@ export class DeleteSnapshotScheduleCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "DeleteSnapshotSchedule",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

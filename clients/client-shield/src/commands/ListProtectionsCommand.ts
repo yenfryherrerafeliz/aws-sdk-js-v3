@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListProtectionsRequest, ListProtectionsResponse } from "../models/models_0";
@@ -55,7 +56,7 @@ export interface ListProtectionsCommandOutput extends ListProtectionsResponse, _
  *       "STRING_VALUE",
  *     ],
  *     ResourceTypes: [ // ProtectedResourceTypeFilters
- *       "STRING_VALUE",
+ *       "CLOUDFRONT_DISTRIBUTION" || "ROUTE_53_HOSTED_ZONE" || "ELASTIC_IP_ALLOCATION" || "CLASSIC_LOAD_BALANCER" || "APPLICATION_LOAD_BALANCER" || "GLOBAL_ACCELERATOR",
  *     ],
  *   },
  * };
@@ -72,7 +73,7 @@ export interface ListProtectionsCommandOutput extends ListProtectionsResponse, _
  * //       ],
  * //       ProtectionArn: "STRING_VALUE",
  * //       ApplicationLayerAutomaticResponseConfiguration: { // ApplicationLayerAutomaticResponseConfiguration
- * //         Status: "STRING_VALUE", // required
+ * //         Status: "ENABLED" || "DISABLED", // required
  * //         Action: { // ResponseAction
  * //           Block: {},
  * //           Count: {},
@@ -154,6 +155,10 @@ export class ListProtectionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSShield_20160616",
+        operation: "ListProtections",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

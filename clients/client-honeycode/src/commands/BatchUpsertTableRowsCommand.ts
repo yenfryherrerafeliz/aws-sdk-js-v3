@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { HoneycodeClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../HoneycodeClient";
@@ -47,7 +48,7 @@ export interface BatchUpsertTableRowsCommandOutput extends BatchUpsertTableRowsR
  *             in the request. If no matching rows are found, a new row is added at the end of the table and the cells in
  *             that row are set to the new values specified in the request.
  *         </p>
- *         <p>
+ *          <p>
  *             You can specify the values to set in some or all of the columns in the table for the
  *             matching or newly appended rows. If a column is not explicitly specified for a particular row, then that
  *             column will not be updated for that row. To clear out the data in a specific cell, you need to set the value
@@ -89,7 +90,7 @@ export interface BatchUpsertTableRowsCommandOutput extends BatchUpsertTableRowsR
  * //       rowIds: [ // RowIdList // required
  * //         "STRING_VALUE",
  * //       ],
- * //       upsertAction: "STRING_VALUE", // required
+ * //       upsertAction: "UPDATED" || "APPENDED", // required
  * //     },
  * //   },
  * //   workbookCursor: Number("long"), // required
@@ -194,6 +195,10 @@ export class BatchUpsertTableRowsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: BatchUpsertTableRowsRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SheetsPublicApiService",
+        operation: "BatchUpsertTableRows",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

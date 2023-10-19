@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { SwitchoverReadReplicaMessage, SwitchoverReadReplicaResult } from "../models/models_1";
@@ -142,6 +143,7 @@ export interface SwitchoverReadReplicaCommandOutput extends SwitchoverReadReplic
  * //       ResumeFullAutomationModeTime: new Date("TIMESTAMP"),
  * //       StorageThroughput: Number("int"),
  * //       Engine: "STRING_VALUE",
+ * //       DedicatedLogVolume: true || false,
  * //     },
  * //     LatestRestorableTime: new Date("TIMESTAMP"),
  * //     MultiAZ: true || false,
@@ -267,6 +269,8 @@ export interface SwitchoverReadReplicaCommandOutput extends SwitchoverReadReplic
  * //     },
  * //     ReadReplicaSourceDBClusterIdentifier: "STRING_VALUE",
  * //     PercentProgress: "STRING_VALUE",
+ * //     DedicatedLogVolume: true || false,
+ * //     IsStorageConfigUpgradeAvailable: true || false,
  * //   },
  * // };
  *
@@ -339,6 +343,10 @@ export class SwitchoverReadReplicaCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "SwitchoverReadReplica",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

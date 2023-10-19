@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MachineLearningClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MachineLearningClient";
@@ -58,19 +59,19 @@ export interface GetMLModelCommandOutput extends GetMLModelOutput, __MetadataBea
  * //   CreatedAt: new Date("TIMESTAMP"),
  * //   LastUpdatedAt: new Date("TIMESTAMP"),
  * //   Name: "STRING_VALUE",
- * //   Status: "STRING_VALUE",
+ * //   Status: "PENDING" || "INPROGRESS" || "FAILED" || "COMPLETED" || "DELETED",
  * //   SizeInBytes: Number("long"),
  * //   EndpointInfo: { // RealtimeEndpointInfo
  * //     PeakRequestsPerSecond: Number("int"),
  * //     CreatedAt: new Date("TIMESTAMP"),
  * //     EndpointUrl: "STRING_VALUE",
- * //     EndpointStatus: "STRING_VALUE",
+ * //     EndpointStatus: "NONE" || "READY" || "UPDATING" || "FAILED",
  * //   },
  * //   TrainingParameters: { // TrainingParameters
  * //     "<keys>": "STRING_VALUE",
  * //   },
  * //   InputDataLocationS3: "STRING_VALUE",
- * //   MLModelType: "STRING_VALUE",
+ * //   MLModelType: "REGRESSION" || "BINARY" || "MULTICLASS",
  * //   ScoreThreshold: Number("float"),
  * //   ScoreThresholdLastUpdatedAt: new Date("TIMESTAMP"),
  * //   LogUri: "STRING_VALUE",
@@ -151,6 +152,10 @@ export class GetMLModelCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonML_20141212",
+        operation: "GetMLModel",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

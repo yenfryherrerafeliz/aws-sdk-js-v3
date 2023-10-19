@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutMetricsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutMetricsClient";
@@ -63,7 +64,7 @@ export interface DescribeAnomalyDetectionExecutionsCommandOutput
  * //   ExecutionList: [ // ExecutionList
  * //     { // ExecutionStatus
  * //       Timestamp: "STRING_VALUE",
- * //       Status: "STRING_VALUE",
+ * //       Status: "PENDING" || "IN_PROGRESS" || "COMPLETED" || "FAILED" || "FAILED_TO_SCHEDULE",
  * //       FailureReason: "STRING_VALUE",
  * //     },
  * //   ],
@@ -148,6 +149,10 @@ export class DescribeAnomalyDetectionExecutionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutMetrics",
+        operation: "DescribeAnomalyDetectionExecutions",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

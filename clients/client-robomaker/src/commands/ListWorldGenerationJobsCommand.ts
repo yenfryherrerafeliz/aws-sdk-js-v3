@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListWorldGenerationJobsRequest, ListWorldGenerationJobsResponse } from "../models/models_0";
@@ -63,7 +64,7 @@ export interface ListWorldGenerationJobsCommandOutput extends ListWorldGeneratio
  * //       arn: "STRING_VALUE",
  * //       template: "STRING_VALUE",
  * //       createdAt: new Date("TIMESTAMP"),
- * //       status: "STRING_VALUE",
+ * //       status: "Pending" || "Running" || "Completed" || "Failed" || "PartialFailed" || "Canceling" || "Canceled",
  * //       worldCount: { // WorldCount
  * //         floorplanCount: Number("int"),
  * //         interiorCountPerFloorplan: Number("int"),
@@ -147,6 +148,10 @@ export class ListWorldGenerationJobsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "ListWorldGenerationJobs",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

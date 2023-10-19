@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -76,6 +77,8 @@ export interface DeleteNamespaceCommandOutput extends DeleteNamespaceResponse, _
  * //     ],
  * //     status: "STRING_VALUE",
  * //     creationDate: new Date("TIMESTAMP"),
+ * //     adminPasswordSecretArn: "STRING_VALUE",
+ * //     adminPasswordSecretKmsKeyId: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -153,6 +156,10 @@ export class DeleteNamespaceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: DeleteNamespaceResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RedshiftServerless",
+        operation: "DeleteNamespace",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

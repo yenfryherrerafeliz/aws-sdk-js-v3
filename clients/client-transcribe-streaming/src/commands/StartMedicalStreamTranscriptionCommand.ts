@@ -14,6 +14,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -56,25 +57,25 @@ export interface StartMedicalStreamTranscriptionCommandOutput
  * <p>Starts a bidirectional HTTP/2 or WebSocket stream where audio is streamed to
  *             Amazon Transcribe Medical and the transcription results are streamed to your
  *             application.</p>
- *         <p>The following parameters are required:</p>
- *         <ul>
+ *          <p>The following parameters are required:</p>
+ *          <ul>
  *             <li>
- *                 <p>
+ *                <p>
  *                   <code>language-code</code>
  *                </p>
  *             </li>
  *             <li>
- *                 <p>
+ *                <p>
  *                   <code>media-encoding</code>
  *                </p>
  *             </li>
  *             <li>
- *                 <p>
+ *                <p>
  *                   <code>sample-rate</code>
  *                </p>
  *             </li>
  *          </ul>
- *         <p>For more information on streaming with Amazon Transcribe Medical, see
+ *          <p>For more information on streaming with Amazon Transcribe Medical, see
  *             <a href="https://docs.aws.amazon.com/transcribe/latest/dg/streaming.html">Transcribing
  *                 streaming audio</a>.</p>
  * @example
@@ -270,6 +271,10 @@ export class StartMedicalStreamTranscriptionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: StartMedicalStreamTranscriptionRequestFilterSensitiveLog,
       outputFilterSensitiveLog: StartMedicalStreamTranscriptionResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Transcribe",
+        operation: "StartMedicalStreamTranscription",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

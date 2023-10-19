@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { KinesisVideoClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KinesisVideoClient";
@@ -41,7 +42,10 @@ export interface UpdateMediaStorageConfigurationCommandOutput
 
 /**
  * @public
- * <p>Associates a <code>SignalingChannel</code> to a stream to store the media. There are two signaling modes that
+ * <important>
+ *             <p>This API is related to <a href="https://docs.aws.amazon.com/kinesisvideostreams-webrtc-dg/latest/devguide/webrtc-ingestion.html">WebRTC Ingestion</a> and is only available in the <code>us-west-2</code> region.</p>
+ *          </important>
+ *          <p>Associates a <code>SignalingChannel</code> to a stream to store the media. There are two signaling modes that
  *             can specified :</p>
  *          <ul>
  *             <li>
@@ -174,6 +178,10 @@ export class UpdateMediaStorageConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "KinesisVideo_20170930",
+        operation: "UpdateMediaStorageConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

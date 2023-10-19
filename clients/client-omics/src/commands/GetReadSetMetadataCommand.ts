@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetReadSetMetadataRequest, GetReadSetMetadataResponse } from "../models/models_0";
@@ -86,6 +87,11 @@ export interface GetReadSetMetadataCommandOutput extends GetReadSetMetadataRespo
  * //   },
  * //   statusMessage: "STRING_VALUE",
  * //   creationType: "STRING_VALUE",
+ * //   etag: { // ETag
+ * //     algorithm: "STRING_VALUE",
+ * //     source1: "STRING_VALUE",
+ * //     source2: "STRING_VALUE",
+ * //   },
  * // };
  *
  * ```
@@ -168,6 +174,10 @@ export class GetReadSetMetadataCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Omics",
+        operation: "GetReadSetMetadata",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

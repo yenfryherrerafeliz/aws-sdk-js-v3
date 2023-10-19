@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutMetricsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutMetricsClient";
@@ -56,7 +57,7 @@ export interface DescribeAlertCommandOutput extends DescribeAlertResponse, __Met
  * //       SNSConfiguration: { // SNSConfiguration
  * //         RoleArn: "STRING_VALUE", // required
  * //         SnsTopicArn: "STRING_VALUE", // required
- * //         SnsFormat: "STRING_VALUE",
+ * //         SnsFormat: "LONG_TEXT" || "SHORT_TEXT" || "JSON",
  * //       },
  * //       LambdaConfiguration: { // LambdaConfiguration
  * //         RoleArn: "STRING_VALUE", // required
@@ -68,8 +69,8 @@ export interface DescribeAlertCommandOutput extends DescribeAlertResponse, __Met
  * //     AnomalyDetectorArn: "STRING_VALUE",
  * //     AlertName: "STRING_VALUE",
  * //     AlertSensitivityThreshold: Number("int"),
- * //     AlertType: "STRING_VALUE",
- * //     AlertStatus: "STRING_VALUE",
+ * //     AlertType: "SNS" || "LAMBDA",
+ * //     AlertStatus: "ACTIVE" || "INACTIVE",
  * //     LastModificationTime: new Date("TIMESTAMP"),
  * //     CreationTime: new Date("TIMESTAMP"),
  * //     AlertFilters: { // AlertFilters
@@ -164,6 +165,10 @@ export class DescribeAlertCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutMetrics",
+        operation: "DescribeAlert",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

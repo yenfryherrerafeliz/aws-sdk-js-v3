@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -44,7 +45,7 @@ export interface DisassociateUserFromPermissionGroupCommandOutput
 
 /**
  * @public
- * <p>Removes a user account from a permission group.</p>
+ * <p>Removes a user from a permission group.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -143,6 +144,10 @@ export class DisassociateUserFromPermissionGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "DisassociateUserFromPermissionGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

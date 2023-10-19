@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DataSyncClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DataSyncClient";
@@ -36,9 +37,9 @@ export interface CreateTaskCommandOutput extends CreateTaskResponse, __MetadataB
 
 /**
  * @public
- * <p>Configures a task, which defines where and how DataSync transfers your
+ * <p>Configures a transfer task, which defines where and how DataSync moves your
  *       data.</p>
- *          <p>A task includes a source location, a destination location, and the preferences for how and
+ *          <p>A task includes a source location, destination location, and the options for how and
  *       when you want to transfer your data (such as bandwidth limits, scheduling, among other
  *       options).</p>
  *          <important>
@@ -96,6 +97,32 @@ export interface CreateTaskCommandOutput extends CreateTaskResponse, __MetadataB
  *       Value: "STRING_VALUE",
  *     },
  *   ],
+ *   TaskReportConfig: { // TaskReportConfig
+ *     Destination: { // ReportDestination
+ *       S3: { // ReportDestinationS3
+ *         Subdirectory: "STRING_VALUE",
+ *         S3BucketArn: "STRING_VALUE", // required
+ *         BucketAccessRoleArn: "STRING_VALUE", // required
+ *       },
+ *     },
+ *     OutputType: "SUMMARY_ONLY" || "STANDARD",
+ *     ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *     ObjectVersionIds: "INCLUDE" || "NONE",
+ *     Overrides: { // ReportOverrides
+ *       Transferred: { // ReportOverride
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *       Verified: {
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *       Deleted: {
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *       Skipped: {
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *     },
+ *   },
  * };
  * const command = new CreateTaskCommand(input);
  * const response = await client.send(command);
@@ -170,6 +197,10 @@ export class CreateTaskCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "FmrsService",
+        operation: "CreateTask",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

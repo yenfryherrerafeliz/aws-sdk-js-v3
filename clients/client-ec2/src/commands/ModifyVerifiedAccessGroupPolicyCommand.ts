@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
@@ -50,16 +51,24 @@ export interface ModifyVerifiedAccessGroupPolicyCommandOutput
  * const client = new EC2Client(config);
  * const input = { // ModifyVerifiedAccessGroupPolicyRequest
  *   VerifiedAccessGroupId: "STRING_VALUE", // required
- *   PolicyEnabled: true || false, // required
+ *   PolicyEnabled: true || false,
  *   PolicyDocument: "STRING_VALUE",
  *   ClientToken: "STRING_VALUE",
  *   DryRun: true || false,
+ *   SseSpecification: { // VerifiedAccessSseSpecificationRequest
+ *     CustomerManagedKeyEnabled: true || false,
+ *     KmsKeyArn: "STRING_VALUE",
+ *   },
  * };
  * const command = new ModifyVerifiedAccessGroupPolicyCommand(input);
  * const response = await client.send(command);
  * // { // ModifyVerifiedAccessGroupPolicyResult
  * //   PolicyEnabled: true || false,
  * //   PolicyDocument: "STRING_VALUE",
+ * //   SseSpecification: { // VerifiedAccessSseSpecificationResponse
+ * //     CustomerManagedKeyEnabled: true || false,
+ * //     KmsKeyArn: "STRING_VALUE",
+ * //   },
  * // };
  *
  * ```
@@ -124,6 +133,10 @@ export class ModifyVerifiedAccessGroupPolicyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2",
+        operation: "ModifyVerifiedAccessGroupPolicy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

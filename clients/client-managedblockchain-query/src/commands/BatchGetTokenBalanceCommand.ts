@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -40,7 +41,7 @@ export interface BatchGetTokenBalanceCommandOutput extends BatchGetTokenBalanceO
 
 /**
  * @public
- * <p>Gets the token balance for a batch of tokens by using the <code>GetTokenBalance</code>
+ * <p>Gets the token balance for a batch of tokens by using the <code>BatchGetTokenBalance</code>
  *          action for every token in the request.</p>
  *          <note>
  *             <p>Only the native tokens BTC,ETH, and the ERC-20,
@@ -194,6 +195,10 @@ export class BatchGetTokenBalanceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "TietonChainQueryService",
+        operation: "BatchGetTokenBalance",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

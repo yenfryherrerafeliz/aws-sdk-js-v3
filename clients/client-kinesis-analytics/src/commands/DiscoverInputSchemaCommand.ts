@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { KinesisAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KinesisAnalyticsClient";
@@ -61,7 +62,7 @@ export interface DiscoverInputSchemaCommandOutput extends DiscoverInputSchemaRes
  *   ResourceARN: "STRING_VALUE",
  *   RoleARN: "STRING_VALUE",
  *   InputStartingPositionConfiguration: { // InputStartingPositionConfiguration
- *     InputStartingPosition: "STRING_VALUE",
+ *     InputStartingPosition: "NOW" || "TRIM_HORIZON" || "LAST_STOPPED_POINT",
  *   },
  *   S3Configuration: { // S3Configuration
  *     RoleARN: "STRING_VALUE", // required
@@ -80,7 +81,7 @@ export interface DiscoverInputSchemaCommandOutput extends DiscoverInputSchemaRes
  * // { // DiscoverInputSchemaResponse
  * //   InputSchema: { // SourceSchema
  * //     RecordFormat: { // RecordFormat
- * //       RecordFormatType: "STRING_VALUE", // required
+ * //       RecordFormatType: "JSON" || "CSV", // required
  * //       MappingParameters: { // MappingParameters
  * //         JSONMappingParameters: { // JSONMappingParameters
  * //           RecordRowPath: "STRING_VALUE", // required
@@ -192,6 +193,10 @@ export class DiscoverInputSchemaCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "KinesisAnalytics_20150814",
+        operation: "DiscoverInputSchema",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

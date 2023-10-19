@@ -8,11 +8,9 @@ AWS SDK for JavaScript Rbin Client for Node.js, Browser and React Native.
 
 <p>This is the <i>Recycle Bin API Reference</i>. This documentation provides
 descriptions and syntax for each of the actions and data types in Recycle Bin.</p>
-
 <p>Recycle Bin is a resource recovery feature that enables you to restore accidentally
 deleted snapshots and EBS-backed AMIs. When using Recycle Bin, if your resources are
 deleted, they are retained in the Recycle Bin for a time period that you specify.</p>
-
 <p>You can restore a resource from the Recycle Bin at any time before its retention period
 expires. After you restore a resource from the Recycle Bin, the resource is removed from the
 Recycle Bin, and you can then use it in the same way you use any other resource of that type
@@ -36,16 +34,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `RbinClient` and
-the commands you need, for example `CreateRuleCommand`:
+the commands you need, for example `ListRulesCommand`:
 
 ```js
 // ES5 example
-const { RbinClient, CreateRuleCommand } = require("@aws-sdk/client-rbin");
+const { RbinClient, ListRulesCommand } = require("@aws-sdk/client-rbin");
 ```
 
 ```ts
 // ES6+ example
-import { RbinClient, CreateRuleCommand } from "@aws-sdk/client-rbin";
+import { RbinClient, ListRulesCommand } from "@aws-sdk/client-rbin";
 ```
 
 ### Usage
@@ -64,7 +62,7 @@ const client = new RbinClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new CreateRuleCommand(params);
+const command = new ListRulesCommand(params);
 ```
 
 #### Async/await
@@ -143,7 +141,7 @@ const client = new AWS.Rbin({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.createRule(params);
+  const data = await client.listRules(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -151,7 +149,7 @@ try {
 
 // Promises.
 client
-  .createRule(params)
+  .listRules(params)
   .then((data) => {
     // process data.
   })
@@ -160,7 +158,7 @@ client
   });
 
 // callbacks.
-client.createRule(params, (err, data) => {
+client.listRules(params, (err, data) => {
   // process err and data.
 });
 ```

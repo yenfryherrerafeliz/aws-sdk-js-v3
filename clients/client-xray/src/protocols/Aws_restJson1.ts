@@ -1,4 +1,5 @@
 // smithy-typescript generated code
+import { awsExpectUnion as __expectUnion } from "@aws-sdk/core";
 import { HttpRequest as __HttpRequest, HttpResponse as __HttpResponse } from "@smithy/protocol-http";
 import {
   _json,
@@ -11,7 +12,6 @@ import {
   expectNumber as __expectNumber,
   expectObject as __expectObject,
   expectString as __expectString,
-  expectUnion as __expectUnion,
   limitedParseDouble as __limitedParseDouble,
   map,
   parseEpochTimestamp as __parseEpochTimestamp,
@@ -2917,9 +2917,9 @@ const de_Annotations = (output: any, context: __SerdeContext): Record<string, Va
     if (value === null) {
       return acc;
     }
-    acc[key] = de_ValuesWithServiceIds(value, context);
+    acc[key as string] = de_ValuesWithServiceIds(value, context);
     return acc;
-  }, {});
+  }, {} as Record<string, ValueWithServiceIds[]>);
 };
 
 /**
@@ -3477,6 +3477,7 @@ const de_TraceSummary = (output: any, context: __SerdeContext): TraceSummary => 
     ResponseTimeRootCauses: (_: any) => de_ResponseTimeRootCauses(_, context),
     Revision: __expectInt32,
     ServiceIds: _json,
+    StartTime: (_: any) => __expectNonNull(__parseEpochTimestamp(__expectNumber(_))),
     Users: _json,
   }) as any;
 };

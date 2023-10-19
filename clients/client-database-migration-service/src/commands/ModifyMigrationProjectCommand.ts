@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -137,6 +138,69 @@ export interface ModifyMigrationProjectCommandOutput extends ModifyMigrationProj
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
  *
+ * @example Modify Migration Project
+ * ```javascript
+ * // Modifies the specified migration project using the provided parameters.
+ * const input = {
+ *   "Description": "description",
+ *   "InstanceProfileIdentifier": "my-instance-profile",
+ *   "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
+ *   "MigrationProjectName": "new-name",
+ *   "SchemaConversionApplicationAttributes": {
+ *     "S3BucketPath": "arn:aws:s3:::myuser-bucket",
+ *     "S3BucketRoleArn": "arn:aws:iam::012345678901:role/Admin"
+ *   },
+ *   "SourceDataProviderDescriptors": [
+ *     {
+ *       "DataProviderIdentifier": "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
+ *       "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/myuser-admin-access",
+ *       "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myorg/myuser/ALL.SOURCE.ORACLE_12-A1B2C3"
+ *     }
+ *   ],
+ *   "TargetDataProviderDescriptors": [
+ *     {
+ *       "DataProviderIdentifier": "arn:aws:dms:us-east-1:012345678901:data-provider:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345",
+ *       "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/myuser-admin-access",
+ *       "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:myorg/myuser/TARGET.postgresql-A1B2C3"
+ *     }
+ *   ]
+ * };
+ * const command = new ModifyMigrationProjectCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "MigrationProject": {
+ *     "InstanceProfileArn": "arn:aws:dms:us-east-1:012345678901:instance-profile:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+ *     "InstanceProfileName": "my-instance-profile",
+ *     "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+ *     "MigrationProjectCreationTime": "2023-04-19T11:45:15.805253Z",
+ *     "MigrationProjectName": "my-migration-project",
+ *     "SchemaConversionApplicationAttributes": {
+ *       "S3BucketPath": "my-s3-bucket/my_folder",
+ *       "S3BucketRoleArn": "arn:aws:iam::012345678901:role/my-s3role"
+ *     },
+ *     "SourceDataProviderDescriptors": [
+ *       {
+ *         "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+ *         "DataProviderName": "all-source-oracle-12",
+ *         "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/my-access-role",
+ *         "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:mygroup/myalias/ALL.SOURCE.ORACLE_12-TP5rA9"
+ *       }
+ *     ],
+ *     "TargetDataProviderDescriptors": [
+ *       {
+ *         "DataProviderArn": "arn:aws:dms:us-east-1:012345678901:data-provider:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+ *         "DataProviderName": "my-dataprovider",
+ *         "SecretsManagerAccessRoleArn": "arn:aws:iam::012345678901:role/my-access-role",
+ *         "SecretsManagerSecretId": "arn:aws:secretsmanager:us-east-1:012345678901:secret:mygroup/myalias/TARGET.postgresql-mysecret"
+ *       }
+ *     ]
+ *   }
+ * }
+ * *\/
+ * // example id: modify-migration-project-1689721117475
+ * ```
+ *
  */
 export class ModifyMigrationProjectCommand extends $Command<
   ModifyMigrationProjectCommandInput,
@@ -188,6 +252,10 @@ export class ModifyMigrationProjectCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "ModifyMigrationProject",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

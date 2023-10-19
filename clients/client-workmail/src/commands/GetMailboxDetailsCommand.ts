@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetMailboxDetailsRequest, GetMailboxDetailsResponse } from "../models/models_0";
@@ -65,6 +66,9 @@ export interface GetMailboxDetailsCommandOutput extends GetMailboxDetailsRespons
  * @throws {@link EntityNotFoundException} (client fault)
  *  <p>The identifier supplied for the user, group, or resource does not exist in your
  *          organization.</p>
+ *
+ * @throws {@link InvalidParameterException} (client fault)
+ *  <p>One or more of the input parameters don't match the service's restrictions.</p>
  *
  * @throws {@link OrganizationNotFoundException} (client fault)
  *  <p>An operation received a valid organization identifier that either doesn't belong or
@@ -128,6 +132,10 @@ export class GetMailboxDetailsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkMailService",
+        operation: "GetMailboxDetails",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

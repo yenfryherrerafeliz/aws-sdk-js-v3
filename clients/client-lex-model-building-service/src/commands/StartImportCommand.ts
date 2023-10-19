@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -49,8 +50,8 @@ export interface StartImportCommandOutput extends StartImportResponse, __Metadat
  * const client = new LexModelBuildingServiceClient(config);
  * const input = { // StartImportRequest
  *   payload: "BLOB_VALUE", // required
- *   resourceType: "STRING_VALUE", // required
- *   mergeStrategy: "STRING_VALUE", // required
+ *   resourceType: "BOT" || "INTENT" || "SLOT_TYPE", // required
+ *   mergeStrategy: "OVERWRITE_LATEST" || "FAIL_ON_CONFLICT", // required
  *   tags: [ // TagList
  *     { // Tag
  *       key: "STRING_VALUE", // required
@@ -62,10 +63,10 @@ export interface StartImportCommandOutput extends StartImportResponse, __Metadat
  * const response = await client.send(command);
  * // { // StartImportResponse
  * //   name: "STRING_VALUE",
- * //   resourceType: "STRING_VALUE",
- * //   mergeStrategy: "STRING_VALUE",
+ * //   resourceType: "BOT" || "INTENT" || "SLOT_TYPE",
+ * //   mergeStrategy: "OVERWRITE_LATEST" || "FAIL_ON_CONFLICT",
  * //   importId: "STRING_VALUE",
- * //   importStatus: "STRING_VALUE",
+ * //   importStatus: "IN_PROGRESS" || "COMPLETE" || "FAILED",
  * //   tags: [ // TagList
  * //     { // Tag
  * //       key: "STRING_VALUE", // required
@@ -146,6 +147,10 @@ export class StartImportCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "StartImport",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

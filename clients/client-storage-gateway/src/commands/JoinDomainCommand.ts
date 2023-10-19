@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { JoinDomainInput, JoinDomainInputFilterSensitiveLog, JoinDomainOutput } from "../models/models_0";
@@ -38,6 +39,15 @@ export interface JoinDomainCommandOutput extends JoinDomainOutput, __MetadataBea
  * @public
  * <p>Adds a file gateway to an Active Directory domain. This operation is only supported for
  *          file gateways that support the SMB file protocol.</p>
+ *          <note>
+ *             <p>Joining a domain creates an Active Directory computer account in the default
+ *             organizational unit, using the gateway's <b>Gateway ID</b> as
+ *             the account name (for example, SGW-1234ADE). If your Active Directory environment
+ *             requires that you pre-stage accounts to facilitate the join domain process, you will
+ *             need to create this account ahead of time.</p>
+ *             <p>To create the gateway's computer account in an organizational unit other than the
+ *             default, you must specify the organizational unit when joining the domain.</p>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -59,7 +69,7 @@ export interface JoinDomainCommandOutput extends JoinDomainOutput, __MetadataBea
  * const response = await client.send(command);
  * // { // JoinDomainOutput
  * //   GatewayARN: "STRING_VALUE",
- * //   ActiveDirectoryStatus: "STRING_VALUE",
+ * //   ActiveDirectoryStatus: "ACCESS_DENIED" || "DETACHED" || "JOINED" || "JOINING" || "NETWORK_ERROR" || "TIMEOUT" || "UNKNOWN_ERROR",
  * // };
  *
  * ```
@@ -130,6 +140,10 @@ export class JoinDomainCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: JoinDomainInputFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "JoinDomain",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

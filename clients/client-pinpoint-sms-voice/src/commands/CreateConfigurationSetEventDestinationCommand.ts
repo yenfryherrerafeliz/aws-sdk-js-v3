@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -65,7 +66,7 @@ export interface CreateConfigurationSetEventDestinationCommandOutput
  *       IamRoleArn: "STRING_VALUE",
  *     },
  *     MatchingEventTypes: [ // EventTypes
- *       "STRING_VALUE",
+ *       "INITIATED_CALL" || "RINGING" || "ANSWERED" || "COMPLETED_CALL" || "BUSY" || "FAILED" || "NO_ANSWER",
  *     ],
  *     SnsDestination: { // SnsDestination
  *       TopicArn: "STRING_VALUE",
@@ -157,6 +158,10 @@ export class CreateConfigurationSetEventDestinationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "PinpointSMSVoice",
+        operation: "CreateConfigurationSetEventDestination",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

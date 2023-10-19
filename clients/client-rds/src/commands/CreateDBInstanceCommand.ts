@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateDBInstanceMessage, CreateDBInstanceResult } from "../models/models_0";
@@ -130,6 +131,7 @@ export interface CreateDBInstanceCommandOutput extends CreateDBInstanceResult, _
  *   MasterUserSecretKmsKeyId: "STRING_VALUE",
  *   CACertificateIdentifier: "STRING_VALUE",
  *   DBSystemId: "STRING_VALUE",
+ *   DedicatedLogVolume: true || false,
  * };
  * const command = new CreateDBInstanceCommand(input);
  * const response = await client.send(command);
@@ -226,6 +228,7 @@ export interface CreateDBInstanceCommandOutput extends CreateDBInstanceResult, _
  * //       ResumeFullAutomationModeTime: new Date("TIMESTAMP"),
  * //       StorageThroughput: Number("int"),
  * //       Engine: "STRING_VALUE",
+ * //       DedicatedLogVolume: true || false,
  * //     },
  * //     LatestRestorableTime: new Date("TIMESTAMP"),
  * //     MultiAZ: true || false,
@@ -351,6 +354,8 @@ export interface CreateDBInstanceCommandOutput extends CreateDBInstanceResult, _
  * //     },
  * //     ReadReplicaSourceDBClusterIdentifier: "STRING_VALUE",
  * //     PercentProgress: "STRING_VALUE",
+ * //     DedicatedLogVolume: true || false,
+ * //     IsStorageConfigUpgradeAvailable: true || false,
  * //   },
  * // };
  *
@@ -601,6 +606,10 @@ export class CreateDBInstanceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "CreateDBInstance",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

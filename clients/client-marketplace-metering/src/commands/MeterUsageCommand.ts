@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -42,14 +43,14 @@ export interface MeterUsageCommandOutput extends MeterUsageResult, __MetadataBea
  * @public
  * <p>API to emit metering records. For identical requests, the API is idempotent. It simply
  *             returns the metering record ID.</p>
- *         <p>
+ *          <p>
  *             <code>MeterUsage</code> is authenticated on the buyer's AWS account using credentials
  *             from the EC2 instance, ECS task, or EKS pod.</p>
- *         <p>
+ *          <p>
  *             <code>MeterUsage</code> can optionally include multiple usage allocations, to provide
  *             customers with usage data split into buckets by tags that you define (or allow the
  *             customer to define).</p>
- *         <p>Usage records are expected to be submitted as quickly as possible after the event that
+ *          <p>Usage records are expected to be submitted as quickly as possible after the event that
  *             is being recorded, and are not accepted more than 6 hours after the event.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -128,7 +129,7 @@ export interface MeterUsageCommandOutput extends MeterUsageResult, __MetadataBea
  * @throws {@link TimestampOutOfBoundsException} (client fault)
  *  <p>The <code>timestamp</code> value passed in the <code>UsageRecord</code> is out of
  *             allowed range.</p>
- *         <p>For <code>BatchMeterUsage</code>, if any of the records are outside of the allowed
+ *          <p>For <code>BatchMeterUsage</code>, if any of the records are outside of the allowed
  *             range, the entire batch is not processed. You must remove invalid records and try
  *             again.</p>
  *
@@ -184,6 +185,10 @@ export class MeterUsageCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSMPMeteringService",
+        operation: "MeterUsage",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

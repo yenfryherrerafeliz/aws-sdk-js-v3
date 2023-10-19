@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTThingsGraphClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTThingsGraphClient";
@@ -48,7 +49,7 @@ export interface SearchSystemTemplatesCommandOutput extends SearchSystemTemplate
  * const input = { // SearchSystemTemplatesRequest
  *   filters: [ // SystemTemplateFilters
  *     { // SystemTemplateFilter
- *       name: "STRING_VALUE", // required
+ *       name: "FLOW_TEMPLATE_ID", // required
  *       value: [ // SystemTemplateFilterValues // required
  *         "STRING_VALUE",
  *       ],
@@ -142,6 +143,10 @@ export class SearchSystemTemplatesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotThingsGraphFrontEndService",
+        operation: "SearchSystemTemplates",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -71,6 +72,8 @@ export interface CreateNamespaceCommandOutput extends CreateNamespaceResponse, _
  *       value: "STRING_VALUE", // required
  *     },
  *   ],
+ *   manageAdminPassword: true || false,
+ *   adminPasswordSecretKmsKeyId: "STRING_VALUE",
  * };
  * const command = new CreateNamespaceCommand(input);
  * const response = await client.send(command);
@@ -91,6 +94,8 @@ export interface CreateNamespaceCommandOutput extends CreateNamespaceResponse, _
  * //     ],
  * //     status: "STRING_VALUE",
  * //     creationDate: new Date("TIMESTAMP"),
+ * //     adminPasswordSecretArn: "STRING_VALUE",
+ * //     adminPasswordSecretKmsKeyId: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -168,6 +173,10 @@ export class CreateNamespaceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateNamespaceRequestFilterSensitiveLog,
       outputFilterSensitiveLog: CreateNamespaceResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RedshiftServerless",
+        operation: "CreateNamespace",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

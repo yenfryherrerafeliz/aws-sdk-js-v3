@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DrsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DrsClient";
@@ -62,6 +63,8 @@ export interface UpdateLaunchConfigurationTemplateCommandOutput
  *     osByol: true || false,
  *   },
  *   exportBucketArn: "STRING_VALUE",
+ *   postLaunchEnabled: true || false,
+ *   launchIntoSourceInstance: true || false,
  * };
  * const command = new UpdateLaunchConfigurationTemplateCommand(input);
  * const response = await client.send(command);
@@ -80,6 +83,8 @@ export interface UpdateLaunchConfigurationTemplateCommandOutput
  * //       osByol: true || false,
  * //     },
  * //     exportBucketArn: "STRING_VALUE",
+ * //     postLaunchEnabled: true || false,
+ * //     launchIntoSourceInstance: true || false,
  * //   },
  * // };
  *
@@ -163,6 +168,10 @@ export class UpdateLaunchConfigurationTemplateCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: UpdateLaunchConfigurationTemplateResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ElasticDisasterRecoveryService",
+        operation: "UpdateLaunchConfigurationTemplate",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

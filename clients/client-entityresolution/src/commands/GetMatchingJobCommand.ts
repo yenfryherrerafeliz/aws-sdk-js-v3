@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EntityResolutionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EntityResolutionClient";
@@ -36,7 +37,8 @@ export interface GetMatchingJobCommandOutput extends GetMatchingJobOutput, __Met
 
 /**
  * @public
- * <p>Gets the status, metrics, and errors (if there are any) that are associated with a job.</p>
+ * <p>Gets the status, metrics, and errors (if there are any) that are associated with a
+ *          job.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -57,8 +59,8 @@ export interface GetMatchingJobCommandOutput extends GetMatchingJobOutput, __Met
  * //   metrics: { // JobMetrics
  * //     inputRecords: Number("int"),
  * //     totalRecordsProcessed: Number("int"),
- * //     matchIDs: Number("int"),
  * //     recordsNotProcessed: Number("int"),
+ * //     matchIDs: Number("int"),
  * //   },
  * //   errorDetails: { // ErrorDetails
  * //     errorMessage: "STRING_VALUE",
@@ -74,11 +76,13 @@ export interface GetMatchingJobCommandOutput extends GetMatchingJobOutput, __Met
  * @see {@link EntityResolutionClientResolvedConfig | config} for EntityResolutionClient's `config` shape.
  *
  * @throws {@link AccessDeniedException} (client fault)
- *  <p>You do not have sufficient access to perform this action. <code>HTTP Status Code: 403</code>
+ *  <p>You do not have sufficient access to perform this action. <code>HTTP Status Code:
+ *             403</code>
  *          </p>
  *
  * @throws {@link InternalServerException} (server fault)
- *  <p>This exception occurs when there is an internal failure in the AWS Entity Resolution service. <code>HTTP Status Code: 500</code>
+ *  <p>This exception occurs when there is an internal failure in the Entity Resolution
+ *          service. <code>HTTP Status Code: 500</code>
  *          </p>
  *
  * @throws {@link ResourceNotFoundException} (client fault)
@@ -86,11 +90,13 @@ export interface GetMatchingJobCommandOutput extends GetMatchingJobOutput, __Met
  *          </p>
  *
  * @throws {@link ThrottlingException} (client fault)
- *  <p>The request was denied due to request throttling. <code>HTTP Status Code: 429</code>
+ *  <p>The request was denied due to request throttling. <code>HTTP Status Code:
+ *          429</code>
  *          </p>
  *
  * @throws {@link ValidationException} (client fault)
- *  <p>The input fails to satisfy the constraints specified by AWS Entity Resolution. <code>HTTP Status Code: 400</code>
+ *  <p>The input fails to satisfy the constraints specified by Entity Resolution. <code>HTTP
+ *             Status Code: 400</code>
  *          </p>
  *
  * @throws {@link EntityResolutionServiceException}
@@ -147,6 +153,10 @@ export class GetMatchingJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSVeniceService",
+        operation: "GetMatchingJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

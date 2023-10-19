@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { RetrieveTapeArchiveInput, RetrieveTapeArchiveOutput } from "../models/models_0";
@@ -40,7 +41,6 @@ export interface RetrieveTapeArchiveCommandOutput extends RetrieveTapeArchiveOut
  *          Virtual tapes archived in the VTS are not associated with any gateway. However after a tape
  *          is retrieved, it is associated with a gateway, even though it is also listed in the VTS,
  *          that is, archive. This operation is only supported in the tape gateway type.</p>
- *
  *          <p>Once a tape is successfully retrieved to a gateway, it cannot be retrieved again to
  *          another gateway. You must archive the tape again before you can retrieve it to another
  *          gateway. This operation is only supported in the tape gateway type.</p>
@@ -147,6 +147,10 @@ export class RetrieveTapeArchiveCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "RetrieveTapeArchive",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

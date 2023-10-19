@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateSiteAddressInput, UpdateSiteAddressOutput } from "../models/models_0";
@@ -37,10 +38,10 @@ export interface UpdateSiteAddressCommandOutput extends UpdateSiteAddressOutput,
 /**
  * @public
  * <p>Updates the address of the specified site.</p>
- *          <p>You can't update a site address if there is an order in progress. You must wait for the order
- *       to complete or cancel the order.</p>
- *          <p>You can update the operating address before you place an order at the
- *       site, or after all Outposts that belong to the site have been deactivated.</p>
+ *          <p>You can't update a site address if there is an order in progress. You must wait for the
+ *       order to complete or cancel the order.</p>
+ *          <p>You can update the operating address before you place an order at the site, or after all
+ *       Outposts that belong to the site have been deactivated.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -160,6 +161,10 @@ export class UpdateSiteAddressCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OutpostsOlafService",
+        operation: "UpdateSiteAddress",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

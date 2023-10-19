@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -55,7 +56,7 @@ export interface StartSupportDataExportCommandOutput extends StartSupportDataExp
  * // const { MarketplaceCommerceAnalyticsClient, StartSupportDataExportCommand } = require("@aws-sdk/client-marketplace-commerce-analytics"); // CommonJS import
  * const client = new MarketplaceCommerceAnalyticsClient(config);
  * const input = { // StartSupportDataExportRequest
- *   dataSetType: "STRING_VALUE", // required
+ *   dataSetType: "customer_support_contacts_data" || "test_customer_support_contacts_data", // required
  *   fromDate: new Date("TIMESTAMP"), // required
  *   roleNameArn: "STRING_VALUE", // required
  *   destinationS3BucketName: "STRING_VALUE", // required
@@ -136,6 +137,10 @@ export class StartSupportDataExportCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MarketplaceCommerceAnalytics20150701",
+        operation: "StartSupportDataExport",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

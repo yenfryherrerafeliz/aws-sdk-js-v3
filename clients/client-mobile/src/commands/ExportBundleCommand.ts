@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MobileClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MobileClient";
@@ -49,7 +50,7 @@ export interface ExportBundleCommandOutput extends ExportBundleResult, __Metadat
  * const input = { // ExportBundleRequest
  *   bundleId: "STRING_VALUE", // required
  *   projectId: "STRING_VALUE",
- *   platform: "STRING_VALUE",
+ *   platform: "OSX" || "WINDOWS" || "LINUX" || "OBJC" || "SWIFT" || "ANDROID" || "JAVASCRIPT",
  * };
  * const command = new ExportBundleCommand(input);
  * const response = await client.send(command);
@@ -151,6 +152,10 @@ export class ExportBundleCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSMobileService",
+        operation: "ExportBundle",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

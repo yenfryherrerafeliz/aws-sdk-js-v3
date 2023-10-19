@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -44,11 +45,11 @@ export interface PutReplicationConfigurationCommandOutput
  *             your account for the replication process. For more information, see <a href="https://docs.aws.amazon.com/AmazonECR/latest/userguide/using-service-linked-roles.html">Using
  *                 service-linked roles for Amazon ECR</a> in the
  *             <i>Amazon Elastic Container Registry User Guide</i>.</p>
- *         <note>
+ *          <note>
  *             <p>When configuring cross-account replication, the destination account must grant the
  *                 source account permission to replicate. This permission is controlled using a
  *                 registry permissions policy. For more information, see <a>PutRegistryPolicy</a>.</p>
- *         </note>
+ *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -68,7 +69,7 @@ export interface PutReplicationConfigurationCommandOutput
  *         repositoryFilters: [ // RepositoryFilterList
  *           { // RepositoryFilter
  *             filter: "STRING_VALUE", // required
- *             filterType: "STRING_VALUE", // required
+ *             filterType: "PREFIX_MATCH", // required
  *           },
  *         ],
  *       },
@@ -90,7 +91,7 @@ export interface PutReplicationConfigurationCommandOutput
  * //         repositoryFilters: [ // RepositoryFilterList
  * //           { // RepositoryFilter
  * //             filter: "STRING_VALUE", // required
- * //             filterType: "STRING_VALUE", // required
+ * //             filterType: "PREFIX_MATCH", // required
  * //           },
  * //         ],
  * //       },
@@ -170,6 +171,10 @@ export class PutReplicationConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "PutReplicationConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECSClient";
@@ -189,7 +190,7 @@ export interface DescribeContainerInstancesCommandOutput extends DescribeContain
  *   "containerInstances": [
  *     {
  *       "agentConnected": true,
- *       "containerInstanceArn": "arn:aws:ecs:us-east-1:012345678910:container-instance/f2756532-8f13-4d53-87c9-aed50dc94cd7",
+ *       "containerInstanceArn": "arn:aws:ecs:us-east-1:012345678910:container-instance/default/f2756532-8f13-4d53-87c9-aed50dc94cd7",
  *       "ec2InstanceId": "i-807f3249",
  *       "pendingTasksCount": 0,
  *       "registeredResources": [
@@ -312,6 +313,10 @@ export class DescribeContainerInstancesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerServiceV20141113",
+        operation: "DescribeContainerInstances",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

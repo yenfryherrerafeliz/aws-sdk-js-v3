@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MediaPackageClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaPackageClient";
@@ -34,6 +35,38 @@ export interface ListTagsForResourceCommandInput extends ListTagsForResourceRequ
  */
 export interface ListTagsForResourceCommandOutput extends ListTagsForResourceResponse, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { MediaPackageClient, ListTagsForResourceCommand } from "@aws-sdk/client-mediapackage"; // ES Modules import
+ * // const { MediaPackageClient, ListTagsForResourceCommand } = require("@aws-sdk/client-mediapackage"); // CommonJS import
+ * const client = new MediaPackageClient(config);
+ * const input = { // ListTagsForResourceRequest
+ *   ResourceArn: "STRING_VALUE", // required
+ * };
+ * const command = new ListTagsForResourceCommand(input);
+ * const response = await client.send(command);
+ * // { // ListTagsForResourceResponse
+ * //   Tags: { // __mapOf__string
+ * //     "<keys>": "STRING_VALUE",
+ * //   },
+ * // };
+ *
+ * ```
+ *
+ * @param ListTagsForResourceCommandInput - {@link ListTagsForResourceCommandInput}
+ * @returns {@link ListTagsForResourceCommandOutput}
+ * @see {@link ListTagsForResourceCommandInput} for command's `input` shape.
+ * @see {@link ListTagsForResourceCommandOutput} for command's `response` shape.
+ * @see {@link MediaPackageClientResolvedConfig | config} for MediaPackageClient's `config` shape.
+ *
+ * @throws {@link MediaPackageServiceException}
+ * <p>Base exception class for all service exceptions from MediaPackage service.</p>
+ *
+ */
 export class ListTagsForResourceCommand extends $Command<
   ListTagsForResourceCommandInput,
   ListTagsForResourceCommandOutput,
@@ -84,6 +117,10 @@ export class ListTagsForResourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaPackage",
+        operation: "ListTagsForResource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

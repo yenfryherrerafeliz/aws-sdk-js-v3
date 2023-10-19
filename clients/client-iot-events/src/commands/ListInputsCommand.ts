@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTEventsClient";
@@ -57,7 +58,7 @@ export interface ListInputsCommandOutput extends ListInputsResponse, __MetadataB
  * //       inputArn: "STRING_VALUE",
  * //       creationTime: new Date("TIMESTAMP"),
  * //       lastUpdateTime: new Date("TIMESTAMP"),
- * //       status: "STRING_VALUE",
+ * //       status: "CREATING" || "UPDATING" || "ACTIVE" || "DELETING",
  * //     },
  * //   ],
  * //   nextToken: "STRING_VALUE",
@@ -135,6 +136,10 @@ export class ListInputsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotColumboService",
+        operation: "ListInputs",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

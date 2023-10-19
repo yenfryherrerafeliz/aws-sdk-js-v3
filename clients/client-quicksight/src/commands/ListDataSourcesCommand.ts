@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListDataSourcesRequest, ListDataSourcesResponse } from "../models/models_3";
@@ -118,6 +119,14 @@ export interface ListDataSourcesCommandOutput extends ListDataSourcesResponse, _
  * //           Port: Number("int"),
  * //           Database: "STRING_VALUE", // required
  * //           ClusterId: "STRING_VALUE",
+ * //           IAMParameters: { // RedshiftIAMParameters
+ * //             RoleArn: "STRING_VALUE", // required
+ * //             DatabaseUser: "STRING_VALUE", // required
+ * //             DatabaseGroups: [ // DatabaseGroupList
+ * //               "STRING_VALUE",
+ * //             ],
+ * //             AutoCreateDatabaseUser: true || false,
+ * //           },
  * //         },
  * //         S3Parameters: { // S3Parameters
  * //           ManifestFileLocation: { // ManifestFileLocation
@@ -224,6 +233,14 @@ export interface ListDataSourcesCommandOutput extends ListDataSourcesResponse, _
  * //             Port: Number("int"),
  * //             Database: "STRING_VALUE", // required
  * //             ClusterId: "STRING_VALUE",
+ * //             IAMParameters: {
+ * //               RoleArn: "STRING_VALUE", // required
+ * //               DatabaseUser: "STRING_VALUE", // required
+ * //               DatabaseGroups: [
+ * //                 "STRING_VALUE",
+ * //               ],
+ * //               AutoCreateDatabaseUser: true || false,
+ * //             },
  * //           },
  * //           S3Parameters: {
  * //             ManifestFileLocation: {
@@ -370,6 +387,10 @@ export class ListDataSourcesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "QuickSight_20180401",
+        operation: "ListDataSources",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

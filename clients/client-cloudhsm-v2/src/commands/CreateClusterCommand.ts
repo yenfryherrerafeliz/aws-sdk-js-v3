@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudHSMV2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudHSMV2Client";
@@ -45,7 +46,7 @@ export interface CreateClusterCommandOutput extends CreateClusterResponse, __Met
  * const client = new CloudHSMV2Client(config);
  * const input = { // CreateClusterRequest
  *   BackupRetentionPolicy: { // BackupRetentionPolicy
- *     Type: "STRING_VALUE",
+ *     Type: "DAYS",
  *     Value: "STRING_VALUE",
  *   },
  *   HsmType: "STRING_VALUE", // required
@@ -64,9 +65,9 @@ export interface CreateClusterCommandOutput extends CreateClusterResponse, __Met
  * const response = await client.send(command);
  * // { // CreateClusterResponse
  * //   Cluster: { // Cluster
- * //     BackupPolicy: "STRING_VALUE",
+ * //     BackupPolicy: "DEFAULT",
  * //     BackupRetentionPolicy: { // BackupRetentionPolicy
- * //       Type: "STRING_VALUE",
+ * //       Type: "DAYS",
  * //       Value: "STRING_VALUE",
  * //     },
  * //     ClusterId: "STRING_VALUE",
@@ -79,7 +80,7 @@ export interface CreateClusterCommandOutput extends CreateClusterResponse, __Met
  * //         EniId: "STRING_VALUE",
  * //         EniIp: "STRING_VALUE",
  * //         HsmId: "STRING_VALUE", // required
- * //         State: "STRING_VALUE",
+ * //         State: "CREATE_IN_PROGRESS" || "ACTIVE" || "DEGRADED" || "DELETE_IN_PROGRESS" || "DELETED",
  * //         StateMessage: "STRING_VALUE",
  * //       },
  * //     ],
@@ -87,7 +88,7 @@ export interface CreateClusterCommandOutput extends CreateClusterResponse, __Met
  * //     PreCoPassword: "STRING_VALUE",
  * //     SecurityGroup: "STRING_VALUE",
  * //     SourceBackupId: "STRING_VALUE",
- * //     State: "STRING_VALUE",
+ * //     State: "CREATE_IN_PROGRESS" || "UNINITIALIZED" || "INITIALIZE_IN_PROGRESS" || "INITIALIZED" || "ACTIVE" || "UPDATE_IN_PROGRESS" || "DELETE_IN_PROGRESS" || "DELETED" || "DEGRADED",
  * //     StateMessage: "STRING_VALUE",
  * //     SubnetMapping: { // ExternalSubnetMapping
  * //       "<keys>": "STRING_VALUE",
@@ -190,6 +191,10 @@ export class CreateClusterCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "BaldrApiService",
+        operation: "CreateCluster",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

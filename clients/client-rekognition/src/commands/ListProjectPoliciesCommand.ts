@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListProjectPoliciesRequest, ListProjectPoliciesResponse } from "../models/models_0";
@@ -36,7 +37,10 @@ export interface ListProjectPoliciesCommandOutput extends ListProjectPoliciesRes
 
 /**
  * @public
- * <p>Gets a list of the project policies attached to a project.</p>
+ * <note>
+ *             <p>This operation applies only to Amazon Rekognition Custom Labels.</p>
+ *          </note>
+ *          <p>Gets a list of the project policies attached to a project.</p>
  *          <p>To attach a project policy to a project, call <a>PutProjectPolicy</a>. To remove a project policy from a project, call <a>DeleteProjectPolicy</a>.</p>
  *          <p>This operation requires permissions to perform the <code>rekognition:ListProjectPolicies</code> action.</p>
  * @example
@@ -179,6 +183,10 @@ export class ListProjectPoliciesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RekognitionService",
+        operation: "ListProjectPolicies",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

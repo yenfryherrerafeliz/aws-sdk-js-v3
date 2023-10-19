@@ -11,9 +11,10 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { DeleteEdgeDeploymentStageRequest } from "../models/models_1";
+import { DeleteEdgeDeploymentStageRequest } from "../models/models_2";
 import { de_DeleteEdgeDeploymentStageCommand, se_DeleteEdgeDeploymentStageCommand } from "../protocols/Aws_json1_1";
 import { SageMakerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../SageMakerClient";
 
@@ -36,7 +37,8 @@ export interface DeleteEdgeDeploymentStageCommandOutput extends __MetadataBearer
 
 /**
  * @public
- * <p>Delete a stage in an edge deployment plan if (and only if) the stage is inactive.</p>
+ * <p>Delete a stage in an edge deployment plan if (and only if) the stage is
+ *             inactive.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -116,6 +118,10 @@ export class DeleteEdgeDeploymentStageCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "DeleteEdgeDeploymentStage",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

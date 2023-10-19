@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeInstancesRequest, DescribeInstancesResult } from "../models/models_0";
@@ -65,9 +66,9 @@ export interface DescribeInstancesCommandOutput extends DescribeInstancesResult,
  * //     { // Instance
  * //       AgentVersion: "STRING_VALUE",
  * //       AmiId: "STRING_VALUE",
- * //       Architecture: "STRING_VALUE",
+ * //       Architecture: "x86_64" || "i386",
  * //       Arn: "STRING_VALUE",
- * //       AutoScalingType: "STRING_VALUE",
+ * //       AutoScalingType: "load" || "timer",
  * //       AvailabilityZone: "STRING_VALUE",
  * //       BlockDeviceMappings: [ // BlockDeviceMappings
  * //         { // BlockDeviceMapping
@@ -78,7 +79,7 @@ export interface DescribeInstancesCommandOutput extends DescribeInstancesResult,
  * //             SnapshotId: "STRING_VALUE",
  * //             Iops: Number("int"),
  * //             VolumeSize: Number("int"),
- * //             VolumeType: "STRING_VALUE",
+ * //             VolumeType: "gp2" || "io1" || "standard",
  * //             DeleteOnTermination: true || false,
  * //           },
  * //         },
@@ -112,7 +113,7 @@ export interface DescribeInstancesCommandOutput extends DescribeInstancesResult,
  * //         Name: "STRING_VALUE",
  * //         Version: "STRING_VALUE",
  * //       },
- * //       RootDeviceType: "STRING_VALUE",
+ * //       RootDeviceType: "ebs" || "instance-store",
  * //       RootDeviceVolumeId: "STRING_VALUE",
  * //       SecurityGroupIds: [
  * //         "STRING_VALUE",
@@ -124,7 +125,7 @@ export interface DescribeInstancesCommandOutput extends DescribeInstancesResult,
  * //       Status: "STRING_VALUE",
  * //       SubnetId: "STRING_VALUE",
  * //       Tenancy: "STRING_VALUE",
- * //       VirtualizationType: "STRING_VALUE",
+ * //       VirtualizationType: "paravirtual" || "hvm",
  * //     },
  * //   ],
  * // };
@@ -197,6 +198,10 @@ export class DescribeInstancesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OpsWorks_20130218",
+        operation: "DescribeInstances",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

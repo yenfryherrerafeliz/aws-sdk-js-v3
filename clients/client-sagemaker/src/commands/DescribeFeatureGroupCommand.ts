@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeFeatureGroupRequest, DescribeFeatureGroupResponse } from "../models/models_2";
@@ -60,6 +61,12 @@ export interface DescribeFeatureGroupCommandOutput extends DescribeFeatureGroupR
  * //     { // FeatureDefinition
  * //       FeatureName: "STRING_VALUE",
  * //       FeatureType: "Integral" || "Fractional" || "String",
+ * //       CollectionType: "List" || "Set" || "Vector",
+ * //       CollectionConfig: { // CollectionConfig Union: only one key present
+ * //         VectorConfig: { // VectorConfig
+ * //           Dimension: Number("int"), // required
+ * //         },
+ * //       },
  * //     },
  * //   ],
  * //   CreationTime: new Date("TIMESTAMP"), // required
@@ -73,6 +80,7 @@ export interface DescribeFeatureGroupCommandOutput extends DescribeFeatureGroupR
  * //       Unit: "Seconds" || "Minutes" || "Hours" || "Days" || "Weeks",
  * //       Value: Number("int"),
  * //     },
+ * //     StorageType: "Standard" || "InMemory",
  * //   },
  * //   OfflineStoreConfig: { // OfflineStoreConfig
  * //     S3StorageConfig: { // S3StorageConfig
@@ -169,6 +177,10 @@ export class DescribeFeatureGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "DescribeFeatureGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

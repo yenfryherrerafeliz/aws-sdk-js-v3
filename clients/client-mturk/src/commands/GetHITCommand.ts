@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetHITRequest, GetHITResponse } from "../models/models_0";
@@ -61,7 +62,7 @@ export interface GetHITCommandOutput extends GetHITResponse, __MetadataBearer {}
  * //     Description: "STRING_VALUE",
  * //     Question: "STRING_VALUE",
  * //     Keywords: "STRING_VALUE",
- * //     HITStatus: "STRING_VALUE",
+ * //     HITStatus: "Assignable" || "Unassignable" || "Reviewable" || "Reviewing" || "Disposed",
  * //     MaxAssignments: Number("int"),
  * //     Reward: "STRING_VALUE",
  * //     AutoApprovalDelayInSeconds: Number("long"),
@@ -71,7 +72,7 @@ export interface GetHITCommandOutput extends GetHITResponse, __MetadataBearer {}
  * //     QualificationRequirements: [ // QualificationRequirementList
  * //       { // QualificationRequirement
  * //         QualificationTypeId: "STRING_VALUE", // required
- * //         Comparator: "STRING_VALUE", // required
+ * //         Comparator: "LessThan" || "LessThanOrEqualTo" || "GreaterThan" || "GreaterThanOrEqualTo" || "EqualTo" || "NotEqualTo" || "Exists" || "DoesNotExist" || "In" || "NotIn", // required
  * //         IntegerValues: [ // IntegerList
  * //           Number("int"),
  * //         ],
@@ -82,10 +83,10 @@ export interface GetHITCommandOutput extends GetHITResponse, __MetadataBearer {}
  * //           },
  * //         ],
  * //         RequiredToPreview: true || false,
- * //         ActionsGuarded: "STRING_VALUE",
+ * //         ActionsGuarded: "Accept" || "PreviewAndAccept" || "DiscoverPreviewAndAccept",
  * //       },
  * //     ],
- * //     HITReviewStatus: "STRING_VALUE",
+ * //     HITReviewStatus: "NotReviewed" || "MarkedForReview" || "ReviewedAppropriate" || "ReviewedInappropriate",
  * //     NumberOfAssignmentsPending: Number("int"),
  * //     NumberOfAssignmentsAvailable: Number("int"),
  * //     NumberOfAssignmentsCompleted: Number("int"),
@@ -154,6 +155,10 @@ export class GetHITCommand extends $Command<GetHITCommandInput, GetHITCommandOut
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MTurkRequesterServiceV20170117",
+        operation: "GetHIT",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

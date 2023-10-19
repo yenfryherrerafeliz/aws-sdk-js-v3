@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -53,7 +54,7 @@ export interface UpdateArchiveCommandOutput extends UpdateArchiveResponse, __Met
  * const response = await client.send(command);
  * // { // UpdateArchiveResponse
  * //   ArchiveArn: "STRING_VALUE",
- * //   State: "STRING_VALUE",
+ * //   State: "ENABLED" || "DISABLED" || "CREATING" || "UPDATING" || "CREATE_FAILED" || "UPDATE_FAILED",
  * //   StateReason: "STRING_VALUE",
  * //   CreationTime: new Date("TIMESTAMP"),
  * // };
@@ -134,6 +135,10 @@ export class UpdateArchiveCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "UpdateArchive",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

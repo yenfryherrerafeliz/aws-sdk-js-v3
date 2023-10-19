@@ -23,16 +23,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `DrsClient` and
-the commands you need, for example `AssociateSourceNetworkStackCommand`:
+the commands you need, for example `ListLaunchActionsCommand`:
 
 ```js
 // ES5 example
-const { DrsClient, AssociateSourceNetworkStackCommand } = require("@aws-sdk/client-drs");
+const { DrsClient, ListLaunchActionsCommand } = require("@aws-sdk/client-drs");
 ```
 
 ```ts
 // ES6+ example
-import { DrsClient, AssociateSourceNetworkStackCommand } from "@aws-sdk/client-drs";
+import { DrsClient, ListLaunchActionsCommand } from "@aws-sdk/client-drs";
 ```
 
 ### Usage
@@ -51,7 +51,7 @@ const client = new DrsClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new AssociateSourceNetworkStackCommand(params);
+const command = new ListLaunchActionsCommand(params);
 ```
 
 #### Async/await
@@ -130,7 +130,7 @@ const client = new AWS.Drs({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.associateSourceNetworkStack(params);
+  const data = await client.listLaunchActions(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -138,7 +138,7 @@ try {
 
 // Promises.
 client
-  .associateSourceNetworkStack(params)
+  .listLaunchActions(params)
   .then((data) => {
     // process data.
   })
@@ -147,7 +147,7 @@ client
   });
 
 // callbacks.
-client.associateSourceNetworkStack(params, (err, data) => {
+client.listLaunchActions(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -249,6 +249,14 @@ DeleteJob
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/classes/deletejobcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/interfaces/deletejobcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/interfaces/deletejobcommandoutput.html)
+
+</details>
+<details>
+<summary>
+DeleteLaunchAction
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/classes/deletelaunchactioncommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/interfaces/deletelaunchactioncommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/interfaces/deletelaunchactioncommandoutput.html)
 
 </details>
 <details>
@@ -421,6 +429,14 @@ ListExtensibleSourceServers
 </details>
 <details>
 <summary>
+ListLaunchActions
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/classes/listlaunchactionscommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/interfaces/listlaunchactionscommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/interfaces/listlaunchactionscommandoutput.html)
+
+</details>
+<details>
+<summary>
 ListStagingAccounts
 </summary>
 
@@ -433,6 +449,14 @@ ListTagsForResource
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/classes/listtagsforresourcecommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/interfaces/listtagsforresourcecommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/interfaces/listtagsforresourcecommandoutput.html)
+
+</details>
+<details>
+<summary>
+PutLaunchAction
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/classes/putlaunchactioncommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/interfaces/putlaunchactioncommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-drs/interfaces/putlaunchactioncommandoutput.html)
 
 </details>
 <details>

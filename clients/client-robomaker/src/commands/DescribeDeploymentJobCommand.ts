@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeDeploymentJobRequest, DescribeDeploymentJobResponse } from "../models/models_0";
@@ -56,7 +57,7 @@ export interface DescribeDeploymentJobCommandOutput extends DescribeDeploymentJo
  * // { // DescribeDeploymentJobResponse
  * //   arn: "STRING_VALUE",
  * //   fleet: "STRING_VALUE",
- * //   status: "STRING_VALUE",
+ * //   status: "Pending" || "Preparing" || "InProgress" || "Failed" || "Succeeded" || "Canceled",
  * //   deploymentConfig: { // DeploymentConfig
  * //     concurrentDeploymentPercentage: Number("int"),
  * //     failureThresholdPercentage: Number("int"),
@@ -83,22 +84,22 @@ export interface DescribeDeploymentJobCommandOutput extends DescribeDeploymentJo
  * //     },
  * //   ],
  * //   failureReason: "STRING_VALUE",
- * //   failureCode: "STRING_VALUE",
+ * //   failureCode: "ResourceNotFound" || "EnvironmentSetupError" || "EtagMismatch" || "FailureThresholdBreached" || "RobotDeploymentAborted" || "RobotDeploymentNoResponse" || "RobotAgentConnectionTimeout" || "GreengrassDeploymentFailed" || "InvalidGreengrassGroup" || "MissingRobotArchitecture" || "MissingRobotApplicationArchitecture" || "MissingRobotDeploymentResource" || "GreengrassGroupVersionDoesNotExist" || "LambdaDeleted" || "ExtractingBundleFailure" || "PreLaunchFileFailure" || "PostLaunchFileFailure" || "BadPermissionError" || "DownloadConditionFailed" || "BadLambdaAssociated" || "InternalServerError" || "RobotApplicationDoesNotExist" || "DeploymentFleetDoesNotExist" || "FleetDeploymentTimeout",
  * //   createdAt: new Date("TIMESTAMP"),
  * //   robotDeploymentSummary: [ // RobotDeploymentSummary
  * //     { // RobotDeployment
  * //       arn: "STRING_VALUE",
  * //       deploymentStartTime: new Date("TIMESTAMP"),
  * //       deploymentFinishTime: new Date("TIMESTAMP"),
- * //       status: "STRING_VALUE",
+ * //       status: "Available" || "Registered" || "PendingNewDeployment" || "Deploying" || "Failed" || "InSync" || "NoResponse",
  * //       progressDetail: { // ProgressDetail
- * //         currentProgress: "STRING_VALUE",
+ * //         currentProgress: "Validating" || "DownloadingExtracting" || "ExecutingDownloadCondition" || "ExecutingPreLaunch" || "Launching" || "ExecutingPostLaunch" || "Finished",
  * //         percentDone: Number("float"),
  * //         estimatedTimeRemainingSeconds: Number("int"),
  * //         targetResource: "STRING_VALUE",
  * //       },
  * //       failureReason: "STRING_VALUE",
- * //       failureCode: "STRING_VALUE",
+ * //       failureCode: "ResourceNotFound" || "EnvironmentSetupError" || "EtagMismatch" || "FailureThresholdBreached" || "RobotDeploymentAborted" || "RobotDeploymentNoResponse" || "RobotAgentConnectionTimeout" || "GreengrassDeploymentFailed" || "InvalidGreengrassGroup" || "MissingRobotArchitecture" || "MissingRobotApplicationArchitecture" || "MissingRobotDeploymentResource" || "GreengrassGroupVersionDoesNotExist" || "LambdaDeleted" || "ExtractingBundleFailure" || "PreLaunchFileFailure" || "PostLaunchFileFailure" || "BadPermissionError" || "DownloadConditionFailed" || "BadLambdaAssociated" || "InternalServerError" || "RobotApplicationDoesNotExist" || "DeploymentFleetDoesNotExist" || "FleetDeploymentTimeout",
  * //     },
  * //   ],
  * //   tags: { // TagMap
@@ -181,6 +182,10 @@ export class DescribeDeploymentJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "DescribeDeploymentJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

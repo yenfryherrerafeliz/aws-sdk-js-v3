@@ -83,7 +83,7 @@ export interface Actuator {
    * @public
    * <p>The specified data type of the actuator. </p>
    */
-  dataType: NodeDataType | string | undefined;
+  dataType: NodeDataType | undefined;
 
   /**
    * @public
@@ -306,7 +306,7 @@ export class ValidationException extends __BaseException {
    * @public
    * <p>The reason the input failed to satisfy the constraints specified by an Amazon Web Services service.</p>
    */
-  reason?: ValidationExceptionReason | string;
+  reason?: ValidationExceptionReason;
 
   /**
    * @public
@@ -346,7 +346,7 @@ export interface Attribute {
    * @public
    * <p>The specified data type of the attribute. </p>
    */
-  dataType: NodeDataType | string | undefined;
+  dataType: NodeDataType | undefined;
 
   /**
    * @public
@@ -474,7 +474,7 @@ export interface CreateVehicleRequestItem {
    * <p>An option to create a new Amazon Web Services IoT thing when creating a vehicle, or to validate an
    *             existing thing as a vehicle.</p>
    */
-  associationBehavior?: VehicleAssociationBehavior | string;
+  associationBehavior?: VehicleAssociationBehavior;
 
   /**
    * @public
@@ -649,7 +649,7 @@ export interface UpdateVehicleRequestItem {
    *             attributes. Or use <code>Merge</code> to combine all attributes.</p>
    *         <p>This is required if attributes are present in the input.</p>
    */
-  attributeUpdateMode?: UpdateMode | string;
+  attributeUpdateMode?: UpdateMode;
 }
 
 /**
@@ -838,7 +838,7 @@ export interface ConditionBasedCollectionScheme {
    *             triggering when the airbag is already exploded; they only care about the change from not
    *             deployed =&gt; deployed.</p>
    */
-  triggerMode?: TriggerMode | string;
+  triggerMode?: TriggerMode;
 
   /**
    * @public
@@ -988,14 +988,14 @@ export interface S3Config {
    *             </li>
    *          </ul>
    */
-  dataFormat?: DataFormat | string;
+  dataFormat?: DataFormat;
 
   /**
    * @public
    * <p>By default, stored data is compressed as a .gzip file. Compressed files have a reduced
    *             file size, which can optimize the cost of data storage.</p>
    */
-  storageCompressionFormat?: StorageCompressionFormat | string;
+  storageCompressionFormat?: StorageCompressionFormat;
 
   /**
    * @public
@@ -1197,7 +1197,7 @@ export interface CreateCampaignRequest {
    *         <p>Default: <code>OFF</code>
    *          </p>
    */
-  diagnosticsMode?: DiagnosticsMode | string;
+  diagnosticsMode?: DiagnosticsMode;
 
   /**
    * @public
@@ -1208,7 +1208,7 @@ export interface CreateCampaignRequest {
    *         <p>Default: <code>OFF</code>
    *          </p>
    */
-  spoolingMode?: SpoolingMode | string;
+  spoolingMode?: SpoolingMode;
 
   /**
    * @public
@@ -1218,7 +1218,7 @@ export interface CreateCampaignRequest {
    *         <p>Default: <code>SNAPPY</code>
    *          </p>
    */
-  compression?: Compression | string;
+  compression?: Compression;
 
   /**
    * @public
@@ -1260,7 +1260,7 @@ export interface CreateCampaignRequest {
   /**
    * @public
    * <p>The destination where the campaign sends data. You can choose to send data to be stored in Amazon S3 or Amazon Timestream.</p>
-   *         <p>Amazon S3 optimizes the cost of data storage and provides additional mechanisms to use vehicle data, such as data lakes, centralized data storage, data processing pipelines, and analytics. </p>
+   *         <p>Amazon S3 optimizes the cost of data storage and provides additional mechanisms to use vehicle data, such as data lakes, centralized data storage, data processing pipelines, and analytics. Amazon Web Services IoT FleetWise supports at-least-once file delivery to S3. Your vehicle data is stored on multiple Amazon Web Services IoT FleetWise servers for redundancy and high availability.</p>
    *         <p>You can use Amazon Timestream to access and analyze time series data, and Timestream to query
    *             vehicle data so that you can identify trends and patterns.</p>
    */
@@ -1382,7 +1382,7 @@ export interface GetCampaignResponse {
    *                 <code>WAITING_FOR_APPROVAL</code>, <code>RUNNING</code>, and <code>SUSPENDED</code>.
    *         </p>
    */
-  status?: CampaignStatus | string;
+  status?: CampaignStatus;
 
   /**
    * @public
@@ -1408,7 +1408,7 @@ export interface GetCampaignResponse {
    * @public
    * <p> Option for a vehicle to send diagnostic trouble codes to Amazon Web Services IoT FleetWise. </p>
    */
-  diagnosticsMode?: DiagnosticsMode | string;
+  diagnosticsMode?: DiagnosticsMode;
 
   /**
    * @public
@@ -1416,7 +1416,7 @@ export interface GetCampaignResponse {
    *             After a connection is re-established, the data is automatically forwarded to Amazon Web Services IoT FleetWise.
    *         </p>
    */
-  spoolingMode?: SpoolingMode | string;
+  spoolingMode?: SpoolingMode;
 
   /**
    * @public
@@ -1424,7 +1424,7 @@ export interface GetCampaignResponse {
    *                 <code>OFF</code> is specified, the signals aren't compressed. If it's not specified,
    *                 <code>SNAPPY</code> is used. </p>
    */
-  compression?: Compression | string;
+  compression?: Compression;
 
   /**
    * @public
@@ -1566,7 +1566,7 @@ export interface CampaignSummary {
    *             </li>
    *          </ul>
    */
-  status?: CampaignStatus | string;
+  status?: CampaignStatus;
 
   /**
    * @public
@@ -1660,7 +1660,7 @@ export interface UpdateCampaignRequest {
    *             </li>
    *          </ul>
    */
-  action: UpdateCampaignAction | string | undefined;
+  action: UpdateCampaignAction | undefined;
 }
 
 /**
@@ -1706,7 +1706,7 @@ export interface UpdateCampaignResponse {
    *             </li>
    *          </ul>
    */
-  status?: CampaignStatus | string;
+  status?: CampaignStatus;
 }
 
 /**
@@ -1840,7 +1840,7 @@ export interface CloudWatchLogDeliveryOptions {
    * @public
    * <p>The type of log to send data to Amazon CloudWatch Logs.</p>
    */
-  logType: LogType | string | undefined;
+  logType: LogType | undefined;
 
   /**
    * @public
@@ -1933,7 +1933,7 @@ export interface NetworkInterface {
    *             (ECUs). <code>OBD_SIGNAL</code> specifies a protocol that defines how self-diagnostic
    *             data is communicated between ECUs.</p>
    */
-  type: NetworkInterfaceType | string | undefined;
+  type: NetworkInterfaceType | undefined;
 
   /**
    * @public
@@ -2043,7 +2043,7 @@ export interface SignalDecoder {
    *             (ECUs). <code>OBD_SIGNAL</code> specifies a protocol that defines how self-diagnostic
    *             data is communicated between ECUs.</p>
    */
-  type: SignalDecoderType | string | undefined;
+  type: SignalDecoderType | undefined;
 
   /**
    * @public
@@ -2156,7 +2156,7 @@ export interface InvalidNetworkInterface {
    * @public
    * <p>A message about why the interface isn't valid. </p>
    */
-  reason?: NetworkInterfaceFailureReason | string;
+  reason?: NetworkInterfaceFailureReason;
 }
 
 /**
@@ -2196,7 +2196,7 @@ export interface InvalidSignalDecoder {
    * @public
    * <p>A message about why the signal decoder isn't valid.</p>
    */
-  reason?: SignalDecoderFailureReason | string;
+  reason?: SignalDecoderFailureReason;
 }
 
 /**
@@ -2396,7 +2396,7 @@ export interface Sensor {
    * @public
    * <p>The specified data type of the sensor. </p>
    */
-  dataType: NodeDataType | string | undefined;
+  dataType: NodeDataType | undefined;
 
   /**
    * @public
@@ -2666,7 +2666,7 @@ export interface CreateVehicleRequest {
    *         <p>Default: <code/>
    *          </p>
    */
-  associationBehavior?: VehicleAssociationBehavior | string;
+  associationBehavior?: VehicleAssociationBehavior;
 
   /**
    * @public
@@ -2786,7 +2786,7 @@ export interface GetDecoderManifestResponse {
    *             manifest can't be edited. If the status is marked <code>DRAFT</code>, you can edit the
    *             decoder manifest.</p>
    */
-  status?: ManifestStatus | string;
+  status?: ManifestStatus;
 
   /**
    * @public
@@ -2978,7 +2978,7 @@ export interface DecoderManifestSummary {
    *             manifest can't be edited. If the status is marked <code>DRAFT</code>, you can edit the
    *             decoder manifest.</p>
    */
-  status?: ManifestStatus | string;
+  status?: ManifestStatus;
 
   /**
    * @public
@@ -3115,7 +3115,7 @@ export interface UpdateDecoderManifestRequest {
    *             manifest can't be edited. If the status is <code>DRAFT</code>, you can edit the decoder
    *             manifest. </p>
    */
-  status?: ManifestStatus | string;
+  status?: ManifestStatus;
 }
 
 /**
@@ -3268,6 +3268,35 @@ export interface DisassociateVehicleFleetRequest {
  * @public
  */
 export interface DisassociateVehicleFleetResponse {}
+
+/**
+ * @public
+ * @enum
+ */
+export const EncryptionStatus = {
+  FAILURE: "FAILURE",
+  PENDING: "PENDING",
+  SUCCESS: "SUCCESS",
+} as const;
+
+/**
+ * @public
+ */
+export type EncryptionStatus = (typeof EncryptionStatus)[keyof typeof EncryptionStatus];
+
+/**
+ * @public
+ * @enum
+ */
+export const EncryptionType = {
+  FLEETWISE_DEFAULT_ENCRYPTION: "FLEETWISE_DEFAULT_ENCRYPTION",
+  KMS_BASED_ENCRYPTION: "KMS_BASED_ENCRYPTION",
+} as const;
+
+/**
+ * @public
+ */
+export type EncryptionType = (typeof EncryptionType)[keyof typeof EncryptionType];
 
 /**
  * @public
@@ -3564,6 +3593,52 @@ export namespace FormattedVss {
 /**
  * @public
  */
+export interface GetEncryptionConfigurationRequest {}
+
+/**
+ * @public
+ */
+export interface GetEncryptionConfigurationResponse {
+  /**
+   * @public
+   * <p>The ID of the KMS key that is used for encryption.</p>
+   */
+  kmsKeyId?: string;
+
+  /**
+   * @public
+   * <p>The encryption status.</p>
+   */
+  encryptionStatus: EncryptionStatus | undefined;
+
+  /**
+   * @public
+   * <p>The type of encryption. Set to <code>KMS_BASED_ENCRYPTION</code> to use an KMS key that you own and manage. Set to <code>FLEETWISE_DEFAULT_ENCRYPTION</code> to use an Amazon Web Services managed key that is owned by the Amazon Web Services IoT FleetWise service account.</p>
+   */
+  encryptionType: EncryptionType | undefined;
+
+  /**
+   * @public
+   * <p>The error message that describes why encryption settings couldn't be configured, if applicable.</p>
+   */
+  errorMessage?: string;
+
+  /**
+   * @public
+   * <p>The time when encryption was configured in seconds since epoch (January 1, 1970 at midnight UTC time).</p>
+   */
+  creationTime?: Date;
+
+  /**
+   * @public
+   * <p>The time when encryption was last updated in seconds since epoch (January 1, 1970 at midnight UTC time).</p>
+   */
+  lastModificationTime?: Date;
+}
+
+/**
+ * @public
+ */
 export interface GetLoggingOptionsRequest {}
 
 /**
@@ -3622,7 +3697,7 @@ export interface GetModelManifestResponse {
    *             model can't be edited. You can edit the vehicle model if the status is marked
    *                 <code>DRAFT</code>.</p>
    */
-  status?: ManifestStatus | string;
+  status?: ManifestStatus;
 
   /**
    * @public
@@ -3676,7 +3751,7 @@ export interface IamRegistrationResponse {
    *                 <code>REGISTRATION_SUCCESS</code>, <code>REGISTRATION_PENDING</code>,
    *                 <code>REGISTRATION_FAILURE</code>.</p>
    */
-  registrationStatus: RegistrationStatus | string | undefined;
+  registrationStatus: RegistrationStatus | undefined;
 
   /**
    * @public
@@ -3720,7 +3795,7 @@ export interface TimestreamRegistrationResponse {
    *                 <code>REGISTRATION_SUCCESS</code>, <code>REGISTRATION_PENDING</code>,
    *                 <code>REGISTRATION_FAILURE</code>.</p>
    */
-  registrationStatus: RegistrationStatus | string | undefined;
+  registrationStatus: RegistrationStatus | undefined;
 
   /**
    * @public
@@ -3761,7 +3836,7 @@ export interface GetRegisterAccountStatusResponse {
    *             </li>
    *          </ul>
    */
-  accountStatus: RegistrationStatus | string | undefined;
+  accountStatus: RegistrationStatus | undefined;
 
   /**
    * @public
@@ -4028,7 +4103,7 @@ export interface VehicleStatus {
    *             </li>
    *          </ul>
    */
-  status?: VehicleState | string;
+  status?: VehicleState;
 }
 
 /**
@@ -4236,7 +4311,7 @@ export interface ModelManifestSummary {
    *             model can't be edited. If the status is <code>DRAFT</code>, you can edit the vehicle
    *             model.</p>
    */
-  status?: ManifestStatus | string;
+  status?: ManifestStatus;
 
   /**
    * @public
@@ -4306,7 +4381,7 @@ export interface UpdateModelManifestRequest {
    *             model can't be edited. If the status is <code>DRAFT</code>, you can edit the vehicle
    *             model. </p>
    */
-  status?: ManifestStatus | string;
+  status?: ManifestStatus;
 }
 
 /**
@@ -4324,6 +4399,46 @@ export interface UpdateModelManifestResponse {
    * <p> The Amazon Resource Name (ARN) of the updated vehicle model. </p>
    */
   arn: string | undefined;
+}
+
+/**
+ * @public
+ */
+export interface PutEncryptionConfigurationRequest {
+  /**
+   * @public
+   * <p>The ID of the KMS key that is used for encryption.</p>
+   */
+  kmsKeyId?: string;
+
+  /**
+   * @public
+   * <p>The type of encryption. Choose <code>KMS_BASED_ENCRYPTION</code> to use a KMS key or <code>FLEETWISE_DEFAULT_ENCRYPTION</code> to use an Amazon Web Services managed key.</p>
+   */
+  encryptionType: EncryptionType | undefined;
+}
+
+/**
+ * @public
+ */
+export interface PutEncryptionConfigurationResponse {
+  /**
+   * @public
+   * <p>The ID of the KMS key that is used for encryption.</p>
+   */
+  kmsKeyId?: string;
+
+  /**
+   * @public
+   * <p>The encryption status.</p>
+   */
+  encryptionStatus: EncryptionStatus | undefined;
+
+  /**
+   * @public
+   * <p>The type of encryption. Set to <code>KMS_BASED_ENCRYPTION</code> to use an KMS key that you own and manage. Set to <code>FLEETWISE_DEFAULT_ENCRYPTION</code> to use an Amazon Web Services managed key that is owned by the Amazon Web Services IoT FleetWise service account.</p>
+   */
+  encryptionType: EncryptionType | undefined;
 }
 
 /**
@@ -4392,7 +4507,7 @@ export interface RegisterAccountResponse {
    * <p> The status of registering your Amazon Web Services account, IAM role, and Timestream resources.
    *         </p>
    */
-  registerAccountStatus: RegistrationStatus | string | undefined;
+  registerAccountStatus: RegistrationStatus | undefined;
 
   /**
    * @public
@@ -4749,7 +4864,7 @@ export interface UpdateVehicleRequest {
    *             attributes. Or use <code>Merge</code> to combine all attributes.</p>
    *         <p>This is required if attributes are present in the input.</p>
    */
-  attributeUpdateMode?: UpdateMode | string;
+  attributeUpdateMode?: UpdateMode;
 }
 
 /**

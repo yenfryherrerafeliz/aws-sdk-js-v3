@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateTargetGroupRequest, CreateTargetGroupResponse } from "../models/models_0";
@@ -50,11 +51,11 @@ export interface CreateTargetGroupCommandOutput extends CreateTargetGroupRespons
  *   name: "STRING_VALUE", // required
  *   type: "STRING_VALUE", // required
  *   config: { // TargetGroupConfig
- *     port: Number("int"), // required
- *     protocol: "STRING_VALUE", // required
+ *     port: Number("int"),
+ *     protocol: "STRING_VALUE",
  *     protocolVersion: "STRING_VALUE",
  *     ipAddressType: "STRING_VALUE",
- *     vpcIdentifier: "STRING_VALUE", // required
+ *     vpcIdentifier: "STRING_VALUE",
  *     healthCheck: { // HealthCheckConfig
  *       enabled: true || false,
  *       protocol: "STRING_VALUE",
@@ -69,6 +70,7 @@ export interface CreateTargetGroupCommandOutput extends CreateTargetGroupRespons
  *         httpCode: "STRING_VALUE",
  *       },
  *     },
+ *     lambdaEventStructureVersion: "STRING_VALUE",
  *   },
  *   clientToken: "STRING_VALUE",
  *   tags: { // TagMap
@@ -83,11 +85,11 @@ export interface CreateTargetGroupCommandOutput extends CreateTargetGroupRespons
  * //   name: "STRING_VALUE",
  * //   type: "STRING_VALUE",
  * //   config: { // TargetGroupConfig
- * //     port: Number("int"), // required
- * //     protocol: "STRING_VALUE", // required
+ * //     port: Number("int"),
+ * //     protocol: "STRING_VALUE",
  * //     protocolVersion: "STRING_VALUE",
  * //     ipAddressType: "STRING_VALUE",
- * //     vpcIdentifier: "STRING_VALUE", // required
+ * //     vpcIdentifier: "STRING_VALUE",
  * //     healthCheck: { // HealthCheckConfig
  * //       enabled: true || false,
  * //       protocol: "STRING_VALUE",
@@ -102,6 +104,7 @@ export interface CreateTargetGroupCommandOutput extends CreateTargetGroupRespons
  * //         httpCode: "STRING_VALUE",
  * //       },
  * //     },
+ * //     lambdaEventStructureVersion: "STRING_VALUE",
  * //   },
  * //   status: "STRING_VALUE",
  * // };
@@ -191,6 +194,10 @@ export class CreateTargetGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MercuryControlPlane",
+        operation: "CreateTargetGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MigrationHubClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MigrationHubClient";
@@ -64,7 +65,7 @@ export interface NotifyMigrationTaskStateCommandOutput extends NotifyMigrationTa
  *   ProgressUpdateStream: "STRING_VALUE", // required
  *   MigrationTaskName: "STRING_VALUE", // required
  *   Task: { // Task
- *     Status: "STRING_VALUE", // required
+ *     Status: "NOT_STARTED" || "IN_PROGRESS" || "FAILED" || "COMPLETED", // required
  *     StatusDetail: "STRING_VALUE",
  *     ProgressPercent: Number("int"),
  *   },
@@ -172,6 +173,10 @@ export class NotifyMigrationTaskStateCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSMigrationHub",
+        operation: "NotifyMigrationTaskState",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

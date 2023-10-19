@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DeleteCanaryRequest, DeleteCanaryResponse } from "../models/models_0";
@@ -64,7 +65,6 @@ export interface DeleteCanaryCommandOutput extends DeleteCanaryResponse, __Metad
  *                   </code>. </p>
  *             </li>
  *          </ul>
- *
  *          <p>Before you delete a canary, you might want to use <code>GetCanary</code> to display
  *          the information about this canary. Make
  *          note of the information returned by this operation so that you can delete these resources
@@ -155,6 +155,10 @@ export class DeleteCanaryCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Synthetics",
+        operation: "DeleteCanary",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

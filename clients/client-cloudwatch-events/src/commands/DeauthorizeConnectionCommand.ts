@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -51,7 +52,7 @@ export interface DeauthorizeConnectionCommandOutput extends DeauthorizeConnectio
  * const response = await client.send(command);
  * // { // DeauthorizeConnectionResponse
  * //   ConnectionArn: "STRING_VALUE",
- * //   ConnectionState: "STRING_VALUE",
+ * //   ConnectionState: "CREATING" || "UPDATING" || "DELETING" || "AUTHORIZED" || "DEAUTHORIZED" || "AUTHORIZING" || "DEAUTHORIZING",
  * //   CreationTime: new Date("TIMESTAMP"),
  * //   LastModifiedTime: new Date("TIMESTAMP"),
  * //   LastAuthorizedTime: new Date("TIMESTAMP"),
@@ -128,6 +129,10 @@ export class DeauthorizeConnectionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "DeauthorizeConnection",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

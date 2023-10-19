@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListSimulationJobBatchesRequest, ListSimulationJobBatchesResponse } from "../models/models_0";
@@ -64,7 +65,7 @@ export interface ListSimulationJobBatchesCommandOutput extends ListSimulationJob
  * //       arn: "STRING_VALUE",
  * //       lastUpdatedAt: new Date("TIMESTAMP"),
  * //       createdAt: new Date("TIMESTAMP"),
- * //       status: "STRING_VALUE",
+ * //       status: "Pending" || "InProgress" || "Failed" || "Completed" || "Canceled" || "Canceling" || "Completing" || "TimingOut" || "TimedOut",
  * //       failedRequestCount: Number("int"),
  * //       pendingRequestCount: Number("int"),
  * //       createdRequestCount: Number("int"),
@@ -142,6 +143,10 @@ export class ListSimulationJobBatchesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "ListSimulationJobBatches",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

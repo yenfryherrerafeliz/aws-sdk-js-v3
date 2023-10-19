@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -45,7 +46,7 @@ export interface ListConnectionsCommandOutput extends ListConnectionsResponse, _
  * const client = new CloudWatchEventsClient(config);
  * const input = { // ListConnectionsRequest
  *   NamePrefix: "STRING_VALUE",
- *   ConnectionState: "STRING_VALUE",
+ *   ConnectionState: "CREATING" || "UPDATING" || "DELETING" || "AUTHORIZED" || "DEAUTHORIZED" || "AUTHORIZING" || "DEAUTHORIZING",
  *   NextToken: "STRING_VALUE",
  *   Limit: Number("int"),
  * };
@@ -56,9 +57,9 @@ export interface ListConnectionsCommandOutput extends ListConnectionsResponse, _
  * //     { // Connection
  * //       ConnectionArn: "STRING_VALUE",
  * //       Name: "STRING_VALUE",
- * //       ConnectionState: "STRING_VALUE",
+ * //       ConnectionState: "CREATING" || "UPDATING" || "DELETING" || "AUTHORIZED" || "DEAUTHORIZED" || "AUTHORIZING" || "DEAUTHORIZING",
  * //       StateReason: "STRING_VALUE",
- * //       AuthorizationType: "STRING_VALUE",
+ * //       AuthorizationType: "BASIC" || "OAUTH_CLIENT_CREDENTIALS" || "API_KEY",
  * //       CreationTime: new Date("TIMESTAMP"),
  * //       LastModifiedTime: new Date("TIMESTAMP"),
  * //       LastAuthorizedTime: new Date("TIMESTAMP"),
@@ -132,6 +133,10 @@ export class ListConnectionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "ListConnections",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

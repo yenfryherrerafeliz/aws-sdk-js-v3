@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListFileSharesInput, ListFileSharesOutput } from "../models/models_0";
@@ -37,8 +38,8 @@ export interface ListFileSharesCommandOutput extends ListFileSharesOutput, __Met
 /**
  * @public
  * <p>Gets a list of the file shares for a specific S3 File Gateway, or the list of file
- *          shares that belong to the calling user account. This operation is only supported for S3
- *          File Gateways.</p>
+ *          shares that belong to the calling Amazon Web Services account. This operation is only
+ *          supported for S3 File Gateways.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -57,7 +58,7 @@ export interface ListFileSharesCommandOutput extends ListFileSharesOutput, __Met
  * //   NextMarker: "STRING_VALUE",
  * //   FileShareInfoList: [ // FileShareInfoList
  * //     { // FileShareInfo
- * //       FileShareType: "STRING_VALUE",
+ * //       FileShareType: "NFS" || "SMB",
  * //       FileShareARN: "STRING_VALUE",
  * //       FileShareId: "STRING_VALUE",
  * //       FileShareStatus: "STRING_VALUE",
@@ -136,6 +137,10 @@ export class ListFileSharesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "ListFileShares",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

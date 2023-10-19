@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -59,6 +60,7 @@ export interface DescribeEntityCommandOutput extends DescribeEntityResponse, __M
  * //   EntityArn: "STRING_VALUE",
  * //   LastModifiedDate: "STRING_VALUE",
  * //   Details: "STRING_VALUE",
+ * //   DetailsDocument: "DOCUMENT_VALUE",
  * // };
  *
  * ```
@@ -146,6 +148,10 @@ export class DescribeEntityCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSMPSeymour",
+        operation: "DescribeEntity",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

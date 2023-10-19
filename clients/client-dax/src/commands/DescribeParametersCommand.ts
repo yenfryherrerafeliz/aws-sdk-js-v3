@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DAXClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DAXClient";
@@ -56,7 +57,7 @@ export interface DescribeParametersCommandOutput extends DescribeParametersRespo
  * //   Parameters: [ // ParameterList
  * //     { // Parameter
  * //       ParameterName: "STRING_VALUE",
- * //       ParameterType: "STRING_VALUE",
+ * //       ParameterType: "DEFAULT" || "NODE_TYPE_SPECIFIC",
  * //       ParameterValue: "STRING_VALUE",
  * //       NodeTypeSpecificValues: [ // NodeTypeSpecificValueList
  * //         { // NodeTypeSpecificValue
@@ -68,8 +69,8 @@ export interface DescribeParametersCommandOutput extends DescribeParametersRespo
  * //       Source: "STRING_VALUE",
  * //       DataType: "STRING_VALUE",
  * //       AllowedValues: "STRING_VALUE",
- * //       IsModifiable: "STRING_VALUE",
- * //       ChangeType: "STRING_VALUE",
+ * //       IsModifiable: "TRUE" || "FALSE" || "CONDITIONAL",
+ * //       ChangeType: "IMMEDIATE" || "REQUIRES_REBOOT",
  * //     },
  * //   ],
  * // };
@@ -148,6 +149,10 @@ export class DescribeParametersCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDAXV3",
+        operation: "DescribeParameters",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

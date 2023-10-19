@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CopyClusterSnapshotMessage, CopyClusterSnapshotResult } from "../models/models_0";
@@ -110,6 +111,8 @@ export interface CopyClusterSnapshotCommandOutput extends CopyClusterSnapshotRes
  * //     ManualSnapshotRetentionPeriod: Number("int"),
  * //     ManualSnapshotRemainingDays: Number("int"),
  * //     SnapshotRetentionStartTime: new Date("TIMESTAMP"),
+ * //     MasterPasswordSecretArn: "STRING_VALUE",
+ * //     MasterPasswordSecretKmsKeyId: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -194,6 +197,10 @@ export class CopyClusterSnapshotCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RedshiftServiceVersion20121201",
+        operation: "CopyClusterSnapshot",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

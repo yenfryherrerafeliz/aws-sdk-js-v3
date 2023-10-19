@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListHumanLoopsRequest, ListHumanLoopsResponse } from "../models/models_0";
@@ -51,7 +52,7 @@ export interface ListHumanLoopsCommandOutput extends ListHumanLoopsResponse, __M
  *   CreationTimeAfter: new Date("TIMESTAMP"),
  *   CreationTimeBefore: new Date("TIMESTAMP"),
  *   FlowDefinitionArn: "STRING_VALUE", // required
- *   SortOrder: "STRING_VALUE",
+ *   SortOrder: "Ascending" || "Descending",
  *   NextToken: "STRING_VALUE",
  *   MaxResults: Number("int"),
  * };
@@ -61,7 +62,7 @@ export interface ListHumanLoopsCommandOutput extends ListHumanLoopsResponse, __M
  * //   HumanLoopSummaries: [ // HumanLoopSummaries // required
  * //     { // HumanLoopSummary
  * //       HumanLoopName: "STRING_VALUE",
- * //       HumanLoopStatus: "STRING_VALUE",
+ * //       HumanLoopStatus: "InProgress" || "Failed" || "Completed" || "Stopped" || "Stopping",
  * //       CreationTime: new Date("TIMESTAMP"),
  * //       FailureReason: "STRING_VALUE",
  * //       FlowDefinitionArn: "STRING_VALUE",
@@ -149,6 +150,10 @@ export class ListHumanLoopsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonSageMakerA2IRuntime",
+        operation: "ListHumanLoops",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

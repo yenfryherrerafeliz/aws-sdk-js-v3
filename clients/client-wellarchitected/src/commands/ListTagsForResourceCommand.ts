@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListTagsForResourceInput, ListTagsForResourceOutput } from "../models/models_0";
@@ -38,7 +39,7 @@ export interface ListTagsForResourceCommandOutput extends ListTagsForResourceOut
  * @public
  * <p>List the tags for a resource.</p>
  *          <note>
- *             <p>The WorkloadArn parameter can be a workload ARN, a custom lens ARN, or a profile ARN.</p>
+ *             <p>The WorkloadArn parameter can be a workload ARN, a custom lens ARN, a profile ARN, or review template ARN.</p>
  *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -125,6 +126,10 @@ export class ListTagsForResourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WellArchitectedApiServiceLambda",
+        operation: "ListTagsForResource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

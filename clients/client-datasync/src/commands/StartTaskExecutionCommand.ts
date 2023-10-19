@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DataSyncClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DataSyncClient";
@@ -36,8 +37,8 @@ export interface StartTaskExecutionCommandOutput extends StartTaskExecutionRespo
 
 /**
  * @public
- * <p>Starts an DataSync task. For each task, you can only run one task execution
- *       at a time.</p>
+ * <p>Starts an DataSync transfer task. For each task, you can only run one task
+ *       execution at a time.</p>
  *          <p>There are several phases to a task execution. For more information, see <a href="https://docs.aws.amazon.com/datasync/latest/userguide/working-with-task-executions.html#understand-task-execution-statuses">Task execution statuses</a>.</p>
  *          <important>
  *             <p>If you're planning to transfer data to or from an Amazon S3 location, review
@@ -88,6 +89,32 @@ export interface StartTaskExecutionCommandOutput extends StartTaskExecutionRespo
  *       Value: "STRING_VALUE",
  *     },
  *   ],
+ *   TaskReportConfig: { // TaskReportConfig
+ *     Destination: { // ReportDestination
+ *       S3: { // ReportDestinationS3
+ *         Subdirectory: "STRING_VALUE",
+ *         S3BucketArn: "STRING_VALUE", // required
+ *         BucketAccessRoleArn: "STRING_VALUE", // required
+ *       },
+ *     },
+ *     OutputType: "SUMMARY_ONLY" || "STANDARD",
+ *     ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *     ObjectVersionIds: "INCLUDE" || "NONE",
+ *     Overrides: { // ReportOverrides
+ *       Transferred: { // ReportOverride
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *       Verified: {
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *       Deleted: {
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *       Skipped: {
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *     },
+ *   },
  * };
  * const command = new StartTaskExecutionCommand(input);
  * const response = await client.send(command);
@@ -164,6 +191,10 @@ export class StartTaskExecutionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "FmrsService",
+        operation: "StartTaskExecution",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

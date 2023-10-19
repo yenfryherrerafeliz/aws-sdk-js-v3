@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { BackupClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../BackupClient";
@@ -45,9 +46,10 @@ export interface CreateLogicallyAirGappedBackupVaultCommandOutput
 
 /**
  * @public
- * <p>This request creates a logical container where backups are stored.</p>
- *          <p>This request includes a name, optionally one or more resource tags, an encryption key,
- *          and a request ID.</p>
+ * <p>This request creates a logical container to where backups may be copied.</p>
+ *          <p>This request includes a name, the Region, the maximum number of retention days, the
+ *       minimum number of retention days, and optionally can include tags and a creator request
+ *       ID.</p>
  *          <note>
  *             <p>Do not include sensitive data, such as passport numbers, in the name of a backup
  *          vault.</p>
@@ -159,6 +161,10 @@ export class CreateLogicallyAirGappedBackupVaultCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateLogicallyAirGappedBackupVaultInputFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CryoControllerUserManager",
+        operation: "CreateLogicallyAirGappedBackupVault",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

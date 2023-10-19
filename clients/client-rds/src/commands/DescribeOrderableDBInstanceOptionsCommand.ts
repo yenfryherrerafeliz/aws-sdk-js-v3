@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeOrderableDBInstanceOptionsMessage, OrderableDBInstanceOptionsMessage } from "../models/models_1";
@@ -122,6 +123,7 @@ export interface DescribeOrderableDBInstanceOptionsCommandOutput
  * //       MaxStorageThroughputPerDbInstance: Number("int"),
  * //       MinStorageThroughputPerIops: Number("double"),
  * //       MaxStorageThroughputPerIops: Number("double"),
+ * //       SupportsDedicatedLogVolume: true || false,
  * //     },
  * //   ],
  * //   Marker: "STRING_VALUE",
@@ -237,6 +239,10 @@ export class DescribeOrderableDBInstanceOptionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "DescribeOrderableDBInstanceOptions",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTThingsGraphClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTThingsGraphClient";
@@ -48,7 +49,7 @@ export interface CreateSystemTemplateCommandOutput extends CreateSystemTemplateR
  * const client = new IoTThingsGraphClient(config);
  * const input = { // CreateSystemTemplateRequest
  *   definition: { // DefinitionDocument
- *     language: "STRING_VALUE", // required
+ *     language: "GRAPHQL", // required
  *     text: "STRING_VALUE", // required
  *   },
  *   compatibleNamespaceVersion: Number("long"),
@@ -138,6 +139,10 @@ export class CreateSystemTemplateCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotThingsGraphFrontEndService",
+        operation: "CreateSystemTemplate",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

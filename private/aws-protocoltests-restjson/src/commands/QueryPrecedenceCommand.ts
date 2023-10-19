@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { QueryPrecedenceInput } from "../models/models_0";
@@ -33,6 +34,37 @@ export interface QueryPrecedenceCommandInput extends QueryPrecedenceInput {}
  */
 export interface QueryPrecedenceCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestJsonProtocolClient, QueryPrecedenceCommand } from "@aws-sdk/aws-protocoltests-restjson"; // ES Modules import
+ * // const { RestJsonProtocolClient, QueryPrecedenceCommand } = require("@aws-sdk/aws-protocoltests-restjson"); // CommonJS import
+ * const client = new RestJsonProtocolClient(config);
+ * const input = { // QueryPrecedenceInput
+ *   foo: "STRING_VALUE",
+ *   baz: { // StringMap
+ *     "<keys>": "STRING_VALUE",
+ *   },
+ * };
+ * const command = new QueryPrecedenceCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param QueryPrecedenceCommandInput - {@link QueryPrecedenceCommandInput}
+ * @returns {@link QueryPrecedenceCommandOutput}
+ * @see {@link QueryPrecedenceCommandInput} for command's `input` shape.
+ * @see {@link QueryPrecedenceCommandOutput} for command's `response` shape.
+ * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
+ *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
+ *
+ */
 export class QueryPrecedenceCommand extends $Command<
   QueryPrecedenceCommandInput,
   QueryPrecedenceCommandOutput,
@@ -71,6 +103,10 @@ export class QueryPrecedenceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "QueryPrecedence",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

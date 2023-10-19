@@ -66,16 +66,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `HealthClient` and
-the commands you need, for example `DescribeAffectedAccountsForOrganizationCommand`:
+the commands you need, for example `DescribeEventsCommand`:
 
 ```js
 // ES5 example
-const { HealthClient, DescribeAffectedAccountsForOrganizationCommand } = require("@aws-sdk/client-health");
+const { HealthClient, DescribeEventsCommand } = require("@aws-sdk/client-health");
 ```
 
 ```ts
 // ES6+ example
-import { HealthClient, DescribeAffectedAccountsForOrganizationCommand } from "@aws-sdk/client-health";
+import { HealthClient, DescribeEventsCommand } from "@aws-sdk/client-health";
 ```
 
 ### Usage
@@ -94,7 +94,7 @@ const client = new HealthClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new DescribeAffectedAccountsForOrganizationCommand(params);
+const command = new DescribeEventsCommand(params);
 ```
 
 #### Async/await
@@ -173,7 +173,7 @@ const client = new AWS.Health({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.describeAffectedAccountsForOrganization(params);
+  const data = await client.describeEvents(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -181,7 +181,7 @@ try {
 
 // Promises.
 client
-  .describeAffectedAccountsForOrganization(params)
+  .describeEvents(params)
   .then((data) => {
     // process data.
   })
@@ -190,7 +190,7 @@ client
   });
 
 // callbacks.
-client.describeAffectedAccountsForOrganization(params, (err, data) => {
+client.describeEvents(params, (err, data) => {
   // process err and data.
 });
 ```
@@ -276,6 +276,14 @@ DescribeEntityAggregates
 </summary>
 
 [Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-health/classes/describeentityaggregatescommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-health/interfaces/describeentityaggregatescommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-health/interfaces/describeentityaggregatescommandoutput.html)
+
+</details>
+<details>
+<summary>
+DescribeEntityAggregatesForOrganization
+</summary>
+
+[Command API Reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-health/classes/describeentityaggregatesfororganizationcommand.html) / [Input](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-health/interfaces/describeentityaggregatesfororganizationcommandinput.html) / [Output](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-health/interfaces/describeentityaggregatesfororganizationcommandoutput.html)
 
 </details>
 <details>

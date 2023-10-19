@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -56,7 +57,7 @@ export interface ListChangesetsCommandOutput extends ListChangesetsResponse, __M
  * //       changesetId: "STRING_VALUE",
  * //       changesetArn: "STRING_VALUE",
  * //       datasetId: "STRING_VALUE",
- * //       changeType: "STRING_VALUE",
+ * //       changeType: "REPLACE" || "APPEND" || "MODIFY",
  * //       sourceParams: { // SourceParams
  * //         "<keys>": "STRING_VALUE",
  * //       },
@@ -64,10 +65,10 @@ export interface ListChangesetsCommandOutput extends ListChangesetsResponse, __M
  * //         "<keys>": "STRING_VALUE",
  * //       },
  * //       createTime: Number("long"),
- * //       status: "STRING_VALUE",
+ * //       status: "PENDING" || "FAILED" || "SUCCESS" || "RUNNING" || "STOP_REQUESTED",
  * //       errorInfo: { // ChangesetErrorInfo
  * //         errorMessage: "STRING_VALUE",
- * //         errorCategory: "STRING_VALUE",
+ * //         errorCategory: "VALIDATION" || "SERVICE_QUOTA_EXCEEDED" || "ACCESS_DENIED" || "RESOURCE_NOT_FOUND" || "THROTTLING" || "INTERNAL_SERVICE_EXCEPTION" || "CANCELLED" || "USER_RECOVERABLE",
  * //       },
  * //       activeUntilTimestamp: Number("long"),
  * //       activeFromTimestamp: Number("long"),
@@ -159,6 +160,10 @@ export class ListChangesetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "ListChangesets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

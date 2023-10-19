@@ -11,9 +11,10 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { CreateDeviceFleetRequest } from "../models/models_0";
+import { CreateDeviceFleetRequest } from "../models/models_1";
 import { de_CreateDeviceFleetCommand, se_CreateDeviceFleetCommand } from "../protocols/Aws_json1_1";
 import { SageMakerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../SageMakerClient";
 
@@ -134,6 +135,10 @@ export class CreateDeviceFleetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "CreateDeviceFleet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

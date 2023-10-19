@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListAssignmentsForHITRequest, ListAssignmentsForHITResponse } from "../models/models_0";
@@ -74,7 +75,7 @@ export interface ListAssignmentsForHITCommandOutput extends ListAssignmentsForHI
  *   NextToken: "STRING_VALUE",
  *   MaxResults: Number("int"),
  *   AssignmentStatuses: [ // AssignmentStatusList
- *     "STRING_VALUE",
+ *     "Submitted" || "Approved" || "Rejected",
  *   ],
  * };
  * const command = new ListAssignmentsForHITCommand(input);
@@ -87,7 +88,7 @@ export interface ListAssignmentsForHITCommandOutput extends ListAssignmentsForHI
  * //       AssignmentId: "STRING_VALUE",
  * //       WorkerId: "STRING_VALUE",
  * //       HITId: "STRING_VALUE",
- * //       AssignmentStatus: "STRING_VALUE",
+ * //       AssignmentStatus: "Submitted" || "Approved" || "Rejected",
  * //       AutoApprovalTime: new Date("TIMESTAMP"),
  * //       AcceptTime: new Date("TIMESTAMP"),
  * //       SubmitTime: new Date("TIMESTAMP"),
@@ -168,6 +169,10 @@ export class ListAssignmentsForHITCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MTurkRequesterServiceV20170117",
+        operation: "ListAssignmentsForHIT",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

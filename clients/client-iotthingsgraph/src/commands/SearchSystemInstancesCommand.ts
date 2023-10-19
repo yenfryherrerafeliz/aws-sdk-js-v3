@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTThingsGraphClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTThingsGraphClient";
@@ -48,7 +49,7 @@ export interface SearchSystemInstancesCommandOutput extends SearchSystemInstance
  * const input = { // SearchSystemInstancesRequest
  *   filters: [ // SystemInstanceFilters
  *     { // SystemInstanceFilter
- *       name: "STRING_VALUE",
+ *       name: "SYSTEM_TEMPLATE_ID" || "STATUS" || "GREENGRASS_GROUP_NAME",
  *       value: [ // SystemInstanceFilterValues
  *         "STRING_VALUE",
  *       ],
@@ -64,8 +65,8 @@ export interface SearchSystemInstancesCommandOutput extends SearchSystemInstance
  * //     { // SystemInstanceSummary
  * //       id: "STRING_VALUE",
  * //       arn: "STRING_VALUE",
- * //       status: "STRING_VALUE",
- * //       target: "STRING_VALUE",
+ * //       status: "NOT_DEPLOYED" || "BOOTSTRAP" || "DEPLOY_IN_PROGRESS" || "DEPLOYED_IN_TARGET" || "UNDEPLOY_IN_PROGRESS" || "FAILED" || "PENDING_DELETE" || "DELETED_IN_TARGET",
+ * //       target: "GREENGRASS" || "CLOUD",
  * //       greengrassGroupName: "STRING_VALUE",
  * //       createdAt: new Date("TIMESTAMP"),
  * //       updatedAt: new Date("TIMESTAMP"),
@@ -147,6 +148,10 @@ export class SearchSystemInstancesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotThingsGraphFrontEndService",
+        operation: "SearchSystemInstances",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

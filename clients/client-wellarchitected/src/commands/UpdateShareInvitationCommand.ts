@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateShareInvitationInput, UpdateShareInvitationOutput } from "../models/models_0";
@@ -55,11 +56,12 @@ export interface UpdateShareInvitationCommandOutput extends UpdateShareInvitatio
  * // { // UpdateShareInvitationOutput
  * //   ShareInvitation: { // ShareInvitation
  * //     ShareInvitationId: "STRING_VALUE",
- * //     ShareResourceType: "WORKLOAD" || "LENS" || "PROFILE",
+ * //     ShareResourceType: "WORKLOAD" || "LENS" || "PROFILE" || "TEMPLATE",
  * //     WorkloadId: "STRING_VALUE",
  * //     LensAlias: "STRING_VALUE",
  * //     LensArn: "STRING_VALUE",
  * //     ProfileArn: "STRING_VALUE",
+ * //     TemplateArn: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -143,6 +145,10 @@ export class UpdateShareInvitationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WellArchitectedApiServiceLambda",
+        operation: "UpdateShareInvitation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

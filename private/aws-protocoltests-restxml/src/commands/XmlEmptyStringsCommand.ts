@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { XmlEmptyStringsInputOutput } from "../models/models_0";
@@ -33,6 +34,36 @@ export interface XmlEmptyStringsCommandInput extends XmlEmptyStringsInputOutput 
  */
 export interface XmlEmptyStringsCommandOutput extends XmlEmptyStringsInputOutput, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestXmlProtocolClient, XmlEmptyStringsCommand } from "@aws-sdk/aws-protocoltests-restxml"; // ES Modules import
+ * // const { RestXmlProtocolClient, XmlEmptyStringsCommand } = require("@aws-sdk/aws-protocoltests-restxml"); // CommonJS import
+ * const client = new RestXmlProtocolClient(config);
+ * const input = { // XmlEmptyStringsInputOutput
+ *   emptyString: "STRING_VALUE",
+ * };
+ * const command = new XmlEmptyStringsCommand(input);
+ * const response = await client.send(command);
+ * // { // XmlEmptyStringsInputOutput
+ * //   emptyString: "STRING_VALUE",
+ * // };
+ *
+ * ```
+ *
+ * @param XmlEmptyStringsCommandInput - {@link XmlEmptyStringsCommandInput}
+ * @returns {@link XmlEmptyStringsCommandOutput}
+ * @see {@link XmlEmptyStringsCommandInput} for command's `input` shape.
+ * @see {@link XmlEmptyStringsCommandOutput} for command's `response` shape.
+ * @see {@link RestXmlProtocolClientResolvedConfig | config} for RestXmlProtocolClient's `config` shape.
+ *
+ * @throws {@link RestXmlProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestXmlProtocol service.</p>
+ *
+ */
 export class XmlEmptyStringsCommand extends $Command<
   XmlEmptyStringsCommandInput,
   XmlEmptyStringsCommandOutput,
@@ -71,6 +102,10 @@ export class XmlEmptyStringsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestXml",
+        operation: "XmlEmptyStrings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

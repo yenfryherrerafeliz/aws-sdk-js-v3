@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTThingsGraphClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTThingsGraphClient";
@@ -59,7 +60,7 @@ export interface SearchFlowExecutionsCommandOutput extends SearchFlowExecutionsR
  * //   summaries: [ // FlowExecutionSummaries
  * //     { // FlowExecutionSummary
  * //       flowExecutionId: "STRING_VALUE",
- * //       status: "STRING_VALUE",
+ * //       status: "RUNNING" || "ABORTED" || "SUCCEEDED" || "FAILED",
  * //       systemInstanceId: "STRING_VALUE",
  * //       flowTemplateId: "STRING_VALUE",
  * //       createdAt: new Date("TIMESTAMP"),
@@ -143,6 +144,10 @@ export class SearchFlowExecutionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotThingsGraphFrontEndService",
+        operation: "SearchFlowExecutions",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

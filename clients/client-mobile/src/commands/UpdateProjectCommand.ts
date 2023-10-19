@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MobileClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MobileClient";
@@ -64,7 +65,7 @@ export interface UpdateProjectCommandOutput extends UpdateProjectResult, __Metad
  * //     name: "STRING_VALUE",
  * //     projectId: "STRING_VALUE",
  * //     region: "STRING_VALUE",
- * //     state: "STRING_VALUE",
+ * //     state: "NORMAL" || "SYNCING" || "IMPORTING",
  * //     createdDate: new Date("TIMESTAMP"),
  * //     lastUpdatedDate: new Date("TIMESTAMP"),
  * //     consoleUrl: "STRING_VALUE",
@@ -189,6 +190,10 @@ export class UpdateProjectCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSMobileService",
+        operation: "UpdateProject",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeBuildClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeBuildClient";
@@ -82,7 +83,7 @@ export interface UpdateProjectVisibilityCommandOutput extends UpdateProjectVisib
  * const client = new CodeBuildClient(config);
  * const input = { // UpdateProjectVisibilityInput
  *   projectArn: "STRING_VALUE", // required
- *   projectVisibility: "STRING_VALUE", // required
+ *   projectVisibility: "PUBLIC_READ" || "PRIVATE", // required
  *   resourceAccessRole: "STRING_VALUE",
  * };
  * const command = new UpdateProjectVisibilityCommand(input);
@@ -90,7 +91,7 @@ export interface UpdateProjectVisibilityCommandOutput extends UpdateProjectVisib
  * // { // UpdateProjectVisibilityOutput
  * //   projectArn: "STRING_VALUE",
  * //   publicProjectAlias: "STRING_VALUE",
- * //   projectVisibility: "STRING_VALUE",
+ * //   projectVisibility: "PUBLIC_READ" || "PRIVATE",
  * // };
  *
  * ```
@@ -161,6 +162,10 @@ export class UpdateProjectVisibilityCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeBuild_20161006",
+        operation: "UpdateProjectVisibility",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

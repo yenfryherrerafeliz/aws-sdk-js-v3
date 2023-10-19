@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AppflowClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AppflowClient";
@@ -68,6 +69,8 @@ export interface DescribeFlowExecutionRecordsCommandOutput
  * //         bytesProcessed: Number("long"),
  * //         bytesWritten: Number("long"),
  * //         recordsProcessed: Number("long"),
+ * //         numParallelProcesses: Number("long"),
+ * //         maxPageSize: Number("long"),
  * //       },
  * //       startedAt: new Date("TIMESTAMP"),
  * //       lastUpdatedAt: new Date("TIMESTAMP"),
@@ -167,6 +170,10 @@ export class DescribeFlowExecutionRecordsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SandstoneConfigurationServiceLambda",
+        operation: "DescribeFlowExecutionRecords",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

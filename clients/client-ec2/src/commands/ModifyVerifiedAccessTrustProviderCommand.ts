@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
@@ -67,6 +68,10 @@ export interface ModifyVerifiedAccessTrustProviderCommandOutput
  *   Description: "STRING_VALUE",
  *   DryRun: true || false,
  *   ClientToken: "STRING_VALUE",
+ *   SseSpecification: { // VerifiedAccessSseSpecificationRequest
+ *     CustomerManagedKeyEnabled: true || false,
+ *     KmsKeyArn: "STRING_VALUE",
+ *   },
  * };
  * const command = new ModifyVerifiedAccessTrustProviderCommand(input);
  * const response = await client.send(command);
@@ -98,6 +103,10 @@ export interface ModifyVerifiedAccessTrustProviderCommandOutput
  * //         Value: "STRING_VALUE",
  * //       },
  * //     ],
+ * //     SseSpecification: { // VerifiedAccessSseSpecificationResponse
+ * //       CustomerManagedKeyEnabled: true || false,
+ * //       KmsKeyArn: "STRING_VALUE",
+ * //     },
  * //   },
  * // };
  *
@@ -163,6 +172,10 @@ export class ModifyVerifiedAccessTrustProviderCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: ModifyVerifiedAccessTrustProviderRequestFilterSensitiveLog,
       outputFilterSensitiveLog: ModifyVerifiedAccessTrustProviderResultFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2",
+        operation: "ModifyVerifiedAccessTrustProvider",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

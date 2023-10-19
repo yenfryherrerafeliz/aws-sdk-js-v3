@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -101,6 +102,39 @@ export interface DescribeMetadataModelImportsCommandOutput
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
  *
+ * @example Describe Metadata Model Imports
+ * ```javascript
+ * // Returns a paginated list of metadata model imports.
+ * const input = {
+ *   "Filters": [
+ *     {
+ *       "Name": "request-id",
+ *       "Values": [
+ *         "01234567-89ab-cdef-0123-456789abcdef"
+ *       ]
+ *     }
+ *   ],
+ *   "Marker": "0123456789abcdefghijklmnopqrs",
+ *   "MaxRecords": 20,
+ *   "MigrationProjectIdentifier": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012"
+ * };
+ * const command = new DescribeMetadataModelImportsCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "Marker": "0123456789abcdefghijklmnopqrs",
+ *   "Requests": [
+ *     {
+ *       "MigrationProjectArn": "arn:aws:dms:us-east-1:012345678901:migration-project:0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ012",
+ *       "RequestIdentifier": "01234567-89ab-cdef-0123-456789abcdef",
+ *       "Status": "SUCCESS"
+ *     }
+ *   ]
+ * }
+ * *\/
+ * // example id: describe-metadata-model-imports-1689719771322
+ * ```
+ *
  */
 export class DescribeMetadataModelImportsCommand extends $Command<
   DescribeMetadataModelImportsCommandInput,
@@ -152,6 +186,10 @@ export class DescribeMetadataModelImportsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "DescribeMetadataModelImports",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

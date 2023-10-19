@@ -12,6 +12,7 @@ import {
   MiddlewareStack,
   SdkStreamSerdeContext as __SdkStreamSerdeContext,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
   StreamingBlobPayloadOutputTypes,
 } from "@smithy/types";
 
@@ -57,7 +58,7 @@ export interface GetChunkCommandOutput extends Omit<GetChunkOutput, "Data">, __M
  * //   Data: "STREAMING_BLOB_VALUE", // required
  * //   Length: Number("long"), // required
  * //   Checksum: "STRING_VALUE", // required
- * //   ChecksumAlgorithm: "STRING_VALUE", // required
+ * //   ChecksumAlgorithm: "SHA256", // required
  * // };
  *
  * ```
@@ -141,6 +142,10 @@ export class GetChunkCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: GetChunkOutputFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CryoStorageFrontendService",
+        operation: "GetChunk",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

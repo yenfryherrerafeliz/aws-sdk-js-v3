@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -63,7 +64,7 @@ export interface GetMediaPipelineCommandOutput extends GetMediaPipelineResponse,
  * //       MediaPipelineArn: "STRING_VALUE",
  * //       SourceType: "ChimeSdkMeeting",
  * //       SourceArn: "STRING_VALUE",
- * //       Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused",
+ * //       Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused" || "NotStarted",
  * //       SinkType: "S3Bucket",
  * //       SinkArn: "STRING_VALUE",
  * //       CreatedTimestamp: new Date("TIMESTAMP"),
@@ -190,7 +191,7 @@ export interface GetMediaPipelineCommandOutput extends GetMediaPipelineResponse,
  * //       ],
  * //       MediaPipelineId: "STRING_VALUE",
  * //       MediaPipelineArn: "STRING_VALUE",
- * //       Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused",
+ * //       Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused" || "NotStarted",
  * //       CreatedTimestamp: new Date("TIMESTAMP"),
  * //       UpdatedTimestamp: new Date("TIMESTAMP"),
  * //     },
@@ -238,7 +239,7 @@ export interface GetMediaPipelineCommandOutput extends GetMediaPipelineResponse,
  * //           },
  * //         },
  * //       ],
- * //       Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused",
+ * //       Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused" || "NotStarted",
  * //       CreatedTimestamp: new Date("TIMESTAMP"),
  * //       UpdatedTimestamp: new Date("TIMESTAMP"),
  * //     },
@@ -246,7 +247,7 @@ export interface GetMediaPipelineCommandOutput extends GetMediaPipelineResponse,
  * //       MediaPipelineId: "STRING_VALUE",
  * //       MediaPipelineArn: "STRING_VALUE",
  * //       MediaInsightsPipelineConfigurationArn: "STRING_VALUE",
- * //       Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused",
+ * //       Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused" || "NotStarted",
  * //       KinesisVideoStreamSourceRuntimeConfiguration: { // KinesisVideoStreamSourceRuntimeConfiguration
  * //         Streams: [ // Streams // required
  * //           { // StreamConfiguration
@@ -288,6 +289,33 @@ export interface GetMediaPipelineCommandOutput extends GetMediaPipelineResponse,
  * //         RecordingFileFormat: "Wav" || "Opus", // required
  * //       },
  * //       CreatedTimestamp: new Date("TIMESTAMP"),
+ * //       ElementStatuses: [ // MediaInsightsPipelineElementStatuses
+ * //         { // MediaInsightsPipelineElementStatus
+ * //           Type: "AmazonTranscribeCallAnalyticsProcessor" || "VoiceAnalyticsProcessor" || "AmazonTranscribeProcessor" || "KinesisDataStreamSink" || "LambdaFunctionSink" || "SqsQueueSink" || "SnsTopicSink" || "S3RecordingSink" || "VoiceEnhancementSink",
+ * //           Status: "NotStarted" || "NotSupported" || "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused",
+ * //         },
+ * //       ],
+ * //     },
+ * //     MediaStreamPipeline: { // MediaStreamPipeline
+ * //       MediaPipelineId: "STRING_VALUE",
+ * //       MediaPipelineArn: "STRING_VALUE",
+ * //       CreatedTimestamp: new Date("TIMESTAMP"),
+ * //       UpdatedTimestamp: new Date("TIMESTAMP"),
+ * //       Status: "Initializing" || "InProgress" || "Failed" || "Stopping" || "Stopped" || "Paused" || "NotStarted",
+ * //       Sources: [ // MediaStreamSourceList
+ * //         { // MediaStreamSource
+ * //           SourceType: "ChimeSdkMeeting", // required
+ * //           SourceArn: "STRING_VALUE", // required
+ * //         },
+ * //       ],
+ * //       Sinks: [ // MediaStreamSinkList
+ * //         { // MediaStreamSink
+ * //           SinkArn: "STRING_VALUE", // required
+ * //           SinkType: "KinesisVideoStreamPool", // required
+ * //           ReservedStreamCapacity: Number("int"), // required
+ * //           MediaStreamType: "MixedAudio" || "IndividualAudio", // required
+ * //         },
+ * //       ],
  * //     },
  * //   },
  * // };
@@ -375,6 +403,10 @@ export class GetMediaPipelineCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: GetMediaPipelineResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ChimeSDKMediaPipelinesService",
+        operation: "GetMediaPipeline",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

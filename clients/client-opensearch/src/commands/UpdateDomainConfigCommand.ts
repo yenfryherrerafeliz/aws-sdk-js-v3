@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -41,7 +42,7 @@ export interface UpdateDomainConfigCommandOutput extends UpdateDomainConfigRespo
 /**
  * @public
  * <p>Modifies the cluster configuration of the specified Amazon OpenSearch Service
- *    domain.sl</p>
+ *    domain.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -474,6 +475,10 @@ export class UpdateDomainConfigCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: UpdateDomainConfigRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonOpenSearchService",
+        operation: "UpdateDomainConfig",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

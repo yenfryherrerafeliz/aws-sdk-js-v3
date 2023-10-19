@@ -11,13 +11,12 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
-import {
-  GetTransitGatewayRouteTablePropagationsRequest,
-  GetTransitGatewayRouteTablePropagationsResult,
-} from "../models/models_5";
+import { GetTransitGatewayRouteTablePropagationsRequest } from "../models/models_5";
+import { GetTransitGatewayRouteTablePropagationsResult } from "../models/models_6";
 import {
   de_GetTransitGatewayRouteTablePropagationsCommand,
   se_GetTransitGatewayRouteTablePropagationsCommand,
@@ -149,6 +148,10 @@ export class GetTransitGatewayRouteTablePropagationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2",
+        operation: "GetTransitGatewayRouteTablePropagations",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

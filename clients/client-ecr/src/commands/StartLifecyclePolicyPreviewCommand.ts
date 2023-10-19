@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -57,7 +58,7 @@ export interface StartLifecyclePolicyPreviewCommandOutput
  * //   registryId: "STRING_VALUE",
  * //   repositoryName: "STRING_VALUE",
  * //   lifecyclePolicyText: "STRING_VALUE",
- * //   status: "STRING_VALUE",
+ * //   status: "IN_PROGRESS" || "COMPLETE" || "EXPIRED" || "FAILED",
  * // };
  *
  * ```
@@ -86,6 +87,9 @@ export interface StartLifecyclePolicyPreviewCommandOutput
  *
  * @throws {@link ServerException} (server fault)
  *  <p>These errors are usually caused by a server-side issue.</p>
+ *
+ * @throws {@link ValidationException} (client fault)
+ *  <p>There was an exception validating this request.</p>
  *
  * @throws {@link ECRServiceException}
  * <p>Base exception class for all service exceptions from ECR service.</p>
@@ -141,6 +145,10 @@ export class StartLifecyclePolicyPreviewCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "StartLifecyclePolicyPreview",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetTagKeysInput, GetTagKeysOutput } from "../models/models_0";
@@ -42,7 +43,7 @@ export interface GetTagKeysCommandOutput extends GetTagKeysOutput, __MetadataBea
  * @public
  * <p>Returns all tag keys currently in use in the specified Amazon Web Services Region for the calling
  *             account.</p>
- *         <p>This operation supports pagination, where the response can be sent in
+ *          <p>This operation supports pagination, where the response can be sent in
  *     multiple pages. You should check the <code>PaginationToken</code> response parameter to determine
  *     if there are additional results available to return. Repeat the query, passing the
  *     <code>PaginationToken</code> response parameter value as an input to the next request until you
@@ -80,21 +81,21 @@ export interface GetTagKeysCommandOutput extends GetTagKeysOutput, __MetadataBea
  *
  * @throws {@link InvalidParameterException} (client fault)
  *  <p>This error indicates one of the following:</p>
- *         <ul>
+ *          <ul>
  *             <li>
- *                 <p>A parameter is missing.</p>
+ *                <p>A parameter is missing.</p>
  *             </li>
  *             <li>
- *                 <p>A malformed string was supplied for the request parameter.</p>
+ *                <p>A malformed string was supplied for the request parameter.</p>
  *             </li>
  *             <li>
- *                 <p>An out-of-range value was supplied for the request parameter.</p>
+ *                <p>An out-of-range value was supplied for the request parameter.</p>
  *             </li>
  *             <li>
- *                 <p>The target ID is invalid, unsupported, or doesn't exist.</p>
+ *                <p>The target ID is invalid, unsupported, or doesn't exist.</p>
  *             </li>
  *             <li>
- *                 <p>You can't access the Amazon S3 bucket for report storage. For more information, see
+ *                <p>You can't access the Amazon S3 bucket for report storage. For more information, see
  *                         <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies-prereqs.html#bucket-policies-org-report">Additional Requirements for Organization-wide Tag Compliance
  *                         Reports</a> in the <i>Organizations User Guide.</i>
  *                </p>
@@ -160,6 +161,10 @@ export class GetTagKeysCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ResourceGroupsTaggingAPI_20170126",
+        operation: "GetTagKeys",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

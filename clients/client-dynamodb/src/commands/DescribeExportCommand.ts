@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DynamoDBClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DynamoDBClient";
@@ -69,6 +70,12 @@ export interface DescribeExportCommandOutput extends DescribeExportOutput, __Met
  * //     ExportFormat: "DYNAMODB_JSON" || "ION",
  * //     BilledSizeBytes: Number("long"),
  * //     ItemCount: Number("long"),
+ * //     ExportType: "FULL_EXPORT" || "INCREMENTAL_EXPORT",
+ * //     IncrementalExportSpecification: { // IncrementalExportSpecification
+ * //       ExportFromTime: new Date("TIMESTAMP"),
+ * //       ExportToTime: new Date("TIMESTAMP"),
+ * //       ExportViewType: "NEW_IMAGE" || "NEW_AND_OLD_IMAGES",
+ * //     },
  * //   },
  * // };
  *
@@ -156,6 +163,10 @@ export class DescribeExportCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "DynamoDB_20120810",
+        operation: "DescribeExport",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

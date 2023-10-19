@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListPackagesForDomainRequest, ListPackagesForDomainResponse } from "../models/models_0";
@@ -57,7 +58,7 @@ export interface ListPackagesForDomainCommandOutput extends ListPackagesForDomai
  * //     { // DomainPackageDetails
  * //       PackageID: "STRING_VALUE",
  * //       PackageName: "STRING_VALUE",
- * //       PackageType: "TXT-DICTIONARY",
+ * //       PackageType: "TXT-DICTIONARY" || "ZIP-PLUGIN",
  * //       LastUpdated: new Date("TIMESTAMP"),
  * //       DomainName: "STRING_VALUE",
  * //       DomainPackageStatus: "ASSOCIATING" || "ASSOCIATION_FAILED" || "ACTIVE" || "DISSOCIATING" || "DISSOCIATION_FAILED",
@@ -149,6 +150,10 @@ export class ListPackagesForDomainCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonOpenSearchService",
+        operation: "ListPackagesForDomain",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

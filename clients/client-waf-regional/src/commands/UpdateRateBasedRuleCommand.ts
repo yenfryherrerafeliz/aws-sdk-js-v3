@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateRateBasedRuleRequest, UpdateRateBasedRuleResponse } from "../models/models_0";
@@ -102,10 +103,10 @@ export interface UpdateRateBasedRuleCommandOutput extends UpdateRateBasedRuleRes
  *   ChangeToken: "STRING_VALUE", // required
  *   Updates: [ // RuleUpdates // required
  *     { // RuleUpdate
- *       Action: "STRING_VALUE", // required
+ *       Action: "INSERT" || "DELETE", // required
  *       Predicate: { // Predicate
  *         Negated: true || false, // required
- *         Type: "STRING_VALUE", // required
+ *         Type: "IPMatch" || "ByteMatch" || "SqlInjectionMatch" || "GeoMatch" || "SizeConstraint" || "XssMatch" || "RegexMatch", // required
  *         DataId: "STRING_VALUE", // required
  *       },
  *     },
@@ -289,6 +290,10 @@ export class UpdateRateBasedRuleCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_Regional_20161128",
+        operation: "UpdateRateBasedRule",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

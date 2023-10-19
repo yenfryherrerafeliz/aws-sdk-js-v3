@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTAnalyticsClient";
@@ -61,7 +62,7 @@ export interface ListChannelsCommandOutput extends ListChannelsResponse, __Metad
  * //           roleArn: "STRING_VALUE",
  * //         },
  * //       },
- * //       status: "STRING_VALUE",
+ * //       status: "CREATING" || "ACTIVE" || "DELETING",
  * //       creationTime: new Date("TIMESTAMP"),
  * //       lastUpdateTime: new Date("TIMESTAMP"),
  * //       lastMessageArrivalTime: new Date("TIMESTAMP"),
@@ -142,6 +143,10 @@ export class ListChannelsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIoTAnalytics",
+        operation: "ListChannels",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

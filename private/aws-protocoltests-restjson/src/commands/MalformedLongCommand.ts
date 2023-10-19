@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MalformedLongInput } from "../models/models_0";
@@ -33,6 +34,37 @@ export interface MalformedLongCommandInput extends MalformedLongInput {}
  */
 export interface MalformedLongCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestJsonProtocolClient, MalformedLongCommand } from "@aws-sdk/aws-protocoltests-restjson"; // ES Modules import
+ * // const { RestJsonProtocolClient, MalformedLongCommand } = require("@aws-sdk/aws-protocoltests-restjson"); // CommonJS import
+ * const client = new RestJsonProtocolClient(config);
+ * const input = { // MalformedLongInput
+ *   longInBody: Number("long"),
+ *   longInPath: Number("long"), // required
+ *   longInQuery: Number("long"),
+ *   longInHeader: Number("long"),
+ * };
+ * const command = new MalformedLongCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param MalformedLongCommandInput - {@link MalformedLongCommandInput}
+ * @returns {@link MalformedLongCommandOutput}
+ * @see {@link MalformedLongCommandInput} for command's `input` shape.
+ * @see {@link MalformedLongCommandOutput} for command's `response` shape.
+ * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
+ *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
+ *
+ */
 export class MalformedLongCommand extends $Command<
   MalformedLongCommandInput,
   MalformedLongCommandOutput,
@@ -71,6 +103,10 @@ export class MalformedLongCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "MalformedLong",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

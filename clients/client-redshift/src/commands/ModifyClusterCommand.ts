@@ -11,9 +11,15 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { ModifyClusterMessage, ModifyClusterResult } from "../models/models_1";
+import {
+  ModifyClusterMessage,
+  ModifyClusterMessageFilterSensitiveLog,
+  ModifyClusterResult,
+  ModifyClusterResultFilterSensitiveLog,
+} from "../models/models_1";
 import { de_ModifyClusterCommand, se_ModifyClusterCommand } from "../protocols/Aws_query";
 import { RedshiftClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../RedshiftClient";
 
@@ -81,6 +87,8 @@ export interface ModifyClusterCommandOutput extends ModifyClusterResult, __Metad
  *   AvailabilityZoneRelocation: true || false,
  *   AvailabilityZone: "STRING_VALUE",
  *   Port: Number("int"),
+ *   ManageMasterPassword: true || false,
+ *   MasterPasswordSecretKmsKeyId: "STRING_VALUE",
  * };
  * const command = new ModifyClusterCommand(input);
  * const response = await client.send(command);
@@ -258,6 +266,8 @@ export interface ModifyClusterCommandOutput extends ModifyClusterResult, __Metad
  * //     CustomDomainName: "STRING_VALUE",
  * //     CustomDomainCertificateArn: "STRING_VALUE",
  * //     CustomDomainCertificateExpiryDate: new Date("TIMESTAMP"),
+ * //     MasterPasswordSecretArn: "STRING_VALUE",
+ * //     MasterPasswordSecretKmsKeyId: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -393,8 +403,12 @@ export class ModifyClusterCommand extends $Command<
       logger,
       clientName,
       commandName,
-      inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      inputFilterSensitiveLog: ModifyClusterMessageFilterSensitiveLog,
+      outputFilterSensitiveLog: ModifyClusterResultFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RedshiftServiceVersion20121201",
+        operation: "ModifyCluster",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

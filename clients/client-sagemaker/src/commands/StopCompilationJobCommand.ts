@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { StopCompilationJobRequest } from "../models/models_4";
@@ -39,9 +40,10 @@ export interface StopCompilationJobCommandOutput extends __MetadataBearer {}
  * <p>Stops a model compilation job.</p>
  *          <p> To stop a job, Amazon SageMaker sends the algorithm the SIGTERM signal. This gracefully shuts the
  *             job down. If the job hasn't stopped, it sends the SIGKILL signal.</p>
- *          <p>When it receives a <code>StopCompilationJob</code> request, Amazon SageMaker changes the <code>CompilationJobStatus</code> of the job to
- *             <code>Stopping</code>. After Amazon SageMaker stops the job, it sets the <code>CompilationJobStatus</code> to <code>Stopped</code>.
- *         </p>
+ *          <p>When it receives a <code>StopCompilationJob</code> request, Amazon SageMaker changes the
+ *                 <code>CompilationJobStatus</code> of the job to <code>Stopping</code>. After Amazon
+ *             SageMaker stops the job, it sets the <code>CompilationJobStatus</code> to
+ *                 <code>Stopped</code>. </p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -120,6 +122,10 @@ export class StopCompilationJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "StopCompilationJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

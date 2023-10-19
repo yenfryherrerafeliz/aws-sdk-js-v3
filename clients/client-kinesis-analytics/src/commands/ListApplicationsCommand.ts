@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { KinesisAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KinesisAnalyticsClient";
@@ -70,7 +71,7 @@ export interface ListApplicationsCommandOutput extends ListApplicationsResponse,
  * //     { // ApplicationSummary
  * //       ApplicationName: "STRING_VALUE", // required
  * //       ApplicationARN: "STRING_VALUE", // required
- * //       ApplicationStatus: "STRING_VALUE", // required
+ * //       ApplicationStatus: "DELETING" || "STARTING" || "STOPPING" || "READY" || "RUNNING" || "UPDATING", // required
  * //     },
  * //   ],
  * //   HasMoreApplications: true || false, // required
@@ -138,6 +139,10 @@ export class ListApplicationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "KinesisAnalytics_20150814",
+        operation: "ListApplications",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

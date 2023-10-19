@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutMetricsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutMetricsClient";
@@ -59,8 +60,8 @@ export interface ListAlertsCommandOutput extends ListAlertsResponse, __MetadataB
  * //       AnomalyDetectorArn: "STRING_VALUE",
  * //       AlertName: "STRING_VALUE",
  * //       AlertSensitivityThreshold: Number("int"),
- * //       AlertType: "STRING_VALUE",
- * //       AlertStatus: "STRING_VALUE",
+ * //       AlertType: "SNS" || "LAMBDA",
+ * //       AlertStatus: "ACTIVE" || "INACTIVE",
  * //       LastModificationTime: new Date("TIMESTAMP"),
  * //       CreationTime: new Date("TIMESTAMP"),
  * //       Tags: { // TagMap
@@ -147,6 +148,10 @@ export class ListAlertsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutMetrics",
+        operation: "ListAlerts",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

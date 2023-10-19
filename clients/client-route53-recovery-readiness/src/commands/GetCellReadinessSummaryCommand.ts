@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetCellReadinessSummaryRequest, GetCellReadinessSummaryResponse } from "../models/models_0";
@@ -56,10 +57,10 @@ export interface GetCellReadinessSummaryCommandOutput extends GetCellReadinessSu
  * const response = await client.send(command);
  * // { // GetCellReadinessSummaryResponse
  * //   NextToken: "STRING_VALUE",
- * //   Readiness: "STRING_VALUE",
+ * //   Readiness: "READY" || "NOT_READY" || "UNKNOWN" || "NOT_AUTHORIZED",
  * //   ReadinessChecks: [ // __listOfReadinessCheckSummary
  * //     { // ReadinessCheckSummary
- * //       Readiness: "STRING_VALUE",
+ * //       Readiness: "READY" || "NOT_READY" || "UNKNOWN" || "NOT_AUTHORIZED",
  * //       ReadinessCheckName: "STRING_VALUE",
  * //     },
  * //   ],
@@ -142,6 +143,10 @@ export class GetCellReadinessSummaryCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Route53RecoveryReadiness",
+        operation: "GetCellReadinessSummary",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
   StreamingBlobPayloadInputTypes,
 } from "@smithy/types";
 
@@ -54,9 +55,7 @@ export interface DetectAnomaliesCommandOutput extends DetectAnomaliesResponse, _
  *          You are charged for the amount of time, in minutes, that a model runs and for the number of anomaly detection units that your
  *          model uses. If you are not using a model, use the <a>StopModel</a> operation to stop your model. </p>
  *          </note>
- *
  *          <p>For more information, see <i>Detecting anomalies in an image</i> in the Amazon Lookout for Vision developer guide.</p>
- *
  *          <p>This operation requires permissions to perform the
  *          <code>lookoutvision:DetectAnomalies</code> operation.</p>
  * @example
@@ -174,6 +173,10 @@ export class DetectAnomaliesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: DetectAnomaliesRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutVisionService",
+        operation: "DetectAnomalies",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

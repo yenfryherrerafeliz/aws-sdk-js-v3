@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MachineLearningClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MachineLearningClient";
@@ -45,13 +46,13 @@ export interface DescribeTagsCommandOutput extends DescribeTagsOutput, __Metadat
  * const client = new MachineLearningClient(config);
  * const input = { // DescribeTagsInput
  *   ResourceId: "STRING_VALUE", // required
- *   ResourceType: "STRING_VALUE", // required
+ *   ResourceType: "BatchPrediction" || "DataSource" || "Evaluation" || "MLModel", // required
  * };
  * const command = new DescribeTagsCommand(input);
  * const response = await client.send(command);
  * // { // DescribeTagsOutput
  * //   ResourceId: "STRING_VALUE",
- * //   ResourceType: "STRING_VALUE",
+ * //   ResourceType: "BatchPrediction" || "DataSource" || "Evaluation" || "MLModel",
  * //   Tags: [ // TagList
  * //     { // Tag
  * //       Key: "STRING_VALUE",
@@ -129,6 +130,10 @@ export class DescribeTagsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonML_20141212",
+        operation: "DescribeTags",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

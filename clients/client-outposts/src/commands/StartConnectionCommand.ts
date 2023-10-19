@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { StartConnectionRequest, StartConnectionResponse } from "../models/models_0";
@@ -40,9 +41,7 @@ export interface StartConnectionCommandOutput extends StartConnectionResponse, _
  *             <p>
  *       Amazon Web Services uses this action to install Outpost servers.</p>
  *          </note>
- *          <p>
- *       Starts the connection required for Outpost server installation.
- *     </p>
+ *          <p> Starts the connection required for Outpost server installation. </p>
  *          <p>
  *       Use CloudTrail to monitor this action or Amazon Web Services managed policy for Amazon Web Services Outposts to secure it. For
  *       more information, see <a href="https://docs.aws.amazon.com/outposts/latest/userguide/security-iam-awsmanpol.html">
@@ -142,6 +141,10 @@ export class StartConnectionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OutpostsOlafService",
+        operation: "StartConnection",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

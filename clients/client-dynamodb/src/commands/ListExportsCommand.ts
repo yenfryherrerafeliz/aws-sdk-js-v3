@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DynamoDBClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DynamoDBClient";
@@ -55,6 +56,7 @@ export interface ListExportsCommandOutput extends ListExportsOutput, __MetadataB
  * //     { // ExportSummary
  * //       ExportArn: "STRING_VALUE",
  * //       ExportStatus: "IN_PROGRESS" || "COMPLETED" || "FAILED",
+ * //       ExportType: "FULL_EXPORT" || "INCREMENTAL_EXPORT",
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -139,6 +141,10 @@ export class ListExportsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "DynamoDB_20120810",
+        operation: "ListExports",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

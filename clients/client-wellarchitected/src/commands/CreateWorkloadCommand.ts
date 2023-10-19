@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateWorkloadInput, CreateWorkloadOutput } from "../models/models_0";
@@ -49,6 +50,29 @@ export interface CreateWorkloadCommandOutput extends CreateWorkloadOutput, __Met
  *                 parameter is listed as not being required in the following section.
  *             </p>
  *          </important>
+ *          <p>When creating a workload using a review template, you must have the following IAM permissions:</p>
+ *          <ul>
+ *             <li>
+ *                <p>
+ *                   <code>wellarchitected:GetReviewTemplate</code>
+ *                </p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <code>wellarchitected:GetReviewTemplateAnswer</code>
+ *                </p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <code>wellarchitected:ListReviewTemplateAnswers</code>
+ *                </p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <code>wellarchitected:GetReviewTemplateLensReview</code>
+ *                </p>
+ *             </li>
+ *          </ul>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -93,6 +117,9 @@ export interface CreateWorkloadCommandOutput extends CreateWorkloadOutput, __Met
  *     "STRING_VALUE",
  *   ],
  *   ProfileArns: [ // WorkloadProfileArns
+ *     "STRING_VALUE",
+ *   ],
+ *   ReviewTemplateArns: [ // ReviewTemplateArns
  *     "STRING_VALUE",
  *   ],
  * };
@@ -186,6 +213,10 @@ export class CreateWorkloadCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WellArchitectedApiServiceLambda",
+        operation: "CreateWorkload",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

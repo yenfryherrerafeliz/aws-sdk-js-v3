@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateTLSInspectionConfigurationRequest, CreateTLSInspectionConfigurationResponse } from "../models/models_0";
@@ -42,7 +43,7 @@ export interface CreateTLSInspectionConfigurationCommandOutput
 /**
  * @public
  * <p>Creates an Network Firewall TLS inspection configuration. A TLS inspection configuration contains the Certificate Manager certificate references that Network Firewall uses to decrypt and re-encrypt inbound traffic.</p>
- *          <p>After you create a TLS inspection configuration, you associate it with a firewall policy.</p>
+ *          <p>After you create a TLS inspection configuration, you associate it with a new firewall policy.</p>
  *          <p>To update the settings for a TLS inspection configuration, use <a>UpdateTLSInspectionConfiguration</a>.</p>
  *          <p>To manage a TLS inspection configuration's tags, use the standard Amazon Web Services resource tagging operations, <a>ListTagsForResource</a>, <a>TagResource</a>, and <a>UntagResource</a>.</p>
  *          <p>To retrieve information about TLS inspection configurations, use <a>ListTLSInspectionConfigurations</a> and <a>DescribeTLSInspectionConfiguration</a>.</p>
@@ -151,6 +152,10 @@ export interface CreateTLSInspectionConfigurationCommandOutput
  * @see {@link CreateTLSInspectionConfigurationCommandOutput} for command's `response` shape.
  * @see {@link NetworkFirewallClientResolvedConfig | config} for NetworkFirewallClient's `config` shape.
  *
+ * @throws {@link InsufficientCapacityException} (server fault)
+ *  <p>Amazon Web Services doesn't currently have enough available capacity to fulfill your request. Try your
+ *          request later. </p>
+ *
  * @throws {@link InternalServerError} (server fault)
  *  <p>Your request is valid, but Network Firewall couldn’t perform the operation because of a
  *          system problem. Retry your request. </p>
@@ -170,6 +175,9 @@ export interface CreateTLSInspectionConfigurationCommandOutput
  *                that isn't valid in the context of the request.</p>
  *             </li>
  *          </ul>
+ *
+ * @throws {@link LimitExceededException} (client fault)
+ *  <p>Unable to perform the operation because doing so would violate a limit setting. </p>
  *
  * @throws {@link ThrottlingException} (client fault)
  *  <p>Unable to process the request due to throttling limitations.</p>
@@ -228,6 +236,10 @@ export class CreateTLSInspectionConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "NetworkFirewall_20201112",
+        operation: "CreateTLSInspectionConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListNetworkSettingsRequest, ListNetworkSettingsResponse } from "../models/models_0";
@@ -52,7 +53,7 @@ export interface ListNetworkSettingsCommandOutput extends ListNetworkSettingsRes
  * // { // ListNetworkSettingsResponse
  * //   networkSettings: [ // NetworkSettingsList
  * //     { // NetworkSettingsSummary
- * //       networkSettingsArn: "STRING_VALUE",
+ * //       networkSettingsArn: "STRING_VALUE", // required
  * //       vpcId: "STRING_VALUE",
  * //     },
  * //   ],
@@ -133,6 +134,10 @@ export class ListNetworkSettingsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSErmineControlPlaneService",
+        operation: "ListNetworkSettings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

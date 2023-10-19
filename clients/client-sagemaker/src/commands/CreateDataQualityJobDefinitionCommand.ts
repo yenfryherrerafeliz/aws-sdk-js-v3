@@ -11,9 +11,11 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { CreateDataQualityJobDefinitionRequest, CreateDataQualityJobDefinitionResponse } from "../models/models_0";
+import { CreateDataQualityJobDefinitionRequest } from "../models/models_0";
+import { CreateDataQualityJobDefinitionResponse } from "../models/models_1";
 import {
   de_CreateDataQualityJobDefinitionCommand,
   se_CreateDataQualityJobDefinitionCommand,
@@ -42,7 +44,8 @@ export interface CreateDataQualityJobDefinitionCommandOutput
 /**
  * @public
  * <p>Creates a definition for a job that monitors data quality and drift. For information
- *          about model monitor, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor.html">Amazon SageMaker Model Monitor</a>.</p>
+ *          about model monitor, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor.html">Amazon SageMaker Model
+ *          Monitor</a>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -86,6 +89,7 @@ export interface CreateDataQualityJobDefinitionCommandOutput
  *       ProbabilityThresholdAttribute: Number("double"),
  *       StartTimeOffset: "STRING_VALUE",
  *       EndTimeOffset: "STRING_VALUE",
+ *       ExcludeFeaturesAttribute: "STRING_VALUE",
  *     },
  *     BatchTransformInput: { // BatchTransformInput
  *       DataCapturedDestinationS3Uri: "STRING_VALUE", // required
@@ -107,6 +111,7 @@ export interface CreateDataQualityJobDefinitionCommandOutput
  *       ProbabilityThresholdAttribute: Number("double"),
  *       StartTimeOffset: "STRING_VALUE",
  *       EndTimeOffset: "STRING_VALUE",
+ *       ExcludeFeaturesAttribute: "STRING_VALUE",
  *     },
  *   },
  *   DataQualityJobOutputConfig: { // MonitoringOutputConfig
@@ -227,6 +232,10 @@ export class CreateDataQualityJobDefinitionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "CreateDataQualityJobDefinition",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

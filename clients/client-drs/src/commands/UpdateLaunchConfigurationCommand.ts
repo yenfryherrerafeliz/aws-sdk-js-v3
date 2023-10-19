@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DrsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DrsClient";
@@ -53,6 +54,10 @@ export interface UpdateLaunchConfigurationCommandOutput extends LaunchConfigurat
  *   licensing: { // Licensing
  *     osByol: true || false,
  *   },
+ *   postLaunchEnabled: true || false,
+ *   launchIntoInstanceProperties: { // LaunchIntoInstanceProperties
+ *     launchIntoEC2InstanceID: "STRING_VALUE",
+ *   },
  * };
  * const command = new UpdateLaunchConfigurationCommand(input);
  * const response = await client.send(command);
@@ -66,6 +71,10 @@ export interface UpdateLaunchConfigurationCommandOutput extends LaunchConfigurat
  * //   copyTags: true || false,
  * //   licensing: { // Licensing
  * //     osByol: true || false,
+ * //   },
+ * //   postLaunchEnabled: true || false,
+ * //   launchIntoInstanceProperties: { // LaunchIntoInstanceProperties
+ * //     launchIntoEC2InstanceID: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -149,6 +158,10 @@ export class UpdateLaunchConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ElasticDisasterRecoveryService",
+        operation: "UpdateLaunchConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

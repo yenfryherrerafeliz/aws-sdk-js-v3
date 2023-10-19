@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CloudWatchEventsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CloudWatchEventsClient";
@@ -49,14 +50,14 @@ export interface CreateApiDestinationCommandOutput extends CreateApiDestinationR
  *   Description: "STRING_VALUE",
  *   ConnectionArn: "STRING_VALUE", // required
  *   InvocationEndpoint: "STRING_VALUE", // required
- *   HttpMethod: "STRING_VALUE", // required
+ *   HttpMethod: "POST" || "GET" || "HEAD" || "OPTIONS" || "PUT" || "PATCH" || "DELETE", // required
  *   InvocationRateLimitPerSecond: Number("int"),
  * };
  * const command = new CreateApiDestinationCommand(input);
  * const response = await client.send(command);
  * // { // CreateApiDestinationResponse
  * //   ApiDestinationArn: "STRING_VALUE",
- * //   ApiDestinationState: "STRING_VALUE",
+ * //   ApiDestinationState: "ACTIVE" || "INACTIVE",
  * //   CreationTime: new Date("TIMESTAMP"),
  * //   LastModifiedTime: new Date("TIMESTAMP"),
  * // };
@@ -136,6 +137,10 @@ export class CreateApiDestinationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "CreateApiDestination",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

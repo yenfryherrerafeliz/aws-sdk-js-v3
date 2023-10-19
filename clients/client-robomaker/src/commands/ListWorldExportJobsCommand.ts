@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListWorldExportJobsRequest, ListWorldExportJobsResponse } from "../models/models_0";
@@ -61,7 +62,7 @@ export interface ListWorldExportJobsCommandOutput extends ListWorldExportJobsRes
  * //   worldExportJobSummaries: [ // WorldExportJobSummaries // required
  * //     { // WorldExportJobSummary
  * //       arn: "STRING_VALUE",
- * //       status: "STRING_VALUE",
+ * //       status: "Pending" || "Running" || "Completed" || "Failed" || "Canceling" || "Canceled",
  * //       createdAt: new Date("TIMESTAMP"),
  * //       worlds: [ // Arns
  * //         "STRING_VALUE",
@@ -147,6 +148,10 @@ export class ListWorldExportJobsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "ListWorldExportJobs",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

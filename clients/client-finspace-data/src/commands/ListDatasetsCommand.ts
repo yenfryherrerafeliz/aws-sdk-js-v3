@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -55,7 +56,7 @@ export interface ListDatasetsCommandOutput extends ListDatasetsResponse, __Metad
  * //       datasetId: "STRING_VALUE",
  * //       datasetArn: "STRING_VALUE",
  * //       datasetTitle: "STRING_VALUE",
- * //       kind: "STRING_VALUE",
+ * //       kind: "TABULAR" || "NON_TABULAR",
  * //       datasetDescription: "STRING_VALUE",
  * //       ownerInfo: { // DatasetOwnerInfo
  * //         name: "STRING_VALUE",
@@ -68,7 +69,7 @@ export interface ListDatasetsCommandOutput extends ListDatasetsResponse, __Metad
  * //         tabularSchemaConfig: { // SchemaDefinition
  * //           columns: [ // ColumnList
  * //             { // ColumnDefinition
- * //               dataType: "STRING_VALUE",
+ * //               dataType: "STRING" || "CHAR" || "INTEGER" || "TINYINT" || "SMALLINT" || "BIGINT" || "FLOAT" || "DOUBLE" || "DATE" || "DATETIME" || "BOOLEAN" || "BINARY",
  * //               columnName: "STRING_VALUE",
  * //               columnDescription: "STRING_VALUE",
  * //             },
@@ -160,6 +161,10 @@ export class ListDatasetsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: ListDatasetsResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "ListDatasets",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

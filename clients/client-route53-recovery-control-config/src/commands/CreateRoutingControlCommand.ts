@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateRoutingControlRequest, CreateRoutingControlResponse } from "../models/models_0";
@@ -61,6 +62,7 @@ export interface CreateRoutingControlCommandOutput extends CreateRoutingControlR
  * //     Name: "STRING_VALUE",
  * //     RoutingControlArn: "STRING_VALUE",
  * //     Status: "PENDING" || "DEPLOYED" || "PENDING_DELETION",
+ * //     Owner: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -147,6 +149,10 @@ export class CreateRoutingControlCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Route53RecoveryControlConfig",
+        operation: "CreateRoutingControl",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

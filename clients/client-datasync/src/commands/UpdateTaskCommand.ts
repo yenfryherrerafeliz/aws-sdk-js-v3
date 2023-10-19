@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DataSyncClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DataSyncClient";
@@ -36,7 +37,7 @@ export interface UpdateTaskCommandOutput extends UpdateTaskResponse, __MetadataB
 
 /**
  * @public
- * <p>Updates the metadata associated with a task.</p>
+ * <p>Updates the configuration of a DataSync transfer task.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -79,6 +80,32 @@ export interface UpdateTaskCommandOutput extends UpdateTaskResponse, __MetadataB
  *       Value: "STRING_VALUE",
  *     },
  *   ],
+ *   TaskReportConfig: { // TaskReportConfig
+ *     Destination: { // ReportDestination
+ *       S3: { // ReportDestinationS3
+ *         Subdirectory: "STRING_VALUE",
+ *         S3BucketArn: "STRING_VALUE", // required
+ *         BucketAccessRoleArn: "STRING_VALUE", // required
+ *       },
+ *     },
+ *     OutputType: "SUMMARY_ONLY" || "STANDARD",
+ *     ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *     ObjectVersionIds: "INCLUDE" || "NONE",
+ *     Overrides: { // ReportOverrides
+ *       Transferred: { // ReportOverride
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *       Verified: {
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *       Deleted: {
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *       Skipped: {
+ *         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ *       },
+ *     },
+ *   },
  * };
  * const command = new UpdateTaskCommand(input);
  * const response = await client.send(command);
@@ -151,6 +178,10 @@ export class UpdateTaskCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "FmrsService",
+        operation: "UpdateTask",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

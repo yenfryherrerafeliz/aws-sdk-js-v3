@@ -11,10 +11,11 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MediaLiveClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaLiveClient";
-import { ListOfferingsRequest, ListOfferingsResponse } from "../models/models_1";
+import { ListOfferingsRequest, ListOfferingsResponse } from "../models/models_2";
 import { de_ListOfferingsCommand, se_ListOfferingsCommand } from "../protocols/Aws_restJson1";
 
 /**
@@ -165,6 +166,10 @@ export class ListOfferingsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaLive",
+        operation: "ListOfferings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

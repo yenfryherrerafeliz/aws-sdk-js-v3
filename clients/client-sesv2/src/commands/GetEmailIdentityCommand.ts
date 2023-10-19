@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetEmailIdentityRequest, GetEmailIdentityResponse } from "../models/models_0";
@@ -81,6 +82,16 @@ export interface GetEmailIdentityCommandOutput extends GetEmailIdentityResponse,
  * //   ],
  * //   ConfigurationSetName: "STRING_VALUE",
  * //   VerificationStatus: "PENDING" || "SUCCESS" || "FAILED" || "TEMPORARY_FAILURE" || "NOT_STARTED",
+ * //   VerificationInfo: { // VerificationInfo
+ * //     LastCheckedTimestamp: new Date("TIMESTAMP"),
+ * //     LastSuccessTimestamp: new Date("TIMESTAMP"),
+ * //     ErrorType: "SERVICE_ERROR" || "DNS_SERVER_ERROR" || "HOST_NOT_FOUND" || "TYPE_NOT_FOUND" || "INVALID_VALUE",
+ * //     SOARecord: { // SOARecord
+ * //       PrimaryNameServer: "STRING_VALUE",
+ * //       AdminEmail: "STRING_VALUE",
+ * //       SerialNumber: Number("long"),
+ * //     },
+ * //   },
  * // };
  *
  * ```
@@ -154,6 +165,10 @@ export class GetEmailIdentityCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SimpleEmailService_v2",
+        operation: "GetEmailIdentity",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

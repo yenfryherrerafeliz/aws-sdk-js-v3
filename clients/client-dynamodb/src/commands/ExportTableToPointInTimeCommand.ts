@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DynamoDBClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DynamoDBClient";
@@ -55,6 +56,12 @@ export interface ExportTableToPointInTimeCommandOutput extends ExportTableToPoin
  *   S3SseAlgorithm: "AES256" || "KMS",
  *   S3SseKmsKeyId: "STRING_VALUE",
  *   ExportFormat: "DYNAMODB_JSON" || "ION",
+ *   ExportType: "FULL_EXPORT" || "INCREMENTAL_EXPORT",
+ *   IncrementalExportSpecification: { // IncrementalExportSpecification
+ *     ExportFromTime: new Date("TIMESTAMP"),
+ *     ExportToTime: new Date("TIMESTAMP"),
+ *     ExportViewType: "NEW_IMAGE" || "NEW_AND_OLD_IMAGES",
+ *   },
  * };
  * const command = new ExportTableToPointInTimeCommand(input);
  * const response = await client.send(command);
@@ -79,6 +86,12 @@ export interface ExportTableToPointInTimeCommandOutput extends ExportTableToPoin
  * //     ExportFormat: "DYNAMODB_JSON" || "ION",
  * //     BilledSizeBytes: Number("long"),
  * //     ItemCount: Number("long"),
+ * //     ExportType: "FULL_EXPORT" || "INCREMENTAL_EXPORT",
+ * //     IncrementalExportSpecification: { // IncrementalExportSpecification
+ * //       ExportFromTime: new Date("TIMESTAMP"),
+ * //       ExportToTime: new Date("TIMESTAMP"),
+ * //       ExportViewType: "NEW_IMAGE" || "NEW_AND_OLD_IMAGES",
+ * //     },
  * //   },
  * // };
  *
@@ -177,6 +190,10 @@ export class ExportTableToPointInTimeCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "DynamoDB_20120810",
+        operation: "ExportTableToPointInTime",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { StartDiscovererRequest, StartDiscovererResponse } from "../models/models_0";
@@ -50,7 +51,7 @@ export interface StartDiscovererCommandOutput extends StartDiscovererResponse, _
  * const response = await client.send(command);
  * // { // StartDiscovererResponse
  * //   DiscovererId: "STRING_VALUE",
- * //   State: "STRING_VALUE",
+ * //   State: "STARTED" || "STOPPED",
  * // };
  *
  * ```
@@ -127,6 +128,10 @@ export class StartDiscovererCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "schemas",
+        operation: "StartDiscoverer",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

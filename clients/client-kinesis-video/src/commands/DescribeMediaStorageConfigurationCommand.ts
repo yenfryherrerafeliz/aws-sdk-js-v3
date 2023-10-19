@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { KinesisVideoClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KinesisVideoClient";
@@ -41,7 +42,10 @@ export interface DescribeMediaStorageConfigurationCommandOutput
 
 /**
  * @public
- * <p>Returns the most current information about the channel. Specify the <code>ChannelName</code>
+ * <important>
+ *             <p>This API is related to <a href="https://docs.aws.amazon.com/kinesisvideostreams-webrtc-dg/latest/devguide/webrtc-ingestion.html">WebRTC Ingestion</a> and is only available in the <code>us-west-2</code> region.</p>
+ *          </important>
+ *          <p>Returns the most current information about the channel. Specify the <code>ChannelName</code>
  *             or <code>ChannelARN</code> in the input.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -137,6 +141,10 @@ export class DescribeMediaStorageConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "KinesisVideo_20170930",
+        operation: "DescribeMediaStorageConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

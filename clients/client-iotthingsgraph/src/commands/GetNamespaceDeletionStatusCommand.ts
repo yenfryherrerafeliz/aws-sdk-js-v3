@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTThingsGraphClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTThingsGraphClient";
@@ -51,8 +52,8 @@ export interface GetNamespaceDeletionStatusCommandOutput extends GetNamespaceDel
  * // { // GetNamespaceDeletionStatusResponse
  * //   namespaceArn: "STRING_VALUE",
  * //   namespaceName: "STRING_VALUE",
- * //   status: "STRING_VALUE",
- * //   errorCode: "STRING_VALUE",
+ * //   status: "IN_PROGRESS" || "SUCCEEDED" || "FAILED",
+ * //   errorCode: "VALIDATION_FAILED",
  * //   errorMessage: "STRING_VALUE",
  * // };
  *
@@ -127,6 +128,10 @@ export class GetNamespaceDeletionStatusCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotThingsGraphFrontEndService",
+        operation: "GetNamespaceDeletionStatus",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

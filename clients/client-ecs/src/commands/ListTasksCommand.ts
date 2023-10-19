@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECSClient";
@@ -107,8 +108,8 @@ export interface ListTasksCommandOutput extends ListTasksResponse, __MetadataBea
  * /* response ==
  * {
  *   "taskArns": [
- *     "arn:aws:ecs:us-east-1:012345678910:task/0cc43cdb-3bee-4407-9c26-c0e6ea5bee84",
- *     "arn:aws:ecs:us-east-1:012345678910:task/6b809ef6-c67e-4467-921f-ee261c15a0a1"
+ *     "arn:aws:ecs:us-east-1:012345678910:task/default/0cc43cdb-3bee-4407-9c26-c0e6ea5bee84",
+ *     "arn:aws:ecs:us-east-1:012345678910:task/default/6b809ef6-c67e-4467-921f-ee261c15a0a1"
  *   ]
  * }
  * *\/
@@ -127,7 +128,7 @@ export interface ListTasksCommandOutput extends ListTasksResponse, __MetadataBea
  * /* response ==
  * {
  *   "taskArns": [
- *     "arn:aws:ecs:us-east-1:012345678910:task/0cc43cdb-3bee-4407-9c26-c0e6ea5bee84"
+ *     "arn:aws:ecs:us-east-1:012345678910:task/default/0cc43cdb-3bee-4407-9c26-c0e6ea5bee84"
  *   ]
  * }
  * *\/
@@ -179,6 +180,10 @@ export class ListTasksCommand extends $Command<ListTasksCommandInput, ListTasksC
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerServiceV20141113",
+        operation: "ListTasks",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

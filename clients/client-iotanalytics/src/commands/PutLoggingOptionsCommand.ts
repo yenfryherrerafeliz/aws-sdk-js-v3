@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTAnalyticsClient";
@@ -50,7 +51,7 @@ export interface PutLoggingOptionsCommandOutput extends __MetadataBearer {}
  * const input = { // PutLoggingOptionsRequest
  *   loggingOptions: { // LoggingOptions
  *     roleArn: "STRING_VALUE", // required
- *     level: "STRING_VALUE", // required
+ *     level: "ERROR", // required
  *     enabled: true || false, // required
  *   },
  * };
@@ -132,6 +133,10 @@ export class PutLoggingOptionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIoTAnalytics",
+        operation: "PutLoggingOptions",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

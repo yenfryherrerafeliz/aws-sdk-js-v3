@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateAutoMLJobRequest, CreateAutoMLJobResponse } from "../models/models_0";
@@ -41,8 +42,8 @@ export interface CreateAutoMLJobCommandOutput extends CreateAutoMLJobResponse, _
  *             <p>We recommend using the new versions <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html">CreateAutoMLJobV2</a> and <a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html">DescribeAutoMLJobV2</a>, which offer backward compatibility.</p>
  *             <p>
  *                <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of
- *             its previous version <code>CreateAutoMLJob</code>, as well as non-tabular problem types
- *             such as image or text classification.</p>
+ *             its previous version <code>CreateAutoMLJob</code>, as well as time-series forecasting,
+ *             and non-tabular problem types such as image or text classification.</p>
  *             <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to
  *                <code>CreateAutoMLJobV2</code> in <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment-api.html#autopilot-create-experiment-api-migrate-v1-v2">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p>
  *          </note>
@@ -199,6 +200,10 @@ export class CreateAutoMLJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "CreateAutoMLJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -6,10 +6,9 @@
 
 AWS SDK for JavaScript SimSpaceWeaver Client for Node.js, Browser and React Native.
 
-<p>SimSpace Weaver (SimSpace Weaver) is a managed service that you can use to build and operate large-scale
-spatial simulations in the Amazon Web Services Cloud. For example, you can create a digital twin of a city,
-crowd simulations with millions of people and objects, and massively multiplayer games with
-hundreds of thousands of connected players.
+<p>SimSpace Weaver (SimSpace Weaver)  is a service that you can use to build and run
+large-scale spatial simulations in the Amazon Web Services Cloud. For example, you can create
+crowd simulations, large real-world environments, and immersive and interactive experiences.
 For more information about SimSpace Weaver, see the <i>
 <a href="https://docs.aws.amazon.com/simspaceweaver/latest/userguide/">SimSpace Weaver User Guide</a>
 </i>.</p>
@@ -34,16 +33,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `SimSpaceWeaverClient` and
-the commands you need, for example `CreateSnapshotCommand`:
+the commands you need, for example `ListAppsCommand`:
 
 ```js
 // ES5 example
-const { SimSpaceWeaverClient, CreateSnapshotCommand } = require("@aws-sdk/client-simspaceweaver");
+const { SimSpaceWeaverClient, ListAppsCommand } = require("@aws-sdk/client-simspaceweaver");
 ```
 
 ```ts
 // ES6+ example
-import { SimSpaceWeaverClient, CreateSnapshotCommand } from "@aws-sdk/client-simspaceweaver";
+import { SimSpaceWeaverClient, ListAppsCommand } from "@aws-sdk/client-simspaceweaver";
 ```
 
 ### Usage
@@ -62,7 +61,7 @@ const client = new SimSpaceWeaverClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new CreateSnapshotCommand(params);
+const command = new ListAppsCommand(params);
 ```
 
 #### Async/await
@@ -141,7 +140,7 @@ const client = new AWS.SimSpaceWeaver({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.createSnapshot(params);
+  const data = await client.listApps(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -149,7 +148,7 @@ try {
 
 // Promises.
 client
-  .createSnapshot(params)
+  .listApps(params)
   .then((data) => {
     // process data.
   })
@@ -158,7 +157,7 @@ client
   });
 
 // callbacks.
-client.createSnapshot(params, (err, data) => {
+client.listApps(params, (err, data) => {
   // process err and data.
 });
 ```

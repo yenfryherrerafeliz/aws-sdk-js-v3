@@ -10109,6 +10109,9 @@ const de_RestoreDBClusterFromSnapshotCommandError = async (
     case "DBSnapshotNotFound":
     case "com.amazonaws.rds#DBSnapshotNotFoundFault":
       throw await de_DBSnapshotNotFoundFaultRes(parsedOutput, context);
+    case "DBSubnetGroupDoesNotCoverEnoughAZs":
+    case "com.amazonaws.rds#DBSubnetGroupDoesNotCoverEnoughAZs":
+      throw await de_DBSubnetGroupDoesNotCoverEnoughAZsRes(parsedOutput, context);
     case "DBSubnetGroupNotFoundFault":
     case "com.amazonaws.rds#DBSubnetGroupNotFoundFault":
       throw await de_DBSubnetGroupNotFoundFaultRes(parsedOutput, context);
@@ -13804,6 +13807,12 @@ const se_CreateBlueGreenDeploymentRequest = (input: CreateBlueGreenDeploymentReq
       entries[loc] = value;
     });
   }
+  if (input.TargetDBInstanceClass != null) {
+    entries["TargetDBInstanceClass"] = input.TargetDBInstanceClass;
+  }
+  if (input.UpgradeTargetStorageConfig != null) {
+    entries["UpgradeTargetStorageConfig"] = input.UpgradeTargetStorageConfig;
+  }
   return entries;
 };
 
@@ -14380,6 +14389,9 @@ const se_CreateDBInstanceMessage = (input: CreateDBInstanceMessage, context: __S
   if (input.DBSystemId != null) {
     entries["DBSystemId"] = input.DBSystemId;
   }
+  if (input.DedicatedLogVolume != null) {
+    entries["DedicatedLogVolume"] = input.DedicatedLogVolume;
+  }
   return entries;
 };
 
@@ -14551,6 +14563,12 @@ const se_CreateDBInstanceReadReplicaMessage = (
   }
   if (input.SourceDBClusterIdentifier != null) {
     entries["SourceDBClusterIdentifier"] = input.SourceDBClusterIdentifier;
+  }
+  if (input.DedicatedLogVolume != null) {
+    entries["DedicatedLogVolume"] = input.DedicatedLogVolume;
+  }
+  if (input.UpgradeStorageConfig != null) {
+    entries["UpgradeStorageConfig"] = input.UpgradeStorageConfig;
   }
   return entries;
 };
@@ -16871,6 +16889,9 @@ const se_ModifyDBClusterMessage = (input: ModifyDBClusterMessage, context: __Ser
   if (input.EnableLocalWriteForwarding != null) {
     entries["EnableLocalWriteForwarding"] = input.EnableLocalWriteForwarding;
   }
+  if (input.AwsBackupRecoveryPointArn != null) {
+    entries["AwsBackupRecoveryPointArn"] = input.AwsBackupRecoveryPointArn;
+  }
   return entries;
 };
 
@@ -17145,6 +17166,9 @@ const se_ModifyDBInstanceMessage = (input: ModifyDBInstanceMessage, context: __S
   }
   if (input.Engine != null) {
     entries["Engine"] = input.Engine;
+  }
+  if (input.DedicatedLogVolume != null) {
+    entries["DedicatedLogVolume"] = input.DedicatedLogVolume;
   }
   return entries;
 };
@@ -18482,6 +18506,9 @@ const se_RestoreDBInstanceFromDBSnapshotMessage = (
   if (input.AllocatedStorage != null) {
     entries["AllocatedStorage"] = input.AllocatedStorage;
   }
+  if (input.DedicatedLogVolume != null) {
+    entries["DedicatedLogVolume"] = input.DedicatedLogVolume;
+  }
   return entries;
 };
 
@@ -18669,6 +18696,9 @@ const se_RestoreDBInstanceFromS3Message = (input: RestoreDBInstanceFromS3Message
   if (input.MasterUserSecretKmsKeyId != null) {
     entries["MasterUserSecretKmsKeyId"] = input.MasterUserSecretKmsKeyId;
   }
+  if (input.DedicatedLogVolume != null) {
+    entries["DedicatedLogVolume"] = input.DedicatedLogVolume;
+  }
   return entries;
 };
 
@@ -18843,6 +18873,9 @@ const se_RestoreDBInstanceToPointInTimeMessage = (
   }
   if (input.AllocatedStorage != null) {
     entries["AllocatedStorage"] = input.AllocatedStorage;
+  }
+  if (input.DedicatedLogVolume != null) {
+    entries["DedicatedLogVolume"] = input.DedicatedLogVolume;
   }
   return entries;
 };
@@ -19659,6 +19692,9 @@ const de_CertificateList = (output: any, context: __SerdeContext): Certificate[]
  */
 const de_CertificateMessage = (output: any, context: __SerdeContext): CertificateMessage => {
   const contents: any = {};
+  if (output["DefaultCertificateForNewLaunches"] !== undefined) {
+    contents.DefaultCertificateForNewLaunches = __expectString(output["DefaultCertificateForNewLaunches"]);
+  }
   if (output.Certificates === "") {
     contents.Certificates = [];
   } else if (output["Certificates"] !== undefined && output["Certificates"]["Certificate"] !== undefined) {
@@ -20372,6 +20408,9 @@ const de_DBCluster = (output: any, context: __SerdeContext): DBCluster => {
   if (output["LocalWriteForwardingStatus"] !== undefined) {
     contents.LocalWriteForwardingStatus = __expectString(output["LocalWriteForwardingStatus"]);
   }
+  if (output["AwsBackupRecoveryPointArn"] !== undefined) {
+    contents.AwsBackupRecoveryPointArn = __expectString(output["AwsBackupRecoveryPointArn"]);
+  }
   return contents;
 };
 
@@ -20467,6 +20506,9 @@ const de_DBClusterAutomatedBackup = (output: any, context: __SerdeContext): DBCl
   }
   if (output["Iops"] !== undefined) {
     contents.Iops = __strictParseInt32(output["Iops"]) as number;
+  }
+  if (output["AwsBackupRecoveryPointArn"] !== undefined) {
+    contents.AwsBackupRecoveryPointArn = __expectString(output["AwsBackupRecoveryPointArn"]);
   }
   return contents;
 };
@@ -21746,6 +21788,12 @@ const de_DBInstance = (output: any, context: __SerdeContext): DBInstance => {
   if (output["PercentProgress"] !== undefined) {
     contents.PercentProgress = __expectString(output["PercentProgress"]);
   }
+  if (output["DedicatedLogVolume"] !== undefined) {
+    contents.DedicatedLogVolume = __parseBoolean(output["DedicatedLogVolume"]);
+  }
+  if (output["IsStorageConfigUpgradeAvailable"] !== undefined) {
+    contents.IsStorageConfigUpgradeAvailable = __parseBoolean(output["IsStorageConfigUpgradeAvailable"]);
+  }
   return contents;
 };
 
@@ -21856,6 +21904,12 @@ const de_DBInstanceAutomatedBackup = (output: any, context: __SerdeContext): DBI
   }
   if (output["StorageThroughput"] !== undefined) {
     contents.StorageThroughput = __strictParseInt32(output["StorageThroughput"]) as number;
+  }
+  if (output["AwsBackupRecoveryPointArn"] !== undefined) {
+    contents.AwsBackupRecoveryPointArn = __expectString(output["AwsBackupRecoveryPointArn"]);
+  }
+  if (output["DedicatedLogVolume"] !== undefined) {
+    contents.DedicatedLogVolume = __parseBoolean(output["DedicatedLogVolume"]);
   }
   return contents;
 };
@@ -22812,6 +22866,9 @@ const de_DBSnapshot = (output: any, context: __SerdeContext): DBSnapshot => {
   }
   if (output["DBSystemId"] !== undefined) {
     contents.DBSystemId = __expectString(output["DBSystemId"]);
+  }
+  if (output["DedicatedLogVolume"] !== undefined) {
+    contents.DedicatedLogVolume = __parseBoolean(output["DedicatedLogVolume"]);
   }
   return contents;
 };
@@ -25444,6 +25501,9 @@ const de_OrderableDBInstanceOption = (output: any, context: __SerdeContext): Ord
   if (output["MaxStorageThroughputPerIops"] !== undefined) {
     contents.MaxStorageThroughputPerIops = __strictParseFloat(output["MaxStorageThroughputPerIops"]) as number;
   }
+  if (output["SupportsDedicatedLogVolume"] !== undefined) {
+    contents.SupportsDedicatedLogVolume = __parseBoolean(output["SupportsDedicatedLogVolume"]);
+  }
   return contents;
 };
 
@@ -25719,6 +25779,9 @@ const de_PendingModifiedValues = (output: any, context: __SerdeContext): Pending
   }
   if (output["Engine"] !== undefined) {
     contents.Engine = __expectString(output["Engine"]);
+  }
+  if (output["DedicatedLogVolume"] !== undefined) {
+    contents.DedicatedLogVolume = __parseBoolean(output["DedicatedLogVolume"]);
   }
   return contents;
 };
@@ -27054,6 +27117,9 @@ const de_ValidDBInstanceModificationsMessage = (
       __getArrayIfSingleItem(output["ValidProcessorFeatures"]["AvailableProcessorFeature"]),
       context
     );
+  }
+  if (output["SupportsDedicatedLogVolume"] !== undefined) {
+    contents.SupportsDedicatedLogVolume = __parseBoolean(output["SupportsDedicatedLogVolume"]);
   }
   return contents;
 };

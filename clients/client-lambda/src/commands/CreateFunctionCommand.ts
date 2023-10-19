@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LambdaClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LambdaClient";
@@ -108,6 +109,7 @@ export interface CreateFunctionCommandOutput extends FunctionConfiguration, __Me
  *     SecurityGroupIds: [ // SecurityGroupIds
  *       "STRING_VALUE",
  *     ],
+ *     Ipv6AllowedForDualStack: true || false,
  *   },
  *   PackageType: "Zip" || "Image",
  *   DeadLetterConfig: { // DeadLetterConfig
@@ -177,6 +179,7 @@ export interface CreateFunctionCommandOutput extends FunctionConfiguration, __Me
  * //       "STRING_VALUE",
  * //     ],
  * //     VpcId: "STRING_VALUE",
+ * //     Ipv6AllowedForDualStack: true || false,
  * //   },
  * //   DeadLetterConfig: { // DeadLetterConfig
  * //     TargetArn: "STRING_VALUE",
@@ -344,6 +347,10 @@ export class CreateFunctionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: CreateFunctionRequestFilterSensitiveLog,
       outputFilterSensitiveLog: FunctionConfigurationFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSGirApiService",
+        operation: "CreateFunction",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { SyncDeploymentJobRequest, SyncDeploymentJobResponse } from "../models/models_0";
@@ -57,7 +58,7 @@ export interface SyncDeploymentJobCommandOutput extends SyncDeploymentJobRespons
  * // { // SyncDeploymentJobResponse
  * //   arn: "STRING_VALUE",
  * //   fleet: "STRING_VALUE",
- * //   status: "STRING_VALUE",
+ * //   status: "Pending" || "Preparing" || "InProgress" || "Failed" || "Succeeded" || "Canceled",
  * //   deploymentConfig: { // DeploymentConfig
  * //     concurrentDeploymentPercentage: Number("int"),
  * //     failureThresholdPercentage: Number("int"),
@@ -84,7 +85,7 @@ export interface SyncDeploymentJobCommandOutput extends SyncDeploymentJobRespons
  * //     },
  * //   ],
  * //   failureReason: "STRING_VALUE",
- * //   failureCode: "STRING_VALUE",
+ * //   failureCode: "ResourceNotFound" || "EnvironmentSetupError" || "EtagMismatch" || "FailureThresholdBreached" || "RobotDeploymentAborted" || "RobotDeploymentNoResponse" || "RobotAgentConnectionTimeout" || "GreengrassDeploymentFailed" || "InvalidGreengrassGroup" || "MissingRobotArchitecture" || "MissingRobotApplicationArchitecture" || "MissingRobotDeploymentResource" || "GreengrassGroupVersionDoesNotExist" || "LambdaDeleted" || "ExtractingBundleFailure" || "PreLaunchFileFailure" || "PostLaunchFileFailure" || "BadPermissionError" || "DownloadConditionFailed" || "BadLambdaAssociated" || "InternalServerError" || "RobotApplicationDoesNotExist" || "DeploymentFleetDoesNotExist" || "FleetDeploymentTimeout",
  * //   createdAt: new Date("TIMESTAMP"),
  * // };
  *
@@ -174,6 +175,10 @@ export class SyncDeploymentJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "SyncDeploymentJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

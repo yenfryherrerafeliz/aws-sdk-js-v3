@@ -8,8 +8,8 @@ import { S3ServiceException as __BaseException } from "./S3ServiceException";
  * @public
  * <p>Specifies the days since the initiation of an incomplete multipart upload that Amazon S3 will
  *          wait before permanently removing all parts of the upload. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config">
- *             Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle Configuration</a> in the
- *             <i>Amazon S3 User Guide</i>.</p>
+ *             Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle Configuration</a> in
+ *          the <i>Amazon S3 User Guide</i>.</p>
  */
 export interface AbortIncompleteMultipartUpload {
   /**
@@ -42,7 +42,7 @@ export interface AbortMultipartUploadOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -88,11 +88,13 @@ export interface AbortMultipartUploadRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -146,7 +148,7 @@ export interface AccelerateConfiguration {
    * @public
    * <p>Specifies the transfer acceleration status of the bucket.</p>
    */
-  Status?: BucketAccelerateStatus | string;
+  Status?: BucketAccelerateStatus;
 }
 
 /**
@@ -227,7 +229,7 @@ export interface Grantee {
    * @public
    * <p>Type of grantee</p>
    */
-  Type: Type | string | undefined;
+  Type: Type | undefined;
 }
 
 /**
@@ -262,7 +264,7 @@ export interface Grant {
    * @public
    * <p>Specifies the permission given to the grantee.</p>
    */
-  Permission?: Permission | string;
+  Permission?: Permission;
 }
 
 /**
@@ -351,7 +353,7 @@ export interface AccessControlTranslation {
    * <p>Specifies the replica ownership. For default and valid values, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketPUTreplication.html">PUT bucket
    *             replication</a> in the <i>Amazon S3 API Reference</i>.</p>
    */
-  Owner: OwnerOverride | string | undefined;
+  Owner: OwnerOverride | undefined;
 }
 
 /**
@@ -456,7 +458,7 @@ export interface CompleteMultipartUploadOutput {
    * <p>The server-side encryption algorithm used when storing this object in Amazon S3 (for example,
    *             <code>AES256</code>, <code>aws:kms</code>).</p>
    */
-  ServerSideEncryption?: ServerSideEncryption | string;
+  ServerSideEncryption?: ServerSideEncryption;
 
   /**
    * @public
@@ -484,7 +486,7 @@ export interface CompleteMultipartUploadOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -628,11 +630,13 @@ export interface CompleteMultipartUploadRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -756,7 +760,7 @@ export interface CopyObjectOutput {
    * <p>The server-side encryption algorithm used when storing this object in Amazon S3 (for example,
    *             <code>AES256</code>, <code>aws:kms</code>, <code>aws:kms:dsse</code>).</p>
    */
-  ServerSideEncryption?: ServerSideEncryption | string;
+  ServerSideEncryption?: ServerSideEncryption;
 
   /**
    * @public
@@ -800,7 +804,7 @@ export interface CopyObjectOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -925,7 +929,7 @@ export interface CopyObjectRequest {
    * <p>The canned ACL to apply to the object.</p>
    *          <p>This action is not supported by Amazon S3 on Outposts.</p>
    */
-  ACL?: ObjectCannedACL | string;
+  ACL?: ObjectCannedACL;
 
   /**
    * @public
@@ -950,7 +954,7 @@ export interface CopyObjectRequest {
    *     <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking object integrity</a> in
    *     the <i>Amazon S3 User Guide</i>.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -1081,31 +1085,32 @@ export interface CopyObjectRequest {
    * <p>Specifies whether the metadata is copied from the source object or replaced with
    *          metadata provided in the request.</p>
    */
-  MetadataDirective?: MetadataDirective | string;
+  MetadataDirective?: MetadataDirective;
 
   /**
    * @public
    * <p>Specifies whether the object tag-set are copied from the source object or replaced with
    *          tag-set provided in the request.</p>
    */
-  TaggingDirective?: TaggingDirective | string;
+  TaggingDirective?: TaggingDirective;
 
   /**
    * @public
    * <p>The server-side encryption algorithm used when storing this object in Amazon S3 (for example,
    *             <code>AES256</code>, <code>aws:kms</code>, <code>aws:kms:dsse</code>).</p>
    */
-  ServerSideEncryption?: ServerSideEncryption | string;
+  ServerSideEncryption?: ServerSideEncryption;
 
   /**
    * @public
-   * <p>By default, Amazon S3 uses the STANDARD Storage Class to store newly created objects. The
-   *          STANDARD storage class provides high durability and high availability. Depending on
-   *          performance needs, you can specify a different Storage Class. Amazon S3 on Outposts only uses
-   *          the OUTPOSTS Storage Class. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage-class-intro.html">Storage Classes</a> in the
-   *             <i>Amazon S3 User Guide</i>.</p>
+   * <p>If the <code>x-amz-storage-class</code> header is not used, the copied object will be stored in the
+   *          STANDARD Storage Class by default. The STANDARD storage class provides high durability and
+   *          high availability. Depending on performance needs, you can specify a different Storage
+   *          Class. Amazon S3 on Outposts only uses the OUTPOSTS Storage Class. For more information, see
+   *             <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage-class-intro.html">Storage
+   *             Classes</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  StorageClass?: StorageClass | string;
+  StorageClass?: StorageClass;
 
   /**
    * @public
@@ -1143,7 +1148,7 @@ export interface CopyObjectRequest {
 
   /**
    * @public
-   * <p>Specifies the KMS key ID to use for object encryption. All GET and PUT requests for an
+   * <p>Specifies the KMS ID (Key ID, Key ARN, or Key Alias) to use for object encryption. All GET and PUT requests for an
    *          object protected by KMS will fail if they're not made via SSL or using SigV4. For
    *          information about configuring any of the officially supported Amazon Web Services SDKs and Amazon Web Services CLI, see
    *             <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingAWSSDK.html#specify-signature-version">Specifying the
@@ -1197,11 +1202,13 @@ export interface CopyObjectRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -1215,7 +1222,7 @@ export interface CopyObjectRequest {
    * @public
    * <p>The Object Lock mode that you want to apply to the copied object.</p>
    */
-  ObjectLockMode?: ObjectLockMode | string;
+  ObjectLockMode?: ObjectLockMode;
 
   /**
    * @public
@@ -1227,7 +1234,7 @@ export interface CopyObjectRequest {
    * @public
    * <p>Specifies whether you want to apply a legal hold to the copied object.</p>
    */
-  ObjectLockLegalHoldStatus?: ObjectLockLegalHoldStatus | string;
+  ObjectLockLegalHoldStatus?: ObjectLockLegalHoldStatus;
 
   /**
    * @public
@@ -1384,7 +1391,7 @@ export interface CreateBucketConfiguration {
    * <p>Specifies the Region where the bucket will be created. If you don't specify a Region,
    *          the bucket is created in the US East (N. Virginia) Region (us-east-1).</p>
    */
-  LocationConstraint?: BucketLocationConstraint | string;
+  LocationConstraint?: BucketLocationConstraint;
 }
 
 /**
@@ -1410,7 +1417,7 @@ export interface CreateBucketRequest {
    * @public
    * <p>The canned ACL to apply to the bucket.</p>
    */
-  ACL?: BucketCannedACL | string;
+  ACL?: BucketCannedACL;
 
   /**
    * @public
@@ -1477,7 +1484,7 @@ export interface CreateBucketRequest {
    *          full control ACLs, such as the <code>bucket-owner-full-control</code> canned ACL or an
    *          equivalent form of this ACL expressed in the XML format.</p>
    */
-  ObjectOwnership?: ObjectOwnership | string;
+  ObjectOwnership?: ObjectOwnership;
 }
 
 /**
@@ -1490,7 +1497,8 @@ export interface CreateMultipartUploadOutput {
    *          multipart uploads and the prefix in the lifecycle rule matches the object name in the
    *          request, the response includes this header. The header indicates when the initiated
    *          multipart upload becomes eligible for an abort operation. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config">
-   *             Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle Configuration</a>.</p>
+   *             Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle
+   *          Configuration</a>.</p>
    *          <p>The response also includes the <code>x-amz-abort-rule-id</code> header that provides the
    *          ID of the lifecycle configuration rule that defines this action.</p>
    */
@@ -1531,7 +1539,7 @@ export interface CreateMultipartUploadOutput {
    * <p>The server-side encryption algorithm used when storing this object in Amazon S3 (for example,
    *             <code>AES256</code>, <code>aws:kms</code>).</p>
    */
-  ServerSideEncryption?: ServerSideEncryption | string;
+  ServerSideEncryption?: ServerSideEncryption;
 
   /**
    * @public
@@ -1575,13 +1583,13 @@ export interface CreateMultipartUploadOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 
   /**
    * @public
    * <p>The algorithm that was used to create a checksum of the object.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 }
 
 /**
@@ -1593,7 +1601,7 @@ export interface CreateMultipartUploadRequest {
    * <p>The canned ACL to apply to the object.</p>
    *          <p>This action is not supported by Amazon S3 on Outposts.</p>
    */
-  ACL?: ObjectCannedACL | string;
+  ACL?: ObjectCannedACL;
 
   /**
    * @public
@@ -1689,7 +1697,7 @@ export interface CreateMultipartUploadRequest {
    * <p>The server-side encryption algorithm used when storing this object in Amazon S3 (for example,
    *             <code>AES256</code>, <code>aws:kms</code>).</p>
    */
-  ServerSideEncryption?: ServerSideEncryption | string;
+  ServerSideEncryption?: ServerSideEncryption;
 
   /**
    * @public
@@ -1699,7 +1707,7 @@ export interface CreateMultipartUploadRequest {
    *          the OUTPOSTS Storage Class. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage-class-intro.html">Storage Classes</a> in the
    *             <i>Amazon S3 User Guide</i>.</p>
    */
-  StorageClass?: StorageClass | string;
+  StorageClass?: StorageClass;
 
   /**
    * @public
@@ -1735,7 +1743,7 @@ export interface CreateMultipartUploadRequest {
 
   /**
    * @public
-   * <p>Specifies the ID of the symmetric encryption customer managed key to use for object encryption.
+   * <p>Specifies the ID (Key ID, Key ARN, or Key Alias) of the symmetric encryption customer managed key to use for object encryption.
    *          All GET and PUT requests for an object protected by KMS will fail if they're not made via
    *          SSL or using SigV4. For information about configuring any of the officially supported Amazon Web Services
    *          SDKs and Amazon Web Services CLI, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingAWSSDK.html#specify-signature-version">Specifying the Signature Version in Request Authentication</a>
@@ -1765,11 +1773,13 @@ export interface CreateMultipartUploadRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -1781,7 +1791,7 @@ export interface CreateMultipartUploadRequest {
    * @public
    * <p>Specifies the Object Lock mode that you want to apply to the uploaded object.</p>
    */
-  ObjectLockMode?: ObjectLockMode | string;
+  ObjectLockMode?: ObjectLockMode;
 
   /**
    * @public
@@ -1793,7 +1803,7 @@ export interface CreateMultipartUploadRequest {
    * @public
    * <p>Specifies whether you want to apply a legal hold to the uploaded object.</p>
    */
-  ObjectLockLegalHoldStatus?: ObjectLockLegalHoldStatus | string;
+  ObjectLockLegalHoldStatus?: ObjectLockLegalHoldStatus;
 
   /**
    * @public
@@ -1807,7 +1817,7 @@ export interface CreateMultipartUploadRequest {
    *     <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking object integrity</a> in
    *     the <i>Amazon S3 User Guide</i>.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 }
 
 /**
@@ -2081,8 +2091,9 @@ export interface DeleteBucketWebsiteRequest {
 export interface DeleteObjectOutput {
   /**
    * @public
-   * <p>Specifies whether the versioned object that was permanently deleted was (true) or was
-   *          not (false) a delete marker.</p>
+   * <p>Indicates whether the specified object version that was permanently deleted was (true) or was
+   *          not (false) a delete marker before deletion. In a simple DELETE, this header indicates whether (true) or
+   *          not (false) the current version of the object is a delete marker.</p>
    */
   DeleteMarker?: boolean;
 
@@ -2098,7 +2109,7 @@ export interface DeleteObjectOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -2139,11 +2150,13 @@ export interface DeleteObjectRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -2179,9 +2192,9 @@ export interface DeletedObject {
 
   /**
    * @public
-   * <p>Specifies whether the versioned object that was permanently deleted was (true) or was
-   *          not (false) a delete marker. In a simple DELETE, this header indicates whether (true) or
-   *          not (false) a delete marker was created.</p>
+   * <p>Indicates whether the specified object version that was permanently deleted was (true) or was
+   *          not (false) a delete marker before deletion. In a simple DELETE, this header indicates whether (true) or
+   *          not (false) the current version of the object is a delete marker.</p>
    */
   DeleteMarker?: boolean;
 
@@ -4107,7 +4120,7 @@ export interface DeleteObjectsOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 
   /**
    * @public
@@ -4191,11 +4204,13 @@ export interface DeleteObjectsRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -4223,7 +4238,7 @@ export interface DeleteObjectsRequest {
    *          <p>This checksum algorithm must be the same for all parts and it match the checksum value
    *          supplied in the <code>CreateMultipartUpload</code> request.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 }
 
 /**
@@ -4299,14 +4314,14 @@ export interface GetBucketAccelerateConfigurationOutput {
    * @public
    * <p>The accelerate configuration of the bucket.</p>
    */
-  Status?: BucketAccelerateStatus | string;
+  Status?: BucketAccelerateStatus;
 
   /**
    * @public
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -4330,11 +4345,13 @@ export interface GetBucketAccelerateConfigurationRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 }
 
 /**
@@ -4515,7 +4532,7 @@ export interface AnalyticsS3BucketDestination {
    * @public
    * <p>Specifies the file format used when exporting data to Amazon S3.</p>
    */
-  Format: AnalyticsS3ExportFileFormat | string | undefined;
+  Format: AnalyticsS3ExportFileFormat | undefined;
 
   /**
    * @public
@@ -4578,7 +4595,7 @@ export interface StorageClassAnalysisDataExport {
    * <p>The version of the output schema to use when exporting data. Must be
    *          <code>V_1</code>.</p>
    */
-  OutputSchemaVersion: StorageClassAnalysisSchemaVersion | string | undefined;
+  OutputSchemaVersion: StorageClassAnalysisSchemaVersion | undefined;
 
   /**
    * @public
@@ -4764,29 +4781,33 @@ export interface ServerSideEncryptionByDefault {
    * @public
    * <p>Server-side encryption algorithm to use for the default encryption.</p>
    */
-  SSEAlgorithm: ServerSideEncryption | string | undefined;
+  SSEAlgorithm: ServerSideEncryption | undefined;
 
   /**
    * @public
    * <p>Amazon Web Services Key Management Service (KMS) customer Amazon Web Services KMS key ID to use for the default
    *          encryption. This parameter is allowed if and only if <code>SSEAlgorithm</code> is set to
    *             <code>aws:kms</code>.</p>
-   *          <p>You can specify the key ID or the Amazon Resource Name (ARN) of the KMS key. If you use
-   *          a key ID, you can run into a LogDestination undeliverable error when creating a VPC flow
-   *          log. </p>
-   *          <p>If you are using encryption with cross-account or Amazon Web Services service operations you must use
-   *          a fully qualified KMS key ARN. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html#bucket-encryption-update-bucket-policy">Using encryption for cross-account operations</a>. </p>
+   *          <p>You can specify the key ID, key alias, or the Amazon Resource Name (ARN) of the KMS
+   *          key.</p>
    *          <ul>
    *             <li>
    *                <p>Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
    *                </p>
    *             </li>
    *             <li>
-   *                <p>Key ARN:
-   *                   <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
+   *                <p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
+   *                </p>
+   *             </li>
+   *             <li>
+   *                <p>Key Alias: <code>alias/alias-name</code>
    *                </p>
    *             </li>
    *          </ul>
+   *          <p>If you use a key ID, you can run into a LogDestination undeliverable error when creating
+   *          a VPC flow log. </p>
+   *          <p>If you are using encryption with cross-account or Amazon Web Services service operations you must use
+   *          a fully qualified KMS key ARN. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html#bucket-encryption-update-bucket-policy">Using encryption for cross-account operations</a>.</p>
    *          <important>
    *             <p>Amazon S3 only supports symmetric encryption KMS keys. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html">Asymmetric keys in Amazon Web Services KMS</a> in the <i>Amazon Web Services Key Management Service
    *                Developer Guide</i>.</p>
@@ -4969,7 +4990,7 @@ export interface Tiering {
    *             for automatically optimizing frequently and infrequently accessed objects</a> for a
    *          list of access tiers in the S3 Intelligent-Tiering storage class.</p>
    */
-  AccessTier: IntelligentTieringAccessTier | string | undefined;
+  AccessTier: IntelligentTieringAccessTier | undefined;
 }
 
 /**
@@ -4997,7 +5018,7 @@ export interface IntelligentTieringConfiguration {
    * @public
    * <p>Specifies the status of the configuration.</p>
    */
-  Status: IntelligentTieringStatus | string | undefined;
+  Status: IntelligentTieringStatus | undefined;
 
   /**
    * @public
@@ -5117,7 +5138,7 @@ export interface InventoryS3BucketDestination {
    * @public
    * <p>Specifies the output format of the inventory results.</p>
    */
-  Format: InventoryFormat | string | undefined;
+  Format: InventoryFormat | undefined;
 
   /**
    * @public
@@ -5224,7 +5245,7 @@ export interface InventorySchedule {
    * @public
    * <p>Specifies how frequently inventory results are produced.</p>
    */
-  Frequency: InventoryFrequency | string | undefined;
+  Frequency: InventoryFrequency | undefined;
 }
 
 /**
@@ -5268,13 +5289,13 @@ export interface InventoryConfiguration {
    *          list. If set to <code>Current</code>, the list does not contain these version-related
    *          fields.</p>
    */
-  IncludedObjectVersions: InventoryIncludedObjectVersions | string | undefined;
+  IncludedObjectVersions: InventoryIncludedObjectVersions | undefined;
 
   /**
    * @public
    * <p>Contains the optional fields that are included in the inventory results.</p>
    */
-  OptionalFields?: (InventoryOptionalField | string)[];
+  OptionalFields?: InventoryOptionalField[];
 
   /**
    * @public
@@ -5328,8 +5349,8 @@ export interface GetBucketInventoryConfigurationRequest {
 export interface LifecycleExpiration {
   /**
    * @public
-   * <p>Indicates at what date the object is to be moved or deleted. The date value must conform to the ISO 8601 format.
-   *          The time is always midnight UTC.</p>
+   * <p>Indicates at what date the object is to be moved or deleted. The date value must conform
+   *          to the ISO 8601 format. The time is always midnight UTC.</p>
    */
   Date?: Date;
 
@@ -5574,7 +5595,7 @@ export interface NoncurrentVersionTransition {
    * @public
    * <p>The class of storage used to store the object.</p>
    */
-  StorageClass?: TransitionStorageClass | string;
+  StorageClass?: TransitionStorageClass;
 
   /**
    * @public
@@ -5625,7 +5646,7 @@ export interface Transition {
    * @public
    * <p>The storage class to which you want the object to transition.</p>
    */
-  StorageClass?: TransitionStorageClass | string;
+  StorageClass?: TransitionStorageClass;
 }
 
 /**
@@ -5676,7 +5697,7 @@ export interface LifecycleRule {
    * <p>If 'Enabled', the rule is currently being applied. If 'Disabled', the rule is not
    *          currently being applied.</p>
    */
-  Status: ExpirationStatus | string | undefined;
+  Status: ExpirationStatus | undefined;
 
   /**
    * @public
@@ -5707,8 +5728,8 @@ export interface LifecycleRule {
    * @public
    * <p>Specifies the days since the initiation of an incomplete multipart upload that Amazon S3 will
    *          wait before permanently removing all parts of the upload. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config">
-   *             Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle Configuration</a> in the
-   *             <i>Amazon S3 User Guide</i>.</p>
+   *             Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle Configuration</a> in
+   *          the <i>Amazon S3 User Guide</i>.</p>
    */
   AbortIncompleteMultipartUpload?: AbortIncompleteMultipartUpload;
 }
@@ -5753,7 +5774,7 @@ export interface GetBucketLocationOutput {
    *          location constraints by Region, see <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region">Regions and Endpoints</a>. Buckets in
    *          Region <code>us-east-1</code> have a LocationConstraint of <code>null</code>.</p>
    */
-  LocationConstraint?: BucketLocationConstraint | string;
+  LocationConstraint?: BucketLocationConstraint;
 }
 
 /**
@@ -5813,7 +5834,7 @@ export interface TargetGrant {
    * @public
    * <p>Logging permissions assigned to the grantee for the bucket.</p>
    */
-  Permission?: BucketLogsPermission | string;
+  Permission?: BucketLogsPermission;
 }
 
 /**
@@ -6162,7 +6183,7 @@ export interface FilterRule {
    *          suffixes are not supported. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/NotificationHowTo.html">Configuring Event Notifications</a>
    *          in the <i>Amazon S3 User Guide</i>.</p>
    */
-  Name?: FilterRuleName | string;
+  Name?: FilterRuleName;
 
   /**
    * @public
@@ -6187,7 +6208,9 @@ export interface S3KeyFilter {
 /**
  * @public
  * <p>Specifies object key name filtering rules. For information about key name filtering, see
- *          <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-filtering.html">Configuring event notifications using object key name filtering</a> in the <i>Amazon S3 User Guide</i>.</p>
+ *             <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-filtering.html">Configuring event
+ *             notifications using object key name filtering</a> in the
+ *             <i>Amazon S3 User Guide</i>.</p>
  */
 export interface NotificationConfigurationFilter {
   /**
@@ -6222,12 +6245,14 @@ export interface LambdaFunctionConfiguration {
    *          see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/NotificationHowTo.html">Supported
    *             Event Types</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  Events: (Event | string)[] | undefined;
+  Events: Event[] | undefined;
 
   /**
    * @public
    * <p>Specifies object key name filtering rules. For information about key name filtering, see
-   *          <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-filtering.html">Configuring event notifications using object key name filtering</a> in the <i>Amazon S3 User Guide</i>.</p>
+   *             <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-filtering.html">Configuring event
+   *             notifications using object key name filtering</a> in the
+   *             <i>Amazon S3 User Guide</i>.</p>
    */
   Filter?: NotificationConfigurationFilter;
 }
@@ -6256,12 +6281,14 @@ export interface QueueConfiguration {
    * @public
    * <p>A collection of bucket events for which to send notifications</p>
    */
-  Events: (Event | string)[] | undefined;
+  Events: Event[] | undefined;
 
   /**
    * @public
    * <p>Specifies object key name filtering rules. For information about key name filtering, see
-   *          <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-filtering.html">Configuring event notifications using object key name filtering</a> in the <i>Amazon S3 User Guide</i>.</p>
+   *             <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-filtering.html">Configuring event
+   *             notifications using object key name filtering</a> in the
+   *             <i>Amazon S3 User Guide</i>.</p>
    */
   Filter?: NotificationConfigurationFilter;
 }
@@ -6292,12 +6319,14 @@ export interface TopicConfiguration {
    *             <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/NotificationHowTo.html">Supported
    *             Event Types</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  Events: (Event | string)[] | undefined;
+  Events: Event[] | undefined;
 
   /**
    * @public
    * <p>Specifies object key name filtering rules. For information about key name filtering, see
-   *          <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-filtering.html">Configuring event notifications using object key name filtering</a> in the <i>Amazon S3 User Guide</i>.</p>
+   *             <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-filtering.html">Configuring event
+   *             notifications using object key name filtering</a> in the
+   *             <i>Amazon S3 User Guide</i>.</p>
    */
   Filter?: NotificationConfigurationFilter;
 }
@@ -6355,7 +6384,7 @@ export interface OwnershipControlsRule {
    *          full control ACLs, such as the <code>bucket-owner-full-control</code> canned ACL or an
    *          equivalent form of this ACL expressed in the XML format.</p>
    */
-  ObjectOwnership: ObjectOwnership | string | undefined;
+  ObjectOwnership: ObjectOwnership | undefined;
 }
 
 /**
@@ -6518,7 +6547,7 @@ export interface DeleteMarkerReplication {
    *             <p>Indicates whether to replicate delete markers.</p>
    *          </note>
    */
-  Status?: DeleteMarkerReplicationStatus | string;
+  Status?: DeleteMarkerReplicationStatus;
 }
 
 /**
@@ -6577,7 +6606,7 @@ export interface Metrics {
    * @public
    * <p> Specifies whether the replication metrics are enabled. </p>
    */
-  Status: MetricsStatus | string | undefined;
+  Status: MetricsStatus | undefined;
 
   /**
    * @public
@@ -6612,7 +6641,7 @@ export interface ReplicationTime {
    * @public
    * <p> Specifies whether the replication time is enabled. </p>
    */
-  Status: ReplicationTimeStatus | string | undefined;
+  Status: ReplicationTimeStatus | undefined;
 
   /**
    * @public
@@ -6654,7 +6683,7 @@ export interface Destination {
    *          <p>For valid values, see the <code>StorageClass</code> element of the <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketPUTreplication.html">PUT Bucket
    *             replication</a> action in the <i>Amazon S3 API Reference</i>.</p>
    */
-  StorageClass?: StorageClass | string;
+  StorageClass?: StorageClass;
 
   /**
    * @public
@@ -6715,7 +6744,7 @@ export interface ExistingObjectReplication {
    * @public
    * <p>Specifies whether Amazon S3 replicates existing source bucket objects. </p>
    */
-  Status: ExistingObjectReplicationStatus | string | undefined;
+  Status: ExistingObjectReplicationStatus | undefined;
 }
 
 /**
@@ -6873,7 +6902,7 @@ export interface ReplicaModifications {
    * @public
    * <p>Specifies whether Amazon S3 replicates modifications on replicas.</p>
    */
-  Status: ReplicaModificationsStatus | string | undefined;
+  Status: ReplicaModificationsStatus | undefined;
 }
 
 /**
@@ -6902,7 +6931,7 @@ export interface SseKmsEncryptedObjects {
    * <p>Specifies whether Amazon S3 replicates objects created with server-side encryption using an
    *          Amazon Web Services KMS key stored in Amazon Web Services Key Management Service.</p>
    */
-  Status: SseKmsEncryptedObjectsStatus | string | undefined;
+  Status: SseKmsEncryptedObjectsStatus | undefined;
 }
 
 /**
@@ -7001,7 +7030,7 @@ export interface ReplicationRule {
    * @public
    * <p>Specifies whether the rule is enabled.</p>
    */
-  Status: ReplicationRuleStatus | string | undefined;
+  Status: ReplicationRuleStatus | undefined;
 
   /**
    * @public
@@ -7121,7 +7150,7 @@ export interface GetBucketRequestPaymentOutput {
    * @public
    * <p>Specifies who pays for the download and request fees.</p>
    */
-  Payer?: Payer | string;
+  Payer?: Payer;
 }
 
 /**
@@ -7209,7 +7238,7 @@ export interface GetBucketVersioningOutput {
    * @public
    * <p>The versioning state of the bucket.</p>
    */
-  Status?: BucketVersioningStatus | string;
+  Status?: BucketVersioningStatus;
 
   /**
    * @public
@@ -7217,7 +7246,7 @@ export interface GetBucketVersioningOutput {
    *          element is only returned if the bucket has been configured with MFA delete. If the bucket
    *          has never been so configured, this element is not returned.</p>
    */
-  MFADelete?: MFADeleteStatus | string;
+  MFADelete?: MFADeleteStatus;
 }
 
 /**
@@ -7307,7 +7336,7 @@ export interface RedirectAllRequestsTo {
    * <p>Protocol to use when redirecting requests. The default is the protocol that is used in
    *          the original request.</p>
    */
-  Protocol?: Protocol | string;
+  Protocol?: Protocol;
 }
 
 /**
@@ -7371,7 +7400,7 @@ export interface Redirect {
    * <p>Protocol to use when redirecting requests. The default is the protocol that is used in
    *          the original request.</p>
    */
-  Protocol?: Protocol | string;
+  Protocol?: Protocol;
 
   /**
    * @public
@@ -7484,6 +7513,7 @@ export interface GetBucketWebsiteRequest {
  */
 export const ReplicationStatus = {
   COMPLETE: "COMPLETE",
+  COMPLETED: "COMPLETED",
   FAILED: "FAILED",
   PENDING: "PENDING",
   REPLICA: "REPLICA",
@@ -7660,7 +7690,7 @@ export interface GetObjectOutput {
    * <p>The server-side encryption algorithm used when storing this object in Amazon S3 (for example,
    *             <code>AES256</code>, <code>aws:kms</code>, <code>aws:kms:dsse</code>).</p>
    */
-  ServerSideEncryption?: ServerSideEncryption | string;
+  ServerSideEncryption?: ServerSideEncryption;
 
   /**
    * @public
@@ -7702,21 +7732,21 @@ export interface GetObjectOutput {
    * <p>Provides storage class information of the object. Amazon S3 returns this header for all
    *          objects except for S3 Standard storage class objects.</p>
    */
-  StorageClass?: StorageClass | string;
+  StorageClass?: StorageClass;
 
   /**
    * @public
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 
   /**
    * @public
    * <p>Amazon S3 can return this if your request involves a bucket that is either a source or
    *          destination in a replication rule.</p>
    */
-  ReplicationStatus?: ReplicationStatus | string;
+  ReplicationStatus?: ReplicationStatus;
 
   /**
    * @public
@@ -7736,7 +7766,7 @@ export interface GetObjectOutput {
    * @public
    * <p>The Object Lock mode currently in place for this object.</p>
    */
-  ObjectLockMode?: ObjectLockMode | string;
+  ObjectLockMode?: ObjectLockMode;
 
   /**
    * @public
@@ -7749,7 +7779,7 @@ export interface GetObjectOutput {
    * <p>Indicates whether this object has an active legal hold. This field is only returned if
    *          you have permission to view an object's legal hold status. </p>
    */
-  ObjectLockLegalHoldStatus?: ObjectLockLegalHoldStatus | string;
+  ObjectLockLegalHoldStatus?: ObjectLockLegalHoldStatus;
 }
 
 /**
@@ -7895,11 +7925,13 @@ export interface GetObjectRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -7919,7 +7951,7 @@ export interface GetObjectRequest {
    * @public
    * <p>To retrieve the checksum, this mode must be enabled.</p>
    */
-  ChecksumMode?: ChecksumMode | string;
+  ChecksumMode?: ChecksumMode;
 }
 
 /**
@@ -7929,8 +7961,8 @@ export interface GetObjectRequest {
 export class InvalidObjectState extends __BaseException {
   readonly name: "InvalidObjectState" = "InvalidObjectState";
   readonly $fault: "client" = "client";
-  StorageClass?: StorageClass | string;
-  AccessTier?: IntelligentTieringAccessTier | string;
+  StorageClass?: StorageClass;
+  AccessTier?: IntelligentTieringAccessTier;
   /**
    * @internal
    */
@@ -7987,7 +8019,7 @@ export interface GetObjectAclOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -8018,11 +8050,13 @@ export interface GetObjectAclRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -8204,7 +8238,7 @@ export interface GetObjectAttributesOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 
   /**
    * @public
@@ -8231,7 +8265,7 @@ export interface GetObjectAttributesOutput {
    *          objects except for S3 Standard storage class objects.</p>
    *          <p>For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage-class-intro.html">Storage Classes</a>.</p>
    */
-  StorageClass?: StorageClass | string;
+  StorageClass?: StorageClass;
 
   /**
    * @public
@@ -8323,11 +8357,13 @@ export interface GetObjectAttributesRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -8337,10 +8373,10 @@ export interface GetObjectAttributesRequest {
 
   /**
    * @public
-   * <p>Specifies the fields at the root level that you want returned in the
-   *          response. Fields that you do not specify are not returned.</p>
+   * <p>Specifies the fields at the root level that you want returned in the response. Fields
+   *          that you do not specify are not returned.</p>
    */
-  ObjectAttributes: (ObjectAttributes | string)[] | undefined;
+  ObjectAttributes: ObjectAttributes[] | undefined;
 }
 
 /**
@@ -8352,7 +8388,7 @@ export interface ObjectLockLegalHold {
    * @public
    * <p>Indicates whether the specified object has a legal hold in place.</p>
    */
-  Status?: ObjectLockLegalHoldStatus | string;
+  Status?: ObjectLockLegalHoldStatus;
 }
 
 /**
@@ -8394,11 +8430,13 @@ export interface GetObjectLegalHoldRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -8458,7 +8496,7 @@ export interface DefaultRetention {
    * <p>The default Object Lock retention mode you want to apply to new objects placed in the
    *          specified bucket. Must be used with either <code>Days</code> or <code>Years</code>.</p>
    */
-  Mode?: ObjectLockRetentionMode | string;
+  Mode?: ObjectLockRetentionMode;
 
   /**
    * @public
@@ -8501,7 +8539,7 @@ export interface ObjectLockConfiguration {
    *             <code>ObjectLockEnabled</code> when you apply <code>ObjectLockConfiguration</code> to a
    *          bucket. </p>
    */
-  ObjectLockEnabled?: ObjectLockEnabled | string;
+  ObjectLockEnabled?: ObjectLockEnabled;
 
   /**
    * @public
@@ -8554,7 +8592,7 @@ export interface ObjectLockRetention {
    * @public
    * <p>Indicates the Retention mode for the specified object.</p>
    */
-  Mode?: ObjectLockRetentionMode | string;
+  Mode?: ObjectLockRetentionMode;
 
   /**
    * @public
@@ -8602,11 +8640,13 @@ export interface GetObjectRetentionRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -8668,11 +8708,13 @@ export interface GetObjectTaggingRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 }
 
 /**
@@ -8690,7 +8732,7 @@ export interface GetObjectTorrentOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -8714,11 +8756,13 @@ export interface GetObjectTorrentRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -8826,10 +8870,11 @@ export interface HeadBucketRequest {
    * @public
    * <p>The bucket name.</p>
    *          <p>When using this action with an access point, you must direct requests to the access point hostname. The access point hostname takes the form <i>AccessPointName</i>-<i>AccountId</i>.s3-accesspoint.<i>Region</i>.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html">Using access points</a> in the <i>Amazon S3 User Guide</i>.</p>
-   *          <p>When you use this action with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name.
-   *          If the Object Lambda access point alias in a request is not valid, the error code <code>InvalidAccessPointAliasError</code> is returned.
-   *          For more information about <code>InvalidAccessPointAliasError</code>, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList">List of
-   *             Error Codes</a>.</p>
+   *          <p>When you use this action with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the
+   *          bucket name. If the Object Lambda access point alias in a request is not valid, the error code
+   *             <code>InvalidAccessPointAliasError</code> is returned. For more information about
+   *             <code>InvalidAccessPointAliasError</code>, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList">List of Error
+   *          Codes</a>.</p>
    *          <p>When you use this action with Amazon S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form <code>
    *                <i>AccessPointName</i>-<i>AccountId</i>.<i>outpostID</i>.s3-outposts.<i>Region</i>.amazonaws.com</code>. When you use this action with S3 on Outposts through the Amazon Web Services SDKs, you provide the Outposts access point ARN in place of the bucket name. For more information about S3 on Outposts ARNs, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html">What is S3 on Outposts?</a> in the <i>Amazon S3 User Guide</i>.</p>
    * <p>Note: To supply the Multi-region Access Point (MRAP) to Bucket, you need to install the "@aws-sdk/signature-v4-crt" package to your project dependencies.
@@ -8924,7 +8969,7 @@ export interface HeadObjectOutput {
    * @public
    * <p>The archive state of the head object.</p>
    */
-  ArchiveStatus?: ArchiveStatus | string;
+  ArchiveStatus?: ArchiveStatus;
 
   /**
    * @public
@@ -9047,7 +9092,7 @@ export interface HeadObjectOutput {
    * <p>The server-side encryption algorithm used when storing this object in Amazon S3 (for example,
    *             <code>AES256</code>, <code>aws:kms</code>, <code>aws:kms:dsse</code>).</p>
    */
-  ServerSideEncryption?: ServerSideEncryption | string;
+  ServerSideEncryption?: ServerSideEncryption;
 
   /**
    * @public
@@ -9090,14 +9135,14 @@ export interface HeadObjectOutput {
    *          objects except for S3 Standard storage class objects.</p>
    *          <p>For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage-class-intro.html">Storage Classes</a>.</p>
    */
-  StorageClass?: StorageClass | string;
+  StorageClass?: StorageClass;
 
   /**
    * @public
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 
   /**
    * @public
@@ -9141,7 +9186,7 @@ export interface HeadObjectOutput {
    *          </ul>
    *          <p>For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/NotificationHowTo.html">Replication</a>.</p>
    */
-  ReplicationStatus?: ReplicationStatus | string;
+  ReplicationStatus?: ReplicationStatus;
 
   /**
    * @public
@@ -9157,7 +9202,7 @@ export interface HeadObjectOutput {
    *          returned if the requester has the <code>s3:GetObjectRetention</code> permission. For more
    *          information about S3 Object Lock, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lock.html">Object Lock</a>. </p>
    */
-  ObjectLockMode?: ObjectLockMode | string;
+  ObjectLockMode?: ObjectLockMode;
 
   /**
    * @public
@@ -9173,7 +9218,7 @@ export interface HeadObjectOutput {
    *          header is not returned if the specified version of this object has never had a legal hold
    *          applied. For more information about S3 Object Lock, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lock.html">Object Lock</a>.</p>
    */
-  ObjectLockLegalHoldStatus?: ObjectLockLegalHoldStatus | string;
+  ObjectLockLegalHoldStatus?: ObjectLockLegalHoldStatus;
 }
 
 /**
@@ -9266,11 +9311,13 @@ export interface HeadObjectRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -9293,7 +9340,7 @@ export interface HeadObjectRequest {
    *          Amazon Web Services Key Management Service (Amazon Web Services KMS), you must have permission to use the
    *             <code>kms:Decrypt</code> action for the request to succeed.</p>
    */
-  ChecksumMode?: ChecksumMode | string;
+  ChecksumMode?: ChecksumMode;
 }
 
 /**
@@ -9648,7 +9695,7 @@ export interface MultipartUpload {
    * @public
    * <p>The class of storage used to store the object.</p>
    */
-  StorageClass?: StorageClass | string;
+  StorageClass?: StorageClass;
 
   /**
    * @public
@@ -9666,7 +9713,7 @@ export interface MultipartUpload {
    * @public
    * <p>The algorithm that was used to create a checksum of the object.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 }
 
 /**
@@ -9760,14 +9807,14 @@ export interface ListMultipartUploadsOutput {
    *             <code>Delimiter</code>, <code>KeyMarker</code>, <code>Prefix</code>,
    *             <code>NextKeyMarker</code>, <code>Key</code>.</p>
    */
-  EncodingType?: EncodingType | string;
+  EncodingType?: EncodingType;
 
   /**
    * @public
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -9805,7 +9852,7 @@ export interface ListMultipartUploadsRequest {
    *          characters that are not supported in XML 1.0, you can add this parameter to request that
    *          Amazon S3 encode the keys in the response.</p>
    */
-  EncodingType?: EncodingType | string;
+  EncodingType?: EncodingType;
 
   /**
    * @public
@@ -9855,19 +9902,21 @@ export interface ListMultipartUploadsRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 }
 
 /**
  * @public
- * <p>Specifies the restoration status of an object. Objects in certain storage classes must be restored
- *          before they can be retrieved. For more information about these storage classes and how to work with
- *          archived objects, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/archived-objects.html">
- *             Working with archived objects</a> in the <i>Amazon S3 User Guide</i>.</p>
+ * <p>Specifies the restoration status of an object. Objects in certain storage classes must
+ *          be restored before they can be retrieved. For more information about these storage classes
+ *          and how to work with archived objects, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/archived-objects.html"> Working with archived
+ *             objects</a> in the <i>Amazon S3 User Guide</i>.</p>
  */
 export interface RestoreStatus {
   /**
@@ -9877,9 +9926,11 @@ export interface RestoreStatus {
    *          <p>
    *             <code>x-amz-optional-object-attributes: IsRestoreInProgress="true"</code>
    *          </p>
-   *          <p>If the object restoration has completed, the header returns the value <code>FALSE</code>. For example:</p>
+   *          <p>If the object restoration has completed, the header returns the value
+   *          <code>FALSE</code>. For example:</p>
    *          <p>
-   *             <code>x-amz-optional-object-attributes: IsRestoreInProgress="false", RestoreExpiryDate="2012-12-21T00:00:00.000Z"</code>
+   *             <code>x-amz-optional-object-attributes: IsRestoreInProgress="false",
+   *             RestoreExpiryDate="2012-12-21T00:00:00.000Z"</code>
    *          </p>
    *          <p>If the object hasn't been restored, there is no header response.</p>
    */
@@ -9890,7 +9941,8 @@ export interface RestoreStatus {
    * <p>Indicates when the restored copy will expire. This value is populated only if the object
    *          has already been restored. For example:</p>
    *          <p>
-   *             <code>x-amz-optional-object-attributes: IsRestoreInProgress="false", RestoreExpiryDate="2012-12-21T00:00:00.000Z"</code>
+   *             <code>x-amz-optional-object-attributes: IsRestoreInProgress="false",
+   *             RestoreExpiryDate="2012-12-21T00:00:00.000Z"</code>
    *          </p>
    */
   RestoreExpiryDate?: Date;
@@ -9967,7 +10019,7 @@ export interface _Object {
    * @public
    * <p>The algorithm that was used to create a checksum of the object.</p>
    */
-  ChecksumAlgorithm?: (ChecksumAlgorithm | string)[];
+  ChecksumAlgorithm?: ChecksumAlgorithm[];
 
   /**
    * @public
@@ -9979,7 +10031,7 @@ export interface _Object {
    * @public
    * <p>The class of storage used to store the object.</p>
    */
-  StorageClass?: ObjectStorageClass | string;
+  StorageClass?: ObjectStorageClass;
 
   /**
    * @public
@@ -9989,10 +10041,10 @@ export interface _Object {
 
   /**
    * @public
-   * <p>Specifies the restoration status of an object. Objects in certain storage classes must be restored
-   *          before they can be retrieved. For more information about these storage classes and how to work with
-   *          archived objects, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/archived-objects.html">
-   *             Working with archived objects</a> in the <i>Amazon S3 User Guide</i>.</p>
+   * <p>Specifies the restoration status of an object. Objects in certain storage classes must
+   *          be restored before they can be retrieved. For more information about these storage classes
+   *          and how to work with archived objects, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/archived-objects.html"> Working with archived
+   *             objects</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
   RestoreStatus?: RestoreStatus;
 }
@@ -10089,14 +10141,14 @@ export interface ListObjectsOutput {
    * @public
    * <p>Encoding type used by Amazon S3 to encode object keys in the response.</p>
    */
-  EncodingType?: EncodingType | string;
+  EncodingType?: EncodingType;
 
   /**
    * @public
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -10141,19 +10193,20 @@ export interface ListObjectsRequest {
    *          characters that are not supported in XML 1.0, you can add this parameter to request that
    *          Amazon S3 encode the keys in the response.</p>
    */
-  EncodingType?: EncodingType | string;
+  EncodingType?: EncodingType;
 
   /**
    * @public
-   * <p>Marker is where you want Amazon S3 to start listing from. Amazon S3 starts listing after
-   *          this specified key. Marker can be any key in the bucket.</p>
+   * <p>Marker is where you want Amazon S3 to start listing from. Amazon S3 starts listing after this
+   *          specified key. Marker can be any key in the bucket.</p>
    */
   Marker?: string;
 
   /**
    * @public
    * <p>Sets the maximum number of keys returned in the response. By default, the action returns
-   *          up to 1,000 key names. The response might contain fewer keys but will never contain more. </p>
+   *          up to 1,000 key names. The response might contain fewer keys but will never contain more.
+   *       </p>
    */
   MaxKeys?: number;
 
@@ -10168,7 +10221,7 @@ export interface ListObjectsRequest {
    * <p>Confirms that the requester knows that she or he will be charged for the list objects
    *          request. Bucket owners need not specify this parameter in their requests.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -10178,10 +10231,10 @@ export interface ListObjectsRequest {
 
   /**
    * @public
-   * <p>Specifies the optional fields that you want returned in the response.
-   *          Fields that you do not specify are not returned.</p>
+   * <p>Specifies the optional fields that you want returned in the response. Fields that you do
+   *          not specify are not returned.</p>
    */
-  OptionalObjectAttributes?: (OptionalObjectAttributes | string)[];
+  OptionalObjectAttributes?: OptionalObjectAttributes[];
 }
 
 /**
@@ -10284,7 +10337,7 @@ export interface ListObjectsV2Output {
    *          <p>
    *             <code>Delimiter, Prefix, Key,</code> and <code>StartAfter</code>.</p>
    */
-  EncodingType?: EncodingType | string;
+  EncodingType?: EncodingType;
 
   /**
    * @public
@@ -10324,7 +10377,7 @@ export interface ListObjectsV2Output {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -10352,7 +10405,7 @@ export interface ListObjectsV2Request {
    * @public
    * <p>Encoding type used by Amazon S3 to encode object keys in the response.</p>
    */
-  EncodingType?: EncodingType | string;
+  EncodingType?: EncodingType;
 
   /**
    * @public
@@ -10398,7 +10451,7 @@ export interface ListObjectsV2Request {
    *          request in V2 style. Bucket owners need not specify this parameter in their
    *          requests.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -10408,10 +10461,10 @@ export interface ListObjectsV2Request {
 
   /**
    * @public
-   * <p>Specifies the optional fields that you want returned in the response.
-   *          Fields that you do not specify are not returned.</p>
+   * <p>Specifies the optional fields that you want returned in the response. Fields that you do
+   *          not specify are not returned.</p>
    */
-  OptionalObjectAttributes?: (OptionalObjectAttributes | string)[];
+  OptionalObjectAttributes?: OptionalObjectAttributes[];
 }
 
 /**
@@ -10479,7 +10532,7 @@ export interface ObjectVersion {
    * @public
    * <p>The algorithm that was used to create a checksum of the object.</p>
    */
-  ChecksumAlgorithm?: (ChecksumAlgorithm | string)[];
+  ChecksumAlgorithm?: ChecksumAlgorithm[];
 
   /**
    * @public
@@ -10491,7 +10544,7 @@ export interface ObjectVersion {
    * @public
    * <p>The class of storage used to store the object.</p>
    */
-  StorageClass?: ObjectVersionStorageClass | string;
+  StorageClass?: ObjectVersionStorageClass;
 
   /**
    * @public
@@ -10526,10 +10579,10 @@ export interface ObjectVersion {
 
   /**
    * @public
-   * <p>Specifies the restoration status of an object. Objects in certain storage classes must be restored
-   *          before they can be retrieved. For more information about these storage classes and how to work with
-   *          archived objects, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/archived-objects.html">
-   *             Working with archived objects</a> in the <i>Amazon S3 User Guide</i>.</p>
+   * <p>Specifies the restoration status of an object. Objects in certain storage classes must
+   *          be restored before they can be retrieved. For more information about these storage classes
+   *          and how to work with archived objects, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/archived-objects.html"> Working with archived
+   *             objects</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
   RestoreStatus?: RestoreStatus;
 }
@@ -10634,14 +10687,14 @@ export interface ListObjectVersionsOutput {
    *          <p>
    *             <code>KeyMarker, NextKeyMarker, Prefix, Key</code>, and <code>Delimiter</code>.</p>
    */
-  EncodingType?: EncodingType | string;
+  EncodingType?: EncodingType;
 
   /**
    * @public
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -10674,7 +10727,7 @@ export interface ListObjectVersionsRequest {
    *          characters that are not supported in XML 1.0, you can add this parameter to request that
    *          Amazon S3 encode the keys in the response.</p>
    */
-  EncodingType?: EncodingType | string;
+  EncodingType?: EncodingType;
 
   /**
    * @public
@@ -10718,18 +10771,20 @@ export interface ListObjectVersionsRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
-   * <p>Specifies the optional fields that you want returned in the response.
-   *          Fields that you do not specify are not returned.</p>
+   * <p>Specifies the optional fields that you want returned in the response. Fields that you do
+   *          not specify are not returned.</p>
    */
-  OptionalObjectAttributes?: (OptionalObjectAttributes | string)[];
+  OptionalObjectAttributes?: OptionalObjectAttributes[];
 }
 
 /**
@@ -10808,7 +10863,8 @@ export interface ListPartsOutput {
    * <p>If the bucket has a lifecycle rule configured with an action to abort incomplete
    *          multipart uploads and the prefix in the lifecycle rule matches the object name in the
    *          request, then the response includes this header indicating when the initiated multipart
-   *          upload will become eligible for abort operation. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config">Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle Configuration</a>.</p>
+   *          upload will become eligible for abort operation. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config">Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle
+   *          Configuration</a>.</p>
    *          <p>The response will also include the <code>x-amz-abort-rule-id</code> header that will
    *          provide the ID of the lifecycle configuration rule that defines this action.</p>
    */
@@ -10900,20 +10956,20 @@ export interface ListPartsOutput {
    * <p>Class of storage (STANDARD or REDUCED_REDUNDANCY) used to store the uploaded
    *          object.</p>
    */
-  StorageClass?: StorageClass | string;
+  StorageClass?: StorageClass;
 
   /**
    * @public
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 
   /**
    * @public
    * <p>The algorithm that was used to create a checksum of the object.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 }
 
 /**
@@ -10959,11 +11015,13 @@ export interface ListPartsRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -11033,7 +11091,7 @@ export interface PutBucketAccelerateConfigurationRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 }
 
 /**
@@ -11044,7 +11102,7 @@ export interface PutBucketAclRequest {
    * @public
    * <p>The canned ACL to apply to the bucket.</p>
    */
-  ACL?: BucketCannedACL | string;
+  ACL?: BucketCannedACL;
 
   /**
    * @public
@@ -11081,7 +11139,7 @@ export interface PutBucketAclRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -11212,7 +11270,7 @@ export interface PutBucketCorsRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -11257,7 +11315,7 @@ export interface PutBucketEncryptionRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -11364,7 +11422,7 @@ export interface PutBucketLifecycleConfigurationRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -11428,7 +11486,7 @@ export interface PutBucketLoggingRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -11564,7 +11622,7 @@ export interface PutBucketPolicyRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -11617,7 +11675,7 @@ export interface PutBucketReplicationRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -11648,7 +11706,7 @@ export interface RequestPaymentConfiguration {
    * @public
    * <p>Specifies who pays for the download and request fees.</p>
    */
-  Payer: Payer | string | undefined;
+  Payer: Payer | undefined;
 }
 
 /**
@@ -11682,7 +11740,7 @@ export interface PutBucketRequestPaymentRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -11740,7 +11798,7 @@ export interface PutBucketTaggingRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -11781,13 +11839,13 @@ export interface VersioningConfiguration {
    *          element is only returned if the bucket has been configured with MFA delete. If the bucket
    *          has never been so configured, this element is not returned.</p>
    */
-  MFADelete?: MFADelete | string;
+  MFADelete?: MFADelete;
 
   /**
    * @public
    * <p>The versioning state of the bucket.</p>
    */
-  Status?: BucketVersioningStatus | string;
+  Status?: BucketVersioningStatus;
 }
 
 /**
@@ -11822,7 +11880,7 @@ export interface PutBucketVersioningRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -11908,7 +11966,7 @@ export interface PutBucketWebsiteRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -11983,7 +12041,7 @@ export interface PutObjectOutput {
    * <p>The server-side encryption algorithm used when storing this object in Amazon S3 (for example,
    *             <code>AES256</code>, <code>aws:kms</code>, <code>aws:kms:dsse</code>).</p>
    */
-  ServerSideEncryption?: ServerSideEncryption | string;
+  ServerSideEncryption?: ServerSideEncryption;
 
   /**
    * @public
@@ -12018,9 +12076,9 @@ export interface PutObjectOutput {
    * @public
    * <p>If present, specifies the Amazon Web Services KMS Encryption Context to use for object encryption. The
    *          value of this header is a base64-encoded UTF-8 string holding JSON with the encryption
-   *          context key-value pairs. This value is stored as object metadata and automatically gets passed
-   *          on to Amazon Web Services KMS for future <code>GetObject</code> or <code>CopyObject</code> operations on
-   *          this object.</p>
+   *          context key-value pairs. This value is stored as object metadata and automatically gets
+   *          passed on to Amazon Web Services KMS for future <code>GetObject</code> or <code>CopyObject</code>
+   *          operations on this object.</p>
    */
   SSEKMSEncryptionContext?: string;
 
@@ -12036,7 +12094,7 @@ export interface PutObjectOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -12049,7 +12107,7 @@ export interface PutObjectRequest {
    *             ACL</a>.</p>
    *          <p>This action is not supported by Amazon S3 on Outposts.</p>
    */
-  ACL?: ObjectCannedACL | string;
+  ACL?: ObjectCannedACL;
 
   /**
    * @public
@@ -12129,7 +12187,7 @@ export interface PutObjectRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -12219,7 +12277,7 @@ export interface PutObjectRequest {
    * <p>The server-side encryption algorithm used when storing this object in Amazon S3 (for example,
    *             <code>AES256</code>, <code>aws:kms</code>, <code>aws:kms:dsse</code>).</p>
    */
-  ServerSideEncryption?: ServerSideEncryption | string;
+  ServerSideEncryption?: ServerSideEncryption;
 
   /**
    * @public
@@ -12229,7 +12287,7 @@ export interface PutObjectRequest {
    *          the OUTPOSTS Storage Class. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage-class-intro.html">Storage Classes</a> in the
    *             <i>Amazon S3 User Guide</i>.</p>
    */
-  StorageClass?: StorageClass | string;
+  StorageClass?: StorageClass;
 
   /**
    * @public
@@ -12279,7 +12337,7 @@ export interface PutObjectRequest {
   /**
    * @public
    * <p>If <code>x-amz-server-side-encryption</code> has a valid value of <code>aws:kms</code>
-   *          or <code>aws:kms:dsse</code>, this header specifies the ID of the Key Management Service (KMS)
+   *          or <code>aws:kms:dsse</code>, this header specifies the ID (Key ID, Key ARN, or Key Alias) of the Key Management Service (KMS)
    *          symmetric encryption customer managed key that was used for the object. If you specify
    *             <code>x-amz-server-side-encryption:aws:kms</code> or
    *             <code>x-amz-server-side-encryption:aws:kms:dsse</code>, but do not provide<code>
@@ -12293,9 +12351,9 @@ export interface PutObjectRequest {
    * @public
    * <p>Specifies the Amazon Web Services KMS Encryption Context to use for object encryption. The value of
    *          this header is a base64-encoded UTF-8 string holding JSON with the encryption context
-   *          key-value pairs. This value is stored as object metadata and automatically gets passed on to
-   *          Amazon Web Services KMS for future <code>GetObject</code> or <code>CopyObject</code> operations on this
-   *          object.</p>
+   *          key-value pairs. This value is stored as object metadata and automatically gets passed on
+   *          to Amazon Web Services KMS for future <code>GetObject</code> or <code>CopyObject</code> operations on
+   *          this object.</p>
    */
   SSEKMSEncryptionContext?: string;
 
@@ -12313,11 +12371,13 @@ export interface PutObjectRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -12330,7 +12390,7 @@ export interface PutObjectRequest {
    * @public
    * <p>The Object Lock mode that you want to apply to this object.</p>
    */
-  ObjectLockMode?: ObjectLockMode | string;
+  ObjectLockMode?: ObjectLockMode;
 
   /**
    * @public
@@ -12344,7 +12404,7 @@ export interface PutObjectRequest {
    * <p>Specifies whether a legal hold will be applied to this object. For more information
    *          about S3 Object Lock, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lock.html">Object Lock</a>.</p>
    */
-  ObjectLockLegalHoldStatus?: ObjectLockLegalHoldStatus | string;
+  ObjectLockLegalHoldStatus?: ObjectLockLegalHoldStatus;
 
   /**
    * @public
@@ -12362,7 +12422,7 @@ export interface PutObjectAclOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -12374,7 +12434,7 @@ export interface PutObjectAclRequest {
    * <p>The canned ACL to apply to the object. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#CannedACL">Canned
    *             ACL</a>.</p>
    */
-  ACL?: ObjectCannedACL | string;
+  ACL?: ObjectCannedACL;
 
   /**
    * @public
@@ -12412,7 +12472,7 @@ export interface PutObjectAclRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public
@@ -12463,11 +12523,13 @@ export interface PutObjectAclRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -12491,7 +12553,7 @@ export interface PutObjectLegalHoldOutput {
    * <p>If present, indicates that the requester was successfully charged for the
    *          request.</p>
    */
-  RequestCharged?: RequestCharged | string;
+  RequestCharged?: RequestCharged;
 }
 
 /**
@@ -12523,11 +12585,13 @@ export interface PutObjectLegalHoldRequest {
   /**
    * @public
    * <p>Confirms that the requester knows that they will be charged for the request. Bucket
-   *          owners need not specify this parameter in their requests. For information about downloading
-   *          objects from Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
+   *          owners need not specify this parameter in their requests. If either the source or
+   *          destination Amazon S3 bucket has Requester Pays enabled, the requester will pay for
+   *          corresponding charges to copy the object. For information about downloading objects from
+   *          Requester Pays buckets, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html">Downloading Objects in
    *             Requester Pays Buckets</a> in the <i>Amazon S3 User Guide</i>.</p>
    */
-  RequestPayer?: RequestPayer | string;
+  RequestPayer?: RequestPayer;
 
   /**
    * @public
@@ -12552,7 +12616,7 @@ export interface PutObjectLegalHoldRequest {
    *          <p>If you provide an individual checksum, Amazon S3 ignores any provided
    *             <code>ChecksumAlgorithm</code> parameter.</p>
    */
-  ChecksumAlgorithm?: ChecksumAlgorithm | string;
+  ChecksumAlgorithm?: ChecksumAlgorithm;
 
   /**
    * @public

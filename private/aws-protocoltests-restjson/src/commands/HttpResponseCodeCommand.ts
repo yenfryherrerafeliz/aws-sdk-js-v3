@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { HttpResponseCodeOutput } from "../models/models_0";
@@ -33,6 +34,34 @@ export interface HttpResponseCodeCommandInput {}
  */
 export interface HttpResponseCodeCommandOutput extends HttpResponseCodeOutput, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestJsonProtocolClient, HttpResponseCodeCommand } from "@aws-sdk/aws-protocoltests-restjson"; // ES Modules import
+ * // const { RestJsonProtocolClient, HttpResponseCodeCommand } = require("@aws-sdk/aws-protocoltests-restjson"); // CommonJS import
+ * const client = new RestJsonProtocolClient(config);
+ * const input = {};
+ * const command = new HttpResponseCodeCommand(input);
+ * const response = await client.send(command);
+ * // { // HttpResponseCodeOutput
+ * //   Status: Number("int"),
+ * // };
+ *
+ * ```
+ *
+ * @param HttpResponseCodeCommandInput - {@link HttpResponseCodeCommandInput}
+ * @returns {@link HttpResponseCodeCommandOutput}
+ * @see {@link HttpResponseCodeCommandInput} for command's `input` shape.
+ * @see {@link HttpResponseCodeCommandOutput} for command's `response` shape.
+ * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
+ *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
+ *
+ */
 export class HttpResponseCodeCommand extends $Command<
   HttpResponseCodeCommandInput,
   HttpResponseCodeCommandOutput,
@@ -71,6 +100,10 @@ export class HttpResponseCodeCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "HttpResponseCode",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,10 +11,11 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
-import { UpdateQuickConnectNameRequest } from "../models/models_1";
+import { UpdateQuickConnectNameRequest } from "../models/models_2";
 import { de_UpdateQuickConnectNameCommand, se_UpdateQuickConnectNameCommand } from "../protocols/Aws_restJson1";
 
 /**
@@ -130,6 +131,10 @@ export class UpdateQuickConnectNameCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonConnectService",
+        operation: "UpdateQuickConnectName",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

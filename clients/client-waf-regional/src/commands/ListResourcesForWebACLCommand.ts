@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListResourcesForWebACLRequest, ListResourcesForWebACLResponse } from "../models/models_0";
@@ -53,7 +54,7 @@ export interface ListResourcesForWebACLCommandOutput extends ListResourcesForWeb
  * const client = new WAFRegionalClient(config);
  * const input = { // ListResourcesForWebACLRequest
  *   WebACLId: "STRING_VALUE", // required
- *   ResourceType: "STRING_VALUE",
+ *   ResourceType: "APPLICATION_LOAD_BALANCER" || "API_GATEWAY",
  * };
  * const command = new ListResourcesForWebACLCommand(input);
  * const response = await client.send(command);
@@ -174,6 +175,10 @@ export class ListResourcesForWebACLCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_Regional_20161128",
+        operation: "ListResourcesForWebACL",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

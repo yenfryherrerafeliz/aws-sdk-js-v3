@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetCanaryRunsRequest, GetCanaryRunsResponse } from "../models/models_0";
@@ -56,9 +57,9 @@ export interface GetCanaryRunsCommandOutput extends GetCanaryRunsResponse, __Met
  * //       Id: "STRING_VALUE",
  * //       Name: "STRING_VALUE",
  * //       Status: { // CanaryRunStatus
- * //         State: "STRING_VALUE",
+ * //         State: "RUNNING" || "PASSED" || "FAILED",
  * //         StateReason: "STRING_VALUE",
- * //         StateReasonCode: "STRING_VALUE",
+ * //         StateReasonCode: "CANARY_FAILURE" || "EXECUTION_FAILURE",
  * //       },
  * //       Timeline: { // CanaryRunTimeline
  * //         Started: new Date("TIMESTAMP"),
@@ -139,6 +140,10 @@ export class GetCanaryRunsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Synthetics",
+        operation: "GetCanaryRuns",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

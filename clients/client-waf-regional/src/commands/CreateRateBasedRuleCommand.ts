@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateRateBasedRuleRequest, CreateRateBasedRuleResponse } from "../models/models_0";
@@ -139,7 +140,7 @@ export interface CreateRateBasedRuleCommandOutput extends CreateRateBasedRuleRes
  * const input = { // CreateRateBasedRuleRequest
  *   Name: "STRING_VALUE", // required
  *   MetricName: "STRING_VALUE", // required
- *   RateKey: "STRING_VALUE", // required
+ *   RateKey: "IP", // required
  *   RateLimit: Number("long"), // required
  *   ChangeToken: "STRING_VALUE", // required
  *   Tags: [ // TagList
@@ -159,11 +160,11 @@ export interface CreateRateBasedRuleCommandOutput extends CreateRateBasedRuleRes
  * //     MatchPredicates: [ // Predicates // required
  * //       { // Predicate
  * //         Negated: true || false, // required
- * //         Type: "STRING_VALUE", // required
+ * //         Type: "IPMatch" || "ByteMatch" || "SqlInjectionMatch" || "GeoMatch" || "SizeConstraint" || "XssMatch" || "RegexMatch", // required
  * //         DataId: "STRING_VALUE", // required
  * //       },
  * //     ],
- * //     RateKey: "STRING_VALUE", // required
+ * //     RateKey: "IP", // required
  * //     RateLimit: Number("long"), // required
  * //   },
  * //   ChangeToken: "STRING_VALUE",
@@ -294,6 +295,10 @@ export class CreateRateBasedRuleCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_Regional_20161128",
+        operation: "CreateRateBasedRule",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

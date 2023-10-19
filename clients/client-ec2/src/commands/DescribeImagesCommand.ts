@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EC2ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EC2Client";
@@ -68,6 +69,7 @@ export interface DescribeImagesCommandOutput extends DescribeImagesResult, __Met
  *     "STRING_VALUE",
  *   ],
  *   IncludeDeprecated: true || false,
+ *   IncludeDisabled: true || false,
  *   DryRun: true || false,
  *   MaxResults: Number("int"),
  *   NextToken: "STRING_VALUE",
@@ -95,7 +97,7 @@ export interface DescribeImagesCommandOutput extends DescribeImagesResult, __Met
  * //         },
  * //       ],
  * //       RamdiskId: "STRING_VALUE",
- * //       State: "pending" || "available" || "invalid" || "deregistered" || "transient" || "failed" || "error",
+ * //       State: "pending" || "available" || "invalid" || "deregistered" || "transient" || "failed" || "error" || "disabled",
  * //       BlockDeviceMappings: [ // BlockDeviceMappingList
  * //         { // BlockDeviceMapping
  * //           DeviceName: "STRING_VALUE",
@@ -137,6 +139,7 @@ export interface DescribeImagesCommandOutput extends DescribeImagesResult, __Met
  * //       TpmSupport: "v2.0",
  * //       DeprecationTime: "STRING_VALUE",
  * //       ImdsSupport: "v2.0",
+ * //       SourceInstanceId: "STRING_VALUE",
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -250,6 +253,10 @@ export class DescribeImagesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2",
+        operation: "DescribeImages",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

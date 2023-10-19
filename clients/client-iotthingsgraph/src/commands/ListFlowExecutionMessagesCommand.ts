@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTThingsGraphClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTThingsGraphClient";
@@ -56,7 +57,7 @@ export interface ListFlowExecutionMessagesCommandOutput extends ListFlowExecutio
  * //   messages: [ // FlowExecutionMessages
  * //     { // FlowExecutionMessage
  * //       messageId: "STRING_VALUE",
- * //       eventType: "STRING_VALUE",
+ * //       eventType: "EXECUTION_STARTED" || "EXECUTION_FAILED" || "EXECUTION_ABORTED" || "EXECUTION_SUCCEEDED" || "STEP_STARTED" || "STEP_FAILED" || "STEP_SUCCEEDED" || "ACTIVITY_SCHEDULED" || "ACTIVITY_STARTED" || "ACTIVITY_FAILED" || "ACTIVITY_SUCCEEDED" || "START_FLOW_EXECUTION_TASK" || "SCHEDULE_NEXT_READY_STEPS_TASK" || "THING_ACTION_TASK" || "THING_ACTION_TASK_FAILED" || "THING_ACTION_TASK_SUCCEEDED" || "ACKNOWLEDGE_TASK_MESSAGE",
  * //       timestamp: new Date("TIMESTAMP"),
  * //       payload: "STRING_VALUE",
  * //     },
@@ -138,6 +139,10 @@ export class ListFlowExecutionMessagesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotThingsGraphFrontEndService",
+        operation: "ListFlowExecutionMessages",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListRobotApplicationsRequest, ListRobotApplicationsResponse } from "../models/models_0";
@@ -67,8 +68,8 @@ export interface ListRobotApplicationsCommandOutput extends ListRobotApplication
  * //       version: "STRING_VALUE",
  * //       lastUpdatedAt: new Date("TIMESTAMP"),
  * //       robotSoftwareSuite: { // RobotSoftwareSuite
- * //         name: "STRING_VALUE",
- * //         version: "STRING_VALUE",
+ * //         name: "ROS" || "ROS2" || "General",
+ * //         version: "Kinetic" || "Melodic" || "Dashing" || "Foxy",
  * //       },
  * //     },
  * //   ],
@@ -147,6 +148,10 @@ export class ListRobotApplicationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "ListRobotApplications",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

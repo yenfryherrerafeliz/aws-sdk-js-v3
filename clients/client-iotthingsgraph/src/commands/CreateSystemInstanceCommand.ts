@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTThingsGraphClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTThingsGraphClient";
@@ -61,10 +62,10 @@ export interface CreateSystemInstanceCommandOutput extends CreateSystemInstanceR
  *     },
  *   ],
  *   definition: { // DefinitionDocument
- *     language: "STRING_VALUE", // required
+ *     language: "GRAPHQL", // required
  *     text: "STRING_VALUE", // required
  *   },
- *   target: "STRING_VALUE", // required
+ *   target: "GREENGRASS" || "CLOUD", // required
  *   greengrassGroupName: "STRING_VALUE",
  *   s3BucketName: "STRING_VALUE",
  *   metricsConfiguration: { // MetricsConfiguration
@@ -79,8 +80,8 @@ export interface CreateSystemInstanceCommandOutput extends CreateSystemInstanceR
  * //   summary: { // SystemInstanceSummary
  * //     id: "STRING_VALUE",
  * //     arn: "STRING_VALUE",
- * //     status: "STRING_VALUE",
- * //     target: "STRING_VALUE",
+ * //     status: "NOT_DEPLOYED" || "BOOTSTRAP" || "DEPLOY_IN_PROGRESS" || "DEPLOYED_IN_TARGET" || "UNDEPLOY_IN_PROGRESS" || "FAILED" || "PENDING_DELETE" || "DELETED_IN_TARGET",
+ * //     target: "GREENGRASS" || "CLOUD",
  * //     greengrassGroupName: "STRING_VALUE",
  * //     createdAt: new Date("TIMESTAMP"),
  * //     updatedAt: new Date("TIMESTAMP"),
@@ -166,6 +167,10 @@ export class CreateSystemInstanceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotThingsGraphFrontEndService",
+        operation: "CreateSystemInstance",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

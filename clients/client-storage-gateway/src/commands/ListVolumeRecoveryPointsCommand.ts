@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListVolumeRecoveryPointsInput, ListVolumeRecoveryPointsOutput } from "../models/models_0";
@@ -38,7 +39,6 @@ export interface ListVolumeRecoveryPointsCommandOutput extends ListVolumeRecover
  * @public
  * <p>Lists the recovery points for a specified gateway. This operation is only supported in
  *          the cached volume gateway type.</p>
- *
  *          <p>Each cache volume has one recovery point. A volume recovery point is a point in time at
  *          which all data of the volume is consistent and from which you can create a snapshot or
  *          clone a new cached volume from a source volume. To create a snapshot from a volume recovery
@@ -159,6 +159,10 @@ export class ListVolumeRecoveryPointsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "StorageGateway_20130630",
+        operation: "ListVolumeRecoveryPoints",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

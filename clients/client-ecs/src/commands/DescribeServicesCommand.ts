@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECSClient";
@@ -367,10 +368,10 @@ export interface DescribeServicesCommandOutput extends DescribeServicesResponse,
  *       "loadBalancers": [],
  *       "pendingCount": 0,
  *       "runningCount": 0,
- *       "serviceArn": "arn:aws:ecs:us-east-1:012345678910:service/ecs-simple-service",
+ *       "serviceArn": "arn:aws:ecs:us-east-1:012345678910:service/default/ecs-simple-service",
  *       "serviceName": "ecs-simple-service",
  *       "status": "ACTIVE",
- *       "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/hello_world:6"
+ *       "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/default/hello_world:6"
  *     }
  *   ]
  * }
@@ -429,6 +430,10 @@ export class DescribeServicesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerServiceV20141113",
+        operation: "DescribeServices",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

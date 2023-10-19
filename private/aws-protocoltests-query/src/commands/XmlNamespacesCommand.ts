@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { XmlNamespacesOutput } from "../models/models_0";
@@ -33,6 +34,39 @@ export interface XmlNamespacesCommandInput {}
  */
 export interface XmlNamespacesCommandOutput extends XmlNamespacesOutput, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { QueryProtocolClient, XmlNamespacesCommand } from "@aws-sdk/aws-protocoltests-query"; // ES Modules import
+ * // const { QueryProtocolClient, XmlNamespacesCommand } = require("@aws-sdk/aws-protocoltests-query"); // CommonJS import
+ * const client = new QueryProtocolClient(config);
+ * const input = {};
+ * const command = new XmlNamespacesCommand(input);
+ * const response = await client.send(command);
+ * // { // XmlNamespacesOutput
+ * //   nested: { // XmlNamespaceNested
+ * //     foo: "STRING_VALUE",
+ * //     values: [ // XmlNamespacedList
+ * //       "STRING_VALUE",
+ * //     ],
+ * //   },
+ * // };
+ *
+ * ```
+ *
+ * @param XmlNamespacesCommandInput - {@link XmlNamespacesCommandInput}
+ * @returns {@link XmlNamespacesCommandOutput}
+ * @see {@link XmlNamespacesCommandInput} for command's `input` shape.
+ * @see {@link XmlNamespacesCommandOutput} for command's `response` shape.
+ * @see {@link QueryProtocolClientResolvedConfig | config} for QueryProtocolClient's `config` shape.
+ *
+ * @throws {@link QueryProtocolServiceException}
+ * <p>Base exception class for all service exceptions from QueryProtocol service.</p>
+ *
+ */
 export class XmlNamespacesCommand extends $Command<
   XmlNamespacesCommandInput,
   XmlNamespacesCommandOutput,
@@ -71,6 +105,10 @@ export class XmlNamespacesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AwsQuery",
+        operation: "XmlNamespaces",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

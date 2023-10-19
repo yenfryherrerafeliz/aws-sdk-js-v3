@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { AutoScalingPlansClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../AutoScalingPlansClient";
@@ -57,10 +58,10 @@ export interface GetScalingPlanResourceForecastDataCommandOutput
  * const input = { // GetScalingPlanResourceForecastDataRequest
  *   ScalingPlanName: "STRING_VALUE", // required
  *   ScalingPlanVersion: Number("long"), // required
- *   ServiceNamespace: "STRING_VALUE", // required
+ *   ServiceNamespace: "autoscaling" || "ecs" || "ec2" || "rds" || "dynamodb", // required
  *   ResourceId: "STRING_VALUE", // required
- *   ScalableDimension: "STRING_VALUE", // required
- *   ForecastDataType: "STRING_VALUE", // required
+ *   ScalableDimension: "autoscaling:autoScalingGroup:DesiredCapacity" || "ecs:service:DesiredCount" || "ec2:spot-fleet-request:TargetCapacity" || "rds:cluster:ReadReplicaCount" || "dynamodb:table:ReadCapacityUnits" || "dynamodb:table:WriteCapacityUnits" || "dynamodb:index:ReadCapacityUnits" || "dynamodb:index:WriteCapacityUnits", // required
+ *   ForecastDataType: "CapacityForecast" || "LoadForecast" || "ScheduledActionMinCapacity" || "ScheduledActionMaxCapacity", // required
  *   StartTime: new Date("TIMESTAMP"), // required
  *   EndTime: new Date("TIMESTAMP"), // required
  * };
@@ -143,6 +144,10 @@ export class GetScalingPlanResourceForecastDataCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AnyScaleScalingPlannerFrontendService",
+        operation: "GetScalingPlanResourceForecastData",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

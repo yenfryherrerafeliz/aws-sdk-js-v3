@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MalformedTimestampPathDefaultInput } from "../models/models_0";
@@ -36,6 +37,34 @@ export interface MalformedTimestampPathDefaultCommandInput extends MalformedTime
  */
 export interface MalformedTimestampPathDefaultCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestJsonProtocolClient, MalformedTimestampPathDefaultCommand } from "@aws-sdk/aws-protocoltests-restjson"; // ES Modules import
+ * // const { RestJsonProtocolClient, MalformedTimestampPathDefaultCommand } = require("@aws-sdk/aws-protocoltests-restjson"); // CommonJS import
+ * const client = new RestJsonProtocolClient(config);
+ * const input = { // MalformedTimestampPathDefaultInput
+ *   timestamp: new Date("TIMESTAMP"), // required
+ * };
+ * const command = new MalformedTimestampPathDefaultCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param MalformedTimestampPathDefaultCommandInput - {@link MalformedTimestampPathDefaultCommandInput}
+ * @returns {@link MalformedTimestampPathDefaultCommandOutput}
+ * @see {@link MalformedTimestampPathDefaultCommandInput} for command's `input` shape.
+ * @see {@link MalformedTimestampPathDefaultCommandOutput} for command's `response` shape.
+ * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
+ *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
+ *
+ */
 export class MalformedTimestampPathDefaultCommand extends $Command<
   MalformedTimestampPathDefaultCommandInput,
   MalformedTimestampPathDefaultCommandOutput,
@@ -74,6 +103,10 @@ export class MalformedTimestampPathDefaultCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "MalformedTimestampPathDefault",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

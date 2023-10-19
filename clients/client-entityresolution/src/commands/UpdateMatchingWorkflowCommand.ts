@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EntityResolutionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EntityResolutionClient";
@@ -37,9 +38,9 @@ export interface UpdateMatchingWorkflowCommandOutput extends UpdateMatchingWorkf
 /**
  * @public
  * <p>Updates an existing <code>MatchingWorkflow</code>. This method is identical to
- *          <code>CreateMatchingWorkflow</code>, except it uses an HTTP <code>PUT</code> request instead of
- *          a <code>POST</code> request, and the <code>MatchingWorkflow</code> must already exist for the
- *          method to succeed.</p>
+ *             <code>CreateMatchingWorkflow</code>, except it uses an HTTP <code>PUT</code> request
+ *          instead of a <code>POST</code> request, and the <code>MatchingWorkflow</code> must already
+ *          exist for the method to succeed.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -59,18 +60,18 @@ export interface UpdateMatchingWorkflowCommandOutput extends UpdateMatchingWorkf
  *   outputSourceConfig: [ // OutputSourceConfig // required
  *     { // OutputSource
  *       outputS3Path: "STRING_VALUE", // required
+ *       KMSArn: "STRING_VALUE",
  *       output: [ // OutputAttributes // required
  *         { // OutputAttribute
  *           name: "STRING_VALUE", // required
  *           hashed: true || false,
  *         },
  *       ],
- *       KMSArn: "STRING_VALUE",
  *       applyNormalization: true || false,
  *     },
  *   ],
  *   resolutionTechniques: { // ResolutionTechniques
- *     resolutionType: "RULE_MATCHING" || "ML_MATCHING",
+ *     resolutionType: "RULE_MATCHING" || "ML_MATCHING" || "PROVIDER", // required
  *     ruleBasedProperties: { // RuleBasedProperties
  *       rules: [ // RuleList // required
  *         { // Rule
@@ -81,6 +82,13 @@ export interface UpdateMatchingWorkflowCommandOutput extends UpdateMatchingWorkf
  *         },
  *       ],
  *       attributeMatchingModel: "ONE_TO_ONE" || "MANY_TO_MANY", // required
+ *     },
+ *     providerProperties: { // ProviderProperties
+ *       providerServiceArn: "STRING_VALUE", // required
+ *       providerConfiguration: "DOCUMENT_VALUE",
+ *       intermediateSourceConfiguration: { // IntermediateSourceConfiguration
+ *         intermediateS3Path: "STRING_VALUE", // required
+ *       },
  *     },
  *   },
  *   incrementalRunConfig: { // IncrementalRunConfig
@@ -103,18 +111,18 @@ export interface UpdateMatchingWorkflowCommandOutput extends UpdateMatchingWorkf
  * //   outputSourceConfig: [ // OutputSourceConfig // required
  * //     { // OutputSource
  * //       outputS3Path: "STRING_VALUE", // required
+ * //       KMSArn: "STRING_VALUE",
  * //       output: [ // OutputAttributes // required
  * //         { // OutputAttribute
  * //           name: "STRING_VALUE", // required
  * //           hashed: true || false,
  * //         },
  * //       ],
- * //       KMSArn: "STRING_VALUE",
  * //       applyNormalization: true || false,
  * //     },
  * //   ],
  * //   resolutionTechniques: { // ResolutionTechniques
- * //     resolutionType: "RULE_MATCHING" || "ML_MATCHING",
+ * //     resolutionType: "RULE_MATCHING" || "ML_MATCHING" || "PROVIDER", // required
  * //     ruleBasedProperties: { // RuleBasedProperties
  * //       rules: [ // RuleList // required
  * //         { // Rule
@@ -125,6 +133,13 @@ export interface UpdateMatchingWorkflowCommandOutput extends UpdateMatchingWorkf
  * //         },
  * //       ],
  * //       attributeMatchingModel: "ONE_TO_ONE" || "MANY_TO_MANY", // required
+ * //     },
+ * //     providerProperties: { // ProviderProperties
+ * //       providerServiceArn: "STRING_VALUE", // required
+ * //       providerConfiguration: "DOCUMENT_VALUE",
+ * //       intermediateSourceConfiguration: { // IntermediateSourceConfiguration
+ * //         intermediateS3Path: "STRING_VALUE", // required
+ * //       },
  * //     },
  * //   },
  * //   incrementalRunConfig: { // IncrementalRunConfig
@@ -142,11 +157,13 @@ export interface UpdateMatchingWorkflowCommandOutput extends UpdateMatchingWorkf
  * @see {@link EntityResolutionClientResolvedConfig | config} for EntityResolutionClient's `config` shape.
  *
  * @throws {@link AccessDeniedException} (client fault)
- *  <p>You do not have sufficient access to perform this action. <code>HTTP Status Code: 403</code>
+ *  <p>You do not have sufficient access to perform this action. <code>HTTP Status Code:
+ *             403</code>
  *          </p>
  *
  * @throws {@link InternalServerException} (server fault)
- *  <p>This exception occurs when there is an internal failure in the AWS Entity Resolution service. <code>HTTP Status Code: 500</code>
+ *  <p>This exception occurs when there is an internal failure in the Entity Resolution
+ *          service. <code>HTTP Status Code: 500</code>
  *          </p>
  *
  * @throws {@link ResourceNotFoundException} (client fault)
@@ -154,11 +171,13 @@ export interface UpdateMatchingWorkflowCommandOutput extends UpdateMatchingWorkf
  *          </p>
  *
  * @throws {@link ThrottlingException} (client fault)
- *  <p>The request was denied due to request throttling. <code>HTTP Status Code: 429</code>
+ *  <p>The request was denied due to request throttling. <code>HTTP Status Code:
+ *          429</code>
  *          </p>
  *
  * @throws {@link ValidationException} (client fault)
- *  <p>The input fails to satisfy the constraints specified by AWS Entity Resolution. <code>HTTP Status Code: 400</code>
+ *  <p>The input fails to satisfy the constraints specified by Entity Resolution. <code>HTTP
+ *             Status Code: 400</code>
  *          </p>
  *
  * @throws {@link EntityResolutionServiceException}
@@ -215,6 +234,10 @@ export class UpdateMatchingWorkflowCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSVeniceService",
+        operation: "UpdateMatchingWorkflow",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

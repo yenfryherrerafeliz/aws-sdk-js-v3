@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateSafetyRuleRequest, CreateSafetyRuleResponse } from "../models/models_0";
@@ -99,6 +100,7 @@ export interface CreateSafetyRuleCommandOutput extends CreateSafetyRuleResponse,
  * //     SafetyRuleArn: "STRING_VALUE", // required
  * //     Status: "PENDING" || "DEPLOYED" || "PENDING_DELETION", // required
  * //     WaitPeriodMs: Number("int"), // required
+ * //     Owner: "STRING_VALUE",
  * //   },
  * //   GatingRule: { // GatingRule
  * //     ControlPanelArn: "STRING_VALUE", // required
@@ -117,6 +119,7 @@ export interface CreateSafetyRuleCommandOutput extends CreateSafetyRuleResponse,
  * //       "STRING_VALUE",
  * //     ],
  * //     WaitPeriodMs: Number("int"), // required
+ * //     Owner: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -188,6 +191,10 @@ export class CreateSafetyRuleCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Route53RecoveryControlConfig",
+        operation: "CreateSafetyRule",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

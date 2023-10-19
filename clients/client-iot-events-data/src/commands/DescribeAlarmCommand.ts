@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTEventsDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTEventsDataClient";
@@ -55,16 +56,16 @@ export interface DescribeAlarmCommandOutput extends DescribeAlarmResponse, __Met
  * //     alarmModelVersion: "STRING_VALUE",
  * //     keyValue: "STRING_VALUE",
  * //     alarmState: { // AlarmState
- * //       stateName: "STRING_VALUE",
+ * //       stateName: "DISABLED" || "NORMAL" || "ACTIVE" || "ACKNOWLEDGED" || "SNOOZE_DISABLED" || "LATCHED",
  * //       ruleEvaluation: { // RuleEvaluation
  * //         simpleRuleEvaluation: { // SimpleRuleEvaluation
  * //           inputPropertyValue: "STRING_VALUE",
- * //           operator: "STRING_VALUE",
+ * //           operator: "GREATER" || "GREATER_OR_EQUAL" || "LESS" || "LESS_OR_EQUAL" || "EQUAL" || "NOT_EQUAL",
  * //           thresholdValue: "STRING_VALUE",
  * //         },
  * //       },
  * //       customerAction: { // CustomerAction
- * //         actionName: "STRING_VALUE",
+ * //         actionName: "SNOOZE" || "ENABLE" || "DISABLE" || "ACKNOWLEDGE" || "RESET",
  * //         snoozeActionConfiguration: { // SnoozeActionConfiguration
  * //           snoozeDuration: Number("int"),
  * //           note: "STRING_VALUE",
@@ -83,9 +84,9 @@ export interface DescribeAlarmCommandOutput extends DescribeAlarmResponse, __Met
  * //         },
  * //       },
  * //       systemEvent: { // SystemEvent
- * //         eventType: "STRING_VALUE",
+ * //         eventType: "STATE_CHANGE",
  * //         stateChangeConfiguration: { // StateChangeConfiguration
- * //           triggerType: "STRING_VALUE",
+ * //           triggerType: "SNOOZE_TIMEOUT",
  * //         },
  * //       },
  * //     },
@@ -170,6 +171,10 @@ export class DescribeAlarmCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "IotColumboDataService",
+        operation: "DescribeAlarm",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeOrganizationRequest, DescribeOrganizationResponse } from "../models/models_0";
@@ -59,6 +60,8 @@ export interface DescribeOrganizationCommandOutput extends DescribeOrganizationR
  * //   CompletedDate: new Date("TIMESTAMP"),
  * //   ErrorMessage: "STRING_VALUE",
  * //   ARN: "STRING_VALUE",
+ * //   MigrationAdmin: "STRING_VALUE",
+ * //   InteroperabilityEnabled: true || false,
  * // };
  *
  * ```
@@ -130,6 +133,10 @@ export class DescribeOrganizationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkMailService",
+        operation: "DescribeOrganization",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -70,8 +71,8 @@ export interface GetBotAliasesCommandOutput extends GetBotAliasesResponse, __Met
  * //       conversationLogs: { // ConversationLogsResponse
  * //         logSettings: [ // LogSettingsResponseList
  * //           { // LogSettingsResponse
- * //             logType: "STRING_VALUE",
- * //             destination: "STRING_VALUE",
+ * //             logType: "AUDIO" || "TEXT",
+ * //             destination: "CLOUDWATCH_LOGS" || "S3",
  * //             kmsKeyArn: "STRING_VALUE",
  * //             resourceArn: "STRING_VALUE",
  * //             resourcePrefix: "STRING_VALUE",
@@ -155,6 +156,10 @@ export class GetBotAliasesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "GetBotAliases",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

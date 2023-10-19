@@ -67,6 +67,10 @@ import {
   DescribeEntityAggregatesCommandOutput,
 } from "./commands/DescribeEntityAggregatesCommand";
 import {
+  DescribeEntityAggregatesForOrganizationCommandInput,
+  DescribeEntityAggregatesForOrganizationCommandOutput,
+} from "./commands/DescribeEntityAggregatesForOrganizationCommand";
+import {
   DescribeEventAggregatesCommandInput,
   DescribeEventAggregatesCommandOutput,
 } from "./commands/DescribeEventAggregatesCommand";
@@ -115,6 +119,7 @@ export type ServiceInputTypes =
   | DescribeAffectedEntitiesCommandInput
   | DescribeAffectedEntitiesForOrganizationCommandInput
   | DescribeEntityAggregatesCommandInput
+  | DescribeEntityAggregatesForOrganizationCommandInput
   | DescribeEventAggregatesCommandInput
   | DescribeEventDetailsCommandInput
   | DescribeEventDetailsForOrganizationCommandInput
@@ -133,6 +138,7 @@ export type ServiceOutputTypes =
   | DescribeAffectedEntitiesCommandOutput
   | DescribeAffectedEntitiesForOrganizationCommandOutput
   | DescribeEntityAggregatesCommandOutput
+  | DescribeEntityAggregatesForOrganizationCommandOutput
   | DescribeEventAggregatesCommandOutput
   | DescribeEventDetailsCommandOutput
   | DescribeEventDetailsForOrganizationCommandOutput
@@ -253,6 +259,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -64,7 +65,7 @@ export interface ListWebsiteAuthorizationProvidersCommandOutput
  * //   WebsiteAuthorizationProviders: [ // WebsiteAuthorizationProvidersSummaryList
  * //     { // WebsiteAuthorizationProviderSummary
  * //       AuthorizationProviderId: "STRING_VALUE",
- * //       AuthorizationProviderType: "STRING_VALUE", // required
+ * //       AuthorizationProviderType: "SAML", // required
  * //       DomainName: "STRING_VALUE",
  * //       CreatedTime: new Date("TIMESTAMP"),
  * //     },
@@ -149,6 +150,10 @@ export class ListWebsiteAuthorizationProvidersCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkLink",
+        operation: "ListWebsiteAuthorizationProviders",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

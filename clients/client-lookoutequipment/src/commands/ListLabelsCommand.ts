@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutEquipmentClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutEquipmentClient";
@@ -36,9 +37,7 @@ export interface ListLabelsCommandOutput extends ListLabelsResponse, __MetadataB
 
 /**
  * @public
- * <p>
- *          Provides a list of labels.
- *       </p>
+ * <p> Provides a list of labels. </p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -93,8 +92,8 @@ export interface ListLabelsCommandOutput extends ListLabelsResponse, __MetadataB
  *  <p>The request was denied due to request throttling.</p>
  *
  * @throws {@link ValidationException} (client fault)
- *  <p> The input fails to satisfy constraints specified by Amazon Lookout for Equipment or a
- *          related Amazon Web Services service that's being utilized. </p>
+ *  <p> The input fails to satisfy constraints specified by Amazon Lookout for Equipment or a related Amazon Web Services
+ *          service that's being utilized. </p>
  *
  * @throws {@link LookoutEquipmentServiceException}
  * <p>Base exception class for all service exceptions from LookoutEquipment service.</p>
@@ -148,6 +147,10 @@ export class ListLabelsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSLookoutEquipmentFrontendService",
+        operation: "ListLabels",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

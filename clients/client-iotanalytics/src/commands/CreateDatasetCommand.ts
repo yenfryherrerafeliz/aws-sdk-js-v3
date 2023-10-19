@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTAnalyticsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTAnalyticsClient";
@@ -67,7 +68,7 @@ export interface CreateDatasetCommandOutput extends CreateDatasetResponse, __Met
  *         image: "STRING_VALUE", // required
  *         executionRoleArn: "STRING_VALUE", // required
  *         resourceConfiguration: { // ResourceConfiguration
- *           computeType: "STRING_VALUE", // required
+ *           computeType: "ACU_1" || "ACU_2", // required
  *           volumeSizeInGB: Number("int"), // required
  *         },
  *         variables: [ // Variables
@@ -230,6 +231,10 @@ export class CreateDatasetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIoTAnalytics",
+        operation: "CreateDataset",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -94,6 +95,33 @@ export interface DeleteInstanceProfileCommandOutput extends DeleteInstanceProfil
  * @throws {@link DatabaseMigrationServiceServiceException}
  * <p>Base exception class for all service exceptions from DatabaseMigrationService service.</p>
  *
+ * @example Delete Instance Profile
+ * ```javascript
+ * // Deletes the specified instance profile.
+ * const input = {
+ *   "InstanceProfileIdentifier": "arn:aws:dms:us-east-1:012345678901:instance-profile:EXAMPLEABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+ * };
+ * const command = new DeleteInstanceProfileCommand(input);
+ * const response = await client.send(command);
+ * /* response ==
+ * {
+ *   "InstanceProfile": {
+ *     "InstanceProfileArn": "arn:aws:dms:us-east-1:012345678901:instance-profile:my-instance-profile",
+ *     "InstanceProfileCreationTime": "2022-12-16T09:44:43.543246Z",
+ *     "InstanceProfileName": "my-instance-profile",
+ *     "KmsKeyArn": "arn:aws:kms:us-east-1:012345678901:key/01234567-89ab-cdef-0123-456789abcdef",
+ *     "PubliclyAccessible": true,
+ *     "SubnetGroupIdentifier": "public-subnets",
+ *     "VpcIdentifier": "vpc-0a1b2c3d4e5f6g7h8",
+ *     "VpcSecurityGroups": [
+ *       "sg-0123456"
+ *     ]
+ *   }
+ * }
+ * *\/
+ * // example id: delete-instance-profile-1689716924105
+ * ```
+ *
  */
 export class DeleteInstanceProfileCommand extends $Command<
   DeleteInstanceProfileCommandInput,
@@ -145,6 +173,10 @@ export class DeleteInstanceProfileCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "DeleteInstanceProfile",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

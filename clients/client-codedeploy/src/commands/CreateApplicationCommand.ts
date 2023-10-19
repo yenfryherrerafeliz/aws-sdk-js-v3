@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeDeployClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeDeployClient";
@@ -68,7 +69,8 @@ export interface CreateApplicationCommandOutput extends CreateApplicationOutput,
  * @see {@link CodeDeployClientResolvedConfig | config} for CodeDeployClient's `config` shape.
  *
  * @throws {@link ApplicationAlreadyExistsException} (client fault)
- *  <p>An application with the specified name with the IAM user or Amazon Web Services account already exists.</p>
+ *  <p>An application with the specified name with the user or Amazon Web Services account
+ *             already exists.</p>
  *
  * @throws {@link ApplicationLimitExceededException} (client fault)
  *  <p>More applications were attempted to be created than are allowed.</p>
@@ -139,6 +141,10 @@ export class CreateApplicationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeDeploy_20141006",
+        operation: "CreateApplication",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

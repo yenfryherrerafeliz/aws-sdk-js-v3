@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateDBSnapshotMessage, CreateDBSnapshotResult } from "../models/models_0";
@@ -102,6 +103,7 @@ export interface CreateDBSnapshotCommandOutput extends CreateDBSnapshotResult, _
  * //     SnapshotTarget: "STRING_VALUE",
  * //     StorageThroughput: Number("int"),
  * //     DBSystemId: "STRING_VALUE",
+ * //     DedicatedLogVolume: true || false,
  * //   },
  * // };
  *
@@ -223,6 +225,10 @@ export class CreateDBSnapshotCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonRDSv19",
+        operation: "CreateDBSnapshot",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

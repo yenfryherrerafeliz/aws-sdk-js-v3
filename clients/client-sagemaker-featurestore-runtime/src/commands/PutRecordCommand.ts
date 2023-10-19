@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { PutRecordRequest } from "../models/models_0";
@@ -67,7 +68,10 @@ export interface PutRecordCommandOutput extends __MetadataBearer {}
  *   Record: [ // Record // required
  *     { // FeatureValue
  *       FeatureName: "STRING_VALUE", // required
- *       ValueAsString: "STRING_VALUE", // required
+ *       ValueAsString: "STRING_VALUE",
+ *       ValueAsStringList: [ // ValueAsStringList
+ *         "STRING_VALUE",
+ *       ],
  *     },
  *   ],
  *   TargetStores: [ // TargetStores
@@ -155,6 +159,10 @@ export class PutRecordCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonSageMakerFeatureStoreRuntime",
+        operation: "PutRecord",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

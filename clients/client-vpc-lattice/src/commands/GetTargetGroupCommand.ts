@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetTargetGroupRequest, GetTargetGroupResponse } from "../models/models_0";
@@ -54,11 +55,11 @@ export interface GetTargetGroupCommandOutput extends GetTargetGroupResponse, __M
  * //   name: "STRING_VALUE",
  * //   type: "STRING_VALUE",
  * //   config: { // TargetGroupConfig
- * //     port: Number("int"), // required
- * //     protocol: "STRING_VALUE", // required
+ * //     port: Number("int"),
+ * //     protocol: "STRING_VALUE",
  * //     protocolVersion: "STRING_VALUE",
  * //     ipAddressType: "STRING_VALUE",
- * //     vpcIdentifier: "STRING_VALUE", // required
+ * //     vpcIdentifier: "STRING_VALUE",
  * //     healthCheck: { // HealthCheckConfig
  * //       enabled: true || false,
  * //       protocol: "STRING_VALUE",
@@ -73,6 +74,7 @@ export interface GetTargetGroupCommandOutput extends GetTargetGroupResponse, __M
  * //         httpCode: "STRING_VALUE",
  * //       },
  * //     },
+ * //     lambdaEventStructureVersion: "STRING_VALUE",
  * //   },
  * //   createdAt: new Date("TIMESTAMP"),
  * //   lastUpdatedAt: new Date("TIMESTAMP"),
@@ -91,6 +93,9 @@ export interface GetTargetGroupCommandOutput extends GetTargetGroupResponse, __M
  * @see {@link GetTargetGroupCommandInput} for command's `input` shape.
  * @see {@link GetTargetGroupCommandOutput} for command's `response` shape.
  * @see {@link VPCLatticeClientResolvedConfig | config} for VPCLatticeClient's `config` shape.
+ *
+ * @throws {@link AccessDeniedException} (client fault)
+ *  <p>The user does not have sufficient access to perform this action.</p>
  *
  * @throws {@link InternalServerException} (server fault)
  *  <p>An unexpected error occurred while processing the request.</p>
@@ -159,6 +164,10 @@ export class GetTargetGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MercuryControlPlane",
+        operation: "GetTargetGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

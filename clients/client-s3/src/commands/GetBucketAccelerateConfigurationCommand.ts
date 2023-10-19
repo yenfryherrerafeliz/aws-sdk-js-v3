@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetBucketAccelerateConfigurationOutput, GetBucketAccelerateConfigurationRequest } from "../models/models_0";
@@ -58,7 +59,8 @@ export interface GetBucketAccelerateConfigurationCommandOutput
  *          has never been set on the bucket. </p>
  *          <p>For more information about transfer acceleration, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/transfer-acceleration.html">Transfer Acceleration</a> in
  *          the Amazon S3 User Guide.</p>
- *          <p>The following operations are related to <code>GetBucketAccelerateConfiguration</code>:</p>
+ *          <p>The following operations are related to
+ *          <code>GetBucketAccelerateConfiguration</code>:</p>
  *          <ul>
  *             <li>
  *                <p>
@@ -152,6 +154,10 @@ export class GetBucketAccelerateConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonS3",
+        operation: "GetBucketAccelerateConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

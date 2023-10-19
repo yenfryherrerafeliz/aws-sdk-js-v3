@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -55,18 +56,18 @@ export interface StartMigrationCommandOutput extends StartMigrationResponse, __M
  *   v1BotVersion: "STRING_VALUE", // required
  *   v2BotName: "STRING_VALUE", // required
  *   v2BotRole: "STRING_VALUE", // required
- *   migrationStrategy: "STRING_VALUE", // required
+ *   migrationStrategy: "CREATE_NEW" || "UPDATE_EXISTING", // required
  * };
  * const command = new StartMigrationCommand(input);
  * const response = await client.send(command);
  * // { // StartMigrationResponse
  * //   v1BotName: "STRING_VALUE",
  * //   v1BotVersion: "STRING_VALUE",
- * //   v1BotLocale: "STRING_VALUE",
+ * //   v1BotLocale: "de-DE" || "en-AU" || "en-GB" || "en-IN" || "en-US" || "es-419" || "es-ES" || "es-US" || "fr-FR" || "fr-CA" || "it-IT" || "ja-JP" || "ko-KR",
  * //   v2BotId: "STRING_VALUE",
  * //   v2BotRole: "STRING_VALUE",
  * //   migrationId: "STRING_VALUE",
- * //   migrationStrategy: "STRING_VALUE",
+ * //   migrationStrategy: "CREATE_NEW" || "UPDATE_EXISTING",
  * //   migrationTimestamp: new Date("TIMESTAMP"),
  * // };
  *
@@ -151,6 +152,10 @@ export class StartMigrationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "StartMigration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

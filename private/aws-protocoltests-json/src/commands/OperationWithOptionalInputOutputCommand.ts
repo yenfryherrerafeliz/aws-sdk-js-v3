@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { JsonProtocolClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../JsonProtocolClient";
@@ -38,6 +39,36 @@ export interface OperationWithOptionalInputOutputCommandOutput
   extends OperationWithOptionalInputOutputOutput,
     __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { JsonProtocolClient, OperationWithOptionalInputOutputCommand } from "@aws-sdk/aws-protocoltests-json"; // ES Modules import
+ * // const { JsonProtocolClient, OperationWithOptionalInputOutputCommand } = require("@aws-sdk/aws-protocoltests-json"); // CommonJS import
+ * const client = new JsonProtocolClient(config);
+ * const input = { // OperationWithOptionalInputOutputInput
+ *   Value: "STRING_VALUE",
+ * };
+ * const command = new OperationWithOptionalInputOutputCommand(input);
+ * const response = await client.send(command);
+ * // { // OperationWithOptionalInputOutputOutput
+ * //   Value: "STRING_VALUE",
+ * // };
+ *
+ * ```
+ *
+ * @param OperationWithOptionalInputOutputCommandInput - {@link OperationWithOptionalInputOutputCommandInput}
+ * @returns {@link OperationWithOptionalInputOutputCommandOutput}
+ * @see {@link OperationWithOptionalInputOutputCommandInput} for command's `input` shape.
+ * @see {@link OperationWithOptionalInputOutputCommandOutput} for command's `response` shape.
+ * @see {@link JsonProtocolClientResolvedConfig | config} for JsonProtocolClient's `config` shape.
+ *
+ * @throws {@link JsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from JsonProtocol service.</p>
+ *
+ */
 export class OperationWithOptionalInputOutputCommand extends $Command<
   OperationWithOptionalInputOutputCommandInput,
   OperationWithOptionalInputOutputCommandOutput,
@@ -76,6 +107,10 @@ export class OperationWithOptionalInputOutputCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "JsonProtocol",
+        operation: "OperationWithOptionalInputOutput",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

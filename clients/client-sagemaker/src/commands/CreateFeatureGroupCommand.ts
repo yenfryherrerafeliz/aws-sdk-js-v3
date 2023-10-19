@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateFeatureGroupRequest, CreateFeatureGroupResponse } from "../models/models_1";
@@ -40,12 +41,16 @@ export interface CreateFeatureGroupCommandOutput extends CreateFeatureGroupRespo
  *             <code>Features</code> defined in the <code>FeatureStore</code> to describe a
  *             <code>Record</code>. </p>
  *          <p>The <code>FeatureGroup</code> defines the schema and features contained in the
- *          FeatureGroup. A <code>FeatureGroup</code> definition is composed of a list of
- *             <code>Features</code>, a <code>RecordIdentifierFeatureName</code>, an
+ *             <code>FeatureGroup</code>. A <code>FeatureGroup</code> definition is composed of a list
+ *          of <code>Features</code>, a <code>RecordIdentifierFeatureName</code>, an
  *             <code>EventTimeFeatureName</code> and configurations for its <code>OnlineStore</code>
  *          and <code>OfflineStore</code>. Check <a href="https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html">Amazon Web Services service
  *             quotas</a> to see the <code>FeatureGroup</code>s quota for your Amazon Web Services
  *          account.</p>
+ *          <p>Note that it can take approximately 10-15 minutes to provision an
+ *             <code>OnlineStore</code>
+ *             <code>FeatureGroup</code> with the <code>InMemory</code>
+ *             <code>StorageType</code>.</p>
  *          <important>
  *             <p>You must include at least one of <code>OnlineStoreConfig</code> and
  *                <code>OfflineStoreConfig</code> to create a <code>FeatureGroup</code>.</p>
@@ -64,6 +69,12 @@ export interface CreateFeatureGroupCommandOutput extends CreateFeatureGroupRespo
  *     { // FeatureDefinition
  *       FeatureName: "STRING_VALUE",
  *       FeatureType: "Integral" || "Fractional" || "String",
+ *       CollectionType: "List" || "Set" || "Vector",
+ *       CollectionConfig: { // CollectionConfig Union: only one key present
+ *         VectorConfig: { // VectorConfig
+ *           Dimension: Number("int"), // required
+ *         },
+ *       },
  *     },
  *   ],
  *   OnlineStoreConfig: { // OnlineStoreConfig
@@ -75,6 +86,7 @@ export interface CreateFeatureGroupCommandOutput extends CreateFeatureGroupRespo
  *       Unit: "Seconds" || "Minutes" || "Hours" || "Days" || "Weeks",
  *       Value: Number("int"),
  *     },
+ *     StorageType: "Standard" || "InMemory",
  *   },
  *   OfflineStoreConfig: { // OfflineStoreConfig
  *     S3StorageConfig: { // S3StorageConfig
@@ -174,6 +186,10 @@ export class CreateFeatureGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "CreateFeatureGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

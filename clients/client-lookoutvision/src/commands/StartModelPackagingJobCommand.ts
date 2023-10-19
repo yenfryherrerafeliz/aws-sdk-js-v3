@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutVisionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutVisionClient";
@@ -39,14 +40,12 @@ export interface StartModelPackagingJobCommandOutput extends StartModelPackaging
  * <p>Starts an Amazon Lookout for Vision model packaging job. A model packaging job creates an AWS IoT Greengrass component for
  *    a Lookout for Vision model. You can use the component to deploy your model to an edge device managed by Greengrass.
  * </p>
- *
  *          <p>Use the <a>DescribeModelPackagingJob</a> API to determine the current status of the job.
  *
  *   The model packaging job is complete if the value of <code>Status</code> is <code>SUCCEEDED</code>.</p>
  *          <p>To deploy the component
  *       to the target device, use the component name and component version
  *       with the AWS IoT Greengrass <a href="https://docs.aws.amazon.com/greengrass/v2/APIReference/API_CreateDeployment.html">CreateDeployment</a> API.</p>
- *
  *          <p>This operation requires the following permissions:</p>
  *          <ul>
  *             <li>
@@ -83,8 +82,6 @@ export interface StartModelPackagingJobCommandOutput extends StartModelPackaging
  *                <p>(Optional) <code>greengrass:TagResource</code>. Only required if you want to tag the component.</p>
  *             </li>
  *          </ul>
- *
- *
  *          <p>For more information, see
  *       <i>Using your Amazon Lookout for Vision model on an edge device</i> in the  Amazon Lookout for Vision Developer Guide. </p>
  * @example
@@ -215,6 +212,10 @@ export class StartModelPackagingJobCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutVisionService",
+        operation: "StartModelPackagingJob",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

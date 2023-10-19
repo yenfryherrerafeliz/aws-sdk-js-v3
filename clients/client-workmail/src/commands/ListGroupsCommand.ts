@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListGroupsRequest, ListGroupsResponse } from "../models/models_0";
@@ -47,6 +48,11 @@ export interface ListGroupsCommandOutput extends ListGroupsResponse, __MetadataB
  *   OrganizationId: "STRING_VALUE", // required
  *   NextToken: "STRING_VALUE",
  *   MaxResults: Number("int"),
+ *   Filters: { // ListGroupsFilters
+ *     NamePrefix: "STRING_VALUE",
+ *     PrimaryEmailPrefix: "STRING_VALUE",
+ *     State: "ENABLED" || "DISABLED" || "DELETED",
+ *   },
  * };
  * const command = new ListGroupsCommand(input);
  * const response = await client.send(command);
@@ -139,6 +145,10 @@ export class ListGroupsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WorkMailService",
+        operation: "ListGroups",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

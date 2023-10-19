@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateSubscriptionRequest, UpdateSubscriptionResponse } from "../models/models_0";
@@ -48,7 +49,7 @@ export interface UpdateSubscriptionCommandOutput extends UpdateSubscriptionRespo
  * // const { ShieldClient, UpdateSubscriptionCommand } = require("@aws-sdk/client-shield"); // CommonJS import
  * const client = new ShieldClient(config);
  * const input = { // UpdateSubscriptionRequest
- *   AutoRenew: "STRING_VALUE",
+ *   AutoRenew: "ENABLED" || "DISABLED",
  * };
  * const command = new UpdateSubscriptionCommand(input);
  * const response = await client.send(command);
@@ -132,6 +133,10 @@ export class UpdateSubscriptionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSShield_20160616",
+        operation: "UpdateSubscription",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

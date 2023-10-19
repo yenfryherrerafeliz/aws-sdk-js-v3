@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DataSyncClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../DataSyncClient";
@@ -36,8 +37,9 @@ export interface DescribeTaskExecutionCommandOutput extends DescribeTaskExecutio
 
 /**
  * @public
- * <p>Provides information about an DataSync transfer task that's
- *       running.</p>
+ * <p>Provides information about an execution of your DataSync task. You can
+ *       use this operation to help monitor the progress of an ongoing transfer or check the results of
+ *       the transfer.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -99,6 +101,41 @@ export interface DescribeTaskExecutionCommandOutput extends DescribeTaskExecutio
  * //     ErrorDetail: "STRING_VALUE",
  * //   },
  * //   BytesCompressed: Number("long"),
+ * //   TaskReportConfig: { // TaskReportConfig
+ * //     Destination: { // ReportDestination
+ * //       S3: { // ReportDestinationS3
+ * //         Subdirectory: "STRING_VALUE",
+ * //         S3BucketArn: "STRING_VALUE", // required
+ * //         BucketAccessRoleArn: "STRING_VALUE", // required
+ * //       },
+ * //     },
+ * //     OutputType: "SUMMARY_ONLY" || "STANDARD",
+ * //     ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ * //     ObjectVersionIds: "INCLUDE" || "NONE",
+ * //     Overrides: { // ReportOverrides
+ * //       Transferred: { // ReportOverride
+ * //         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ * //       },
+ * //       Verified: {
+ * //         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ * //       },
+ * //       Deleted: {
+ * //         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ * //       },
+ * //       Skipped: {
+ * //         ReportLevel: "ERRORS_ONLY" || "SUCCESSES_AND_ERRORS",
+ * //       },
+ * //     },
+ * //   },
+ * //   FilesDeleted: Number("long"),
+ * //   FilesSkipped: Number("long"),
+ * //   FilesVerified: Number("long"),
+ * //   ReportResult: { // ReportResult
+ * //     Status: "PENDING" || "SUCCESS" || "ERROR",
+ * //     ErrorCode: "STRING_VALUE",
+ * //     ErrorDetail: "STRING_VALUE",
+ * //   },
+ * //   EstimatedFilesToDelete: Number("long"),
  * // };
  *
  * ```
@@ -170,6 +207,10 @@ export class DescribeTaskExecutionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "FmrsService",
+        operation: "DescribeTaskExecution",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

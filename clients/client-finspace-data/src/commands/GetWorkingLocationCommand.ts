@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -45,7 +46,7 @@ export interface GetWorkingLocationCommandOutput extends GetWorkingLocationRespo
  * // const { FinspaceDataClient, GetWorkingLocationCommand } = require("@aws-sdk/client-finspace-data"); // CommonJS import
  * const client = new FinspaceDataClient(config);
  * const input = { // GetWorkingLocationRequest
- *   locationType: "STRING_VALUE",
+ *   locationType: "INGESTION" || "SAGEMAKER",
  * };
  * const command = new GetWorkingLocationCommand(input);
  * const response = await client.send(command);
@@ -130,6 +131,10 @@ export class GetWorkingLocationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "GetWorkingLocation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

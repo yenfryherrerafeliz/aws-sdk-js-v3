@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { StartPipelineExecutionRequest, StartPipelineExecutionResponse } from "../models/models_4";
@@ -58,7 +59,7 @@ export interface StartPipelineExecutionCommandOutput extends StartPipelineExecut
  *     MaxParallelExecutionSteps: Number("int"), // required
  *   },
  *   SelectiveExecutionConfig: { // SelectiveExecutionConfig
- *     SourcePipelineExecutionArn: "STRING_VALUE", // required
+ *     SourcePipelineExecutionArn: "STRING_VALUE",
  *     SelectedSteps: [ // SelectedStepList // required
  *       { // SelectedStep
  *         StepName: "STRING_VALUE", // required
@@ -141,6 +142,10 @@ export class StartPipelineExecutionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "StartPipelineExecution",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

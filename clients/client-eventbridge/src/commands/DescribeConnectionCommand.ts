@@ -11,10 +11,15 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EventBridgeClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EventBridgeClient";
-import { DescribeConnectionRequest, DescribeConnectionResponse } from "../models/models_0";
+import {
+  DescribeConnectionRequest,
+  DescribeConnectionResponse,
+  DescribeConnectionResponseFilterSensitiveLog,
+} from "../models/models_0";
 import { de_DescribeConnectionCommand, se_DescribeConnectionCommand } from "../protocols/Aws_json1_1";
 
 /**
@@ -189,7 +194,11 @@ export class DescribeConnectionCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: DescribeConnectionResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSEvents",
+        operation: "DescribeConnection",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

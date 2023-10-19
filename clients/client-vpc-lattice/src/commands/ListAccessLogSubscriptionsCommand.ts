@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListAccessLogSubscriptionsRequest, ListAccessLogSubscriptionsResponse } from "../models/models_0";
@@ -72,6 +73,9 @@ export interface ListAccessLogSubscriptionsCommandOutput extends ListAccessLogSu
  * @see {@link ListAccessLogSubscriptionsCommandInput} for command's `input` shape.
  * @see {@link ListAccessLogSubscriptionsCommandOutput} for command's `response` shape.
  * @see {@link VPCLatticeClientResolvedConfig | config} for VPCLatticeClient's `config` shape.
+ *
+ * @throws {@link AccessDeniedException} (client fault)
+ *  <p>The user does not have sufficient access to perform this action.</p>
  *
  * @throws {@link InternalServerException} (server fault)
  *  <p>An unexpected error occurred while processing the request.</p>
@@ -137,6 +141,10 @@ export class ListAccessLogSubscriptionsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MercuryControlPlane",
+        operation: "ListAccessLogSubscriptions",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

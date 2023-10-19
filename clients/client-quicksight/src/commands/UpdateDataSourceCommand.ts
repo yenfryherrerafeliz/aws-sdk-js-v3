@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -109,6 +110,14 @@ export interface UpdateDataSourceCommandOutput extends UpdateDataSourceResponse,
  *       Port: Number("int"),
  *       Database: "STRING_VALUE", // required
  *       ClusterId: "STRING_VALUE",
+ *       IAMParameters: { // RedshiftIAMParameters
+ *         RoleArn: "STRING_VALUE", // required
+ *         DatabaseUser: "STRING_VALUE", // required
+ *         DatabaseGroups: [ // DatabaseGroupList
+ *           "STRING_VALUE",
+ *         ],
+ *         AutoCreateDatabaseUser: true || false,
+ *       },
  *     },
  *     S3Parameters: { // S3Parameters
  *       ManifestFileLocation: { // ManifestFileLocation
@@ -219,6 +228,14 @@ export interface UpdateDataSourceCommandOutput extends UpdateDataSourceResponse,
  *             Port: Number("int"),
  *             Database: "STRING_VALUE", // required
  *             ClusterId: "STRING_VALUE",
+ *             IAMParameters: {
+ *               RoleArn: "STRING_VALUE", // required
+ *               DatabaseUser: "STRING_VALUE", // required
+ *               DatabaseGroups: [
+ *                 "STRING_VALUE",
+ *               ],
+ *               AutoCreateDatabaseUser: true || false,
+ *             },
  *           },
  *           S3Parameters: {
  *             ManifestFileLocation: {
@@ -371,6 +388,10 @@ export class UpdateDataSourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: UpdateDataSourceRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "QuickSight_20180401",
+        operation: "UpdateDataSource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

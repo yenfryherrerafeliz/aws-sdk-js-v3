@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeRobotApplicationRequest, DescribeRobotApplicationResponse } from "../models/models_0";
@@ -58,12 +59,12 @@ export interface DescribeRobotApplicationCommandOutput extends DescribeRobotAppl
  * //       s3Bucket: "STRING_VALUE",
  * //       s3Key: "STRING_VALUE",
  * //       etag: "STRING_VALUE",
- * //       architecture: "STRING_VALUE",
+ * //       architecture: "X86_64" || "ARM64" || "ARMHF",
  * //     },
  * //   ],
  * //   robotSoftwareSuite: { // RobotSoftwareSuite
- * //     name: "STRING_VALUE",
- * //     version: "STRING_VALUE",
+ * //     name: "ROS" || "ROS2" || "General",
+ * //     version: "Kinetic" || "Melodic" || "Dashing" || "Foxy",
  * //   },
  * //   revisionId: "STRING_VALUE",
  * //   lastUpdatedAt: new Date("TIMESTAMP"),
@@ -151,6 +152,10 @@ export class DescribeRobotApplicationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "DescribeRobotApplication",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EFSClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EFSClient";
@@ -39,9 +40,7 @@ export interface DeleteReplicationConfigurationCommandOutput extends __MetadataB
 
 /**
  * @public
- * <p>Deletes an existing replication configuration. To delete a replication configuration, you
- *       must make the request from the Amazon Web Services Region in which the destination file system
- *       is located. Deleting a replication configuration ends the replication process. After a
+ * <p>Deletes an existing replication configuration. Deleting a replication configuration ends the replication process. After a
  *       replication configuration is deleted, the destination file system is no longer read-only. You
  *       can write to the destination file system after its status becomes
  *       <code>Writeable</code>.</p>
@@ -135,6 +134,10 @@ export class DeleteReplicationConfigurationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MagnolioAPIService_v20150201",
+        operation: "DeleteReplicationConfiguration",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

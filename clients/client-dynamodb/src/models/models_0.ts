@@ -98,7 +98,7 @@ export interface AttributeDefinition {
    *             </li>
    *          </ul>
    */
-  AttributeType: ScalarAttributeType | string | undefined;
+  AttributeType: ScalarAttributeType | undefined;
 }
 
 /**
@@ -361,7 +361,7 @@ export interface BackupDetails {
    * @public
    * <p>Backup can be in one of the following states: CREATING, ACTIVE, DELETED. </p>
    */
-  BackupStatus: BackupStatus | string | undefined;
+  BackupStatus: BackupStatus | undefined;
 
   /**
    * @public
@@ -385,7 +385,7 @@ export interface BackupDetails {
    *             </li>
    *          </ul>
    */
-  BackupType: BackupType | string | undefined;
+  BackupType: BackupType | undefined;
 
   /**
    * @public
@@ -474,7 +474,7 @@ export interface KeySchemaElement {
    *                 value.</p>
    *          </note>
    */
-  KeyType: KeyType | string | undefined;
+  KeyType: KeyType | undefined;
 }
 
 /**
@@ -579,7 +579,7 @@ export interface SourceTableDetails {
    *             </li>
    *          </ul>
    */
-  BillingMode?: BillingMode | string;
+  BillingMode?: BillingMode;
 }
 
 /**
@@ -626,7 +626,7 @@ export interface Projection {
    *             </li>
    *          </ul>
    */
-  ProjectionType?: ProjectionType | string;
+  ProjectionType?: ProjectionType;
 
   /**
    * @public
@@ -792,7 +792,7 @@ export interface SSEDescription {
    *             </li>
    *          </ul>
    */
-  Status?: SSEStatus | string;
+  Status?: SSEStatus;
 
   /**
    * @public
@@ -805,7 +805,7 @@ export interface SSEDescription {
    *             </li>
    *          </ul>
    */
-  SSEType?: SSEType | string;
+  SSEType?: SSEType;
 
   /**
    * @public
@@ -879,7 +879,7 @@ export interface StreamSpecification {
    *             </li>
    *          </ul>
    */
-  StreamViewType?: StreamViewType | string;
+  StreamViewType?: StreamViewType;
 }
 
 /**
@@ -907,7 +907,7 @@ export interface TimeToLiveDescription {
    * @public
    * <p> The TTL status for the table.</p>
    */
-  TimeToLiveStatus?: TimeToLiveStatus | string;
+  TimeToLiveStatus?: TimeToLiveStatus;
 
   /**
    * @public
@@ -1077,7 +1077,7 @@ export interface BackupSummary {
    * @public
    * <p>Backup can be in one of the following states: CREATING, ACTIVE, DELETED.</p>
    */
-  BackupStatus?: BackupStatus | string;
+  BackupStatus?: BackupStatus;
 
   /**
    * @public
@@ -1101,7 +1101,7 @@ export interface BackupSummary {
    *             </li>
    *          </ul>
    */
-  BackupType?: BackupType | string;
+  BackupType?: BackupType;
 
   /**
    * @public
@@ -1432,7 +1432,7 @@ export interface BillingModeSummary {
    *             </li>
    *          </ul>
    */
-  BillingMode?: BillingMode | string;
+  BillingMode?: BillingMode;
 
   /**
    * @public
@@ -1528,7 +1528,7 @@ export interface PointInTimeRecoveryDescription {
    *             </li>
    *          </ul>
    */
-  PointInTimeRecoveryStatus?: PointInTimeRecoveryStatus | string;
+  PointInTimeRecoveryStatus?: PointInTimeRecoveryStatus;
 
   /**
    * @public
@@ -1558,7 +1558,7 @@ export interface ContinuousBackupsDescription {
    *             <code>ContinuousBackupsStatus</code> can be one of the following states: ENABLED,
    *             DISABLED</p>
    */
-  ContinuousBackupsStatus: ContinuousBackupsStatus | string | undefined;
+  ContinuousBackupsStatus: ContinuousBackupsStatus | undefined;
 
   /**
    * @public
@@ -1640,7 +1640,7 @@ export interface ContributorInsightsSummary {
    * <p>Describes the current status for contributor insights for the given table and index,
    *             if applicable.</p>
    */
-  ContributorInsightsStatus?: ContributorInsightsStatus | string;
+  ContributorInsightsStatus?: ContributorInsightsStatus;
 }
 
 /**
@@ -1902,7 +1902,7 @@ export interface TableClassSummary {
    * <p>The table class of the specified table. Valid values are <code>STANDARD</code> and
    *                 <code>STANDARD_INFREQUENT_ACCESS</code>.</p>
    */
-  TableClass?: TableClass | string;
+  TableClass?: TableClass;
 
   /**
    * @public
@@ -1965,7 +1965,7 @@ export interface ReplicaDescription {
    *             </li>
    *          </ul>
    */
-  ReplicaStatus?: ReplicaStatus | string;
+  ReplicaStatus?: ReplicaStatus;
 
   /**
    * @public
@@ -2059,7 +2059,7 @@ export interface GlobalTableDescription {
    *             </li>
    *          </ul>
    */
-  GlobalTableStatus?: GlobalTableStatus | string;
+  GlobalTableStatus?: GlobalTableStatus;
 
   /**
    * @public
@@ -2169,7 +2169,7 @@ export interface CreateReplicationGroupMemberAction {
    * <p>Replica-specific table class. If not specified, uses the source table's table
    *             class.</p>
    */
-  TableClassOverride?: TableClass | string;
+  TableClassOverride?: TableClass;
 }
 
 /**
@@ -2303,7 +2303,7 @@ export interface SSESpecification {
    *             </li>
    *          </ul>
    */
-  SSEType?: SSEType | string;
+  SSEType?: SSEType;
 
   /**
    * @public
@@ -2555,7 +2555,7 @@ export interface CreateTableInput {
    *             </li>
    *          </ul>
    */
-  BillingMode?: BillingMode | string;
+  BillingMode?: BillingMode;
 
   /**
    * @public
@@ -2629,7 +2629,7 @@ export interface CreateTableInput {
    * <p>The table class of the new table. Valid values are <code>STANDARD</code> and
    *                 <code>STANDARD_INFREQUENT_ACCESS</code>.</p>
    */
-  TableClass?: TableClass | string;
+  TableClass?: TableClass;
 
   /**
    * @public
@@ -2766,7 +2766,7 @@ export interface GlobalSecondaryIndexDescription {
    *             </li>
    *          </ul>
    */
-  IndexStatus?: IndexStatus | string;
+  IndexStatus?: IndexStatus;
 
   /**
    * @public
@@ -3048,7 +3048,7 @@ export interface TableDescription {
    *             </li>
    *          </ul>
    */
-  TableStatus?: TableStatus | string;
+  TableStatus?: TableStatus;
 
   /**
    * @public
@@ -3649,7 +3649,7 @@ export interface DescribeContributorInsightsOutput {
    * @public
    * <p>Current status of contributor insights.</p>
    */
-  ContributorInsightsStatus?: ContributorInsightsStatus | string;
+  ContributorInsightsStatus?: ContributorInsightsStatus;
 
   /**
    * @public
@@ -3762,6 +3762,58 @@ export type ExportStatus = (typeof ExportStatus)[keyof typeof ExportStatus];
  * @public
  * @enum
  */
+export const ExportType = {
+  FULL_EXPORT: "FULL_EXPORT",
+  INCREMENTAL_EXPORT: "INCREMENTAL_EXPORT",
+} as const;
+
+/**
+ * @public
+ */
+export type ExportType = (typeof ExportType)[keyof typeof ExportType];
+
+/**
+ * @public
+ * @enum
+ */
+export const ExportViewType = {
+  NEW_AND_OLD_IMAGES: "NEW_AND_OLD_IMAGES",
+  NEW_IMAGE: "NEW_IMAGE",
+} as const;
+
+/**
+ * @public
+ */
+export type ExportViewType = (typeof ExportViewType)[keyof typeof ExportViewType];
+
+/**
+ * @public
+ * <p>Optional object containing the parameters specific to an incremental export.</p>
+ */
+export interface IncrementalExportSpecification {
+  /**
+   * @public
+   * <p>Time in the past which provides the inclusive start range for the export table's data, counted in seconds from the start of the Unix epoch. The incremental export will reflect the table's state including and after this point in time.</p>
+   */
+  ExportFromTime?: Date;
+
+  /**
+   * @public
+   * <p>Time in the past which provides the exclusive end range for the export table's data, counted in seconds from the start of the Unix epoch. The incremental export will reflect the table's state just prior to this point in time. If this is not provided, the latest time with data available will be used.</p>
+   */
+  ExportToTime?: Date;
+
+  /**
+   * @public
+   * <p>The view type that was chosen for the export. Valid values are <code>NEW_AND_OLD_IMAGES</code> and <code>NEW_IMAGES</code>. The default value is <code>NEW_AND_OLD_IMAGES</code>.</p>
+   */
+  ExportViewType?: ExportViewType;
+}
+
+/**
+ * @public
+ * @enum
+ */
 export const S3SseAlgorithm = {
   AES256: "AES256",
   KMS: "KMS",
@@ -3788,7 +3840,7 @@ export interface ExportDescription {
    * <p>Export can be in one of the following states: IN_PROGRESS, COMPLETED, or
    *             FAILED.</p>
    */
-  ExportStatus?: ExportStatus | string;
+  ExportStatus?: ExportStatus;
 
   /**
    * @public
@@ -3871,7 +3923,7 @@ export interface ExportDescription {
    *             </li>
    *          </ul>
    */
-  S3SseAlgorithm?: S3SseAlgorithm | string;
+  S3SseAlgorithm?: S3SseAlgorithm;
 
   /**
    * @public
@@ -3897,7 +3949,7 @@ export interface ExportDescription {
    * <p>The format of the exported data. Valid values for <code>ExportFormat</code> are
    *                 <code>DYNAMODB_JSON</code> or <code>ION</code>.</p>
    */
-  ExportFormat?: ExportFormat | string;
+  ExportFormat?: ExportFormat;
 
   /**
    * @public
@@ -3910,6 +3962,18 @@ export interface ExportDescription {
    * <p>The number of items exported.</p>
    */
   ItemCount?: number;
+
+  /**
+   * @public
+   * <p>The type of export that was performed. Valid values are <code>FULL_EXPORT</code> or <code>INCREMENTAL_EXPORT</code>.</p>
+   */
+  ExportType?: ExportType;
+
+  /**
+   * @public
+   * <p>Optional object containing the parameters specific to an incremental export.</p>
+   */
+  IncrementalExportSpecification?: IncrementalExportSpecification;
 }
 
 /**
@@ -4030,7 +4094,7 @@ export interface ReplicaGlobalSecondaryIndexSettingsDescription {
    *             </li>
    *          </ul>
    */
-  IndexStatus?: IndexStatus | string;
+  IndexStatus?: IndexStatus;
 
   /**
    * @public
@@ -4094,7 +4158,7 @@ export interface ReplicaSettingsDescription {
    *             </li>
    *          </ul>
    */
-  ReplicaStatus?: ReplicaStatus | string;
+  ReplicaStatus?: ReplicaStatus;
 
   /**
    * @public
@@ -4286,7 +4350,7 @@ export interface TableCreationParameters {
    * <p> The billing mode for provisioning the table created as part of the import operation.
    *         </p>
    */
-  BillingMode?: BillingMode | string;
+  BillingMode?: BillingMode;
 
   /**
    * @public
@@ -4329,7 +4393,7 @@ export interface ImportTableDescription {
    * @public
    * <p> The status of the import. </p>
    */
-  ImportStatus?: ImportStatus | string;
+  ImportStatus?: ImportStatus;
 
   /**
    * @public
@@ -4378,7 +4442,7 @@ export interface ImportTableDescription {
    * <p> The format of the source data going into the target table.
    *             </p>
    */
-  InputFormat?: InputFormat | string;
+  InputFormat?: InputFormat;
 
   /**
    * @public
@@ -4392,7 +4456,7 @@ export interface ImportTableDescription {
    * <p> The compression options for the data that has been imported into the target table.
    *             The values are NONE, GZIP, or ZSTD. </p>
    */
-  InputCompressionType?: InputCompressionType | string;
+  InputCompressionType?: InputCompressionType;
 
   /**
    * @public
@@ -4524,7 +4588,7 @@ export interface KinesisDataStreamDestination {
    * @public
    * <p>The current status of replication.</p>
    */
-  DestinationStatus?: DestinationStatus | string;
+  DestinationStatus?: DestinationStatus;
 
   /**
    * @public
@@ -4664,7 +4728,7 @@ export interface ReplicaGlobalSecondaryIndexAutoScalingDescription {
    *             </li>
    *          </ul>
    */
-  IndexStatus?: IndexStatus | string;
+  IndexStatus?: IndexStatus;
 
   /**
    * @public
@@ -4734,7 +4798,7 @@ export interface ReplicaAutoScalingDescription {
    *             </li>
    *          </ul>
    */
-  ReplicaStatus?: ReplicaStatus | string;
+  ReplicaStatus?: ReplicaStatus;
 }
 
 /**
@@ -4770,7 +4834,7 @@ export interface TableAutoScalingDescription {
    *             </li>
    *          </ul>
    */
-  TableStatus?: TableStatus | string;
+  TableStatus?: TableStatus;
 
   /**
    * @public
@@ -4849,7 +4913,7 @@ export interface KinesisStreamingDestinationOutput {
    * @public
    * <p>The current status of the replication.</p>
    */
-  DestinationStatus?: DestinationStatus | string;
+  DestinationStatus?: DestinationStatus;
 }
 
 /**
@@ -5070,7 +5134,7 @@ export interface ExportTableToPointInTimeInput {
    *             </li>
    *          </ul>
    */
-  S3SseAlgorithm?: S3SseAlgorithm | string;
+  S3SseAlgorithm?: S3SseAlgorithm;
 
   /**
    * @public
@@ -5084,7 +5148,19 @@ export interface ExportTableToPointInTimeInput {
    * <p>The format for the exported data. Valid values for <code>ExportFormat</code> are
    *                 <code>DYNAMODB_JSON</code> or <code>ION</code>.</p>
    */
-  ExportFormat?: ExportFormat | string;
+  ExportFormat?: ExportFormat;
+
+  /**
+   * @public
+   * <p>Choice of whether to execute as a full export or incremental export. Valid values are FULL_EXPORT or INCREMENTAL_EXPORT. The default value is FULL_EXPORT. If INCREMENTAL_EXPORT is provided, the IncrementalExportSpecification must also be used.</p>
+   */
+  ExportType?: ExportType;
+
+  /**
+   * @public
+   * <p>Optional object containing the parameters specific to an incremental export.</p>
+   */
+  IncrementalExportSpecification?: IncrementalExportSpecification;
 }
 
 /**
@@ -5193,7 +5269,7 @@ export interface ImportTableInput {
    * <p> The format of the source data. Valid values for <code>ImportFormat</code> are
    *                 <code>CSV</code>, <code>DYNAMODB_JSON</code> or <code>ION</code>. </p>
    */
-  InputFormat: InputFormat | string | undefined;
+  InputFormat: InputFormat | undefined;
 
   /**
    * @public
@@ -5205,7 +5281,7 @@ export interface ImportTableInput {
    * @public
    * <p> Type of compression to be used on the input coming from the imported table. </p>
    */
-  InputCompressionType?: InputCompressionType | string;
+  InputCompressionType?: InputCompressionType;
 
   /**
    * @public
@@ -5288,7 +5364,7 @@ export interface ListBackupsInput {
    *             </li>
    *          </ul>
    */
-  BackupType?: BackupTypeFilter | string;
+  BackupType?: BackupTypeFilter;
 }
 
 /**
@@ -5397,7 +5473,13 @@ export interface ExportSummary {
    * <p>Export can be in one of the following states: IN_PROGRESS, COMPLETED, or
    *             FAILED.</p>
    */
-  ExportStatus?: ExportStatus | string;
+  ExportStatus?: ExportStatus;
+
+  /**
+   * @public
+   * <p>The type of export that was performed. Valid values are <code>FULL_EXPORT</code> or <code>INCREMENTAL_EXPORT</code>.</p>
+   */
+  ExportType?: ExportType;
 }
 
 /**
@@ -5524,7 +5606,7 @@ export interface ImportSummary {
    * @public
    * <p> The status of the import operation. </p>
    */
-  ImportStatus?: ImportStatus | string;
+  ImportStatus?: ImportStatus;
 
   /**
    * @public
@@ -5552,7 +5634,7 @@ export interface ImportSummary {
    * <p> The format of the source data. Valid values are <code>CSV</code>,
    *                 <code>DYNAMODB_JSON</code> or <code>ION</code>.</p>
    */
-  InputFormat?: InputFormat | string;
+  InputFormat?: InputFormat;
 
   /**
    * @public
@@ -5708,7 +5790,7 @@ export interface RestoreTableFromBackupInput {
    * @public
    * <p>The billing mode of the restored table.</p>
    */
-  BillingModeOverride?: BillingMode | string;
+  BillingModeOverride?: BillingMode;
 
   /**
    * @public
@@ -5831,7 +5913,7 @@ export interface RestoreTableToPointInTimeInput {
    * @public
    * <p>The billing mode of the restored table.</p>
    */
-  BillingModeOverride?: BillingMode | string;
+  BillingModeOverride?: BillingMode;
 
   /**
    * @public
@@ -5972,7 +6054,7 @@ export interface UpdateContributorInsightsInput {
    * @public
    * <p>Represents the contributor insights action.</p>
    */
-  ContributorInsightsAction: ContributorInsightsAction | string | undefined;
+  ContributorInsightsAction: ContributorInsightsAction | undefined;
 }
 
 /**
@@ -5995,7 +6077,7 @@ export interface UpdateContributorInsightsOutput {
    * @public
    * <p>The status of contributor insights</p>
    */
-  ContributorInsightsStatus?: ContributorInsightsStatus | string;
+  ContributorInsightsStatus?: ContributorInsightsStatus;
 }
 
 /**
@@ -6210,7 +6292,7 @@ export interface ReplicaSettingsUpdate {
    * <p>Replica-specific table class. If not specified, uses the source table's table
    *             class.</p>
    */
-  ReplicaTableClass?: TableClass | string;
+  ReplicaTableClass?: TableClass;
 }
 
 /**
@@ -6242,7 +6324,7 @@ export interface UpdateGlobalTableSettingsInput {
    *             </li>
    *          </ul>
    */
-  GlobalTableBillingMode?: BillingMode | string;
+  GlobalTableBillingMode?: BillingMode;
 
   /**
    * @public
@@ -6417,7 +6499,7 @@ export interface UpdateReplicationGroupMemberAction {
    * <p>Replica-specific table class. If not specified, uses the source table's table
    *             class.</p>
    */
-  TableClassOverride?: TableClass | string;
+  TableClassOverride?: TableClass;
 }
 
 /**
@@ -6505,7 +6587,7 @@ export interface UpdateTableInput {
    *             </li>
    *          </ul>
    */
-  BillingMode?: BillingMode | string;
+  BillingMode?: BillingMode;
 
   /**
    * @public
@@ -6573,7 +6655,7 @@ export interface UpdateTableInput {
    * <p>The table class of the table to be updated. Valid values are <code>STANDARD</code> and
    *                 <code>STANDARD_INFREQUENT_ACCESS</code>.</p>
    */
-  TableClass?: TableClass | string;
+  TableClass?: TableClass;
 
   /**
    * @public
@@ -7160,7 +7242,7 @@ export interface AttributeValueUpdate {
    *             </li>
    *          </ul>
    */
-  Action?: AttributeAction | string;
+  Action?: AttributeAction;
 }
 
 /**
@@ -7172,7 +7254,7 @@ export interface BatchStatementError {
    * @public
    * <p> The error code associated with the failed PartiQL batch statement. </p>
    */
-  Code?: BatchStatementErrorCodeEnum | string;
+  Code?: BatchStatementErrorCodeEnum;
 
   /**
    * @public
@@ -7218,7 +7300,7 @@ export interface BatchStatementRequest {
    *             small network and processing overhead of receiving a larger response. No read capacity
    *             units are consumed.</p>
    */
-  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure | string;
+  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure;
 }
 
 /**
@@ -7475,7 +7557,7 @@ export interface Condition {
    *                 Conditional Parameters</a> in the <i>Amazon DynamoDB Developer
    *                 Guide</i>.</p>
    */
-  ComparisonOperator: ComparisonOperator | string | undefined;
+  ComparisonOperator: ComparisonOperator | undefined;
 }
 
 /**
@@ -7577,7 +7659,7 @@ export interface ExecuteStatementInput {
    *             </li>
    *          </ul>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 
   /**
    * @public
@@ -7600,7 +7682,7 @@ export interface ExecuteStatementInput {
    *             small network and processing overhead of receiving a larger response. No read capacity
    *             units are consumed.</p>
    */
-  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure | string;
+  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure;
 }
 
 /**
@@ -7705,7 +7787,7 @@ export interface GetItemInput {
    *             </li>
    *          </ul>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 
   /**
    * @public
@@ -7865,7 +7947,7 @@ export interface ParameterizedStatement {
    *             small network and processing overhead of receiving a larger response. No read capacity
    *             units are consumed.</p>
    */
-  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure | string;
+  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure;
 }
 
 /**
@@ -8038,7 +8120,7 @@ export interface BatchExecuteStatementInput {
    *             </li>
    *          </ul>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 }
 
 /**
@@ -8063,7 +8145,7 @@ export interface ExecuteTransactionInput {
    * <p>Determines the level of detail about either provisioned or on-demand throughput
    *             consumption that is returned in the response. For more information, see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TransactGetItems.html">TransactGetItems</a> and <a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TransactWriteItems.html">TransactWriteItems</a>.</p>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 }
 
 /**
@@ -8140,6 +8222,13 @@ export interface TransactGetItemsOutput {
  *             </li>
  *             <li>
  *                <p>There is a user error, such as an invalid data format.</p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                     There is an ongoing <code>TransactWriteItems</code> operation that conflicts with a concurrent
+ *                     <code>TransactWriteItems</code> request. In this case the <code>TransactWriteItems</code> operation
+ *                     fails with a <code>TransactionCanceledException</code>.
+ *                 </p>
  *             </li>
  *          </ul>
  *          <p>DynamoDB cancels a <code>TransactGetItems</code> request under the
@@ -8507,7 +8596,7 @@ export interface BatchGetItemInput {
    *             </li>
    *          </ul>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 }
 
 /**
@@ -8777,7 +8866,7 @@ export interface ExpectedAttributeValue {
    *             </li>
    *          </ul>
    */
-  ComparisonOperator?: ComparisonOperator | string;
+  ComparisonOperator?: ComparisonOperator;
 
   /**
    * @public
@@ -8812,7 +8901,7 @@ export interface TransactGetItemsInput {
    *             a value of <code>NONE</code> prevents that information from being returned. No other
    *             value is valid.</p>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 }
 
 /**
@@ -8885,7 +8974,7 @@ export interface ConditionCheck {
    *                 <code>ReturnValuesOnConditionCheckFailure</code>, the valid values are: NONE and
    *             ALL_OLD.</p>
    */
-  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure | string;
+  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure;
 }
 
 /**
@@ -8932,7 +9021,7 @@ export interface Delete {
    *                 <code>ReturnValuesOnConditionCheckFailure</code>, the valid values are: NONE and
    *             ALL_OLD.</p>
    */
-  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure | string;
+  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure;
 }
 
 /**
@@ -8982,7 +9071,7 @@ export interface Put {
    *                 <code>ReturnValuesOnConditionCheckFailure</code>, the valid values are: NONE and
    *             ALL_OLD.</p>
    */
-  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure | string;
+  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure;
 }
 
 /**
@@ -9036,7 +9125,7 @@ export interface Update {
    *                 <code>ReturnValuesOnConditionCheckFailure</code>, the valid values are: NONE and
    *             ALL_OLD.</p>
    */
-  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure | string;
+  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure;
 }
 
 /**
@@ -9596,7 +9685,7 @@ export interface ScanInput {
    *                 value for <code>Select</code> will return an error.</p>
    *          </note>
    */
-  Select?: Select | string;
+  Select?: Select;
 
   /**
    * @public
@@ -9612,7 +9701,7 @@ export interface ScanInput {
    *             information, see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LegacyConditionalParameters.ConditionalOperator.html">ConditionalOperator</a> in the <i>Amazon DynamoDB Developer
    *                 Guide</i>.</p>
    */
-  ConditionalOperator?: ConditionalOperator | string;
+  ConditionalOperator?: ConditionalOperator;
 
   /**
    * @public
@@ -9655,7 +9744,7 @@ export interface ScanInput {
    *             </li>
    *          </ul>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 
   /**
    * @public
@@ -9712,7 +9801,7 @@ export interface ScanInput {
    *             <p>A <code>FilterExpression</code> is applied after the items have already been read;
    *                 the process of filtering does not consume any additional read capacity units.</p>
    *          </note>
-   *          <p>For more information, see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/QueryAndScan.html#Query.FilterExpression">Filter Expressions</a> in the <i>Amazon DynamoDB Developer
+   *          <p>For more information, see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.FilterExpression">Filter Expressions</a> in the <i>Amazon DynamoDB Developer
    *                 Guide</i>.</p>
    */
   FilterExpression?: string;
@@ -9902,7 +9991,7 @@ export interface BatchWriteItemInput {
    *             </li>
    *          </ul>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 
   /**
    * @public
@@ -9911,7 +10000,7 @@ export interface BatchWriteItemInput {
    *             during the operation are returned in the response. If set to <code>NONE</code> (the
    *             default), no statistics are returned.</p>
    */
-  ReturnItemCollectionMetrics?: ReturnItemCollectionMetrics | string;
+  ReturnItemCollectionMetrics?: ReturnItemCollectionMetrics;
 }
 
 /**
@@ -9950,7 +10039,7 @@ export interface DeleteItemInput {
    *             information, see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LegacyConditionalParameters.ConditionalOperator.html">ConditionalOperator</a> in the <i>Amazon DynamoDB Developer
    *                 Guide</i>.</p>
    */
-  ConditionalOperator?: ConditionalOperator | string;
+  ConditionalOperator?: ConditionalOperator;
 
   /**
    * @public
@@ -9977,7 +10066,7 @@ export interface DeleteItemInput {
    *                     <code>NONE</code> or <code>ALL_OLD</code>.</p>
    *          </note>
    */
-  ReturnValues?: ReturnValue | string;
+  ReturnValues?: ReturnValue;
 
   /**
    * @public
@@ -10007,7 +10096,7 @@ export interface DeleteItemInput {
    *             </li>
    *          </ul>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 
   /**
    * @public
@@ -10016,7 +10105,7 @@ export interface DeleteItemInput {
    *             during the operation are returned in the response. If set to <code>NONE</code> (the
    *             default), no statistics are returned.</p>
    */
-  ReturnItemCollectionMetrics?: ReturnItemCollectionMetrics | string;
+  ReturnItemCollectionMetrics?: ReturnItemCollectionMetrics;
 
   /**
    * @public
@@ -10134,7 +10223,7 @@ export interface DeleteItemInput {
    *             small network and processing overhead of receiving a larger response. No read capacity
    *             units are consumed.</p>
    */
-  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure | string;
+  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure;
 }
 
 /**
@@ -10206,7 +10295,7 @@ export interface PutItemInput {
    *                     <code>NONE</code> or <code>ALL_OLD</code>.</p>
    *          </note>
    */
-  ReturnValues?: ReturnValue | string;
+  ReturnValues?: ReturnValue;
 
   /**
    * @public
@@ -10236,7 +10325,7 @@ export interface PutItemInput {
    *             </li>
    *          </ul>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 
   /**
    * @public
@@ -10245,7 +10334,7 @@ export interface PutItemInput {
    *             during the operation are returned in the response. If set to <code>NONE</code> (the
    *             default), no statistics are returned.</p>
    */
-  ReturnItemCollectionMetrics?: ReturnItemCollectionMetrics | string;
+  ReturnItemCollectionMetrics?: ReturnItemCollectionMetrics;
 
   /**
    * @public
@@ -10253,7 +10342,7 @@ export interface PutItemInput {
    *             information, see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LegacyConditionalParameters.ConditionalOperator.html">ConditionalOperator</a> in the <i>Amazon DynamoDB Developer
    *                 Guide</i>.</p>
    */
-  ConditionalOperator?: ConditionalOperator | string;
+  ConditionalOperator?: ConditionalOperator;
 
   /**
    * @public
@@ -10371,7 +10460,7 @@ export interface PutItemInput {
    *             small network and processing overhead of receiving a larger response. No read capacity
    *             units are consumed.</p>
    */
-  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure | string;
+  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure;
 }
 
 /**
@@ -10451,7 +10540,7 @@ export interface QueryInput {
    *                 value for <code>Select</code> will return an error.</p>
    *          </note>
    */
-  Select?: Select | string;
+  Select?: Select;
 
   /**
    * @public
@@ -10508,7 +10597,7 @@ export interface QueryInput {
    *             information, see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LegacyConditionalParameters.ConditionalOperator.html">ConditionalOperator</a> in the <i>Amazon DynamoDB Developer
    *                 Guide</i>.</p>
    */
-  ConditionalOperator?: ConditionalOperator | string;
+  ConditionalOperator?: ConditionalOperator;
 
   /**
    * @public
@@ -10563,7 +10652,7 @@ export interface QueryInput {
    *             </li>
    *          </ul>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 
   /**
    * @public
@@ -10939,7 +11028,7 @@ export interface UpdateItemInput {
    *             information, see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LegacyConditionalParameters.ConditionalOperator.html">ConditionalOperator</a> in the <i>Amazon DynamoDB Developer
    *                 Guide</i>.</p>
    */
-  ConditionalOperator?: ConditionalOperator | string;
+  ConditionalOperator?: ConditionalOperator;
 
   /**
    * @public
@@ -10979,7 +11068,7 @@ export interface UpdateItemInput {
    *             units are consumed.</p>
    *          <p>The values returned are strongly consistent.</p>
    */
-  ReturnValues?: ReturnValue | string;
+  ReturnValues?: ReturnValue;
 
   /**
    * @public
@@ -11009,7 +11098,7 @@ export interface UpdateItemInput {
    *             </li>
    *          </ul>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 
   /**
    * @public
@@ -11018,7 +11107,7 @@ export interface UpdateItemInput {
    *             during the operation are returned in the response. If set to <code>NONE</code> (the
    *             default), no statistics are returned.</p>
    */
-  ReturnItemCollectionMetrics?: ReturnItemCollectionMetrics | string;
+  ReturnItemCollectionMetrics?: ReturnItemCollectionMetrics;
 
   /**
    * @public
@@ -11243,7 +11332,7 @@ export interface UpdateItemInput {
    *             small network and processing overhead of receiving a larger response. No read capacity
    *             units are consumed.</p>
    */
-  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure | string;
+  ReturnValuesOnConditionCheckFailure?: ReturnValuesOnConditionCheckFailure;
 }
 
 /**
@@ -11319,7 +11408,7 @@ export interface TransactWriteItemsInput {
    *             </li>
    *          </ul>
    */
-  ReturnConsumedCapacity?: ReturnConsumedCapacity | string;
+  ReturnConsumedCapacity?: ReturnConsumedCapacity;
 
   /**
    * @public
@@ -11328,7 +11417,7 @@ export interface TransactWriteItemsInput {
    *             during the operation and are returned in the response. If set to <code>NONE</code> (the
    *             default), no statistics are returned. </p>
    */
-  ReturnItemCollectionMetrics?: ReturnItemCollectionMetrics | string;
+  ReturnItemCollectionMetrics?: ReturnItemCollectionMetrics;
 
   /**
    * @public

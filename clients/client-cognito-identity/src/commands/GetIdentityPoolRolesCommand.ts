@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CognitoIdentityClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CognitoIdentityClient";
@@ -57,13 +58,13 @@ export interface GetIdentityPoolRolesCommandOutput extends GetIdentityPoolRolesR
  * //   },
  * //   RoleMappings: { // RoleMappingMap
  * //     "<keys>": { // RoleMapping
- * //       Type: "STRING_VALUE", // required
- * //       AmbiguousRoleResolution: "STRING_VALUE",
+ * //       Type: "Token" || "Rules", // required
+ * //       AmbiguousRoleResolution: "AuthenticatedRole" || "Deny",
  * //       RulesConfiguration: { // RulesConfigurationType
  * //         Rules: [ // MappingRulesList // required
  * //           { // MappingRule
  * //             Claim: "STRING_VALUE", // required
- * //             MatchType: "STRING_VALUE", // required
+ * //             MatchType: "Equals" || "Contains" || "StartsWith" || "NotEqual", // required
  * //             Value: "STRING_VALUE", // required
  * //             RoleARN: "STRING_VALUE", // required
  * //           },
@@ -156,6 +157,10 @@ export class GetIdentityPoolRolesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSCognitoIdentityService",
+        operation: "GetIdentityPoolRoles",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

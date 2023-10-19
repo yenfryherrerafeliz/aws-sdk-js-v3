@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { UpdateRuleGroupRequest, UpdateRuleGroupResponse } from "../models/models_0";
@@ -79,17 +80,17 @@ export interface UpdateRuleGroupCommandOutput extends UpdateRuleGroupResponse, _
  *   RuleGroupId: "STRING_VALUE", // required
  *   Updates: [ // RuleGroupUpdates // required
  *     { // RuleGroupUpdate
- *       Action: "STRING_VALUE", // required
+ *       Action: "INSERT" || "DELETE", // required
  *       ActivatedRule: { // ActivatedRule
  *         Priority: Number("int"), // required
  *         RuleId: "STRING_VALUE", // required
  *         Action: { // WafAction
- *           Type: "STRING_VALUE", // required
+ *           Type: "BLOCK" || "ALLOW" || "COUNT", // required
  *         },
  *         OverrideAction: { // WafOverrideAction
- *           Type: "STRING_VALUE", // required
+ *           Type: "NONE" || "COUNT", // required
  *         },
- *         Type: "STRING_VALUE",
+ *         Type: "REGULAR" || "RATE_BASED" || "GROUP",
  *         ExcludedRules: [ // ExcludedRules
  *           { // ExcludedRule
  *             RuleId: "STRING_VALUE", // required
@@ -263,6 +264,10 @@ export class UpdateRuleGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_Regional_20161128",
+        operation: "UpdateRuleGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

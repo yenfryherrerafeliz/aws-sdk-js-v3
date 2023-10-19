@@ -30,17 +30,18 @@ import {
   HlsId3SegmentTaggingState,
   HlsIncompleteSegmentBehavior,
   HlsIvInManifest,
-  HlsIvSource,
   IFrameOnlyPlaylistType,
   Input,
   InputAttachment,
   InputClass,
   InputDestination,
   InputDestinationRequest,
+  InputDeviceCodec,
   InputDeviceConfiguredInput,
   InputDeviceConnectionState,
   InputDeviceHdSettings,
   InputDeviceNetworkSettings,
+  InputDeviceOutputType,
   InputDeviceSettings,
   InputDeviceSummary,
   InputDeviceType,
@@ -57,7 +58,6 @@ import {
   InputType,
   InputWhitelistRule,
   InputWhitelistRuleCidr,
-  KeyProviderSettings,
   LogLevel,
   MaintenanceDay,
   MaintenanceStatus,
@@ -65,10 +65,7 @@ import {
   MediaConnectFlowRequest,
   MultiplexOutputDestination,
   MultiplexProgramPipelineDetail,
-  MultiplexProgramSummary,
   MultiplexState,
-  MultiplexSummary,
-  Offering,
   OfferingDurationUnits,
   OfferingType,
   Output,
@@ -77,6 +74,50 @@ import {
   ReservationResourceSpecification,
   VpcOutputSettingsDescription,
 } from "./models_0";
+
+/**
+ * @public
+ * @enum
+ */
+export const HlsIvSource = {
+  EXPLICIT: "EXPLICIT",
+  FOLLOWS_SEGMENT_NUMBER: "FOLLOWS_SEGMENT_NUMBER",
+} as const;
+
+/**
+ * @public
+ */
+export type HlsIvSource = (typeof HlsIvSource)[keyof typeof HlsIvSource];
+
+/**
+ * @public
+ * Static Key Settings
+ */
+export interface StaticKeySettings {
+  /**
+   * @public
+   * The URL of the license server used for protecting content.
+   */
+  KeyProviderServer?: InputLocation;
+
+  /**
+   * @public
+   * Static key value as a 32 character hexadecimal string.
+   */
+  StaticKeyValue: string | undefined;
+}
+
+/**
+ * @public
+ * Key Provider Settings
+ */
+export interface KeyProviderSettings {
+  /**
+   * @public
+   * Static Key Settings
+   */
+  StaticKeySettings?: StaticKeySettings;
+}
 
 /**
  * @public
@@ -243,7 +284,7 @@ export interface HlsGroupSettings {
    * @public
    * Choose one or more ad marker types to pass SCTE35 signals through to this group of Apple HLS outputs.
    */
-  AdMarkers?: (HlsAdMarkers | string)[];
+  AdMarkers?: HlsAdMarkers[];
 
   /**
    * @public
@@ -286,19 +327,19 @@ export interface HlsGroupSettings {
    * none: Include CLOSED-CAPTIONS=NONE line in the manifest.
    * omit: Omit any CLOSED-CAPTIONS line from the manifest.
    */
-  CaptionLanguageSetting?: HlsCaptionLanguageSetting | string;
+  CaptionLanguageSetting?: HlsCaptionLanguageSetting;
 
   /**
    * @public
    * When set to "disabled", sets the #EXT-X-ALLOW-CACHE:no tag in the manifest, which prevents clients from saving media segments for later replay.
    */
-  ClientCache?: HlsClientCache | string;
+  ClientCache?: HlsClientCache;
 
   /**
    * @public
    * Specification to use (RFC-6381 or the default RFC-4281) during m3u8 playlist generation.
    */
-  CodecSpecification?: HlsCodecSpecification | string;
+  CodecSpecification?: HlsCodecSpecification;
 
   /**
    * @public
@@ -316,7 +357,7 @@ export interface HlsGroupSettings {
    * @public
    * Place segments in subdirectories.
    */
-  DirectoryStructure?: HlsDirectoryStructure | string;
+  DirectoryStructure?: HlsDirectoryStructure;
 
   /**
    * @public
@@ -324,13 +365,13 @@ export interface HlsGroupSettings {
    * Typically, choose Insert because these tags are required in the manifest (according to the HLS specification) and serve an important purpose.
    * Choose Never Insert only if the downstream system is doing real-time failover (without using the MediaLive automatic failover feature) and only if that downstream system has advised you to exclude the tags.
    */
-  DiscontinuityTags?: HlsDiscontinuityTags | string;
+  DiscontinuityTags?: HlsDiscontinuityTags;
 
   /**
    * @public
    * Encrypts the segments with the given encryption scheme.  Exclude this parameter if no encryption is desired.
    */
-  EncryptionType?: HlsEncryptionType | string;
+  EncryptionType?: HlsEncryptionType;
 
   /**
    * @public
@@ -342,7 +383,7 @@ export interface HlsGroupSettings {
    * @public
    * State of HLS ID3 Segment Tagging
    */
-  HlsId3SegmentTagging?: HlsId3SegmentTaggingState | string;
+  HlsId3SegmentTagging?: HlsId3SegmentTaggingState;
 
   /**
    * @public
@@ -350,7 +391,7 @@ export interface HlsGroupSettings {
    *
    * STANDARD: Create an I-frame-only manifest for each output that contains video, as well as the other manifests (according to the Output Selection field). The I-frame manifest contains a #EXT-X-I-FRAMES-ONLY tag to indicate it is I-frame only, and one or more #EXT-X-BYTERANGE entries identifying the I-frame position. For example, #EXT-X-BYTERANGE:160364@1461888"
    */
-  IFrameOnlyPlaylists?: IFrameOnlyPlaylistType | string;
+  IFrameOnlyPlaylists?: IFrameOnlyPlaylistType;
 
   /**
    * @public
@@ -358,7 +399,7 @@ export interface HlsGroupSettings {
    * Auto means that MediaLive decides whether to include the final segment, depending on the channel class and the types of output groups.
    * Suppress means to never include the incomplete segment. We recommend you choose Auto and let MediaLive control the behavior.
    */
-  IncompleteSegmentBehavior?: HlsIncompleteSegmentBehavior | string;
+  IncompleteSegmentBehavior?: HlsIncompleteSegmentBehavior;
 
   /**
    * @public
@@ -372,19 +413,19 @@ export interface HlsGroupSettings {
    * @public
    * Parameter that control output group behavior on input loss.
    */
-  InputLossAction?: InputLossActionForHlsOut | string;
+  InputLossAction?: InputLossActionForHlsOut;
 
   /**
    * @public
    * For use with encryptionType. The IV (Initialization Vector) is a 128-bit number used in conjunction with the key for encrypting blocks. If set to "include", IV is listed in the manifest, otherwise the IV is not in the manifest.
    */
-  IvInManifest?: HlsIvInManifest | string;
+  IvInManifest?: HlsIvInManifest;
 
   /**
    * @public
    * For use with encryptionType. The IV (Initialization Vector) is a 128-bit number used in conjunction with the key for encrypting blocks. If this setting is "followsSegmentNumber", it will cause the IV to change every segment (to match the segment number). If this is set to "explicit", you must enter a constantIv value.
    */
-  IvSource?: HlsIvSource | string;
+  IvSource?: HlsIvSource;
 
   /**
    * @public
@@ -418,13 +459,13 @@ export interface HlsGroupSettings {
    * @public
    * When set to gzip, compresses HLS playlist.
    */
-  ManifestCompression?: HlsManifestCompression | string;
+  ManifestCompression?: HlsManifestCompression;
 
   /**
    * @public
    * Indicates whether the output manifest should use floating point or integer values for segment duration.
    */
-  ManifestDurationFormat?: HlsManifestDurationFormat | string;
+  ManifestDurationFormat?: HlsManifestDurationFormat;
 
   /**
    * @public
@@ -438,7 +479,7 @@ export interface HlsGroupSettings {
    *
    * VOD mode uses HLS EXT-X-PLAYLIST-TYPE of EVENT while the channel is running, converting it to a "VOD" type manifest on completion of the stream.
    */
-  Mode?: HlsMode | string;
+  Mode?: HlsMode;
 
   /**
    * @public
@@ -448,13 +489,13 @@ export interface HlsGroupSettings {
    *
    * SEGMENTS_ONLY: Does not generate any manifests for this output group.
    */
-  OutputSelection?: HlsOutputSelection | string;
+  OutputSelection?: HlsOutputSelection;
 
   /**
    * @public
    * Includes or excludes EXT-X-PROGRAM-DATE-TIME tag in .m3u8 manifest files. The value is calculated using the program date time clock.
    */
-  ProgramDateTime?: HlsProgramDateTime | string;
+  ProgramDateTime?: HlsProgramDateTime;
 
   /**
    * @public
@@ -464,7 +505,7 @@ export interface HlsGroupSettings {
    *
    * SYSTEM_CLOCK: The PDT clock is initialized as a function of the UTC wall clock, then incremented by the EXTINF duration of each encoded segment. If the PDT clock diverges from the wall clock by more than 500ms, it is resynchronized to the wall clock.
    */
-  ProgramDateTimeClock?: HlsProgramDateTimeClock | string;
+  ProgramDateTimeClock?: HlsProgramDateTimeClock;
 
   /**
    * @public
@@ -480,7 +521,7 @@ export interface HlsGroupSettings {
    *
    * For an HLS output group with MediaPackage as the destination, the DISABLED behavior is always followed. MediaPackage regenerates the manifests it serves to players so a redundant manifest from MediaLive is irrelevant.
    */
-  RedundantManifest?: HlsRedundantManifest | string;
+  RedundantManifest?: HlsRedundantManifest;
 
   /**
    * @public
@@ -492,7 +533,7 @@ export interface HlsGroupSettings {
    * @public
    * useInputSegmentation has been deprecated. The configured segment size is always used.
    */
-  SegmentationMode?: HlsSegmentationMode | string;
+  SegmentationMode?: HlsSegmentationMode;
 
   /**
    * @public
@@ -504,13 +545,13 @@ export interface HlsGroupSettings {
    * @public
    * Include or exclude RESOLUTION attribute for video in EXT-X-STREAM-INF tag of variant manifest.
    */
-  StreamInfResolution?: HlsStreamInfResolution | string;
+  StreamInfResolution?: HlsStreamInfResolution;
 
   /**
    * @public
    * Indicates ID3 frame that has the timecode.
    */
-  TimedMetadataId3Frame?: HlsTimedMetadataId3Frame | string;
+  TimedMetadataId3Frame?: HlsTimedMetadataId3Frame;
 
   /**
    * @public
@@ -530,7 +571,7 @@ export interface HlsGroupSettings {
    *
    * SINGLE_FILE: Applies only if Mode field is VOD. Emit the program as a single .ts media file. The media manifest includes #EXT-X-BYTERANGE tags to index segments for playback. A typical use for this value is when sending the output to AWS Elemental MediaConvert, which can accept only a single media file. Playback while the channel is running is not guaranteed due to HTTP server caching.
    */
-  TsFileMode?: HlsTsFileMode | string;
+  TsFileMode?: HlsTsFileMode;
 }
 
 /**
@@ -694,13 +735,13 @@ export interface MsSmoothGroupSettings {
    * @public
    * If set to passthrough for an audio-only MS Smooth output, the fragment absolute time will be set to the current timecode. This option does not write timecodes to the audio elementary stream.
    */
-  AudioOnlyTimecodeControl?: SmoothGroupAudioOnlyTimecodeControl | string;
+  AudioOnlyTimecodeControl?: SmoothGroupAudioOnlyTimecodeControl;
 
   /**
    * @public
    * If set to verifyAuthenticity, verify the https certificate chain to a trusted Certificate Authority (CA).  This will cause https outputs to self-signed certificates to fail.
    */
-  CertificateMode?: SmoothGroupCertificateMode | string;
+  CertificateMode?: SmoothGroupCertificateMode;
 
   /**
    * @public
@@ -731,13 +772,13 @@ export interface MsSmoothGroupSettings {
    * - "useTimestamp" - generate and send an event ID based on the current timestamp
    * - "noEventId" - do not send an event ID to the IIS server.
    */
-  EventIdMode?: SmoothGroupEventIdMode | string;
+  EventIdMode?: SmoothGroupEventIdMode;
 
   /**
    * @public
    * When set to sendEos, send EOS signal to IIS server when stopping the event
    */
-  EventStopBehavior?: SmoothGroupEventStopBehavior | string;
+  EventStopBehavior?: SmoothGroupEventStopBehavior;
 
   /**
    * @public
@@ -755,7 +796,7 @@ export interface MsSmoothGroupSettings {
    * @public
    * Parameter that control output group behavior on input loss.
    */
-  InputLossAction?: InputLossActionForMsSmoothOut | string;
+  InputLossAction?: InputLossActionForMsSmoothOut;
 
   /**
    * @public
@@ -773,7 +814,7 @@ export interface MsSmoothGroupSettings {
    * @public
    * useInputSegmentation has been deprecated. The configured segment size is always used.
    */
-  SegmentationMode?: SmoothGroupSegmentationMode | string;
+  SegmentationMode?: SmoothGroupSegmentationMode;
 
   /**
    * @public
@@ -788,13 +829,13 @@ export interface MsSmoothGroupSettings {
    * - SCTE35_WITHOUT_SEGMENTATION: Insert SCTE-35 messages from the source content. With each message, insert an IDR frame but don't start a new segment.
    * - NONE: Don't generate a sparse track for any outputs in this output group.
    */
-  SparseTrackType?: SmoothGroupSparseTrackType | string;
+  SparseTrackType?: SmoothGroupSparseTrackType;
 
   /**
    * @public
    * When set to send, send stream manifest so publishing point doesn't start until all streams start.
    */
-  StreamManifestBehavior?: SmoothGroupStreamManifestBehavior | string;
+  StreamManifestBehavior?: SmoothGroupStreamManifestBehavior;
 
   /**
    * @public
@@ -808,7 +849,7 @@ export interface MsSmoothGroupSettings {
    * - useEventStartDate: Use the date the event was started as the offset
    * - useConfiguredOffset: Use an explicitly configured date as the offset
    */
-  TimestampOffsetMode?: SmoothGroupTimestampOffsetMode | string;
+  TimestampOffsetMode?: SmoothGroupTimestampOffsetMode;
 }
 
 /**
@@ -911,19 +952,19 @@ export interface RtmpGroupSettings {
    * @public
    * Choose the ad marker type for this output group. MediaLive will create a message based on the content of each SCTE-35 message, format it for that marker type, and insert it in the datastream.
    */
-  AdMarkers?: (RtmpAdMarkers | string)[];
+  AdMarkers?: RtmpAdMarkers[];
 
   /**
    * @public
    * Authentication scheme to use when connecting with CDN
    */
-  AuthenticationScheme?: AuthenticationScheme | string;
+  AuthenticationScheme?: AuthenticationScheme;
 
   /**
    * @public
    * Controls behavior when content cache fills up. If remote origin server stalls the RTMP connection and does not accept content fast enough the 'Media Cache' will fill up. When the cache reaches the duration specified by cacheLength the cache will stop accepting new content. If set to disconnectImmediately, the RTMP output will force a disconnect. Clear the media cache, and reconnect after restartDelay seconds. If set to waitForServer, the RTMP output will wait up to 5 minutes to allow the origin server to begin accepting data again.
    */
-  CacheFullBehavior?: RtmpCacheFullBehavior | string;
+  CacheFullBehavior?: RtmpCacheFullBehavior;
 
   /**
    * @public
@@ -935,7 +976,7 @@ export interface RtmpGroupSettings {
    * @public
    * Controls the types of data that passes to onCaptionInfo outputs.  If set to 'all' then 608 and 708 carried DTVCC data will be passed.  If set to 'field1AndField2608' then DTVCC data will be stripped out, but 608 data from both fields will be passed. If set to 'field1608' then only the data carried in 608 from field 1 video will be passed.
    */
-  CaptionData?: RtmpCaptionData | string;
+  CaptionData?: RtmpCaptionData;
 
   /**
    * @public
@@ -944,7 +985,7 @@ export interface RtmpGroupSettings {
    * - emitOutput: Emit a slate until input returns.
    * - pauseOutput: Stop transmitting data until input returns. This does not close the underlying RTMP connection.
    */
-  InputLossAction?: InputLossActionForRtmpOut | string;
+  InputLossAction?: InputLossActionForRtmpOut;
 
   /**
    * @public
@@ -956,7 +997,7 @@ export interface RtmpGroupSettings {
    * @public
    * Applies only when the rate control mode (in the codec settings) is CBR (constant bit rate). Controls whether the RTMP output stream is padded (with FILL NAL units) in order to achieve a constant bit rate that is truly constant. When there is no padding, the bandwidth varies (up to the bitrate value in the codec settings). We recommend that you choose Auto.
    */
-  IncludeFillerNalUnits?: IncludeFillerNalUnits | string;
+  IncludeFillerNalUnits?: IncludeFillerNalUnits;
 }
 
 /**
@@ -998,13 +1039,13 @@ export interface UdpGroupSettings {
    * @public
    * Specifies behavior of last resort when input video is lost, and no more backup inputs are available. When dropTs is selected the entire transport stream will stop being emitted.  When dropProgram is selected the program can be dropped from the transport stream (and replaced with null packets to meet the TS bitrate requirement).  Or, when emitProgram is chosen the transport stream will continue to be produced normally with repeat frames, black frames, or slate frames substituted for the absent input video.
    */
-  InputLossAction?: InputLossActionForUdpOut | string;
+  InputLossAction?: InputLossActionForUdpOut;
 
   /**
    * @public
    * Indicates ID3 frame that has the timecode.
    */
-  TimedMetadataId3Frame?: UdpTimedMetadataId3Frame | string;
+  TimedMetadataId3Frame?: UdpTimedMetadataId3Frame;
 
   /**
    * @public
@@ -1150,7 +1191,7 @@ export interface PipelinePauseStateSettings {
    * @public
    * Pipeline ID to pause ("PIPELINE_0" or "PIPELINE_1").
    */
-  PipelineId: PipelineId | string | undefined;
+  PipelineId: PipelineId | undefined;
 }
 
 /**
@@ -1178,7 +1219,7 @@ export interface RenewalSettings {
    * @public
    * Automatic renewal status for the reservation
    */
-  AutomaticRenewal?: ReservationAutomaticRenewal | string;
+  AutomaticRenewal?: ReservationAutomaticRenewal;
 
   /**
    * @public
@@ -1236,7 +1277,7 @@ export interface Reservation {
    * @public
    * Units for duration, e.g. 'MONTHS'
    */
-  DurationUnits?: OfferingDurationUnits | string;
+  DurationUnits?: OfferingDurationUnits;
 
   /**
    * @public
@@ -1272,7 +1313,7 @@ export interface Reservation {
    * @public
    * Offering type, e.g. 'NO_UPFRONT'
    */
-  OfferingType?: OfferingType | string;
+  OfferingType?: OfferingType;
 
   /**
    * @public
@@ -1308,7 +1349,7 @@ export interface Reservation {
    * @public
    * Current state of reservation, e.g. 'ACTIVE'
    */
-  State?: ReservationState | string;
+  State?: ReservationState;
 
   /**
    * @public
@@ -1402,7 +1443,7 @@ export interface StopTimecode {
    * @public
    * If you specify a StopTimecode in an input (in order to clip the file), you can specify if you want the clip to exclude (the default) or include the frame specified by the timecode.
    */
-  LastFrameClippingBehavior?: LastFrameClippingBehavior | string;
+  LastFrameClippingBehavior?: LastFrameClippingBehavior;
 
   /**
    * @public
@@ -1420,7 +1461,7 @@ export interface InputClippingSettings {
    * @public
    * The source of the timecodes in the source being clipped.
    */
-  InputTimecodeSource: InputTimecodeSource | string | undefined;
+  InputTimecodeSource: InputTimecodeSource | undefined;
 
   /**
    * @public
@@ -1560,7 +1601,7 @@ export interface Scte35InputScheduleActionSettings {
    * @public
    * Whether the SCTE-35 input should be the active input or a fixed input.
    */
-  Mode: Scte35InputMode | string | undefined;
+  Mode: Scte35InputMode | undefined;
 }
 
 /**
@@ -1662,25 +1703,25 @@ export interface Scte35DeliveryRestrictions {
    * @public
    * Corresponds to SCTE-35 archive_allowed_flag.
    */
-  ArchiveAllowedFlag: Scte35ArchiveAllowedFlag | string | undefined;
+  ArchiveAllowedFlag: Scte35ArchiveAllowedFlag | undefined;
 
   /**
    * @public
    * Corresponds to SCTE-35 device_restrictions parameter.
    */
-  DeviceRestrictions: Scte35DeviceRestrictions | string | undefined;
+  DeviceRestrictions: Scte35DeviceRestrictions | undefined;
 
   /**
    * @public
    * Corresponds to SCTE-35 no_regional_blackout_flag parameter.
    */
-  NoRegionalBlackoutFlag: Scte35NoRegionalBlackoutFlag | string | undefined;
+  NoRegionalBlackoutFlag: Scte35NoRegionalBlackoutFlag | undefined;
 
   /**
    * @public
    * Corresponds to SCTE-35 web_delivery_allowed_flag parameter.
    */
-  WebDeliveryAllowedFlag: Scte35WebDeliveryAllowedFlag | string | undefined;
+  WebDeliveryAllowedFlag: Scte35WebDeliveryAllowedFlag | undefined;
 }
 
 /**
@@ -1719,7 +1760,7 @@ export interface Scte35SegmentationDescriptor {
    * @public
    * Corresponds to SCTE-35 segmentation_event_cancel_indicator.
    */
-  SegmentationCancelIndicator: Scte35SegmentationCancelIndicator | string | undefined;
+  SegmentationCancelIndicator: Scte35SegmentationCancelIndicator | undefined;
 
   /**
    * @public
@@ -2009,7 +2050,7 @@ export interface FollowModeScheduleActionStartSettings {
    * @public
    * Identifies whether this action starts relative to the start or relative to the end of the reference action.
    */
-  FollowPoint: FollowPoint | string | undefined;
+  FollowPoint: FollowPoint | undefined;
 
   /**
    * @public
@@ -2107,7 +2148,7 @@ export interface Thumbnail {
    * @public
    * Thumbnail Type
    */
-  ThumbnailType?: ThumbnailType | string;
+  ThumbnailType?: ThumbnailType;
 
   /**
    * @public
@@ -2175,7 +2216,7 @@ export interface TransferringInputDeviceSummary {
    * @public
    * The type (direction) of the input device transfer.
    */
-  TransferType?: InputDeviceTransferType | string;
+  TransferType?: InputDeviceTransferType;
 }
 
 /**
@@ -2256,13 +2297,13 @@ export interface TimecodeBurninSettings {
    * @public
    * Choose a timecode burn-in font size
    */
-  FontSize: TimecodeBurninFontSize | string | undefined;
+  FontSize: TimecodeBurninFontSize | undefined;
 
   /**
    * @public
    * Choose a timecode burn-in output position
    */
-  Position: TimecodeBurninPosition | string | undefined;
+  Position: TimecodeBurninPosition | undefined;
 
   /**
    * @public
@@ -2286,7 +2327,7 @@ export interface FrameCaptureSettings {
    * @public
    * Unit for the frame capture interval.
    */
-  CaptureIntervalUnits?: FrameCaptureIntervalUnit | string;
+  CaptureIntervalUnits?: FrameCaptureIntervalUnit;
 
   /**
    * @public
@@ -2455,13 +2496,13 @@ export interface TemporalFilterSettings {
    * - If the source content is noisy (it contains excessive digital artifacts), the filter cleans up the source.
    * - If the source content is already clean, the filter tends to decrease the bitrate, especially when the rate control mode is QVBR.
    */
-  PostFilterSharpening?: TemporalFilterPostFilterSharpening | string;
+  PostFilterSharpening?: TemporalFilterPostFilterSharpening;
 
   /**
    * @public
    * Choose a filter strength. We recommend a strength of 1 or 2. A higher strength might take out good information, resulting in an image that is overly soft.
    */
-  Strength?: TemporalFilterStrength | string;
+  Strength?: TemporalFilterStrength;
 }
 
 /**
@@ -2783,13 +2824,13 @@ export interface H264Settings {
    * @public
    * Enables or disables adaptive quantization, which is a technique MediaLive can apply to video on a frame-by-frame basis to produce more compression without losing quality. There are three types of adaptive quantization: flicker, spatial, and temporal. Set the field in one of these ways: Set to Auto. Recommended. For each type of AQ, MediaLive will determine if AQ is needed, and if so, the appropriate strength. Set a strength (a value other than Auto or Disable). This strength will apply to any of the AQ fields that you choose to enable. Set to Disabled to disable all types of adaptive quantization.
    */
-  AdaptiveQuantization?: H264AdaptiveQuantization | string;
+  AdaptiveQuantization?: H264AdaptiveQuantization;
 
   /**
    * @public
    * Indicates that AFD values will be written into the output stream.  If afdSignaling is "auto", the system will try to preserve the input AFD value (in cases where multiple AFD values are valid). If set to "fixed", the AFD value will be the value configured in the fixedAfd parameter.
    */
-  AfdSignaling?: AfdSignaling | string;
+  AfdSignaling?: AfdSignaling;
 
   /**
    * @public
@@ -2813,7 +2854,7 @@ export interface H264Settings {
    * @public
    * Includes colorspace metadata in the output.
    */
-  ColorMetadata?: H264ColorMetadata | string;
+  ColorMetadata?: H264ColorMetadata;
 
   /**
    * @public
@@ -2825,7 +2866,7 @@ export interface H264Settings {
    * @public
    * Entropy encoding mode.  Use cabac (must be in Main or High profile) or cavlc.
    */
-  EntropyEncoding?: H264EntropyEncoding | string;
+  EntropyEncoding?: H264EntropyEncoding;
 
   /**
    * @public
@@ -2837,13 +2878,13 @@ export interface H264Settings {
    * @public
    * Four bit AFD value to write on all frames of video in the output stream. Only valid when afdSignaling is set to 'Fixed'.
    */
-  FixedAfd?: FixedAfd | string;
+  FixedAfd?: FixedAfd;
 
   /**
    * @public
    * Flicker AQ makes adjustments within each frame to reduce flicker or 'pop' on I-frames. The value to enter in this field depends on the value in the Adaptive quantization field: If you have set the Adaptive quantization field to Auto, MediaLive ignores any value in this field. MediaLive will determine if flicker AQ is appropriate and will apply the appropriate strength. If you have set the Adaptive quantization field to a strength, you can set this field to Enabled or Disabled. Enabled: MediaLive will apply flicker AQ using the specified strength. Disabled: MediaLive won't apply flicker AQ. If you have set the Adaptive quantization to Disabled, MediaLive ignores any value in this field and doesn't apply flicker AQ.
    */
-  FlickerAq?: H264FlickerAq | string;
+  FlickerAq?: H264FlickerAq;
 
   /**
    * @public
@@ -2851,13 +2892,13 @@ export interface H264Settings {
    * enabled: Force MediaLive to code on a field basis, so that odd and even sets of fields are coded separately.
    * disabled: Code the two sets of fields separately (on a field basis) or together (on a frame basis using PAFF), depending on what is most appropriate for the content.
    */
-  ForceFieldPictures?: H264ForceFieldPictures | string;
+  ForceFieldPictures?: H264ForceFieldPictures;
 
   /**
    * @public
    * This field indicates how the output video frame rate is specified.  If "specified" is selected then the output video frame rate is determined by framerateNumerator and framerateDenominator, else if "initializeFromSource" is selected then the output video frame rate will be set equal to the input video frame rate of the first input.
    */
-  FramerateControl?: H264FramerateControl | string;
+  FramerateControl?: H264FramerateControl;
 
   /**
    * @public
@@ -2875,7 +2916,7 @@ export interface H264Settings {
    * @public
    * Documentation update needed
    */
-  GopBReference?: H264GopBReference | string;
+  GopBReference?: H264GopBReference;
 
   /**
    * @public
@@ -2901,19 +2942,19 @@ export interface H264Settings {
    * @public
    * Indicates if the gopSize is specified in frames or seconds. If seconds the system will convert the gopSize into a frame count at run time.
    */
-  GopSizeUnits?: H264GopSizeUnits | string;
+  GopSizeUnits?: H264GopSizeUnits;
 
   /**
    * @public
    * H.264 Level.
    */
-  Level?: H264Level | string;
+  Level?: H264Level;
 
   /**
    * @public
    * Amount of lookahead. A value of low can decrease latency and memory usage, while high can produce better quality for certain content.
    */
-  LookAheadRateControl?: H264LookAheadRateControl | string;
+  LookAheadRateControl?: H264LookAheadRateControl;
 
   /**
    * @public
@@ -2939,7 +2980,7 @@ export interface H264Settings {
    * @public
    * This field indicates how the output pixel aspect ratio is specified.  If "specified" is selected then the output video pixel aspect ratio is determined by parNumerator and parDenominator, else if "initializeFromSource" is selected then the output pixsel aspect ratio will be set equal to the input video pixel aspect ratio of the first input.
    */
-  ParControl?: H264ParControl | string;
+  ParControl?: H264ParControl;
 
   /**
    * @public
@@ -2957,7 +2998,7 @@ export interface H264Settings {
    * @public
    * H.264 Profile.
    */
-  Profile?: H264Profile | string;
+  Profile?: H264Profile;
 
   /**
    * @public
@@ -2965,7 +3006,7 @@ export interface H264Settings {
    * - ENHANCED_QUALITY: Produces a slightly better video quality without an increase in the bitrate. Has an effect only when the Rate control mode is QVBR or CBR. If this channel is in a MediaLive multiplex, the value must be ENHANCED_QUALITY.
    * - STANDARD_QUALITY: Valid for any Rate control mode.
    */
-  QualityLevel?: H264QualityLevel | string;
+  QualityLevel?: H264QualityLevel;
 
   /**
    * @public
@@ -2994,13 +3035,13 @@ export interface H264Settings {
    * delivered to a MediaLive Multiplex in which case the rate control configuration is controlled
    * by the properties within the Multiplex Program.
    */
-  RateControlMode?: H264RateControlMode | string;
+  RateControlMode?: H264RateControlMode;
 
   /**
    * @public
    * Sets the scan type of the output to progressive or top-field-first interlaced.
    */
-  ScanType?: H264ScanType | string;
+  ScanType?: H264ScanType;
 
   /**
    * @public
@@ -3009,7 +3050,7 @@ export interface H264Settings {
    * - On: inserts I-frames when scene change is detected.
    * - Off: does not force an I-frame when scene change is detected.
    */
-  SceneChangeDetect?: H264SceneChangeDetect | string;
+  SceneChangeDetect?: H264SceneChangeDetect;
 
   /**
    * @public
@@ -3028,25 +3069,25 @@ export interface H264Settings {
    * @public
    * Spatial AQ makes adjustments within each frame based on spatial variation of content complexity. The value to enter in this field depends on the value in the Adaptive quantization field: If you have set the Adaptive quantization field to Auto, MediaLive ignores any value in this field. MediaLive will determine if spatial AQ is appropriate and will apply the appropriate strength. If you have set the Adaptive quantization field to a strength, you can set this field to Enabled or Disabled. Enabled: MediaLive will apply spatial AQ using the specified strength. Disabled: MediaLive won't apply spatial AQ. If you have set the Adaptive quantization to Disabled, MediaLive ignores any value in this field and doesn't apply spatial AQ.
    */
-  SpatialAq?: H264SpatialAq | string;
+  SpatialAq?: H264SpatialAq;
 
   /**
    * @public
    * If set to fixed, use gopNumBFrames B-frames per sub-GOP. If set to dynamic, optimize the number of B-frames used for each sub-GOP to improve visual quality.
    */
-  SubgopLength?: H264SubGopLength | string;
+  SubgopLength?: H264SubGopLength;
 
   /**
    * @public
    * Produces a bitstream compliant with SMPTE RP-2027.
    */
-  Syntax?: H264Syntax | string;
+  Syntax?: H264Syntax;
 
   /**
    * @public
    * Temporal makes adjustments within each frame based on temporal variation of content complexity. The value to enter in this field depends on the value in the Adaptive quantization field: If you have set the Adaptive quantization field to Auto, MediaLive ignores any value in this field. MediaLive will determine if temporal AQ is appropriate and will apply the appropriate strength. If you have set the Adaptive quantization field to a strength, you can set this field to Enabled or Disabled. Enabled: MediaLive will apply temporal AQ using the specified strength. Disabled: MediaLive won't apply temporal AQ. If you have set the Adaptive quantization to Disabled, MediaLive ignores any value in this field and doesn't apply temporal AQ.
    */
-  TemporalAq?: H264TemporalAq | string;
+  TemporalAq?: H264TemporalAq;
 
   /**
    * @public
@@ -3054,7 +3095,7 @@ export interface H264Settings {
    * - 'disabled': Do not include timecodes
    * - 'picTimingSei': Pass through picture timing SEI messages from the source specified in Timecode Config
    */
-  TimecodeInsertion?: H264TimecodeInsertionBehavior | string;
+  TimecodeInsertion?: H264TimecodeInsertionBehavior;
 
   /**
    * @public
@@ -3329,19 +3370,19 @@ export interface H265Settings {
    * @public
    * Adaptive quantization. Allows intra-frame quantizers to vary to improve visual quality.
    */
-  AdaptiveQuantization?: H265AdaptiveQuantization | string;
+  AdaptiveQuantization?: H265AdaptiveQuantization;
 
   /**
    * @public
    * Indicates that AFD values will be written into the output stream.  If afdSignaling is "auto", the system will try to preserve the input AFD value (in cases where multiple AFD values are valid). If set to "fixed", the AFD value will be the value configured in the fixedAfd parameter.
    */
-  AfdSignaling?: AfdSignaling | string;
+  AfdSignaling?: AfdSignaling;
 
   /**
    * @public
    * Whether or not EML should insert an Alternative Transfer Function SEI message to support backwards compatibility with non-HDR decoders and displays.
    */
-  AlternativeTransferFunction?: H265AlternativeTransferFunction | string;
+  AlternativeTransferFunction?: H265AlternativeTransferFunction;
 
   /**
    * @public
@@ -3359,7 +3400,7 @@ export interface H265Settings {
    * @public
    * Includes colorspace metadata in the output.
    */
-  ColorMetadata?: H265ColorMetadata | string;
+  ColorMetadata?: H265ColorMetadata;
 
   /**
    * @public
@@ -3377,13 +3418,13 @@ export interface H265Settings {
    * @public
    * Four bit AFD value to write on all frames of video in the output stream. Only valid when afdSignaling is set to 'Fixed'.
    */
-  FixedAfd?: FixedAfd | string;
+  FixedAfd?: FixedAfd;
 
   /**
    * @public
    * If set to enabled, adjust quantization within each frame to reduce flicker or 'pop' on I-frames.
    */
-  FlickerAq?: H265FlickerAq | string;
+  FlickerAq?: H265FlickerAq;
 
   /**
    * @public
@@ -3415,19 +3456,19 @@ export interface H265Settings {
    * @public
    * Indicates if the gopSize is specified in frames or seconds. If seconds the system will convert the gopSize into a frame count at run time.
    */
-  GopSizeUnits?: H265GopSizeUnits | string;
+  GopSizeUnits?: H265GopSizeUnits;
 
   /**
    * @public
    * H.265 Level.
    */
-  Level?: H265Level | string;
+  Level?: H265Level;
 
   /**
    * @public
    * Amount of lookahead. A value of low can decrease latency and memory usage, while high can produce better quality for certain content.
    */
-  LookAheadRateControl?: H265LookAheadRateControl | string;
+  LookAheadRateControl?: H265LookAheadRateControl;
 
   /**
    * @public
@@ -3457,7 +3498,7 @@ export interface H265Settings {
    * @public
    * H.265 Profile.
    */
-  Profile?: H265Profile | string;
+  Profile?: H265Profile;
 
   /**
    * @public
@@ -3482,19 +3523,19 @@ export interface H265Settings {
    * delivered to a MediaLive Multiplex in which case the rate control configuration is controlled
    * by the properties within the Multiplex Program.
    */
-  RateControlMode?: H265RateControlMode | string;
+  RateControlMode?: H265RateControlMode;
 
   /**
    * @public
    * Sets the scan type of the output to progressive or top-field-first interlaced.
    */
-  ScanType?: H265ScanType | string;
+  ScanType?: H265ScanType;
 
   /**
    * @public
    * Scene change detection.
    */
-  SceneChangeDetect?: H265SceneChangeDetect | string;
+  SceneChangeDetect?: H265SceneChangeDetect;
 
   /**
    * @public
@@ -3507,7 +3548,7 @@ export interface H265Settings {
    * @public
    * H.265 Tier.
    */
-  Tier?: H265Tier | string;
+  Tier?: H265Tier;
 
   /**
    * @public
@@ -3515,7 +3556,7 @@ export interface H265Settings {
    * - 'disabled': Do not include timecodes
    * - 'picTimingSei': Pass through picture timing SEI messages from the source specified in Timecode Config
    */
-  TimecodeInsertion?: H265TimecodeInsertionBehavior | string;
+  TimecodeInsertion?: H265TimecodeInsertionBehavior;
 
   /**
    * @public
@@ -3661,7 +3702,7 @@ export interface Mpeg2Settings {
    * @public
    * Choose Off to disable adaptive quantization. Or choose another value to enable the quantizer and set its strength. The strengths are: Auto, Off, Low, Medium, High. When you enable this field, MediaLive allows intra-frame quantizers to vary, which might improve visual quality.
    */
-  AdaptiveQuantization?: Mpeg2AdaptiveQuantization | string;
+  AdaptiveQuantization?: Mpeg2AdaptiveQuantization;
 
   /**
    * @public
@@ -3669,13 +3710,13 @@ export interface Mpeg2Settings {
    * AUTO: MediaLive will try to preserve the input AFD value (in cases where multiple AFD values are valid).
    * FIXED: MediaLive will use the value you specify in fixedAFD.
    */
-  AfdSignaling?: AfdSignaling | string;
+  AfdSignaling?: AfdSignaling;
 
   /**
    * @public
    * Specifies whether to include the color space metadata. The metadata describes the color space that applies to the video (the colorSpace field). We recommend that you insert the metadata.
    */
-  ColorMetadata?: Mpeg2ColorMetadata | string;
+  ColorMetadata?: Mpeg2ColorMetadata;
 
   /**
    * @public
@@ -3683,13 +3724,13 @@ export interface Mpeg2Settings {
    * PASSTHROUGH: Keep the color space of the input content - do not convert it.
    * AUTO:Convert all content that is SD to rec 601, and convert all content that is HD to rec 709.
    */
-  ColorSpace?: Mpeg2ColorSpace | string;
+  ColorSpace?: Mpeg2ColorSpace;
 
   /**
    * @public
    * Sets the pixel aspect ratio for the encode.
    */
-  DisplayAspectRatio?: Mpeg2DisplayRatio | string;
+  DisplayAspectRatio?: Mpeg2DisplayRatio;
 
   /**
    * @public
@@ -3704,7 +3745,7 @@ export interface Mpeg2Settings {
    * @public
    * Complete this field only when afdSignaling is set to FIXED. Enter the AFD value (4 bits) to write on all frames of the video encode.
    */
-  FixedAfd?: FixedAfd | string;
+  FixedAfd?: FixedAfd;
 
   /**
    * @public
@@ -3742,13 +3783,13 @@ export interface Mpeg2Settings {
    * @public
    * Relates to the GOP structure. Specifies whether the gopSize is specified in frames or seconds. If you do not plan to change the default gopSize, leave the default. If you specify SECONDS, MediaLive will internally convert the gop size to a frame count.
    */
-  GopSizeUnits?: Mpeg2GopSizeUnits | string;
+  GopSizeUnits?: Mpeg2GopSizeUnits;
 
   /**
    * @public
    * Set the scan type of the output to PROGRESSIVE or INTERLACED (top field first).
    */
-  ScanType?: Mpeg2ScanType | string;
+  ScanType?: Mpeg2ScanType;
 
   /**
    * @public
@@ -3756,7 +3797,7 @@ export interface Mpeg2Settings {
    * FIXED: Set the number of B-frames in each sub-GOP to the value in gopNumBFrames.
    * DYNAMIC: Let MediaLive optimize the number of B-frames in each sub-GOP, to improve visual quality.
    */
-  SubgopLength?: Mpeg2SubGopLength | string;
+  SubgopLength?: Mpeg2SubGopLength;
 
   /**
    * @public
@@ -3764,7 +3805,7 @@ export interface Mpeg2Settings {
    * DISABLED: do not include timecodes.
    * GOP_TIMECODE: Include timecode metadata in the GOP header.
    */
-  TimecodeInsertion?: Mpeg2TimecodeInsertionBehavior | string;
+  TimecodeInsertion?: Mpeg2TimecodeInsertionBehavior;
 
   /**
    * @public
@@ -3864,13 +3905,13 @@ export interface VideoDescription {
    * PASSTHROUGH: MediaLive ignores the AFD values and does not clip the video. But MediaLive does include the values in the output.
    * NONE: MediaLive does not clip the input video and does not include the AFD values in the output
    */
-  RespondToAfd?: VideoDescriptionRespondToAfd | string;
+  RespondToAfd?: VideoDescriptionRespondToAfd;
 
   /**
    * @public
    * STRETCH_TO_OUTPUT configures the output position to stretch the video to the specified output resolution (height and width). This option will override any position value. DEFAULT may insert black boxes (pillar boxes or letter boxes) around the video to provide the specified output resolution.
    */
-  ScalingBehavior?: VideoDescriptionScalingBehavior | string;
+  ScalingBehavior?: VideoDescriptionScalingBehavior;
 
   /**
    * @public
@@ -4198,7 +4239,7 @@ export interface AvailBlanking {
    * @public
    * When set to enabled, causes video, audio and captions to be blanked when insertion metadata is added.
    */
-  State?: AvailBlankingState | string;
+  State?: AvailBlankingState;
 }
 
 /**
@@ -4288,13 +4329,13 @@ export interface Scte35SpliceInsert {
    * @public
    * When set to ignore, Segment Descriptors with noRegionalBlackoutFlag set to 0 will no longer trigger blackouts or Ad Avail slates
    */
-  NoRegionalBlackoutFlag?: Scte35SpliceInsertNoRegionalBlackoutBehavior | string;
+  NoRegionalBlackoutFlag?: Scte35SpliceInsertNoRegionalBlackoutBehavior;
 
   /**
    * @public
    * When set to ignore, Segment Descriptors with webDeliveryAllowedFlag set to 0 will no longer trigger blackouts or Ad Avail slates
    */
-  WebDeliveryAllowedFlag?: Scte35SpliceInsertWebDeliveryAllowedBehavior | string;
+  WebDeliveryAllowedFlag?: Scte35SpliceInsertWebDeliveryAllowedBehavior;
 }
 
 /**
@@ -4342,13 +4383,13 @@ export interface Scte35TimeSignalApos {
    * @public
    * When set to ignore, Segment Descriptors with noRegionalBlackoutFlag set to 0 will no longer trigger blackouts or Ad Avail slates
    */
-  NoRegionalBlackoutFlag?: Scte35AposNoRegionalBlackoutBehavior | string;
+  NoRegionalBlackoutFlag?: Scte35AposNoRegionalBlackoutBehavior;
 
   /**
    * @public
    * When set to ignore, Segment Descriptors with webDeliveryAllowedFlag set to 0 will no longer trigger blackouts or Ad Avail slates
    */
-  WebDeliveryAllowedFlag?: Scte35AposWebDeliveryAllowedBehavior | string;
+  WebDeliveryAllowedFlag?: Scte35AposWebDeliveryAllowedBehavior;
 }
 
 /**
@@ -4641,7 +4682,7 @@ export interface BlackoutSlate {
    * @public
    * Setting to enabled causes the encoder to blackout the video, audio, and captions, and raise the "Network Blackout Image" slate when an SCTE104/35 Network End Segmentation Descriptor is encountered. The blackout will be lifted when the Network Start Segmentation Descriptor is encountered. The Network End and Network Start descriptors must contain a network ID that matches the value entered in "Network ID".
    */
-  NetworkEndBlackout?: BlackoutSlateNetworkEndBlackout | string;
+  NetworkEndBlackout?: BlackoutSlateNetworkEndBlackout;
 
   /**
    * @public
@@ -4659,7 +4700,7 @@ export interface BlackoutSlate {
    * @public
    * When set to enabled, causes video, audio and captions to be blanked when indicated by program metadata.
    */
-  State?: BlackoutSlateState | string;
+  State?: BlackoutSlateState;
 }
 
 /**
@@ -4705,7 +4746,7 @@ export interface FeatureActivations {
    * Enables the Input Prepare feature. You can create Input Prepare actions in the schedule only if this feature is enabled.
    * If you disable the feature on an existing schedule, make sure that you first delete all input prepare actions from the schedule.
    */
-  InputPrepareScheduleActions?: FeatureActivationsInputPrepareScheduleActions | string;
+  InputPrepareScheduleActions?: FeatureActivationsInputPrepareScheduleActions;
 }
 
 /**
@@ -4764,7 +4805,7 @@ export interface InputLossBehavior {
    * @public
    * Indicates whether to substitute a solid color or a slate into the output after input loss exceeds blackFrameMsec.
    */
-  InputLossImageType?: InputLossImageType | string;
+  InputLossImageType?: InputLossImageType;
 
   /**
    * @public
@@ -4787,6 +4828,48 @@ export const GlobalConfigurationOutputLockingMode = {
  */
 export type GlobalConfigurationOutputLockingMode =
   (typeof GlobalConfigurationOutputLockingMode)[keyof typeof GlobalConfigurationOutputLockingMode];
+
+/**
+ * @public
+ * Epoch Locking Settings
+ */
+export interface EpochLockingSettings {
+  /**
+   * @public
+   * Optional. Enter a value here to use a custom epoch, instead of the standard epoch (which started at 1970-01-01T00:00:00 UTC). Specify the start time of the custom epoch, in YYYY-MM-DDTHH:MM:SS in UTC. The time must be 2000-01-01T00:00:00 or later. Always set the MM:SS portion to 00:00.
+   */
+  CustomEpoch?: string;
+
+  /**
+   * @public
+   * Optional. Enter a time for the jam sync. The default is midnight UTC. When epoch locking is enabled, MediaLive performs a daily jam sync on every output encode to ensure timecodes don’t diverge from the wall clock. The jam sync applies only to encodes with frame rate of 29.97 or 59.94 FPS. To override, enter a time in HH:MM:SS in UTC. Always set the MM:SS portion to 00:00.
+   */
+  JamSyncTime?: string;
+}
+
+/**
+ * @public
+ * Pipeline Locking Settings
+ */
+export interface PipelineLockingSettings {}
+
+/**
+ * @public
+ * Output Locking Settings
+ */
+export interface OutputLockingSettings {
+  /**
+   * @public
+   * Epoch Locking Settings
+   */
+  EpochLockingSettings?: EpochLockingSettings;
+
+  /**
+   * @public
+   * Pipeline Locking Settings
+   */
+  PipelineLockingSettings?: PipelineLockingSettings;
+}
 
 /**
  * @public
@@ -4833,7 +4916,7 @@ export interface GlobalConfiguration {
    * @public
    * Indicates the action to take when the current input completes (e.g. end-of-file). When switchAndLoopInputs is configured the encoder will restart at the beginning of the first input.  When "none" is configured the encoder will transcode either black, a solid color, or a user specified slate images per the "Input Loss Behavior" configuration until the next input switch occurs (which is controlled through the Channel Schedule API).
    */
-  InputEndAction?: GlobalConfigurationInputEndAction | string;
+  InputEndAction?: GlobalConfigurationInputEndAction;
 
   /**
    * @public
@@ -4848,19 +4931,25 @@ export interface GlobalConfiguration {
    * PIPELINE_LOCKING - MediaLive will attempt to synchronize the output of each pipeline to the other.
    * EPOCH_LOCKING - MediaLive will attempt to synchronize the output of each pipeline to the Unix epoch.
    */
-  OutputLockingMode?: GlobalConfigurationOutputLockingMode | string;
+  OutputLockingMode?: GlobalConfigurationOutputLockingMode;
 
   /**
    * @public
    * Indicates whether the rate of frames emitted by the Live encoder should be paced by its system clock (which optionally may be locked to another source via NTP) or should be locked to the clock of the source that is providing the input stream.
    */
-  OutputTimingSource?: GlobalConfigurationOutputTimingSource | string;
+  OutputTimingSource?: GlobalConfigurationOutputTimingSource;
 
   /**
    * @public
    * Adjusts video input buffer for streams with very low video framerates. This is commonly set to enabled for music channels with less than one video frame per second.
    */
-  SupportLowFramerateInputs?: GlobalConfigurationLowFramerateInputs | string;
+  SupportLowFramerateInputs?: GlobalConfigurationLowFramerateInputs;
+
+  /**
+   * @public
+   * Advanced output locking settings
+   */
+  OutputLockingSettings?: OutputLockingSettings;
 }
 
 /**
@@ -4904,7 +4993,7 @@ export interface MotionGraphicsConfiguration {
    * @public
    * Motion Graphics Insertion
    */
-  MotionGraphicsInsertion?: MotionGraphicsInsertion | string;
+  MotionGraphicsInsertion?: MotionGraphicsInsertion;
 
   /**
    * @public
@@ -4943,7 +5032,7 @@ export interface NielsenConfiguration {
    * @public
    * Enables Nielsen PCM to ID3 tagging
    */
-  NielsenPcmToId3Tagging?: NielsenPcmToId3TaggingState | string;
+  NielsenPcmToId3Tagging?: NielsenPcmToId3TaggingState;
 }
 
 /**
@@ -4969,7 +5058,7 @@ export interface ThumbnailConfiguration {
    * @public
    * Whether Thumbnail is enabled.
    */
-  State: ThumbnailState | string | undefined;
+  State: ThumbnailState | undefined;
 }
 
 /**
@@ -4999,7 +5088,7 @@ export interface TimecodeConfig {
    * -System Clock (systemclock): Use the UTC time.
    * -Start at 0 (zerobased): The time of the first frame of the event will be 00:00:00:00.
    */
-  Source: TimecodeConfigSource | string | undefined;
+  Source: TimecodeConfigSource | undefined;
 
   /**
    * @public
@@ -5113,7 +5202,7 @@ export interface Channel {
    * @public
    * The class for this channel. STANDARD for a channel with two pipelines or SINGLE_PIPELINE for a channel with one pipeline.
    */
-  ChannelClass?: ChannelClass | string;
+  ChannelClass?: ChannelClass;
 
   /**
    * @public
@@ -5157,7 +5246,7 @@ export interface Channel {
    * @public
    * The log level being written to CloudWatch Logs.
    */
-  LogLevel?: LogLevel | string;
+  LogLevel?: LogLevel;
 
   /**
    * @public
@@ -5193,7 +5282,7 @@ export interface Channel {
    * @public
    * Placeholder documentation for ChannelState
    */
-  State?: ChannelState | string;
+  State?: ChannelState;
 
   /**
    * @public
@@ -5248,7 +5337,7 @@ export interface MaintenanceCreateSettings {
    * @public
    * Choose one day of the week for maintenance. The chosen day is used for all future maintenance windows.
    */
-  MaintenanceDay?: MaintenanceDay | string;
+  MaintenanceDay?: MaintenanceDay;
 
   /**
    * @public
@@ -5300,7 +5389,7 @@ export interface CreateChannelRequest {
    * @public
    * The class for this channel. STANDARD for a channel with two pipelines or SINGLE_PIPELINE for a channel with one pipeline.
    */
-  ChannelClass?: ChannelClass | string;
+  ChannelClass?: ChannelClass;
 
   /**
    * @public
@@ -5330,7 +5419,7 @@ export interface CreateChannelRequest {
    * @public
    * The log level to write to CloudWatch Logs.
    */
-  LogLevel?: LogLevel | string;
+  LogLevel?: LogLevel;
 
   /**
    * @public
@@ -5481,7 +5570,7 @@ export interface CreateInputRequest {
    * @public
    * The different types of inputs that AWS Elemental MediaLive supports.
    */
-  Type?: InputType | string;
+  Type?: InputType;
 
   /**
    * @public
@@ -5659,7 +5748,7 @@ export interface Multiplex {
    * @public
    * The current state of the multiplex.
    */
-  State?: MultiplexState | string;
+  State?: MultiplexState;
 
   /**
    * @public
@@ -5766,7 +5855,7 @@ export interface MultiplexProgramSettings {
    * @public
    * Indicates which pipeline is preferred by the multiplex for program ingest.
    */
-  PreferredChannelPipeline?: PreferredChannelPipeline | string;
+  PreferredChannelPipeline?: PreferredChannelPipeline;
 
   /**
    * @public
@@ -6038,7 +6127,7 @@ export interface DeleteChannelResponse {
    * @public
    * The class for this channel. STANDARD for a channel with two pipelines or SINGLE_PIPELINE for a channel with one pipeline.
    */
-  ChannelClass?: ChannelClass | string;
+  ChannelClass?: ChannelClass;
 
   /**
    * @public
@@ -6082,7 +6171,7 @@ export interface DeleteChannelResponse {
    * @public
    * The log level being written to CloudWatch Logs.
    */
-  LogLevel?: LogLevel | string;
+  LogLevel?: LogLevel;
 
   /**
    * @public
@@ -6118,7 +6207,7 @@ export interface DeleteChannelResponse {
    * @public
    * Placeholder documentation for ChannelState
    */
-  State?: ChannelState | string;
+  State?: ChannelState;
 
   /**
    * @public
@@ -6238,7 +6327,7 @@ export interface DeleteMultiplexResponse {
    * @public
    * The current state of the multiplex.
    */
-  State?: MultiplexState | string;
+  State?: MultiplexState;
 
   /**
    * @public
@@ -6346,7 +6435,7 @@ export interface DeleteReservationResponse {
    * @public
    * Units for duration, e.g. 'MONTHS'
    */
-  DurationUnits?: OfferingDurationUnits | string;
+  DurationUnits?: OfferingDurationUnits;
 
   /**
    * @public
@@ -6382,7 +6471,7 @@ export interface DeleteReservationResponse {
    * @public
    * Offering type, e.g. 'NO_UPFRONT'
    */
-  OfferingType?: OfferingType | string;
+  OfferingType?: OfferingType;
 
   /**
    * @public
@@ -6418,7 +6507,7 @@ export interface DeleteReservationResponse {
    * @public
    * Current state of reservation, e.g. 'ACTIVE'
    */
-  State?: ReservationState | string;
+  State?: ReservationState;
 
   /**
    * @public
@@ -6520,7 +6609,7 @@ export interface DescribeChannelResponse {
    * @public
    * The class for this channel. STANDARD for a channel with two pipelines or SINGLE_PIPELINE for a channel with one pipeline.
    */
-  ChannelClass?: ChannelClass | string;
+  ChannelClass?: ChannelClass;
 
   /**
    * @public
@@ -6564,7 +6653,7 @@ export interface DescribeChannelResponse {
    * @public
    * The log level being written to CloudWatch Logs.
    */
-  LogLevel?: LogLevel | string;
+  LogLevel?: LogLevel;
 
   /**
    * @public
@@ -6600,7 +6689,7 @@ export interface DescribeChannelResponse {
    * @public
    * Placeholder documentation for ChannelState
    */
-  State?: ChannelState | string;
+  State?: ChannelState;
 
   /**
    * @public
@@ -6661,7 +6750,7 @@ export interface DescribeInputResponse {
    * STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD, both sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested; the second source will always be ignored, even if the first source fails.
    * SINGLE_PIPELINE - You can connect only one source to this input. If the ChannelClass is also  SINGLE_PIPELINE, this value is valid. If the ChannelClass is STANDARD, this value is not valid because the channel requires two sources in the input.
    */
-  InputClass?: InputClass | string;
+  InputClass?: InputClass;
 
   /**
    * @public
@@ -6680,7 +6769,7 @@ export interface DescribeInputResponse {
    * Certain pull input sources can be dynamic, meaning that they can have their URL's dynamically changes
    * during input switch actions. Presently, this functionality only works with MP4_FILE and TS_FILE inputs.
    */
-  InputSourceType?: InputSourceType | string;
+  InputSourceType?: InputSourceType;
 
   /**
    * @public
@@ -6716,7 +6805,7 @@ export interface DescribeInputResponse {
    * @public
    * Placeholder documentation for InputState
    */
-  State?: InputState | string;
+  State?: InputState;
 
   /**
    * @public
@@ -6728,7 +6817,7 @@ export interface DescribeInputResponse {
    * @public
    * The different types of inputs that AWS Elemental MediaLive supports.
    */
-  Type?: InputType | string;
+  Type?: InputType;
 }
 
 /**
@@ -6758,19 +6847,19 @@ export interface DescribeInputDeviceResponse {
    * @public
    * The state of the connection between the input device and AWS.
    */
-  ConnectionState?: InputDeviceConnectionState | string;
+  ConnectionState?: InputDeviceConnectionState;
 
   /**
    * @public
    * The status of the action to synchronize the device configuration. If you change the configuration of the input device (for example, the maximum bitrate), MediaLive sends the new data to the device. The device might not update itself immediately. SYNCED means the device has updated its configuration. SYNCING means that it has not updated its configuration.
    */
-  DeviceSettingsSyncState?: DeviceSettingsSyncState | string;
+  DeviceSettingsSyncState?: DeviceSettingsSyncState;
 
   /**
    * @public
    * The status of software on the input device.
    */
-  DeviceUpdateStatus?: DeviceUpdateStatus | string;
+  DeviceUpdateStatus?: DeviceUpdateStatus;
 
   /**
    * @public
@@ -6812,7 +6901,7 @@ export interface DescribeInputDeviceResponse {
    * @public
    * The type of the input device.
    */
-  Type?: InputDeviceType | string;
+  Type?: InputDeviceType;
 
   /**
    * @public
@@ -6831,6 +6920,18 @@ export interface DescribeInputDeviceResponse {
    * The Availability Zone associated with this input device.
    */
   AvailabilityZone?: string;
+
+  /**
+   * @public
+   * An array of the ARNs for the MediaLive inputs attached to the device. Returned only if the outputType is MEDIALIVE_INPUT.
+   */
+  MedialiveInputArns?: string[];
+
+  /**
+   * @public
+   * The output attachment type of the input device. Specifies MEDIACONNECT_FLOW if this device is the source for a MediaConnect flow. Specifies MEDIALIVE_INPUT if this device is the source for a MediaLive input.
+   */
+  OutputType?: InputDeviceOutputType;
 }
 
 /**
@@ -6848,7 +6949,7 @@ export interface DescribeInputDeviceThumbnailRequest {
    * @public
    * The HTTP Accept header. Indicates the requested type for the thumbnail.
    */
-  Accept: AcceptHeader | string | undefined;
+  Accept: AcceptHeader | undefined;
 }
 
 /**
@@ -6866,7 +6967,7 @@ export interface DescribeInputDeviceThumbnailResponse {
    * @public
    * Specifies the media type of the thumbnail.
    */
-  ContentType?: ContentType | string;
+  ContentType?: ContentType;
 
   /**
    * @public
@@ -6926,7 +7027,7 @@ export interface DescribeInputSecurityGroupResponse {
    * @public
    * The current state of the Input Security Group.
    */
-  State?: InputSecurityGroupState | string;
+  State?: InputSecurityGroupState;
 
   /**
    * @public
@@ -7010,7 +7111,7 @@ export interface DescribeMultiplexResponse {
    * @public
    * The current state of the multiplex.
    */
-  State?: MultiplexState | string;
+  State?: MultiplexState;
 
   /**
    * @public
@@ -7112,7 +7213,7 @@ export interface DescribeOfferingResponse {
    * @public
    * Units for duration, e.g. 'MONTHS'
    */
-  DurationUnits?: OfferingDurationUnits | string;
+  DurationUnits?: OfferingDurationUnits;
 
   /**
    * @public
@@ -7136,7 +7237,7 @@ export interface DescribeOfferingResponse {
    * @public
    * Offering type, e.g. 'NO_UPFRONT'
    */
-  OfferingType?: OfferingType | string;
+  OfferingType?: OfferingType;
 
   /**
    * @public
@@ -7202,7 +7303,7 @@ export interface DescribeReservationResponse {
    * @public
    * Units for duration, e.g. 'MONTHS'
    */
-  DurationUnits?: OfferingDurationUnits | string;
+  DurationUnits?: OfferingDurationUnits;
 
   /**
    * @public
@@ -7238,7 +7339,7 @@ export interface DescribeReservationResponse {
    * @public
    * Offering type, e.g. 'NO_UPFRONT'
    */
-  OfferingType?: OfferingType | string;
+  OfferingType?: OfferingType;
 
   /**
    * @public
@@ -7274,7 +7375,7 @@ export interface DescribeReservationResponse {
    * @public
    * Current state of reservation, e.g. 'ACTIVE'
    */
-  State?: ReservationState | string;
+  State?: ReservationState;
 
   /**
    * @public
@@ -7369,6 +7470,36 @@ export interface DescribeThumbnailsResponse {
 
 /**
  * @public
+ * Parameters required to attach a MediaConnect flow to the device.
+ */
+export interface InputDeviceMediaConnectConfigurableSettings {
+  /**
+   * @public
+   * The ARN of the MediaConnect flow to attach this device to.
+   */
+  FlowArn?: string;
+
+  /**
+   * @public
+   * The ARN for the role that MediaLive assumes to access the attached flow and secret. For more information about how to create this role, see the MediaLive user guide.
+   */
+  RoleArn?: string;
+
+  /**
+   * @public
+   * The ARN for the secret that holds the encryption key to encrypt the content output by the device.
+   */
+  SecretArn?: string;
+
+  /**
+   * @public
+   * The name of the MediaConnect Flow source to stream to.
+   */
+  SourceName?: string;
+}
+
+/**
+ * @public
  * Configurable settings for the input device.
  */
 export interface InputDeviceConfigurableSettings {
@@ -7376,7 +7507,7 @@ export interface InputDeviceConfigurableSettings {
    * @public
    * The input source that you want to use. If the device has a source connected to only one of its input ports, or if you don't care which source the device sends, specify Auto. If the device has sources connected to both its input ports, and you want to use a specific source, specify the source.
    */
-  ConfiguredInput?: InputDeviceConfiguredInput | string;
+  ConfiguredInput?: InputDeviceConfiguredInput;
 
   /**
    * @public
@@ -7389,6 +7520,18 @@ export interface InputDeviceConfigurableSettings {
    * The Link device's buffer size (latency) in milliseconds (ms).
    */
   LatencyMs?: number;
+
+  /**
+   * @public
+   * Choose the codec for the video that the device produces. Only UHD devices can specify this parameter.
+   */
+  Codec?: InputDeviceCodec;
+
+  /**
+   * @public
+   * To attach this device to a MediaConnect flow, specify these parameters. To detach an existing flow, enter \{\} for the value of mediaconnectSettings. Only UHD devices can specify this parameter.
+   */
+  MediaconnectSettings?: InputDeviceMediaConnectConfigurableSettings;
 }
 
 /**
@@ -7593,246 +7736,6 @@ export interface ListMultiplexesRequest {
    * The token to retrieve the next page of results.
    */
   NextToken?: string;
-}
-
-/**
- * @public
- * Placeholder documentation for ListMultiplexesResponse
- */
-export interface ListMultiplexesResponse {
-  /**
-   * @public
-   * List of multiplexes.
-   */
-  Multiplexes?: MultiplexSummary[];
-
-  /**
-   * @public
-   * Token for the next ListMultiplexes request.
-   */
-  NextToken?: string;
-}
-
-/**
- * @public
- * Placeholder documentation for ListMultiplexProgramsRequest
- */
-export interface ListMultiplexProgramsRequest {
-  /**
-   * @public
-   * The maximum number of items to return.
-   */
-  MaxResults?: number;
-
-  /**
-   * @public
-   * The ID of the multiplex that the programs belong to.
-   */
-  MultiplexId: string | undefined;
-
-  /**
-   * @public
-   * The token to retrieve the next page of results.
-   */
-  NextToken?: string;
-}
-
-/**
- * @public
- * Placeholder documentation for ListMultiplexProgramsResponse
- */
-export interface ListMultiplexProgramsResponse {
-  /**
-   * @public
-   * List of multiplex programs.
-   */
-  MultiplexPrograms?: MultiplexProgramSummary[];
-
-  /**
-   * @public
-   * Token for the next ListMultiplexProgram request.
-   */
-  NextToken?: string;
-}
-
-/**
- * @public
- * Placeholder documentation for ListOfferingsRequest
- */
-export interface ListOfferingsRequest {
-  /**
-   * @public
-   * Filter by channel class, 'STANDARD' or 'SINGLE_PIPELINE'
-   */
-  ChannelClass?: string;
-
-  /**
-   * @public
-   * Filter to offerings that match the configuration of an existing channel, e.g. '2345678' (a channel ID)
-   */
-  ChannelConfiguration?: string;
-
-  /**
-   * @public
-   * Filter by codec, 'AVC', 'HEVC', 'MPEG2', 'AUDIO', or 'LINK'
-   */
-  Codec?: string;
-
-  /**
-   * @public
-   * Filter by offering duration, e.g. '12'
-   */
-  Duration?: string;
-
-  /**
-   * @public
-   * Placeholder documentation for MaxResults
-   */
-  MaxResults?: number;
-
-  /**
-   * @public
-   * Filter by bitrate, 'MAX_10_MBPS', 'MAX_20_MBPS', or 'MAX_50_MBPS'
-   */
-  MaximumBitrate?: string;
-
-  /**
-   * @public
-   * Filter by framerate, 'MAX_30_FPS' or 'MAX_60_FPS'
-   */
-  MaximumFramerate?: string;
-
-  /**
-   * @public
-   * Placeholder documentation for __string
-   */
-  NextToken?: string;
-
-  /**
-   * @public
-   * Filter by resolution, 'SD', 'HD', 'FHD', or 'UHD'
-   */
-  Resolution?: string;
-
-  /**
-   * @public
-   * Filter by resource type, 'INPUT', 'OUTPUT', 'MULTIPLEX', or 'CHANNEL'
-   */
-  ResourceType?: string;
-
-  /**
-   * @public
-   * Filter by special feature, 'ADVANCED_AUDIO' or 'AUDIO_NORMALIZATION'
-   */
-  SpecialFeature?: string;
-
-  /**
-   * @public
-   * Filter by video quality, 'STANDARD', 'ENHANCED', or 'PREMIUM'
-   */
-  VideoQuality?: string;
-}
-
-/**
- * @public
- * Placeholder documentation for ListOfferingsResponse
- */
-export interface ListOfferingsResponse {
-  /**
-   * @public
-   * Token to retrieve the next page of results
-   */
-  NextToken?: string;
-
-  /**
-   * @public
-   * List of offerings
-   */
-  Offerings?: Offering[];
-}
-
-/**
- * @public
- * Placeholder documentation for ListReservationsRequest
- */
-export interface ListReservationsRequest {
-  /**
-   * @public
-   * Filter by channel class, 'STANDARD' or 'SINGLE_PIPELINE'
-   */
-  ChannelClass?: string;
-
-  /**
-   * @public
-   * Filter by codec, 'AVC', 'HEVC', 'MPEG2', 'AUDIO', or 'LINK'
-   */
-  Codec?: string;
-
-  /**
-   * @public
-   * Placeholder documentation for MaxResults
-   */
-  MaxResults?: number;
-
-  /**
-   * @public
-   * Filter by bitrate, 'MAX_10_MBPS', 'MAX_20_MBPS', or 'MAX_50_MBPS'
-   */
-  MaximumBitrate?: string;
-
-  /**
-   * @public
-   * Filter by framerate, 'MAX_30_FPS' or 'MAX_60_FPS'
-   */
-  MaximumFramerate?: string;
-
-  /**
-   * @public
-   * Placeholder documentation for __string
-   */
-  NextToken?: string;
-
-  /**
-   * @public
-   * Filter by resolution, 'SD', 'HD', 'FHD', or 'UHD'
-   */
-  Resolution?: string;
-
-  /**
-   * @public
-   * Filter by resource type, 'INPUT', 'OUTPUT', 'MULTIPLEX', or 'CHANNEL'
-   */
-  ResourceType?: string;
-
-  /**
-   * @public
-   * Filter by special feature, 'ADVANCED_AUDIO' or 'AUDIO_NORMALIZATION'
-   */
-  SpecialFeature?: string;
-
-  /**
-   * @public
-   * Filter by video quality, 'STANDARD', 'ENHANCED', or 'PREMIUM'
-   */
-  VideoQuality?: string;
-}
-
-/**
- * @public
- * Placeholder documentation for ListReservationsResponse
- */
-export interface ListReservationsResponse {
-  /**
-   * @public
-   * Token to retrieve the next page of results
-   */
-  NextToken?: string;
-
-  /**
-   * @public
-   * List of reservations
-   */
-  Reservations?: Reservation[];
 }
 
 /**

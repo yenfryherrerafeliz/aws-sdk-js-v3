@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { XmlListsInputOutput } from "../models/models_0";
@@ -33,6 +34,140 @@ export interface XmlEmptyListsCommandInput extends XmlListsInputOutput {}
  */
 export interface XmlEmptyListsCommandOutput extends XmlListsInputOutput, __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestXmlProtocolClient, XmlEmptyListsCommand } from "@aws-sdk/aws-protocoltests-restxml"; // ES Modules import
+ * // const { RestXmlProtocolClient, XmlEmptyListsCommand } = require("@aws-sdk/aws-protocoltests-restxml"); // CommonJS import
+ * const client = new RestXmlProtocolClient(config);
+ * const input = { // XmlListsInputOutput
+ *   stringList: [ // StringList
+ *     "STRING_VALUE",
+ *   ],
+ *   stringSet: [ // StringSet
+ *     "STRING_VALUE",
+ *   ],
+ *   integerList: [ // IntegerList
+ *     Number("int"),
+ *   ],
+ *   booleanList: [ // BooleanList
+ *     true || false,
+ *   ],
+ *   timestampList: [ // TimestampList
+ *     new Date("TIMESTAMP"),
+ *   ],
+ *   enumList: [ // FooEnumList
+ *     "Foo" || "Baz" || "Bar" || "1" || "0",
+ *   ],
+ *   intEnumList: [ // IntegerEnumList
+ *     1 || 2 || 3,
+ *   ],
+ *   nestedStringList: [ // NestedStringList
+ *     [
+ *       "STRING_VALUE",
+ *     ],
+ *   ],
+ *   renamedListMembers: [ // RenamedListMembers
+ *     "STRING_VALUE",
+ *   ],
+ *   flattenedList: [
+ *     "STRING_VALUE",
+ *   ],
+ *   flattenedList2: [
+ *     "STRING_VALUE",
+ *   ],
+ *   flattenedListWithMemberNamespace: [ // ListWithMemberNamespace
+ *     "STRING_VALUE",
+ *   ],
+ *   flattenedListWithNamespace: [ // ListWithNamespace
+ *     "STRING_VALUE",
+ *   ],
+ *   structureList: [ // StructureList
+ *     { // StructureListMember
+ *       a: "STRING_VALUE",
+ *       b: "STRING_VALUE",
+ *     },
+ *   ],
+ *   flattenedStructureList: [
+ *     {
+ *       a: "STRING_VALUE",
+ *       b: "STRING_VALUE",
+ *     },
+ *   ],
+ * };
+ * const command = new XmlEmptyListsCommand(input);
+ * const response = await client.send(command);
+ * // { // XmlListsInputOutput
+ * //   stringList: [ // StringList
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   stringSet: [ // StringSet
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   integerList: [ // IntegerList
+ * //     Number("int"),
+ * //   ],
+ * //   booleanList: [ // BooleanList
+ * //     true || false,
+ * //   ],
+ * //   timestampList: [ // TimestampList
+ * //     new Date("TIMESTAMP"),
+ * //   ],
+ * //   enumList: [ // FooEnumList
+ * //     "Foo" || "Baz" || "Bar" || "1" || "0",
+ * //   ],
+ * //   intEnumList: [ // IntegerEnumList
+ * //     1 || 2 || 3,
+ * //   ],
+ * //   nestedStringList: [ // NestedStringList
+ * //     [
+ * //       "STRING_VALUE",
+ * //     ],
+ * //   ],
+ * //   renamedListMembers: [ // RenamedListMembers
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   flattenedList: [
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   flattenedList2: [
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   flattenedListWithMemberNamespace: [ // ListWithMemberNamespace
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   flattenedListWithNamespace: [ // ListWithNamespace
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   structureList: [ // StructureList
+ * //     { // StructureListMember
+ * //       a: "STRING_VALUE",
+ * //       b: "STRING_VALUE",
+ * //     },
+ * //   ],
+ * //   flattenedStructureList: [
+ * //     {
+ * //       a: "STRING_VALUE",
+ * //       b: "STRING_VALUE",
+ * //     },
+ * //   ],
+ * // };
+ *
+ * ```
+ *
+ * @param XmlEmptyListsCommandInput - {@link XmlEmptyListsCommandInput}
+ * @returns {@link XmlEmptyListsCommandOutput}
+ * @see {@link XmlEmptyListsCommandInput} for command's `input` shape.
+ * @see {@link XmlEmptyListsCommandOutput} for command's `response` shape.
+ * @see {@link RestXmlProtocolClientResolvedConfig | config} for RestXmlProtocolClient's `config` shape.
+ *
+ * @throws {@link RestXmlProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestXmlProtocol service.</p>
+ *
+ */
 export class XmlEmptyListsCommand extends $Command<
   XmlEmptyListsCommandInput,
   XmlEmptyListsCommandOutput,
@@ -71,6 +206,10 @@ export class XmlEmptyListsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestXml",
+        operation: "XmlEmptyLists",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

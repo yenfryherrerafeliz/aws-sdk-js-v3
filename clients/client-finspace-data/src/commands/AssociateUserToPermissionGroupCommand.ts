@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { FinspaceDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../FinspaceDataClient";
@@ -41,7 +42,7 @@ export interface AssociateUserToPermissionGroupCommandOutput
 
 /**
  * @public
- * <p>Adds a user account to a permission group to grant permissions for actions a user can perform in FinSpace.</p>
+ * <p>Adds a user to a permission group to grant permissions for actions a user can perform in FinSpace.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -140,6 +141,10 @@ export class AssociateUserToPermissionGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSHabaneroPublicAPI",
+        operation: "AssociateUserToPermissionGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

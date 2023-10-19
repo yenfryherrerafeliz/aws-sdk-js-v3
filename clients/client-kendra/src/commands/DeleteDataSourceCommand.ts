@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { KendraClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../KendraClient";
@@ -40,6 +41,9 @@ export interface DeleteDataSourceCommandOutput extends __MetadataBearer {}
  *       data source is already being deleted. While the data source is being deleted, the
  *         <code>Status</code> field returned by a call to the <code>DescribeDataSource</code> API is
  *       set to <code>DELETING</code>. For more information, see <a href="https://docs.aws.amazon.com/kendra/latest/dg/delete-data-source.html">Deleting Data Sources</a>.</p>
+ *          <p>Deleting an entire data source or re-syncing your index after deleting specific documents
+ *       from a data source could take up to an hour or more, depending on the number of documents you
+ *       want to delete.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -140,6 +144,10 @@ export class DeleteDataSourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSKendraFrontendService",
+        operation: "DeleteDataSource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

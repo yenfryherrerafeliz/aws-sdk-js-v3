@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetSubscriptionStateRequest, GetSubscriptionStateResponse } from "../models/models_0";
@@ -47,7 +48,7 @@ export interface GetSubscriptionStateCommandOutput extends GetSubscriptionStateR
  * const command = new GetSubscriptionStateCommand(input);
  * const response = await client.send(command);
  * // { // GetSubscriptionStateResponse
- * //   SubscriptionState: "STRING_VALUE", // required
+ * //   SubscriptionState: "ACTIVE" || "INACTIVE", // required
  * // };
  *
  * ```
@@ -115,6 +116,10 @@ export class GetSubscriptionStateCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSShield_20160616",
+        operation: "GetSubscriptionState",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

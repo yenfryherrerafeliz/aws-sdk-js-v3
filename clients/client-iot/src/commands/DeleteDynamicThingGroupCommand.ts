@@ -11,10 +11,12 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTClient";
-import { DeleteDynamicThingGroupRequest, DeleteDynamicThingGroupResponse } from "../models/models_0";
+import { DeleteDynamicThingGroupRequest } from "../models/models_0";
+import { DeleteDynamicThingGroupResponse } from "../models/models_1";
 import { de_DeleteDynamicThingGroupCommand, se_DeleteDynamicThingGroupCommand } from "../protocols/Aws_restJson1";
 
 /**
@@ -128,6 +130,10 @@ export class DeleteDynamicThingGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIotService",
+        operation: "DeleteDynamicThingGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
   StreamingBlobPayloadInputTypes,
 } from "@smithy/types";
 
@@ -56,16 +57,16 @@ export interface PutObjectCommandOutput extends PutObjectOutput, __MetadataBeare
  *   InlineChunkChecksum: "STRING_VALUE",
  *   InlineChunkChecksumAlgorithm: "STRING_VALUE",
  *   ObjectChecksum: "STRING_VALUE",
- *   ObjectChecksumAlgorithm: "STRING_VALUE",
+ *   ObjectChecksumAlgorithm: "SUMMARY",
  *   ThrowOnDuplicate: true || false,
  * };
  * const command = new PutObjectCommand(input);
  * const response = await client.send(command);
  * // { // PutObjectOutput
  * //   InlineChunkChecksum: "STRING_VALUE", // required
- * //   InlineChunkChecksumAlgorithm: "STRING_VALUE", // required
+ * //   InlineChunkChecksumAlgorithm: "SHA256", // required
  * //   ObjectChecksum: "STRING_VALUE", // required
- * //   ObjectChecksumAlgorithm: "STRING_VALUE", // required
+ * //   ObjectChecksumAlgorithm: "SUMMARY", // required
  * // };
  *
  * ```
@@ -152,6 +153,10 @@ export class PutObjectCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: PutObjectInputFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CryoStorageFrontendService",
+        operation: "PutObject",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

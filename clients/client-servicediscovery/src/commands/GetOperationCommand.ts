@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GetOperationRequest, GetOperationResponse } from "../models/models_0";
@@ -37,7 +38,7 @@ export interface GetOperationCommandOutput extends GetOperationResponse, __Metad
 /**
  * @public
  * <p>Gets information about any operation that returns an operation ID in the response, such as a
- *     <code>CreateService</code> request.</p>
+ *     <code>CreateHttpNamespace</code> request.</p>
  *          <note>
  *             <p>To get a list of operations that match specified criteria, see <a href="https://docs.aws.amazon.com/cloud-map/latest/api/API_ListOperations.html">ListOperations</a>.</p>
  *          </note>
@@ -160,6 +161,10 @@ export class GetOperationCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Route53AutoNaming_v20170314",
+        operation: "GetOperation",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

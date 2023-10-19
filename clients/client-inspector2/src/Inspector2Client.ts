@@ -394,6 +394,8 @@ export interface ClientDefaults extends Partial<__SmithyResolvedConfiguration<__
 
   /**
    * Specifies which retry algorithm to use.
+   * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-smithy-util-retry/Enum/RETRY_MODES/
+   *
    */
   retryMode?: string | __Provider<string>;
 
@@ -455,7 +457,7 @@ export interface Inspector2ClientResolvedConfig extends Inspector2ClientResolved
 /**
  * @public
  * <p>Amazon Inspector is a vulnerability discovery service that automates continuous scanning for
- *          security vulnerabilities within your Amazon EC2 and Amazon ECR environments.</p>
+ *          security vulnerabilities within your Amazon EC2, Amazon ECR, and Amazon Web Services Lambda environments.</p>
  */
 export class Inspector2Client extends __Client<
   __HttpHandlerOptions,

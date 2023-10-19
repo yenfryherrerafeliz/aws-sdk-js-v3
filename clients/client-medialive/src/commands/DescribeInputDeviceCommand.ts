@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MediaLiveClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaLiveClient";
@@ -88,11 +89,22 @@ export interface DescribeInputDeviceCommandOutput extends DescribeInputDeviceRes
  * //     ScanType: "INTERLACED" || "PROGRESSIVE",
  * //     Width: Number("int"),
  * //     LatencyMs: Number("int"),
+ * //     Codec: "HEVC" || "AVC",
+ * //     MediaconnectSettings: { // InputDeviceMediaConnectSettings
+ * //       FlowArn: "STRING_VALUE",
+ * //       RoleArn: "STRING_VALUE",
+ * //       SecretArn: "STRING_VALUE",
+ * //       SourceName: "STRING_VALUE",
+ * //     },
  * //   },
  * //   Tags: { // Tags
  * //     "<keys>": "STRING_VALUE",
  * //   },
  * //   AvailabilityZone: "STRING_VALUE",
+ * //   MedialiveInputArns: [
+ * //     "STRING_VALUE",
+ * //   ],
+ * //   OutputType: "NONE" || "MEDIALIVE_INPUT" || "MEDIACONNECT_FLOW",
  * // };
  *
  * ```
@@ -178,6 +190,10 @@ export class DescribeInputDeviceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaLive",
+        operation: "DescribeInputDevice",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

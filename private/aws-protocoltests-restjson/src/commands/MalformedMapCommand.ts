@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MalformedMapInput } from "../models/models_0";
@@ -33,6 +34,36 @@ export interface MalformedMapCommandInput extends MalformedMapInput {}
  */
 export interface MalformedMapCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestJsonProtocolClient, MalformedMapCommand } from "@aws-sdk/aws-protocoltests-restjson"; // ES Modules import
+ * // const { RestJsonProtocolClient, MalformedMapCommand } = require("@aws-sdk/aws-protocoltests-restjson"); // CommonJS import
+ * const client = new RestJsonProtocolClient(config);
+ * const input = { // MalformedMapInput
+ *   bodyMap: { // SimpleMap
+ *     "<keys>": "STRING_VALUE",
+ *   },
+ * };
+ * const command = new MalformedMapCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param MalformedMapCommandInput - {@link MalformedMapCommandInput}
+ * @returns {@link MalformedMapCommandOutput}
+ * @see {@link MalformedMapCommandInput} for command's `input` shape.
+ * @see {@link MalformedMapCommandOutput} for command's `response` shape.
+ * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
+ *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
+ *
+ */
 export class MalformedMapCommand extends $Command<
   MalformedMapCommandInput,
   MalformedMapCommandOutput,
@@ -71,6 +102,10 @@ export class MalformedMapCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "MalformedMap",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

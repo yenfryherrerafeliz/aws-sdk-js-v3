@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -23,7 +24,7 @@ import {
   ModifyEndpointMessageFilterSensitiveLog,
   ModifyEndpointResponse,
   ModifyEndpointResponseFilterSensitiveLog,
-} from "../models/models_0";
+} from "../models/models_1";
 import { de_ModifyEndpointCommand, se_ModifyEndpointCommand } from "../protocols/Aws_json1_1";
 
 /**
@@ -859,6 +860,10 @@ export class ModifyEndpointCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: ModifyEndpointMessageFilterSensitiveLog,
       outputFilterSensitiveLog: ModifyEndpointResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonDMSv20160101",
+        operation: "ModifyEndpoint",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

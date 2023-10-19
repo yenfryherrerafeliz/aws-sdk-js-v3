@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateRobotRequest, CreateRobotResponse } from "../models/models_0";
@@ -50,7 +51,7 @@ export interface CreateRobotCommandOutput extends CreateRobotResponse, __Metadat
  * const client = new RoboMakerClient(config);
  * const input = { // CreateRobotRequest
  *   name: "STRING_VALUE", // required
- *   architecture: "STRING_VALUE", // required
+ *   architecture: "X86_64" || "ARM64" || "ARMHF", // required
  *   greengrassGroupId: "STRING_VALUE", // required
  *   tags: { // TagMap
  *     "<keys>": "STRING_VALUE",
@@ -63,7 +64,7 @@ export interface CreateRobotCommandOutput extends CreateRobotResponse, __Metadat
  * //   name: "STRING_VALUE",
  * //   createdAt: new Date("TIMESTAMP"),
  * //   greengrassGroupId: "STRING_VALUE",
- * //   architecture: "STRING_VALUE",
+ * //   architecture: "X86_64" || "ARM64" || "ARMHF",
  * //   tags: { // TagMap
  * //     "<keys>": "STRING_VALUE",
  * //   },
@@ -146,6 +147,10 @@ export class CreateRobotCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "CreateRobot",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

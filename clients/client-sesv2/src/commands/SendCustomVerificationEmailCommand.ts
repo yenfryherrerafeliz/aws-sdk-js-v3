@@ -11,9 +11,10 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { SendCustomVerificationEmailRequest, SendCustomVerificationEmailResponse } from "../models/models_0";
+import { SendCustomVerificationEmailRequest, SendCustomVerificationEmailResponse } from "../models/models_1";
 import {
   de_SendCustomVerificationEmailCommand,
   se_SendCustomVerificationEmailCommand,
@@ -151,6 +152,10 @@ export class SendCustomVerificationEmailCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SimpleEmailService_v2",
+        operation: "SendCustomVerificationEmail",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

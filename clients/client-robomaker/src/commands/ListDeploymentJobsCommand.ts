@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListDeploymentJobsRequest, ListDeploymentJobsResponse } from "../models/models_0";
@@ -67,7 +68,7 @@ export interface ListDeploymentJobsCommandOutput extends ListDeploymentJobsRespo
  * //     { // DeploymentJob
  * //       arn: "STRING_VALUE",
  * //       fleet: "STRING_VALUE",
- * //       status: "STRING_VALUE",
+ * //       status: "Pending" || "Preparing" || "InProgress" || "Failed" || "Succeeded" || "Canceled",
  * //       deploymentApplicationConfigs: [ // DeploymentApplicationConfigs
  * //         { // DeploymentApplicationConfig
  * //           application: "STRING_VALUE", // required
@@ -94,7 +95,7 @@ export interface ListDeploymentJobsCommandOutput extends ListDeploymentJobsRespo
  * //         },
  * //       },
  * //       failureReason: "STRING_VALUE",
- * //       failureCode: "STRING_VALUE",
+ * //       failureCode: "ResourceNotFound" || "EnvironmentSetupError" || "EtagMismatch" || "FailureThresholdBreached" || "RobotDeploymentAborted" || "RobotDeploymentNoResponse" || "RobotAgentConnectionTimeout" || "GreengrassDeploymentFailed" || "InvalidGreengrassGroup" || "MissingRobotArchitecture" || "MissingRobotApplicationArchitecture" || "MissingRobotDeploymentResource" || "GreengrassGroupVersionDoesNotExist" || "LambdaDeleted" || "ExtractingBundleFailure" || "PreLaunchFileFailure" || "PostLaunchFileFailure" || "BadPermissionError" || "DownloadConditionFailed" || "BadLambdaAssociated" || "InternalServerError" || "RobotApplicationDoesNotExist" || "DeploymentFleetDoesNotExist" || "FleetDeploymentTimeout",
  * //       createdAt: new Date("TIMESTAMP"),
  * //     },
  * //   ],
@@ -176,6 +177,10 @@ export class ListDeploymentJobsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "robomaker",
+        operation: "ListDeploymentJobs",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

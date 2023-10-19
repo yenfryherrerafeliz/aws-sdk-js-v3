@@ -10,6 +10,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MalformedBooleanInput } from "../models/models_0";
@@ -33,6 +34,37 @@ export interface MalformedBooleanCommandInput extends MalformedBooleanInput {}
  */
 export interface MalformedBooleanCommandOutput extends __MetadataBearer {}
 
+/**
+ * @public
+ *
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { RestJsonProtocolClient, MalformedBooleanCommand } from "@aws-sdk/aws-protocoltests-restjson"; // ES Modules import
+ * // const { RestJsonProtocolClient, MalformedBooleanCommand } = require("@aws-sdk/aws-protocoltests-restjson"); // CommonJS import
+ * const client = new RestJsonProtocolClient(config);
+ * const input = { // MalformedBooleanInput
+ *   booleanInBody: true || false,
+ *   booleanInPath: true || false, // required
+ *   booleanInQuery: true || false,
+ *   booleanInHeader: true || false,
+ * };
+ * const command = new MalformedBooleanCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param MalformedBooleanCommandInput - {@link MalformedBooleanCommandInput}
+ * @returns {@link MalformedBooleanCommandOutput}
+ * @see {@link MalformedBooleanCommandInput} for command's `input` shape.
+ * @see {@link MalformedBooleanCommandOutput} for command's `response` shape.
+ * @see {@link RestJsonProtocolClientResolvedConfig | config} for RestJsonProtocolClient's `config` shape.
+ *
+ * @throws {@link RestJsonProtocolServiceException}
+ * <p>Base exception class for all service exceptions from RestJsonProtocol service.</p>
+ *
+ */
 export class MalformedBooleanCommand extends $Command<
   MalformedBooleanCommandInput,
   MalformedBooleanCommandOutput,
@@ -71,6 +103,10 @@ export class MalformedBooleanCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RestJson",
+        operation: "MalformedBoolean",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

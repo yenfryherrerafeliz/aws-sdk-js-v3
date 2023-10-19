@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -55,10 +56,10 @@ export interface GetImportCommandOutput extends GetImportResponse, __MetadataBea
  * const response = await client.send(command);
  * // { // GetImportResponse
  * //   name: "STRING_VALUE",
- * //   resourceType: "STRING_VALUE",
- * //   mergeStrategy: "STRING_VALUE",
+ * //   resourceType: "BOT" || "INTENT" || "SLOT_TYPE",
+ * //   mergeStrategy: "OVERWRITE_LATEST" || "FAIL_ON_CONFLICT",
  * //   importId: "STRING_VALUE",
- * //   importStatus: "STRING_VALUE",
+ * //   importStatus: "IN_PROGRESS" || "COMPLETE" || "FAILED",
  * //   failureReason: [ // StringList
  * //     "STRING_VALUE",
  * //   ],
@@ -140,6 +141,10 @@ export class GetImportCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "GetImport",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,9 +11,15 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
-import { UpdateUserSettingsRequest, UpdateUserSettingsResponse } from "../models/models_0";
+import {
+  UpdateUserSettingsRequest,
+  UpdateUserSettingsRequestFilterSensitiveLog,
+  UpdateUserSettingsResponse,
+  UpdateUserSettingsResponseFilterSensitiveLog,
+} from "../models/models_0";
 import { de_UpdateUserSettingsCommand, se_UpdateUserSettingsCommand } from "../protocols/Aws_restJson1";
 import { ServiceInputTypes, ServiceOutputTypes, WorkSpacesWebClientResolvedConfig } from "../WorkSpacesWebClient";
 
@@ -53,6 +59,22 @@ export interface UpdateUserSettingsCommandOutput extends UpdateUserSettingsRespo
  *   disconnectTimeoutInMinutes: Number("int"),
  *   idleDisconnectTimeoutInMinutes: Number("int"),
  *   clientToken: "STRING_VALUE",
+ *   cookieSynchronizationConfiguration: { // CookieSynchronizationConfiguration
+ *     allowlist: [ // CookieSpecifications // required
+ *       { // CookieSpecification
+ *         domain: "STRING_VALUE", // required
+ *         name: "STRING_VALUE",
+ *         path: "STRING_VALUE",
+ *       },
+ *     ],
+ *     blocklist: [
+ *       {
+ *         domain: "STRING_VALUE", // required
+ *         name: "STRING_VALUE",
+ *         path: "STRING_VALUE",
+ *       },
+ *     ],
+ *   },
  * };
  * const command = new UpdateUserSettingsCommand(input);
  * const response = await client.send(command);
@@ -69,6 +91,22 @@ export interface UpdateUserSettingsCommandOutput extends UpdateUserSettingsRespo
  * //     printAllowed: "STRING_VALUE",
  * //     disconnectTimeoutInMinutes: Number("int"),
  * //     idleDisconnectTimeoutInMinutes: Number("int"),
+ * //     cookieSynchronizationConfiguration: { // CookieSynchronizationConfiguration
+ * //       allowlist: [ // CookieSpecifications // required
+ * //         { // CookieSpecification
+ * //           domain: "STRING_VALUE", // required
+ * //           name: "STRING_VALUE",
+ * //           path: "STRING_VALUE",
+ * //         },
+ * //       ],
+ * //       blocklist: [
+ * //         {
+ * //           domain: "STRING_VALUE", // required
+ * //           name: "STRING_VALUE",
+ * //           path: "STRING_VALUE",
+ * //         },
+ * //       ],
+ * //     },
  * //   },
  * // };
  *
@@ -147,8 +185,12 @@ export class UpdateUserSettingsCommand extends $Command<
       logger,
       clientName,
       commandName,
-      inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      inputFilterSensitiveLog: UpdateUserSettingsRequestFilterSensitiveLog,
+      outputFilterSensitiveLog: UpdateUserSettingsResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSErmineControlPlaneService",
+        operation: "UpdateUserSettings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

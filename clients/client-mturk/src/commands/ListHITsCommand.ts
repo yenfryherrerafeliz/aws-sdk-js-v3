@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListHITsRequest, ListHITsResponse } from "../models/models_0";
@@ -69,7 +70,7 @@ export interface ListHITsCommandOutput extends ListHITsResponse, __MetadataBeare
  * //       Description: "STRING_VALUE",
  * //       Question: "STRING_VALUE",
  * //       Keywords: "STRING_VALUE",
- * //       HITStatus: "STRING_VALUE",
+ * //       HITStatus: "Assignable" || "Unassignable" || "Reviewable" || "Reviewing" || "Disposed",
  * //       MaxAssignments: Number("int"),
  * //       Reward: "STRING_VALUE",
  * //       AutoApprovalDelayInSeconds: Number("long"),
@@ -79,7 +80,7 @@ export interface ListHITsCommandOutput extends ListHITsResponse, __MetadataBeare
  * //       QualificationRequirements: [ // QualificationRequirementList
  * //         { // QualificationRequirement
  * //           QualificationTypeId: "STRING_VALUE", // required
- * //           Comparator: "STRING_VALUE", // required
+ * //           Comparator: "LessThan" || "LessThanOrEqualTo" || "GreaterThan" || "GreaterThanOrEqualTo" || "EqualTo" || "NotEqualTo" || "Exists" || "DoesNotExist" || "In" || "NotIn", // required
  * //           IntegerValues: [ // IntegerList
  * //             Number("int"),
  * //           ],
@@ -90,10 +91,10 @@ export interface ListHITsCommandOutput extends ListHITsResponse, __MetadataBeare
  * //             },
  * //           ],
  * //           RequiredToPreview: true || false,
- * //           ActionsGuarded: "STRING_VALUE",
+ * //           ActionsGuarded: "Accept" || "PreviewAndAccept" || "DiscoverPreviewAndAccept",
  * //         },
  * //       ],
- * //       HITReviewStatus: "STRING_VALUE",
+ * //       HITReviewStatus: "NotReviewed" || "MarkedForReview" || "ReviewedAppropriate" || "ReviewedInappropriate",
  * //       NumberOfAssignmentsPending: Number("int"),
  * //       NumberOfAssignmentsAvailable: Number("int"),
  * //       NumberOfAssignmentsCompleted: Number("int"),
@@ -163,6 +164,10 @@ export class ListHITsCommand extends $Command<ListHITsCommandInput, ListHITsComm
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MTurkRequesterServiceV20170117",
+        operation: "ListHITs",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

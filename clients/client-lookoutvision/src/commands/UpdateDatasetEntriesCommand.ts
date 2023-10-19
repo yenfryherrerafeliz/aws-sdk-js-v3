@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutVisionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutVisionClient";
@@ -41,16 +42,12 @@ export interface UpdateDatasetEntriesCommandOutput extends UpdateDatasetEntriesR
  *          <p>To update an existing JSON Line, use the <code>source-ref</code> field to identify the JSON Line. The JSON line
  *          that you supply replaces the existing JSON line. Any existing annotations that are not in the new JSON line are removed from the dataset.
  *       </p>
- *
- *
  *          <p>For more information, see
  *          <i>Defining JSON lines for anomaly classification</i> in the  Amazon Lookout for Vision Developer Guide. </p>
- *
  *          <note>
  *             <p>The images you reference in the <code>source-ref</code> field of a JSON line, must be
  *       in the same S3 bucket as the existing images in the dataset. </p>
  *          </note>
- *
  *          <p>Updating a dataset might take a while to complete. To check the current status, call <a>DescribeDataset</a> and
  *          check the <code>Status</code> field in the response.</p>
  *          <p>This operation requires permissions to perform the
@@ -154,6 +151,10 @@ export class UpdateDatasetEntriesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutVisionService",
+        operation: "UpdateDatasetEntries",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

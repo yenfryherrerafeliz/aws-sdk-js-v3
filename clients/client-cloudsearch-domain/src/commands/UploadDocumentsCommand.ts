@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
   StreamingBlobPayloadInputTypes,
 } from "@smithy/types";
 
@@ -60,7 +61,7 @@ export interface UploadDocumentsCommandOutput extends UploadDocumentsResponse, _
  * const client = new CloudSearchDomainClient(config);
  * const input = { // UploadDocumentsRequest
  *   documents: "STREAMING_BLOB_VALUE", // required
- *   contentType: "STRING_VALUE", // required
+ *   contentType: "application/json" || "application/xml", // required
  * };
  * const command = new UploadDocumentsCommand(input);
  * const response = await client.send(command);
@@ -140,6 +141,10 @@ export class UploadDocumentsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: UploadDocumentsRequestFilterSensitiveLog,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonCloudSearch2013",
+        operation: "UploadDocuments",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IoTClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IoTClient";
@@ -45,7 +46,7 @@ export interface ListV2LoggingLevelsCommandOutput extends ListV2LoggingLevelsRes
  * // const { IoTClient, ListV2LoggingLevelsCommand } = require("@aws-sdk/client-iot"); // CommonJS import
  * const client = new IoTClient(config);
  * const input = { // ListV2LoggingLevelsRequest
- *   targetType: "DEFAULT" || "THING_GROUP" || "CLIENT_ID" || "SOURCE_IP" || "PRINCIPAL_ID",
+ *   targetType: "DEFAULT" || "THING_GROUP" || "CLIENT_ID" || "SOURCE_IP" || "PRINCIPAL_ID" || "EVENT_TYPE" || "DEVICE_DEFENDER",
  *   nextToken: "STRING_VALUE",
  *   maxResults: Number("int"),
  * };
@@ -55,7 +56,7 @@ export interface ListV2LoggingLevelsCommandOutput extends ListV2LoggingLevelsRes
  * //   logTargetConfigurations: [ // LogTargetConfigurations
  * //     { // LogTargetConfiguration
  * //       logTarget: { // LogTarget
- * //         targetType: "DEFAULT" || "THING_GROUP" || "CLIENT_ID" || "SOURCE_IP" || "PRINCIPAL_ID", // required
+ * //         targetType: "DEFAULT" || "THING_GROUP" || "CLIENT_ID" || "SOURCE_IP" || "PRINCIPAL_ID" || "EVENT_TYPE" || "DEVICE_DEFENDER", // required
  * //         targetName: "STRING_VALUE",
  * //       },
  * //       logLevel: "DEBUG" || "INFO" || "ERROR" || "WARN" || "DISABLED",
@@ -138,6 +139,10 @@ export class ListV2LoggingLevelsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSIotService",
+        operation: "ListV2LoggingLevels",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

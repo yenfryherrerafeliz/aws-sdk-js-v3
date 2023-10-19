@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -54,7 +55,6 @@ export interface DeleteBotCommandOutput extends __MetadataBearer {}
  *       delete the alias. If you get the same exception again, delete the
  *       referring alias until the <code>DeleteBot</code> operation is
  *       successful.</p>
- *
  *          <p>This operation requires permissions for the
  *         <code>lex:DeleteBot</code> action.</p>
  * @example
@@ -167,6 +167,10 @@ export class DeleteBotCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "DeleteBot",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

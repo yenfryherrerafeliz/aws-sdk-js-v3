@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListReviewPolicyResultsForHITRequest, ListReviewPolicyResultsForHITResponse } from "../models/models_0";
@@ -57,7 +58,7 @@ export interface ListReviewPolicyResultsForHITCommandOutput
  * const input = { // ListReviewPolicyResultsForHITRequest
  *   HITId: "STRING_VALUE", // required
  *   PolicyLevels: [ // ReviewPolicyLevelList
- *     "STRING_VALUE",
+ *     "Assignment" || "HIT",
  *   ],
  *   RetrieveActions: true || false,
  *   RetrieveResults: true || false,
@@ -123,7 +124,7 @@ export interface ListReviewPolicyResultsForHITCommandOutput
  * //         ActionName: "STRING_VALUE",
  * //         TargetId: "STRING_VALUE",
  * //         TargetType: "STRING_VALUE",
- * //         Status: "STRING_VALUE",
+ * //         Status: "Intended" || "Succeeded" || "Failed" || "Cancelled",
  * //         CompleteTime: new Date("TIMESTAMP"),
  * //         Result: "STRING_VALUE",
  * //         ErrorCode: "STRING_VALUE",
@@ -147,7 +148,7 @@ export interface ListReviewPolicyResultsForHITCommandOutput
  * //         ActionName: "STRING_VALUE",
  * //         TargetId: "STRING_VALUE",
  * //         TargetType: "STRING_VALUE",
- * //         Status: "STRING_VALUE",
+ * //         Status: "Intended" || "Succeeded" || "Failed" || "Cancelled",
  * //         CompleteTime: new Date("TIMESTAMP"),
  * //         Result: "STRING_VALUE",
  * //         ErrorCode: "STRING_VALUE",
@@ -225,6 +226,10 @@ export class ListReviewPolicyResultsForHITCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MTurkRequesterServiceV20170117",
+        operation: "ListReviewPolicyResultsForHIT",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { IVSRealTimeClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../IVSRealTimeClient";
@@ -60,6 +61,12 @@ export interface GetParticipantCommandOutput extends GetParticipantResponse, __M
  * //       "<keys>": "STRING_VALUE",
  * //     },
  * //     published: true || false,
+ * //     ispName: "STRING_VALUE",
+ * //     osName: "STRING_VALUE",
+ * //     osVersion: "STRING_VALUE",
+ * //     browserName: "STRING_VALUE",
+ * //     browserVersion: "STRING_VALUE",
+ * //     sdkVersion: "STRING_VALUE",
  * //   },
  * // };
  *
@@ -134,6 +141,10 @@ export class GetParticipantCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonInteractiveVideoServiceRealTime",
+        operation: "GetParticipant",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

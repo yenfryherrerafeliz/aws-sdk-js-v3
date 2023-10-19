@@ -11,10 +11,11 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ConnectClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ConnectClient";
-import { DisassociatePhoneNumberContactFlowRequest } from "../models/models_0";
+import { DisassociatePhoneNumberContactFlowRequest } from "../models/models_1";
 import {
   de_DisassociatePhoneNumberContactFlowCommand,
   se_DisassociatePhoneNumberContactFlowCommand,
@@ -141,6 +142,10 @@ export class DisassociatePhoneNumberContactFlowCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonConnectService",
+        operation: "DisassociatePhoneNumberContactFlow",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

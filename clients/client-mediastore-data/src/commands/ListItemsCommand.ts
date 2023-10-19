@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MediaStoreDataClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaStoreDataClient";
@@ -55,7 +56,7 @@ export interface ListItemsCommandOutput extends ListItemsResponse, __MetadataBea
  * //   Items: [ // ItemList
  * //     { // Item
  * //       Name: "STRING_VALUE",
- * //       Type: "STRING_VALUE",
+ * //       Type: "OBJECT" || "FOLDER",
  * //       ETag: "STRING_VALUE",
  * //       LastModified: new Date("TIMESTAMP"),
  * //       ContentType: "STRING_VALUE",
@@ -131,6 +132,10 @@ export class ListItemsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaStoreObject_20170901",
+        operation: "ListItems",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

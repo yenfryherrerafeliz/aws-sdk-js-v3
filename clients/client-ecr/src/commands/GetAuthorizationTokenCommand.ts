@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -39,7 +40,7 @@ export interface GetAuthorizationTokenCommandOutput extends GetAuthorizationToke
  * <p>Retrieves an authorization token. An authorization token represents your IAM
  *             authentication credentials and can be used to access any Amazon ECR registry that your IAM
  *             principal has access to. The authorization token is valid for 12 hours.</p>
- *         <p>The <code>authorizationToken</code> returned is a base64 encoded string that can be
+ *          <p>The <code>authorizationToken</code> returned is a base64 encoded string that can be
  *             decoded and used in a <code>docker login</code> command to authenticate to a registry.
  *             The CLI offers an <code>get-login-password</code> command that simplifies the login
  *             process. For more information, see <a href="https://docs.aws.amazon.com/AmazonECR/latest/userguide/Registries.html#registry_auth">Registry
@@ -95,8 +96,8 @@ export interface GetAuthorizationTokenCommandOutput extends GetAuthorizationToke
  * {
  *   "authorizationData": [
  *     {
- *       "authorizationToken": "QVdTOkN...",
- *       "expiresAt": "1470951892432",
+ *       "authorizationToken": "QVdTOkNEXAMPLE",
+ *       "expiresAt": "2022-05-17T06:56:13.652000+00:00",
  *       "proxyEndpoint": "https://012345678901.dkr.ecr.us-west-2.amazonaws.com"
  *     }
  *   ]
@@ -156,6 +157,10 @@ export class GetAuthorizationTokenCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "GetAuthorizationToken",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

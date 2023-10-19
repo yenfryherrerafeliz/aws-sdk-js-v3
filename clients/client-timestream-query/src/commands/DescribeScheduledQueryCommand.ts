@@ -12,6 +12,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -59,7 +60,7 @@ export interface DescribeScheduledQueryCommandOutput extends DescribeScheduledQu
  * //     Name: "STRING_VALUE", // required
  * //     QueryString: "STRING_VALUE", // required
  * //     CreationTime: new Date("TIMESTAMP"),
- * //     State: "STRING_VALUE", // required
+ * //     State: "ENABLED" || "DISABLED", // required
  * //     PreviousInvocationTime: new Date("TIMESTAMP"),
  * //     NextInvocationTime: new Date("TIMESTAMP"),
  * //     ScheduleConfiguration: { // ScheduleConfiguration
@@ -78,7 +79,7 @@ export interface DescribeScheduledQueryCommandOutput extends DescribeScheduledQu
  * //         DimensionMappings: [ // DimensionMappingList // required
  * //           { // DimensionMapping
  * //             Name: "STRING_VALUE", // required
- * //             DimensionValueType: "STRING_VALUE", // required
+ * //             DimensionValueType: "VARCHAR", // required
  * //           },
  * //         ],
  * //         MultiMeasureMappings: { // MultiMeasureMappings
@@ -87,7 +88,7 @@ export interface DescribeScheduledQueryCommandOutput extends DescribeScheduledQu
  * //             { // MultiMeasureAttributeMapping
  * //               SourceColumn: "STRING_VALUE", // required
  * //               TargetMultiMeasureAttributeName: "STRING_VALUE",
- * //               MeasureValueType: "STRING_VALUE", // required
+ * //               MeasureValueType: "BIGINT" || "BOOLEAN" || "DOUBLE" || "VARCHAR" || "TIMESTAMP", // required
  * //             },
  * //           ],
  * //         },
@@ -96,12 +97,12 @@ export interface DescribeScheduledQueryCommandOutput extends DescribeScheduledQu
  * //             MeasureName: "STRING_VALUE",
  * //             SourceColumn: "STRING_VALUE",
  * //             TargetMeasureName: "STRING_VALUE",
- * //             MeasureValueType: "STRING_VALUE", // required
+ * //             MeasureValueType: "BIGINT" || "BOOLEAN" || "DOUBLE" || "VARCHAR" || "MULTI", // required
  * //             MultiMeasureAttributeMappings: [
  * //               {
  * //                 SourceColumn: "STRING_VALUE", // required
  * //                 TargetMultiMeasureAttributeName: "STRING_VALUE",
- * //                 MeasureValueType: "STRING_VALUE", // required
+ * //                 MeasureValueType: "BIGINT" || "BOOLEAN" || "DOUBLE" || "VARCHAR" || "TIMESTAMP", // required
  * //               },
  * //             ],
  * //           },
@@ -115,13 +116,13 @@ export interface DescribeScheduledQueryCommandOutput extends DescribeScheduledQu
  * //       S3Configuration: { // S3Configuration
  * //         BucketName: "STRING_VALUE", // required
  * //         ObjectKeyPrefix: "STRING_VALUE",
- * //         EncryptionOption: "STRING_VALUE",
+ * //         EncryptionOption: "SSE_S3" || "SSE_KMS",
  * //       },
  * //     },
  * //     LastRunSummary: { // ScheduledQueryRunSummary
  * //       InvocationTime: new Date("TIMESTAMP"),
  * //       TriggerTime: new Date("TIMESTAMP"),
- * //       RunStatus: "STRING_VALUE",
+ * //       RunStatus: "AUTO_TRIGGER_SUCCESS" || "AUTO_TRIGGER_FAILURE" || "MANUAL_TRIGGER_SUCCESS" || "MANUAL_TRIGGER_FAILURE",
  * //       ExecutionStats: { // ExecutionStats
  * //         ExecutionTimeInMillis: Number("long"),
  * //         DataWrites: Number("long"),
@@ -141,7 +142,7 @@ export interface DescribeScheduledQueryCommandOutput extends DescribeScheduledQu
  * //       {
  * //         InvocationTime: new Date("TIMESTAMP"),
  * //         TriggerTime: new Date("TIMESTAMP"),
- * //         RunStatus: "STRING_VALUE",
+ * //         RunStatus: "AUTO_TRIGGER_SUCCESS" || "AUTO_TRIGGER_FAILURE" || "MANUAL_TRIGGER_SUCCESS" || "MANUAL_TRIGGER_FAILURE",
  * //         ExecutionStats: {
  * //           ExecutionTimeInMillis: Number("long"),
  * //           DataWrites: Number("long"),
@@ -246,6 +247,10 @@ export class DescribeScheduledQueryCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: DescribeScheduledQueryResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "Timestream_20181101",
+        operation: "DescribeScheduledQuery",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

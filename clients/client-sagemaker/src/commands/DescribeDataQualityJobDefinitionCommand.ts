@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeDataQualityJobDefinitionRequest, DescribeDataQualityJobDefinitionResponse } from "../models/models_2";
@@ -92,6 +93,7 @@ export interface DescribeDataQualityJobDefinitionCommandOutput
  * //       ProbabilityThresholdAttribute: Number("double"),
  * //       StartTimeOffset: "STRING_VALUE",
  * //       EndTimeOffset: "STRING_VALUE",
+ * //       ExcludeFeaturesAttribute: "STRING_VALUE",
  * //     },
  * //     BatchTransformInput: { // BatchTransformInput
  * //       DataCapturedDestinationS3Uri: "STRING_VALUE", // required
@@ -113,6 +115,7 @@ export interface DescribeDataQualityJobDefinitionCommandOutput
  * //       ProbabilityThresholdAttribute: Number("double"),
  * //       StartTimeOffset: "STRING_VALUE",
  * //       EndTimeOffset: "STRING_VALUE",
+ * //       ExcludeFeaturesAttribute: "STRING_VALUE",
  * //     },
  * //   },
  * //   DataQualityJobOutputConfig: { // MonitoringOutputConfig
@@ -218,6 +221,10 @@ export class DescribeDataQualityJobDefinitionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SageMaker",
+        operation: "DescribeDataQualityJobDefinition",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

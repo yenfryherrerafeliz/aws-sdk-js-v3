@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeDeploymentsRequest, DescribeDeploymentsResult } from "../models/models_0";
@@ -72,7 +73,7 @@ export interface DescribeDeploymentsCommandOutput extends DescribeDeploymentsRes
  * //       IamUserArn: "STRING_VALUE",
  * //       Comment: "STRING_VALUE",
  * //       Command: { // DeploymentCommand
- * //         Name: "STRING_VALUE", // required
+ * //         Name: "install_dependencies" || "update_dependencies" || "update_custom_cookbooks" || "execute_recipes" || "configure" || "setup" || "deploy" || "rollback" || "start" || "stop" || "restart" || "undeploy", // required
  * //         Args: { // DeploymentCommandArgs
  * //           "<keys>": [ // Strings
  * //             "STRING_VALUE",
@@ -156,6 +157,10 @@ export class DescribeDeploymentsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "OpsWorks_20130218",
+        operation: "DescribeDeployments",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

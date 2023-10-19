@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListTargetGroupsRequest, ListTargetGroupsResponse } from "../models/models_0";
@@ -69,6 +70,7 @@ export interface ListTargetGroupsCommandOutput extends ListTargetGroupsResponse,
  * //       serviceArns: [ // ServiceArnList
  * //         "STRING_VALUE",
  * //       ],
+ * //       lambdaEventStructureVersion: "STRING_VALUE",
  * //     },
  * //   ],
  * //   nextToken: "STRING_VALUE",
@@ -149,6 +151,10 @@ export class ListTargetGroupsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MercuryControlPlane",
+        operation: "ListTargetGroups",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EntityResolutionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EntityResolutionClient";
@@ -36,8 +37,7 @@ export interface UntagResourceCommandOutput extends UntagResourceOutput, __Metad
 
 /**
  * @public
- * <p>Removes one or more tags from the specified AWS Entity Resolution resource. In Entity
- *          Resolution, <code>SchemaMapping</code>, and <code>MatchingWorkflow</code> can be
+ * <p>Removes one or more tags from the specified Entity Resolution resource. In Entity Resolution, <code>SchemaMapping</code>, and <code>MatchingWorkflow</code> can be
  *          tagged.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -64,7 +64,8 @@ export interface UntagResourceCommandOutput extends UntagResourceOutput, __Metad
  * @see {@link EntityResolutionClientResolvedConfig | config} for EntityResolutionClient's `config` shape.
  *
  * @throws {@link InternalServerException} (server fault)
- *  <p>This exception occurs when there is an internal failure in the AWS Entity Resolution service. <code>HTTP Status Code: 500</code>
+ *  <p>This exception occurs when there is an internal failure in the Entity Resolution
+ *          service. <code>HTTP Status Code: 500</code>
  *          </p>
  *
  * @throws {@link ResourceNotFoundException} (client fault)
@@ -123,6 +124,10 @@ export class UntagResourceCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSVeniceService",
+        operation: "UntagResource",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

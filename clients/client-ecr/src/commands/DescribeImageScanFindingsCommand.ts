@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ECRClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ECRClient";
@@ -63,7 +64,7 @@ export interface DescribeImageScanFindingsCommandOutput extends DescribeImageSca
  * //     imageTag: "STRING_VALUE",
  * //   },
  * //   imageScanStatus: { // ImageScanStatus
- * //     status: "STRING_VALUE",
+ * //     status: "IN_PROGRESS" || "COMPLETE" || "FAILED" || "UNSUPPORTED_IMAGE" || "ACTIVE" || "PENDING" || "SCAN_ELIGIBILITY_EXPIRED" || "FINDINGS_UNAVAILABLE",
  * //     description: "STRING_VALUE",
  * //   },
  * //   imageScanFindings: { // ImageScanFindings
@@ -77,7 +78,7 @@ export interface DescribeImageScanFindingsCommandOutput extends DescribeImageSca
  * //         name: "STRING_VALUE",
  * //         description: "STRING_VALUE",
  * //         uri: "STRING_VALUE",
- * //         severity: "STRING_VALUE",
+ * //         severity: "INFORMATIONAL" || "LOW" || "MEDIUM" || "HIGH" || "CRITICAL" || "UNDEFINED",
  * //         attributes: [ // AttributeList
  * //           { // Attribute
  * //             key: "STRING_VALUE", // required
@@ -265,6 +266,10 @@ export class DescribeImageScanFindingsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AmazonEC2ContainerRegistry_V20150921",
+        operation: "DescribeImageScanFindings",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

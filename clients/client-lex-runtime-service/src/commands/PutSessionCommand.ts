@@ -12,6 +12,7 @@ import {
   MiddlewareStack,
   SdkStreamSerdeContext as __SdkStreamSerdeContext,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
   StreamingBlobPayloadOutputTypes,
 } from "@smithy/types";
 
@@ -68,24 +69,24 @@ export interface PutSessionCommandOutput extends Omit<PutSessionResponse, "audio
  *     "<keys>": "STRING_VALUE",
  *   },
  *   dialogAction: { // DialogAction
- *     type: "STRING_VALUE", // required
+ *     type: "ElicitIntent" || "ConfirmIntent" || "ElicitSlot" || "Close" || "Delegate", // required
  *     intentName: "STRING_VALUE",
  *     slots: {
  *       "<keys>": "STRING_VALUE",
  *     },
  *     slotToElicit: "STRING_VALUE",
- *     fulfillmentState: "STRING_VALUE",
+ *     fulfillmentState: "Fulfilled" || "Failed" || "ReadyForFulfillment",
  *     message: "STRING_VALUE",
- *     messageFormat: "STRING_VALUE",
+ *     messageFormat: "PlainText" || "CustomPayload" || "SSML" || "Composite",
  *   },
  *   recentIntentSummaryView: [ // IntentSummaryList
  *     { // IntentSummary
  *       intentName: "STRING_VALUE",
  *       checkpointLabel: "STRING_VALUE",
  *       slots: "<StringMap>",
- *       confirmationStatus: "STRING_VALUE",
- *       dialogActionType: "STRING_VALUE", // required
- *       fulfillmentState: "STRING_VALUE",
+ *       confirmationStatus: "None" || "Confirmed" || "Denied",
+ *       dialogActionType: "ElicitIntent" || "ConfirmIntent" || "ElicitSlot" || "Close" || "Delegate", // required
+ *       fulfillmentState: "Fulfilled" || "Failed" || "ReadyForFulfillment",
  *       slotToElicit: "STRING_VALUE",
  *     },
  *   ],
@@ -112,8 +113,8 @@ export interface PutSessionCommandOutput extends Omit<PutSessionResponse, "audio
  * //   sessionAttributes: "STRING_VALUE",
  * //   message: "STRING_VALUE",
  * //   encodedMessage: "STRING_VALUE",
- * //   messageFormat: "STRING_VALUE",
- * //   dialogState: "STRING_VALUE",
+ * //   messageFormat: "PlainText" || "CustomPayload" || "SSML" || "Composite",
+ * //   dialogState: "ElicitIntent" || "ConfirmIntent" || "ElicitSlot" || "Fulfilled" || "ReadyForFulfillment" || "Failed",
  * //   slotToElicit: "STRING_VALUE",
  * //   audioStream: "STREAMING_BLOB_VALUE",
  * //   sessionId: "STRING_VALUE",
@@ -225,6 +226,10 @@ export class PutSessionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: PutSessionRequestFilterSensitiveLog,
       outputFilterSensitiveLog: PutSessionResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseRunTimeService",
+        operation: "PutSession",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

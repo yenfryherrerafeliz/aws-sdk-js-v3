@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MediaStoreClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MediaStoreClient";
@@ -59,7 +60,7 @@ export interface GetCorsPolicyCommandOutput extends GetCorsPolicyOutput, __Metad
  * //         "STRING_VALUE",
  * //       ],
  * //       AllowedMethods: [ // AllowedMethods
- * //         "STRING_VALUE",
+ * //         "PUT" || "GET" || "DELETE" || "HEAD",
  * //       ],
  * //       AllowedHeaders: [ // AllowedHeaders // required
  * //         "STRING_VALUE",
@@ -145,6 +146,10 @@ export class GetCorsPolicyCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "MediaStore_20170901",
+        operation: "GetCorsPolicy",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

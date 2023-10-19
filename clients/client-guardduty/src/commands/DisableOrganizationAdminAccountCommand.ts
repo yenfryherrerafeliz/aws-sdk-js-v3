@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { GuardDutyClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../GuardDutyClient";
@@ -41,8 +42,9 @@ export interface DisableOrganizationAdminAccountCommandOutput
 
 /**
  * @public
- * <p>Disables an Amazon Web Services account within the Organization as the GuardDuty delegated
- *       administrator.</p>
+ * <p>Removes the existing GuardDuty delegated
+ *     administrator of the organization. Only the organization's management account can run this
+ *       API operation.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -124,6 +126,10 @@ export class DisableOrganizationAdminAccountCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "GuardDutyAPIService",
+        operation: "DisableOrganizationAdminAccount",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

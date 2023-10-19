@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateRuleGroupRequest, CreateRuleGroupResponse } from "../models/models_0";
@@ -110,6 +111,9 @@ export interface CreateRuleGroupCommandOutput extends CreateRuleGroupResponse, _
  *             HeaderOrder: { // HeaderOrder
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *             },
+ *             JA3Fingerprint: { // JA3Fingerprint
+ *               FallbackBehavior: "MATCH" || "NO_MATCH", // required
+ *             },
  *           },
  *           TextTransformations: [ // TextTransformations // required
  *             { // TextTransformation
@@ -174,6 +178,9 @@ export interface CreateRuleGroupCommandOutput extends CreateRuleGroupResponse, _
  *             HeaderOrder: {
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *             },
+ *             JA3Fingerprint: {
+ *               FallbackBehavior: "MATCH" || "NO_MATCH", // required
+ *             },
  *           },
  *           TextTransformations: [ // required
  *             {
@@ -234,6 +241,9 @@ export interface CreateRuleGroupCommandOutput extends CreateRuleGroupResponse, _
  *             HeaderOrder: {
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
  *             },
+ *             JA3Fingerprint: {
+ *               FallbackBehavior: "MATCH" || "NO_MATCH", // required
+ *             },
  *           },
  *           TextTransformations: [ // required
  *             {
@@ -288,6 +298,9 @@ export interface CreateRuleGroupCommandOutput extends CreateRuleGroupResponse, _
  *             },
  *             HeaderOrder: {
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
+ *             },
+ *             JA3Fingerprint: {
+ *               FallbackBehavior: "MATCH" || "NO_MATCH", // required
  *             },
  *           },
  *           ComparisonOperator: "EQ" || "NE" || "LE" || "LT" || "GE" || "GT", // required
@@ -430,6 +443,9 @@ export interface CreateRuleGroupCommandOutput extends CreateRuleGroupResponse, _
  *             },
  *             HeaderOrder: {
  *               OversizeHandling: "CONTINUE" || "MATCH" || "NO_MATCH", // required
+ *             },
+ *             JA3Fingerprint: {
+ *               FallbackBehavior: "MATCH" || "NO_MATCH", // required
  *             },
  *           },
  *           TextTransformations: [ // required
@@ -594,6 +610,7 @@ export interface CreateRuleGroupCommandOutput extends CreateRuleGroupResponse, _
  *                   },
  *                   AWSManagedRulesBotControlRuleSet: { // AWSManagedRulesBotControlRuleSet
  *                     InspectionLevel: "COMMON" || "TARGETED", // required
+ *                     EnableMachineLearning: true || false,
  *                   },
  *                   AWSManagedRulesATPRuleSet: { // AWSManagedRulesATPRuleSet
  *                     LoginPath: "STRING_VALUE", // required
@@ -810,6 +827,7 @@ export interface CreateRuleGroupCommandOutput extends CreateRuleGroupResponse, _
  *               PasswordField: "<PasswordField>",
  *               AWSManagedRulesBotControlRuleSet: {
  *                 InspectionLevel: "COMMON" || "TARGETED", // required
+ *                 EnableMachineLearning: true || false,
  *               },
  *               AWSManagedRulesATPRuleSet: {
  *                 LoginPath: "STRING_VALUE", // required
@@ -1140,6 +1158,10 @@ export class CreateRuleGroupCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_20190729",
+        operation: "CreateRuleGroup",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

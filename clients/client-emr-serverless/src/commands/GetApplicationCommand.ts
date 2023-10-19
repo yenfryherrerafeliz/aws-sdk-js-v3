@@ -11,10 +11,15 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EMRServerlessClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EMRServerlessClient";
-import { GetApplicationRequest, GetApplicationResponse } from "../models/models_0";
+import {
+  GetApplicationRequest,
+  GetApplicationResponse,
+  GetApplicationResponseFilterSensitiveLog,
+} from "../models/models_0";
 import { de_GetApplicationCommand, se_GetApplicationCommand } from "../protocols/Aws_restJson1";
 
 /**
@@ -105,6 +110,44 @@ export interface GetApplicationCommandOutput extends GetApplicationResponse, __M
  * //         },
  * //       },
  * //     },
+ * //     runtimeConfiguration: [ // ConfigurationList
+ * //       { // Configuration
+ * //         classification: "STRING_VALUE", // required
+ * //         properties: { // SensitivePropertiesMap
+ * //           "<keys>": "STRING_VALUE",
+ * //         },
+ * //         configurations: [
+ * //           {
+ * //             classification: "STRING_VALUE", // required
+ * //             properties: {
+ * //               "<keys>": "STRING_VALUE",
+ * //             },
+ * //             configurations: "<ConfigurationList>",
+ * //           },
+ * //         ],
+ * //       },
+ * //     ],
+ * //     monitoringConfiguration: { // MonitoringConfiguration
+ * //       s3MonitoringConfiguration: { // S3MonitoringConfiguration
+ * //         logUri: "STRING_VALUE",
+ * //         encryptionKeyArn: "STRING_VALUE",
+ * //       },
+ * //       managedPersistenceMonitoringConfiguration: { // ManagedPersistenceMonitoringConfiguration
+ * //         enabled: true || false,
+ * //         encryptionKeyArn: "STRING_VALUE",
+ * //       },
+ * //       cloudWatchLoggingConfiguration: { // CloudWatchLoggingConfiguration
+ * //         enabled: true || false, // required
+ * //         logGroupName: "STRING_VALUE",
+ * //         logStreamNamePrefix: "STRING_VALUE",
+ * //         encryptionKeyArn: "STRING_VALUE",
+ * //         logTypes: { // LogTypeMap
+ * //           "<keys>": [ // LogTypeList
+ * //             "STRING_VALUE",
+ * //           ],
+ * //         },
+ * //       },
+ * //     },
  * //   },
  * // };
  *
@@ -179,7 +222,11 @@ export class GetApplicationCommand extends $Command<
       clientName,
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
-      outputFilterSensitiveLog: (_: any) => _,
+      outputFilterSensitiveLog: GetApplicationResponseFilterSensitiveLog,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AwsToledoWebService",
+        operation: "GetApplication",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

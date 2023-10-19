@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { EntityResolutionClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../EntityResolutionClient";
@@ -36,8 +37,8 @@ export interface DeleteMatchingWorkflowCommandOutput extends DeleteMatchingWorkf
 
 /**
  * @public
- * <p>Deletes the <code>MatchingWorkflow</code> with a given name. This operation will succeed even if a
- *          workflow with the given name does not exist.</p>
+ * <p>Deletes the <code>MatchingWorkflow</code> with a given name. This operation will succeed
+ *          even if a workflow with the given name does not exist.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -62,19 +63,23 @@ export interface DeleteMatchingWorkflowCommandOutput extends DeleteMatchingWorkf
  * @see {@link EntityResolutionClientResolvedConfig | config} for EntityResolutionClient's `config` shape.
  *
  * @throws {@link AccessDeniedException} (client fault)
- *  <p>You do not have sufficient access to perform this action. <code>HTTP Status Code: 403</code>
+ *  <p>You do not have sufficient access to perform this action. <code>HTTP Status Code:
+ *             403</code>
  *          </p>
  *
  * @throws {@link InternalServerException} (server fault)
- *  <p>This exception occurs when there is an internal failure in the AWS Entity Resolution service. <code>HTTP Status Code: 500</code>
+ *  <p>This exception occurs when there is an internal failure in the Entity Resolution
+ *          service. <code>HTTP Status Code: 500</code>
  *          </p>
  *
  * @throws {@link ThrottlingException} (client fault)
- *  <p>The request was denied due to request throttling. <code>HTTP Status Code: 429</code>
+ *  <p>The request was denied due to request throttling. <code>HTTP Status Code:
+ *          429</code>
  *          </p>
  *
  * @throws {@link ValidationException} (client fault)
- *  <p>The input fails to satisfy the constraints specified by AWS Entity Resolution. <code>HTTP Status Code: 400</code>
+ *  <p>The input fails to satisfy the constraints specified by Entity Resolution. <code>HTTP
+ *             Status Code: 400</code>
  *          </p>
  *
  * @throws {@link EntityResolutionServiceException}
@@ -131,6 +136,10 @@ export class DeleteMatchingWorkflowCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSVeniceService",
+        operation: "DeleteMatchingWorkflow",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

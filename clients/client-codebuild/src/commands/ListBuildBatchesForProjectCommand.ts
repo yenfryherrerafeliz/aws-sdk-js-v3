@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CodeBuildClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../CodeBuildClient";
@@ -46,10 +47,10 @@ export interface ListBuildBatchesForProjectCommandOutput extends ListBuildBatche
  * const input = { // ListBuildBatchesForProjectInput
  *   projectName: "STRING_VALUE",
  *   filter: { // BuildBatchFilter
- *     status: "STRING_VALUE",
+ *     status: "SUCCEEDED" || "FAILED" || "FAULT" || "TIMED_OUT" || "IN_PROGRESS" || "STOPPED",
  *   },
  *   maxResults: Number("int"),
- *   sortOrder: "STRING_VALUE",
+ *   sortOrder: "ASCENDING" || "DESCENDING",
  *   nextToken: "STRING_VALUE",
  * };
  * const command = new ListBuildBatchesForProjectCommand(input);
@@ -129,6 +130,10 @@ export class ListBuildBatchesForProjectCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "CodeBuild_20161006",
+        operation: "ListBuildBatchesForProject",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DeleteAccountAssignmentRequest, DeleteAccountAssignmentResponse } from "../models/models_0";
@@ -36,10 +37,11 @@ export interface DeleteAccountAssignmentCommandOutput extends DeleteAccountAssig
 
 /**
  * @public
- * <p>Deletes a principal's access from a specified AWS account using a specified permission
+ * <p>Deletes a principal's access from a specified Amazon Web Services account using a specified permission
  *       set.</p>
  *          <note>
- *             <p>After a successful response, call <code>DescribeAccountAssignmentCreationStatus</code> to describe the status of an assignment deletion request.</p>
+ *             <p>After a successful response, call <code>DescribeAccountAssignmentDeletionStatus</code> to
+ *         describe the status of an assignment deletion request.</p>
  *          </note>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -156,6 +158,10 @@ export class DeleteAccountAssignmentCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "SWBExternalService",
+        operation: "DeleteAccountAssignment",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

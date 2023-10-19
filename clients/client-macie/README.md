@@ -9,7 +9,6 @@ AWS SDK for JavaScript Macie Client for Node.js, Browser and React Native.
 <fullname>Amazon Macie Classic</fullname>
 
 <p>Amazon Macie Classic has been discontinued and is no longer available.</p>
-
 <p>A new Amazon Macie is now available with significant design improvements and additional
 features, at a lower price and in most Amazon Web Services Regions. We encourage you to take advantage of the
 new and improved features, and benefit from the reduced cost. To learn about features and pricing for the new Macie, see <a href="http://aws.amazon.com/macie/">Amazon Macie</a>. To learn how to use the new Macie, see the <a href="https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html">Amazon Macie User
@@ -30,16 +29,16 @@ using your favorite package manager:
 
 The AWS SDK is modulized by clients and commands.
 To send a request, you only need to import the `MacieClient` and
-the commands you need, for example `AssociateMemberAccountCommand`:
+the commands you need, for example `ListS3ResourcesCommand`:
 
 ```js
 // ES5 example
-const { MacieClient, AssociateMemberAccountCommand } = require("@aws-sdk/client-macie");
+const { MacieClient, ListS3ResourcesCommand } = require("@aws-sdk/client-macie");
 ```
 
 ```ts
 // ES6+ example
-import { MacieClient, AssociateMemberAccountCommand } from "@aws-sdk/client-macie";
+import { MacieClient, ListS3ResourcesCommand } from "@aws-sdk/client-macie";
 ```
 
 ### Usage
@@ -58,7 +57,7 @@ const client = new MacieClient({ region: "REGION" });
 const params = {
   /** input parameters */
 };
-const command = new AssociateMemberAccountCommand(params);
+const command = new ListS3ResourcesCommand(params);
 ```
 
 #### Async/await
@@ -137,7 +136,7 @@ const client = new AWS.Macie({ region: "REGION" });
 
 // async/await.
 try {
-  const data = await client.associateMemberAccount(params);
+  const data = await client.listS3Resources(params);
   // process data.
 } catch (error) {
   // error handling.
@@ -145,7 +144,7 @@ try {
 
 // Promises.
 client
-  .associateMemberAccount(params)
+  .listS3Resources(params)
   .then((data) => {
     // process data.
   })
@@ -154,7 +153,7 @@ client
   });
 
 // callbacks.
-client.associateMemberAccount(params, (err, data) => {
+client.listS3Resources(params, (err, data) => {
   // process err and data.
 });
 ```

@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { LookoutMetricsClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../LookoutMetricsClient";
@@ -49,7 +50,7 @@ export interface UpdateMetricSetCommandOutput extends UpdateMetricSetResponse, _
  *   MetricList: [ // MetricList
  *     { // Metric
  *       MetricName: "STRING_VALUE", // required
- *       AggregationFunction: "STRING_VALUE", // required
+ *       AggregationFunction: "AVG" || "SUM", // required
  *       Namespace: "STRING_VALUE",
  *     },
  *   ],
@@ -61,7 +62,7 @@ export interface UpdateMetricSetCommandOutput extends UpdateMetricSetResponse, _
  *   DimensionList: [ // DimensionList
  *     "STRING_VALUE",
  *   ],
- *   MetricSetFrequency: "STRING_VALUE",
+ *   MetricSetFrequency: "P1D" || "PT1H" || "PT10M" || "PT5M",
  *   MetricSource: { // MetricSource
  *     S3SourceConfig: { // S3SourceConfig
  *       RoleArn: "STRING_VALUE",
@@ -73,7 +74,7 @@ export interface UpdateMetricSetCommandOutput extends UpdateMetricSetResponse, _
  *       ],
  *       FileFormatDescriptor: { // FileFormatDescriptor
  *         CsvFormatDescriptor: { // CsvFormatDescriptor
- *           FileCompression: "STRING_VALUE",
+ *           FileCompression: "NONE" || "GZIP",
  *           Charset: "STRING_VALUE",
  *           ContainsHeader: true || false,
  *           Delimiter: "STRING_VALUE",
@@ -83,7 +84,7 @@ export interface UpdateMetricSetCommandOutput extends UpdateMetricSetResponse, _
  *           QuoteSymbol: "STRING_VALUE",
  *         },
  *         JsonFormatDescriptor: { // JsonFormatDescriptor
- *           FileCompression: "STRING_VALUE",
+ *           FileCompression: "NONE" || "GZIP",
  *           Charset: "STRING_VALUE",
  *         },
  *       },
@@ -150,7 +151,7 @@ export interface UpdateMetricSetCommandOutput extends UpdateMetricSetResponse, _
  *       FilterList: [ // FilterList
  *         { // Filter
  *           DimensionValue: "STRING_VALUE",
- *           FilterOperation: "STRING_VALUE",
+ *           FilterOperation: "EQUALS",
  *         },
  *       ],
  *     },
@@ -243,6 +244,10 @@ export class UpdateMetricSetCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "LookoutMetrics",
+        operation: "UpdateMetricSet",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

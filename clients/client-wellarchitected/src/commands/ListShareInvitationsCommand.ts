@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ListShareInvitationsInput, ListShareInvitationsOutput } from "../models/models_0";
@@ -36,7 +37,11 @@ export interface ListShareInvitationsCommandOutput extends ListShareInvitationsO
 
 /**
  * @public
- * <p>List  the workload invitations.</p>
+ * <p>List the share invitations.</p>
+ *          <p>
+ *             <code>WorkloadNamePrefix</code>, <code>LensNamePrefix</code>,
+ *                 <code>ProfileNamePrefix</code>, and <code>TemplateNamePrefix</code> are mutually
+ *             exclusive. Use the parameter that matches your <code>ShareResourceType</code>.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
  * ```javascript
@@ -46,10 +51,11 @@ export interface ListShareInvitationsCommandOutput extends ListShareInvitationsO
  * const input = { // ListShareInvitationsInput
  *   WorkloadNamePrefix: "STRING_VALUE",
  *   LensNamePrefix: "STRING_VALUE",
- *   ShareResourceType: "WORKLOAD" || "LENS" || "PROFILE",
+ *   ShareResourceType: "WORKLOAD" || "LENS" || "PROFILE" || "TEMPLATE",
  *   NextToken: "STRING_VALUE",
  *   MaxResults: Number("int"),
  *   ProfileNamePrefix: "STRING_VALUE",
+ *   TemplateNamePrefix: "STRING_VALUE",
  * };
  * const command = new ListShareInvitationsCommand(input);
  * const response = await client.send(command);
@@ -60,13 +66,15 @@ export interface ListShareInvitationsCommandOutput extends ListShareInvitationsO
  * //       SharedBy: "STRING_VALUE",
  * //       SharedWith: "STRING_VALUE",
  * //       PermissionType: "READONLY" || "CONTRIBUTOR",
- * //       ShareResourceType: "WORKLOAD" || "LENS" || "PROFILE",
+ * //       ShareResourceType: "WORKLOAD" || "LENS" || "PROFILE" || "TEMPLATE",
  * //       WorkloadName: "STRING_VALUE",
  * //       WorkloadId: "STRING_VALUE",
  * //       LensName: "STRING_VALUE",
  * //       LensArn: "STRING_VALUE",
  * //       ProfileName: "STRING_VALUE",
  * //       ProfileArn: "STRING_VALUE",
+ * //       TemplateName: "STRING_VALUE",
+ * //       TemplateArn: "STRING_VALUE",
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -146,6 +154,10 @@ export class ListShareInvitationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "WellArchitectedApiServiceLambda",
+        operation: "ListShareInvitations",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

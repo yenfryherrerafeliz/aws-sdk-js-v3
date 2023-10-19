@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import {
@@ -50,10 +51,8 @@ export interface CreateSlotTypeVersionCommandOutput extends CreateSlotTypeVersio
  *         type. You can't update the numbered versions that you create with the
  *           <code>CreateSlotTypeVersion</code> operation.</p>
  *          </note>
- *
  *          <p>When you create a version of a slot type, Amazon Lex sets the version to
  *       1. Subsequent versions increment by 1. For more information, see <a>versioning-intro</a>. </p>
- *
  *          <p>This operation requires permissions for the
  *         <code>lex:CreateSlotTypeVersion</code> action.</p>
  * @example
@@ -83,7 +82,7 @@ export interface CreateSlotTypeVersionCommandOutput extends CreateSlotTypeVersio
  * //   createdDate: new Date("TIMESTAMP"),
  * //   version: "STRING_VALUE",
  * //   checksum: "STRING_VALUE",
- * //   valueSelectionStrategy: "STRING_VALUE",
+ * //   valueSelectionStrategy: "ORIGINAL_VALUE" || "TOP_RESOLUTION",
  * //   parentSlotTypeSignature: "STRING_VALUE",
  * //   slotTypeConfigurations: [ // SlotTypeConfigurations
  * //     { // SlotTypeConfiguration
@@ -180,6 +179,10 @@ export class CreateSlotTypeVersionCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSDeepSenseModelBuildingService",
+        operation: "CreateSlotTypeVersion",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

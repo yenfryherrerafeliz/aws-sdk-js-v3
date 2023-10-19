@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { CreateRuleRequest, CreateRuleResponse } from "../models/models_0";
@@ -115,7 +116,7 @@ export interface CreateRuleCommandOutput extends CreateRuleResponse, __MetadataB
  * //     Predicates: [ // Predicates // required
  * //       { // Predicate
  * //         Negated: true || false, // required
- * //         Type: "STRING_VALUE", // required
+ * //         Type: "IPMatch" || "ByteMatch" || "SqlInjectionMatch" || "GeoMatch" || "SizeConstraint" || "XssMatch" || "RegexMatch", // required
  * //         DataId: "STRING_VALUE", // required
  * //       },
  * //     ],
@@ -276,6 +277,10 @@ export class CreateRuleCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSWAF_20150824",
+        operation: "CreateRule",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

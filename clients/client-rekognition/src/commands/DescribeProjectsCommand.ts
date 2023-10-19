@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { DescribeProjectsRequest, DescribeProjectsResponse } from "../models/models_0";
@@ -36,7 +37,7 @@ export interface DescribeProjectsCommandOutput extends DescribeProjectsResponse,
 
 /**
  * @public
- * <p>Gets information about your Amazon Rekognition Custom Labels projects. </p>
+ * <p>Gets information about your Rekognition projects.</p>
  *          <p>This operation requires permissions to perform the <code>rekognition:DescribeProjects</code> action.</p>
  * @example
  * Use a bare-bones client and the command you need to make an API call.
@@ -49,6 +50,9 @@ export interface DescribeProjectsCommandOutput extends DescribeProjectsResponse,
  *   MaxResults: Number("int"),
  *   ProjectNames: [ // ProjectNames
  *     "STRING_VALUE",
+ *   ],
+ *   Features: [ // CustomizationFeatures
+ *     "CONTENT_MODERATION" || "CUSTOM_LABELS",
  *   ],
  * };
  * const command = new DescribeProjectsCommand(input);
@@ -69,6 +73,8 @@ export interface DescribeProjectsCommandOutput extends DescribeProjectsResponse,
  * //           StatusMessageCode: "SUCCESS" || "SERVICE_ERROR" || "CLIENT_ERROR",
  * //         },
  * //       ],
+ * //       Feature: "CONTENT_MODERATION" || "CUSTOM_LABELS",
+ * //       AutoUpdate: "ENABLED" || "DISABLED",
  * //     },
  * //   ],
  * //   NextToken: "STRING_VALUE",
@@ -198,6 +204,10 @@ export class DescribeProjectsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "RekognitionService",
+        operation: "DescribeProjects",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

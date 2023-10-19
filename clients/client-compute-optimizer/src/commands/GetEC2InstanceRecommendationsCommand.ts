@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { ComputeOptimizerClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../ComputeOptimizerClient";
@@ -87,11 +88,11 @@ export interface GetEC2InstanceRecommendationsCommandOutput
  * //       currentInstanceType: "STRING_VALUE",
  * //       finding: "Underprovisioned" || "Overprovisioned" || "Optimized" || "NotOptimized",
  * //       findingReasonCodes: [ // InstanceRecommendationFindingReasonCodes
- * //         "CPUOverprovisioned" || "CPUUnderprovisioned" || "MemoryOverprovisioned" || "MemoryUnderprovisioned" || "EBSThroughputOverprovisioned" || "EBSThroughputUnderprovisioned" || "EBSIOPSOverprovisioned" || "EBSIOPSUnderprovisioned" || "NetworkBandwidthOverprovisioned" || "NetworkBandwidthUnderprovisioned" || "NetworkPPSOverprovisioned" || "NetworkPPSUnderprovisioned" || "DiskIOPSOverprovisioned" || "DiskIOPSUnderprovisioned" || "DiskThroughputOverprovisioned" || "DiskThroughputUnderprovisioned",
+ * //         "CPUOverprovisioned" || "CPUUnderprovisioned" || "MemoryOverprovisioned" || "MemoryUnderprovisioned" || "EBSThroughputOverprovisioned" || "EBSThroughputUnderprovisioned" || "EBSIOPSOverprovisioned" || "EBSIOPSUnderprovisioned" || "NetworkBandwidthOverprovisioned" || "NetworkBandwidthUnderprovisioned" || "NetworkPPSOverprovisioned" || "NetworkPPSUnderprovisioned" || "DiskIOPSOverprovisioned" || "DiskIOPSUnderprovisioned" || "DiskThroughputOverprovisioned" || "DiskThroughputUnderprovisioned" || "GPUUnderprovisioned" || "GPUOverprovisioned" || "GPUMemoryUnderprovisioned" || "GPUMemoryOverprovisioned",
  * //       ],
  * //       utilizationMetrics: [ // UtilizationMetrics
  * //         { // UtilizationMetric
- * //           name: "Cpu" || "Memory" || "EBS_READ_OPS_PER_SECOND" || "EBS_WRITE_OPS_PER_SECOND" || "EBS_READ_BYTES_PER_SECOND" || "EBS_WRITE_BYTES_PER_SECOND" || "DISK_READ_OPS_PER_SECOND" || "DISK_WRITE_OPS_PER_SECOND" || "DISK_READ_BYTES_PER_SECOND" || "DISK_WRITE_BYTES_PER_SECOND" || "NETWORK_IN_BYTES_PER_SECOND" || "NETWORK_OUT_BYTES_PER_SECOND" || "NETWORK_PACKETS_IN_PER_SECOND" || "NETWORK_PACKETS_OUT_PER_SECOND",
+ * //           name: "Cpu" || "Memory" || "EBS_READ_OPS_PER_SECOND" || "EBS_WRITE_OPS_PER_SECOND" || "EBS_READ_BYTES_PER_SECOND" || "EBS_WRITE_BYTES_PER_SECOND" || "DISK_READ_OPS_PER_SECOND" || "DISK_WRITE_OPS_PER_SECOND" || "DISK_READ_BYTES_PER_SECOND" || "DISK_WRITE_BYTES_PER_SECOND" || "NETWORK_IN_BYTES_PER_SECOND" || "NETWORK_OUT_BYTES_PER_SECOND" || "NETWORK_PACKETS_IN_PER_SECOND" || "NETWORK_PACKETS_OUT_PER_SECOND" || "GPU_PERCENTAGE" || "GPU_MEMORY_PERCENTAGE",
  * //           statistic: "Maximum" || "Average",
  * //           value: Number("double"),
  * //         },
@@ -102,7 +103,7 @@ export interface GetEC2InstanceRecommendationsCommandOutput
  * //           instanceType: "STRING_VALUE",
  * //           projectedUtilizationMetrics: [ // ProjectedUtilizationMetrics
  * //             {
- * //               name: "Cpu" || "Memory" || "EBS_READ_OPS_PER_SECOND" || "EBS_WRITE_OPS_PER_SECOND" || "EBS_READ_BYTES_PER_SECOND" || "EBS_WRITE_BYTES_PER_SECOND" || "DISK_READ_OPS_PER_SECOND" || "DISK_WRITE_OPS_PER_SECOND" || "DISK_READ_BYTES_PER_SECOND" || "DISK_WRITE_BYTES_PER_SECOND" || "NETWORK_IN_BYTES_PER_SECOND" || "NETWORK_OUT_BYTES_PER_SECOND" || "NETWORK_PACKETS_IN_PER_SECOND" || "NETWORK_PACKETS_OUT_PER_SECOND",
+ * //               name: "Cpu" || "Memory" || "EBS_READ_OPS_PER_SECOND" || "EBS_WRITE_OPS_PER_SECOND" || "EBS_READ_BYTES_PER_SECOND" || "EBS_WRITE_BYTES_PER_SECOND" || "DISK_READ_OPS_PER_SECOND" || "DISK_WRITE_OPS_PER_SECOND" || "DISK_READ_BYTES_PER_SECOND" || "DISK_WRITE_BYTES_PER_SECOND" || "NETWORK_IN_BYTES_PER_SECOND" || "NETWORK_OUT_BYTES_PER_SECOND" || "NETWORK_PACKETS_IN_PER_SECOND" || "NETWORK_PACKETS_OUT_PER_SECOND" || "GPU_PERCENTAGE" || "GPU_MEMORY_PERCENTAGE",
  * //               statistic: "Maximum" || "Average",
  * //               value: Number("double"),
  * //             },
@@ -120,12 +121,20 @@ export interface GetEC2InstanceRecommendationsCommandOutput
  * //             },
  * //           },
  * //           migrationEffort: "VeryLow" || "Low" || "Medium" || "High",
+ * //           instanceGpuInfo: { // GpuInfo
+ * //             gpus: [ // Gpus
+ * //               { // Gpu
+ * //                 gpuCount: Number("int"),
+ * //                 gpuMemorySizeInMiB: Number("int"),
+ * //               },
+ * //             ],
+ * //           },
  * //         },
  * //       ],
  * //       recommendationSources: [ // RecommendationSources
  * //         { // RecommendationSource
  * //           recommendationSourceArn: "STRING_VALUE",
- * //           recommendationSourceType: "Ec2Instance" || "AutoScalingGroup" || "EbsVolume" || "LambdaFunction" || "EcsService",
+ * //           recommendationSourceType: "Ec2Instance" || "AutoScalingGroup" || "EbsVolume" || "LambdaFunction" || "EcsService" || "License",
  * //         },
  * //       ],
  * //       lastRefreshTimestamp: new Date("TIMESTAMP"),
@@ -154,6 +163,15 @@ export interface GetEC2InstanceRecommendationsCommandOutput
  * //         statusCode: "NO_EXTERNAL_METRIC_SET" || "INTEGRATION_SUCCESS" || "DATADOG_INTEGRATION_ERROR" || "DYNATRACE_INTEGRATION_ERROR" || "NEWRELIC_INTEGRATION_ERROR" || "INSTANA_INTEGRATION_ERROR" || "INSUFFICIENT_DATADOG_METRICS" || "INSUFFICIENT_DYNATRACE_METRICS" || "INSUFFICIENT_NEWRELIC_METRICS" || "INSUFFICIENT_INSTANA_METRICS",
  * //         statusReason: "STRING_VALUE",
  * //       },
+ * //       currentInstanceGpuInfo: {
+ * //         gpus: [
+ * //           {
+ * //             gpuCount: Number("int"),
+ * //             gpuMemorySizeInMiB: Number("int"),
+ * //           },
+ * //         ],
+ * //       },
+ * //       idle: "True" || "False",
  * //     },
  * //   ],
  * //   errors: [ // GetRecommendationErrors
@@ -252,6 +270,10 @@ export class GetEC2InstanceRecommendationsCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "ComputeOptimizerService",
+        operation: "GetEC2InstanceRecommendations",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(

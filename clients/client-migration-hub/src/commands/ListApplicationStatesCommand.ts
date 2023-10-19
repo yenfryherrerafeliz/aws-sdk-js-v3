@@ -11,6 +11,7 @@ import {
   MetadataBearer as __MetadataBearer,
   MiddlewareStack,
   SerdeContext as __SerdeContext,
+  SMITHY_CONTEXT_KEY,
 } from "@smithy/types";
 
 import { MigrationHubClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../MigrationHubClient";
@@ -58,7 +59,7 @@ export interface ListApplicationStatesCommandOutput extends ListApplicationState
  * //   ApplicationStateList: [ // ApplicationStateList
  * //     { // ApplicationState
  * //       ApplicationId: "STRING_VALUE",
- * //       ApplicationStatus: "STRING_VALUE",
+ * //       ApplicationStatus: "NOT_STARTED" || "IN_PROGRESS" || "COMPLETED",
  * //       LastUpdatedTime: new Date("TIMESTAMP"),
  * //     },
  * //   ],
@@ -148,6 +149,10 @@ export class ListApplicationStatesCommand extends $Command<
       commandName,
       inputFilterSensitiveLog: (_: any) => _,
       outputFilterSensitiveLog: (_: any) => _,
+      [SMITHY_CONTEXT_KEY]: {
+        service: "AWSMigrationHub",
+        operation: "ListApplicationStates",
+      },
     };
     const { requestHandler } = configuration;
     return stack.resolve(
