@@ -760,7 +760,7 @@ export interface CopyProductInput {
    * <p>The identifiers of the provisioning artifacts (also known as versions) of the product to copy.
    *          By default, all provisioning artifacts are copied.</p>
    */
-  SourceProvisioningArtifactIdentifiers?: Record<ProvisioningArtifactPropertyName, string>[];
+  SourceProvisioningArtifactIdentifiers?: Partial<Record<ProvisioningArtifactPropertyName, string>>[];
 
   /**
    * @public
@@ -1267,6 +1267,7 @@ export class OperationNotSupportedException extends __BaseException {
  */
 export const ProductType = {
   CLOUD_FORMATION_TEMPLATE: "CLOUD_FORMATION_TEMPLATE",
+  EXTERNAL: "EXTERNAL",
   MARKETPLACE: "MARKETPLACE",
   TERRAFORM_CLOUD: "TERRAFORM_CLOUD",
   TERRAFORM_OPEN_SOURCE: "TERRAFORM_OPEN_SOURCE",
@@ -1283,6 +1284,7 @@ export type ProductType = (typeof ProductType)[keyof typeof ProductType];
  */
 export const ProvisioningArtifactType = {
   CLOUD_FORMATION_TEMPLATE: "CLOUD_FORMATION_TEMPLATE",
+  EXTERNAL: "EXTERNAL",
   MARKETPLACE_AMI: "MARKETPLACE_AMI",
   MARKETPLACE_CAR: "MARKETPLACE_CAR",
   TERRAFORM_CLOUD: "TERRAFORM_CLOUD",
@@ -1338,7 +1340,15 @@ export interface ProvisioningArtifactProperties {
    *             </li>
    *             <li>
    *                <p>
-   *                   <code>TERRAFORM_OPEN_SOURCE</code> - Terraform open source configuration file</p>
+   *                   <code>TERRAFORM_OPEN_SOURCE</code> - Terraform Open Source configuration file</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>TERRAFORM_CLOUD</code> - Terraform Cloud configuration file</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>EXTERNAL</code> - External configuration file</p>
    *             </li>
    *          </ul>
    */
@@ -1843,8 +1853,24 @@ export interface ProvisioningArtifactDetail {
   /**
    * @public
    * <p>The type of provisioning artifact.</p>
-   *          <p>
-   *             <code>CLOUD_FORMATION_TEMPLATE</code> - CloudFormation template</p>
+   *          <ul>
+   *             <li>
+   *                <p>
+   *                   <code>CLOUD_FORMATION_TEMPLATE</code> - CloudFormation template</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>TERRAFORM_OPEN_SOURCE</code> - Terraform Open Source configuration file</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>TERRAFORM_CLOUD</code> - Terraform Cloud configuration file</p>
+   *             </li>
+   *             <li>
+   *                <p>
+   *                   <code>EXTERNAL</code> - External configuration file</p>
+   *             </li>
+   *          </ul>
    */
   Type?: ProvisioningArtifactType;
 
@@ -2207,7 +2233,7 @@ export interface CreateServiceActionInput {
    *             </dd>
    *          </dl>
    */
-  Definition: Record<ServiceActionDefinitionKey, string> | undefined;
+  Definition: Partial<Record<ServiceActionDefinitionKey, string>> | undefined;
 
   /**
    * @public
@@ -2284,7 +2310,7 @@ export interface ServiceActionDetail {
    * @public
    * <p>A map that defines the self-service action.</p>
    */
-  Definition?: Record<ServiceActionDefinitionKey, string>;
+  Definition?: Partial<Record<ServiceActionDefinitionKey, string>>;
 }
 
 /**
@@ -3418,7 +3444,9 @@ export interface ProvisionedProductDetail {
 
   /**
    * @public
-   * <p>The type of provisioned product. The supported values are <code>CFN_STACK</code> and <code>CFN_STACKSET</code>.</p>
+   * <p>The type of provisioned product.
+   *          The supported values are <code>CFN_STACK</code>, <code>CFN_STACKSET</code>, <code>TERRAFORM_OPEN_SOURCE</code>,
+   *          <code>TERRAFORM_CLOUD</code>, and <code>EXTERNAL</code>.</p>
    */
   Type?: string;
 
@@ -4498,7 +4526,7 @@ export interface RecordDetail {
   /**
    * @public
    * <p>The type of provisioned product. The supported values are <code>CFN_STACK</code>, <code>CFN_STACKSET</code>,
-   *          <code>TERRAFORM_OPEN_SOURCE</code>, and <code>TERRAFORM_CLOUD</code>.</p>
+   *          <code>TERRAFORM_OPEN_SOURCE</code>, <code>TERRAFORM_CLOUD</code>, and <code>EXTERNAL</code>.</p>
    */
   ProvisionedProductType?: string;
 
@@ -7123,7 +7151,7 @@ export interface SearchProductsInput {
    * <p>The search filters. If no search filters are specified, the output includes
    *          all products to which the caller has access.</p>
    */
-  Filters?: Record<ProductViewFilterBy, string[]>;
+  Filters?: Partial<Record<ProductViewFilterBy, string[]>>;
 
   /**
    * @public
@@ -7236,7 +7264,7 @@ export interface SearchProductsAsAdminInput {
    * <p>The search filters. If no search filters are specified, the output includes all products
    *          to which the administrator has access.</p>
    */
-  Filters?: Record<ProductViewFilterBy, string[]>;
+  Filters?: Partial<Record<ProductViewFilterBy, string[]>>;
 
   /**
    * @public
@@ -7338,7 +7366,7 @@ export interface SearchProvisionedProductsInput {
    *          <p>Example: <code>"SearchQuery":["status:AVAILABLE"]</code>
    *          </p>
    */
-  Filters?: Record<ProvisionedProductViewFilterBy, string[]>;
+  Filters?: Partial<Record<ProvisionedProductViewFilterBy, string[]>>;
 
   /**
    * @public
@@ -7385,7 +7413,9 @@ export interface ProvisionedProductAttribute {
 
   /**
    * @public
-   * <p>The type of provisioned product. The supported values are <code>CFN_STACK</code> and <code>CFN_STACKSET</code>.</p>
+   * <p>The type of provisioned product.
+   *          The supported values are <code>CFN_STACK</code>, <code>CFN_STACKSET</code>, <code>TERRAFORM_OPEN_SOURCE</code>,
+   *          <code>TERRAFORM_CLOUD</code>, and <code>EXTERNAL</code>.</p>
    */
   Type?: string;
 
@@ -8296,7 +8326,7 @@ export interface UpdateProvisionedProductPropertiesInput {
    *          If an end user provisions a product and the owner is updated to someone else, they will no longer be able to see or perform any actions through
    *          API or the Service Catalog console on that provisioned product.</p>
    */
-  ProvisionedProductProperties: Record<PropertyKey, string> | undefined;
+  ProvisionedProductProperties: Partial<Record<PropertyKey, string>> | undefined;
 
   /**
    * @public
@@ -8319,7 +8349,7 @@ export interface UpdateProvisionedProductPropertiesOutput {
    * @public
    * <p>A map that contains the properties updated.</p>
    */
-  ProvisionedProductProperties?: Record<PropertyKey, string>;
+  ProvisionedProductProperties?: Partial<Record<PropertyKey, string>>;
 
   /**
    * @public
@@ -8439,7 +8469,7 @@ export interface UpdateServiceActionInput {
    * @public
    * <p>A map that defines the self-service action.</p>
    */
-  Definition?: Record<ServiceActionDefinitionKey, string>;
+  Definition?: Partial<Record<ServiceActionDefinitionKey, string>>;
 
   /**
    * @public
